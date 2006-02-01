@@ -22,7 +22,7 @@ require_once(PATH_LIB . '/VAClientes.class.php');
 require_once(PATH_LIB . '/VACobranca.class.php');
 require_once(PATH_LIB . '/VASuporte.class.php');
 require_once(PATH_LIB . '/VAConfiguracao.class.php');
-require_once(PATH_LIB . '/VAAdministrador.class.php');
-require_once(PATH_LIB . '/VARelatorio.class.php');
+//require_once(PATH_LIB . '/VAAdministrador.class.php');
+//require_once(PATH_LIB . '/VARelatorio.class.php');
 
 ?>
