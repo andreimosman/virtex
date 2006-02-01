@@ -1,0 +1,273 @@
+<html>
+<head>
+<!-- <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
+<title>Main</title>
+</head> 
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="60"> 
+      <table width="100%" height="50" border="0" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
+        <tr> 
+          <td width="18%"><div align="center">Logotipo</div></td>
+          <td width="82%"> <div align="center"><strong>VIRTEX ADMIN - PAINEL DE 
+              CONTROLE </strong> </div></td>
+        </tr>
+        <tr> 
+          <td colspan="2"><table width="100%" border="0" cellspacing="2" cellpadding="0">
+              <tr align="center" valign="top" bgcolor="#F4F4F4"> 
+                <td><strong>Clientes</strong><br> &raquo; <a href="search_clientes.html">Pesquisa</a><br> 
+                  &raquo; <a href="cadastro_clientes.html">Cadastro</a><br> &raquo; 
+                  <a href="elimina_clientes.html">Eliminar Reg</a>.</td>
+                <td><strong>Cobranca</strong><br> &raquo; <a href="cobr_bloqueados.html">Bloqueados</a><br> 
+                  &raquo; <a href="produtos.html">Produtos/Planos</a><br> </td>
+                <td><strong>Suporte</strong><br> &raquo; <a href="sup_graficos.html">Graficos</a><br> 
+                  &raquo; <a href="suporte_radius.html">Log Radius</a><br> &raquo; 
+                  <a href="suporte_monitor.html">Monitoramento</a><br> &raquo; 
+                  <a href="suporte_calc.html">Calculadora IP</a><br> &raquo; <a href="suporte_arp.html">ARP</a></td>
+                <td><strong>Configura&ccedil;&otilde;es<br>
+                  </strong>&raquo; <a href="conf_pop.html">POPs</a><br> &raquo; 
+                  <a href="conf_nas.html">NAS</a><br> &raquo; <a href="conf_monitor.html">Monitoramento</a></td>
+                <td><strong>Administradores</strong><br> &raquo; <a href="admin_senha.html">Alterar 
+                  Senha</a><br> &raquo; <a href="admin_cadastro.html">Cadastro</a></td>
+                <td><p><strong>Relat&oacute;rios</strong><br>
+                    &raquo; Cobran&ccedil;a &gt;<br>
+                    - <a href="relat_faturas.html">Faturas</a><br>
+                    - <a href="relat_cobcortesias.html">Cortesias</a><br>
+                    &raquo; Clientes &gt;<br>
+                    - <a href="relat_clientesgeral.html">Lista Geral</a><br>
+                    - <a href="relat_clientesestatisticas.html">Estat&iacute;sticas</a><br>
+                    - <a href="relat_clientes_filtros.html">Filtros</a><br>
+                    &raquo; Configura&ccedil;&otilde;es<br>
+                    - <a href="relat_confap.html">Carga por AP</a><br>
+                    - <a href="relat_confpop.html">Carga por POP</a><br>
+                    - <a href="relat_confnas.html">Carga por NAS</a><br>
+                    &raquo; Administradores<br>
+                    - <a href="admin_lista.html">Listagem</a></p></td>
+                <td><a href="main.html">home</a></td>
+                <td><a href="http://www.mosman.com.br/helpdesk.php" target="_blank">suporte</a></td>
+              </tr>
+            </table></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle">
+	<form name=dados method="post" action="/~virtsys/admin.php">
+        <table width="500" border="0" align="center" cellpadding="0" cellspacing="1" class=main>
+          <tr> 
+            <td width="47%">&nbsp;</td>
+            <td width="53%">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                <tr> 
+                  <td width="47%">Nome/Raz&atilde;o Social</td>
+                  <td width="38%">Pessoa</td>
+                </tr>
+                <tr> 
+                  <td><input  name="nome_razao" type="text" class=input1 id="nome_razao" size="50"></td>
+                  <td><SELECT name='tipo_pessoa' >
+                      <OPTION VALUE='F' selected >Física</OPTION>
+                      <OPTION VALUE='J' >Juridica</OPTION>
+                    </SELECT>
+</td>
+                </tr>
+              </table></td>
+          </tr>
+          <tr> 
+            <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                <tr> 
+                  <td width="33%">RG</td>
+                  <td width="33%">Expedi&ccedil;&atilde;o </td>
+                  <td width="33%">CPF/CNPJ </td>
+                </tr>
+                <tr> 
+                  <td><input  name="rg_inscr" type="text" class=input1 id="rg_inscr"></td>
+                  <td><input  name="rg_inscr2" type="text" class=input1 id="rg_inscr2"></td>
+                  <td><input  name="rg_inscr3" type="text" class=input1 id="rg_inscr3"></td>
+                </tr>
+              </table></td>
+          </tr>
+          <tr> 
+            <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                <tr> 
+                  <td width="46%">Email</td>
+                  <td width="54%">&nbsp;</td>
+                </tr>
+                <tr> 
+                  <td colspan="2"><input  name="email"type="text" class=input1 id="email4" size="50"></td>
+                </tr>
+              </table></td>
+          </tr>
+          <tr> 
+            <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                <tr> 
+                  <td width="33%">Endere&ccedil;o </td>
+                  <td width="33%">&nbsp;</td>
+                  <td width="33%">&nbsp;</td>
+                </tr>
+                <tr> 
+                  <td colspan="3"><input  name="endereco"type="text" class=input1 id="endereco3" value="" size="70"> 
+                  </td>
+                </tr>
+                <tr> 
+                  <td>Complemento <input  name="complemento" value=""type="text" class=input1 id="complemento4"></td>
+                  <td>Bairro <input  name="bairro" value="" type="text" class=input1 id="bairro"></td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr> 
+                  <td>Cidade <input  name="cidade" value="" type="text" class=input1 id="cidade3"></td>
+                  <td>Estado 
+                    <select name='estado' >
+                      <option value='AC' >Acre</option>
+                      <option value='AL' >Alagoas</option>
+                      <option value='AP' >Amapá</option>
+                      <option value='AM' >Amazonas</option>
+                      <option value='BA' >Bahia</option>
+                      <option value='CE' >Ceará</option>
+                      <option value='DF' >Distrito Federal</option>
+                      <option value='ES' >Espirito Santo</option>
+                      <option value='GO' >Goiás</option>
+                      <option value='MA' >Maranhão</option>
+                      <option value='MT' >Mato Grosso</option>
+                      <option value='MS' >Mato Grosso do Sul</option>
+                      <option value='MG' >Minas Gerais</option>
+                      <option value='PA' >Pará</option>
+                      <option value='PB' >Paraíba</option>
+                      <option value='PR' >Paraná</option>
+                      <option value='PE' >Pernambuco</option>
+                      <option value='PI' >Piauí</option>
+                      <option value='RJ' >Rio de Janeiro</option>
+                      <option value='RN' >Rio Grande do Norte</option>
+                      <option value='RO' >Rondônia</option>
+                      <option value='RS' >Rio Grande do Sul</option>
+                      <option value='RO' >Rondônia</option>
+                      <option value='RR' >Rorâima</option>
+                      <option value='SC' >Santa Catarina</option>
+                      <option value='SP' selected >São Paulo</option>
+                      <option value='SE' >Sergipe</option>
+                      <option value='TO' >Tocantins</option>
+                    </select></td>
+                  <td>CEP <input  name="cep" value=""type="text" class=input1 id="cep"></td>
+                </tr>
+                <tr> 
+                  <td>Telefone Comercial
+                    <input  name="fone_comercial" value="" type="text" class=input1 id="fone_comercial2"></td>
+                  <td>Telefone Residencial
+                    <input  name="fone_residencial" value="" type="text" class=input1 id="fone_residencial2"></td>
+                  <td>Celular
+                    <input  name="fone_celular" value=""type="text" class=input1 id="fone_celular2"></td>
+                </tr>
+              </table></td>
+          </tr>
+          <tr> 
+            <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                <tr> 
+                  <td width="33%">Contato
+                    <input  name="contato" value="" type="text" class=input1 id="contato"></td>
+                  <td width="33%">&nbsp;</td>
+                  <td width="33%">&nbsp;</td>
+                </tr>
+                <tr> 
+                  <td>&nbsp; </td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+              </table></td>
+          </tr>
+          <tr> 
+            <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                <tr> 
+                  <td colspan="3">Outras Informa&ccedil;&otilde;es</td>
+                </tr>
+                <tr> 
+                  <td width="33%">Banco
+                    <input  name="banco" value="" type="text" class=input1 id="banco"></td>
+                  <td width="33%">Ag&ecirc;ncia <input  name="agencia" value="" type="text" class=input1 id="agencia"></td>
+                  <td width="33%">Conta Corrente
+                    <input  name="conta_corrente" value="" type="text" class=input1 id="conta_corrente3"></td>
+                </tr>
+              </table></td>
+          </tr>
+          <tr> 
+            <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                <tr> 
+                  <td width="33%">&nbsp;</td>
+                  <td width="33%">&nbsp;</td>
+                  <td width="33%">&nbsp;</td>
+                </tr>
+                <tr> 
+                  <td>Status do Contrato<br>
+                    <select name='ativo' >
+                      <option value='1' selected >Ativo</option>
+                      <option value='0' >Inativo</option>
+                    </select></td>
+                  <td>Data de Pagamento
+                    <select name='dia_pagamento' >
+                      <option value='5' selected >05</option>
+                      <option value='1' >10</option>
+                      <option value='15' >15</option>
+                      <option value='20' >20</option>
+                      <option value='25' >25</option>
+                      <option value='30' >30</option>
+                    </select></td>
+                  <td>&nbsp;</td>
+                </tr>
+              </table></td>
+          </tr>
+          <tr> 
+            <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                <tr> 
+                  <td width="33%">&nbsp;</td>
+                  <td width="33%">&nbsp;</td>
+                  <td width="33%">&nbsp;</td>
+                </tr>
+                <tr> 
+                  <td colspan="3">Observa&ccedil;&otilde;es </td>
+                </tr>
+                <tr> 
+                  <td colspan="3"><textarea name="textarea" cols="60" rows="8">
+
+</textarea></td>
+                </tr>
+              </table></td>
+          </tr>
+          <tr> 
+            <td colspan="2"> <table width="100%" border="0" cellspacing="1" cellpadding="0">
+                <tr> 
+                  <td width="33%">&nbsp;</td>
+                  <td width="33%"><div align="center"> 
+                      <input name="cadastro_cliente" type="submit" id="cadastro_cliente2" value="Cadastrar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
+                    </div></td>
+                  <td width="33%">&nbsp;</td>
+                </tr>
+              </table></td>
+          </tr>
+          <tr> 
+            <td width="47%">&nbsp;</td>
+            <td width="53%">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td width="47%">&nbsp;</td>
+            <td width="53%">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td width="47%">&nbsp;</td>
+            <td width="53%">&nbsp; </td>
+          </tr>
+          <tr> 
+            <td width="47%">&nbsp;</td>
+            <td width="53%">&nbsp;</td>
+          </tr>
+        </table>
+      </form>
+	
+      </td>
+  </tr>
+</table>
+</body>
+
+
+</html>

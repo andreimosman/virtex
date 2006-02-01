@@ -1,0 +1,504 @@
+<html>
+<head>
+<!-- <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
+<title>Main</title>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function MM_reloadPage(init) {  //reloads the window if Nav4 resized
+  if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
+    document.MM_pgW=innerWidth; document.MM_pgH=innerHeight; onresize=MM_reloadPage; }}
+  else if (innerWidth!=document.MM_pgW || innerHeight!=document.MM_pgH) location.reload();
+}
+MM_reloadPage(true);
+//-->
+</script>
+</head> 
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<div id="BL" style="position:absolute; left:99px; top:290px; width:591px; height:64px; z-index:1; visibility: hidden;"> 
+  <table class=table_main width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#F0f0f0">
+    <tr> 
+      <th><font face="Arial" size="+1"><b>Cadastro de Produto (Banda Larga)</b></font></th>
+    </tr>
+    <tr> 
+      <th bgcolor="#FFFFFF"> <table class=table_main width="75%" border="0" align="center" cellpadding="0" cellspacing="0" >
+          <tr> 
+            <td> <form name=dados method="post" action="/~virtsys/admin.php">
+                <table width="90%" border="0" align="center" cellpadding="0" cellspacing="1" class=main>
+                  <tr> 
+                    <td width="65%">&nbsp;</td>
+                    <td width="50%">&nbsp;</td>
+                  </tr>
+                  <tr> 
+                    <td width="65%">Nome do Produto</td>
+                    <td width="50%">Descricao</td>
+                  </tr>
+                  <tr> 
+                    <td valign="top"><input  name="nome2" value="" type="text" class=input1 id="nome22" size="20"></td>
+                    <td rowspan=5 valign="top"><textarea name="textarea" rows=5></textarea></td>
+                  </tr>
+                  <tr> 
+                    <td width="65%">Preço</td>
+                  </tr>
+                  <tr> 
+                    <td width="65%"><input name="valor2" type="text" class=input1 id="valor2" value=""></td>
+                  </tr>
+                  <tr> 
+                    <td width="65%">Disponível para contratação?</td>
+                  </tr>
+                  <tr> 
+                    <td valign="top"><SELECT name='select' >
+                        <OPTION VALUE='1' >Sim</OPTION>
+                        <OPTION VALUE='0' >Não</OPTION>
+                      </SELECT> </td>
+                  </tr>
+                  <tr> 
+                    <td colspan=2>Número de contas de banda larga</td>
+                  </tr>
+                  <tr> 
+                    <td colspan=2><input type="text" name="numero_contas2" value="1" size=4 maxlenght=4></td>
+                  </tr>
+                  <tr> 
+                    <td colspan=2><hr size=1></td>
+                  </tr>
+                  <tr> 
+                    <td width="65%">Download</td>
+                    <td width="50%">Upload</td>
+                  </tr>
+                  <tr> 
+                    <td width="65%"><SELECT name='banda_download_kbps' >
+                        <OPTION VALUE='0' >SEM CONTROLE</OPTION>
+                        <OPTION VALUE='32' >32</OPTION>
+                        <OPTION VALUE='64' >64</OPTION>
+                        <OPTION VALUE='96' >96</OPTION>
+                        <OPTION VALUE='128' >128</OPTION>
+                        <OPTION VALUE='192' >192</OPTION>
+                        <OPTION VALUE='256' >256</OPTION>
+                        <OPTION VALUE='384' >384</OPTION>
+                        <OPTION VALUE='512' >512</OPTION>
+                        <OPTION VALUE='768' >768</OPTION>
+                        <OPTION VALUE='1024' >1024</OPTION>
+                      </SELECT>
+                      Kbps</td>
+                    <td width="50%"><SELECT name='banda_upload_kbps' >
+                        <OPTION VALUE='0' >SEM CONTROLE</OPTION>
+                        <OPTION VALUE='32' >32</OPTION>
+                        <OPTION VALUE='64' >64</OPTION>
+                        <OPTION VALUE='96' >96</OPTION>
+                        <OPTION VALUE='128' >128</OPTION>
+                        <OPTION VALUE='192' >192</OPTION>
+                        <OPTION VALUE='256' >256</OPTION>
+                        <OPTION VALUE='384' >384</OPTION>
+                        <OPTION VALUE='512' >512</OPTION>
+                        <OPTION VALUE='768' >768</OPTION>
+                        <OPTION VALUE='1024' >1024</OPTION>
+                      </SELECT>
+                      Kbps</td>
+                  </tr>
+                  <tr> 
+                    <td width="65%">Franquia Tráfego Mensal (GB)</td>
+                    <td width="50%">Valor GB Adicional</td>
+                  </tr>
+                  <tr> 
+                    <td width="65%"> <input type="text" class=input1 name="franquia_trafego_mensal_gb" value=""> 
+                      <br> <font id=aviso>Ilimitado = 0</font> </td>
+                    <td width="50%"><input type="text" class=input1 name="valor_trafego_adicional_gb" value=""></td>
+                  </tr>
+                  <tr> 
+                    <td colspan=2><hr size=1></td>
+                  </tr>
+                  <tr> 
+                    <td width="65%">No. de Emails</td>
+                    <td width="50%">Quota por conta de e-mail</td>
+                  </tr>
+                  <tr> 
+                    <td width="65%"><input type="text" class=input1 name="num_emails2" value=""></td>
+                    <td width="50%"><input name="quota_por_conta2" value=""type="text" class=input1 id="quota_por_conta2"></td>
+                  </tr>
+                  <tr> 
+                    <td width="65%">Email Adicional (R$)</td>
+                    <td width="50%">Permitir outros dominios?</td>
+                  </tr>
+                  <tr> 
+                    <td width="65%"><input name="vl_email_adicional2" value=""type="text" class=input1 id="vl_email_adicional2"></td>
+                    <td width="50%"><SELECT name='select' >
+                        <OPTION VALUE='1' >Sim</OPTION>
+                        <OPTION VALUE='0' >Não</OPTION>
+                      </SELECT> </td>
+                  </tr>
+                  <tr> 
+                  <tr> 
+                    <td width="65%">&nbsp;</td>
+                    <td width="50%">&nbsp;</td>
+                  </tr>
+                  <tr> 
+                    <td width="65%">&nbsp;</td>
+                    <td width="50%"><input name="submit" type="submit" class=input2 id="submit2" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;" value="Cadastrar &gt;&gt;"></td>
+                  </tr>
+                </table>
+              </form></td>
+          </tr>
+        </table></th>
+    </tr>
+  </table>
+</div>
+<div id="DISC" style="position:absolute; left:99px; top:291px; width:591; height:34px; z-index:2; visibility: hidden;"> 
+  <table class=table_main width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#F0f0f0">
+    <tr> 
+      <th class=th_main ><font face="Arial" size="+1"><b>Cadastro de Produto (Acesso 
+        Discado)</b></font></th>
+    </tr>
+    <tr> 
+      <th bgcolor="#FFFFFF" class=th_main ><table class=table_main width="75%" border="0" align="center" cellpadding="0" cellspacing="0" >
+          <tr> 
+            <td class=td_main > <form name=dados method="post" action="/~virtsys/admin.php">
+                <table width="90%" border="0" align="center" cellpadding="0" cellspacing="1" class=main>
+                  <tr> 
+                    <td width="65%">&nbsp;</td>
+                    <td width="50%">&nbsp;</td>
+                  </tr>
+                  <tr> 
+                    <td width="65%">Nome do Produto</td>
+                    <td width="50%">Descricao</td>
+                  </tr>
+                  <tr> 
+                    <td valign="top"><input  name="nome3" value="" type="text" class=input1 id="nome32" size="20"></td>
+                    <td rowspan=5 valign="top"><textarea name="textarea2" rows=5></textarea></td>
+                  </tr>
+                  <tr> 
+                    <td width="65%">Preço</td>
+                  </tr>
+                  <tr> 
+                    <td width="65%"><input name="valor3" type="text" class=input1 id="valor32" value=""></td>
+                  </tr>
+                  <tr> 
+                    <td width="65%">Disponível para contratação?</td>
+                  </tr>
+                  <tr> 
+                    <td valign="top"><SELECT name='select2' >
+                        <OPTION VALUE='1' >Sim</OPTION>
+                        <OPTION VALUE='0' >Não</OPTION>
+                      </SELECT> </td>
+                  </tr>
+                  <tr> 
+                    <td colspan=2>Número de contas de discado</td>
+                  </tr>
+                  <tr> 
+                    <td colspan=2><input type="text" name="numero_contas3" value="1" size=4 maxlenght=4></td>
+                  </tr>
+                  <tr> 
+                    <td colspan=2><hr size=1></td>
+                  </tr>
+                  <tr> 
+                    <td width="65%">Franquia em horas</td>
+                    <td width="50%">Permitir Duplicidade</td>
+                  </tr>
+                  <tr> 
+                    <td width="65%"> <input type="text" class=input1 name="franquia_horas" value=""> 
+                      <br> <font id=aviso>Ilimitado = 0</font> </td>
+                    <td width="50%" valign="top"><SELECT name='permitir_duplicidade' >
+                        <OPTION VALUE='1' >Sim</OPTION>
+                        <OPTION VALUE='0'  SELECTED >Não</OPTION>
+                      </SELECT> </td>
+                  </tr>
+                  <tr> 
+                    <td width="65%">Valor Hora Adicional (R$)</td>
+                    <td width="50%">Bloq. tentativa acesso duplicado</td>
+                  </tr>
+                  <tr> 
+                    <td width="65%"><input name="valor_hora_adicional" value=""type="text" class=input1 id="valor_hora_adicional2"></td>
+                    <td width="50%"><SELECT name='bloquear_duplicidade' >
+                        <OPTION VALUE='1' >Sim</OPTION>
+                        <OPTION VALUE='0'  SELECTED >Não</OPTION>
+                      </SELECT> </td>
+                  </tr>
+                  <tr> 
+                    <td colspan=2><hr size=1></td>
+                  </tr>
+                  <tr> 
+                    <td width="65%">No. de Emails</td>
+                    <td width="50%">Quota por conta de e-mail</td>
+                  </tr>
+                  <tr> 
+                    <td width="65%"><input type="text" class=input1 name="num_emails3" value=""></td>
+                    <td width="50%"><input name="quota_por_conta3" value=""type="text" class=input1 id="quota_por_conta32"></td>
+                  </tr>
+                  <tr> 
+                    <td width="65%">Email Adicional (R$)</td>
+                    <td width="50%">Permitir outros dominios?</td>
+                  </tr>
+                  <tr> 
+                    <td width="65%"><input name="vl_email_adicional3" value=""type="text" class=input1 id="valor_hora_adicional2"></td>
+                    <td width="50%"><SELECT name='select2' >
+                        <OPTION VALUE='1' >Sim</OPTION>
+                        <OPTION VALUE='0' >Não</OPTION>
+                      </SELECT> </td>
+                  </tr>
+                  <tr> 
+                  <tr> 
+                    <td width="65%">&nbsp;</td>
+                    <td width="50%">&nbsp;</td>
+                  </tr>
+                  <tr> 
+                    <td width="65%">&nbsp;</td>
+                    <td width="50%"><input name="submit2" type="submit" class=input2 id="submit22" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;" value="Cadastrar &gt;&gt;"></td>
+                  </tr>
+                </table>
+              </form></td>
+          </tr>
+        </table></th>
+    </tr>
+  </table>
+</div>
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="60"> 
+      <table width="100%" height="50" border="0" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
+        <tr> 
+          <td width="18%"><div align="center">Logotipo</div></td>
+          <td width="82%"> <div align="center"><strong>VIRTEX ADMIN - PAINEL DE 
+              CONTROLE </strong> </div></td>
+        </tr>
+        <tr> 
+          <td colspan="2"><table width="100%" border="0" cellspacing="2" cellpadding="0">
+              <tr align="center" valign="top" bgcolor="#F4F4F4"> 
+                <td><strong>Clientes</strong><br> &raquo; <a href="search_clientes.html">Pesquisa</a><br> 
+                  &raquo; <a href="cadastro_clientes.html">Cadastro</a><br> &raquo; 
+                  Relatorios<br> &raquo; Eliminar Reg.</td>
+                <td><strong>Cobranca</strong><br> &raquo; Bloqueados<br> &raquo; 
+                  Produtos/Planos<br> &raquo; Relatorios</td>
+                <td><strong>Suporte</strong><br> &raquo; Graficos<br> &raquo; 
+                  Log Radius<br> &raquo; Monitoramento<br> &raquo; Calculadora 
+                  IP<br> &raquo; ARP</td>
+                <td><strong>Configura&ccedil;&otilde;es<br>
+                  </strong>&raquo; POPs<br> &raquo; NAS<br> &raquo; Monitoramento<br> 
+                  &raquo; Relatorios</td>
+                <td><strong>Administradores</strong><br> &raquo; Alterar Senha<br> 
+                  &raquo; Cadastro<br> &raquo; Listagem</td>
+                <td><p><strong>Relat&oacute;rios</strong><br>
+                    &raquo; Cobran&ccedil;a &gt;<br>
+                    - Faturas<br>
+                    - Cortesias<br>
+                    &raquo; Clientes &gt;<br>
+                    - Lista Geral<br>
+                    - Estat&iacute;sticas<br>
+                    - Filtros<br>
+                    &raquo; Configura&ccedil;&otilde;es<br>
+                    - Carga por AP<br>
+                    - Carga por POP<br>
+                    - Carga por NAS</p>
+                </td>
+                <td><a href="main.html">home</a></td>
+                <td>suporte</td>
+              </tr>
+            </table></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle"><br>
+      <p><table class=table_main width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#F0f0f0">
+  <tr>
+    <th class=th_main ><font face="Arial" size="+1"><b>Cadastro de Produto (E-Mail)</b></font></th>
+  </tr>
+</table>
+<table class=table_main width="75%" border="0" align="center" cellpadding="0" cellspacing="0" >
+  <tr>
+    <td class=td_main >
+<form name=dados method="post" action="/~virtsys/admin.php">
+        <table width="90%" border="0" align="center" cellpadding="0" cellspacing="1" class=main>
+          <tr> 
+            <td width="65%">&nbsp;</td>
+            <td width="50%">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td width="65%">Nome do Produto</td>
+            <td width="50%">Descricao</td>
+          </tr>
+          <tr> 
+            <td valign="top"><input  name="nome" value="" type="text" class=input1 id="nome" size="20"></td>
+            <td rowspan=5 valign="top"><textarea name="descricao" rows=5></textarea></td>
+          </tr>
+          <tr> 
+            <td width="65%">Preço</td>
+          </tr>
+          <tr> 
+            <td width="65%"><input name="valor" type="text" class=input1 id="rg" value=""></td>
+          </tr>
+          <tr> 
+            <td width="65%">Disponível para contratação?</td>
+          </tr>
+          <tr> 
+            <td valign="top"><SELECT name='disponivel' >
+<OPTION VALUE='1' >Sim</OPTION>
+<OPTION VALUE='0' >Não</OPTION>
+</SELECT>
+</td>
+          </tr>
+          <tr>
+            <td colspan=2>Número de contas de email</td>
+          </tr>
+          <tr>
+            <td colspan=2><input type="text" name="numero_contas" value="1" size=4 maxlenght=4></td>
+          </tr>
+          <tr>
+             <td colspan=2><hr size=1></td>
+          </tr>
+
+
+
+
+          <tr> 
+            <td width="65%">No. de Emails</td>
+            <td width="50%">Quota/Conta</td>
+          </tr>
+          <tr> 
+            <td width="65%"><input type="text" class=input1 name="num_emails" value=""></td>
+            <td width="50%"><input name="quota_por_conta" value=""type="text" class=input1 id="email"></td>
+          </tr>
+          <tr> 
+            <td width="65%">Email Adicional (R$)</td>
+            <td width="50%">Permitir outros dominios?</td>
+          </tr>
+          <tr> 
+            <td width="65%"><input name="vl_email_adicional" value=""type="text" class=input1 id="endereco"></td>
+            <td width="50%"><SELECT name='permitir_outros_dominios' >
+<OPTION VALUE='1' >Sim</OPTION>
+<OPTION VALUE='0' >Não</OPTION>
+</SELECT>
+</td>
+          </tr>
+          <tr> 
+          <tr> 
+            <td width="65%">&nbsp;</td>
+            <td width="50%">&nbsp;</td>
+          </tr>
+          <tr> 
+            <td width="65%">&nbsp;</td>
+            <td width="50%"><input name="cadastro_cliente" type="submit" class=input2 id="cadastro_cliente" value="Cadastrar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;"></td>
+          </tr>
+        </table>
+      </form></td>
+  </tr>
+</table>
+<br>
+<table class=table_main width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#F0f0f0">
+  <tr>
+    <th class=th_main ><font face="Arial" size="+1"><b>Cadastro de Produto (Hospedagem)</b></font></th>
+  </tr>
+</table>
+<table class=table_main width="75%" border="0" align="center" cellpadding="0" cellspacing="0" >
+  <tr>
+    <td class=td_main >
+<form onSubmit="return confirma()" name=dados method="post" action="/~virtsys/admin.php">
+<table width="90%" border="0" align="center" cellpadding="0" cellspacing="1" class=main>
+          <tr>
+            <td width="65%">&nbsp;</td>
+            <td width="50%">&nbsp;</td>
+          </tr>
+          <tr>
+            <td width="65%">Nome do Produto</td>
+            <td width="50%">Descricao</td>
+          </tr>
+          <tr>
+            <td valign="top"><input  name="nome" value="" type="text" class=input1 id="nome" size="20"></td>
+            <td rowspan=5 valign="top"><textarea name="descricao" rows=5></textarea></td>
+          </tr>
+          <tr>
+            <td width="65%">Preço</td>
+          </tr>
+          <tr>
+            <td width="65%"><input name="valor" type="text" class=input1 id="rg" value=""></td>
+          </tr>
+          <tr>
+            <td width="65%">Disponível para contratação?</td>
+          </tr>
+          <tr>
+            <td valign="top"><SELECT name='disponivel' >
+<OPTION VALUE='1' >Sim</OPTION>
+<OPTION VALUE='0' >Não</OPTION>
+</SELECT>
+</td>
+          </tr>
+          <tr>
+            <td colspan=2>Número de contas de hospedagem</td>
+          </tr>
+          <tr>
+            <td colspan=2><input type="text" name="numero_contas" value="1" size=4 maxlenght=4></td>
+          </tr>
+          <tr>
+             <td colspan=2><hr size=1></td>
+          </tr>
+
+
+
+
+          <tr>
+            <td width="65%">Dominio</td>
+            <td width="50%">Franquia em MB</td>
+          </tr>
+          <tr>
+            <td width="65%"><SELECT name='dominio' >
+<OPTION VALUE='1' >Sim</OPTION>
+<OPTION VALUE='0' >Não</OPTION>
+</SELECT>
+</td>
+            <td width="50%"><input type="text" class=input1 name="franquia_em_mb" value=""></td>
+          </tr>
+          <tr>
+            <td width="65%">Valor MB Adicional (R$)</td>
+            <td width="50%">&nbsp;</td>
+          </tr>
+          <tr>
+            <td width="65%"><input name="valor_mb_adicional" value=""type="text" class=input1 id="endereco"></td>
+            <td width="50%">&nbsp;</td>
+          </tr>
+
+          <tr>
+             <td colspan=2><hr size=1></td>
+          </tr>
+          <tr>
+            <td width="65%">No. de Emails</td>
+            <td width="50%">Quota por conta de e-mail</td>
+          </tr>
+          <tr>
+            <td width="65%"><input type="text" class=input1 name="num_emails" value=""></td>
+            <td width="50%"><input name="quota_por_conta" value=""type="text" class=input1 id="email"></td>
+          </tr>
+          <tr>
+            <td width="65%">Email Adicional (R$)</td>
+            <td width="50%">Permitir outros dominios?</td>
+          </tr>
+          <tr>
+            <td width="65%"><input name="vl_email_adicional" value=""type="text" class=input1 id="endereco"></td>
+            <td width="50%"><SELECT name='permitir_outros_dominios' >
+<OPTION VALUE='1' >Sim</OPTION>
+<OPTION VALUE='0' >Não</OPTION>
+</SELECT>
+</td>
+          </tr>
+          <tr>
+          <tr>
+            <td width="65%">&nbsp;</td>
+            <td width="50%">&nbsp;</td>
+          </tr>
+
+
+
+          <tr>
+            <td width="65%">&nbsp;</td>
+            <td width="50%"><input type="submit" class=input2 id="cadastro_cliente" value="Cadastrar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;"></td>
+          </tr>
+        </table>
+      </form></td>
+  </tr>
+</table>
+</p>
+<p>&nbsp;</p></p></td>
+  </tr>
+  
+</table>
+</body>
+
+
+</html>
