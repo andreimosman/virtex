@@ -20,9 +20,6 @@ class VAAdministrador extends VirtexAdmin {
 		$this->arquivoTemplate = "administrador_cadastro.html";
 	}
 
-
 }
-
-
 
 ?>
