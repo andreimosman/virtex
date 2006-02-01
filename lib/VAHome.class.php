@@ -12,6 +12,25 @@ class VAHome extends VirtexAdmin {
 	
 	
 	}
+	
+	
+	public function processa($op=null) {
+	
+		if( $op == "cad" ) {
+		   
+		   
+		   
+		   
+		   
+		   
+		   $this->arquivoTemplate = "arquivoTal.html";
+		   
+		}
+	
+	
+	
+	
+	}
 
 
 }

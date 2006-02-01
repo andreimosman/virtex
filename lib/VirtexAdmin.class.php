@@ -11,7 +11,7 @@ class VirtexAdmin extends MWebApp {
 	}
 	
 	
-	public function processa() {
+	public function processa($op=null) {
 	   // Não faz nada por hora.
 	}
 
