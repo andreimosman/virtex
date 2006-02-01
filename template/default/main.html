@@ -1,139 +1,9 @@
 <html>
 <head>
-<script>
-function clientSideInclude(id, url) {
-  var req = false;
-  // For Safari, Firefox, and other non-MS browsers
-  if (window.XMLHttpRequest) {
-    try {
-      req = new XMLHttpRequest();
-    } catch (e) {
-      req = false;
-    }
-  } else if (window.ActiveXObject) {
-    // For Internet Explorer on Windows
-    try {
-      req = new ActiveXObject("Msxml2.XMLHTTP");
-    } catch (e) {
-      try {
-        req = new ActiveXObject("Microsoft.XMLHTTP");
-      } catch (e) {
-        req = false;
-      }
-    }
-  }
- var element = document.getElementById(id);
- if (!element) {
-  alert("Bad id " + id + 
-   "passed to clientSideInclude." +
-   "You need a div or span element " +
-   "with this id in your page.");
-  return;
- }
-  if (req) {
-    // Synchronous request, wait till we have it all
-    req.open('GET', url, false);
-    req.send(null);
-    element.innerHTML = req.responseText;
-  } else {
-    element.innerHTML =
-   "Sorry, your browser does not support " +
-      "XMLHTTPRequest objects. This page requires " +
-      "Internet Explorer 5 or better for Windows, " +
-      "or Firefox for any system, or Safari. Other " +
-      "compatible browsers may also exist.";
-  }
-}
-</script> 
-<script language="JavaScript">
-<!--
-function mmLoadMenus() {
-  if (window.mm_menu_0201094658_0) return;
-    window.mm_menu_0201094658_0 = new Menu("root",80,18,"Verdana, Arial, Helvetica, sans-serif",12,"#000000","#FFFFFF","#F4F4F4","#333333","left","middle",3,0,500,-5,7,true,false,true,0,true,true);
-  mm_menu_0201094658_0.addMenuItem("Pesquisa","location='search_clientes.html'");
-  mm_menu_0201094658_0.addMenuItem("Cadastro","location='cadastro_clientes.html'");
-  mm_menu_0201094658_0.addMenuItem("Eliminar","location='elimina_clientes.html'");
-   mm_menu_0201094658_0.hideOnMouseOut=true;
-   mm_menu_0201094658_0.bgColor='#555555';
-   mm_menu_0201094658_0.menuBorder=1;
-   mm_menu_0201094658_0.menuLiteBgColor='#FFFFFF';
-   mm_menu_0201094658_0.menuBorderBgColor='#777777';
-
-    window.mm_menu_0201095353_0 = new Menu("root",134,18,"Verdana, Arial, Helvetica, sans-serif",12,"#000000","#FFFFFF","#F4F4F4","#333333","left","middle",3,0,500,-5,7,true,false,true,0,true,true);
-  mm_menu_0201095353_0.addMenuItem("Bloqueados","location='cobr_bloqueados.html'");
-  mm_menu_0201095353_0.addMenuItem("Produtos&nbsp;e&nbsp;Planos","location='produtos.html'");
-   mm_menu_0201095353_0.hideOnMouseOut=true;
-   mm_menu_0201095353_0.bgColor='#555555';
-   mm_menu_0201095353_0.menuBorder=1;
-   mm_menu_0201095353_0.menuLiteBgColor='#FFFFFF';
-   mm_menu_0201095353_0.menuBorderBgColor='#777777';
-  window.mm_menu_0201095704_0 = new Menu("root",117,18,"Verdana, Arial, Helvetica, sans-serif",12,"#000000","#FFFFFF","#F4F4F4","#333333","left","middle",3,0,500,-5,7,true,false,true,0,true,true);
-  mm_menu_0201095704_0.addMenuItem("Gráficos","location='sup_graficos.html'");
-  mm_menu_0201095704_0.addMenuItem("Log&nbsp;Radius","location='sup_radius.html'");
-  mm_menu_0201095704_0.addMenuItem("Monitoramento","location='sup_monitor.html'");
-  mm_menu_0201095704_0.addMenuItem("Calculadora&nbsp;IP","location='sup_calc.html'");
-   mm_menu_0201095704_0.hideOnMouseOut=true;
-   mm_menu_0201095704_0.bgColor='#555555';
-   mm_menu_0201095704_0.menuBorder=1;
-   mm_menu_0201095704_0.menuLiteBgColor='#FFFFFF';
-   mm_menu_0201095704_0.menuBorderBgColor='#777777';
-
-  window.mm_menu_0201100450_0 = new Menu("root",117,18,"Verdana, Arial, Helvetica, sans-serif",12,"#000000","#FFFFFF","#F4F4F4","#333333","left","middle",3,0,500,-5,7,true,false,true,0,true,true);
-  mm_menu_0201100450_0.addMenuItem("POPs","location='conf_pop.html'");
-  mm_menu_0201100450_0.addMenuItem("NAS","location='conf_nas.html'");
-  mm_menu_0201100450_0.addMenuItem("Monitoramento","location='conf_monitor.html'");
-   mm_menu_0201100450_0.hideOnMouseOut=true;
-   mm_menu_0201100450_0.bgColor='#555555';
-   mm_menu_0201100450_0.menuBorder=1;
-   mm_menu_0201100450_0.menuLiteBgColor='#FFFFFF';
-   mm_menu_0201100450_0.menuBorderBgColor='#777777';
-
-  window.mm_menu_0201100725_0 = new Menu("root",107,18,"Verdana, Arial, Helvetica, sans-serif",12,"#000000","#FFFFFF","#F4F4F4","#333333","left","middle",3,0,500,-5,7,true,false,true,0,true,true);
-  mm_menu_0201100725_0.addMenuItem("Alterar&nbsp;Senha","location='admin_senha.html'");
-  mm_menu_0201100725_0.addMenuItem("Cadastro","location='admin_cadastro.html'");
-   mm_menu_0201100725_0.hideOnMouseOut=true;
-   mm_menu_0201100725_0.bgColor='#555555';
-   mm_menu_0201100725_0.menuBorder=1;
-   mm_menu_0201100725_0.menuLiteBgColor='#FFFFFF';
-   mm_menu_0201100725_0.menuBorderBgColor='#777777';
-
-  window.mm_menu_0201100941_0 = new Menu("root",147,18,"Verdana, Arial, Helvetica, sans-serif",12,"#000000","#FFFFFF","#F4F4F4","#333333","left","middle",3,0,500,-5,7,true,false,true,0,true,true);
-  mm_menu_0201100941_0.addMenuItem("<b>..&nbsp;Cobrança&nbsp;..</b><br>");
-  mm_menu_0201100941_0.addMenuItem("Faturas","location='relat_faturas.html'");
-  mm_menu_0201100941_0.addMenuItem("Cortesias","location='relat_cortesias.html'");
-  mm_menu_0201100941_0.addMenuItem("<b>..&nbsp;Clientes&nbsp;..</b><br>");
-  mm_menu_0201100941_0.addMenuItem("Lista&nbsp;Geral","location='relat_clientesgeral.html'");
-  mm_menu_0201100941_0.addMenuItem("Estatísticas","location='relat_clientesestatisticas.html'");
-  mm_menu_0201100941_0.addMenuItem("Filtros","location='relat_clientesfiltros.html'");
-  mm_menu_0201100941_0.addMenuItem("<b>..&nbsp;Configurações&nbsp;..</b><br>");
-  mm_menu_0201100941_0.addMenuItem("Carga&nbsp;por&nbsp;AP","location='conf_ap.html'");
-  mm_menu_0201100941_0.addMenuItem("Carga&nbsp;por&nbsp;POP","location='conf_pop.html'");
-  mm_menu_0201100941_0.addMenuItem("Carga&nbsp;por&nbsp;NAS","location='conf_nas.html'");
-  mm_menu_0201100941_0.addMenuItem("<b>..&nbsp;Administradores&nbsp;..</b><br>");
-  mm_menu_0201100941_0.addMenuItem("Listagem&nbsp;Geral","location='admin_lista.html'");
-   mm_menu_0201100941_0.hideOnMouseOut=true;
-   mm_menu_0201100941_0.bgColor='#555555';
-   mm_menu_0201100941_0.menuBorder=1;
-   mm_menu_0201100941_0.menuLiteBgColor='#FFFFFF';
-   mm_menu_0201100941_0.menuBorderBgColor='#777777';
-
-mm_menu_0201100941_0.writeMenus();
-} // mmLoadMenus()
-
-function MM_popupMsg(msg) { //v1.0
-  alert(msg);
-}
-//-->
-</script>
-<script language="JavaScript" src="mm_menu.js"></script>
-<script language="JavaScript1.2">mmLoadMenus();</script>
-
-
-<!-- <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
 <title>Main</title>
 </head> 
 
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="clientSideInclude('includeone', 'menu_principal.html');">
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td height="60"> 
@@ -144,8 +14,7 @@ function MM_popupMsg(msg) { //v1.0
               CONTROLE </strong> </div></td>
         </tr>
         <tr bgcolor="#FFFFFF"> 
-          <td colspan="2"><span id="includeone">
-</span>
+          <td colspan="2">{ include 'menu_principal.html' }
 </td>
         </tr>
       </table></td>
