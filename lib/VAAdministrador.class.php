@@ -21,5 +21,5 @@ class VAAdministrador extends VirtexAdmin {
 	}
 
 }
-
+}
 ?>
