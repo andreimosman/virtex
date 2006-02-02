@@ -1,6 +1,5 @@
 <html>
 <head>
-<!-- <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
 <title>Main</title>
 </head> 
 
@@ -14,41 +13,8 @@
           <td width="82%"> <div align="center"><strong>VIRTEX ADMIN - PAINEL DE 
               CONTROLE </strong> </div></td>
         </tr>
-        <tr> 
-          <td colspan="2"><table width="100%" border="0" cellspacing="2" cellpadding="0">
-              <tr align="center" valign="top" bgcolor="#F4F4F4"> 
-                <td><strong>Clientes</strong><br> &raquo; <a href="search_clientes.html">Pesquisa</a><br> 
-                  &raquo; <a href="cadastro_clientes.html">Cadastro</a><br> &raquo; 
-                  <a href="elimina_clientes.html">Eliminar Reg</a>.</td>
-                <td><strong>Cobranca</strong><br> &raquo; <a href="cobr_bloqueados.html">Bloqueados</a><br> 
-                  &raquo; <a href="produtos.html">Produtos/Planos</a><br> </td>
-                <td><strong>Suporte</strong><br> &raquo; <a href="sup_graficos.html">Graficos</a><br> 
-                  &raquo; <a href="suporte_radius.html">Log Radius</a><br> &raquo; 
-                  <a href="suporte_monitor.html">Monitoramento</a><br> &raquo; 
-                  <a href="suporte_calc.html">Calculadora IP</a><br> &raquo; <a href="suporte_arp.html">ARP</a></td>
-                <td><strong>Configura&ccedil;&otilde;es<br>
-                  </strong>&raquo; <a href="conf_pop.html">POPs</a><br> &raquo; 
-                  <a href="conf_nas.html">NAS</a><br> &raquo; <a href="conf_monitor.html">Monitoramento</a></td>
-                <td><strong>Administradores</strong><br> &raquo; <a href="admin_senha.html">Alterar 
-                  Senha</a><br> &raquo; <a href="admin_cadastro.html">Cadastro</a></td>
-                <td><p><strong>Relat&oacute;rios</strong><br>
-                    &raquo; Cobran&ccedil;a &gt;<br>
-                    - <a href="relat_faturas.html">Faturas</a><br>
-                    - <a href="relat_cobcortesias.html">Cortesias</a><br>
-                    &raquo; Clientes &gt;<br>
-                    - <a href="relat_clientesgeral.html">Lista Geral</a><br>
-                    - <a href="relat_clientesestatisticas.html">Estat&iacute;sticas</a><br>
-                    - <a href="relat_clientes_filtros.html">Filtros</a><br>
-                    &raquo; Configura&ccedil;&otilde;es<br>
-                    - <a href="relat_confap.html">Carga por AP</a><br>
-                    - <a href="relat_confpop.html">Carga por POP</a><br>
-                    - <a href="relat_confnas.html">Carga por NAS</a><br>
-                    &raquo; Administradores<br>
-                    - <a href="admin_lista.html">Listagem</a></p></td>
-                <td><a href="main.html">home</a></td>
-                <td><a href="http://www.mosman.com.br/helpdesk.php" target="_blank">suporte</a></td>
-              </tr>
-            </table></td>
+        <tr bgcolor="#FFFFFF"> 
+          <td colspan="2">{include file='menu_principal.html'}</td>
         </tr>
       </table></td>
   </tr>
@@ -56,6 +22,10 @@
     <td align="center" valign="middle">
 	<form name=dados method="post" action="/~virtsys/admin.php">
         <table width="500" border="0" align="center" cellpadding="0" cellspacing="1" class=main>
+          <tr> 
+            <td colspan="2"><div align="center"><strong><font size="5" face="Arial, Helvetica, sans-serif">Altera&ccedil;&atilde;o 
+                de Usu&aacute;rios</font></strong></div></td>
+          </tr>
           <tr> 
             <td width="47%">&nbsp;</td>
             <td width="53%">&nbsp;</td>
@@ -71,8 +41,7 @@
                   <td><SELECT name='tipo_pessoa' >
                       <OPTION VALUE='F' selected >Física</OPTION>
                       <OPTION VALUE='J' >Juridica</OPTION>
-                    </SELECT>
-</td>
+                    </SELECT> </td>
                 </tr>
               </table></td>
           </tr>
@@ -113,12 +82,15 @@
                   </td>
                 </tr>
                 <tr> 
-                  <td>Complemento <input  name="complemento" value=""type="text" class=input1 id="complemento4"></td>
-                  <td>Bairro <input  name="bairro" value="" type="text" class=input1 id="bairro"></td>
+                  <td>Complemento 
+                    <input  name="complemento" value=""type="text" class=input1 id="complemento4"></td>
+                  <td>Bairro 
+                    <input  name="bairro" value="" type="text" class=input1 id="bairro"></td>
                   <td>&nbsp;</td>
                 </tr>
                 <tr> 
-                  <td>Cidade <input  name="cidade" value="" type="text" class=input1 id="cidade3"></td>
+                  <td>Cidade 
+                    <input  name="cidade" value="" type="text" class=input1 id="cidade3"></td>
                   <td>Estado 
                     <select name='estado' >
                       <option value='AC' >Acre</option>
@@ -150,14 +122,15 @@
                       <option value='SE' >Sergipe</option>
                       <option value='TO' >Tocantins</option>
                     </select></td>
-                  <td>CEP <input  name="cep" value=""type="text" class=input1 id="cep"></td>
+                  <td>CEP 
+                    <input  name="cep" value=""type="text" class=input1 id="cep"></td>
                 </tr>
                 <tr> 
-                  <td>Telefone Comercial
+                  <td>Telefone Comercial 
                     <input  name="fone_comercial" value="" type="text" class=input1 id="fone_comercial2"></td>
-                  <td>Telefone Residencial
+                  <td>Telefone Residencial 
                     <input  name="fone_residencial" value="" type="text" class=input1 id="fone_residencial2"></td>
-                  <td>Celular
+                  <td>Celular 
                     <input  name="fone_celular" value=""type="text" class=input1 id="fone_celular2"></td>
                 </tr>
               </table></td>
@@ -165,7 +138,7 @@
           <tr> 
             <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
                 <tr> 
-                  <td width="33%">Contato
+                  <td width="33%">Contato 
                     <input  name="contato" value="" type="text" class=input1 id="contato"></td>
                   <td width="33%">&nbsp;</td>
                   <td width="33%">&nbsp;</td>
@@ -183,10 +156,11 @@
                   <td colspan="3">Outras Informa&ccedil;&otilde;es</td>
                 </tr>
                 <tr> 
-                  <td width="33%">Banco
+                  <td width="33%">Banco 
                     <input  name="banco" value="" type="text" class=input1 id="banco"></td>
-                  <td width="33%">Ag&ecirc;ncia <input  name="agencia" value="" type="text" class=input1 id="agencia"></td>
-                  <td width="33%">Conta Corrente
+                  <td width="33%">Ag&ecirc;ncia 
+                    <input  name="agencia" value="" type="text" class=input1 id="agencia"></td>
+                  <td width="33%">Conta Corrente 
                     <input  name="conta_corrente" value="" type="text" class=input1 id="conta_corrente3"></td>
                 </tr>
               </table></td>
@@ -199,12 +173,11 @@
                   <td width="33%">&nbsp;</td>
                 </tr>
                 <tr> 
-                  <td>Status do Contrato<br>
-                    <select name='ativo' >
+                  <td>Status do Contrato<br> <select name='ativo' >
                       <option value='1' selected >Ativo</option>
                       <option value='0' >Inativo</option>
                     </select></td>
-                  <td>Data de Pagamento
+                  <td>Data de Pagamento 
                     <select name='dia_pagamento' >
                       <option value='5' selected >05</option>
                       <option value='1' >10</option>
