@@ -1,0 +1,130 @@
+<html>
+<head>
+<title>Main</title>
+</head> 
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="60"> 
+      <table width="690" height="50" border="0" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
+        <tr> 
+          <td width="18%"><div align="center">Logotipo</div></td>
+          <td width="82%"> <div align="center"><strong>VIRTEX ADMIN - PAINEL DE 
+              CONTROLE </strong> </div></td>
+        </tr>
+        <tr bgcolor="#FFFFFF"> 
+          <td colspan="2">{include file= 'menu_principal.html' }
+</td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle"><table class=table_main width="100%" border="0" align="center" cellpadding="0" cellspacing="0" >
+  <tr>
+    <td class=td_main >
+        <table width="97%" border="0" align="center" cellpadding="0" cellspacing="1" class=main>
+          <tr>
+            <td colspan="2">
+
+<table border=0 width=90% align="center">
+  <tr>
+    <td align="right" valing="bottom" bgcolor="#E0E0E0">
+       Período: 
+    </td>
+    <td valing="bottom">
+       Entre <input type="text" name="data_ini" value="02/02/2006" size=10 maxlenght="10"> e <input type="text" name="data_fim" value="02/02/2006" size=10 maxlenght="10">
+    </td>
+  </tr>
+  <tr>
+    <td align="right" valing="bottom" bgcolor="#E0E0E0">
+       Faturas: 
+    </td>
+    <td valing="bottom">
+       <SELECT name='tipo_relatorio' >
+<OPTION VALUE='PG' >Pagas</OPTION>
+<OPTION VALUE='PG+' >Pagas (incluindo adesões)</OPTION>
+<OPTION VALUE='PD' >Pagas (com desconto)</OPTION>
+<OPTION VALUE='AT' >Em atrazo</OPTION>
+<OPTION VALUE='AD' >Adesões</OPTION>
+<OPTION VALUE='AB' >Em aberto (incluindo atrazadas)</OPTION>
+<OPTION VALUE='AB-' >Em aberto (excluindo atrazadas)</OPTION>
+</SELECT>
+
+       <input type="submit" class=input2 id="cadastro_cliente" value="&gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
+    </td>
+  </tr>
+</table>
+<hr size=1>
+
+<div align="left"><font size=2 color="#000000"><b>AINDA NÃO FORAM DEFINIDOS OS PARÂMETROS DE PESQUISA</b></font><br>
+      <br>
+    
+
+</div><table border=0 width="480" cellspacing=1 cellpadding=1 bgcolor="#000000">
+   <tr bgcolor="#F0F0F0">
+      <td align="left" colspan=8><div align="center">SACADO</div></td>
+   </tr>
+   <tr bgcolor="#F0F0F0">
+      <td align="center" width="12%"><div align="center">Venc.</div></td>
+      <td align="center" width="12%"><div align="center">Dt. Pgto</div></td>
+      <td align="center" width="12%"><div align="center">Vl Fatura</div></td>
+      <td align="center" width="12%"><div align="center">Desconto</div></td>
+      <td align="center" width="12%"><div align="center">Acrescimo</div></td>
+      <td align="center" width="12%"><div align="center">Re-agend</div></td>
+      <td align="center" width="12%"><div align="center">Vl Pago</div></td>
+      <td align="center" width="12%"><div align="center">Adesao</div></td>
+   </tr>
+   <tr bgcolor="#000000">
+      <td colspan=8><img src="img/nada.gif" width=1 height=1></td>
+   </tr>
+</table>
+<div align="center"></div>
+<table border=0 width="480" cellspacing=1 cellpadding=1 bgcolor="#000000">
+
+
+</table>
+<br>
+<table border=0 width="480" cellspacing=1 cellpadding=1 bgcolor="#000000">
+   <tr bgcolor="#F0F0F0">
+      <td align="left" colspan=8><div align="center"><B>TOTAIS</B></div></td>
+   </tr>
+   <tr bgcolor="#F0F0F0">
+      <td align="center" width="12%"># Faturas</td>
+      <td align="center" width="12%">&nbsp;</td>
+      <td align="center" width="12%">Estimativa</td>
+      <td align="center" width="12%">Desconto</td>
+      <td align="center" width="12%">Acrescimo</td>
+      <td align="center" width="12%">Re-agend</td>
+      <td align="center" width="12%">Recebido</td>
+      <td align="center" width="12%">Adesões</td>
+   </tr>
+   <tr bgcolor="#F0F0F0">
+      <td align="center" width="12%">0</td>
+      <td align="center" width="12%">&nbsp;</td>
+      <td align="center" width="12%">0,00</td>
+      <td align="center" width="12%">0,00</td>
+      <td align="center" width="12%">0,00</td>
+      <td align="center" width="12%">0</td>
+      <td align="center" width="12%">0,00</td>
+      <td align="center" width="12%">0</td>
+   </tr>
+   <tr bgcolor="#000000">
+      <td colspan=8><img src="img/nada.gif" width=1 height=1></td>
+   </tr>
+</table>
+
+
+
+
+
+            </td>
+          </tr>
+        </table>
+</p> </td>
+  </tr>
+</table>
+</body>
+
+
+</html>

@@ -18,7 +18,7 @@ class VARelatorio extends VirtexAdmin {
 	} else if ($op == "cortesia"){
 		$this->arquivoTemplate = "relatorio_cortesia.html";
 	} else if ($op == "geral"){
-		$this->arquivoTemplate = "relatorio_geral.html";
+		$this->arquivoTemplate = "relatorio_clientes.html";
 	} else if ($op == "estat"){
 		$this->arquivoTemplate = "relatorio_estat.html";
 	} else if ($op == "filtro"){
