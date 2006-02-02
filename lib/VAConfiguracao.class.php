@@ -20,7 +20,11 @@ class VAConfiguracao extends VirtexAdmin {
 		$this->arquivoTemplate = "configuracoes_nas.html";
 	} else if ($op == "monitor"){
 		$this->arquivoTemplate = "configuracoes_monitoramento.html";
-	}	
+	} else if ($op == "cadpop"){
+		$this->arquivoTemplate = "cadastro_pop.html";
+	} else if ($op == "altpop"){
+		$this->arquivoTemplate = "alteracao_pop.html";
+	} 
 	
 }
 
