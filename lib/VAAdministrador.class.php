@@ -11,15 +11,19 @@ class VAAdministrador extends VirtexAdmin {
 	
 	}
 	
-	
+	// processa os links
 	public function processa($op=null) {
 	
 	if($op == "altera"){	
 		$this->arquivoTemplate = "administrador_alterarsenha.html";
 	} else if ($op == "cadastro"){
 		$this->arquivoTemplate = "administrador_cadastro.html";
-	}
-
+	} else if ($op == "direitos"){
+		$this->arquivoTemplate = "administrador_direitos.html";
+	} else if ($op == "lista"){
+		$this->arquivoTemplate = "administrador_listagem.html";
+		}
+	  
 }
 }
 ?>
