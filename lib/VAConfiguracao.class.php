@@ -34,6 +34,20 @@ class VAConfiguracao extends VirtexAdmin {
 		$this->arquivoTemplate = "alteracao_nas_redes.html";
 	} else if ($op == "listaredes"){
 		$this->arquivoTemplate = "lista_nas_redes.html";
+	} else if ($op == "cadpopok"){
+		$this->arquivoTemplate = "confirma_cadastro_pops.html";
+	} else if ($op == "altpopok"){
+		$this->arquivoTemplate = "confirma_alteracao_pops.html";
+	}  else if ($op == "cadnasok"){
+		$this->arquivoTemplate = "confirma_cadastro_pops.html";
+	} else if ($op == "altnasok"){
+		$this->arquivoTemplate = "confirma_alteracao_pops.html";
+	} else if ($op == "cadredesok"){
+		$this->arquivoTemplate = "confirma_cadastro_redes.html";
+	} else if ($op == "altredesok"){
+		$this->arquivoTemplate = "lista_nas_redes.html";
+	} else if ($op == "voltaredes"){
+		$this->arquivoTemplate = "lista_nas_redes.html";
 	} 
 }
 
