@@ -22,8 +22,9 @@ class VAAdministrador extends VirtexAdmin {
 		$this->arquivoTemplate = "administrador_direitos.html";
 	} else if ($op == "lista"){
 		$this->arquivoTemplate = "administrador_lista.html";
-		}
-	  
+	}else if ($op == "mod"){
+		$this->arquivoTemplate = "administrador_altera.html";
+	}
 }
 }
 ?>
