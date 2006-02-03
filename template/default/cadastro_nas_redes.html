@@ -1,0 +1,89 @@
+<html>
+<head>
+<title>Main</title>
+</head> 
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="60"> 
+      <table width="100%" height="50" border="0" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
+        <tr> 
+          <td width="18%"><div align="center">Logotipo</div></td>
+          <td width="82%"> <div align="center"><strong>VIRTEX ADMIN - PAINEL DE 
+              CONTROLE </strong> </div></td>
+        </tr>
+        <tr bgcolor="#FFFFFF"> 
+          <td colspan="2">{ include file= 'menu_principal.html' }
+</td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle"><p><table class=table_main width="100%" _height="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td class=td_main _height_="100%" align="center" valign="middle">NAS::SRNonato::REDES (cadastro)</td>
+  </tr>
+  <tr>
+    <td class=td_main width="100%" _height_="100%" align="center" valign="middle">
+	<form name=formulario method="post" action="/~virtsys/admin.php">
+	<table border=0 cellspacing="0" cellpadding=1 width="390">
+	   <tr><td>&nbsp;</td>
+	   </tr>
+	</table>
+	<table border=0  _bgcolor="#000000" cellspacing=1 cellpadding=1 width="90%">
+		<tr>
+			<td align="center">
+			<br>
+				<table border=0 width="390" bgcolor="#A0A0A0" align="center">
+					<tr>
+						<td colspan=2><font color="#FFFFFF" size="+1">Criar sub-redes</font></td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top">Rede Origem:</td>
+						<td bgcolor="#FFFFFF"><input type="text" maxlength="30" name="rede_origem" value="">(ex: 192.168.0.0/16)</td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top">Rede Inicial:</td>
+						<td bgcolor="#FFFFFF"><input type="text" maxlength="30" name="rede_inicial" value="">(ex: 192.168.1.8/30)</td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top">Criar redes:</td>
+						<td bgcolor="#FFFFFF">/<input type="text" maxlength="2" size=2 name="bits_subredes" value=""> (ex: /30 = 255.255.255.252)</td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top">Máximo de sub-redes:</td>
+						<td bgcolor="#FFFFFF"><input type="text" maxlength="5" name="num_redes" value=""> (ex: 500 subredes) </td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top">Tipo:</td>
+						<td bgcolor="#FFFFFF"><SELECT name='tipo_rede' >
+<OPTION VALUE='C' >Cliente</OPTION>
+<OPTION VALUE='I' >Infraestrutura</OPTION>
+<OPTION VALUE='S' >Suporte</OPTION>
+</SELECT>
+</td>
+					</tr>
+				</table>
+{literal}
+<script language="JavaScript">
+   if( formulario.op.value == "alt" ) {
+      formulario.rede.disabled = true;
+   }
+</script>
+{/literal}
+				<hr size=1>
+				<input name="botao_enviar" type="submit" class=input2 id="submit" value="Cadastrar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
+			</td>
+		</tr>
+	</table>
+	</form></td>
+  </tr>
+</table>
+ </p> </td>
+  </tr>
+</table>
+</body>
+
+
+</html>
