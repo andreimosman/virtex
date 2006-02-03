@@ -19,6 +19,8 @@ class VACobranca extends VirtexAdmin {
 		$this->arquivoTemplate = "produtos.html";
 	} else if ($op == "novo"){
 		$this->arquivoTemplate = "cadastro_produto.html";
+	} else if ($op == "desbloqOk"){
+		$this->arquivoTemplate = "desbloqueado_ok.html";
 		}
 }
 

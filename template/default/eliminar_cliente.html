@@ -28,16 +28,18 @@
 <table class=table_main width="75%" border="0" align="center" cellpadding="0" cellspacing="0" >
   <tr>
     <td class=td_main >
-	<form name=dados method="get" action="/~virtsys/admin.php">
-		<table width="90%" border="0" align="center" cellpadding="0" cellspacing="1" class=main>
+	<form name=dados method="get" action="clientes.php">
+              <table width="90%" border="0" align="center" cellpadding="0" cellspacing="1" class=main>
           <tr> 
-            <td height="33" colspan="2">&nbsp;</td>
+            <td height="33" colspan="2"><input name="op" type="hidden" id="op" value="clEliminado"></td>
             </tr>
 
           <tr> 
             <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
                 <tr> 
-                  <td>Código do Cliente: <input  name="id_cliente" value="0" type="text" class=input1 id="nome_razao" size="5" maxlength=5> &nbsp; <input name="cadastro_cliente" type="submit" class=input2 id="cadastro_cliente2" value="Eliminar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;"></td>
+                        <td align="center">Código do Cliente: 
+                          <input  name="id_cliente" value="0" type="text" class=input1 id="nome_razao" size="5" maxlength=5> &nbsp; <input name="cadastro_cliente" type="submit" class=input2 id="cadastro_cliente2" value="Eliminar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;" onClick="return confirm('Deseja realmente excluir este cliente?')">
+                        </td>
                 </tr>
               </table></td>
           </tr>

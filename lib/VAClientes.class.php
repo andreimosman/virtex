@@ -58,7 +58,9 @@ class VAClientes extends VirtexAdmin {
 		$this->arquivoTemplate = "cliente_cobranca_disc.html";
 		} else if ($op == "clHosp"){
 		$this->arquivoTemplate = "cliente_cobranca_hosp.html";
-		} 
+		}  else if ($op =="clEliminado"){
+		$this->arquivoTemplate = "cliente_eliminadoOk.html";
+		}
 
 
 
