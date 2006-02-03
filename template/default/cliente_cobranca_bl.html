@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<table class=table_main width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#F0f0f0">
+  <tr> 
+    <th><font face="Arial" size="+1"><b>Cadastro de Produto (Banda Larga)</b></font></th>
+  </tr>
+  <tr> 
+    <th bgcolor="#FFFFFF"> <table class=table_main width="75%" border="0" align="center" cellpadding="0" cellspacing="0" >
+        <tr> 
+          <td> <form action="clientes.php" method="post" name=dados target="_parent">
+              <table width="90%" border="0" align="center" cellpadding="0" cellspacing="1" class=main>
+                <tr> 
+                  <td width="65%">&nbsp;</td>
+                  <td width="50%"><input name="op" type="hidden" id="op" value="clientemod"></td>
+                </tr>
+                <tr> 
+                  <td width="65%">Nome do Produto</td>
+                  <td width="50%">Descricao</td>
+                </tr>
+                <tr> 
+                  <td valign="top"><input  name="nome2" value="" type="text" class=input1 id="nome2" size="20"></td>
+                  <td rowspan=5 valign="top"><textarea name="textarea" rows=5></textarea></td>
+                </tr>
+                <tr> 
+                  <td width="65%">Preço</td>
+                </tr>
+                <tr> 
+                  <td width="65%"><input name="valor2" type="text" class=input1 id="valor2" value=""></td>
+                </tr>
+                <tr> 
+                  <td width="65%">Disponível para contratação?</td>
+                </tr>
+                <tr> 
+                  <td valign="top"><select name='select' >
+                      <option value='1' >Sim</option>
+                      <option value='0' >Não</option>
+                    </select> </td>
+                </tr>
+                <tr> 
+                  <td colspan=2>Número de contas de banda larga</td>
+                </tr>
+                <tr> 
+                  <td colspan=2><input type="text" name="numero_contas2" value="1" size=4 maxlenght=4></td>
+                </tr>
+                <tr> 
+                  <td colspan=2><hr size=1></td>
+                </tr>
+                <tr> 
+                  <td width="65%">Download</td>
+                  <td width="50%">Upload</td>
+                </tr>
+                <tr> 
+                  <td width="65%"><select name='banda_download_kbps' >
+                      <option value='0' >SEM CONTROLE</option>
+                      <option value='32' >32</option>
+                      <option value='64' >64</option>
+                      <option value='96' >96</option>
+                      <option value='128' >128</option>
+                      <option value='192' >192</option>
+                      <option value='256' >256</option>
+                      <option value='384' >384</option>
+                      <option value='512' >512</option>
+                      <option value='768' >768</option>
+                      <option value='1024' >1024</option>
+                    </select>
+                    Kbps</td>
+                  <td width="50%"><select name='banda_upload_kbps' >
+                      <option value='0' >SEM CONTROLE</option>
+                      <option value='32' >32</option>
+                      <option value='64' >64</option>
+                      <option value='96' >96</option>
+                      <option value='128' >128</option>
+                      <option value='192' >192</option>
+                      <option value='256' >256</option>
+                      <option value='384' >384</option>
+                      <option value='512' >512</option>
+                      <option value='768' >768</option>
+                      <option value='1024' >1024</option>
+                    </select>
+                    Kbps</td>
+                </tr>
+                <tr> 
+                  <td width="65%">Franquia Tráfego Mensal (GB)</td>
+                  <td width="50%">Valor GB Adicional</td>
+                </tr>
+                <tr> 
+                  <td width="65%"> <input type="text" class=input1 name="franquia_trafego_mensal_gb" value=""> 
+                    <br> <font id=aviso>Ilimitado = 0</font> </td>
+                  <td width="50%"><input type="text" class=input1 name="valor_trafego_adicional_gb" value=""></td>
+                </tr>
+                <tr> 
+                  <td colspan=2><hr size=1></td>
+                </tr>
+                <tr> 
+                  <td width="65%">No. de Emails</td>
+                  <td width="50%">Quota por conta de e-mail</td>
+                </tr>
+                <tr> 
+                  <td width="65%"><input type="text" class=input1 name="num_emails2" value=""></td>
+                  <td width="50%"><input name="quota_por_conta2" value=""type="text" class=input1 id="quota_por_conta2"></td>
+                </tr>
+                <tr> 
+                  <td width="65%">Email Adicional (R$)</td>
+                  <td width="50%">Permitir outros dominios?</td>
+                </tr>
+                <tr> 
+                  <td width="65%"><input name="vl_email_adicional2" value=""type="text" class=input1 id="vl_email_adicional2"></td>
+                  <td width="50%"><select name='select' >
+                      <option value='1' >Sim</option>
+                      <option value='0' >Não</option>
+                    </select> </td>
+                </tr>
+                <tr> 
+                <tr> 
+                  <td width="65%">&nbsp;</td>
+                  <td width="50%">&nbsp;</td>
+                </tr>
+                <tr> 
+                  <td width="65%">&nbsp;</td>
+                  <td width="50%"><input name="submit" type="submit" class=input2 id="submit2" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;" value="Cadastrar &gt;&gt;"></td>
+                </tr>
+              </table>
+            </form></td>
+        </tr>
+      </table></th>
+  </tr>
+</table>
+</body>
+</html>

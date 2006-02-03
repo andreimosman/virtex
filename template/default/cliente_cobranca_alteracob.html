@@ -1,0 +1,158 @@
+<html>
+<head>
+<title>Main</title>
+</head> 
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table width="102%" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="60"> 
+      <table width="100%" height="50" border="0" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
+        <tr> 
+          <td width="18%"><div align="center">Logotipo</div></td>
+          <td width="82%"> <div align="center"><strong>VIRTEX ADMIN - PAINEL DE 
+              CONTROLE </strong> </div></td>
+        </tr>
+        <tr bgcolor="#FFFFFF"> 
+          <td colspan="2">{include file='menu_principal.html'}</td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr> 
+    <td align="center" valign="middle"> <table width="100%" border="0" cellspacing="2" cellpadding="0">
+        <tr> 
+          <td align="center" bgcolor="#F4F4F4"><strong><font size="5" face="Arial, Helvetica, sans-serif">Cobran&ccedil;a<br>
+            </font></strong><font size="5" face="Arial, Helvetica, sans-serif"> 
+            <font size="2"><a href="clientes.php?op=clienteCob">Resumo</a> . <a href="clientes.php?op=clienteContr">Novo 
+            Contrato</a> . <a href="clientes.php?op=clienteRelat">Relatorio</a></font></font></td>
+        </tr>
+        <tr> 
+          <td><table width="600" border="0" align="center" cellpadding="0" cellspacing="2">
+              <tr> 
+                <td><div align="center"><strong>Altera&ccedil;&atilde;o</strong></div></td>
+              </tr>
+              <tr> 
+                <td><table class=table_main width="100%" height="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td class=td_main width="100%" height="100%" align="center" valign="middle">
+	<form name=formulario method="post" action="clientes.php" >
+    <input type="hidden" name="oper" value="alt">
+	<input type="hidden" name="sessao" value="clientes">
+	<input type="hidden" name="subsess" value="cobranca">
+	<input type="hidden" name="p" value="editar_cobranca">
+	<input type="hidden" name="op" value="clienteCob">
+	<input type="hidden" name="id_cliente" value="1023">
+	<input type="hidden" name="id_cliente_produto" value="216">
+	<input type="hidden" name="data" value="2006-01-05">
+	<input type="hidden" name="valor" value="64.00">
+	<input type="hidden" name="descricao" value="Radio 064 kbps-Acesso via radio">
+	<input type="hidden" name="vt" value="64.00">
+	<input type="hidden" name="vp" value="0">
+	<input type="hidden" name="status_fatura" value="">
+	<input type="hidden" name="popup" value="">
+	
+	<table border=0  _bgcolor="#000000" cellspacing=1 cellpadding=1>
+		<tr>
+			<td align="center">
+				<table border=0 width=390 cellspacing=0 cellpadding=0>
+				   <tr><td><font color="#FF0000"><b><b></font></td></tr>
+				</table>
+				<table border=0 width="390" bgcolor="#A0A0A0">
+					<tr>
+						<td colspan=2><div align="center"><font color="#FFFFFF" size="+1">Fatura</font></div></td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="120">Referente à:</td>
+						<td bgcolor="#FFFFFF">Radio 064 kbps-Acesso via radio</td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="120">Vencimento:</td>
+						<td bgcolor="#FFFFFF">05/01/2006</td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="120">Valor Total:</td>
+						<td bgcolor="#FFFFFF"><input type="text" name="valor_total" value="64.00" disabled="true"></td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="120">Valor já pago(-):</td>
+						<td bgcolor="#FFFFFF"><input type="text" name="valor_pago" value="0" disabled="1"></td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="120">Desconto(-):</td>
+						<td bgcolor="#FFFFFF"><input type="text" name="desconto" value="0,00" onChange="javascript:calculaValores();" onFocusOut="javascript:calculaValores();"></td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="120">Acrescimo(+):</td>
+						<td bgcolor="#FFFFFF"><input type="text" name="acrescimo" value="0,00" onChange="javascript:calculaValores();" onFocusOut="javascript:calculaValores();"></td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="120">Valor a ser pago(=):</td>
+						<td bgcolor="#FFFFFF"><input type="text" name="valor_restante" value="64,00" disabled=1></td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="120">Amortizar(-):</td>
+						<td bgcolor="#FFFFFF"><input type="text" name="amortizar" value="0,00" onChange="javascript:calculaValores();" onFocusOut="javascript:calculaValores();"></td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="120">Valor Pendente(=):</td>
+						<td bgcolor="#FFFFFF"><input type="text" name="valor_pendente" value="64,00" disabled=1></td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="120">Status:</td>
+						<td bgcolor="#FFFFFF"><SELECT name='status' disabled=1>
+<OPTION VALUE='A'  SELECTED >Em Aberto</OPTION>
+<OPTION VALUE='PP' >Pagamento Parcial</OPTION>
+<OPTION VALUE='PG' >Pago</OPTION>
+<OPTION VALUE='ES' >Estornado</OPTION>
+</SELECT>
+</td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="120">Data do Pagamento:</td>
+						<td bgcolor="#FFFFFF"><input type="text" name="data_pagamento" value="">
+						 <input type="button" name="hoje" value="Hoje" onClick="javascript:pagamentoHoje();" &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
+						 <input type="button" name="venc" value="Venc." onClick="javascript:pagamentoVencimento();" &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
+						</td>
+					</tr>
+					<tr>
+						<td colspan=2><font color="#FFFFFF" size="-1">Opções</font></td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="120">
+						<input type="checkbox" name="reagendar" value="1" onClick="javascript:verificaReagendamento();" onChange="javascript:verificaReagendamento();" >
+						re-agendar cobrança para dia:
+						</td>
+						<td bgcolor="#FFFFFF"><input type="text" name="data_reagendamento" value="" size=10 maxlength=10></td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="120" valign="top">Observações:</td>
+						<td bgcolor="#FFFFFF"><textarea name="observacoes" rows=5 cols=29></textarea></td>
+					</tr>
+						
+
+				</table>
+				<hr size=1>
+				<input name="botao_enviar" type="submit" class=input2 id="submit" value="Processar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
+			</td>
+		</tr>
+	</table>
+	</form></td>
+  </tr>
+</table>
+</td>
+              </tr>
+            </table></td>
+        </tr>
+        <tr>
+          <td align="center"><a href="clientes.php?op=clientemod">Voltar para 
+            Ficha do Cliente</a></td>
+        </tr>
+      </table>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p> </td>
+  </tr>
+</table>
+</body>
+
+
+</html>

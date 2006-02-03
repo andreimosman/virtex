@@ -1,0 +1,204 @@
+<html>
+<head>
+<title>Main</title>
+</head> 
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table width="102%" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td height="60"> 
+      <table width="100%" height="50" border="0" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
+        <tr> 
+          <td width="18%"><div align="center">Logotipo</div></td>
+          <td width="82%"> <div align="center"><strong>VIRTEX ADMIN - PAINEL DE 
+              CONTROLE </strong> </div></td>
+        </tr>
+        <tr bgcolor="#FFFFFF"> 
+          <td colspan="2">{include file='menu_principal.html'}</td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr> 
+    <td align="center" valign="middle"> <table width="100%" border="0" cellspacing="2" cellpadding="0">
+        <tr>
+          
+        <td align="center" bgcolor="#F4F4F4"><strong><font size="5" face="Arial, Helvetica, sans-serif">Hospedagem</font></strong></td>
+        </tr>
+        <tr>
+          <td><table width="600" border="0" align="center" cellpadding="0" cellspacing="2">
+              <tr>
+                
+              <td align="center" bgcolor="#333333"><font color="#FFFFFF" size="4" face="Arial, Helvetica, sans-serif">Cliente 
+                .. Altera&ccedil;&atilde;o de Banda Larga</font></td>
+              </tr>
+              <tr>
+                
+              <td><center> 
+                <table class=table_main width="100%" _height="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td class=td_main width="100%" _height_="100%" align="center" valign="middle">
+	<form name=formulario method="post" action="clientes.php">
+                        <input type="hidden" name="sessao" value="clientes">
+	<input type="hidden" name="subsess" value="produtos">
+	<input type="hidden" name="oper" value="cadastro">
+	<input type="hidden" name="op" value="clientebl">
+	<input type="hidden" name="id_cliente" value="1031">
+	<input type="hidden" name="id_cliente_produto" value="895">
+	<input type="hidden" name="tipo_conta" value="BL">
+	<table border=0 cellspacing="0" cellpadding=1 width="390">
+	   <tr><td><font face="arial" size=2 color="#FF0000"><b></b></font></td></tr>
+	</table>
+	<table border=0  _bgcolor="#000000" cellspacing=1 cellpadding=1 width="90%">
+		<tr>
+			<td align="center">
+
+<input type="hidden" name="username_orig" value="mosman">
+<input type="hidden" name="dominio_orig" value="firme.com.br">
+<input type="hidden" name="endereco_orig" value="10.0.1.1">
+<input type="hidden" name="id_nas_orig" value="2">
+<input type="hidden" name="status_orig" value="B">
+
+				<table border=0 width="390" bgcolor="#A0A0A0">
+					<tr>
+						          <td colspan=4><font color="#FFFFFF" size="+1">Dados 
+                                    da Conta de Banda Larga</font></td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top">Username:</td>
+						<td bgcolor="#FFFFFF" colspan=3><input type="text" maxlength="30" name="username" value="mosman">@firme.com.br</td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top">Senha:</td>
+						<td bgcolor="#FFFFFF" colspan=3>
+						   <input type="password" maxlength="32" name="senha">
+						</td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top">Confirme:</td>
+						<td bgcolor="#FFFFFF" colspan=3>
+						   <input type="password" maxlength="32" name="conf_senha">
+						</td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top">Status:</td>
+						<td bgcolor="#FFFFFF" colspan=3>
+						   <SELECT name='status' >
+<OPTION VALUE='A' >Ativo</OPTION>
+<OPTION VALUE='B'  SELECTED >Bloqueado</OPTION>
+</SELECT>
+
+						</td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top">POP:</td>
+						<td bgcolor="#FFFFFF"><SELECT name='id_pop' >
+<OPTION VALUE='5'  SELECTED >AP - Associacao</OPTION>
+<OPTION VALUE='4' >AP - BOMBA</OPTION>
+<OPTION VALUE='30' >AP - CANOPY</OPTION>
+<OPTION VALUE='33' >AP - COHAB</OPTION>
+<OPTION VALUE='1' >AP - DVD</OPTION>
+<OPTION VALUE='3' >AP - Junco</OPTION>
+<OPTION VALUE='28' >AP - KLN</OPTION>
+<OPTION VALUE='2' >AP - Wireless Network</OPTION>
+<OPTION VALUE='34' >AP TCV</OPTION>
+<OPTION VALUE='24' >CABO</OPTION>
+<OPTION VALUE='31' >IP - POPS</OPTION>
+<OPTION VALUE='7' >POP  - Liborio Novo</OPTION>
+<OPTION VALUE='26' >POP - ANTARES</OPTION>
+<OPTION VALUE='18' >POP - Alberto</OPTION>
+<OPTION VALUE='12' >POP - Bosco</OPTION>
+<OPTION VALUE='6' >POP - DECON</OPTION>
+<OPTION VALUE='21' >POP - Diocese</OPTION>
+<OPTION VALUE='14' >POP - Educandario</OPTION>
+<OPTION VALUE='8' >POP - Esc.Luis</OPTION>
+<OPTION VALUE='15' >POP - Firme</OPTION>
+<OPTION VALUE='17' >POP - Galeria Dep.Sa Urtiga</OPTION>
+<OPTION VALUE='23' >POP - Galeria Tininha de Sa</OPTION>
+<OPTION VALUE='19' >POP - Geraldinho</OPTION>
+<OPTION VALUE='16' >POP - Jocile</OPTION>
+<OPTION VALUE='25' >POP - Josio</OPTION>
+<OPTION VALUE='10' >POP - LanHouse</OPTION>
+<OPTION VALUE='11' >POP - Pamplona</OPTION>
+<OPTION VALUE='36' >POP - Picos Hotel</OPTION>
+<OPTION VALUE='32' >POP - Rego Neto</OPTION>
+<OPTION VALUE='9' >POP - Salustiano</OPTION>
+<OPTION VALUE='29' >POP - TVSAT</OPTION>
+<OPTION VALUE='22' >POP - Vidal</OPTION>
+<OPTION VALUE='27' >POP - Viturino</OPTION>
+<OPTION VALUE='13' >POP - Viviane</OPTION>
+<OPTION VALUE='20' >POP - Ze Maia</OPTION>
+<OPTION VALUE='35' >Sao Raimundo Nonato</OPTION>
+</SELECT>
+</td>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top">NAS:</td>
+						<td bgcolor="#FFFFFF"><SELECT name='id_nas' onChange='javascript:alteraNas();'>
+<OPTION VALUE='3' >IP: SRNonato</OPTION>
+<OPTION VALUE='1' >IP: srv-ip</OPTION>
+<OPTION VALUE='2'  SELECTED >PPPoE: srv-pppoe</OPTION>
+</SELECT>
+</td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><input type="checkbox" name="alterar_ip" value="1" onClick="javascript:alteraIP();" onChange="javascript:alteraIP();"> Nova seleção de Rede/IP:</td>
+						<td bgcolor="#FFFFFF" valign="top"><SELECT name='endereco_ip' onChange='javascript:verificaEndereco()'>
+<OPTION VALUE='A' >Automática</OPTION>
+<OPTION VALUE='M' >Manual</OPTION>
+</SELECT>
+<br><input type="text" name="endereco" value="10.0.1.1"></td>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top">MAC:</td>
+						<td bgcolor="#FFFFFF" valign="top"><input type="text" name="mac" value="00:0d:87:0c:32:0e" maxlength="17" size=15></td>
+					</tr>
+					<tr>
+						<td colspan=4><font color="#FFFFFF" size="-1">Banda</font></td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top">UPLOAD:</td>
+						<td bgcolor="#FFFFFF" valign="top"><SELECT name='upload_kbps' >
+<OPTION VALUE='0' >SEM CONTROLE</OPTION>
+<OPTION VALUE='32' >32</OPTION>
+<OPTION VALUE='64' >64</OPTION>
+<OPTION VALUE='96' >96</OPTION>
+<OPTION VALUE='128' >128</OPTION>
+<OPTION VALUE='192' >192</OPTION>
+<OPTION VALUE='256' >256</OPTION>
+<OPTION VALUE='384' >384</OPTION>
+<OPTION VALUE='512' >512</OPTION>
+<OPTION VALUE='768' >768</OPTION>
+<OPTION VALUE='1024'  SELECTED >1024</OPTION>
+</SELECT>
+</td>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top">DOWNLOAD:</td>
+						<td bgcolor="#FFFFFF" valign="top"><SELECT name='download_kbps' >
+<OPTION VALUE='0' >SEM CONTROLE</OPTION>
+<OPTION VALUE='32' >32</OPTION>
+<OPTION VALUE='64' >64</OPTION>
+<OPTION VALUE='96' >96</OPTION>
+<OPTION VALUE='128' >128</OPTION>
+<OPTION VALUE='192' >192</OPTION>
+<OPTION VALUE='256' >256</OPTION>
+<OPTION VALUE='384' >384</OPTION>
+<OPTION VALUE='512' >512</OPTION>
+<OPTION VALUE='768' >768</OPTION>
+<OPTION VALUE='1024'  SELECTED >1024</OPTION>
+</SELECT>
+</td>
+					</tr>
+				</table>
+				<hr size=1>
+				<input name="botao_enviar" type="submit" class=input2 id="submit" value="Alterar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
+			</td>
+		</tr>
+	</table>
+	</form></td>
+  </tr>
+</table></td>
+        </tr>
+      </table>
+      <p>&nbsp;</p>
+      <p>&nbsp;</p> </td>
+  </tr>
+</table>
+</body>
+
+
+</html>
