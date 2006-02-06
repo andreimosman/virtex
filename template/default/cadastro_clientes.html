@@ -1,237 +1,289 @@
 <html>
 <head>
-<title>Main</title>
+<title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
 </head> 
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td height="91" bgcolor="#CCCCCC"> 
-      <table width="100%" height="50" border="0" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
-        <tr> 
-          <td width="18%"><div align="center">Logotipo</div></td>
-          <td width="82%"> <div align="center"><strong>VIRTEX ADMIN - PAINEL DE 
-              CONTROLE </strong> </div></td>
+    <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>{ include file='menu_principal.html' }</td>
         </tr>
-        <tr bgcolor="#FFFFFF"> 
-          <td colspan="2">{include file='menu_principal.html'}</td>
-        </tr>
-    </table>
-    <p align="center" class="style1">Ficha do Cliente</p></td>
-  </tr>
-  <tr>
-    <td align="center" valign="middle">
-	<form name=dados method="post" action="clientes.php">
-        <table width="500" border="0" align="center" cellpadding="0" cellspacing="1" class=main>
-          <tr> 
-            <td width="47%">&nbsp;</td>
-            <td width="53%"><input name="op" type="hidden" id="op" value="confirmacadcli"></td>
-          </tr>
-          <tr> 
-            <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                <tr> 
-                  <td width="47%">Nome/Raz&atilde;o Social</td>
-                  <td width="38%">Pessoa</td>
-                </tr>
-                <tr> 
-                  <td><input  name="nome_razao" type="text" class=input1 id="nome_razao" size="50"></td>
-                  <td><SELECT name='tipo_pessoa' >
-                      <OPTION VALUE='F' selected >Física</OPTION>
-                      <OPTION VALUE='J' >Juridica</OPTION>
-                    </SELECT>
-</td>
-                </tr>
-              </table></td>
-          </tr>
-          <tr> 
-            <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                <tr> 
-                  <td width="33%">RG</td>
-                  <td width="33%">Expedi&ccedil;&atilde;o </td>
-                  <td width="33%">CPF/CNPJ </td>
-                </tr>
-                <tr> 
-                  <td><input  name="rg_inscr" type="text" class=input1 id="rg_inscr"></td>
-                  <td><input  name="rg_inscr2" type="text" class=input1 id="rg_inscr2"></td>
-                  <td><input  name="rg_inscr3" type="text" class=input1 id="rg_inscr3"></td>
-                </tr>
-              </table></td>
-          </tr>
-          <tr> 
-            <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                <tr> 
-                  <td width="46%">Email</td>
-                  <td width="54%">&nbsp;</td>
-                </tr>
-                <tr> 
-                  <td colspan="2"><input  name="email"type="text" class=input1 id="email4" size="50"></td>
-                </tr>
-              </table></td>
-          </tr>
-          <tr> 
-            <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                <tr> 
-                  <td width="33%">Endere&ccedil;o </td>
-                  <td width="33%">&nbsp;</td>
-                  <td width="33%">&nbsp;</td>
-                </tr>
-                <tr> 
-                  <td colspan="3"><input  name="endereco"type="text" class=input1 id="endereco3" value="" size="70"> 
-                  </td>
-                </tr>
-                <tr> 
-                  <td>Complemento <input  name="complemento" value=""type="text" class=input1 id="complemento4"></td>
-                  <td>Bairro <input  name="bairro" value="" type="text" class=input1 id="bairro"></td>
-                  <td>&nbsp;</td>
-                </tr>
-                <tr> 
-                  <td>Cidade <input  name="cidade" value="" type="text" class=input1 id="cidade3"></td>
-                  <td>Estado 
-                    <select name='estado' >
-                      <option value='AC' >Acre</option>
-                      <option value='AL' >Alagoas</option>
-                      <option value='AP' >Amapá</option>
-                      <option value='AM' >Amazonas</option>
-                      <option value='BA' >Bahia</option>
-                      <option value='CE' >Ceará</option>
-                      <option value='DF' >Distrito Federal</option>
-                      <option value='ES' >Espirito Santo</option>
-                      <option value='GO' >Goiás</option>
-                      <option value='MA' >Maranhão</option>
-                      <option value='MT' >Mato Grosso</option>
-                      <option value='MS' >Mato Grosso do Sul</option>
-                      <option value='MG' >Minas Gerais</option>
-                      <option value='PA' >Pará</option>
-                      <option value='PB' >Paraíba</option>
-                      <option value='PR' >Paraná</option>
-                      <option value='PE' >Pernambuco</option>
-                      <option value='PI' >Piauí</option>
-                      <option value='RJ' >Rio de Janeiro</option>
-                      <option value='RN' >Rio Grande do Norte</option>
-                      <option value='RO' >Rondônia</option>
-                      <option value='RS' >Rio Grande do Sul</option>
-                      <option value='RO' >Rondônia</option>
-                      <option value='RR' >Rorâima</option>
-                      <option value='SC' >Santa Catarina</option>
-                      <option value='SP' selected >São Paulo</option>
-                      <option value='SE' >Sergipe</option>
-                      <option value='TO' >Tocantins</option>
-                    </select></td>
-                  <td>CEP <input  name="cep" value=""type="text" class=input1 id="cep"></td>
-                </tr>
-                <tr> 
-                  <td>Telefone Comercial
-                    <input  name="fone_comercial" value="" type="text" class=input1 id="fone_comercial2"></td>
-                  <td>Telefone Residencial
-                    <input  name="fone_residencial" value="" type="text" class=input1 id="fone_residencial2"></td>
-                  <td>Celular
-                    <input  name="fone_celular" value=""type="text" class=input1 id="fone_celular2"></td>
-                </tr>
-              </table></td>
-          </tr>
-          <tr> 
-            <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                <tr> 
-                  <td width="33%">Contato
-                    <input  name="contato" value="" type="text" class=input1 id="contato"></td>
-                  <td width="33%">&nbsp;</td>
-                  <td width="33%">&nbsp;</td>
-                </tr>
-                <tr> 
-                  <td>&nbsp; </td>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                </tr>
-              </table></td>
-          </tr>
-          <tr> 
-            <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                <tr> 
-                  <td colspan="3">Outras Informa&ccedil;&otilde;es</td>
-                </tr>
-                <tr> 
-                  <td width="33%">Banco
-                    <input  name="banco" value="" type="text" class=input1 id="banco"></td>
-                  <td width="33%">Ag&ecirc;ncia <input  name="agencia" value="" type="text" class=input1 id="agencia"></td>
-                  <td width="33%">Conta Corrente
-                    <input  name="conta_corrente" value="" type="text" class=input1 id="conta_corrente3"></td>
-                </tr>
-              </table></td>
-          </tr>
-          <tr> 
-            <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                <tr> 
-                  <td width="33%">&nbsp;</td>
-                  <td width="33%">&nbsp;</td>
-                  <td width="33%">&nbsp;</td>
-                </tr>
-                <tr> 
-                  <td>Status do Contrato<br>
-                    <select name='ativo' >
-                      <option value='1' selected >Ativo</option>
-                      <option value='0' >Inativo</option>
-                    </select></td>
-                  <td>Data de Pagamento
-                    <select name='dia_pagamento' >
-                      <option value='5' selected >05</option>
-                      <option value='1' >10</option>
-                      <option value='15' >15</option>
-                      <option value='20' >20</option>
-                      <option value='25' >25</option>
-                      <option value='30' >30</option>
-                    </select></td>
-                  <td>&nbsp;</td>
-                </tr>
-              </table></td>
-          </tr>
-          <tr> 
-            <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                <tr> 
-                  <td width="33%">&nbsp;</td>
-                  <td width="33%">&nbsp;</td>
-                  <td width="33%">&nbsp;</td>
-                </tr>
-                <tr> 
-                  <td colspan="3">Observa&ccedil;&otilde;es </td>
-                </tr>
-                <tr> 
-                  <td colspan="3"><textarea name="textarea" cols="60" rows="8">
+        <tr>
+          <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td align="center" valign="middle"><p><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Cadastro 
+                    de Cliente</strong></font></p>
+                  <form name=dados method="post" action="clientes.php">
+                    <table width="500" border="0" align="center" cellpadding="0" cellspacing="1" class=main>
+                      <tr> 
+                        <td width="47%">&nbsp;</td>
+                        <td width="53%"><input name="op" type="hidden" id="op" value="confirmacadcli"></td>
+                      </tr>
+                      <tr> 
+                        <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                            <tr> 
+                              <td width="47%"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Nome/Raz&atilde;o 
+                                Social</font></td>
+                              <td width="38%"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Pessoa</font></td>
+                            </tr>
+                            <tr> 
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input  name="nome_razao" type="text" class="campos" id="nome_razao" size="50">
+                                </font></td>
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <SELECT name='tipo_pessoa' class="campos">
+                                  <OPTION VALUE='F' selected >Física</OPTION>
+                                  <OPTION VALUE='J' >Juridica</OPTION>
+                                </SELECT>
+                                </font></td>
+                            </tr>
+                          </table></td>
+                      </tr>
+                      <tr> 
+                        <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                            <tr> 
+                              <td width="33%"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">RG</font></td>
+                              <td width="33%"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Expedi&ccedil;&atilde;o 
+                                </font></td>
+                              <td width="33%"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">CPF/CNPJ 
+                                </font></td>
+                            </tr>
+                            <tr> 
+                              <td><input  name="rg_inscr" type="text" class="campos" id="rg_inscr"></td>
+                              <td><input  name="rg_inscr2" type="text" class="campos" id="rg_inscr2"></td>
+                              <td><input  name="rg_inscr3" type="text" class="campos" id="rg_inscr3"></td>
+                            </tr>
+                          </table></td>
+                      </tr>
+                      <tr> 
+                        <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                            <tr> 
+                              <td width="46%"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Email</font></td>
+                              <td width="54%">&nbsp;</td>
+                            </tr>
+                            <tr> 
+                              <td colspan="2"><input  name="email"type="text" class="campos" id="email4" size="50"></td>
+                            </tr>
+                          </table></td>
+                      </tr>
+                      <tr> 
+                        <td colspan="2"><table width="100%" border="0" cellspacing="0" cellpadding="1">
+                            <tr> 
+                              <td width="33%"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Endere&ccedil;o</font></td>
+                              <td width="33%">&nbsp;</td>
+                              <td width="34%">&nbsp;</td>
+                            </tr>
+                            <tr> 
+                              <td colspan="3"><input  name="endereco"type="text" class="campos" id="endereco3" value="" size="70"> 
+                              </td>
+                            </tr>
+                            <tr> 
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Complemento 
+                                </font></td>
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Bairro<br>
+                                </font></td>
+                              <td rowspan="2"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
+                            </tr>
+                            <tr> 
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input  name="complemento" value=""type="text" class="campos" id="complemento4">
+                                </font></td>
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input  name="bairro" value="" type="text" class="campos" id="bairro2">
+                                </font></td>
+                            </tr>
+                            <tr> 
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Cidade 
+                                </font></td>
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Estado</font></td>
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">CEP</font></td>
+                            </tr>
+                            <tr> 
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input  name="cidade" value="" type="text" class="campos" id="cidade">
+                                </font></td>
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <select name='estado' class="campos" >
+                                  <option value='AC' >Acre</option>
+                                  <option value='AL' >Alagoas</option>
+                                  <option value='AP' >Amapá</option>
+                                  <option value='AM' >Amazonas</option>
+                                  <option value='BA' >Bahia</option>
+                                  <option value='CE' >Ceará</option>
+                                  <option value='DF' >Distrito Federal</option>
+                                  <option value='ES' >Espirito Santo</option>
+                                  <option value='GO' >Goiás</option>
+                                  <option value='MA' >Maranhão</option>
+                                  <option value='MT' >Mato Grosso</option>
+                                  <option value='MS' >Mato Grosso do Sul</option>
+                                  <option value='MG' >Minas Gerais</option>
+                                  <option value='PA' >Pará</option>
+                                  <option value='PB' >Paraíba</option>
+                                  <option value='PR' >Paraná</option>
+                                  <option value='PE' >Pernambuco</option>
+                                  <option value='PI' >Piauí</option>
+                                  <option value='RJ' >Rio de Janeiro</option>
+                                  <option value='RN' >Rio Grande do Norte</option>
+                                  <option value='RO' >Rondônia</option>
+                                  <option value='RS' >Rio Grande do Sul</option>
+                                  <option value='RO' >Rondônia</option>
+                                  <option value='RR' >Rorâima</option>
+                                  <option value='SC' >Santa Catarina</option>
+                                  <option value='SP' selected >São Paulo</option>
+                                  <option value='SE' >Sergipe</option>
+                                  <option value='TO' >Tocantins</option>
+                                </select>
+                                </font></td>
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+                                <input  name="cep" value=""type="text" class="campos" id="cep2">
+                                </font></td>
+                            </tr>
+                            <tr> 
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Telefone 
+                                Comercial 
+                                <input  name="fone_comercial" value="" type="text" class="campos" id="fone_comercial2">
+                                </font></td>
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Telefone 
+                                Residencial 
+                                <input  name="fone_residencial" value="" type="text" class="campos" id="fone_residencial2">
+                                </font></td>
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Celular 
+                                <br>
+                                <input  name="fone_celular" value=""type="text" class="campos" id="fone_celular2">
+                                </font></td>
+                            </tr>
+                          </table></td>
+                      </tr>
+                      <tr> 
+                        <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                            <tr> 
+                              <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Contato 
+                                <br>
+                                </font> <input  name="contato" type="text" class="campos" id="contato" value="" size="50"></td>
+                            </tr>
+                            <tr> 
+                              <td width="33%">&nbsp; </td>
+                              <td width="33%">&nbsp;</td>
+                              <td width="33%">&nbsp;</td>
+                            </tr>
+                          </table></td>
+                      </tr>
+                      <tr> 
+                        <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                            <tr> 
+                              <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Outras 
+                                Informa&ccedil;&otilde;es</font></td>
+                            </tr>
+                            <tr> 
+                              <td width="33%"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Banco<br>
+                                <input  name="banco" value="" type="text" class="campos" id="banco">
+                                </font></td>
+                              <td width="33%"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Ag&ecirc;ncia<br>
+                                <input  name="agencia" value="" type="text" class="campos" id="agencia">
+                                </font></td>
+                              <td width="33%"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Conta 
+                                Corrente<br>
+                                <input  name="conta_corrente" value="" type="text" class="campos" id="conta_corrente3">
+                                </font></td>
+                            </tr>
+                          </table></td>
+                      </tr>
+                      <tr> 
+                        <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                            <tr> 
+                              <td width="33%">&nbsp;</td>
+                              <td width="33%">&nbsp;</td>
+                              <td width="33%">&nbsp;</td>
+                            </tr>
+                            <tr> 
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Status 
+                                do Contrato<br>
+                                <select name='ativo' class="campos">
+                                  <option value='1' selected >Ativo</option>
+                                  <option value='0' >Inativo</option>
+                                </select>
+                                </font></td>
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                                de Pagamento<br>
+                                <select name='dia_pagamento' class="campos" >
+                                  <option value='5' selected >05</option>
+                                  <option value='1' >10</option>
+                                  <option value='15' >15</option>
+                                  <option value='20' >20</option>
+                                  <option value='25' >25</option>
+                                  <option value='30' >30</option>
+                                </select>
+                                </font></td>
+                              <td>&nbsp;</td>
+                            </tr>
+                          </table></td>
+                      </tr>
+                      <tr> 
+                        <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                            <tr> 
+                              <td width="33%">&nbsp;</td>
+                              <td width="33%">&nbsp;</td>
+                              <td width="33%">&nbsp;</td>
+                            </tr>
+                            <tr> 
+                              <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Observa&ccedil;&otilde;es 
+                                </font></td>
+                            </tr>
+                            <tr> 
+                              <td colspan="3"><textarea name="textarea" class="campos" cols="80" rows="8">
 
 </textarea></td>
-                </tr>
-              </table></td>
-          </tr>
-          <tr> 
-            <td colspan="2"> <table width="100%" border="0" cellspacing="1" cellpadding="0">
-                <tr> 
-                  <td width="33%">&nbsp;</td>
-                  <td width="33%"><div align="center"> 
-                      <input name="cadastro_cliente" type="submit" id="cadastro_cliente2" value="Cadastrar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
-                    </div></td>
-                  <td width="33%">&nbsp;</td>
-                </tr>
-              </table></td>
-          </tr>
-          <tr> 
-            <td width="47%">&nbsp;</td>
-            <td width="53%">&nbsp;</td>
-          </tr>
-          <tr> 
-            <td width="47%">&nbsp;</td>
-            <td width="53%">&nbsp;</td>
-          </tr>
-          <tr> 
-            <td width="47%">&nbsp;</td>
-            <td width="53%">&nbsp; </td>
-          </tr>
-          <tr> 
-            <td width="47%">&nbsp;</td>
-            <td width="53%">&nbsp;</td>
-          </tr>
-        </table>
-      </form>
-	
-    </td>
+                            </tr>
+                          </table></td>
+                      </tr>
+                      <tr> 
+                        <td colspan="2"> <table width="100%" border="0" cellspacing="1" cellpadding="0">
+                            <tr> 
+                              <td width="33%">&nbsp;</td>
+                              <td width="33%"><div align="center"> 
+                                  <input name="cadastro_cliente" class="campos" type="submit" id="cadastro_cliente2" value="Cadastrar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
+                                </div></td>
+                              <td width="33%">&nbsp;</td>
+                            </tr>
+                          </table></td>
+                      </tr>
+                      <tr> 
+                        <td width="47%">&nbsp;</td>
+                        <td width="53%">&nbsp;</td>
+                      </tr>
+                      <tr> 
+                        <td width="47%">&nbsp;</td>
+                        <td width="53%">&nbsp;</td>
+                      </tr>
+                      <tr> 
+                        <td width="47%">&nbsp;</td>
+                        <td width="53%">&nbsp; </td>
+                      </tr>
+                      <tr> 
+                        <td width="47%">&nbsp;</td>
+                        <td width="53%">&nbsp;</td>
+                      </tr>
+                    </table>
+                  </form>
+                  <p>&nbsp;</p></td>
+              </tr>
+            </table></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr>
+    <td height="20" align="center" bgcolor="#BCD3C4"><table width="400" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy; 
+              Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
+        </tr>
+      </table></td>
   </tr>
 </table>
 </body>
