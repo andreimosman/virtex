@@ -34,11 +34,11 @@ p{
 COLOR: #000000; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; TEXT-DECORATION: none;
 }
 h1 {
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: Arial;
 	font-size: 20px;
-	font-style: normal;
+	font-style: bold;
 	line-height: normal;
-	font-weight: bold;
+	font-weight: strong;
 	font-variant: normal;
 	text-transform: none;
 	color: #000000;

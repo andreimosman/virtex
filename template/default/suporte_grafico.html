@@ -1,55 +1,93 @@
 <html>
 <head>
-<!-- <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />-->
 <title>Main</title>
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
 </head> 
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td height="60"> <table width="100%" height="50" border="0" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
-        <tr> 
-          <td width="18%"><div align="center">Logotipo</div></td>
-          <td width="82%"> <div align="center"><strong>VIRTEX ADMIN - PAINEL DE 
-              CONTROLE </strong> </div></td>
+    <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>{ include file='menu_principal.html' }</td>
         </tr>
-        <tr bgcolor="#FFFFFF"> 
-          <td colspan="2">{include file='menu_principal.html'}</td>
+        <tr>
+          <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td align="center" valign="middle"><p><br>
+                  </p>
+                  <h1>Análise de Tráfego Wireless </h1>
+                  <TABLE>
+                    <TR> 
+                      <TD bgcolor="#F4F4F4"><p>Sistema:</p></TD>
+                      <TD><p>10.10.10.71 (renovar) Marabá, Pará, Brasil</p></TD>
+                    </TR>
+                    <TR> 
+                      <TD bgcolor="#F4F4F4"><p>Interface: </p></TD>
+                      <TD><p>Wireless 802.11</p></TD>
+                    </TR>
+                    <TR> 
+                      <TD bgcolor="#F4F4F4"><p>Velocidade: </p></TD>
+                      <TD><p>Medida em Kbps</p></TD>
+                    </TR>
+                    <TR> 
+                      <TD bgcolor="#F4F4F4"><p>Banda alocada: </p></TD>
+                      <TD> <p>UP: 100K/DOWN: 100K </p></TD>
+                    </TR>
+                    <TR> 
+                      <TD bgcolor="#F4F4F4"><p>Status: </p></TD>
+                      <TD> <p>Ativo </p></TD>
+                    </TR>
+                  </TABLE>
+                  <BR> <HR>
+                  <h2>&Uacute;ltima atualiza&ccedil;&atilde;o das estat&iacute;sticas: 
+                    <B>Quarta, 1 de Fevereiro de 2006 &agrave;s 10:05</B><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
+                    <!-- Begin `Daily' Graph (5 Minute -->
+                    </font> </h2>
+                  <HR>
+                  <h2>Gr&aacute;fico `Di&aacute;rio' (5 minutos - m&eacute;dia)</h2>
+                  <p><img src="template/default/images/grafico.gif" width="500" height="135"><BR>
+                  </p>
+                  <p></p>
+                  <table cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td align="right"><p>M&aacute;x &nbsp;in: </p></td>
+                      <td align="right"><p>52.5 kb/s (52.5%) </p></td>
+                      <td width="5"><p>&nbsp;</p></td>
+                      <td align="right"><p>M&eacute;dia &nbsp;in: </p></td>
+                      <td align="right"><p>12.6 kb/s (12.6%) </p></td>
+                      <td width="5"><p>&nbsp;</p></td>
+                      <td align="right"><p>Atual &nbsp;in: </p></td>
+                      <td align="right"><p>0.0 b/s (0.0%) </p></td>
+                    </tr>
+                    <tr> 
+                      <td align="right"><p>M&aacute;x &nbsp;out: </p></td>
+                      <td align="right"><p>50.2 kb/s (50.2%) </p></td>
+                      <td width="5"><p>&nbsp;</p></td>
+                      <td align="right"><p>M&eacute;dia &nbsp;out: </p></td>
+                      <td align="right"><p>12.0 kb/s (12.0%) </p></td>
+                      <td width="5"><p>&nbsp;</p></td>
+                      <td align="right"><p>Atual &nbsp;out: </p></td>
+                      <td align="right"><p>0.0 b/s (0.0%) </p></td>
+                    </tr>
+                  </table>
+                  <p>&nbsp;</p>
+    <p>&nbsp;</p></td>
+              </tr>
+            </table></td>
         </tr>
       </table></td>
   </tr>
   <tr>
-    <td align="center" valign="middle"><p><H1>Análise de Tráfego Wireless</H1> <TABLE> <TR><TD>Sistema:</TD><TD>10.10.10.71 (renovar) Marabá, Pará, Brasil</TD></TR><TR><TD>Interface:  </TD><TD>Wireless 802.11</TD></TR> <TR><TD>Velocidade: </TD><TD>Medida em Kbps</TD></TR> <TR><TD>Banda alocada: </TD><TD> UP: 100K/DOWN: 100K </TD></TR> <TR><TD>Status: </TD><TD> Ativo </TD></TR> </TABLE><BR>
-<HR>
-&Uacute;ltima atualiza&ccedil;&atilde;o das estat&iacute;sticas: <B>Quarta, 1 de Fevereiro de  2006  &agrave;s  10:05</B>
-<!-- Begin `Daily' Graph (5 Minute -->
-<HR>
-<B>Gr&aacute;fico `Di&aacute;rio' (5 minutos - m&eacute;dia)</B><BR>
-<img src="10.10.10.71-day.png" width="470" height="135">
-</p>
-<table cellspacing="0" cellpadding="0">
-  <tr>
-    <td align="right">M&aacute;x &nbsp;in: </td>
-    <td align="right">52.5 kb/s (52.5%) </td>
-    <td width="5"></td>
-    <td align="right">M&eacute;dia &nbsp;in: </td>
-    <td align="right">12.6 kb/s (12.6%) </td>
-    <td width="5"></td>
-    <td align="right">Atual &nbsp;in: </td>
-    <td align="right">0.0 b/s (0.0%) </td>
-  </tr>
-  <tr>
-    <td align="right">M&aacute;x &nbsp;out: </td>
-    <td align="right">50.2 kb/s (50.2%) </td>
-    <td width="5"></td>
-    <td align="right">M&eacute;dia &nbsp;out: </td>
-    <td align="right">12.0 kb/s (12.0%) </td>
-    <td width="5"></td>
-    <td align="right">Atual &nbsp;out: </td>
-    <td align="right">0.0 b/s (0.0%) </td>
-  </tr>
-</table><p>&nbsp;</p>
-    </td>
+    <td height="20" align="center" bgcolor="#BCD3C4"><table width="400" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy; 
+              Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
+        </tr>
+      </table></td>
   </tr>
 </table>
 </body>

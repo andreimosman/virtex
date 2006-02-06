@@ -21,7 +21,9 @@ class VASuporte extends VirtexAdmin {
 		$this->arquivoTemplate = "suporte_monitoramento.html";
 	} else if ($op == "calc"){
 		$this->arquivoTemplate = "suporte_calculadoraip.html";
-	}
+	} else if ($op == "arp"){
+		$this->arquivoTemplate = "suporte_arp.html";
+		}
 }
 
 
