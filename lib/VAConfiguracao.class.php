@@ -45,7 +45,7 @@ class VAConfiguracao extends VirtexAdmin {
 	} else if ($op == "cadredesok"){
 		$this->arquivoTemplate = "confirma_cadastro_redes.html";
 	} else if ($op == "altredesok"){
-		$this->arquivoTemplate = "lista_nas_redes.html";
+		$this->arquivoTemplate = "confirma_alteracao_redes.html";
 	} else if ($op == "voltaredes"){
 		$this->arquivoTemplate = "lista_nas_redes.html";
 	} 

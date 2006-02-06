@@ -54,23 +54,17 @@ class VAClientes extends VirtexAdmin {
 		$this->arquivoTemplate = "cliente_cobranca_nada.html";
 	} else if ($op == "clBl"){
 		$this->arquivoTemplate = "cliente_cobranca_bl.html";
-		}else if ($op == "clDisc"){
+	}else if ($op == "clDisc"){
 		$this->arquivoTemplate = "cliente_cobranca_disc.html";
-		} else if ($op == "clHosp"){
+	} else if ($op == "clHosp"){
 		$this->arquivoTemplate = "cliente_cobranca_hosp.html";
-		}  else if ($op =="clEliminado"){
+	}  else if ($op =="clEliminado"){
 		$this->arquivoTemplate = "cliente_eliminadoOk.html";
-		}
-
-
-
-
-
+	} else if ($op =="confirmacadcli"){
+		$this->arquivoTemplate = "confirma_cadastro_pops.html";
+	}else if ($op =="confirmaaltcli"){
+		$this->arquivoTemplate = "confirma_alteracao_pops.html";
 	}
-
-
 }
-
-
-
+}
 ?>
