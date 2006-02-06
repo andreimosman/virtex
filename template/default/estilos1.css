@@ -1,10 +1,10 @@
-INPUT.campos {
+INPUT{
 	background: white;
 	font-family : Verdana;
 	font-size : 10px;
 	border : 1 solid #000000;
 }
-select.campos {
+select{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px;
 	color: #000000;
@@ -12,7 +12,7 @@ select.campos {
 	background: white; 
 	border: 1 solid #000000;
 }
-TEXTAREA.campos {
+TEXTAREA{
 	background: white;
 	font-family : Verdana;
 	font-size : 10px;
@@ -29,4 +29,29 @@ A:visited {
 }
 A:hover {
 	COLOR: #000000; TEXT-DECORATION: underline;
+}
+p{
+COLOR: #000000; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; TEXT-DECORATION: none;
+}
+h1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: bold;
+	font-variant: normal;
+	text-transform: none;
+	color: #000000;
+	text-decoration: none;
+}
+h2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-style: bold;
+	line-height: normal;
+	font-weight: bold;
+	font-variant: normal;
+	text-transform: none;
+	color: #000000;
+	text-decoration: none;
 }
