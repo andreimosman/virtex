@@ -21,7 +21,13 @@ class VACobranca extends VirtexAdmin {
 		$this->arquivoTemplate = "cadastro_produto.html";
 	} else if ($op == "desbloqOk"){
 		$this->arquivoTemplate = "desbloqueado_ok.html";
-		}
+	} else if ($op == "cadprobl"){
+		$this->arquivoTemplate = "cadastro_produto_bl.html";
+	} else if ($op == "cadprodisc"){
+		$this->arquivoTemplate = "cadastro_produto_disc.html";
+	} else if ($op == "cadprohosp"){
+		$this->arquivoTemplate = "cadastro_produto_hosp.html";
+	}
 }
 
 
