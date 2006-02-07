@@ -1,66 +1,79 @@
 <html>
 <head>
 <title>Main</title>
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
 </head> 
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-<table width="102%" height="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td height="60"> 
-      <table width="100%" height="50" border="0" cellpadding="0" cellspacing="0" bgcolor="#CCCCCC">
-        <tr> 
-          <td width="18%"><div align="center">Logotipo</div></td>
-          <td width="82%"> <div align="center"><strong>VIRTEX ADMIN - PAINEL DE 
-              CONTROLE </strong> </div></td>
-        </tr>
-        <tr bgcolor="#FFFFFF"> 
-          <td colspan="2">{include file='menu_principal.html'}</td>
-        </tr>
-      </table></td>
-  </tr>
-  <tr> 
-    <td align="center" valign="middle"> <table width="100%" border="0" cellspacing="2" cellpadding="0">
+    <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
-          <td align="center" bgcolor="#F4F4F4"><strong><font size="5" face="Arial, Helvetica, sans-serif">Discado</font></strong></td>
+          <td>{ include file='menu_principal.html' }</td>
         </tr>
         <tr>
-          <td><table width="600" border="0" align="center" cellpadding="0" cellspacing="2">
-              <tr>
-                <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                    <tr bgcolor="#999999"> 
-                      <td width="150" align="center">Username</td>
-                      <td width="150" align="center">Dominio</td>
-                      <td width="50" align="center">Tipo</td>
-                      <td width="100" align="center">Conta Mestre</td>
-                      <td width="100">&nbsp;</td>
+          <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td>&nbsp;</td>
+              </tr>
+              <tr> 
+                <td align="center" bgcolor="#FFFFFF"><h1><strong><font size="5" face="Arial, Helvetica, sans-serif">Discado</font></strong></h1></td>
+              </tr>
+              <tr> 
+                <td><table width="600" border="0" align="center" cellpadding="0" cellspacing="2">
+                    <tr> 
+                      <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr bgcolor="#f1f1f1"> 
+                            <td width="150" align="center"> 
+                              <p>Username</p></td>
+                            <td width="150" align="center"> 
+                              <p>Dominio</p></td>
+                            <td width="50" align="center"> 
+                              <p>Tipo</p></td>
+                            <td width="100" align="center"> 
+                              <p>Conta Mestre</p></td>
+                            <td width="100">&nbsp;</td>
+                          </tr>
+                        </table></td>
+                    </tr>
+                    <tr> 
+                      <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr> 
+                            <td width="150" align="center"><p><font size="2">z&eacute;</font></p></td>
+                            <td width="150" align="center"><p><font size="2">mosman.com.br</font></p></td>
+                            <td width="50" align="center"><p><font size="2">D</font></p></td>
+                            <td width="100" align="center"><p><font size="2">sim</font></p></td>
+                            <td width="50" align="center"><p><font size="2"><a href="clientes.php?op=clienteAdisc"><img src="template/default/images/gif_alterar.gif" width="16" height="16" border="0"></a></font></p></td>
+                            <td width="50" align="center"><p><font size="2"><a href="clientes.php?op=clienteDdisc">DEL</a></font></p></td>
+                          </tr>
+                          <tr> 
+                            <td align="center"><p><font size="2">z&eacute;</font></p></td>
+                            <td align="center"><p><font size="2">mosman.com.br</font></p></td>
+                            <td align="center"><p><font size="2">E</font></p></td>
+                            <td align="center"><p><font size="2">sim</font></p></td>
+                            <td align="center"><p><font size="2"><a href="clientes.php?op=clienteAmail"><img src="template/default/images/gif_alterar.gif" width="16" height="16" border="0"></a></font></p></td>
+                            <td align="center"><p><font size="2"><a href="clientes.php?op=clienteDmail">DEL</a></font></p></td>
+                          </tr>
+                        </table></td>
                     </tr>
                   </table></td>
               </tr>
-              <tr>
-                <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                    <tr> 
-                      <td width="150" align="center"><font size="2">z&eacute;</font></td>
-                      <td width="150" align="center"><font size="2">mosman.com.br</font></td>
-                      <td width="50" align="center"><font size="2">D</font></td>
-                      <td width="100" align="center"><font size="2">sim</font></td>
-                      <td width="50" align="center"><font size="2"><a href="clientes.php?op=clienteAdisc">ALT</a></font></td>
-                      <td width="50" align="center"><font size="2"><a href="clientes.php?op=clienteDdisc">DEL</a></font></td>
-                    </tr>
-                    <tr> 
-                      <td align="center"><font size="2">z&eacute;</font></td>
-                      <td align="center"><font size="2">mosman.com.br</font></td>
-                      <td align="center"><font size="2">E</font></td>
-                      <td align="center"><font size="2">sim</font></td>
-                      <td align="center"><font size="2"><a href="clientes.php?op=clienteAmail">ALT</a></font></td>
-                      <td align="center"><font size="2"><a href="clientes.php?op=clienteDmail">DEL</a></font></td>
-                    </tr>
-                  </table></td>
+              <tr> 
+                <td align="center" valign="middle"><p><br>
+                  </p>
+                  <p>&nbsp;</p></td>
               </tr>
             </table></td>
         </tr>
-      </table>
-      <p>&nbsp;</p>
-      <p>&nbsp;</p> </td>
+      </table></td>
+  </tr>
+  <tr>
+    <td height="20" align="center" bgcolor="#BCD3C4"><table width="400" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy; 
+              Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
+        </tr>
+      </table></td>
   </tr>
 </table>
 </body>
