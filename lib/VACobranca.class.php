@@ -27,7 +27,13 @@ class VACobranca extends VirtexAdmin {
 		$this->arquivoTemplate = "cadastro_produto_disc.html";
 	} else if ($op == "cadprohosp"){
 		$this->arquivoTemplate = "cadastro_produto_hosp.html";
-	}
+	} else if ($op == "altprodbl"){
+		$this->arquivoTemplate = "cobranca_altera_bl.html";
+	} else if ($op == "altproddisc"){
+		$this->arquivoTemplate = "cobranca_altera_disc.html";
+	} else if ($op == "altprodhosp"){
+		$this->arquivoTemplate = "cobranca_altera_hosp.html";
+		}	
 }
 
 
