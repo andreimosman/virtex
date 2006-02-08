@@ -40,7 +40,7 @@
                               <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                   <input  name="nome_razao" type="text" class="campos" id="nome_razao" value="{$nome_razao}" size="50">
                                   </font></p></td>
-                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                   <SELECT name='tipo_pessoa' class="campos" >
                                     <OPTION VALUE='F' selected >Física</OPTION>
                                     <OPTION VALUE='J' >Juridica</OPTION>
@@ -114,34 +114,9 @@
                                 </font></td>
                               <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                 <select name='estado' class="campos">
-                                  <option value='AC' >Acre</option>
-                                  <option value='AL' >Alagoas</option>
-                                  <option value='AP' >Amapá</option>
-                                  <option value='AM' >Amazonas</option>
-                                  <option value='BA' >Bahia</option>
-                                  <option value='CE' >Ceará</option>
-                                  <option value='DF' >Distrito Federal</option>
-                                  <option value='ES' >Espirito Santo</option>
-                                  <option value='GO' >Goiás</option>
-                                  <option value='MA' >Maranhão</option>
-                                  <option value='MT' >Mato Grosso</option>
-                                  <option value='MS' >Mato Grosso do Sul</option>
-                                  <option value='MG' >Minas Gerais</option>
-                                  <option value='PA' >Pará</option>
-                                  <option value='PB' >Paraíba</option>
-                                  <option value='PR' >Paraná</option>
-                                  <option value='PE' >Pernambuco</option>
-                                  <option value='PI' >Piauí</option>
-                                  <option value='RJ' >Rio de Janeiro</option>
-                                  <option value='RN' >Rio Grande do Norte</option>
-                                  <option value='RO' >Rondônia</option>
-                                  <option value='RS' >Rio Grande do Sul</option>
-                                  <option value='RO' >Rondônia</option>
-                                  <option value='RR' >Rorâima</option>
-                                  <option value='SC' >Santa Catarina</option>
-                                  <option value='SP' selected >São Paulo</option>
-                                  <option value='SE' >Sergipe</option>
-                                  <option value='TO' >Tocantins</option>
+                                {foreach key=id item=nome from=$lista_estados}
+                                   <option value='{$id}'{if $id == $estado}SELECTED{/if}>{$nome}</option>
+                                {/foreach}
                                 </select>
                                 </font></td>
                               <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">

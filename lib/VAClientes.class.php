@@ -144,6 +144,11 @@ class VAClientes extends VirtexAdmin {
 			// Atribui a variável de erro no template.
 			$this->tpl->atribui("erros",$erros);
 			
+			// Atribui as listas
+			global $_LS_ESTADOS;
+			$this->tpl->atribui("lista_estados",$_LS_ESTADOS);
+			
+			
 			// Atribui os campos
 		        $this->tpl->atribui("id_cliente",$reg["id_cliente"]);
 		        $this->tpl->atribui("data_cadastro",$reg["data_cadastro"]);
