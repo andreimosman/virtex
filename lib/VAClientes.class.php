@@ -62,7 +62,16 @@ class VAClientes extends VirtexAdmin {
 			      $acao = "cad";
 			   }
 			}
-
+			
+			if ($acao == "cad"){
+			   $msg_final = "Cliente cadastrado com sucesso";
+			   
+			}else{
+			   $msg_final = "Cliente alterado com sucesso";
+			   }
+			
+			
+			
 
 			$this->tpl->atribui("op",$op);
 			$this->tpl->atribui("acao",$acao);
@@ -121,6 +130,33 @@ class VAClientes extends VirtexAdmin {
 
 			      } else {
 			         // Alteração
+			         $sSQL  = "UPDATE ";
+			         $sSQL .= "   cltb_cliente ";
+			         $sSQL .= "SET ";
+			         $sSQL .= "   nome_razao = '" . $this->bd->escape(@$_REQUEST["nome_razao"]) . "', ";
+			         $sSQL .= "   tipo_pessoa = '" . $this->bd->escape(@$_REQUEST["tipo_pessoa"]) . "', ";
+       			         $sSQL .= "   rg_inscr = '" . $this->bd->escape(@$_REQUEST["rg_inscr"]) . "', ";
+       			         $sSQL .= "   expedicao = '" . $this->bd->escape(@$_REQUEST["expedicao"]) . "', ";
+       			         $sSQL .= "   cpf_cnpj = '" . $this->bd->escape(@$_REQUEST["cpf_cnpj"]) . "', ";
+       			         $sSQL .= "   email = '" . $this->bd->escape(@$_REQUEST["email"]) . "', ";
+       			         $sSQL .= "   endereco = '" . $this->bd->escape(@$_REQUEST["endereco"]) . "', ";
+       			         $sSQL .= "   complemento = '" . $this->bd->escape(@$_REQUEST["complemento"]) . "', ";
+       			         $sSQL .= "   cidade = '" . $this->bd->escape(@$_REQUEST["cidade"]) . "', ";
+       			         $sSQL .= "   estado = '" . $this->bd->escape(@$_REQUEST["estado"]) . "', ";
+       			         $sSQL .= "   cep = '" . $this->bd->escape(@$_REQUEST["cep"]) . "', ";
+       			         $sSQL .= "   bairro = '" . $this->bd->escape(@$_REQUEST["bairro"]) . "', ";
+       			         $sSQL .= "   fone_comercial = '" . $this->bd->escape(@$_REQUEST["fone_comercial"]) . "', ";
+       			         $sSQL .= "   fone_residencial = '" . $this->bd->escape(@$_REQUEST["fone_residencial"]) . "', ";
+       			         $sSQL .= "   fone_celular = '" . $this->bd->escape(@$_REQUEST["fone_celular"]) . "', ";
+       			         $sSQL .= "   contato = '" . $this->bd->escape(@$_REQUEST["contato"]) . "', ";
+       			         $sSQL .= "   banco = '" . $this->bd->escape(@$_REQUEST["banco"]) . "', ";
+       			         $sSQL .= "   conta_corrente = '" . $this->bd->escape(@$_REQUEST["conta_corrente"]) . "', ";
+       			         $sSQL .= "   agencia = '" . $this->bd->escape(@$_REQUEST["agencia"]) . "', ";
+       			         $sSQL .= "   dia_pagamento = '" . $this->bd->escape(@$_REQUEST["dia_pagamento"]) . "', ";
+       			         $sSQL .= "   ativo = '" . $this->bd->escape(@$_REQUEST["ativo"]) . "', ";
+       			         $sSQL .= "   obs = '" . $this->bd->escape(@$_REQUEST["obs"]) . "', ";
+			         $sSQL .= "WHERE ";
+			         $sSQL .= "   id_cliente = '" . $this->bd->escape(@$_REQUEST["id_cliente"]) . "' ";
 			         
     		         
 			      }
@@ -129,7 +165,7 @@ class VAClientes extends VirtexAdmin {
 
 
 			      // Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
-			      $this->tpl->atribui("mensagem","Cliente cadastrado com sucesso");
+			      $this->tpl->atribui("mensagem",$msg_final);
 			      $this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=listagem");
 			      $this->tpl->atribui("target","_top");
 
@@ -160,30 +196,30 @@ class VAClientes extends VirtexAdmin {
 			
 			
 			// Atribui os campos
-		        $this->tpl->atribui("id_cliente",$reg["id_cliente"]);
-		        $this->tpl->atribui("data_cadastro",$reg["data_cadastro"]);
-		        $this->tpl->atribui("nome_razao",$reg["nome_razao"]);
-		        $this->tpl->atribui("tipo_pessoa",$reg["tipo_pessoa"]);
-		        $this->tpl->atribui("rg_inscr",$reg["rg_inscr"]);
-		        $this->tpl->atribui("expedicao",$reg["expedicao"]);
-		        $this->tpl->atribui("cpf_cnpj",$reg["cpf_cnpj"]);
-		        $this->tpl->atribui("email",$reg["email"]);
-		        $this->tpl->atribui("endereco",$reg["endereco"]);
-		        $this->tpl->atribui("complemento",$reg["complemento"]);
-		        $this->tpl->atribui("cidade",$reg["cidade"]);
-		        $this->tpl->atribui("estado",$reg["estado"]);
-		        $this->tpl->atribui("cep",$reg["cep"]);
-		        $this->tpl->atribui("bairro",$reg["bairro"]);
-		        $this->tpl->atribui("fone_comercial",$reg["fone_comercial"]);
-		        $this->tpl->atribui("fone_residencial",$reg["fone_residencial"]);
-		        $this->tpl->atribui("fone_celular",$reg["fone_celular"]);			
-		        $this->tpl->atribui("contato",$reg["contato"]);			
-		        $this->tpl->atribui("banco",$reg["banco"]);
-		        $this->tpl->atribui("conta_corrente",$reg["conta_corrente"]);			
-		        $this->tpl->atribui("agencia",$reg["agencia"]);			
-		        $this->tpl->atribui("dia_pagamento",$reg["dia_pagamento"]);			
-		        $this->tpl->atribui("ativo",$reg["ativo"]);			
-		        $this->tpl->atribui("obs",$reg["obs"]);
+		        $this->tpl->atribui("id_cliente",@$reg["id_cliente"]);
+		        $this->tpl->atribui("data_cadastro",@$reg["data_cadastro"]);
+		        $this->tpl->atribui("nome_razao",@$reg["nome_razao"]);
+		        $this->tpl->atribui("tipo_pessoa",@$reg["tipo_pessoa"]);
+		        $this->tpl->atribui("rg_inscr",@$reg["rg_inscr"]);
+		        $this->tpl->atribui("expedicao",@$reg["expedicao"]);
+		        $this->tpl->atribui("cpf_cnpj",@$reg["cpf_cnpj"]);
+		        $this->tpl->atribui("email",@$reg["email"]);
+		        $this->tpl->atribui("endereco",@$reg["endereco"]);
+		        $this->tpl->atribui("complemento",@$reg["complemento"]);
+		        $this->tpl->atribui("cidade",@$reg["cidade"]);
+		        $this->tpl->atribui("estado",@$reg["estado"]);
+		        $this->tpl->atribui("cep",@$reg["cep"]);
+		        $this->tpl->atribui("bairro",@$reg["bairro"]);
+		        $this->tpl->atribui("fone_comercial",@$reg["fone_comercial"]);
+		        $this->tpl->atribui("fone_residencial",@$reg["fone_residencial"]);
+		        $this->tpl->atribui("fone_celular",@$reg["fone_celular"]);			
+		        $this->tpl->atribui("contato",@$reg["contato"]);			
+		        $this->tpl->atribui("banco",@$reg["banco"]);
+		        $this->tpl->atribui("conta_corrente",@$reg["conta_corrente"]);			
+		        $this->tpl->atribui("agencia",@$reg["agencia"]);			
+		        $this->tpl->atribui("dia_pagamento",@$reg["dia_pagamento"]);			
+		        $this->tpl->atribui("ativo",@$reg["ativo"]);			
+		        $this->tpl->atribui("obs",@$reg["obs"]);
 		        
 		        
 
