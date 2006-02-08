@@ -7,11 +7,11 @@ class VAClientes extends VirtexAdmin {
 
 	public function VAClientes() {
 		parent::VirtexAdmin();
-	
-	
+
+
 	}
-	
-	
+
+
 	protected function validaFormulario() {
 	   $erros = array();
 	   return $erros;
@@ -24,7 +24,10 @@ class VAClientes extends VirtexAdmin {
 
 			$acao = @$_REQUEST["acao"];
 			$id_cliente = @$_REQUEST["id_cliente"];
-			
+
+			$enviando = false;
+
+
 			if( $acao ) {
 			   // Se ele recebeu o campo ação é pq veio de um submit
 			   $enviando = true;
@@ -32,13 +35,13 @@ class VAClientes extends VirtexAdmin {
 			   // Se não recebe o campo ação e tem id_cliente é alteração, caso contrário é cadastro.
 			   $acao = $id_cliente ? "alt" : "cad";
 			}
-				
-			
+
+
 			$this->tpl->atribui("op",$op);
 			$this->tpl->atribui("acao",$acao);
 			$this->tpl->atribui("id_cliente",$id_cliente);
-			
-			
+
+
 			// O cara clicou no botão enviar (submit).
 			if( $enviando ) {
 			   // Validar
@@ -71,7 +74,7 @@ class VAClientes extends VirtexAdmin {
 				 $sSQL .= "     '" . $this->bd->escape(@$_REQUEST["cidade"]) . "', ";
 				 $sSQL .= "     '" . $this->bd->escape(@$_REQUEST["estado"]) . "', ";
 				 $sSQL .= "     '" . $this->bd->escape(@$_REQUEST["cep"]) . "', ";
-				 $sSQL .= "     '" . $this->bd->escape(@$_REQUEST["bairro"]) . "', "; 
+				 $sSQL .= "     '" . $this->bd->escape(@$_REQUEST["bairro"]) . "', ";
 				 $sSQL .= "     '" . $this->bd->escape(@$_REQUEST["fone_comercial"]) . "', ";
 				 $sSQL .= "     '" . $this->bd->escape(@$_REQUEST["fone_residencial"]) . "', ";
 				 $sSQL .= "     '" . $this->bd->escape(@$_REQUEST["fone_celular"]) . "', ";
@@ -83,35 +86,35 @@ class VAClientes extends VirtexAdmin {
 				 $sSQL .= "     '" . $this->bd->escape(@$_REQUEST["ativo"]) . "', ";
 				 $sSQL .= "     '" . $this->bd->escape(@$_REQUEST["obs"]) . "' ";
 			         $sSQL .= "     )";
-			         
-			         
+
+
 			      } else {
 			         // Alteração
 			      }
-			      
+
 			      $this->bd->consulta($sSQL);
-			      
-			      
+
+
 			      // Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
 			      $this->tpl->atribui("mensagem","Cliente cadastrado com sucesso");
 			      $this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=listagem");
 			      $this->tpl->atribui("target","_top");
-			      
+
 			      $this->arquivoTemplate="msgredirect.html";
-			   
+
 			      // cai fora da função (ou seja, deixa de processar o resto do aplicativo: a parte de exibicao da tela);
 			      return;
 			   }
-			   
+
 			}
-			
+
 			// Atribui a variável de erro no template.
 			$this->tpl->atribui("erros",$erros);
-			
+
 			// Seta as variáveis do template.
 			$this->arquivoTemplate = "clientes_cadastro.html";
 
-		} else if($op == "pesquisa"){	
+		} else if($op == "pesquisa"){
 			$this->arquivoTemplate = "search_clientes.html";
 
 		} else if ($op == "eliminar"){
