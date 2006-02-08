@@ -154,7 +154,7 @@ class VAClientes extends VirtexAdmin {
        			         $sSQL .= "   agencia = '" . $this->bd->escape(@$_REQUEST["agencia"]) . "', ";
        			         $sSQL .= "   dia_pagamento = '" . $this->bd->escape(@$_REQUEST["dia_pagamento"]) . "', ";
        			         $sSQL .= "   ativo = '" . $this->bd->escape(@$_REQUEST["ativo"]) . "', ";
-       			         $sSQL .= "   obs = '" . $this->bd->escape(@$_REQUEST["obs"]) . "', ";
+       			         $sSQL .= "   obs = '" . $this->bd->escape(@$_REQUEST["obs"]) . "' ";
 			         $sSQL .= "WHERE ";
 			         $sSQL .= "   id_cliente = '" . $this->bd->escape(@$_REQUEST["id_cliente"]) . "' ";
 			         
@@ -162,6 +162,11 @@ class VAClientes extends VirtexAdmin {
 			      }
 
 			      $this->bd->consulta($sSQL);
+			      
+			      if( $this->bd->obtemErro() != MDATABASE_OK ) {
+			         echo "ERRO: " . $this->bd->obtemMensagemErro() , "<br>\n";
+			         echo "QUERY: " . $sSQL . "<br>\n";
+			      }
 
 
 			      // Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.

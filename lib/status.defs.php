@@ -35,8 +35,8 @@ $_LS_TP_PESSOA = array(
                  );
 
 $_LS_ST_CLIENTE = array(
-                      "A" => "Ativo",
-                      "I" => "Inativo"
+                      "t" => "Ativo",
+                      "f" => "Inativo"
                      );
 
 $_LS_DIA_PGTO = array(
