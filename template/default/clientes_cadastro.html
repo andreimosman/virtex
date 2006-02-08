@@ -41,9 +41,10 @@
                                   <input  name="nome_razao" type="text" class="campos" id="nome_razao" value="{$nome_razao}" size="50">
                                   </font></p></td>
                               <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-                                  <SELECT name='tipo_pessoa' class="campos" >
-                                    <OPTION VALUE='F' selected >Física</OPTION>
-                                    <OPTION VALUE='J' >Juridica</OPTION>
+                                  <SELECT name='tipo_pessoa'>
+                                  {foreach key=id item=nome from=$lista_tp_pessoa}
+                                     <option value='{$id}'{if $id == $tipo_pessoa}SELECTED{/if}>{$nome}</option>
+                                  {/foreach}
                                   </SELECT>
                                   </font></p></td>
                             </tr>
@@ -183,20 +184,18 @@
                             <tr>
                               <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Status
                                   do Contrato<br>
-                                  <select name='ativo' class="campos">
-                                    <option value='1' selected >Ativo</option>
-                                    <option value='0' >Inativo</option>
+                                  <select name='ativo'>
+                               		 {foreach key=id item=nome from=$lista_ativo}
+                              			 <option value='{$id}'{if $id == $ativo}SELECTED{/if}>{$nome}</option>
+                               		 {/foreach}
                                   </select>
                                   </font></p></td>
                               <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data
                                   de Pagamento<br>
-                                  <select name='dia_pagamento' class="campos" >
-                                    <option value='5' selected >05</option>
-                                    <option value='1' >10</option>
-                                    <option value='15' >15</option>
-                                    <option value='20' >20</option>
-                                    <option value='25' >25</option>
-                                    <option value='30' >30</option>
+                                  <select name='dia_pagamento'>
+                             	  {foreach key=id item=nome from=$lista_dia_pagamento}
+                              		 <option value='{$id}'{if $id == $dia_pagamento}SELECTED{/if}>{$nome}</option>
+                               	  {/foreach}
                                   </select>
                                   </font></p></td>
                               <td>&nbsp;</td>

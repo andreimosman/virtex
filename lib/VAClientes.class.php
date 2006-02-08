@@ -148,6 +148,16 @@ class VAClientes extends VirtexAdmin {
 			global $_LS_ESTADOS;
 			$this->tpl->atribui("lista_estados",$_LS_ESTADOS);
 			
+			global $_LS_TP_PESSOA;
+			$this->tpl->atribui("lista_tp_pessoa",$_LS_TP_PESSOA);
+			
+			global $_LS_ST_CLIENTE;
+			$this->tpl->atribui("lista_ativo",$_LS_ST_CLIENTE);
+
+			global $_LS_DIA_PGTO;
+			$this->tpl->atribui("lista_dia_pagamento",$_LS_DIA_PGTO);
+
+			
 			
 			// Atribui os campos
 		        $this->tpl->atribui("id_cliente",$reg["id_cliente"]);
