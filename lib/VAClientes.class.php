@@ -26,6 +26,9 @@ class VAClientes extends VirtexAdmin {
 			$id_cliente = @$_REQUEST["id_cliente"];
 
 			$enviando = false;
+			
+			
+			$reg = array();
 
 
 			if( $acao ) {
@@ -33,7 +36,31 @@ class VAClientes extends VirtexAdmin {
 			   $enviando = true;
 			} else {
 			   // Se não recebe o campo ação e tem id_cliente é alteração, caso contrário é cadastro.
-			   $acao = $id_cliente ? "alt" : "cad";
+			   if( $id_cliente ) {
+			      // SELECT
+			      $sSQL  = "SELECT ";
+			      $sSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
+			      $sSQL .= "   rg_inscr, expedicao, cpf_cnpj, email, endereco, complemento, ";
+			      $sSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
+			      $sSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
+			      $sSQL .= "   ativo,obs ";
+			      $sSQL .= "FROM cltb_cliente ";
+			      $sSQL .= "WHERE id_cliente = $id_cliente ";
+
+
+				
+			      $reg = $this->bd->obtemUnicoRegistro($sSQL);
+			      
+			      
+			      
+			      $acao = "alt";
+			      
+			      
+			      
+			      
+			   } else {
+			      $acao = "cad";
+			   }
 			}
 
 
@@ -46,7 +73,11 @@ class VAClientes extends VirtexAdmin {
 			if( $enviando ) {
 			   // Validar
 			   $erros = $this->validaFormulario();
-			   if( !count($erros) ) {
+			   
+			   if( count($erros) ) {
+			      $reg = $_REQUEST;
+			      
+			   } else {
 			      // Gravar no banco.
 			      $sSQL = "";
 			      if( $acao == "cad" ) {
@@ -90,6 +121,8 @@ class VAClientes extends VirtexAdmin {
 
 			      } else {
 			         // Alteração
+			         
+    		         
 			      }
 
 			      $this->bd->consulta($sSQL);
@@ -110,6 +143,34 @@ class VAClientes extends VirtexAdmin {
 
 			// Atribui a variável de erro no template.
 			$this->tpl->atribui("erros",$erros);
+			
+			// Atribui os campos
+		        $this->tpl->atribui("id_cliente",$reg["id_cliente"]);
+		        $this->tpl->atribui("data_cadastro",$reg["data_cadastro"]);
+		        $this->tpl->atribui("nome_razao",$reg["nome_razao"]);
+		        $this->tpl->atribui("tipo_pessoa",$reg["tipo_pessoa"]);
+		        $this->tpl->atribui("rg_inscr",$reg["rg_inscr"]);
+		        $this->tpl->atribui("expedicao",$reg["expedicao"]);
+		        $this->tpl->atribui("cpf_cnpj",$reg["cpf_cnpj"]);
+		        $this->tpl->atribui("email",$reg["email"]);
+		        $this->tpl->atribui("endereco",$reg["endereco"]);
+		        $this->tpl->atribui("complemento",$reg["complemento"]);
+		        $this->tpl->atribui("cidade",$reg["cidade"]);
+		        $this->tpl->atribui("estado",$reg["estado"]);
+		        $this->tpl->atribui("cep",$reg["cep"]);
+		        $this->tpl->atribui("bairro",$reg["bairro"]);
+		        $this->tpl->atribui("fone_comercial",$reg["fone_comercial"]);
+		        $this->tpl->atribui("fone_residencial",$reg["fone_residencial"]);
+		        $this->tpl->atribui("fone_celular",$reg["fone_celular"]);			
+		        $this->tpl->atribui("contato",$reg["contato"]);			
+		        $this->tpl->atribui("banco",$reg["banco"]);
+		        $this->tpl->atribui("conta_corrente",$reg["conta_corrente"]);			
+		        $this->tpl->atribui("agencia",$reg["agencia"]);			
+		        $this->tpl->atribui("dia_pagamento",$reg["dia_pagamento"]);			
+		        $this->tpl->atribui("ativo",$reg["ativo"]);			
+		        $this->tpl->atribui("obs",$reg["obs"]);
+		        
+		        
 
 			// Seta as variáveis do template.
 			$this->arquivoTemplate = "clientes_cadastro.html";
