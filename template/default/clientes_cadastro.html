@@ -38,7 +38,7 @@
                             </tr>
                             <tr>
                               <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-                                  <input  name="nome_razao" type="text" class="campos" id="nome_razao" value="$nome_razao" size="50">
+                                  <input  name="nome_razao" type="text" class="campos" id="nome_razao" value="{$nome_razao}" size="50">
                                   </font></p></td>
                               <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
                                   <SELECT name='tipo_pessoa' class="campos" >
@@ -59,9 +59,9 @@
                                   </font></p></td>
                             </tr>
                             <tr>
-                              <td><input  name="rg_inscr" type="text" class="campos" id="rg_inscr" value="$rg_inscr"></td>
-                              <td><input  name="rg_inscr2" type="text" class="campos" id="rg_inscr2" value="$expedicao"></td>
-                              <td><input  name="rg_inscr3" type="text" class="campos" id="rg_inscr3" value="$cpf_cnpj"></td>
+                              <td><input  name="rg_inscr" type="text" class="campos" id="rg_inscr" value="{$rg_inscr}"></td>
+                              <td><input  name="rg_inscr2" type="text" class="campos" id="rg_inscr2" value="{$expedicao}"></td>
+                              <td><input  name="rg_inscr3" type="text" class="campos" id="rg_inscr3" value="{$cpf_cnpj}"></td>
                             </tr>
                           </table></td>
                       </tr>
@@ -72,7 +72,7 @@
                               <td width="54%">&nbsp;</td>
                             </tr>
                             <tr>
-                              <td colspan="2"><input  name="email"type="text" class="campos" id="email4" value="$email" size="50"></td>
+                              <td colspan="2"><input  name="email"type="text" class="campos" id="email4" value="{$email}" size="50"></td>
                             </tr>
                           </table></td>
                       </tr>
@@ -84,7 +84,7 @@
                               <td width="34%">&nbsp;</td>
                             </tr>
                             <tr>
-                              <td colspan="3"><input  name="endereco"type="text" class="campos" id="endereco3" value="$endereco" size="70">
+                              <td colspan="3"><input  name="endereco"type="text" class="campos" id="endereco3" value="{$endereco}" size="70">
                               </td>
                             </tr>
                             <tr>
@@ -96,10 +96,10 @@
                             </tr>
                             <tr>
                               <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-                                <input  name="complemento" value="$complemento"type="text" class="campos" id="complemento4">
+                                <input  name="complemento" value="{$complemento}"type="text" class="campos" id="complemento4">
                                 </font></td>
                               <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-                                <input  name="bairro" value="$bairro" type="text" class="campos" id="bairro2">
+                                <input  name="bairro" value="{$bairro}" type="text" class="campos" id="bairro2">
                                 </font></td>
                             </tr>
                             <tr>
@@ -110,10 +110,10 @@
                             </tr>
                             <tr>
                               <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-                                <input  name="cidade" value="$cidade" type="text" class="campos" id="cidade">
+                                <input  name="cidade" value="{$cidade}" type="text" class="campos" id="cidade">
                                 </font></td>
                               <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-                                <select name='estado' class="campos" >
+                                <select name='estado' class="campos">
                                   <option value='AC' >Acre</option>
                                   <option value='AL' >Alagoas</option>
                                   <option value='AP' >Amapá</option>
@@ -145,21 +145,21 @@
                                 </select>
                                 </font></td>
                               <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-                                <input  name="cep" value="$cep"type="text" class="campos" id="cep2">
+                                <input  name="cep" value="{$cep}"type="text" class="campos" id="cep2">
                                 </font></td>
                             </tr>
                             <tr>
                               <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Telefone
                                   Comercial
-                                  <input  name="fone_comercial" value="$fone_comercial" type="text" class="campos" id="fone_comercial2">
+                                  <input  name="fone_comercial" value="{$fone_comercial}" type="text" class="campos" id="fone_comercial2">
                                   </font></p></td>
                               <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Telefone
                                   Residencial
-                                  <input  name="fone_residencial" value="$fone_residencial" type="text" class="campos" id="fone_residencial2">
+                                  <input  name="fone_residencial" value="{$fone_residencial}" type="text" class="campos" id="fone_residencial2">
                                   </font></p></td>
                               <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Celular
                                   <br>
-                                  <input  name="fone_celular" value="$fone_celular"type="text" class="campos" id="fone_celular2">
+                                  <input  name="fone_celular" value="{$fone_celular}"type="text" class="campos" id="fone_celular2">
                                   </font></p></td>
                             </tr>
                           </table></td>
@@ -169,7 +169,7 @@
                             <tr>
                               <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Contato
                                 <br>
-                                </font> <input  name="contato" type="text" class="campos" id="contato" value="$contato" size="50"></td>
+                                </font> <input  name="contato" type="text" class="campos" id="contato" value="{$contato}" size="50"></td>
                             </tr>
                             <tr>
                               <td width="33%">&nbsp; </td>
@@ -186,14 +186,14 @@
                             </tr>
                             <tr>
                               <td width="33%"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Banco<br>
-                                  <input  name="banco" type="text" class="campos" id="banco" value="$banco">
+                                  <input  name="banco" type="text" class="campos" id="banco" value="{$banco}">
                                   </font></p></td>
                               <td width="33%"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Ag&ecirc;ncia<br>
-                                  <input  name="agencia" value="$agencia" type="text" class="campos" id="agencia">
+                                  <input  name="agencia" value="{$agencia}" type="text" class="campos" id="agencia">
                                   </font></p></td>
                               <td width="33%"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Conta
                                   Corrente<br>
-                                  <input  name="conta_corrente" value="$conta_corrente" type="text" class="campos" id="conta_corrente3">
+                                  <input  name="conta_corrente" value="{$conta_corrente}" type="text" class="campos" id="conta_corrente3">
                                   </font></p></td>
                             </tr>
                           </table></td>
@@ -240,8 +240,7 @@
                                   </font></p></td>
                             </tr>
                             <tr>
-                              <td colspan="3"><textarea name="textarea" class="campos" cols="80" rows="8">$obs
-
+                              <td colspan="3"><textarea name="textarea" class="campos" cols="80" rows="8">{$obs}
 </textarea></td>
                             </tr>
                           </table></td>
