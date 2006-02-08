@@ -1,6 +1,6 @@
 /*
 Created		7/8/2004
-Modified		31/1/2006
+Modified		8/2/2006
 Project		Virtex Admin
 Model		Geral
 Company		Virtex ISP
@@ -49,6 +49,11 @@ Create table  prtb_produto
 	tipo Char(2) NULL ,
 	valor Numeric(7,2) NULL ,
 	disponivel Boolean NULL ,
+	num_emails Smallint NULL ,
+	quota_por_conta Smallint NULL ,
+	vl_email_adicional Numeric(7,2) NULL ,
+	permitir_outros_dominios Boolean NULL ,
+	email_anexado Boolean NULL ,
  primary key (id_produto)
 );
 
@@ -68,17 +73,6 @@ Create table  prtb_produto_bandalarga
 	banda_download_kbps Smallint NULL ,
 	franquia_trafego_mensal_gb Smallint NULL ,
 	valor_trafego_adicional_gb Numeric(7,2) NULL ,
- primary key (id_produto)
-);
-
-Create table  prtb_produto_email
-(
-	id_produto Smallint NOT NULL,
-	num_emails Smallint NULL  Default 0,
-	quota_por_conta Smallint NULL ,
-	vl_email_adicional Numeric(7,2) NULL ,
-	permitir_outros_dominios Boolean NULL ,
-	email_anexado Boolean NULL ,
  primary key (id_produto)
 );
 
@@ -215,7 +209,6 @@ Create table  contas
 
 
 
-
 Create index clix_cliente_nome_razao on cltb_cliente using btree( nome_razao );
 Create index clix_cliente_rg_inscr on cltb_cliente using btree( rg_inscr );
 Create index clix_cliente_cpf_cnpj on cltb_cliente using btree( cpf_cnpj );
@@ -230,7 +223,6 @@ Alter table cbtb_cliente_produto add  foreign key (id_cliente) references cltb_c
 Alter table dominio add  foreign key (id_cliente) references cltb_cliente (id_cliente)  on update restrict  on delete restrict ;
 Alter table prtb_produto_discado add  foreign key (id_produto) references prtb_produto (id_produto)  on update restrict  on delete restrict ;
 Alter table prtb_produto_bandalarga add  foreign key (id_produto) references prtb_produto (id_produto)  on update restrict  on delete restrict ;
-Alter table prtb_produto_email add  foreign key (id_produto) references prtb_produto (id_produto)  on update restrict  on delete restrict ;
 Alter table prtb_produto_hospedagem add  foreign key (id_produto) references prtb_produto (id_produto)  on update restrict  on delete restrict ;
 Alter table cbtb_cliente_produto add  foreign key (id_produto) references prtb_produto (id_produto)  on update restrict  on delete restrict ;
 Alter table cbtb_contrato add  foreign key (id_cliente_produto) references cbtb_cliente_produto (id_cliente_produto)  on update restrict  on delete restrict ;
