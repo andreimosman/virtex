@@ -47,4 +47,11 @@ $_LS_DIA_PGTO = array(
                     "25" => "25",
                     "30" => "30"
                    );
+                   
+$_LS_ST_ADMIN = array(
+                      "t" => "Ativo",
+                      "f" => "Inativo"
+                     );           
+                   
+                   
 ?>
