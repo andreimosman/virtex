@@ -261,10 +261,30 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
 		$sSQL .= "   ativo,obs ";
 		$sSQL .= "FROM cltb_cliente ";
-		$sSQL .= "WHERE $campo = $campo_pesquisa ";
+		//$sSQL .= "WHERE $campo = '$campo_pesquisa' ";
+		$sSQL .= "WHERE ";
+		
+		switch($cond) {
+		
+		   case 'nome':
+		      $sSQL .= "   nome_razao ilike '%$campo_pesquisa%' ";
+		      break;
+		   case 'CPF':
+		      $sSQL .= "   cpf_cnpj = '$campo_pesquisa' ";
+		      break;
+		
+		}
+		
 		
 		
 		$clientes = $this->bd->obtemRegistros($sSQL);
+		
+		if( $this->bd->obtemErro() ) {
+		   echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
+		   echo "SQL: $sSQL <br>\n";
+		}
+		
+		$this->tpl->atribui("lista_clientes", $clientes);
 			
 			$this->tpl->atribui("pagina","clientes_resultado.html");
 			$this->arquivoTemplate="clientes_pesquisa.html";
