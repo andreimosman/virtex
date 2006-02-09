@@ -64,10 +64,12 @@ class VAClientes extends VirtexAdmin {
 			}
 			
 			if ($acao == "cad"){
-			   $msg_final = "Cliente cadastrado com sucesso";
+			   $msg_final = "Cliente cadastrado com sucesso!";
+			   $titulo = "Cadastrar";
 			   
 			}else{
-			   $msg_final = "Cliente alterado com sucesso";
+			   $msg_final = "Cliente alterado com sucesso!";
+			   $titulo = "Alterar";
 			   }
 			
 			
@@ -90,7 +92,7 @@ class VAClientes extends VirtexAdmin {
 			      // Gravar no banco.
 			      $sSQL = "";
 			      if( $acao == "cad" ) {
-			         $id_cliente = $this->bd->proximoID("clsq_id_cliente");
+			         $id_cliente = $this->bd->proximoID("clsq_id_cliente");//?
 
 			         // Cadastro
 			         $sSQL  = "INSERT INTO ";
@@ -156,12 +158,12 @@ class VAClientes extends VirtexAdmin {
        			         $sSQL .= "   ativo = '" . $this->bd->escape(@$_REQUEST["ativo"]) . "', ";
        			         $sSQL .= "   obs = '" . $this->bd->escape(@$_REQUEST["obs"]) . "' ";
 			         $sSQL .= "WHERE ";
-			         $sSQL .= "   id_cliente = '" . $this->bd->escape(@$_REQUEST["id_cliente"]) . "' ";
+			         $sSQL .= "   id_cliente = '" . $this->bd->escape(@$_REQUEST["id_cliente"]) . "' ";  // se idcliente for =  ao passado.
 			         
     		         
 			      }
 
-			      $this->bd->consulta($sSQL);
+			      $this->bd->consulta($sSQL);  //mostra mensagem de erro
 			      
 			      if( $this->bd->obtemErro() != MDATABASE_OK ) {
 			         echo "ERRO: " . $this->bd->obtemMensagemErro() , "<br>\n";
@@ -170,11 +172,11 @@ class VAClientes extends VirtexAdmin {
 
 
 			      // Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
-			      $this->tpl->atribui("mensagem",$msg_final);
+			      $this->tpl->atribui("mensagem",$msg_final); //pega o conteúdo de msg_final e envia para mensagem que é uma val do smart.
 			      $this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=listagem");
 			      $this->tpl->atribui("target","_top");
 
-			      $this->arquivoTemplate="msgredirect.html";
+			      $this->arquivoTemplate="msgredirect.html"; //faz exibir o msgredirect.html que tem vai receber a mensagem de erro ou sucesso.
 
 			      // cai fora da função (ou seja, deixa de processar o resto do aplicativo: a parte de exibicao da tela);
 			      return;
@@ -190,7 +192,7 @@ class VAClientes extends VirtexAdmin {
 			$this->tpl->atribui("lista_estados",$_LS_ESTADOS);
 			
 			global $_LS_TP_PESSOA;
-			$this->tpl->atribui("lista_tp_pessoa",$_LS_TP_PESSOA);
+			$this->tpl->atribui("lista_tp_pessoa",$_LS_TP_PESSOA); //lista_tp_pessoa recebe os dados do array LS_TP_PESSOA(status.defs.php) para mostrar do dropdown.
 			
 			global $_LS_ST_CLIENTE;
 			$this->tpl->atribui("lista_ativo",$_LS_ST_CLIENTE);
@@ -203,7 +205,7 @@ class VAClientes extends VirtexAdmin {
 			// Atribui os campos
 		        $this->tpl->atribui("id_cliente",@$reg["id_cliente"]);
 		        $this->tpl->atribui("data_cadastro",@$reg["data_cadastro"]);
-		        $this->tpl->atribui("nome_razao",@$reg["nome_razao"]);
+		        $this->tpl->atribui("nome_razao",@$reg["nome_razao"]);// pega a info do db e atribui ao campo correspon do form
 		        $this->tpl->atribui("tipo_pessoa",@$reg["tipo_pessoa"]);
 		        $this->tpl->atribui("rg_inscr",@$reg["rg_inscr"]);
 		        $this->tpl->atribui("expedicao",@$reg["expedicao"]);
@@ -226,6 +228,7 @@ class VAClientes extends VirtexAdmin {
 		        $this->tpl->atribui("ativo",@$reg["ativo"]);			
 		        $this->tpl->atribui("obs",@$reg["obs"]);
 		        
+		        $this->tpl->atribui("titulo",$titulo);// para que no clientes_cadastro.html a variavel do smart titulo consiga pegar o que foi definido no $titulo.
 		        
 
 			// Seta as variáveis do template.
