@@ -234,8 +234,70 @@ class VAClientes extends VirtexAdmin {
 			// Seta as variáveis do template.
 			$this->arquivoTemplate = "clientes_cadastro.html";
 
-		} else if($op == "pesquisa"){
-			$this->arquivoTemplate = "search_clientes.html";
+		} else if($op=="pesquisa"){
+			  $cond = @$_REQUEST['cond'];
+			  $campo_pesquisa = @$_REQUEST['campo_pesquisa'];
+			  
+			  if($campo_pesquisa == ""){
+			  	$this->tpl->atribui("mostra","nao");
+			  	}
+			  $this->tpl->atribui("mostra","sim");
+			  
+				
+			  if($cond=="nome"){
+			     $campo="nome_cliente";
+			  }else if ($cond=="CPF"){
+			     $campo="cpf_cnpj";
+			  }else if ($cond="email"){
+			     $campo="email";
+			  }else{
+			     $campo="id_cliente";
+			  }
+			
+		$sSQL  = "SELECT ";
+		$sSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
+		$sSQL .= "   rg_inscr, expedicao, cpf_cnpj, email, endereco, complemento, ";
+		$sSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
+		$sSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
+		$sSQL .= "   ativo,obs ";
+		$sSQL .= "FROM cltb_cliente ";
+		$sSQL .= "WHERE $campo = $campo_pesquisa ";
+		
+		
+		$clientes = $this->bd->obtemRegistros($sSQL);
+			
+			$this->tpl->atribui("pagina","clientes_resultado.html");
+			$this->arquivoTemplate="clientes_pesquisa.html";
+				
+				
+				
+				
+				
+				
+				
+				
+//				}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//		}else if($op == "pesquisa"){
+//			$this->arquivoTemplate = "search_clientes.html";
 
 		} else if ($op == "eliminar"){
 			$this->arquivoTemplate = "eliminar_cliente.html";
@@ -285,5 +347,27 @@ class VAClientes extends VirtexAdmin {
 			$this->arquivoTemplate = "confirma_alteracao_pops.html";
 		}
 	}
+	
+	
+	
+	
+
+				
+				
 }
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ?>
