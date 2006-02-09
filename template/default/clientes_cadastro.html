@@ -27,7 +27,8 @@
                      <input type="hidden" name="id_cliente" value="{$id_cliente}">
                      <input type="hidden" name="acao" value="{$acao}">
 					 { literal }
-					 <script>
+<!-- INICIO - VALIDAÇÃO DE FORMULARIO -->
+	 <script>
 		function validaNome(){
            d = document.cadastro;
            //validar nome
@@ -170,61 +171,62 @@ function validaData(){
        }
 
 					 </script>
+<!-- INICIO - VALIDAÇÃO DE FORMULARIO -->					 
 					 { /literal }
 
 
                     <table width="500" border="0" align="center" cellpadding="0" cellspacing="1" class=main>
-                      <tr>
+                      <tr> 
                         <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                            <tr>
-                              <td width="47%"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Nome/Raz&atilde;o
+                            <tr> 
+                              <td width="47%"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Nome/Raz&atilde;o 
                                   Social</font></p></td>
                               <td width="38%"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Pessoa</font></p></td>
                             </tr>
-                            <tr>
-                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-                                  <input  name="Nome" type="text" class="campos" id="nome_razao" value="{$nome_razao}" size="50" maxlength="50" onBlur="return validaNome(this.value)">
+                            <tr> 
+                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <input  name="Nome" type="text"  id="nome_razao" value="{$nome_razao}" size="50" maxlength="50" onBlur="return validaNome(this.value),this.style.backgroundColor='#FFFFFF'" onfocus="this.style.backgroundColor='#F7F9F7'" >
                                   </font></p></td>
-                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
                                   <SELECT name='tipo_pessoa'>
                                   {foreach key=id item=nome from=$lista_tp_pessoa}
-                                     <option value='{$id}'{if $id == $tipo_pessoa}SELECTED{/if}>{$nome}</option>
+                                     
+                                    <option value='{$id}'{if $id == $tipo_pessoa}SELECTED{/if}>{$nome}</option>
                                   {/foreach}
                                   </SELECT>
                                   </font></p></td>
                             </tr>
                           </table></td>
                       </tr>
-                      <tr>
+                      <tr> 
                         <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                            <tr>
-                              <td width="33%" height="14">
-<p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">RG</font></p></td>
-                              <td width="33%"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Expedi&ccedil;&atilde;o
+                            <tr> 
+                              <td width="33%" height="14"> <p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">RG</font></p></td>
+                              <td width="33%"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Expedi&ccedil;&atilde;o 
                                   </font></p></td>
-                              <td width="33%"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">CPF/CNPJ
+                              <td width="33%"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">CPF/CNPJ 
                                   </font></p></td>
                             </tr>
-                            <tr>
-                              <td><input  name="rg_inscr" type="text" id="rg_inscr" value="{$rg_inscr}" maxlength="20"></td>
-                              <td><input  name="expedicao" type="text" id="expedicao" value="{$expedicao}" maxlength="10"></td>
-                              <td><input  name="cpf_cnpj" type="text" id="cpf_cnpj" value="{$cpf_cnpj}" maxlength="25"  onchange="return checa(this.value)">
+                            <tr> 
+                              <td><input  name="rg_inscr" type="text" id="rg_inscr" value="{$rg_inscr}" maxlength="20" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
+                              <td><input  name="expedicao" type="text" id="expedicao" value="{$expedicao}" maxlength="10" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
+                              <td><input  name="cpf_cnpj" type="text" id="cpf_cnpj" value="{$cpf_cnpj}" maxlength="25"  onchange="return checa(this.value)" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"> 
                               </td>
                             </tr>
                           </table></td>
                       </tr>
-                      <tr>
+                      <tr> 
                         <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                            <tr>
+                            <tr> 
                               <td width="46%"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Email</font></p></td>
                               <td width="54%">&nbsp;</td>
                             </tr>
-                            <tr>
-                              <td colspan="2"><input  name="email"type="text" id="email4" value="{$email}" size="50" maxlength="255" onchange="return validaEmail(this.value)"></td>
+                            <tr> 
+                              <td colspan="2"><input  name="email"type="text" id="email4" value="{$email}" size="50" maxlength="255" onchange="return validaEmail(this.value)" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
                             </tr>
                           </table></td>
                       </tr>
-                      <tr>
+                      <tr> 
                         <td colspan="2"><table width="100%" border="0" cellspacing="0" cellpadding="1">
                             <tr> 
                               <td width="33%"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Endere&ccedil;o</font></p></td>
@@ -232,7 +234,7 @@ function validaData(){
                               <td width="34%">&nbsp;</td>
                             </tr>
                             <tr> 
-                              <td colspan="3"><input  name="endereco"type="text" class="campos" id="endereco3" value="{$endereco}" size="70" maxlength="50"> 
+                              <td colspan="3"><input  name="endereco"type="text"  id="endereco3" value="{$endereco}" size="70" maxlength="50" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"> 
                               </td>
                             </tr>
                             <tr> 
@@ -244,10 +246,10 @@ function validaData(){
                             </tr>
                             <tr> 
                               <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
-                                <input  name="complemento"type="text" class="campos" id="complemento4" value="{$complemento}" maxlength="20">
+                                <input  name="complemento"type="text"  id="complemento4" value="{$complemento}" maxlength="20" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                                 </font></td>
                               <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
-                                <input  name="bairro" type="text" class="campos" id="bairro2" value="{$bairro}" maxlength="15">
+                                <input  name="bairro" type="text"  id="bairro2" value="{$bairro}" maxlength="15" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                                 </font></td>
                             </tr>
                             <tr> 
@@ -258,10 +260,10 @@ function validaData(){
                             </tr>
                             <tr> 
                               <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
-                                <input  name="cidade" type="text" class="campos" id="cidade" value="{$cidade}" maxlength="20">
+                                <input  name="cidade" type="text"  id="cidade" value="{$cidade}" maxlength="20" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                                 </font></td>
                               <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
-                                <select name='estado' class="campos">
+                                <select name='estado' >
                                 {foreach key=id item=nome from=$lista_estados}
                                    
                                   <option value='{$id}'{if $id == $estado}SELECTED{/if}>{$nome}</option>
@@ -269,7 +271,7 @@ function validaData(){
                                 </select>
                                 </font></td>
                               <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
-                                <input  name="cep"type="text" class="campos" id="cep2" value="{$cep}" maxlength="10">
+                                <input  name="cep"type="text"  id="cep2" value="{$cep}" maxlength="10" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                                 </font></td>
                             </tr>
                             <tr> 
@@ -281,74 +283,76 @@ function validaData(){
                                   <br>
                                   </font></p></td>
                             </tr>
-                            <tr>
-                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-                                <input  name="fone_comercial" type="text" class="campos" id="fone_comercial" value="{$fone_comercial}" maxlength="15">
+                            <tr> 
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input  name="fone_comercial" type="text"  id="fone_comercial" value="{$fone_comercial}" maxlength="15" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                                 </font></td>
-                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-                                <input  name="fone_residencial" type="text" class="campos" id="fone_residencial" value="{$fone_residencial}" maxlength="15">
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input  name="fone_residencial" type="text"  id="fone_residencial" value="{$fone_residencial}" maxlength="15" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                                 </font></td>
-                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-                                <input  name="fone_celular"type="text" class="campos" id="fone_celular" value="{$fone_celular}" maxlength="15">
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <input  name="fone_celular"type="text"  id="fone_celular" value="{$fone_celular}" maxlength="15" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                                 </font></td>
                             </tr>
                           </table></td>
                       </tr>
-                      <tr>
+                      <tr> 
                         <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                            <tr>
-                              <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Contato
+                            <tr> 
+                              <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Contato 
                                 <br>
-                                </font> <input  name="contato" type="text" class="campos" id="contato" value="{$contato}" size="50" maxlength="20"></td>
+                                </font> <input  name="contato" type="text"  id="contato" value="{$contato}" size="50" maxlength="20" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
                             </tr>
-                            <tr>
+                            <tr> 
                               <td width="33%">&nbsp; </td>
                               <td width="33%">&nbsp;</td>
                               <td width="33%">&nbsp;</td>
                             </tr>
                           </table></td>
                       </tr>
-                      <tr>
+                      <tr> 
                         <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                            <tr>
-                              <td colspan="3"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Outras
+                            <tr> 
+                              <td colspan="3"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Outras 
                                   Informa&ccedil;&otilde;es</font></p></td>
                             </tr>
-                            <tr>
+                            <tr> 
                               <td width="33%"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Banco<br>
-                                  <input  name="banco" type="text" class="campos" id="banco" value="{$banco}" maxlength="20">
+                                  <input  name="banco" type="text"  id="banco" value="{$banco}" maxlength="20" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                                   </font></p></td>
                               <td width="33%"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Ag&ecirc;ncia<br>
-                                  <input  name="agencia" type="text" class="campos" id="agencia" value="{$agencia}" maxlength="10">
+                                  <input  name="agencia" type="text"  id="agencia" value="{$agencia}" maxlength="10" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                                   </font></p></td>
-                              <td width="33%"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Conta
+                              <td width="33%"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Conta 
                                   Corrente<br>
-                                  <input  name="conta_corrente" type="text" class="campos" id="conta_corrente3" value="{$conta_corrente}" maxlength="10">
+                                  <input  name="conta_corrente" type="text"  id="conta_corrente3" value="{$conta_corrente}" maxlength="10" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                                   </font></p></td>
                             </tr>
                           </table></td>
                       </tr>
-                      <tr>
+                      <tr> 
                         <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                            <tr>
+                            <tr> 
                               <td width="33%">&nbsp;</td>
                               <td width="33%">&nbsp;</td>
                               <td width="33%">&nbsp;</td>
                             </tr>
-                            <tr>
-                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Status
+                            <tr> 
+                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Status 
                                   do Contrato<br>
                                   <select name='ativo'>
                                		 {foreach key=id item=nome from=$lista_ativo}
-                              			 <option value='{$id}'{if $id == $ativo}SELECTED{/if}>{$nome}</option>
+                              			 
+                                    <option value='{$id}'{if $id == $ativo}SELECTED{/if}>{$nome}</option>
                                		 {/foreach}
                                   </select>
                                   </font></p></td>
-                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data
+                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
                                   de Pagamento<br>
                                   <select name='dia_pagamento'>
                              	  {foreach key=id item=nome from=$lista_dia_pagamento}
-                              		 <option value='{$id}'{if $id == $dia_pagamento}SELECTED{/if}>{$nome}</option>
+                              		 
+                                    <option value='{$id}'{if $id == $dia_pagamento}SELECTED{/if}>{$nome}</option>
                                	  {/foreach}
                                   </select>
                                   </font></p></td>
@@ -356,47 +360,39 @@ function validaData(){
                             </tr>
                           </table></td>
                       </tr>
-                      <tr>
+                      <tr> 
                         <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                            <tr>
+                            <tr> 
                               <td width="33%">&nbsp;</td>
                               <td width="33%">&nbsp;</td>
                               <td width="33%">&nbsp;</td>
                             </tr>
-                            <tr>
-                              <td colspan="3"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Observa&ccedil;&otilde;es
+                            <tr> 
+                              <td colspan="3"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Observa&ccedil;&otilde;es 
                                   </font></p></td>
                             </tr>
-                            <tr>
-                              <td colspan="3"><textarea name="textarea" class="campos" cols="80" rows="8">{$obs}
+                            <tr> 
+                              <td colspan="3"><textarea name="textarea" cols="80" rows="8" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">{$obs}
 </textarea></td>
                             </tr>
                           </table></td>
                       </tr>
-                      <tr>
+                      <tr> 
                         <td colspan="2"> <table width="100%" border="0" cellspacing="1" cellpadding="0">
-                            <tr>
+                            <tr> 
                               <td width="33%">&nbsp;</td>
-                              <td width="33%"><div align="center">
+                              <td width="33%"><div align="center"> 
                                   <input name="cadastro_cliente" type="submit" id="cadastro_cliente2" value="Cadastrar &gt;&gt;">
                                 </div></td>
                               <td width="33%">&nbsp;</td>
                             </tr>
                           </table></td>
                       </tr>
-                      <tr>
-                        <td width="47%">&nbsp;</td>
+                      <tr> 
+                        <td width="47%" bgcolor="#F7F9F7">&nbsp;</td>
                         <td width="53%">&nbsp;</td>
                       </tr>
-                      <tr>
-                        <td width="47%">&nbsp;</td>
-                        <td width="53%">&nbsp;</td>
-                      </tr>
-                      <tr>
-                        <td width="47%">&nbsp;</td>
-                        <td width="53%">&nbsp; </td>
-                      </tr>
-                      <tr>
+                      <tr> 
                         <td width="47%">&nbsp;</td>
                         <td width="53%">&nbsp;</td>
                       </tr>
