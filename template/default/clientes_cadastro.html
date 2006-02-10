@@ -5,7 +5,126 @@
 </head>
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 
+{ literal }
 
+<script>
+
+function check(){
+	var pessoa = document.cadastro.tipo_pessoa.value;
+
+	if(pessoa == 'F'){
+		return validaCPF();
+	} else {
+ 	    return validaCNPJ();
+	}
+
+}
+
+
+function validaCPF() {
+	cpf = document.cadastro.cpf_cnpj.value;
+	erro = new String;
+
+	if (cpf.length < 11) erro += "Sao necessarios 11 digitos para verificacao do CPF! ";
+
+	//substituir os caracteres que não são números
+    if(document.layers && parseInt(navigator.appVersion) == 4){
+    	x = cpf.substring(0,3);
+        x += cpf. substring (3,6);
+        x += cpf. substring (6,9);
+        x += cpf. substring (9,10);
+        cpf = x;
+    } else {
+		cpf = cpf. replace (".","");
+		cpf = cpf. replace (".","");
+		cpf = cpf. replace ("-","");
+	}
+
+    var a = [];
+    var b = new Number;
+    var c = 11;
+    for (i=0; i<11; i++){
+    	a[i] = cpf.charAt(i);
+		if (i < 9) b += (a[i] * --c);
+	}
+    if ((x = b % 11) < 2) { a[9] = 0 } else { a[9] = 11-x }
+    b = 0;
+    c = 11;
+    for (y=0; y<10; y++) b += (a[y] * c--);
+    	if ((x = b % 11) < 2) { a[10] = 0; } else { a[10] = 11-x; }
+        if ((cpf.charAt(9) != a[9]) || (cpf.charAt(10) != a[10])){
+        	erro +="Digito verificador com problema!";
+		}
+		if (erro.length > 0){
+			alert(erro);
+			return false;
+		}
+	return true;
+}
+
+
+function validaCNPJ() {
+	CNPJ = document.dados.cpf_cnpj.value;
+    erro = new String;
+    if (CNPJ.length < 18) erro += "É necessario preencher corretamente o número do CNPJ! ";
+
+	if ((CNPJ.charAt(2) != ".") || (CNPJ.charAt(6) != ".") || (CNPJ.charAt(10) != "/") || (CNPJ.charAt(15) != "-")){
+    	if (erro.length == 0) erro += "É necessário preencher corretamente o número do CNPJ! ";
+	}
+
+	//substituir os caracteres que não são números
+    if(document.layers && parseInt(navigator.appVersion) == 4){
+    	x = CNPJ.substring(0,2);
+        x += CNPJ. substring (3,6);
+        x += CNPJ. substring (7,10);
+        x += CNPJ. substring (11,15);
+        x += CNPJ. substring (16,18);
+        CNPJ = x;
+    } else {
+		CNPJ = CNPJ. replace (".","");
+		CNPJ = CNPJ. replace (".","");
+		CNPJ = CNPJ. replace ("-","");
+		CNPJ = CNPJ. replace ("/","");
+	}
+
+	var nonNumbers = /\D/;
+	if (nonNumbers.test(CNPJ)) erro += "A verificação de CNPJ suporta apenas números! ";
+	var a = [];
+	var b = new Number;
+	var c = [6,5,4,3,2,9,8,7,6,5,4,3,2];
+    for (i=0; i<12; i++){
+    	a[i] = CNPJ.charAt(i);
+    	b += a[i] * c[i+1];
+	}
+
+	if ((x = b % 11) < 2) { a[12] = 0 } else { a[12] = 11-x }
+    	b = 0;
+        for (y=0; y<13; y++) {
+        	b += (a[y] * c[y]);
+        }
+		if ((x = b % 11) < 2) { a[13] = 0; } else { a[13] = 11-x; }
+		if ((CNPJ.charAt(12) != a[12]) || (CNPJ.charAt(13) != a[13])){
+        	erro +="Dígito verificador com problema!";
+        }
+        if (erro.length > 0){
+        	alert(erro);
+            return false;
+        } else {
+        	alert("CNPJ valido!");
+        }
+      	return true;
+	}
+
+//-->
+</script>
+
+
+
+
+
+
+
+{ /literal }
 
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
@@ -26,153 +145,7 @@
                     <input type="hidden" name="op" value="{$op}">
                      <input type="hidden" name="id_cliente" value="{$id_cliente}">
                      <input type="hidden" name="acao" value="{$acao}">
-					 { literal }
-<!-- INICIO - VALIDAÇÃO DE FORMULARIO -->
-	 <script>
-		function validaNome(){
-           d = document.cadastro;
-           //validar nome
-           if (d.nome_razao.value == ""){
-                     alert("O campo " + d.nome_razao.name + " deve ser preenchido!");
-                     d.nome_razao.focus();
-                     return false;
-           }
-}
 
-function validaEmail(){
-          d = document.cadastro;
-		 //validar email
-         if (d.email.value == ""){
-                   alert("O campo " + d.email.name + " deve ser preenchido!");
-                   d.email.focus();
-         }
-         //validar email(verificao de endereco eletrônico)
-         parte1 = d.email.value.indexOf("@");
-         parte2 = d.email.value.indexOf(".");
-         parte3 = d.email.value.length;
-         if (!(parte1 >= 3 && parte2 >= 6 && parte3 >= 9)) {
-                   alert ("O campo " + d.email.name + " deve ser conter um endereco eletronico!");
-                   d.email.focus();
-                   return false;
-         }
-}
-
-
-function validaData(){
-         //validar data de nascimento
-         erro=0;
-         hoje = new Date();
-         anoAtual = hoje.getFullYear();
-         barras = d.data.value.split("/");
-         if (barras.length == 3){
-                   dia = barras[0];
-                   mes = barras[1];
-                   ano = barras[2];
-                   resultado = (!isNaN(dia) && (dia > 0) && (dia < 32)) && (!isNaN(mes) && (mes > 0) && (mes < 13)) && (!isNaN(ano) && (ano.length == 4) && (ano <= anoAtual && ano >= 1900));
-                   if (!resultado) {
-                             alert("Formato de data invalido!");
-                             d.data.focus();
-                             return false;
-                   }
-         } else {
-                   alert("Formato de data invalido!");
-                   d.data.focus();
-                   return false;
-         }
- }
- 		function checa(){
-          d = document.cadastro;
-
-		if(d.tipo_pessoa.value=="F"){
-		 	return validaCPF();
-			}else{
-			return validaCNPJ();
-		}
-
-
-         function validaCPF() {
-                 cpf = d.cpf_cnpj.value;
-                 erro = new String;
-                 if (cpf.length < 11) erro += "Sao necessarios 11 digitos para verificacao do CPF! \n\n";
-                 var nonNumbers = /\D/;
-                 if (nonNumbers.test(cpf)) erro += "A verificacao de CPF suporta apenas numeros! \n\n";
-                 if (cpf == "00000000000" || cpf == "11111111111" || cpf == "22222222222" || cpf == "33333333333" || cpf == "44444444444" || cpf == "55555555555" || cpf == "66666666666" || cpf == "77777777777" || cpf == "88888888888" || cpf == "99999999999"){
-                        erro += "Numero de CPF invalido!"
-               }
-               var a = [];
-               var b = new Number;
-               var c = 11;
-               for (i=0; i<11; i++){
-                      a[i] = cpf.charAt(i);
-                       if (i < 9) b += (a[i] * --c);
-               }
-               if ((x = b % 11) < 2) { a[9] = 0 } else { a[9] = 11-x }
-               b = 0;
-               c = 11;
-               for (y=0; y<10; y++) b += (a[y] * c--);
-               if ((x = b % 11) < 2) { a[10] = 0; } else { a[10] = 11-x; }
-               if ((cpf.charAt(9) != a[9]) || (cpf.charAt(10) != a[10])){
-                       erro +="Digito verificador com problema!";
-               }
-               if (erro.length > 0){
-                       alert(erro);
-                       return false;
-               }
-              return true;
-
-}
-}
-         function validaCNPJ() {
-                 CNPJ = d.cpf_cnpj.value;
-                 erro = new String;
-                 if (CNPJ.length < 18) erro += "É necessario preencher corretamente o número do CNPJ! \n\n";
-                 if ((CNPJ.charAt(2) != ".") || (CNPJ.charAt(6) != ".") || (CNPJ.charAt(10) != "/") || (CNPJ.charAt(15) != "-")){
-                 if (erro.length == 0) erro += "É necessário preencher corretamente o número do CNPJ! \n\n";
-                 }
-                 //substituir os caracteres que não são números
-               if(document.layers && parseInt(navigator.appVersion) == 4){
-                       x = CNPJ.substring(0,2);
-                       x += CNPJ. substring (3,6);
-                       x += CNPJ. substring (7,10);
-                       x += CNPJ. substring (11,15);
-                       x += CNPJ. substring (16,18);
-                       CNPJ = x;
-               } else {
-                       CNPJ = CNPJ. replace (".","");
-                       CNPJ = CNPJ. replace (".","");
-                       CNPJ = CNPJ. replace ("-","");
-                       CNPJ = CNPJ. replace ("/","");
-               }
-               var nonNumbers = /\D/;
-               if (nonNumbers.test(CNPJ)) erro += "A verificação de CNPJ suporta apenas números! \n\n";
-               var a = [];
-               var b = new Number;
-               var c = [6,5,4,3,2,9,8,7,6,5,4,3,2];
-               for (i=0; i<12; i++){
-                       a[i] = CNPJ.charAt(i);
-                       b += a[i] * c[i+1];
- }
-               if ((x = b % 11) < 2) { a[12] = 0 } else { a[12] = 11-x }
-               b = 0;
-               for (y=0; y<13; y++) {
-                       b += (a[y] * c[y]);
-               }
-               if ((x = b % 11) < 2) { a[13] = 0; } else { a[13] = 11-x; }
-               if ((CNPJ.charAt(12) != a[12]) || (CNPJ.charAt(13) != a[13])){
-                       erro +="Dígito verificador com problema!";
-               }
-               if (erro.length > 0){
-                       alert(erro);
-                       return false;
-               } else {
-                       alert("CNPJ valido!");
-               }
-               return true;
-       }
-
-					 </script>
-<!-- INICIO - VALIDAÇÃO DE FORMULARIO -->
-					 { /literal }
 
 
                     <table width="500" border="0" align="center" cellpadding="0" cellspacing="1" class=main>
@@ -185,7 +158,7 @@ function validaData(){
                             </tr>
                             <tr>
                               <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-                                  <input  name="Nome" type="text"  id="nome_razao" value="{$nome_razao}" size="50" maxlength="50" onBlur="return validaNome(this.value),this.style.backgroundColor='#FFFFFF'" onfocus="this.style.backgroundColor='#F7F9F7'" >
+                                  <input  name="nome_razao" type="text"  id="nome_razao" value="{$nome_razao}" size="50" maxlength="50" onBlur="this.style.backgroundColor='#FFFFFF'" onfocus="this.style.backgroundColor='#F7F9F7'" >
                                   </font></p></td>
                               <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                   <SELECT name='tipo_pessoa'>
@@ -212,9 +185,18 @@ function validaData(){
                             <tr>
                               <td><input  name="rg_inscr" type="text" id="rg_inscr" value="{$rg_inscr}" maxlength="20" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
                               <td><input  name="expedicao" type="text" id="expedicao" value="{$expedicao}" maxlength="10" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
-                              <td><input  name="cpf_cnpj" type="text" id="cpf_cnpj" value="{$cpf_cnpj}" maxlength="25"  onchange="return checa(this.value)" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
-                              </td>
+                              <td><input  name="cpf_cnpj" type="text" id="cpf_cnpj" value="{$cpf_cnpj}" maxlength="25"  onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'" onChange="return check(this.value)">
+                                { if $mensagem != "" }
+								</tr>
+								<tr>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                              <td><font color="#FF0000" size="1" face="Verdana, Arial, Helvetica, sans-serif"><b>{$mensagem}</b></font></td>
                             </tr>
+
+                                </b> { /if } </td>
+                            </tr>
+
                           </table></td>
                       </tr>
                       <tr>
@@ -224,7 +206,7 @@ function validaData(){
                               <td width="54%">&nbsp;</td>
                             </tr>
                             <tr>
-                              <td colspan="2"><input  name="email"type="text" id="email4" value="{$email}" size="50" maxlength="255" onchange="return validaEmail(this.value)" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
+                              <td colspan="2"><input  name="email"type="text" id="email4" value="{$email}" size="50" maxlength="255" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
                             </tr>
                           </table></td>
                       </tr>
@@ -374,7 +356,7 @@ function validaData(){
                                   </font></p></td>
                             </tr>
                             <tr>
-                              <td colspan="3"><textarea name="textarea" cols="80" rows="8" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">{$obs}
+                              <td colspan="3"><textarea name="obs" cols="80" rows="8" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">{$obs}
 </textarea></td>
                             </tr>
                           </table></td>

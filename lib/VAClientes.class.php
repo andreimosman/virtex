@@ -72,9 +72,86 @@ class VAClientes extends VirtexAdmin {
 			   $titulo = "Alterar";
 			   }
 			
+			//Checa se já existe CPF/CNPJ cadastrado igual no banco
 			
+			$cpf_cnpj = @$_REQUEST['cpf_cnpj'];
+			if( $cpf_cnpj ){
 			
+			      $tSQL  = "SELECT ";
+			      $tSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
+			      $tSQL .= "   rg_inscr, expedicao, cpf_cnpj, email, endereco, complemento, ";
+			      $tSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
+			      $tSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
+			      $tSQL .= "   ativo,obs ";
+			      $tSQL .= "FROM cltb_cliente ";
+			      $tSQL .= "WHERE cpf_cnpj = '$cpf_cnpj' ";
+			      
+			      $checa = $this->bd->obtemUnicoRegistro($tSQL);
+			      
+			      if ( count($checa)){
+			      	$erroSQL = "CPF/CNPJ já cadastrado";
+			      	
+			      	//echo $erroSQL;
+			      	     $this->tpl->atribui("mensagem",$erroSQL ); //pega o conteúdo de msg_final e envia para mensagem que é uma val do smart.
+				     //$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=listagem");
+				     //$this->tpl->atribui("target","_top");
+				     
+				     // Atribui as listas
+				     global $_LS_ESTADOS;
+				     $this->tpl->atribui("lista_estados",$_LS_ESTADOS);
+				     
+				     global $_LS_TP_PESSOA;
+				     $this->tpl->atribui("lista_tp_pessoa",$_LS_TP_PESSOA); //lista_tp_pessoa recebe os dados do array LS_TP_PESSOA(status.defs.php) para mostrar do dropdown.
+				     			
+				     global $_LS_ST_CLIENTE;
+				     $this->tpl->atribui("lista_ativo",$_LS_ST_CLIENTE);
+				     
+				     global $_LS_DIA_PGTO;
+				     $this->tpl->atribui("lista_dia_pagamento",$_LS_DIA_PGTO);
 
+				     
+				     
+				     
+				     //$this->tpl->atribui("id_cliente",@$reg["id_cliente"]);
+				     //$this->tpl->atribui("data_cadastro",@_REQUEST['']);
+				     $this->tpl->atribui("nome_razao",@$_REQUEST['nome_razao']);// pega a info do db e atribui ao campo correspon do form
+				     $this->tpl->atribui("tipo_pessoa",@$_REQUEST["tipo_pessoa"]);
+				     $this->tpl->atribui("rg_inscr",@$_REQUEST["rg_inscr"]);
+				     $this->tpl->atribui("expedicao",@$_REQUEST["expedicao"]);
+				     $this->tpl->atribui("cpf_cnpj",@$_REQUEST["cpf_cnpj"]);
+				     $this->tpl->atribui("email",@$_REQUEST["email"]);
+				     $this->tpl->atribui("endereco",@$_REQUEST["endereco"]);
+				     $this->tpl->atribui("complemento",@$_REQUEST["complemento"]);
+				     $this->tpl->atribui("cidade",@$_REQUEST["cidade"]);
+				     $this->tpl->atribui("estado",@$_REQUEST["estado"]);
+				     $this->tpl->atribui("cep",@$_REQUEST["cep"]);
+				     $this->tpl->atribui("bairro",@$_REQUEST["bairro"]);
+				     $this->tpl->atribui("fone_comercial",@$_REQUEST["fone_comercial"]);
+				     $this->tpl->atribui("fone_residencial",@$_REQUEST["fone_residencial"]);
+				     $this->tpl->atribui("fone_celular",@$_REQUEST["fone_celular"]);			
+				     $this->tpl->atribui("contato",@$_REQUEST["contato"]);			
+				     $this->tpl->atribui("banco",@$_REQUEST["banco"]);
+				     $this->tpl->atribui("conta_corrente",@$_REQUEST["conta_corrente"]);			
+				     $this->tpl->atribui("agencia",@$_REQUEST["agencia"]);			
+				     $this->tpl->atribui("dia_pagamento",@$_REQUEST["dia_pagamento"]);			
+				     $this->tpl->atribui("ativo",@$_REQUEST["ativo"]);			
+				     $this->tpl->atribui("obs",@$_REQUEST["obs"]);
+				     
+				     $this->tpl->atribui("titulo",$titulo);
+
+				
+				$this->arquivoTemplate="clientes_cadastro.html";
+				//header("Location:clientes.php?op=cadastro");
+				return;
+
+			      	
+			      	}
+			 }     	
+			             
+
+			
+			
+			// FINAL DA CHECAGEM DO CPF/CNPJ
 			$this->tpl->atribui("op",$op);
 			$this->tpl->atribui("acao",$acao);
 			$this->tpl->atribui("id_cliente",$id_cliente);
@@ -176,6 +253,11 @@ class VAClientes extends VirtexAdmin {
 			      $this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=listagem");
 			      $this->tpl->atribui("target","_top");
 
+			         if (count($checa)){
+			         $this->arquivoTemplate="clientes_cadastro.html";
+				 }
+
+
 			      $this->arquivoTemplate="msgredirect.html"; //faz exibir o msgredirect.html que tem vai receber a mensagem de erro ou sucesso.
 
 			      // cai fora da função (ou seja, deixa de processar o resto do aplicativo: a parte de exibicao da tela);
@@ -235,90 +317,71 @@ class VAClientes extends VirtexAdmin {
 			$this->arquivoTemplate = "clientes_cadastro.html";
 
 		} else if($op=="pesquisa"){
-			  $cond = @$_REQUEST['cond'];
-			  $campo_pesquisa = @$_REQUEST['campo_pesquisa'];
-			  
-			  if($campo_pesquisa == ""){
-			  	$this->tpl->atribui("mostra","nao");
+			$erros = array();
+			$cond = @$_REQUEST['cond'];
+			$campo_pesquisa = @$_REQUEST['campo_pesquisa'];
+			
+			if( !$campo_pesquisa ){
+			 	// Faz alguma coisa
+			  	if( $cond ) {
+			  		$erros[] = "Você se esqueceu de preencher os parâmetros da pesquisa.";
+			  	} else {
+			  		$cond = "nome";
 			  	}
-			  $this->tpl->atribui("mostra","sim");
 			  
+			} else {
+
+				$sSQL  = "SELECT ";
+				$sSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
+				$sSQL .= "   rg_inscr, expedicao, cpf_cnpj, email, endereco, complemento, ";
+				$sSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
+				$sSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
+				$sSQL .= "   ativo,obs ";
+				$sSQL .= "FROM cltb_cliente ";
+				//$sSQL .= "WHERE $campo = '$campo_pesquisa' ";
+				$sSQL .= "WHERE ";
+
+				switch($cond) {
+
+				   case 'nome':
+				      $sSQL .= "   nome_razao ilike '%$campo_pesquisa%' ";
+				      break;
+				   case 'CPF':
+				      $sSQL .= "   cpf_cnpj = '" . $this->bd->escape(@$_REQUEST["campo_pesquisa"]) . "' ";
+				      break;
+				   case 'cod':
+				      $sSQL .= "   id_cliente = '" . $this->bd->escape(@$_REQUEST["campo_pesquisa"]) . "' ";
+				      break;
+				}
+		
+				$clientes = $this->bd->obtemRegistros($sSQL);
+		
+				if( $this->bd->obtemErro() ) {
+				   echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
+				   echo "SQL: $sSQL <br>\n";
+				}
+		
+				$this->tpl->atribui("lista_clientes", $clientes);
 				
-			  if($cond=="nome"){
-			     $campo="nome_cliente";
-			  }else if ($cond=="CPF"){
-			     $campo="cpf_cnpj";
-			  }else if ($cond="email"){
-			     $campo="email";
-			  }else{
-			     $campo="id_cliente";
-			  }
+				if( !count($clientes) ) {
+				   $erros[] = "A pesquisa não retornou resultados";
+				}
+				
+				
+		
+			} //fecha o else do mostra				
 			
-		$sSQL  = "SELECT ";
-		$sSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
-		$sSQL .= "   rg_inscr, expedicao, cpf_cnpj, email, endereco, complemento, ";
-		$sSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
-		$sSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
-		$sSQL .= "   ativo,obs ";
-		$sSQL .= "FROM cltb_cliente ";
-		//$sSQL .= "WHERE $campo = '$campo_pesquisa' ";
-		$sSQL .= "WHERE ";
-		
-		switch($cond) {
-		
-		   case 'nome':
-		      $sSQL .= "   nome_razao ilike '%$campo_pesquisa%' ";
-		      break;
-		   case 'CPF':
-		      $sSQL .= "   cpf_cnpj = '$campo_pesquisa' ";
-		      break;
-		
-		}
-		
-		
-		
-		$clientes = $this->bd->obtemRegistros($sSQL);
-		
-		if( $this->bd->obtemErro() ) {
-		   echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
-		   echo "SQL: $sSQL <br>\n";
-		}
-		
-		$this->tpl->atribui("lista_clientes", $clientes);
+			$this->tpl->atribui("erros",$erros);
+			$this->tpl->atribui("cond",$cond);
+			$this->tpl->atribui("campo_pesquisa",$campo_pesquisa);
 			
-			$this->tpl->atribui("pagina","clientes_resultado.html");
 			$this->arquivoTemplate="clientes_pesquisa.html";
 				
-				
-				
-				
-				
-				
-				
-				
-//				}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-//		}else if($op == "pesquisa"){
-//			$this->arquivoTemplate = "search_clientes.html";
 
+				
+				
+				
+				
 		} else if ($op == "eliminar"){
 			$this->arquivoTemplate = "eliminar_cliente.html";
 		} else if ($op =="clientemod"){
