@@ -16,7 +16,7 @@
           <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td><p>&nbsp;</p>
-                  <h1 align="center"><b>Ponto de Presença (POP)::Cadastro</b></h1></td>
+                  <h1 align="center"><b>Ponto de Presença (POP)::{$titulo}</b></h1></td>
               </tr>
               <tr>
                 <td align="center" valign="middle"><form name=formulario method="post" action="configuracao.php">
@@ -35,13 +35,24 @@
                             <tr> 
                               <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Nome:</p></td>
                               <td bgcolor="#FFFFFF"><p> 
-                                  <input type="text" maxlength="30" name="nome" value="">
+                                  <input type="text" maxlength="30" name="nome" value="{$nome}">
                                 </p></td>
+								{literal}
+								  <script>
+								   conteudo = nome.cadastro;
+								   tam = length(conteudo);
+								   for (
+								  
+								  </script>
+								
+								{/literal}
+								
+								
                             </tr>
                             <tr> 
                               <td bgcolor="#FFFFFF" align="right" width="70" valign="top" size=10><p>Info:</p></td>
                               <td bgcolor="#FFFFFF"> <p> 
-                                  <textarea name="info" rows=7 cols=35></textarea>
+                                  <textarea name="info" rows=7 cols=35 ></textarea>
                                 </p></td>
                             </tr>
                             <tr> 
@@ -70,10 +81,10 @@
                                 </p></td>
                             </tr>
                           </table>
-                          <script language="JavaScript">
-verificaTipoPop();
-</script> <input name="op" type="hidden" id="op" value="cadpopok">
-                          <input name="botao_enviar" type="submit" class=input2 id="submit" value="Cadastrar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">	
+                          <input name="op" type="hidden" value="{$op}">
+                          <input name="id_pop" type="hidden" value="{$id_pop}">
+                          <input name="acao" type="hidden" value="{$acao}"> 
+                          <input name="botao_enviar" type="submit" class=input2 id="submit" value="{$titulo}" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">	
                         </td>
                       </tr>
                     </table>

@@ -15,7 +15,8 @@
         <tr>
           <td height="100%" align="center" valign="middle"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" bgcolor="#F0f0f0">
               <tr>
-                <th bordercolor="#FFFFFF" bgcolor="#FFFFFF" class=th_main ><font face="Arial" size="4"><b>Ficha
+                <th bordercolor="#FFFFFF" bgcolor="#FFFFFF" class=th_main ><font face="Arial" size="4"><b>{$titulo}
+			
                   do Administrador </b></font></th>
               </tr>
             </table>
@@ -29,9 +30,13 @@
                   <table  width="75%" border="0" align="center" cellpadding="0" cellspacing="0" >
                     <tr>
                       <td  > <form name=dados method="post" action="{$smarty.server.PHP_SELF}">
-                          <input type="hidden" name="op" value="{$op}">
-                          <input type="hidden" name="acao" value="{$acao}">
-                          <input type="hidden" name="id_admin" value="{$id_admin}">
+                          <p>
+                            <input type="hidden" name="op" value="{$op}">
+                            <input type="hidden" name="acao" value="{$acao}">
+                            <input type="hidden" name="id_admin" value="{$id_admin}">
+                          </p>
+                          {literal}
+						  {/literal}
                           <table width="90%" border="0" align="center" cellpadding="0" cellspacing="1" class=main>
                             <tr>
                               <td width="47%">&nbsp;</td>
@@ -44,8 +49,8 @@
                                     <td width="50%"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">E-mail</font></td>
                                   </tr>
                                   <tr>
-                                    <td><input  name="nome" type="text" id="nome" value="{$nome}" size="30" maxlength="40"></td>
-                                    <td><input  name="email" type="text" class="campos" id="email" value="{$email}" size="30" maxlength="255"></td>
+                                    <td><input  name="nome" type="text" id="nome" value="{$nome}" size="30" maxlength="40" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
+                                    <td><input  name="email" type="text" class="campos" id="email" value="{$email}" size="30" maxlength="255" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
                                   </tr>
                                 </table></td>
                             </tr>
@@ -60,12 +65,12 @@
                                     <td width="33%"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Status</font></td>
                                   </tr>
                                   <tr>
-                                    <td valign="top"><input  name="admin" type="text" class="campos" id="rg_inscr" value="{$admin}" maxlength="20"></td>
-                                    <td valign="top"><input  name="senha" type="password" class="campos" id="senha" value="{$senha}" maxlength="64">
-                                      <input  name="confsenha" type="password" class="campos" id="confsenha"value="{$senha}" maxlength="64">
+                                    <td valign="top"><input  name="admin" type="text" class="campos" id="rg_inscr" value="{$admin}" maxlength="20" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
+                                    <td valign="top"><input  name="senha" type="password" class="campos" id="senha" value="{$senha}" maxlength="64" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"> 
+                                      <input  name="confsenha" type="password" class="campos" id="confsenha"value="{$senha}" maxlength="64" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                                     </td>
                                     <td valign="top">
-                                    <SELECT name='status' class= "campos">
+                                    <SELECT name='status' class= "campos" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                                   		{foreach key=id item=nome from=$lista_status}
                                      		<option value='{$id}'{if $id == $status}SELECTED{/if}>{$nome}</option>
                                   		{/foreach}
@@ -87,7 +92,7 @@
                                   <tr>
                                     <td>&nbsp;</td>
                                     <td><div align="center">
-                                        <input name="cadastro_admin" type="submit" id="cadastro_admin" value="Cadastrar &gt;&gt;">
+                                        <input name="cadastro_admin" type="submit" id="cadastro_admin" value="{$titulo}">
                                       </div></td>
                                     <td>&nbsp;</td>
                                   </tr>

@@ -56,14 +56,16 @@ public function processa($op=null) {
 			 			
 			if ($acao == "cad"){
 			   $msg_final = "Administrador cadastrado com sucesso!";
+			   $titulo = "Cadastrar" ;
 			 			   
 			}else{
 			  $msg_final = "Administrador alterado com sucesso!";
+			  $titulo = "Alterar" ;
 			}
 			
-			$this->tpl->atribui("op",$op);  //??tpl
-			$this->tpl->atribui("acao",$acao);  //??
-			$this->tpl->atribui("id_admin",$id_admin);//??
+			$this->tpl->atribui("op",$op);  //tpl = template
+			$this->tpl->atribui("acao",$acao);  // atribui o que está em acao para acao.
+			$this->tpl->atribui("id_admin",$id_admin);//
 
 	              // O cara clicou no botão enviar (submit).
 	              if( $enviando ) {
@@ -148,6 +150,8 @@ public function processa($op=null) {
 		$this->tpl->atribui("nome",@$reg["nome"]);
 		$this->tpl->atribui("email",@$reg["email"]);
 		$this->tpl->atribui("primeiro_login",@$reg["primeiro_login"]);
+		
+		$this->tpl->atribui("titulo",$titulo);
 		
 		// Seta as variáveis do template.
 		$this->arquivoTemplate = "administrador_cadastro.html";
