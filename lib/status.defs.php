@@ -53,5 +53,14 @@ $_LS_ST_ADMIN = array(
                       "f" => "Inativo"
                      );           
                    
-                   
+$_LS_ST_PROD = array(
+		"t" => "Disponivel para contratação",
+		"f" => "Não disponível para contratação"
+		    );
+
+
+
+
+
+
 ?>
