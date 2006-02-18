@@ -1,11 +1,82 @@
 <html>
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
-
+	
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
-</head>
+</head> 
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<!-- INICIO código de verificacao de campos -->
+{literal}
+<script>
+	function check(){
+		        										
+			var cnome, cemail, cusername, csenha, cconfsenha, erro;
+									
+			cnome=document.dados.nome.value;
+			cemail=document.dados.email.value;
+			cusername=document.dados.admin.value;
+			csenha=document.dados.senha.value;
+			cconfsenha=document.dados.confsenha.value;
+									
+			msg="";
+			erro=0;
+								
+			if  (cnome ==""){
+				msg= msg + "O campo Nome está vazio!\n";
+				erro = 1;
+			}
+								
+			if (cemail ==""){
+				msg= msg + "O campo Email está vazio!\n";
+				erro = 1;
+			}
+			
+			if (cemail != ""){
+			   			parte1 = cemail.indexOf("@");
+	            		parte2 = cemail.indexOf(".");
+	   	        		parte3 = cemail.length;
+	       	    		if (!(parte1 >= 3 && parte2 >= 6 && parte3 >= 9)) {
+		            	    	msg= msg + "O campo email deve conter um endereco eletrônico!\n";
+								erro = 1;
+	   	        		}					
+			}	
+			
+									
+			if (cusername ==""){
+				msg= msg + "O campo Username está vazio!\n";
+				erro = 1;
+			}
+									
+			if (csenha ==""){
+				msg= msg + "O campo Senha está vazio!\n";
+				erro = 1;
+			}
+
+			if (cconfsenha ==""){
+				msg= msg + "O campo Confirmação está vazio!\n";
+				erro = 1;
+			}
+									
+			if (csenha != cconfsenha) {
+				msg = msg + "Os campos Senha e Confirmação devem conter o mesmo conteúdo.\n"; 
+				erro = 1;
+			} 
+									
+			if (erro == 1){
+				alert(msg);
+				return false;
+			}
+			
+	return true;
+	}
+
+</script>
+{/literal}
+
+
+
+
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -15,9 +86,9 @@
         <tr>
           <td height="100%" align="center" valign="middle"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" bgcolor="#F0f0f0">
               <tr>
-                <th bordercolor="#FFFFFF" bgcolor="#FFFFFF" class=th_main ><font face="Arial" size="4"><b>{$titulo}
-			
-                  do Administrador </b></font></th>
+                <th bordercolor="#FFFFFF" bgcolor="#FFFFFF" class=th_main ><p><font face="Arial" size="4"><b>{$titulo} 
+                    Administrador </b></font></p>
+                  <p>&nbsp;</p></th>
               </tr>
             </table>
             <table  width="75%" border="0" align="center" cellpadding="0" cellspacing="0" >
@@ -27,17 +98,25 @@
                       <th bgcolor="#FFFFFF" >&nbsp;</th>
                     </tr>
                   </table>
+				  
+				  
+				  
+				  
                   <table  width="75%" border="0" align="center" cellpadding="0" cellspacing="0" >
                     <tr>
-                      <td  > <form name=dados method="post" action="{$smarty.server.PHP_SELF}">
+                      <td  > <form name=dados method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return check(this)">
                           <p>
                             <input type="hidden" name="op" value="{$op}">
                             <input type="hidden" name="acao" value="{$acao}">
                             <input type="hidden" name="id_admin" value="{$id_admin}">
+							
+							
                           </p>
-                          {literal}
-						  {/literal}
-                          <table width="90%" border="0" align="center" cellpadding="0" cellspacing="1" class=main>
+                         
+						 {foreach item=e from=$erros} 
+						 	<b><font color="#FF0000" size="1" face="Verdana, Arial, Helvetica, sans-serif">{$e}</font></b><p></p><br>
+						 {/foreach}
+						  <table width="99%" border="0" align="center" cellpadding="0" cellspacing="1" class=main>
                             <tr>
                               <td width="47%">&nbsp;</td>
                               <td width="53%">&nbsp;</td>
@@ -49,8 +128,11 @@
                                     <td width="50%"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">E-mail</font></td>
                                   </tr>
                                   <tr>
-                                    <td><input  name="nome" type="text" id="nome" value="{$nome}" size="30" maxlength="40" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
-                                    <td><input  name="email" type="text" class="campos" id="email" value="{$email}" size="30" maxlength="255" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
+                                    <td><input  name="nome" type="text" id="nome" value="{$nome}" size="30" maxlength="40" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
+                                      <font size="1" face="Verdana, Arial, Helvetica, sans-serif">*</font> </td>
+                                    <td><input  name="email" type="text" class="campos" id="email" value="{$email}" size="30" maxlength="255" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
+                                      <font size="1" face="Verdana, Arial, Helvetica, sans-serif">* 
+                                      (xxx@xxx.xx) </font></td>
                                   </tr>
                                 </table></td>
                             </tr>
@@ -60,22 +142,28 @@
                             <tr>
                               <td colspan="2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
                                   <tr>
-                                    <td width="33%"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Username</font></td>
-                                    <td width="33%"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Senha/Confirmação</font></td>
-                                    <td width="33%"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Status</font></td>
+                                    <td width="37%"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Username</font></td>
+                                    <td width="38%"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Senha/Confirmação</font></td>
+                                    <td width="25%"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Status</font></td>
                                   </tr>
                                   <tr>
-                                    <td valign="top"><input  name="admin" type="text" class="campos" id="rg_inscr" value="{$admin}" maxlength="20" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
-                                    <td valign="top"><input  name="senha" type="password" class="campos" id="senha" value="{$senha}" maxlength="64" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"> 
+                                    <td valign="top"><input  name="admin" type="text" class="campos" id="rg_inscr" value="{$admin}" maxlength="20" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
+                                      <font size="2" face="Verdana, Arial, Helvetica, sans-serif">*</font></td>
+                                    <td valign="top"><input  name="senha" type="password" class="campos" id="senha" value="{$senha}" maxlength="64" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
+                                      <font size="2" face="Verdana, Arial, Helvetica, sans-serif">*</font> 
                                       <input  name="confsenha" type="password" class="campos" id="confsenha"value="{$senha}" maxlength="64" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
-                                    </td>
-                                    <td valign="top">
-                                    <SELECT name='status' class= "campos" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
+                                      <font size="2" face="Verdana, Arial, Helvetica, sans-serif">*</font> </td>
+                                    <td valign="top"> <p>
+                                        <SELECT name='status' >
                                   		{foreach key=id item=nome from=$lista_status}
-                                     		<option value='{$id}'{if $id == $status}SELECTED{/if}>{$nome}</option>
+										
+                                     		 <option value='{$id}' {if $id == $status}SELECTED {/if}>{$nome}</option>
+											
                                   		{/foreach}
-                                      </SELECT>
-                                      </td>
+										
+                                       </SELECT>
+                                      </p>
+                                      <p>&nbsp; </p></td>
                                   </tr>
                                 </table></td>
                             </tr>
