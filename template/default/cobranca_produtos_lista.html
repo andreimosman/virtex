@@ -3,7 +3,7 @@
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
 
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css"></head><body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-{ literal } { /literal } 
+{ literal } { /literal }
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -17,34 +17,34 @@
               </tr>
               <tr>
                 <td align="center" valign="middle"> <h1>Produtos Cadastrados</h1>
-                  <p><a href="cobranca.php?op=cadastrar">Cadastrar novo</a> </p>
+                  <p><a href="cobranca.php?op=cadastro">Cadastrar novo</a> </p>
                   <table width="600" border="0" cellspacing="2" cellpadding="0">
-                    <tr align="center" valign="middle"> 
+                    <tr align="center" valign="middle">
                       <td height="50"> <p>Listar somente:</p></td>
                       <td height="50"><a href="cobranca.php?op=lista"><img src="template/default/images/bt_todos.gif" alt="Exibir Todos" width="77" height="73" border="0"></a></td>
                       <td height="50"><a href="cobranca.php?op=lista&filtro=bl"><img src="template/default/images/bt_bandalarga.gif" alt="Exibir somente Banda Larga" width="77" height="73" border="0"></a></td>
                       <td height="50"><a href="cobranca.php?op=lista&filtro=d"><img src="template/default/images/bt_discado.gif" alt="Exibir somente Discado" width="77" height="73" border="0"></a></td>
                       <td height="50"><a href="cobranca.php?op=lista&filtro=h"><img src="template/default/images/bt_hospedagem.gif" alt="Exibir somente Hospedagem" width="77" height="73" border="0"></a></td>
                     </tr>
-                    <tr align="center" valign="middle"> 
+                    <tr align="center" valign="middle">
                       <td colspan="5"><form name="form1" method="post" action="cobranca.php">
                           <table width="75%" border="0" cellspacing="2" cellpadding="0">
-                            <tr align="center" valign="middle"> 
-                              <td><p>mostrando s&oacute; os produtos: 
+                            <tr align="center" valign="middle">
+                              <td><p>mostrando s&oacute; os produtos:
                                   <input name="op" type="hidden" id="op" value="{$op}">
                                   <input name="filtro" type="hidden" id="filtro" value="{$filtro}">
                                 </p></td>
-                              <td align="left"> <p> 
-                                  <label> 
+                              <td align="left"> <p>
+                                  <label>
                                   <input name="disp" type="radio" value="t" class="checkbox" {if $disp=="t" || !$disp}CHECKED{/if}>
                                   Disponíveis para contratação</label>
                                   <br>
-                                  <label> 
+                                  <label>
                                   <input type="radio" name="disp" value="f" class="checkbox" {if $disp=="f"}CHECKED{/if}>
                                   Não disponíveis para contratação</label>
                                   <br>
                                 </p></td>
-                              <td> 
+                              <td>
                                 <input name="imageField" type="image" src="template/default/images/bt_filtrar.gif" width="52" height="20" border="0" class="checkbox"></td>
                             </tr>
                           </table>
@@ -53,20 +53,20 @@
                   </table>
                   <p>&nbsp;</p>
                   <table border=0 width="700" cellspacing=0>
-                    <tr bgcolor="#FAFAFA"> 
+                    <tr bgcolor="#FAFAFA">
                       <td width=40 align="center"><b>&nbsp;</b></td>
                       <td width=150 colspan="2"><h2>Produto</h2></td>
                       <td><h2>Descri&ccedil;&atilde;o</h2></td>
                       <td width="60" align="right"><h2>R$</h2></td>
                       <td width="100" align="center"><h2>Disponivel</h2></td>
                     </tr>
-                    <tr> 
+                    <tr>
                       <td colspan=6><hr size=1></td>
                     </tr>
-                    {foreach item=v from=$lista_produtos} 
-                    <tr bgcolor="#FFFFFF"> 
-                      <td align="center" width=40><p><a href="cobranca.php?op=cadastrar&id_produto={$v.id_produto}"><img src="template/default/images/gif_alterar.gif" width="16" height="16" border="0"></a></p></td>
-                      <td width="24" valign="middle"><img src="template/default/images/{$v.tipo}.gif" width="24" height="24"> 
+                    {foreach item=v from=$lista_produtos}
+                    <tr bgcolor="#FFFFFF">
+                      <td align="center" width=40><p><a href="cobranca.php?op=cadastro&id_produto={$v.id_produto}&prod={$v.tipo}"><img src="template/default/images/gif_alterar.gif" width="16" height="16" border="0"></a></p></td>
+                      <td width="24" valign="middle"><img src="template/default/images/{$v.tipo}.gif" width="24" height="24">
                       </td>
                       <td valign="middle"><p>{$v.nome}</p></td>
                       <td valign="middle"> <p>{$v.descricao}</p></td>
@@ -78,12 +78,12 @@
 					  {else}
 					  <img src="template/default/images/gif_indisp.gif" width="26" height="26" alt="Produto NÃO Disponível para contratação">
 					  {/if}
-					  
-					  
-					  
+
+
+
 					  </td>
                     </tr>
-                    { /foreach } 
+                    { /foreach }
                   </table>
                   <p>&nbsp;</p>
       </td>
@@ -95,7 +95,7 @@
   <tr>
     <td height="20" align="center" bgcolor="#BCD3C4"><table width="400" border="0" cellspacing="0" cellpadding="0">
         <tr>
-          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy; 
+          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy;
               Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
         </tr>
       </table></td>
