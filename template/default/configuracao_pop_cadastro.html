@@ -1,0 +1,118 @@
+<html>
+<head>
+<title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
+
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+<script language="JavaScript">
+{literal}
+
+function verificaTipoPop() {
+   formulario.id_pop_ap.disabled = formulario.tipo.value != "CL";
+}
+
+{/literal}
+</script>
+</head>
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>{ include file='menu_principal.html' }</td>
+        </tr>
+        <tr>
+          <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td align="center" valign="middle">
+<form name="formulario" method="post" action="{$smarty.server.PHP_SELF}">
+                	<input type="hidden" name="op" value="pop">
+					<input type="hidden" name="acao" value="{$acao}">
+					<input type="hidden" name="id_pop" value="{$id_pop}">
+
+
+                    <table width="600" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td align="center" valign="middle"><h1>{$titulo} POP</h1></td>
+                      </tr>
+                      <tr>
+                        <td align="center" valign="top"><table width="300" border="0" cellspacing="2" cellpadding="0">
+                            <tr>
+                              <td width="47"><p>Nome</p></td>
+                              <td colspan="3"><p>
+                                  <input name="nome" type="text" id="nome" value="{$nome}" size="40">
+                                </p></td>
+                            </tr>
+                            <tr>
+                              <td><p>Info</p></td>
+                              <td colspan="3"><p>
+                                  <textarea name="info" cols="50" rows="6">{$info}</textarea>
+                                </p></td>
+                            </tr>
+                            <tr>
+                              <td><p>Tipo</p></td>
+                              <td width="221"><p>
+                                  <select name="tipo" onChange='javascript:verificaTipoPop();'>
+                                  {foreach key=id item=nome from=$tipo_pop}
+
+                                    <option value='{$id}'{if $id == $tipo}SELECTED{/if}>{$nome}</option>
+
+
+                                  {/foreach}
+                                  </select>
+                                </p></td>
+                              <td width="31"><p>Ap:</p></td>
+                              <td width="191"> <select name="id_pop_ap">
+                              <option value=''></option>
+                              	{foreach item=b from=$lista_pops2}
+
+                                  <option value='{$b.id_pop}'{if $b.id_pop == $id_pop_ap}SELECTED{/if}>{$b.nome}</option>
+
+                              	{/foreach}
+
+
+                               </select></td>
+                            </tr>
+                            <tr>
+                              <td colspan="4" align="right">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td colspan="4" align="right"><input type="submit" name="Submit" value="{$titulo}">
+                              </td>
+                            </tr>
+                          </table></td>
+                      </tr>
+                    </table>
+                  </form>
+                  <p><a href="configuracao.php?op=lista_pop">voltar</a><br>
+                  </p>
+                  <p>&nbsp;</p></td>
+              </tr>
+            </table></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr>
+    <td height="20" align="center" bgcolor="#BCD3C4"><table width="400" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>
+
+	    {literal}
+
+	      <script language="JavaScript">
+		  		verificaTipoPop();
+		</script>
+		{/literal}
+          <div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy;
+              Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+</body>
+
+
+</html>

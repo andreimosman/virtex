@@ -2,11 +2,7 @@
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
-</head>
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-
-{ literal }
-
+{literal}
 <script>
 
 function check(){
@@ -117,19 +113,16 @@ function validaCNPJ() {
 
 //-->
 </script>
+{/literal}
+</head>
 
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 
-
-
-
-
-
-{ /literal }
-<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+<table width="100%" height="10%" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-          <td>{ include file='menu_principal.html' }</td>
+    <td align="center" valign="top">{ include file='menu_principal.html' }</td>
+  </tr>
+</table></td>
         </tr>
         <tr>
           <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -137,23 +130,45 @@ function validaCNPJ() {
                 <td>
 				<table width="500" border="0" cellspacing="2" cellpadding="2" align="center">
 
+
+							{ if $id_cliente }
                             <tr align="center" valign="middle">
-							<td valign="middle" align="right"><h2> Produtos do Cliente </h2></td>
+							<td valign="middle" align="right"></td>
+							  <td><a href="clientes.php?op=cadastro&id_cliente={$id_cliente}"><img src="template/default/images/bt_ficha_cliente.gif" width="77" height="73" border="0"></a></td>
                               <td><a href="#"><img src="template/default/images/bt_discado.gif" width="77" height="73" border="0"></a></td>
                               <td><a href="#"><img src="template/default/images/bt_bandalarga" width="77" height="73" border="0"></a></td>
                               <td><a href="#"><img src="template/default/images/bt_hospedagem.gif" width="77" height="73" border="0"></a></td>
                               <td><a href="#"><img src="template/default/images/bt_cobranca.gif" width="77" height="73" border="0"></a></td>
                               <td><img src="template/default/images/bt_helpdesk.gif" width="77" height="73"></td>
                             </tr>
+						{/if}
+						{if !$id_cliente }
+                            <tr align="center" valign="middle">
+							<td valign="middle" align="right"></td>
+							  <td><img src="template/default/images/bt_ficha_cliente_inativo.gif" width="77" height="73" border="0"></td>
+                              <td><img src="template/default/images/bt_discado_inativo.gif" width="77" height="73" border="0"></td>
+                              <td><img src="template/default/images/bt_bandalarga_inativo.gif" width="77" height="73" border="0"></td>
+                              <td><img src="template/default/images/bt_hospedagem_inativo.gif" width="77" height="73" border="0"></td>
+                              <td><img src="template/default/images/bt_cobranca_inativo.gif" width="77" height="73" border="0"></td>
+                              <td><img src="template/default/images/bt_helpdesk_inativo.gif" width="77" height="73"></td>
+                            </tr>
+						{ /if }
+
                           </table>
 
 				</td>
              </tr>
               <tr>
                 <td align="center" valign="middle"><p><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>
-                  <h1>{$titulo} Cliente</h1>
+                  <h1>{$titulo} Cliente</h1><br>
+                  {if count($erros) }
+                  {foreach item=a from=$erros}
+                  <font size="2" face="arial" color="#FF0000">Mensagem de Erro:<b> {$a}</b><br></font>
+				  {/foreach}
+                  {/if}
+
                   </strong></font><p></p>
-                  <form action="{$smarty.server.PHP_SELF}" method="post" name=cadastro id="cadastro">
+                  <form action="{$smarty.server.PHP_SELF}" method="post" name=cadastro id="cadastro" onSubmit="return check()">
                     <input type="hidden" name="op" value="{$op}">
                      <input type="hidden" name="id_cliente" value="{$id_cliente}">
                      <input type="hidden" name="acao" value="{$acao}">
@@ -170,17 +185,18 @@ function validaCNPJ() {
                             </tr>
                             <tr>
                               <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-                                  <input  name="nome_razao" type="text"  id="nome_razao" value="{$nome_razao}" size="50" maxlength="50" onBlur="this.style.backgroundColor='#FFFFFF'" onfocus="this.style.backgroundColor='#F7F9F7'" >
+                                  <input  name="nome_razao" type="text"  id="nome_razao" value="{$nome_razao}" size="50" maxlength="50" onBlur="this.style.backgroundColor='#FFFFFF'" onFocus="this.style.backgroundColor='#F7F9F7'" >
                                   </font></p></td>
                               <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                   <SELECT name='tipo_pessoa'>
-                                  {foreach key=id item=nome from=$lista_tp_pessoa} <!-- carrega no dropdown as info do array que estao atribuidas em vaclientes.c. -->
+                                  {foreach key=id item=nome from=$lista_tp_pessoa}
 
                                     <option value='{$id}'{if $id == $tipo_pessoa}SELECTED{/if}>{$nome}</option>
 
 
                                   {/foreach}
-                                  </SELECT>
+
+								</SELECT>
                                   </font></p></td>
                             </tr>
                           </table></td>
@@ -195,18 +211,10 @@ function validaCNPJ() {
                                   </font></p></td>
                             </tr>
                             <tr>
-                              <td><input  name="rg_inscr" type="text" id="rg_inscr" value="{$rg_inscr}" maxlength="20" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
-                              <td><input  name="expedicao" type="text" id="expedicao" value="{$expedicao}" maxlength="10" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
+                              <td><input  name="rg_inscr" type="text" id="rg_inscr" value="{$rg_inscr}" maxlength="20" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
+                              <td><input  name="expedicao" type="text" id="expedicao" value="{$expedicao}" maxlength="10" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
                               <td><input  name="cpf_cnpj" type="text" id="cpf_cnpj" value="{$cpf_cnpj}" maxlength="25"  onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'" onChange="return check(this.value)">
-                                { if $mensagem != "" }
-								</tr>
-								<tr>
-                              <td>&nbsp;</td>
-                              <td>&nbsp;</td>
-                              <td><font color="#FF0000" size="1" face="Verdana, Arial, Helvetica, sans-serif"><b>{$mensagem}</b></font></td>
-                            </tr>
-
-                                </b> { /if } </td>
+                                 </td>
                             </tr>
 
                           </table></td>
@@ -218,7 +226,7 @@ function validaCNPJ() {
                               <td width="54%">&nbsp;</td>
                             </tr>
                             <tr>
-                              <td colspan="2"><input  name="email"type="text" id="email4" value="{$email}" size="50" maxlength="255" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
+                              <td colspan="2"><input  name="email"type="text" id="email4" value="{$email}" size="50" maxlength="255" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
                             </tr>
                           </table></td>
                       </tr>
@@ -230,44 +238,40 @@ function validaCNPJ() {
                               <td width="34%">&nbsp;</td>
                             </tr>
                             <tr>
-                              <td colspan="3"><input  name="endereco"type="text"  id="endereco3" value="{$endereco}" size="70" maxlength="50" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
+                              <td colspan="3"><input  name="endereco"type="text"  id="endereco3" value="{$endereco}" size="70" maxlength="50" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                               </td>
                             </tr>
                             <tr>
-                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Complemento
-                                  </font></p></td>
-                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Bairro<br>
-                                  </font></p></td>
+                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Complemento</font></p></td>
+                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Bairro<br></font></p></td>
                               <td rowspan="2"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
                             </tr>
                             <tr>
                               <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-                                <input  name="complemento"type="text"  id="complemento4" value="{$complemento}" maxlength="20" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
+                                <input  name="complemento"type="text"  id="complemento4" value="{$complemento}" maxlength="20" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                                 </font></td>
                               <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-                                <input  name="bairro" type="text"  id="bairro2" value="{$bairro}" maxlength="15" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
+                                <input  name="bairro" type="text"  id="bairro2" value="{$bairro}" maxlength="15" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                                 </font></td>
                             </tr>
                             <tr>
                               <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Cidade
                                   </font></p></td>
-                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Estado</font></p></td>
+                              <td width="20"></td>
                               <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">CEP</font></p></td>
                             </tr>
                             <tr>
                               <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-                                <input  name="cidade" type="text"  id="cidade" value="{$cidade}" maxlength="20" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
-                                </font></td>
-                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-                                <select name='estado' >
-                                {foreach key=id item=nome from=$lista_estados}
 
-                                  <option value='{$id}'{if $id == $estado}SELECTED{/if}>{$nome}</option>
-                                {/foreach}
-                                </select>
+							  <select name="id_cidade">
+							  {foreach item=a from=$cidades_disponiveis}
+							  	<option value='{$a.id_cidade}' {if $a.id_cidade == $id_city}SELECTED{/if}>{$a.cidade} - {$a.uf}</option>
+							  {/foreach}
+							  </select>
                                 </font></td>
+                              <td width="20"></td>
                               <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-                                <input  name="cep"type="text"  id="cep2" value="{$cep}" maxlength="10" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
+                                <input  name="cep"type="text"  id="cep2" value="{$cep}" maxlength="10" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                                 </font></td>
                             </tr>
                             <tr>
@@ -281,13 +285,13 @@ function validaCNPJ() {
                             </tr>
                             <tr>
                               <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-                                <input  name="fone_comercial" type="text"  id="fone_comercial" value="{$fone_comercial}" maxlength="15" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
+                                <input  name="fone_comercial" type="text"  id="fone_comercial" value="{$fone_comercial}" maxlength="15" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                                 </font></td>
                               <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-                                <input  name="fone_residencial" type="text"  id="fone_residencial" value="{$fone_residencial}" maxlength="15" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
+                                <input  name="fone_residencial" type="text"  id="fone_residencial" value="{$fone_residencial}" maxlength="15" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                                 </font></td>
                               <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-                                <input  name="fone_celular"type="text"  id="fone_celular" value="{$fone_celular}" maxlength="15" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
+                                <input  name="fone_celular"type="text"  id="fone_celular" value="{$fone_celular}" maxlength="15" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                                 </font></td>
                             </tr>
                           </table></td>
@@ -297,7 +301,7 @@ function validaCNPJ() {
                             <tr>
                               <td colspan="3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Contato
                                 <br>
-                                </font> <input  name="contato" type="text"  id="contato" value="{$contato}" size="50" maxlength="20" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
+                                </font> <input  name="contato" type="text"  id="contato" value="{$contato}" size="50" maxlength="20" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
                             </tr>
                             <tr>
                               <td width="33%">&nbsp; </td>
@@ -314,14 +318,14 @@ function validaCNPJ() {
                             </tr>
                             <tr>
                               <td width="33%"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Banco<br>
-                                  <input  name="banco" type="text"  id="banco" value="{$banco}" maxlength="20" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
+                                  <input  name="banco" type="text"  id="banco" value="{$banco}" maxlength="20" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                                   </font></p></td>
                               <td width="33%"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Ag&ecirc;ncia<br>
-                                  <input  name="agencia" type="text"  id="agencia" value="{$agencia}" maxlength="10" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
+                                  <input  name="agencia" type="text"  id="agencia" value="{$agencia}" maxlength="10" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                                   </font></p></td>
                               <td width="33%"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Conta
                                   Corrente<br>
-                                  <input  name="conta_corrente" type="text"  id="conta_corrente3" value="{$conta_corrente}" maxlength="10" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
+                                  <input  name="conta_corrente" type="text"  id="conta_corrente3" value="{$conta_corrente}" maxlength="10" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                                   </font></p></td>
                             </tr>
                           </table></td>
@@ -337,20 +341,18 @@ function validaCNPJ() {
                               <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Status
                                   do Contrato<br>
                                   <select name='ativo'>
-                               		 {foreach key=id item=nome from=$lista_ativo}
-
-                                    <option value='{$id}'{if $id == $ativo}SELECTED{/if}>{$nome}</option>
-                               		 {/foreach}
-                                  </select>
+									     {foreach key=id item=nome from=$lista_ativo}
+                                    		<option value='{$id}'{if $id == $ativo}SELECTED{/if}>{$nome}</option>
+                               		 	 {/foreach}
+									</select>
                                   </font></p></td>
                               <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data
                                   de Pagamento<br>
                                   <select name='dia_pagamento'>
-                             	  {foreach key=id item=nome from=$lista_dia_pagamento}
-
-                                    <option value='{$id}'{if $id == $dia_pagamento}SELECTED{/if}>{$nome}</option>
-                               	  {/foreach}
-                                  </select>
+                             	  			{foreach key=id item=nome from=$lista_dia_pagamento}
+                                    				<option value='{$id}'{if $id == $dia_pagamento}SELECTED{/if}>{$nome}</option>
+                               	  			{/foreach}
+                               	   </select>
                                   </font></p></td>
                               <td>&nbsp;</td>
                             </tr>
@@ -368,7 +370,7 @@ function validaCNPJ() {
                                   </font></p></td>
                             </tr>
                             <tr>
-                              <td colspan="3"><textarea name="obs" cols="80" rows="8" onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">{$obs}
+                              <td colspan="3"><textarea name="obs" cols="80" rows="8" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">{$obs}
 </textarea></td>
                             </tr>
                           </table></td>
@@ -385,7 +387,7 @@ function validaCNPJ() {
                           </table></td>
                       </tr>
                       <tr>
-                        <td width="47%" bgcolor="#F7F9F7">&nbsp;</td>
+                        <td width="47%">&nbsp;</td>
                         <td width="53%">&nbsp;</td>
                       </tr>
                       <tr>
@@ -413,3 +415,4 @@ function validaCNPJ() {
 
 
 </html>
+

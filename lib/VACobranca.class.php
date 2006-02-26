@@ -20,6 +20,7 @@ class VACobranca extends VirtexAdmin {
 
 	public function processa($op=null) {
 		if ($op == "cadastro"){
+		//INICIO DO CADASTRAMENTO E ALTERAÇÃO DE PRODUTO
 			
 			$erros = array();
 
@@ -75,7 +76,7 @@ class VACobranca extends VirtexAdmin {
 			      $sSQL .= "   p.permitir_outros_dominios, p.email_anexado, p.numero_contas, ph.dominio, ph.franquia_em_mb, ph.valor_mb_adicional ";
 			      $sSQL .= "FROM prtb_produto p , prtb_produto_hospedagem ph ";
 			      $sSQL .= "WHERE p.id_produto = ph.id_produto ";
-			      $sSQL .= "WHERE p.id_produto = $id_produto ";
+			      $sSQL .= "AND p.id_produto = $id_produto ";
 
 			      //$sSQL = "SELECT * FROM prtb_produto INNER JOIN prtb_produto_hospedagem ON (prtb_produto.id_produto = $id_produto AND prtb_produto_hospedagem.id_produto = $id_produto)";
 			      
@@ -308,6 +309,31 @@ class VACobranca extends VirtexAdmin {
 			// Atribui a variável de erro no template.
 			$this->tpl->atribui("erros",$erros);
 			
+			
+			// Atribui as listas
+			global $_LS_DISPONIVEL;
+			$this->tpl->atribui("ls_disponivel",$_LS_DISPONIVEL);
+			
+			global $_LS_DOWNLOAD;
+			$this->tpl->atribui("ls_banda_download_kbps",$_LS_DOWNLOAD);
+
+			global $_LS_UPLOAD;
+			$this->tpl->atribui("ls_banda_upload_kbps",$_LS_UPLOAD);
+				
+			global $_LS_DUPLICIDADE;
+			$this->tpl->atribui("ls_permitir_duplicidade",$_LS_DUPLICIDADE);
+			
+			global $_LS_DOMINIO;
+			$this->tpl->atribui("ls_dominio",$_LS_DOMINIO);
+			
+			global $_LS_OUTROS_DOMINIOS;
+			$this->tpl->atribui("ls_permitir_outros_dominios",$_LS_OUTROS_DOMINIOS);
+			
+			global $_LS_EMAIL_ANEXADO;
+			$this->tpl->atribui("ls_email_anexado",$_LS_EMAIL_ANEXADO);
+			
+			
+			
 			// tabela prtb_produto
 			
 			//echo "SQL: ". $sSQL . "<br>\n";
@@ -351,6 +377,9 @@ class VACobranca extends VirtexAdmin {
 
 			// Seta as variáveis do template.
 			$this->arquivoTemplate = "cobranca_produtos_novo.html";
+			
+			
+			//FINAL DO CADASTRAMENTO E ALTERAÇÃO DE PRODUTO
 
 
 		} else if($op == "lista"){

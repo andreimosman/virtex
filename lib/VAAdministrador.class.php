@@ -158,14 +158,32 @@ public function processa($op=null) {
 
 
 	// processa os links
-	    } else if($op == "altera"){
-	        $this->arquivoTemplate = "administrador_alterarsenha.html";
-	    } else if ($op == "cadastro"){
-	        $this->arquivoTemplate = "administrador_cadastro.html";
+	    } else if($op == "lista"){
+	    
+			$sSQL  = "SELECT ";
+			$sSQL .= "   id_admin, admin, senha, status, ";
+			$sSQL .= "   nome, email, primeiro_login ";
+			$sSQL .= "FROM adtb_admin ";
+			$sSQL .= "ORDER BY nome ASC ";
+			
+			$lista = $this->bd->obtemRegistros($sSQL);
+			
+			$this->tpl->atribui("lista_admin",$lista);
+			$this->tpl->atribui("id_admin",@$lista["id_admin"]);
+			$this->tpl->atribui("admin",@$lista["admin"]);
+			$this->tpl->atribui("senha",@$lista["senha"]);
+			$this->tpl->atribui("status",@$lista["status"]);
+			$this->tpl->atribui("nome",@$lista["nome"]);
+			$this->tpl->atribui("email",@$lista["email"]);
+			$this->tpl->atribui("primeiro_login",@$lista["primeiro_login"]);
+	    
+			$this->arquivoTemplate = "administrador_lista.html";	 		   
+	 		   
+	    
+	        
 	    } else if ($op == "direitos"){
 	        $this->arquivoTemplate = "administrador_direitos.html";
-	    } else if ($op == "lista"){
-		$this->arquivoTemplate = "administrador_lista.html";
+
 	    }else if ($op == "mod"){
 		$this->arquivoTemplate = "administrador_altera.html";
 	   }

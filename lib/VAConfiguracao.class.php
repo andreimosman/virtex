@@ -17,8 +17,41 @@ class VAConfiguracao extends VirtexAdmin {
 
 		public function processa($op=null) {// Cria função processa
 		
-			if ($op == "cadastro"){
+			if ($op == "lista_pop"){
 		
+				$erros = array();
+											
+															
+				$enviando = false;
+														
+														
+				$reg = array();
+				
+				$sSQL  = "SELECT ";
+				$sSQL .= "   id_pop, nome, info, tipo, id_pop_ap ";
+				$sSQL .= "FROM cftb_pop ";
+								
+				$reg = $this->bd->obtemRegistros($sSQL);
+								
+				$this->tpl->atribui("lista_pop",$reg);
+				
+				
+				
+				$this->arquivoTemplate = "configuracao_pop_lista.html";
+					
+					
+					
+					
+					
+				
+				
+
+
+
+
+			}else if($op == "pop"){
+
+
 			$erros = array();
 
 			$acao = @$_REQUEST["acao"];
@@ -26,6 +59,12 @@ class VAConfiguracao extends VirtexAdmin {
 
 			$enviando = false;
 			
+			$tSQL  = "SELECT ";
+			$tSQL .= "   id_pop, nome, info, tipo, id_pop_ap ";
+			$tSQL .= "FROM cftb_pop ";
+			$tSQL .= "WHERE tipo = 'AP'";
+
+			$aps = $this->bd->obtemRegistros($tSQL);
 			
 			$reg = array();
 
@@ -34,145 +73,509 @@ class VAConfiguracao extends VirtexAdmin {
 			   // Se ele recebeu o campo ação é pq veio de um submit
 			   $enviando = true;
 			} else {
-			   // Se não recebe o campo ação e tem id_cliente é alteração, caso contrário é cadastro.
-			   if( $id_cliente ) {
-			      // SELECT
-			      $sSQL  = "SELECT ";
-			      $sSQL .= "   id_pop, nome, info, interface, ";
-			      $sSQL .= "FROM cftb_cliente ";
-			      $sSQL .= "WHERE id_pop = $pop ";
+				// Se não recebe o campo ação e tem id_pop é alteração, caso contrário é cadastro.
+				if( $id_pop ) {
+					// SELECT
+					$sSQL  = "SELECT ";
+					$sSQL .= "   id_pop, nome, info, tipo, id_pop_ap ";
+					$sSQL .= "FROM cftb_pop ";
+					$sSQL .= "WHERE id_pop = '$id_pop'";
+					
+										
+					$reg = $this->bd->obtemUnicoRegistro($sSQL);
+					
 
+					$acao = "alt";
+					$titulo = "Alterar";
+
+				} else {
+					$acao = "cad";
+					$titulo = "Cadastrar";
+				}
+			}
+			
+			if( $enviando ) {
 
 				
-			      $reg = $this->bd->obtemUnicoRegistro($sSQL);
-			      
-			      
-			      
-			      $acao = "alt";
-			      
-			      
-			      
-			      
-			   } else {
-			      $acao = "cad";
-			   }
+				if( !count($erros) ) {
+				   // Grava no banco.
+					if( $acao == "cad" ) {
+				   		// CADASTRO
+				   		
+				   		$id_pop_ap = @$_REQUEST['id_pop_ap'];
+				   		
+						$msg_final = "POP Cadastrado com sucesso!";
+				   		
+						$id_pop = $this->bd->proximoID("cfsq_id_pop");
+
+					
+						$sSQL  = "INSERT INTO ";
+						$sSQL .= "   cftb_pop( ";
+						$sSQL .= "      id_pop, nome, info, tipo, id_pop_ap ) ";
+						$sSQL .= "   VALUES (";
+						$sSQL .= "     '" . $this->bd->escape($id_pop) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["info"]) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["tipo"]) . "', ";
+						$sSQL .= "      " . ($id_pop_ap ? "$id_pop_ap" : "NULL") . "  ";
+						//$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["id_pop_ap"]) . "' ";
+						$sSQL .= "     )";
+					
+						
+					} else {
+					   // ALTERACAO
+						$msg_final = "POP Alterado com sucesso!";
+
+
+						$sSQL  = "UPDATE ";
+						$sSQL .= "   cftb_pop ";
+						$sSQL .= "SET ";
+						$sSQL .= "   nome = '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
+						$sSQL .= "   info = '" . $this->bd->escape(@$_REQUEST["info"]) . "', ";
+						$sSQL .= "   tipo = '" . $this->bd->escape(@$_REQUEST["tipo"]) . "', ";
+						$sSQL .= "   id_pop_ap = ". (@$_REQUEST["tipo"] != "CL" ? "NULL" : "'" . $this->bd->escape(@$_REQUEST["id_pop_ap"]) . "'" ) .   " ";
+						$sSQL .= "WHERE ";
+						$sSQL .= "   id_pop = '" . $this->bd->escape(@$_REQUEST["id_pop"]) . "' ";  
+
+
+					}
+					
+					$this->bd->consulta($sSQL);  
+
+					if( $this->bd->obtemErro() != MDATABASE_OK ) {
+						echo "ERRO: " . $this->bd->obtemMensagemErro() , "<br>\n";
+						echo "QUERY: " . $sSQL . "<br>\n";
+					
+					}
+
+
+					// Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
+					$this->tpl->atribui("mensagem",$msg_final); 
+					$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=listagem");
+					$this->tpl->atribui("target","_top");
+
+					$this->arquivoTemplate = "msgredirect.html";
+					
+					
+					// cai fora da função (ou seja, deixa de processar o resto do aplicativo: a parte de exibicao da tela);
+					return;
+				}else{
+				
+				
+				}
+				
 			}
 			
-			if ($acao == "cad"){
-			   $msg_final = "POP cadastrado com sucesso!";
-			   $titulo = "Cadastrar";
-			   
-			}else{
-			   $msg_final = "POP alterado com sucesso!";
-			   $titulo = "Alterar";
-			   }
 			
-
-			$this->tpl->atribui("op",$op);
-			$this->tpl->atribui("acao",$acao);
-			$this->tpl->atribui("id_pop",$id_pop);
-
-
-			// O cara clicou no botão enviar (submit).
-			if( $enviando ) {
-			   // Validar
-			   $erros = $this->validaFormulario();
-			   
-			   if( count($erros) ) {
-			      $reg = $_REQUEST;
-			      
-			   } else {
-			      // Gravar no banco.
-			      $sSQL = "";
-			      if( $acao == "cad" ) {
-			         $id_pop = $this->bd->proximoID("cfsq_id_pop");
-
-			         // Cadastro
-			         $sSQL  = "INSERT INTO ";
-			         $sSQL .= "   cftb_pop( ";
-				 $sSQL .= "      id_pop, nome, info, interface ) ";
-			         $sSQL .= "   VALUES (";
-				 $sSQL .= "     '" . $this->bd->escape($id_pop) . "', ";
-				 $sSQL .= "     '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
-				 $sSQL .= "     '" . $this->bd->escape(@$_REQUEST["info"]) . "', ";
-				 $sSQL .= "     '" . $this->bd->escape(@$_REQUEST["interface"]) . "' ";
-			         $sSQL .= "     )";
-
-
-			      } else {
-			         // Alteração
-			         $sSQL  = "UPDATE ";
-			         $sSQL .= "   cftb_pop ";
-			         $sSQL .= "SET ";
-			         $sSQL .= "   nome = '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
-			         $sSQL .= "   info = '" . $this->bd->escape(@$_REQUEST["info"]) . "', ";
-       			         $sSQL .= "   interface = '" . $this->bd->escape(@$_REQUEST["interface"]) . "' ";
-			         $sSQL .= "WHERE ";
-			         $sSQL .= "   id_pop = '" . $this->bd->escape(@$_REQUEST["id_pop"]) . "' ";  // se idcliente for =  ao passado.
-			         
-    		         
-			      }
-
-			      $this->bd->consulta($sSQL);  //mostra mensagem de erro
-			      
-			      if( $this->bd->obtemErro() != MDATABASE_OK ) {
-			         echo "ERRO: " . $this->bd->obtemMensagemErro() , "<br>\n";
-			         echo "QUERY: " . $sSQL . "<br>\n";
-			      }
-
-
-			      // Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
-			      $this->tpl->atribui("mensagem",$msg_final); //pega o conteúdo de msg_final e envia para mensagem que é uma val do smart.
-			      $this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=listagem");
-			      $this->tpl->atribui("target","_top");
-
-			       //  if (count($checa)){
-			       //  $this->arquivoTemplate="clientes_cadastro.html";
-			       // }
-
-
-			      $this->arquivoTemplate="msgredirect.html"; //faz exibir o msgredirect.html que tem vai receber a mensagem de erro ou sucesso.
-
-			      // cai fora da função (ou seja, deixa de processar o resto do aplicativo: a parte de exibicao da tela);
-			      return;
-			   }
-
-			}
-
+			
 			// Atribui a variável de erro no template.
 			$this->tpl->atribui("erros",$erros);
+			$this->tpl->atribui("mensagem",$erros);
+			$this->tpl->atribui("acao",$acao);
+			$this->tpl->atribui("op",$op);
 			
-			/*// Atribui as listas
-			global $_LS_ESTADOS;
-			$this->tpl->atribui("lista_estados",$_LS_ESTADOS);
+			// Atribui as listas
+			//global $_LS_ESTADOS;
+			//$this->tpl->atribui("lista_estados",$_LS_ESTADOS);
 			
-			global $_LS_TP_PESSOA;
-			$this->tpl->atribui("lista_tp_pessoa",$_LS_TP_PESSOA); //lista_tp_pessoa recebe os dados do array LS_TP_PESSOA(status.defs.php) para mostrar do dropdown.
-			
-			global $_LS_ST_CLIENTE;
-			$this->tpl->atribui("lista_ativo",$_LS_ST_CLIENTE);
 
-			global $_LS_DIA_PGTO;
-			$this->tpl->atribui("lista_dia_pagamento",$_LS_DIA_PGTO);*/
+			global $_LS_TIPO_POP;
+			$this->tpl->atribui("tipo_pop",$_LS_TIPO_POP);
 
-			
-			
 			// Atribui os campos
 		        $this->tpl->atribui("id_pop",@$reg["id_pop"]);
-		        $this->tpl->atribui("info",@$reg["info"]);
-		        $this->tpl->atribui("interface",@$reg["interface"]);// pega a info do db e atribui ao campo correspon do form
-
+		        $this->tpl->atribui("nome",@$reg["nome"]);
+		        $this->tpl->atribui("info",@$reg["info"]);// pega a info do db e atribui ao campo correspon do form
+		        $this->tpl->atribui("tipo",@$reg["tipo"]);
+		        $this->tpl->atribui("id_pop_ap",@$reg["id_pop_ap"]);
+		        $this->tpl->atribui("titulo",@$titulo);// para que no template a variavel do smart titulo consiga pegar o que foi definido no $titulo.
 		        
-		        $this->tpl->atribui("titulo",$titulo);// para que no clientes_cadastro.html a variavel do smart titulo consiga pegar o que foi definido no $titulo.
+		        $this->tpl->atribui("lista_pops2",@$aps);
 		        
 
 			// Seta as variáveis do template.
-			$this->arquivoTemplate = "pop_cadastro.html";
-
-				}
+			$this->arquivoTemplate = "configuracao_pop_cadastro.html";
+			
+			
+			
+		}else if ($op == "lista_nas"){
 		
-			}// fecha if op=cadastro
-		}// fecha processa
+				
+				$erros = array();
+															
+																			
+				$enviando = false;
+																		
+																		
+				$reg = array();
+								
+				$sSQL  = "SELECT ";
+				$sSQL .= "   id_nas, nome, ip, secret, tipo_nas ";
+				$sSQL .= "FROM cftb_nas ";
+												
+				$reg = $this->bd->obtemRegistros($sSQL);
+												
+				$this->tpl->atribui("lista_nas",$reg);
+								
+								
+								
+				$this->arquivoTemplate = "configuracao_nas_lista.html";
+				
+				
+				
+				
+				
+				
+				
+		
+		}else if ($op =="nas"){
+
+			
+			
+				$erros = array();
+			
+				$acao = @$_REQUEST["acao"];
+				$id_nas = @$_REQUEST["id_nas"];
+			
+				$enviando = false;
+						
+				$reg = array();
+
+			
+				if( $acao ) {
+					// Se ele recebeu o campo ação é pq veio de um submit
+					$enviando = true;
+				} else {
+					// Se não recebe o campo ação e tem id_pop é alteração, caso contrário é cadastro.
+					if( $id_nas ) {
+						// SELECT
+						$sSQL  = "SELECT ";
+						$sSQL .= "   id_nas, nome, ip, secret, tipo_nas ";
+						$sSQL .= "FROM cftb_nas ";
+						$sSQL .= "WHERE id_nas = '$id_nas'";
+								
+													
+						$reg = $this->bd->obtemUnicoRegistro($sSQL);
+								
+			
+						$acao = "alt";
+						$titulo = "Alterar";
+			
+					} else {
+						$acao = "cad";
+						$titulo = "Cadastrar";
+					}
+				}
+						
+				if( $enviando ) {
+			
+							
+					if( !count($erros) ) {
+						// Grava no banco.
+						if( $acao == "cad" ) {
+						// CADASTRO
+							   		
+							   		
+						$msg_final = "NAS Cadastrado com sucesso!";
+							   		
+						$id_nas = $this->bd->proximoID("cfsq_id_nas");
+			
+								
+						$sSQL  = "INSERT INTO ";
+						$sSQL .= "   cftb_nas( ";
+						$sSQL .= "      id_nas, nome, ip, secret, tipo_nas ) ";
+						$sSQL .= "   VALUES (";
+						$sSQL .= "     '" . $this->bd->escape($id_nas) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["ip"]) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["secret"]) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["tipo_nas"]) . "' ";
+						$sSQL .= "     )";
+								
+									
+						} else {
+						// ALTERACAO
+						$msg_final = "NAS Alterado com sucesso!";
+			
+			
+						$sSQL  = "UPDATE ";
+						$sSQL .= "   cftb_nas ";
+						$sSQL .= "SET ";
+						$sSQL .= "   nome = '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
+						$sSQL .= "   ip = '" . $this->bd->escape(@$_REQUEST["ip"]) . "', ";
+						$sSQL .= "   secret = '" . $this->bd->escape(@$_REQUEST["secret"]) . "', ";
+						$sSQL .= "   tipo_nas = '" . $this->bd->escape(@$_REQUEST["tipo_nas"]) . "' ";
+						$sSQL .= "WHERE ";
+						$sSQL .= "   id_nas = '" . $this->bd->escape(@$_REQUEST["id_nas"]) . "' ";  
+			
+			
+						}
+								
+						$this->bd->consulta($sSQL);  
+			
+						if( $this->bd->obtemErro() != MDATABASE_OK ) {
+						echo "ERRO: " . $this->bd->obtemMensagemErro() , "<br>\n";
+						echo "QUERY: " . $sSQL . "<br>\n";
+								
+						}
+			
+			
+						// Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
+						$this->tpl->atribui("mensagem",$msg_final); 
+						$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=listagem");
+						$this->tpl->atribui("target","_top");
+			
+						$this->arquivoTemplate = "msgredirect.html";
+								
+								
+						// cai fora da função (ou seja, deixa de processar o resto do aplicativo: a parte de exibicao da tela);
+						return;
+						}else{
+							
+							
+						}
+							
+					}
+			
+			
+				// Atribui a variável de erro no template.
+				$this->tpl->atribui("erros",$erros);
+				$this->tpl->atribui("mensagem",$erros);
+				$this->tpl->atribui("acao",$acao);
+				$this->tpl->atribui("op",$op);
+							
+				// Atribui as listas
+				//global $_LS_ESTADOS;
+				//$this->tpl->atribui("lista_estados",$_LS_ESTADOS);
+							
+				
+				global $_LS_TIPO_NAS;
+				$this->tpl->atribui("ls_tipo_nas",$_LS_TIPO_NAS);
+				
+				// Atribui os campos
+				$this->tpl->atribui("id_nas",@$reg["id_nas"]);
+				$this->tpl->atribui("nome",@$reg["nome"]);
+				$this->tpl->atribui("ip",@$reg["ip"]);// pega a info do db e atribui ao campo correspon do form
+				$this->tpl->atribui("secret",@$reg["secret"]);
+				$this->tpl->atribui("tipo_nas",@$reg["tipo_nas"]);
+				$this->tpl->atribui("titulo",@$titulo);// para que no template a variavel do smart titulo consiga pegar o que foi definido no $titulo.
+						        
+										        
+				
+				// Seta as variáveis do template.
+				$this->arquivoTemplate = "configuracao_nas_cadastro.html";
+			
+			
+//////////////////////////////
+		}else if ($op == "nas_rede"){
+		//LISTA REDES CADASTRADAS EM DETERMINADO NAS
+		
+		$this->arquivoTemplate = "configuracao_nas_rede.html";
+	
+		
+		}else if($op == "rede"){
+		// CADASTRA E ALTERA REDE EM DETERMINADO NAS
+				
+		$this->arquivoTemplate = "configuracao_redes_cadastro.html";
+		
+
+
+
+///////////////////////////////		
+		}else if ($op == "cidades"){
+		
+				
+				
+				$eSQL  = "SELECT ";
+				$eSQL .= "   uf, estado ";
+				$eSQL .= "FROM cftb_uf ";
+				$eSQL .= "ORDER BY estado ";
+
+				$lista_estados = $this->bd->obtemRegistros($eSQL);
+				
+				$this->tpl->atribui("lista_estados",$lista_estados);
+				$city = @$_REQUEST['pesquisa'];
+				$uf = @$_REQUEST['uf'];
+				$acao = @$_REQUEST['acao'];
+				//$erro = "";
+				$mov = @$_REQUEST['mov'];
+				
+				$this->tpl->atribui("acao",$acao);
+				
+				if (!$city && !$uf){
+				$dSQL  = "SELECT ";
+				$dSQL .= "   id_cidade, uf, cidade, disponivel ";
+				$dSQL .= "FROM cftb_cidade ";
+				$dSQL .= "WHERE disponivel = 't'";
+				$dSQL .= "ORDER BY cidade ";
+
+				$erro = "";
+				
+				
+				$lista_cidades = $this->bd->obtemRegistros($dSQL);
+				$this->tpl->atribui("lista_cidades",$lista_cidades);
+				
+					if (!count($lista_cidades)){
+						$erro = "nenhuma cidade disponivel no momento";
+					}
+				
+
+				
+				}
+				
+			
+			
+			
+				if ( $city ) {
+					
+					
+					
+					$city = @$_REQUEST['pesquisa'];;
+					
+					$city = ereg_replace("[áàâãª]","a",$city);
+					$city = ereg_replace("[ÁÀÂÃ]","A",$city);
+					$city = ereg_replace("[éèê]","e",$city);
+					$city = ereg_replace("[ÉÈÊ]","E",$city);
+					$city = ereg_replace("[óòôõº]","o",$city);
+					$city = ereg_replace("[ÓÒÔÕ]","O",$city);
+					$city = ereg_replace("[úùû]","u",$city);
+					$city = ereg_replace("[ÚÙÛ]","U",$city);
+					$city = str_replace("ç","c",$city);
+					$city = str_replace("Ç","C",$city);
+					$city = ereg_replace(" ","",$city); 
+					$city = strtoupper($city);
+					
+										
+					if ( !$uf ){
+				
+					
+					$cSQL  = "SELECT ";
+					$cSQL .= "   id_cidade, uf, cidade, disponivel ";
+					$cSQL .= "FROM cftb_cidade ";
+					//$cSQL .= "WHERE nome ilike '%$city%'";
+					$cSQL .= "WHERE cidade ilike '". str_replace("*","%",$city) ."' ";
+					$cSQL .= "ORDER BY cidade ASC";
+					
+					
+					
+					$pesquisa_resultado = $this->bd->obtemRegistros($cSQL);
+					
+					$this->tpl->atribui("pesquisa_resultado",$pesquisa_resultado);
+					$this->tpl->atribui("pesquisa",$city);
+					$acao = "search";
+					$this->tpl->atribui("acao",$acao);
+					
+					}else{
+					
+										
+						$cSQL  = "SELECT ";
+						$cSQL .= "   id_cidade, uf, cidade, disponivel ";
+						$cSQL .= "FROM cftb_cidade ";
+						//$cSQL .= "WHERE nome ilike '%$city%' AND uf = '$estado'";
+						$cSQL .= "WHERE cidade ilike '". str_replace("*","%",$city) ."' AND uf = '$uf'";
+						$cSQL .= "ORDER BY cidade ASC";
+						
+						$eSQL  = "SELECT ";
+						$eSQL .= "   estado ";
+						$eSQL .= "FROM cftb_uf ";
+						$eSQL .= "WHERE uf = '$uf'";
+						
+						
+
+									echo "bosta";	
+						$pesquisa_resultado = $this->bd->obtemRegistros($cSQL);
+						$nome_estado = $this->bd->obtemUnicoRegistro($eSQL);
+						
+						$this->tpl->atribui("nome_uf",$nome_estado["estado"]);
+						$this->tpl->atribui("pesquisa_resultado",$pesquisa_resultado);
+						$this->tpl->atribui("pesquisa",$city);
+						$this->tpl->atribui("uf",$uf);
+						$acao = "search";
+						$this->tpl->atribui("acao",$acao);
+					}
+				
+				
+				}else if ( $uf ){
+				
+					$cSQL  = "SELECT ";
+					$cSQL .= "   id_cidade, uf, cidade, disponivel ";
+					$cSQL .= "FROM cftb_cidade ";
+					$cSQL .= "WHERE uf = '$uf'";
+					$cSQL .= "ORDER BY cidade ASC";
+					
+					$eSQL  = "SELECT ";
+					$eSQL .= "   estado ";
+					$eSQL .= "FROM cftb_uf ";
+					$eSQL .= "WHERE uf = '$uf'";
+
+					$pesquisa_resultado = $this->bd->obtemRegistros($cSQL);
+					$nome_estado = $this->bd->obtemUnicoRegistro($eSQL);
+												
+					$this->tpl->atribui("pesquisa_resultado",$pesquisa_resultado);
+					$this->tpl->atribui("nome_uf",$nome_estado["estado"]);
+					$this->tpl->atribui("uf",$uf);
+					$acao = "search";
+					$this->tpl->atribui("acao",$acao);
+				
+				
+				
+
+				
+					}
+				
+
+					if($mov == "cadastro"){
+											
+											
+						while(list($id,$valor)=each($_REQUEST['disponivel'])){
+											
+							$uSQL  = "UPDATE ";
+							$uSQL .= "   cftb_cidade ";
+							$uSQL .= "SET ";
+							$uSQL .= "   disponivel = '$valor' ";
+							$uSQL .= "WHERE ";
+							$uSQL .= "   id_cidade = '$id' ";
+											
+							$this->bd->consulta($uSQL);
+							
+							$this->tpl->atribui("op","cidades");
+							$this->tpl->atribui("acao","ok");
+											
+											
+						}
+					}
+				//$this->tpl->atribui("erro",$erro);
+				global $_LS_ST_CIDADE;
+				$this->tpl->atribui("lista_st_cidades",$_LS_ST_CIDADE);
+
+				$this->arquivoTemplate = "configuracao_cadastro_cidades.html";
+				
+				
+				
+					
+						
+					
+					
+					}
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+
+				
+				
+				
+				
+		
+			}// fecha function processa()
+		}// fecha classe VirtexAdmin
 
 
 
