@@ -14,6 +14,16 @@ class AdminLogin {
 	protected $privilegios;
 	protected $logado;
 	protected $primeiroLogin;
+	
+	
+	function __sleep() {
+		$this->bd = null;
+		return(array("id_admin","admin","senha","nome","email","privilegios","logado","primeiroLogin"));
+	}
+	
+	function __wakeup() {
+	
+	}
 
 	/**
 	 * Constructor
