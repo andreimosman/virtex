@@ -5,8 +5,6 @@ class VAConfiguracao extends VirtexAdmin {
 
 	public function VAConfiguracao() {
 		parent::VirtexAdmin();
-
-
 	}
 
 
@@ -39,15 +37,6 @@ class VAConfiguracao extends VirtexAdmin {
 				
 				$this->arquivoTemplate = "configuracao_pop_lista.html";
 					
-					
-					
-					
-					
-				
-				
-
-
-
 
 			}else if($op == "pop"){
 
@@ -368,15 +357,64 @@ class VAConfiguracao extends VirtexAdmin {
 			
 //////////////////////////////
 		}else if ($op == "nas_rede"){
-		//LISTA REDES CADASTRADAS EM DETERMINADO NAS
-		
-		$this->arquivoTemplate = "configuracao_nas_rede.html";
-	
+			//LISTA REDES CADASTRADAS EM DETERMINADO NAS
+			$this->arquivoTemplate = "configuracao_nas_rede.html";
+			
+			$id_nas = @$_REQUEST["id_nas"];
+			
+			$erro = "";
+			
+			if( !$id_nas ) {
+			   $erro = "Tentativa de acesso inválido";
+			}
+			
+			if( !$erro ) {
+				// Informações do NAS
+				$sSQL  = "SELECT ";
+				$sSQL .= "   id_nas, nome, ip, secret, tipo_nas ";
+				$sSQL .= "FROM ";
+				$sSQL .= "   cftb_nas ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "   id_nas = '".$this->bd->escape($id_nas)."' ";
+				
+				$nas = $this->bd->obtemUnicoRegistro($sSQL);
+				
+				$this->tpl->atribui("nas",$nas);
+				
+				// $sSQL .= "";
+			
+			
+				// Lista das redes deste NAS
+				$sSQL  = "SELECT ";
+				$sSQL .= "   r.rede,r.tipo_rede,r.id_rede ";
+				$sSQL .= "FROM ";
+				$sSQL .= "   cftb_nas_rede nr, cftb_rede r ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "   r.id_rede = nr.id_rede ";
+				$sSQL .= "   AND id_nas = '" . $this->bd->escape($id_nas) . "' ";
+				
+				// TODO: aplicar filtros e paginação...
+				$redes = $this->bd->obtemRegistros($sSQL);
+				
+				$this->tpl->atribui("redes",$redes);
+				
+			}
 		
 		}else if($op == "rede"){
-		// CADASTRA E ALTERA REDE EM DETERMINADO NAS
+			// CADASTRA E ALTERA REDE EM DETERMINADO NAS
+			$this->arquivoTemplate = "configuracao_redes_cadastro.html";
+			
+			$acao = @$_REQUEST["acao"];
+			$erro = "";
+			
+			
+			if( $acao ) {
+				// Está enviando um post
 				
-		$this->arquivoTemplate = "configuracao_redes_cadastro.html";
+				
+			
+			
+			}
 		
 
 
@@ -576,28 +614,13 @@ class VAConfiguracao extends VirtexAdmin {
 		
 			}// fecha function processa()
 			
-public function __destruct() {
-      	parent::__destruct();
-}
+		public function __destruct() {
+				parent::__destruct();
+		}
 
 			
-			
-		}// fecha classe VirtexAdmin
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}// fecha classe VirtexAdmin
 
 
 

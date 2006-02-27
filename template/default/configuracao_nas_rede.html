@@ -21,14 +21,14 @@
                 <td align="center" valign="middle"><p>&nbsp; </p>
                   <table class=table_main width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#F0f0f0">
                     <tr>
-                      <th align="left" bgcolor="#FFFFFF" class=th_main> <h1 align="center"><b>NAS - Redes - {$tipo_nas} - {$nome_nas}</b></h1></th>
+                      <th align="left" bgcolor="#FFFFFF" class=th_main> <h1 align="center"><b>NAS::Redes - {$nas.nome} ({$nas.tipo_nas}/{$nas.ip})</b></h1></th>
                     </tr>
                   </table>
                   <table class=table_main width="90%" border="0" align="center" cellpadding="0" cellspacing="0" >
                     <tr>
                       <td class=td_main > <table width="97%" border="0" align="center" cellpadding="0" cellspacing="1" class=main>
                           <tr>
-                            <td colspan="2"><p align="center"> <a href="configuracao.php?op=rede"><img src="template/default/images/bt_rede.gif" width="77" height="73" border="0"></a></p>
+                            <td colspan="2"><p align="center"> <a href="configuracao.php?op=rede&id_nas={$nas.id_nas}"><img src="template/default/images/bt_rede.gif" width="77" height="73" border="0"></a></p>
                               <div align="center">
                                 <table border=0 width="632" cellspacing=0 cellpadding=0>
                                   <tr bgcolor="#FAFAFA">
@@ -41,7 +41,7 @@
                                   <tr>
                                     <td colspan=5 bgcolor="000000"><img src="template/default/menu/spacer.gif" width=1 height=1 border=0></td>
                                   </tr>
-                                  {foreach item=a from=$lista_nas}
+                                  {foreach item=a from=$redes}
                                   <tr bgcolor="#FFFFFF">
                                     <td align="left"><p>{$a.nome}</p></td>
                                     <td align="left"><p>{$a.ip}</p></td>
@@ -50,8 +50,7 @@
                                     <td align="center"><p><a href="configuracao.php?op=nas&id_nas={$a.id_nas}"><img src="template/default/images/gif_alterar.gif" border="0"></a></p></td>
                                   </tr>
 								  <tr>
-								  <td colspan="5"><hr size="1">
-</td>
+								  <td colspan="5"><hr size="1"></td>
 								  </tr>
                                   {/foreach}
                                 </table>
