@@ -49,8 +49,8 @@ $_LS_DIA_PGTO = array(
                    );
                    
 $_LS_ST_ADMIN = array(
-                      "t" => "Ativo",
-                      "f" => "Inativo"
+                      "A" => "Ativo",
+                      "C" => "Inativo"
                      );           
                    
 $_LS_ST_PROD = array(
