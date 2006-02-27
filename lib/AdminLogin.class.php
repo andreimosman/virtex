@@ -158,6 +158,17 @@ class AdminLogin {
 	function primeiroLogin() {
 		return($this->primeiroLogin);
 	}
+	function obtemAdmin(){
+		return($this->admin);
+		
+	}
+	
+	function obtemNome(){
+		return($this->nome);
+	
+	}
+
+	
 
 }
 
