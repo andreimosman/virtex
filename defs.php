@@ -16,7 +16,9 @@ define('PATH_ETC','./etc');
  * Aqui são incluidos todos os arquivos de classes que chamam os templates (templates/default)
  */
 require_once(PATH_LIB . '/status.defs.php');
+require_once(PATH_LIB . '/AdminLogin.class.php');
 require_once(PATH_LIB . '/VirtexAdmin.class.php');
+require_once(PATH_LIB . '/VALogin.class.php');
 require_once(PATH_LIB . '/VAHome.class.php');
 require_once(PATH_LIB . '/VAClientes.class.php');
 require_once(PATH_LIB . '/VACobranca.class.php');
