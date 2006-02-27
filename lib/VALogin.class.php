@@ -26,8 +26,8 @@ class VALogin extends VirtexAdmin {
 		if( !$op || $op == "logout") {
 			$this->arquivoTemplate = "login.html";
 		} else {
-			$this->adminLogin = $_SESSION["admLogin"];
-			$this->adminLogin->bd = $this->bd;
+			$this->admLogin = $_SESSION["admLogin"];
+			$this->admLogin->bd = $this->bd;
 			if( $op == "login" ) {
 				if( !$admin || !$senha ) {
 					$erro = "Entre com o usuário e a respectiva senha";
@@ -35,12 +35,12 @@ class VALogin extends VirtexAdmin {
 
 				if( !$erro ) {
 					
-					$this->adminLogin->login($admin,$senha);
+					$this->admLogin->login($admin,$senha);
 
-					if( !$this->adminLogin->estaLogado() ) {
+					if( !$this->admLogin->estaLogado() ) {
 						$erro = "Usuário inválido ou senha incorreta";
 					} else {
-						if( $this->adminLogin->primeiroLogin() ) {
+						if( $this->admLogin->primeiroLogin() ) {
 							$url = "administrador.php?op=altera";
 						} else {
 							$url = "home.php";
@@ -52,7 +52,7 @@ class VALogin extends VirtexAdmin {
 			if($erro) $this->tpl->atribui("mensagem",$erro);
 			$this->tpl->atribui("url",$url);
 			$this->tpl->atribui("target",$target);
-			$_SESSION["admLogin"] = $this->adminLogin;
+			$_SESSION["admLogin"] = $this->admLogin;
 			
 		}
 	}

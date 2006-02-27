@@ -6,7 +6,7 @@ require_once("MDatabase.class.php");
 class VirtexAdmin extends MWebApp {
 
 	protected $bd;
-	protected $adminLogin;
+	protected $admLogin;
 
 	public function VirtexAdmin() {
 	   parent::MWebApp("etc/virtex.ini",'template/default');
@@ -26,10 +26,10 @@ class VirtexAdmin extends MWebApp {
 	      }
 
 		   if( isset($_SESSION["admLogin"]) ) {
-			  $this->adminLogin = $_SESSION["admLogin"];
-			  $this->adminLogin->bd = $this->bd;
+			  $this->admLogin = $_SESSION["admLogin"];
+			  $this->admLogin->bd = $this->bd;
 		   } else {
-		   		$this->adminLogin = new AdminLogin($this->bd);
+		   		$this->admLogin = new AdminLogin($this->bd);
 		   }
 
 	   }
