@@ -70,7 +70,8 @@ class AdminLogin {
 				   $this->privilegios = array();
 				} else {
 				   // Carrega os privilegios
-				   $this->carregaPrivilegios;
+				   $this->carregaPrivilegios();
+				   $_SESSION["admLogin"] = $this;
 				}
 				
 				return;
@@ -168,6 +169,10 @@ class AdminLogin {
 	
 	}
 
+	function obtemId(){
+		return($this->id_admin);
+	
+	}
 	
 
 }

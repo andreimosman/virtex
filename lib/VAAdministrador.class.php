@@ -12,53 +12,54 @@ class VAAdministrador extends VirtexAdmin {
 	}
 
 	protected function validaFormulario() {
-	   $erros = array();
-	   return $erros;
+		$erros = array();
+		return $erros;
+		
 	}
 
 
 
-public function processa($op=null) {
-	if ($op == "cadastro"){
-	    $erros = array();
+	public function processa($op=null) {
+		if ($op == "cadastro"){
+	    	$erros = array();
 
-		$acao = @$_REQUEST["acao"];
-		$id_admin = @$_REQUEST["id_admin"];
+			$acao = @$_REQUEST["acao"];
+			$id_admin = @$_REQUEST["id_admin"];
 
-		$enviando = false;
+			$enviando = false;
 
-		$reg = array(); //
+			$reg = array(); //
 		
-		if( $acao ) {
-		    // Se ele recebeu o campo ação é pq veio de um submit
-		    $enviando = true;
+			if( $acao ) {
+		    	// Se ele recebeu o campo ação é pq veio de um submit
+		    	$enviando = true;
 			} else {
 			    // Se não recebe o campo ação e tem id_admin é alteração, caso contrário é cadastro.
 			   
-			   if( $id_admin ) {
+				if( $id_admin ) {
 			   	// SELECT
-			   	$sSQL  = "SELECT ";
-			   	$sSQL .= "   id_admin, admin, senha, status, ";
-			   	$sSQL .= "   nome, email, primeiro_login ";
-			   	$sSQL .= "FROM adtb_admin ";
-			        $sSQL .= "WHERE id_admin = $id_admin ";
+					$sSQL  = "SELECT ";
+					$sSQL .= "   id_admin, admin, senha, status, ";
+					$sSQL .= "   nome, email, primeiro_login ";
+					$sSQL .= "FROM adtb_admin ";
+					$sSQL .= "WHERE id_admin = $id_admin ";
 			        
 			   
-			 $reg = $this->bd->obtemUnicoRegistro($sSQL);
+					$reg = $this->bd->obtemUnicoRegistro($sSQL);
 			     
-			 $acao = "alt";  
+					$acao = "alt";  
 			 
 			 
-			 } else {
-			     $acao = "cad";
-			 }
-		      }
+				} else {
+					$acao = "cad";
+				}
+			}
 			 			
 			if ($acao == "cad"){
-			   $msg_final = "Administrador cadastrado com sucesso!";
-			   $titulo = "Cadastrar" ;
+				$msg_final = "Administrador cadastrado com sucesso!";
+				$titulo = "Cadastrar" ;
 			 			   
-			}else{
+			} else {
 			  $msg_final = "Administrador alterado com sucesso!";
 			  $titulo = "Alterar" ;
 			}
@@ -67,15 +68,15 @@ public function processa($op=null) {
 			$this->tpl->atribui("acao",$acao);  // atribui o que está em acao para acao.
 			$this->tpl->atribui("id_admin",$id_admin);//
 
-	              // O cara clicou no botão enviar (submit).
-	              if( $enviando ) {
-			   // Validar
-			   $erros = $this->validaFormulario();
-			   if( count($erros) ) {
-			   	$reg = $_REQUEST;
-			   }else {
-			      // Gravar no banco.
-			      $sSQL = "";
+			// O cara clicou no botão enviar (submit).
+			if( $enviando ) {
+				// Validar
+				$erros = $this->validaFormulario();
+				if( count($erros) ) {
+					$reg = $_REQUEST;
+				}else {
+					// Gravar no banco.
+					$sSQL = "";
 			      if( $acao == "cad" ) {
 	  		          $primeiro_login = true; //deve receber verdadeiro;
                                   $id_admin = $this->bd->proximoID("adsq_id_admin");
@@ -180,15 +181,115 @@ public function processa($op=null) {
 			$this->arquivoTemplate = "administrador_lista.html";	 		   
 	 		   
 	    
+	    }else if ($op == "altera"){
+	    		$erro = array();
+		
+			$acao = @$_REQUEST["acao"];
+			//$id_admin = @$_REQUEST["id_admin"];
+			$senha = @$_REQUEST["senha"];
+		
+			$enviando = false;
+		
+			$reg = array(); 
+			
+			$nome = $this->admLogin->obtemNome();
+			$adm = $this->admLogin->obtemAdmin();
+			$id_admin = $this->admLogin->obtemId();
+			
+
+			if( !$acao ) {
+		    // Se ele recebeu o campo ação é pq veio de um submit
+				$enviando = false;
+
+					$this->tpl->atribui("nome",$nome);
+					$this->tpl->atribui("admin",$adm);	
+					//echo "acao: ". $acao;
+					//echo "bosta";
+				$this->arquivoTemplate = "administrador_alterarsenha.html";
+				return;						    
+			 
+			} else {
+				// Valida senha e confirmação
+				
+			
+				$enviando = true;
+				
+			}
+			
+			$mensagem = "";
+			$url = "administrador.php?op=altera";
+			$target = "_top";
+			
+			
+			if( $erro ) {
+				$mensagem = $erro;
+			} else {
+				if( !$enviando ) {
+					// Atribui as variáveis de exibicao.
+					
+					$this->tpl->atribui("nome",$nome);
+					$this->tpl->atribui("admin",$admin);
+					
+					
+					
+					
+				} else {
+			
+					$mensagem = "Senha alterada com sucesso. ";
+				
+					if( $this->admLogin->primeiroLogin() ) {
+					   $mensagem .= " Bem vindo ao sistema VirtexAdmin";
+					   $url = "home.php";
+					}
+
+					$sSQL  = "UPDATE ";
+					$sSQL .= "   adtb_admin ";
+					$sSQL .= "SET ";
+					$sSQL .= "   senha = '" . md5(@$_REQUEST["senha"]) . "', ";
+					$sSQL .= "   primeiro_login = 'f' ";
+					$sSQL .= "WHERE ";
+					$sSQL .= "   id_admin = '$id_admin' ";
+					
+					$this->bd->consulta($sSQL);
+
+					if( $this->bd->obtemErro() != MDATABASE_OK ) {
+						echo "ERRO: " . $this->bd->obtemMensagemErro() , "<br>\n";
+						echo "QUERY: " . $sSQL . "<br>\n";
+					}
+
+					$this->admLogin->login($adm,$senha);
+					
+				}
+
+			     		
+			}
+			
+			$this->tpl->atribui("url",$url);
+			$this->tpl->atribui("target",$target);
+			$this->tpl->atribui("mensagem",$mensagem);
+
+	    
+	    	
+	    	$this->arquivoTemplate = "jsredir.html";
+	    	
+	    	
 	        
 	    } else if ($op == "direitos"){
 	        $this->arquivoTemplate = "administrador_direitos.html";
 
-	    }else if ($op == "mod"){
+	    }else if ($op == "alt"){
 		$this->arquivoTemplate = "administrador_altera.html";
 	   }
       }//function processa
       
+
+
+public function __destruct() {
+      	parent::__destruct();
+}
+      
+
+
 }//class VAAdministrador
 
 
