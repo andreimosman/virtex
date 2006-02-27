@@ -461,6 +461,9 @@ class VAClientes extends VirtexAdmin {
 		}
 	}
 	
+public function __destruct() {
+      	parent::__destruct();
+}
 	
 	
 	

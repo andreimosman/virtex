@@ -575,6 +575,13 @@ class VAConfiguracao extends VirtexAdmin {
 				
 		
 			}// fecha function processa()
+			
+public function __destruct() {
+      	parent::__destruct();
+}
+
+			
+			
 		}// fecha classe VirtexAdmin
 
 
