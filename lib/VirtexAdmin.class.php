@@ -28,6 +28,8 @@ class VirtexAdmin extends MWebApp {
 		   if( isset($_SESSION["admLogin"]) ) {
 			  $this->adminLogin = $_SESSION["admLogin"];
 			  $this->adminLogin->bd = $this->bd;
+		   } else {
+		   		$this->adminLogin = new AdminLogin($this->bd);
 		   }
 
 	   }
