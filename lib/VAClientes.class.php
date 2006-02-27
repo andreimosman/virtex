@@ -84,9 +84,38 @@ class VAClientes extends VirtexAdmin {
 					}
 
 					$checa = $this->bd->obtemUnicoRegistro($tSQL);
+					if($checa){
 					
-					//$erros[] = "CPF/CNPJ cadastrado para outro cliente.";
+					$erros[] = "CPF/CNPJ cadastrado para outro cliente.";
 					
+					// Atribui os campos
+					$this->tpl->atribui("id_cliente",@$_REQUEST["id_cliente"]);
+					$this->tpl->atribui("data_cadastro",@$_REQUEST["data_cadastro"]);
+					$this->tpl->atribui("nome_razao",@$_REQUEST["nome_razao"]);// pega a info do db e atribui ao campo correspon do form
+					$this->tpl->atribui("tipo_pessoa",@$_REQUEST["tipo_pessoa"]);
+					$this->tpl->atribui("rg_inscr",@$_REQUEST["rg_inscr"]);
+					$this->tpl->atribui("expedicao",@$_REQUEST["expedicao"]);
+					$this->tpl->atribui("cpf_cnpj",@$_REQUEST["cpf_cnpj"]);
+					$this->tpl->atribui("email",@$_REQUEST["email"]);
+					$this->tpl->atribui("endereco",@$_REQUEST["endereco"]);
+					$this->tpl->atribui("complemento",@$_REQUEST["complemento"]);
+					$this->tpl->atribui("id_city",@$_REQUEST["id_cidade"]);
+					$this->tpl->atribui("cidade",@$_REQUEST["cidade"]);
+					$this->tpl->atribui("estado",@$_REQUEST["estado"]);
+					$this->tpl->atribui("cep",@$_REQUEST["cep"]);
+					$this->tpl->atribui("bairro",@$_REQUEST["bairro"]);
+					$this->tpl->atribui("fone_comercial",@$_REQUEST["fone_comercial"]);
+					$this->tpl->atribui("fone_residencial",@$_REQUEST["fone_residencial"]);
+					$this->tpl->atribui("fone_celular",@$_REQUEST["fone_celular"]);			
+					$this->tpl->atribui("contato",@$_REQUEST["contato"]);			
+					$this->tpl->atribui("banco",@$_REQUEST["banco"]);
+					$this->tpl->atribui("conta_corrente",@$_REQUEST["conta_corrente"]);			
+					$this->tpl->atribui("agencia",@$_REQUEST["agencia"]);			
+					$this->tpl->atribui("dia_pagamento",@$_REQUEST["dia_pagamento"]);			
+					$this->tpl->atribui("ativo",@$_REQUEST["ativo"]);			
+		        		$this->tpl->atribui("obs",@$_REQUEST["obs"]);
+					
+					}
 					
 				}
 				
@@ -194,7 +223,7 @@ class VAClientes extends VirtexAdmin {
 					return;
 				}else{
 				
-				$erros[] = "CPF/CNPJ cadastrado para outro cliente.";
+				//$erros[] = "CPF/CNPJ cadastrado para outro cliente.";
 				
 				}
 				
@@ -216,6 +245,13 @@ class VAClientes extends VirtexAdmin {
 				
 				
 				//echo $erros;
+			if ($acao == "cad"){
+				$titulo = "Cadastrar";
+			}else if ($acao == "alt"){
+				$titulo = "Alterar";
+			}
+			
+			
 			
 			
 			// Atribui a variável de erro no template.
@@ -266,7 +302,10 @@ class VAClientes extends VirtexAdmin {
 		        
 		        $this->tpl->atribui("titulo",@$titulo);// para que no clientes_cadastro.html a variavel do smart titulo consiga pegar o que foi definido no $titulo.
 		        
+					
 
+			
+			
 			// Seta as variáveis do template.
 			$this->arquivoTemplate = "clientes_cadastro.html";
 			

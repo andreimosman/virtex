@@ -88,7 +88,7 @@ public function processa($op=null) {
 			   $sSQL .= "   VALUES (";
 			   $sSQL .= "     '" . $this->bd->escape($id_admin) . "', ";
 			   $sSQL .= "     '" . $this->bd->escape(@$_REQUEST["admin"]) . "', ";
-			   $sSQL .= "     '" . $this->bd->escape(@$_REQUEST["senha"]) . "', ";
+			   $sSQL .= "     '" . md5($this->bd->escape(@$_REQUEST["senha"])) . "', ";
 			   $sSQL .= "     '" . $this->bd->escape(@$_REQUEST["status"]) . "', ";
 			   $sSQL .= "     '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
 			   $sSQL .= "     '" . $this->bd->escape(@$_REQUEST["email"]) . "', ";
@@ -101,7 +101,7 @@ public function processa($op=null) {
 			$sSQL .= "   adtb_admin ";
 			$sSQL .= "SET ";
 			$sSQL .= "   admin = '" . $this->bd->escape(@$_REQUEST["admin"]) . "', ";
-			$sSQL .= "   senha = '" . $this->bd->escape(@$_REQUEST["senha"]) . "', ";
+			$sSQL .= "   senha = '" . md5($this->bd->escape(@$_REQUEST["senha"])) . "', ";
        			$sSQL .= "   status = '" . $this->bd->escape(@$_REQUEST["status"]) . "', ";
        			$sSQL .= "   nome = '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
        			$sSQL .= "   email = '" . $this->bd->escape(@$_REQUEST["email"]) . "' ";
