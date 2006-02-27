@@ -104,18 +104,6 @@ class VirtexAdmin extends MWebApp {
 	   // Não faz nada por hora.
 	}
 
-/**
-	public function exibe($arq="") {
-		MWebApp::exibe($arq);
-	}
-*/
-
-	public function __destruct() {
-		if( isset($_SESSION["admLogin"]) ) {
-			$_SESSION["admLogin"]->bd = null;
-		}
-	}
-
 }
 
 
