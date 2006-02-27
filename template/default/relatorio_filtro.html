@@ -19,37 +19,42 @@
               </tr>
               <tr>
                 <td align="center" valign="middle"><h1>Gerador de Relat&oacute;rios</h1>
-                  <form name="form1" method="post" action="">
+                  <form action="{$smarty.server.PHP_SELF}" method="post" name="formulario" id="formulario">
                     <p>&nbsp;</p>
                     <table width="414" border="0">
                       <tr> 
                         <td width="71"><p><strong>Produtos</strong></p></td>
                         <td width="90"> <p> 
-                            <select name="select" class="campos">
-                              <option>Todos</option>
+                            <select name="prod" class="campos" id="prod">
+                              <option value="*">Todos</option>
+                              <option value="BL">Banda Larga</option>
+                              <option value="D">Discado</option>
+                              <option value="H">Hospedagem</option>
                             </select>
                           </p></td>
                         <td width="72"><p><strong>Cliente</strong></p></td>
                         <td width="163"> <p> 
-                            <select name="select2" class="campos">
-                              <option>Todos</option>
+                            <select name="cli" class="campos" id="cli">
+                              <option value="t">Ativo</option>
+                              <option value="f">Inativo</option>
                             </select>
                           </p></td>
                       </tr>
                       <tr> 
                         <td><p><strong>Per&iacute;odo:</strong> </p></td>
                         <td> <p> 
-                            <input name="textfield" type="text" size="20" class="campos">
+                            <input name="dt_inicio" type="text" class="campos" id="dt_inicio" size="20">
                           </p></td>
                         <td><div align="center"> 
                             <p><strong>at&eacute;</strong> </p>
                           </div></td>
                         <td> <p> 
-                            <input name="textfield2" type="text" size="20" class="campos">
+                            <input name="dt_final" type="text" class="campos" id="dt_final" size="20">
                           </p></td>
                       </tr>
                       <tr align="center"> 
                         <td colspan="4"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input name="op" type="hidden" id="op" value="{$op}">
                           <input type="submit" name="Submit" value="Gerar Relat&oacute;rio" class="campos">
                           </font></td>
                       </tr>
