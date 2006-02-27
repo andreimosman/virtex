@@ -6,7 +6,7 @@ require_once("MDatabase.class.php");
 class VirtexAdmin extends MWebApp {
 
 	protected $bd;
-	protected $admLogin;
+	protected $adminLogin;
 
 	public function VirtexAdmin() {
 	   parent::MWebApp("etc/virtex.ini",'template/default');
