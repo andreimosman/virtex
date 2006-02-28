@@ -3,7 +3,7 @@
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
 
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
-</head> 
+</head>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
@@ -18,27 +18,76 @@
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td align="center" valign="middle"><form name=formulario method="get" action="/~virtsys/admin.php">
+                <td align="center" valign="middle">
+                    <form name=formulario method="get" action="{$smarty.server.PHP_SELF}">
+                	<input type="hidden" name="op" value="calc">
                     <table border=0  _bgcolor="#000000" cellspacing=1 cellpadding=1 width="90%">
                       <tr>
                         <td align="center"><h1>Calculadora IP<br>
                           </h1>
                           </td>
                       </tr>
-                      <tr> 
-                        <td align="center"> <table border=0 cellpadding="2" cellspacing=2>
-                            <tr bgcolor="#F0F0F0"> 
+                      <tr>
+                        <td align="center">
+                          <table border=0 cellpadding="2" cellspacing=2>
+                            <tr bgcolor="#F0F0F0">
                               <td><p>Endereço (Host ou Rede)</p></td>
                               <td><p>Máscara (Ex: /24)</p></td>
                               <td>&nbsp;</td>
                             </tr>
-                            <tr> 
-                              <td><input type="text" name="ip" value="" class="campos"></td>
-                              <td><input type="text" name="netmask" value="24" class="campos"></td>
+                            <tr>
+                              <td><input type="text" name="ip" value="{$ip}" class="campos"></td>
+                              <td><input type="text" name="netmask" value="{$netmask}" class="campos"></td>
                               <td><input name="botao_enviar" type="submit" class="campos" id="submit" value="calcular &gt;&gt;"></td>
                             </tr>
                           </table>
-                          
+
+                          {if $ipaddr}
+                          <hr size=1>
+							<table border=0 cellspacing=0 cellpadding=0 width=300>
+							   <tr>
+								  <td>Endereço:</td>
+								  <td>{$ipaddr.endereco}</td>
+							   </tr>
+							   <tr>
+								  <td>Máscara:</td>
+								  <td>{$ipaddr.mascara}</td>
+							   </tr>
+							   <tr>
+								  <td>Wildcard:</td>
+								  <td>{$ipaddr.wildcard}</td>
+							   </tr>
+							   <tr>
+								  <td colspan=2 bgcolor=#000000><img src="img/nada.gif" border=0 width=1 height=1></td>
+							   </tr>
+							   <tr>
+								  <td>Rede:</td>
+								  <td>{$ipaddr.nw}</td>
+							   </tr>
+							   <tr>
+								  <td>Broadcast:</td>
+								  <td>{$ipaddr.bc}</td>
+							   </tr>
+							   <tr>
+								  <td colspan=2 bgcolor=#000000><img src="img/nada.gif" border=0 width=1 height=1></td>
+							   </tr>
+							   <tr>
+								  <td>Primeiro Host:</td>
+								  <td>{$ipaddr.minhost}</td>
+							   </tr>
+							   <tr>
+								  <td>Último Host:</td>
+								  <td>{$ipaddr.maxhost}</td>
+							   </tr>
+							   <tr>
+								  <td>Número de hosts</td>
+								  <td>{$ipaddr.numhosts}</td>
+							   </tr>
+
+							</table>
+
+                          {/if}
+
                         </td>
                       </tr>
                     </table>
@@ -54,7 +103,7 @@
   <tr>
     <td height="20" align="center" bgcolor="#BCD3C4"><table width="400" border="0" cellspacing="0" cellpadding="0">
         <tr>
-          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy; 
+          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy;
               Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
         </tr>
       </table></td>
