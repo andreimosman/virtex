@@ -254,7 +254,7 @@ class VAConfiguracao extends VirtexAdmin {
 						$acao = "cad";
 						$titulo = "Cadastrar";
 					}
-				}
+				}//hugo2
 						
 				if( $enviando ) {
 			
@@ -355,10 +355,9 @@ class VAConfiguracao extends VirtexAdmin {
 				$this->arquivoTemplate = "configuracao_nas_cadastro.html";
 			
 			
-//////////////////////////////
+//////////////////////////////HUGO
 		}else if ($op == "nas_rede"){
 			//LISTA REDES CADASTRADAS EM DETERMINADO NAS
-			$this->arquivoTemplate = "configuracao_nas_rede.html";
 			
 			$id_nas = @$_REQUEST["id_nas"];
 			
@@ -385,41 +384,182 @@ class VAConfiguracao extends VirtexAdmin {
 			
 			
 				// Lista das redes deste NAS
+				//$sSQL  = "SELECT ";
+				//$sSQL .= "   r.rede,r.tipo_rede,r.id_rede, nr.id_rede ";
+				//$sSQL .= "FROM ";
+				//$sSQL .= "   cftb_nas_rede nr, cftb_rede r ";
+				//$sSQL .= "WHERE ";
+				//$sSQL .= "   r.id_rede = nr.id_rede ";
+				//$sSQL .= "   AND nr.id_nas = '" . $this->bd->escape($id_nas) . "' ";
+				//$sSQL .= "   id_nas = '" . $this->bd->escape($id_nas) . "' ";
+				
 				$sSQL  = "SELECT ";
-				$sSQL .= "   r.rede,r.tipo_rede,r.id_rede ";
+				$sSQL .= "   r.rede, r.tipo_rede, r.id_rede ";
 				$sSQL .= "FROM ";
-				$sSQL .= "   cftb_nas_rede nr, cftb_rede r ";
+				$sSQL .= "   cftb_rede r, cftb_nas_rede nr ";
 				$sSQL .= "WHERE ";
-				$sSQL .= "   r.id_rede = nr.id_rede ";
-				$sSQL .= "   AND id_nas = '" . $this->bd->escape($id_nas) . "' ";
+				$sSQL .= "   r.rede = nr.rede ";
+				$sSQL .= "   AND nr.id_nas = $id_nas ";
+				$sSQL .= "ORDER BY ";
+				$sSQL .= "   r.rede ";
+				$sSQL .= "";
+				
+				
 				
 				// TODO: aplicar filtros e paginação...
 				$redes = $this->bd->obtemRegistros($sSQL);
 				
 				$this->tpl->atribui("redes",$redes);
 				
+				$this->arquivoTemplate = "configuracao_nas_rede.html";
+
+				
 			}
+			
+			
 		
 		}else if($op == "rede"){
 			// CADASTRA E ALTERA REDE EM DETERMINADO NAS
+			
+			$erros = array();
+						
+			$acao = @$_REQUEST["acao"];
+			$id_rede = @$_REQUEST["id_rede"];
+			$id_nas = @$_REQUEST["id_nas"];
+			$tipo_rede = @$_REQUEST["tipo_rede"];
+			$rede = @$_REQUEST["rede"];
+			$rede_origem = @$_REQUEST["rede_origem"];
+			$rede_inicial = @$_REQUEST["rede_inicial"];
+			$bits_subredes = @$_REQUEST["bits_subredes"];
+			$num_redes = @$_REQUEST['num_redes'];
+			$tipo_nas = @$_REQUEST['tipo_nas'];
+			$network = @$_REQUEST['network'];
+			
+
+			
+			
+			
+			$enviando = false;
+									
+			$reg = array();
+			
+			$sSQL  = "SELECT ";
+			$sSQL .= "   id_nas, nome, ip, secret, tipo_nas ";
+			$sSQL .= "FROM ";
+			$sSQL .= "   cftb_nas ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "   id_nas = '".$this->bd->escape($id_nas)."' ";
+								
+			$nas = $this->bd->obtemUnicoRegistro($sSQL);
+
+			
+			
+			if($acao){
+				$enviando = true;
+				
+			}else{
+			
+				if($id_rede){
+					$acao = "alt";
+					$titulo = "Alterar";
+				} else {
+					$acao = "cad";
+					$titulo = "Cadastrar";
+				}
+
+			}
+
+			if( $enviando ) {
+				if( !count($erros) ) {
+					// Grava no banco.
+					if( $acao == "cad" ) {
+						// CADASTRO
+										   		
+										   		
+						$msg_final = "Rede Cadastrada com sucesso!";
+										   		
+						
+						if($nas["tipo_nas"] == "P"){
+							// cadastraRede (a rede que o cara digitou)
+							$this->cadastraRede($rede,$tipo_rede);
+							
+							// vinculaRede (a mesma)
+							$this->vinculaRede($id_nas,$rede);
+							$this->cadastraIPs(@$_REQUEST['rede']);
+							
+							//$this->cadastraIPs($rede);
+						}else if ($nas["tipo_nas"] == "I"){
+						$this->cadastraSubredes($id_nas,$rede_origem,$rede_inicial,$bits_subredes,$num_redes,$tipo_rede);
+							//$rede = $rede_origem;						
+							//$this->cadastraSubRedes($id_nas,$rede_origem,$rede_inicial,$bits_subredes,$num_redes,$tipo_rede);
+
+						}
+						
+						//$this->cadastraRede($rede,$tipo_rede);	
+						//$this->vinculaRede($id_nas,$rede);
+
+					
+																
+					} else {
+						// ALTERACAO
+						
+						$msg_final = "Rede Alterada com sucesso!";
+						
+						$this->alteraRede($rede,$tipo_rede);
+						
+						
+						
+					}
+											
+											
+				
+						
+						
+				// Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
+				$this->tpl->atribui("mensagem",$msg_final); 
+				$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=listagem");
+				$this->tpl->atribui("target","_top");
+						
+				$this->arquivoTemplate = "msgredirect.html";
+											
+											
+				// cai fora da função (ou seja, deixa de processar o resto do aplicativo: a parte de exibicao da tela);
+				return;
+				} else {
+										
+										
+				}
+										
+			}					
+						
+						
+			// Atribui a variável de erro no template.
+			$this->tpl->atribui("erros",$erros);
+			$this->tpl->atribui("mensagem",$erros);
+			$this->tpl->atribui("acao",$acao);
+			$this->tpl->atribui("op",$op);
+			$this->tpl->atribui("nas",@$nas);		
+						
+			// Atribui os campos
+			$this->tpl->atribui("network",$network);
+			$this->tpl->atribui("id_rede",@$id_rede);
+			$this->tpl->atribui("id_nas",@$id_nas);
+			$this->tpl->atribui("tipo_rede",@$tipo_rede);// pega a info do db e atribui ao campo correspon do form
+			$this->tpl->atribui("rede",@$rede);
+			$this->tpl->atribui("tipo_nas",@$tipo_nas);
+			$this->tpl->atribui("titulo",@$titulo);// para que no template a variavel do smart titulo consiga pegar o que foi definido no $titulo.
+									        
+													        
+							
+			
+			// Seta as variáveis do template.
+			
 			$this->arquivoTemplate = "configuracao_redes_cadastro.html";
 			
-			$acao = @$_REQUEST["acao"];
-			$erro = "";
-			
-			
-			if( $acao ) {
-				// Está enviando um post
-				
-				
-			
-			
-			}
-		
-
 
 
 ///////////////////////////////		
+
 		}else if ($op == "cidades"){
 		
 				
@@ -480,7 +620,7 @@ class VAConfiguracao extends VirtexAdmin {
 					$city = ereg_replace("[ÚÙÛ]","U",$city);
 					$city = str_replace("ç","c",$city);
 					$city = str_replace("Ç","C",$city);
-					$city = ereg_replace(" ","",$city); 
+					//$city = ereg_replace(" ","",$city); 
 					$city = strtoupper($city);
 					
 										
@@ -520,7 +660,7 @@ class VAConfiguracao extends VirtexAdmin {
 						
 						
 
-									echo "bosta";	
+									
 						$pesquisa_resultado = $this->bd->obtemRegistros($cSQL);
 						$nome_estado = $this->bd->obtemUnicoRegistro($eSQL);
 						
@@ -614,11 +754,140 @@ class VAConfiguracao extends VirtexAdmin {
 		
 			}// fecha function processa()
 			
-		public function __destruct() {
-				parent::__destruct();
-		}
-
+	public function __destruct() {
+			parent::__destruct();
+	}
+		
+	private function cadastraRede($rede,$tipo_rede) {
 			
+			
+		$id_rede = $this->bd->proximoID("cfsq_id_rede");
+		
+		$sSQL  = "INSERT INTO ";
+		$sSQL .= "   cftb_rede ( ";
+		$sSQL .= "      rede,tipo_rede,id_rede ";
+		$sSQL .= "   ) VALUES ( ";
+		$sSQL .= "      '$rede','$tipo_rede','$id_rede' ";
+		$sSQL .= "   )";
+		$sSQL .= "";
+		
+		$this->bd->consulta($sSQL);
+		
+		return($rede);
+		
+	}
+		
+	// Altera o tipo de uma rede
+	private function alteraRede($rede,$tipo_rede) {
+		  
+		
+		$sSQL  = "UPDATE ";
+		$sSQL .= "   cftb_rede ";
+		$sSQL .= "SET ";
+		$sSQL .= "   tipo_rede = '$tipo_rede' ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "   rede = '$rede' ";
+		$sSQL .= "";
+		$sSQL .= "";
+		
+		$this->bd->consulta($sSQL);
+		       		
+		/*if( $this->bd->obtemErro() != MDATABASE_OK ) {
+			echo "ERRO: " . $this->bd->obtemMensagemErro() , "<br>\n";
+			echo "QUERY: " . $sSQL . "<br>\n";
+													
+		}*/
+
+		       		
+		
+	}
+		    
+	// Vincula uma rede a um nas.
+	private function vinculaRede($id_nas,$rede) {
+		    
+		
+		$sSQL  = "INSERT INTO ";
+		$sSQL .= "   cftb_nas_rede ( ";
+		$sSQL .= "      id_nas, rede ";
+		$sSQL .= "   ) VALUES ( ";
+		$sSQL .= "      '$id_nas', '$rede' ";
+		$sSQL .= "   );";
+		$sSQL .= "";
+		$sSQL .= "";
+		
+		$this->bd->consulta($sSQL);
+		
+		return;
+		
+	}
+		
+	// Cadastra um ip no sistema
+	private function cadastraIP($ipaddr) {
+		  
+		
+		$sSQL  = "INSERT INTO ";
+		$sSQL .= "   cftb_ip ( ";
+		$sSQL .= "      ipaddr ";
+		$sSQL .= "   ) VALUES ( ";
+		$sSQL .= "      '$ipaddr' ";
+		$sSQL .= "   )";
+		
+		$this->bd->consulta($sSQL);
+		
+		return($ipaddr);
+		
+    }
+
+	// Cadastra todos os ips de uma rede no sistema.
+    private function cadastraIPs($rede) {
+
+    	$_rede = new RedeIP($rede);
+    	$ips = $_rede->listaIPs();
+
+    	for($x=0;$x<count($ips);$x++) {
+          
+			// Insere no BD
+			$this->cadastraIP($ips[$x]);
+   	    		
+   	    		
+   	    }
+   	}		
+
+	private function cadastraSubRedes($id_nas,$rede_origem,$rede_inicial,$bits_subredes,$num_redes,$tipo_rede) {
+		
+		$_rede_origem = new RedeIP($rede_origem);
+		$_rede_inicio = new RedeIP($rede_inicial);
+		
+		$_subredes = $_rede_origem->listaSubRedes($bits_subredes);
+		
+		$conta = 0;
+		
+		$comecou = false;
+	
+		for($x=0;$x<count($_subredes);$x++) {
+		
+			if( bin2addr($_subredes[$x]->network) == bin2addr($_rede_inicio->network) ){
+				$comecou = true;
+			}
+	
+			if( $comecou ) {
+				$rede = bin2addr($_subredes[$x]->network) . "/". $bits_subredes;
+				$this->cadastraRede($rede,$tipo_rede);
+				$this->vinculaRede($id_nas,$rede);
+				$conta++;
+			}
+	
+			if( $conta == $num_redes ) {
+				break;
+			}
+			
+		}
+		
+	}
+
+
+
+
 
 }// fecha classe VirtexAdmin
 

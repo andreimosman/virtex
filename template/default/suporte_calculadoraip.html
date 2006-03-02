@@ -45,46 +45,57 @@
                           {if $ipaddr}
                           <hr size=1>
 							<table border=0 cellspacing=0 cellpadding=0 width=300>
-							   <tr>
-								  <td>Endereço:</td>
-								  <td>{$ipaddr.endereco}</td>
-							   </tr>
-							   <tr>
-								  <td>Máscara:</td>
-								  <td>{$ipaddr.mascara}</td>
-							   </tr>
-							   <tr>
-								  <td>Wildcard:</td>
-								  <td>{$ipaddr.wildcard}</td>
-							   </tr>
-							   <tr>
-								  <td colspan=2 bgcolor=#000000><img src="img/nada.gif" border=0 width=1 height=1></td>
-							   </tr>
-							   <tr>
-								  <td>Rede:</td>
-								  <td>{$ipaddr.nw}</td>
-							   </tr>
-							   <tr>
-								  <td>Broadcast:</td>
-								  <td>{$ipaddr.bc}</td>
-							   </tr>
-							   <tr>
-								  <td colspan=2 bgcolor=#000000><img src="img/nada.gif" border=0 width=1 height=1></td>
-							   </tr>
-							   <tr>
-								  <td>Primeiro Host:</td>
-								  <td>{$ipaddr.minhost}</td>
-							   </tr>
-							   <tr>
-								  <td>Último Host:</td>
-								  <td>{$ipaddr.maxhost}</td>
-							   </tr>
-							   <tr>
-								  <td>Número de hosts</td>
-								  <td>{$ipaddr.numhosts}</td>
-							   </tr>
-
-							</table>
+                            <tr> 
+                              <td><p>Endereço:</p></td>
+                              <td><p>{$ipaddr.endereco}</p></td>
+                            </tr>
+                            <tr> 
+                              <td><p>Máscara:</p></td>
+                              <td><p>{$ipaddr.mascara}</p></td>
+                            </tr>
+                            <tr> 
+                              <td><p>Wildcard:</p></td>
+                              <td><p>{$ipaddr.wildcard}</p></td>
+                            </tr>
+                            <tr> 
+                              <td colspan="2"><img src="template/default/images/menu/spacer.gif" width="150" height="3"></td>
+                            </tr>
+                            <tr> 
+                              <td colspan=2 bgcolor=#000000><p><img src="img/nada.gif" border=0 width=1 height=1></p></td>
+                            </tr>
+                            <tr> 
+                              <td colspan="2"><img src="template/default/images/menu/spacer.gif" width="150" height="3"></td>
+                            </tr>
+                            <tr> 
+                              <td><p>Rede:</p></td>
+                              <td><p>{$ipaddr.nw}</p></td>
+                            </tr>
+                            <tr> 
+                              <td><p>Broadcast:</p></td>
+                              <td><p>{$ipaddr.bc}</p></td>
+                            </tr>
+                            <tr> 
+                              <td colspan="2"><img src="template/default/images/menu/spacer.gif" width="150" height="3"></td>
+                            </tr>
+                            <tr> 
+                              <td colspan=2 bgcolor=#000000><p><img src="img/nada.gif" border=0 width=1 height=1></p></td>
+                            </tr>
+                            <tr> 
+                              <td colspan="2"><img src="template/default/images/menu/spacer.gif" width="150" height="3"></td>
+                            </tr>
+                            <tr> 
+                              <td><p>Primeiro Host:</p></td>
+                              <td><p>{$ipaddr.minhost}</p></td>
+                            </tr>
+                            <tr> 
+                              <td><p>Último Host:</p></td>
+                              <td><p>{$ipaddr.maxhost}</p></td>
+                            </tr>
+                            <tr> 
+                              <td><p>Número de hosts</p></td>
+                              <td><p>{$ipaddr.numhosts}</p></td>
+                            </tr>
+                          </table>
 
                           {/if}
 

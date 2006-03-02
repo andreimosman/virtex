@@ -23,68 +23,145 @@
               <tr>
                 <td align="center" valign="middle">
 <form name="formulario" method="post" action="{$smarty.server.PHP_SELF}">
-                	<input type="hidden" name="op" value="nas">
+                	<input type="hidden" name="op" value="rede">
 					<input type="hidden" name="acao" value="{$acao}">
 					<input name="id_nas" type="hidden" id="id_nas" value="{$id_nas}">
+					<input type="hidden" name="acao" value="{$acao}">
+					<input type="hidden" name="tipo_nas" value="{$tipo_nas}"
+
 
 
                     <table width="600" border="0" cellspacing="0" cellpadding="0">
                       <tr>
-                        <td align="center" valign="middle"><h1>Cadastrar Redes 
-                            (tipo_nas) </h1></td>
+                        <td align="center" valign="middle"><h1>{$titulo} Redes
+                            { if $nas.tipo_nas == P } ( PPPoE ) {/if}{ if $nas.tipo_nas == I } ( IP ) {/if}{ if $nas.tipo_nas == R } ( RAS ) {/if}</h1></td>
                       </tr>
                       <tr>
-                        <td align="center" valign="top"><table width="500" border="0" cellspacing="2" cellpadding="0">
-                            <tr> 
+                        <td align="center" valign="top">
+                        {if !$network }
+						{if $nas.tipo_nas != P}
+						<table width="500" border="0" cellspacing="2" cellpadding="0">
+                            <tr>
                               <td align="right"> <p>Rede Origem:</p></td>
-                              <td width="290"><p> <font color="#999999"> 
-                                  <input name="nome" type="text" size="25">
+                              <td width="290"><p> <font color="#999999">
+                                  <input name="rede_origem" type="text" id="rede_origem" size="25">
                                   (ex: 192.168.0.0/16) </font></p></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td align="right"> <p>Rede Inicial:</p></td>
-                              <td><p> <font color="#999999"> 
-                                  <input name="ip" type="text" size="25">
+                              <td><p> <font color="#999999">
+                                  <input name="rede_inicial" type="text" id="rede_inicial" size="25">
                                   (ex: 192.168.1.8/30) </font></p></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td align="right"> <p>Criar rede:</p></td>
                               <td><table width="100%" border="0" cellspacing="2" cellpadding="0">
-                                  <tr> 
-                                    <td width="6%" align="center" valign="middle"> 
-                                      <font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>/</strong></font> 
+                                  <tr>
+                                    <td width="6%" align="center" valign="middle">
+                                      <font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>/</strong></font>
                                     </td>
-                                    <td width="94%"><p> 
-                                        <input name="textfield" type="text" size="5">
-                                        <font color="#999999"> (ex: /30 = 255.255.255.252) 
+                                    <td width="94%"><p>
+                                        <input name="bits_subredes" type="text" id="rede" size="5">
+                                        <font color="#999999"> (ex: /30 = 255.255.255.252)
                                         </font></p></td>
                                   </tr>
                                 </table></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td align="right"> <p>M&aacute;ximo de sub-redes:</p></td>
-                              <td><p> 
-                                  <input name="secret" type="text" size="25">
+                              <td><p>
+                                  <input name="num_redes" type="text" id="num_redes" size="25">
                                   <font color="#999999">(ex: 500 subredes) </font></p></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td align="right"><p>Tipo:</p></td>
-                              <td><p> 
-                                  <select name="tipo_nas">
-                                    <option value='{$id}'>Cliente</option>
-                                    <option value='{$id}'>Infraestrutura</option>
-                                    <option value='{$id}'>Suporte</option>
+                              <td><p>
+                                  <select name="tipo_rede">
+                                    <option value='C'>Cliente</option>
+                                    <option value='I'>Infraestrutura</option>
+                                    <option value='S'>Suporte</option>
                                   </select>
                                 </p></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td><p>&nbsp;</p></td>
                               <td><p>&nbsp;</p></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td colspan="2" align="center"> <input type="submit" name="Submit" value="Cadastrar"></td>
                             </tr>
-                          </table></td>
+                          </table>
+
+                          { /if }
+						  { if $nas.tipo_nas == P}
+                          <table width="500" border="0" cellspacing="2" cellpadding="0">
+                            <tr>
+                              <td width="204" align="right"><p>Rede:</p></td>
+                              <td width="290"><font color="#999999">
+                                <input name="rede" type="text" id="rede" size="25">
+                                </font></td>
+                            </tr>
+                            <tr>
+                            	<td align="center" colspan=2><p><font color="#999999">ex: 192.168.0.0/24</font></p></td>
+                            </tr>
+                            <tr>
+                              <td align="right"><p>Tipo:</p></td>
+                              <td><select name="tipo_rede" id="tipo_rede">
+                                  <option value='C'>Cliente</option>
+                                  <option value='I'>Infraestrutura</option>
+                                  <option value='S'>Suporte</option>
+                                </select></td>
+                            </tr>
+                            <tr>
+                              <td>&nbsp;</td>
+                              <td>&nbsp;</td>
+                            </tr>
+                            <tr align="center" valign="middle">
+                              <td colspan="2"><input type="submit" name="Submit2" value="Cadastrar"></td>
+                            </tr>
+                          </table>
+                          <p>&nbsp;</p>
+                          <p>&nbsp;</p>
+                          <p>&nbsp;</p>
+                          <p> {/if} </p>
+                          {/if}
+                          { if $network }
+                               <table width="500" border="0" cellspacing="2" cellpadding="0">
+						       	<tr>
+						        	<td width="204" align="right"><p>Rede:</p></td>
+						            <td width="290"><font color="#999999">
+						            <input name="rede_orig" type="text" id="rede" size="25" value="{$network}" DISABLED>
+						            <input type="hidden" name="rede" value="{$network}">
+						            <input type="hidden" name="id_rede" value="{$id_rede}">
+						            </font></td>
+						        </tr>
+						        <tr>
+						            <td align="center" colspan=2></td>
+						        </tr>
+						        <tr>
+						        <td align="right"><p>Tipo:</p></td>
+						        <td><select name="tipo_rede" id="tipo_rede">
+						        <option value='C'>Cliente</option>
+						        <option value='I'>Infraestrutura</option>
+						        <option value='S'>Suporte</option>
+						        </select></td>
+						        </tr>
+						        <tr>
+						        <td>&nbsp;</td>
+						        <td>&nbsp;</td>
+						        </tr>
+						        <tr align="center" valign="middle">
+						        <td colspan="2"><input type="submit" name="Submit2" value="Cadastrar"></td>
+						        </tr>
+						        </table>
+
+						        <p>&nbsp;</p>
+                          		<p>&nbsp;</p>
+
+
+
+                          { /if }
+                          </td>
                       </tr>
                     </table>
                   </form>

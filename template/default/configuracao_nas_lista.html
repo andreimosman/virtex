@@ -47,7 +47,7 @@
                                     <td align="left"><p>{$a.nome}</p></td>
                                     <td align="left"><p>{$a.ip}</p></td>
                                     <td align="center"><p>{$a.tipo_nas}</p></td>
-									<td align="center"><p><a href="configuracao.php?op=nas_rede&id_nas={$a.id_nas}"><img src="template/default/images/gif_rede.gif" border="0" alt="Redes do NAS: {$a.nome}" ></a></p></td>
+									<td align="center"><p>{if $a.tipo_nas != "R"}<a href="configuracao.php?op=nas_rede&id_nas={$a.id_nas}&tipo_nas={$a.tipo_nas}"><img src="template/default/images/gif_rede.gif" border="0" alt="Redes do NAS: {$a.nome}" ></a>{/if}</p></td>
                                     <td align="center"><p><a href="configuracao.php?op=nas&id_nas={$a.id_nas}"><img src="template/default/images/gif_alterar.gif" border="0" alt="Alterar NAS: {$a.nome}"></a></p></td>
                                   </tr>
 								  <tr>

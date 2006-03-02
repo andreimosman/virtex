@@ -274,7 +274,24 @@ class VAAdministrador extends VirtexAdmin {
 	    	
 	    	
 	        
-	    } else if ($op == "direitos"){
+	    } else if ($op == "privilegio"){
+	    
+	    	$sSQL  = "SELECT ";
+	    	$sSQL .= "	up.id_admin, up.id_priv, up.pode_gravar, ";
+	    	$sSQL .= "	ad.admin, ad.id_admin, ad.nome, ";
+	    	$sSQL .= "	ap.id_priv, ap.cod_priv, ap.nome ";
+	    	$sSQL .= "FROM ";
+	    	$sSQL .= "adtb_usuario_privilegio up, adtb_admin ad, adtb_privilegio ";
+	    	$sSQL .= "WHERE ";
+	    	$sSQL .= "id.admin = '". @$_REQUEST['id_admin'] ."' ";
+	    	$sSQL .= "AND up.id_priv = ap.id_priv ";
+	    	
+	    	$privilegios = $this->bd->obtemRegistros($sSQL);
+	    	
+	    	$this->tpl->atribui("privilegios",$privilegios);
+	    	
+	    
+	    
 	        $this->arquivoTemplate = "administrador_direitos.html";
 
 	    }else if ($op == "alt"){

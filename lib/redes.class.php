@@ -42,12 +42,15 @@
       var $network;
       var $wildcard;
       var $broadcast;
+      
+      
 
       function RedeIP($rede,$mask="") {
          $bits=0;
          if( $mask ) {
             $this->mask = addr2bin($mask);
          } else {
+         //echo "Rede: ". $rede;
             list($rede,$bits) = explode("/", $rede);
             $this->mask = bitcount2bitmask($bits);
          }
@@ -101,6 +104,7 @@
          $fim = 0;
 
          $rede = b2d($this->network);
+         
 
          while( $rede < b2d($this->broadcast) ) {
             $subrede = new RedeIP( bin2addr(d2b($rede)) . "/" . $bits );
@@ -115,7 +119,7 @@
 
             $rede += $subrede->numIPs();
          }
-
+		
          return($retorno);
       }
 

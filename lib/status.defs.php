@@ -126,5 +126,12 @@ $_LS_TIPO_NAS = array(
 		"P" => "PPPoE",
 		"R" => "RAS (Discado)"
 		);
+$_LS_PRIVILEGIO = array(
+		"0" => "Somente Leitura",
+		"1" => "Ler e Gravar"
+		);
+
+
+
 
 ?>
