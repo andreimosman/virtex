@@ -296,7 +296,7 @@ class VAAdministrador extends VirtexAdmin {
          	$sSQL  = "SELECT ";
          	$sSQL .= "   p.id_priv, p.cod_priv,p.nome, ";
          	$sSQL .= "   CASE WHEN up.pode_gravar is true THEN 1 ELSE 0 END as pode_gravar, ";
-         	$sSQL .= "   CASE WHEN up.pode_gravar is null THEN '' ELSE 'checked' END as checked ";
+         	$sSQL .= "   up.id_admin ";
          	$sSQL .= "FROM ";
          	$sSQL .= "   adtb_privilegio p LEFT OUTER JOIN adtb_usuario_privilegio up ON (p.id_priv = up.id_priv AND up.id_admin = $id_admin) ";
          	$sSQL .= "ORDER BY ";
@@ -305,35 +305,60 @@ class VAAdministrador extends VirtexAdmin {
 	    	$privilegios = $this->bd->obtemRegistros($sSQL);
 	    	$admin = $this->bd->obtemUnicoRegistro($tSQL);
 	    	
-	    	$this->tpl->atribui("privilegios",$privilegios);
-	    	global $_LS_PRIVILEGIO;
-			$this->tpl->atribui("lista_privilegio",$_LS_PRIVILEGIO);
-			
-			$this->tpl->atribui("admin",$admin);
 			
 			if ( $oper == "alt" ) {
 			
 				$dSQL = "DELETE FROM adtb_usuario_privilegio WHERE id_admin = $id_admin";
 				$this->bd->consulta($dSQL);
 				
-					while(list($id,$valor)=each($_REQUEST['$id'])){
+				if( isset($_REQUEST['id']) ) {
+				
+				    // Lista dos privilegios MARCADOS.
+					while(list($id,$valor)=each($_REQUEST['id'])){
 
 						$sSQL  = "INSERT INTO ";
-						$sSQL .= "   adtb_usuario_privilegio( ";
+						$sSQL .= "   adtb_usuario_privilegio ( ";
 						$sSQL .= "      id_admin, id_priv, pode_gravar ";
 						$sSQL .= "   ) VALUES (";
-						$sSQL .= "      '". @$_REQUEST['$id_admin'] ."', ";
+						$sSQL .= "      '". @$_REQUEST['id_admin'] ."', ";
 						$sSQL .= "      '$id', ";
-						$sSQL .= "      '". @$_REQUEST['$pode_gravar'] ."' ";
+						$sSQL .= "      '". @$_REQUEST['pode_gravar'][$id] ."' ";
 						$sSQL .= "   ) ";
 						$sSQL .= "";
 
 						$this->bd->consulta($sSQL);
+						//echo $sSQL . "<br>\n";
+						
+						//echo "ID_ADMIN: $id_admin | ID_PRIV: $id | PODE_GRAVAR: " . @$_REQUEST[
+						
+
+					}
+					
+					    if( $this->bd->obtemErro() != MDATABASE_OK ) {
+							echo "ERRO: " . $this->bd->obtemMensagemErro() , "<br>\n";
+							echo "QUERY: " . $sSQL . "<br>\n";
+						}
+					
+						// Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
+						$this->tpl->atribui("mensagem","Privilegios Alterados com Sucesso!");
+						$this->tpl->atribui("url","administrador.php?op=lista");
+						$this->tpl->atribui("target","_top");
+						
+						$this->arquivoTemplate="msgredirect.html";
+						// cai fora da função (ou seja, deixa de processar o resto do aplicativo: a parte de exibicao da tela);
+						return;
 
 				}
 				
 			
 			}
+			
+			
+	    	$this->tpl->atribui("privilegios",$privilegios);
+	    	global $_LS_PRIVILEGIO;
+			$this->tpl->atribui("lista_privilegio",$_LS_PRIVILEGIO);
+			
+			$this->tpl->atribui("admin",$admin);
 
 	    
 	    

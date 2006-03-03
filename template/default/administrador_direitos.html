@@ -21,18 +21,18 @@
                 <td align="center" valign="middle"><table width=100% cellpadding=0 cellspacing=0 height='100%'>
                     <tr height="100%">
                       <td width=100% style="border-right: 1px solid #cccccc; border-bottom: 1px solid #cccccc;" align="center">
-                        <form method="post" action="">
-                          <input type="hidden" name="sessao" value="admin">
-                          <input type="hidden" name="subsess" value="privilegios">
+                        <form method="post" action="{$smarty.server.PHP_SELF}">
                           <input type="hidden" name="oper" value="alt">
-                          <input type="hidden" name="id_admin" value="2">
+                          <input type="hidden" name="id_admin" value="{$admin.id_admin}">
+                          <input type="hidden" name="op" value="privilegio">
+
                           <table class=table_main width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#F0f0f0">
                             <tr>
                               <th bgcolor="#FFFFFF" class=th_main ><font face="Arial" size="4"><b>Privilégios</b></font></th>
                             </tr>
                           </table>
-                          <font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>Administrador:</b> 2
-                          - mosman - Andrei de Oliveira Mosman </font>
+                          <font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>Administrador:</b> {$admin.id_admin}
+                          - {$admin.admin} - {$admin.nome} </font>
                           <hr size=1>
                           <br>
                           <table border=0 cellspacing=1 cellpadding=0 bgcolor="#444444" align="center">
@@ -47,12 +47,14 @@
                                   </tr>
 								  {foreach item=v from=$privilegios}
                                   <tr bgcolor="#FFFFFF">
-                                    <td> <input type="checkbox" name="id_priv[{$v.id_priv}]" value="1" >
+                                    <td><input type="checkbox" name="id[{$v.id_priv}]" class="checkbox" {if $v.id_admin}CHECKED{ /if }>
                                     </td>
-                                    <td> <p>administradores </p></td>
-                                    <td> <SELECT name='gravar_1'>
-                                        <OPTION VALUE='0'  SELECTED >SOMENTE LEITURA</OPTION>
-                                        <OPTION VALUE='1' >LER E GRAVAR</OPTION>
+                                    <td> <p>{$v.nome}</p></td>
+
+                                    <td> <SELECT name='pode_gravar[{$v.id_priv}]'>
+                                    	{foreach key=id item=nome from=$lista_privilegio}
+                                        <OPTION VALUE='{$id}' {if $id == $v.pode_gravar}SELECTED{/if}>{$nome}</OPTION>
+                                        {/foreach}
                                       </SELECT> </td>
                                   </tr>
                                   <tr>

@@ -41,47 +41,47 @@ class VAConfiguracao extends VirtexAdmin {
 			}else if($op == "pop"){
 
 
-			$erros = array();
+				$erros = array();
 
-			$acao = @$_REQUEST["acao"];
-			$id_pop = @$_REQUEST["id_pop"];
+				$acao = @$_REQUEST["acao"];
+				$id_pop = @$_REQUEST["id_pop"];
 
-			$enviando = false;
-			
-			$tSQL  = "SELECT ";
-			$tSQL .= "   id_pop, nome, info, tipo, id_pop_ap ";
-			$tSQL .= "FROM cftb_pop ";
-			$tSQL .= "WHERE tipo = 'AP'";
+				$enviando = false;
+				
+				$tSQL  = "SELECT ";
+				$tSQL .= "   id_pop, nome, info, tipo, id_pop_ap ";
+				$tSQL .= "FROM cftb_pop ";
+				$tSQL .= "WHERE tipo = 'AP'";
+	
+				$aps = $this->bd->obtemRegistros($tSQL);
+				
+				$reg = array();
 
-			$aps = $this->bd->obtemRegistros($tSQL);
-			
-			$reg = array();
 
-
-			if( $acao ) {
-			   // Se ele recebeu o campo ação é pq veio de um submit
-			   $enviando = true;
-			} else {
-				// Se não recebe o campo ação e tem id_pop é alteração, caso contrário é cadastro.
-				if( $id_pop ) {
-					// SELECT
-					$sSQL  = "SELECT ";
-					$sSQL .= "   id_pop, nome, info, tipo, id_pop_ap ";
-					$sSQL .= "FROM cftb_pop ";
-					$sSQL .= "WHERE id_pop = '$id_pop'";
+				if( $acao ) {
+				   // Se ele recebeu o campo ação é pq veio de um submit
+				   $enviando = true;
+				} else {
+					// Se não recebe o campo ação e tem id_pop é alteração, caso contrário é cadastro.
+					if( $id_pop ) {
+						// SELECT
+						$sSQL  = "SELECT ";
+						$sSQL .= "   id_pop, nome, info, tipo, id_pop_ap ";
+						$sSQL .= "FROM cftb_pop ";
+						$sSQL .= "WHERE id_pop = '$id_pop'";
 					
 										
-					$reg = $this->bd->obtemUnicoRegistro($sSQL);
+						$reg = $this->bd->obtemUnicoRegistro($sSQL);
 					
 
-					$acao = "alt";
-					$titulo = "Alterar";
+						$acao = "alt";
+						$titulo = "Alterar";
 
-				} else {
-					$acao = "cad";
-					$titulo = "Cadastrar";
+					} else {
+						$acao = "cad";
+						$titulo = "Cadastrar";
+					}
 				}
-			}
 			
 			if( $enviando ) {
 
@@ -263,39 +263,114 @@ class VAConfiguracao extends VirtexAdmin {
 						// Grava no banco.
 						if( $acao == "cad" ) {
 						// CADASTRO
+							$tipo_nas = @$_REQUEST["tipo_nas"];
+							$secret = @$_REQUEST["secret"];
+							$ip = @$_REQUEST["ip"];
+
+							$msg_final = "NAS Cadastrado com sucesso!";
+							
+							
+							if($tipo_nas == "R" || $tipo_nas == "P"){   		
+								
 							   		
-							   		
-						$msg_final = "NAS Cadastrado com sucesso!";
-							   		
-						$id_nas = $this->bd->proximoID("cfsq_id_nas");
+								$id_nas = $this->bd->proximoID("cfsq_id_nas");
 			
 								
-						$sSQL  = "INSERT INTO ";
-						$sSQL .= "   cftb_nas( ";
-						$sSQL .= "      id_nas, nome, ip, secret, tipo_nas ) ";
-						$sSQL .= "   VALUES (";
-						$sSQL .= "     '" . $this->bd->escape($id_nas) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["ip"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["secret"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["tipo_nas"]) . "' ";
-						$sSQL .= "     )";
+								$sSQL  = "INSERT INTO ";
+								$sSQL .= "   cftb_nas( ";
+								$sSQL .= "      id_nas, nome, ip, secret, tipo_nas ) ";
+								$sSQL .= "   VALUES (";
+								$sSQL .= "     '" . $this->bd->escape($id_nas) . "', ";
+								$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
+								$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["ip"]) . "', ";
+								$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["secret"]) . "', ";
+								$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["tipo_nas"]) . "' ";
+								$sSQL .= "     )";
+										
+						
+								$this->spool->radiusAdicionaNAS($ip,$secret);
+							
+							} else if($tipo_nas == "I"){
 								
+								$sSQL  = "INSERT INTO ";
+								$sSQL .= "   cftb_nas( ";
+								$sSQL .= "      id_nas, nome, ip, secret, tipo_nas ) ";
+								$sSQL .= "   VALUES (";
+								$sSQL .= "     '" . $this->bd->escape($id_nas) . "', ";
+								$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
+								$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["ip"]) . "', ";
+								$sSQL .= "     NULL, ";
+								$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["tipo_nas"]) . "' ";
+								$sSQL .= "     )";
+
+							}
+									
+									
+									
+									
 									
 						} else {
 						// ALTERACAO
-						$msg_final = "NAS Alterado com sucesso!";
+							$msg_final = "NAS Alterado com sucesso!";
+							$tipo_nas = @$_REQUEST["tipo_nas"];
+							$secret = @$_REQUEST["secret"];
+							$ip = @$_REQUEST["ip"];
+							$tipo_nas_up = @$_REQUEST['tipo_nas_up'];
+							
+							//echo "Tipo NAS: $tipo_nas";
 			
-			
-						$sSQL  = "UPDATE ";
-						$sSQL .= "   cftb_nas ";
-						$sSQL .= "SET ";
-						$sSQL .= "   nome = '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
-						$sSQL .= "   ip = '" . $this->bd->escape(@$_REQUEST["ip"]) . "', ";
-						$sSQL .= "   secret = '" . $this->bd->escape(@$_REQUEST["secret"]) . "', ";
-						$sSQL .= "   tipo_nas = '" . $this->bd->escape(@$_REQUEST["tipo_nas"]) . "' ";
-						$sSQL .= "WHERE ";
-						$sSQL .= "   id_nas = '" . $this->bd->escape(@$_REQUEST["id_nas"]) . "' ";  
+				
+							if($tipo_nas_up == "R" || $tipo_nas_up == "P"){
+							
+								$tSQL  = "SELECT ";
+								$tSQL .= "	ip, secret ";
+								$tSQL .= "FROM ";
+								$tSQL .= "	cftb_nas ";
+								$tSQL .= "WHERE ";
+								$tSQL .= "   id_nas = '" . $this->bd->escape(@$_REQUEST["id_nas"]) . "' ";
+								
+								$compara = $this->bd->obtemUnicoRegistro($tSQL);
+								
+								
+								$sSQL  = "UPDATE ";
+								$sSQL .= "   cftb_nas ";
+								$sSQL .= "SET ";
+								$sSQL .= "   nome = '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
+								$sSQL .= "   ip = '" . $this->bd->escape(@$_REQUEST["ip"]) . "', ";
+								$sSQL .= "   secret = '" . $this->bd->escape(@$_REQUEST["secret"]) . "', ";
+								$sSQL .= "   tipo_nas = '" . $this->bd->escape(@$_REQUEST["tipo_nas_up"]) . "' ";
+								$sSQL .= "WHERE ";
+								$sSQL .= "   id_nas = '" . $this->bd->escape(@$_REQUEST["id_nas"]) . "' ";  
+						
+								
+								
+								if ($ip != $compara['ip'] || $secret != $compara['secret']){
+								
+								
+									$this->spool->radiusExcluiNAS($ip);
+									$this->spool->radiusAdicionaNAS($ip,$secret);
+							
+								}
+							
+							
+							}else if($tipo_nas_up == "I"){
+							
+							
+							
+								$sSQL  = "UPDATE ";
+								$sSQL .= "   cftb_nas ";
+								$sSQL .= "SET ";
+								$sSQL .= "   nome = '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
+								$sSQL .= "   ip = '" . $this->bd->escape(@$_REQUEST["ip"]) . "', ";
+								$sSQL .= "   secret = NULL, ";
+								$sSQL .= "   tipo_nas = '$tipo_nas_up' ";
+								$sSQL .= "WHERE ";
+								$sSQL .= "   id_nas = '" . $this->bd->escape(@$_REQUEST["id_nas"]) . "' ";  
+							
+							
+							
+							}
+
 			
 			
 						}
@@ -311,7 +386,7 @@ class VAConfiguracao extends VirtexAdmin {
 			
 						// Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
 						$this->tpl->atribui("mensagem",$msg_final); 
-						$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=listagem");
+						$this->tpl->atribui("url","configuracao.php?op=lista_nas");
 						$this->tpl->atribui("target","_top");
 			
 						$this->arquivoTemplate = "msgredirect.html";
