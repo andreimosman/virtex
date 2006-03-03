@@ -6,6 +6,7 @@ require_once("MDatabase.class.php");
 class VirtexAdmin extends MWebApp {
 
 	protected $bd;
+	protected $spool;
 	protected $admLogin;
 
 	public function VirtexAdmin() {
@@ -24,6 +25,8 @@ class VirtexAdmin extends MWebApp {
 	      } else {
 
 	      }
+	      
+	      $this->spool = new Spool($this->bd);
 
 		   if( isset($_SESSION["admLogin"]) ) {
 			  $this->admLogin = $_SESSION["admLogin"];
