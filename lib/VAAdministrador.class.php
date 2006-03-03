@@ -276,20 +276,65 @@ class VAAdministrador extends VirtexAdmin {
 	        
 	    } else if ($op == "privilegio"){
 	    
-	    	$sSQL  = "SELECT ";
-	    	$sSQL .= "	up.id_admin, up.id_priv, up.pode_gravar, ";
-	    	$sSQL .= "	ad.admin, ad.id_admin, ad.nome, ";
-	    	$sSQL .= "	ap.id_priv, ap.cod_priv, ap.nome ";
-	    	$sSQL .= "FROM ";
-	    	$sSQL .= "adtb_usuario_privilegio up, adtb_admin ad, adtb_privilegio ";
-	    	$sSQL .= "WHERE ";
-	    	$sSQL .= "id.admin = '". @$_REQUEST['id_admin'] ."' ";
-	    	$sSQL .= "AND up.id_priv = ap.id_priv ";
+	    	$id_priv = Array();
+	    
+	    	$id_admin = @$_REQUEST['id_admin'];
+	    	$oper = @$_REQUEST['oper'];
+	    	$id_priv = @$_REQUEST['id_priv'];
+	    	
+	    	
+	    	//Infos do admininstrador
+	    	$tSQL  = "SELECT ";
+			$tSQL .= "   id_admin, admin, status, nome, email ";
+			$tSQL .= "FROM ";
+			$tSQL .= "   adtb_admin ";
+			$tSQL .= "WHERE ";
+			$tSQL .= "   id_admin = '$id_admin' ";
+
+	    	
+	    	// LISTA DOS PRIVILÉGIOS
+         	$sSQL  = "SELECT ";
+         	$sSQL .= "   p.id_priv, p.cod_priv,p.nome, ";
+         	$sSQL .= "   CASE WHEN up.pode_gravar is true THEN 1 ELSE 0 END as pode_gravar, ";
+         	$sSQL .= "   CASE WHEN up.pode_gravar is null THEN '' ELSE 'checked' END as checked ";
+         	$sSQL .= "FROM ";
+         	$sSQL .= "   adtb_privilegio p LEFT OUTER JOIN adtb_usuario_privilegio up ON (p.id_priv = up.id_priv AND up.id_admin = $id_admin) ";
+         	$sSQL .= "ORDER BY ";
+         	$sSQL .= "   p.nome ";
 	    	
 	    	$privilegios = $this->bd->obtemRegistros($sSQL);
+	    	$admin = $this->bd->obtemUnicoRegistro($tSQL);
 	    	
 	    	$this->tpl->atribui("privilegios",$privilegios);
-	    	
+	    	global $_LS_PRIVILEGIO;
+			$this->tpl->atribui("lista_privilegio",$_LS_PRIVILEGIO);
+			
+			$this->tpl->atribui("admin",$admin);
+			
+			if ( $oper == "alt" ) {
+			
+				$dSQL = "DELETE FROM adtb_usuario_privilegio WHERE id_admin = $id_admin";
+				$this->bd->consulta($dSQL);
+				
+					while(list($id,$valor)=each($_REQUEST['$id'])){
+
+						$sSQL  = "INSERT INTO ";
+						$sSQL .= "   adtb_usuario_privilegio( ";
+						$sSQL .= "      id_admin, id_priv, pode_gravar ";
+						$sSQL .= "   ) VALUES (";
+						$sSQL .= "      '". @$_REQUEST['$id_admin'] ."', ";
+						$sSQL .= "      '$id', ";
+						$sSQL .= "      '". @$_REQUEST['$pode_gravar'] ."' ";
+						$sSQL .= "   ) ";
+						$sSQL .= "";
+
+						$this->bd->consulta($sSQL);
+
+				}
+				
+			
+			}
+
 	    
 	    
 	        $this->arquivoTemplate = "administrador_direitos.html";
