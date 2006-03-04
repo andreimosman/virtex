@@ -49,16 +49,17 @@
 		</td>
 	</tr>
 	{if $id_cliente}
-	<tr>
-		<td colspan="6" bgcolor="#779977">
-			<font face="arial" size=+1><b>{$cliente.nome_razao}</b></font>
-			<!--table width="100%" cellpadding=2 cellspacing=1 bgcolor="#559955">
+	
+  <tr align="center"> 
+    <td colspan="6" bgcolor="#779977"> <font face="arial" size=+1><b><font color="#FFFFFF">{$cliente.nome_razao}</font></b></font> 
+      <font color="#FFFFFF"> 
+      <!--table width="100%" cellpadding=2 cellspacing=1 bgcolor="#559955">
 				<tr bgcolor="#FFFFFF">
 					<td width="50%"><u><small>CLIENTE:</small></u>&nbsp;{$cliente.nome_razao}</td>
 					<td width="50%"><u><small>CPF/CNPJ:</small></u>&nbsp;{$cliente.cpf_cnpj}</td>
 				</tr>
 			</table-->
-		</td>
+      </font> </td>
 	</tr>
 	{/if}
 </table>

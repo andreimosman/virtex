@@ -18,10 +18,16 @@
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td align="center" valign="middle"><h1>Contrata&ccedil;&atilde;o
-                    de Produto - {$produtos.nome}</h1>
+                <td align="center" valign="middle"><h1>Contrata&ccedil;&atilde;o 
+                    de Produto </h1>
                   <h2>Cliente: {$cliente.id_cliente} - {$cliente.nome}</h2>
-                  <h2>&nbsp;</h2>
+                  <h2>
+                    <select name="tipo" id="tipo">
+                      <option value="BL">Banda Larga</option>
+                      <option value="D">Discado</option>
+                      <option value="H">Hospedagem</option>
+                    </select>
+                  </h2>
                   <table width="100" border="0" cellspacing="0" cellpadding="0">
                     <tr>
                       <td><form name="form1" method="post" action="{$smarty.server.PHP_SELF}">
@@ -300,8 +306,8 @@
                         </form></td>
                     </tr>
                   </table>
-                  <h2><br>
-                  </h2>
+                  <p><a href="javascript:history.go(-1);"><br>
+                    voltar</a> </p>
                   <p>&nbsp;</p></td>
               </tr>
             </table></td>

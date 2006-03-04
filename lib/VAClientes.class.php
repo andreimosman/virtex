@@ -410,57 +410,7 @@ class VAClientes extends VirtexAdmin {
 				
 				
 				
-		} else if ($op == "produtos"){
-			//SELECTS PARA POPULAR OS CAMPOS DROP-DOWN
-			
-			//Lista de Clientes
-			$aSQL  = "SELECT ";
-			$aSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
-			$aSQL .= "   rg_inscr, expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
-			$aSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
-			$aSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
-			$aSQL .= "   ativo,obs ";
-			$aSQL .= "FROM cltb_cliente ";
-			
-			
-			//Lista de Produtos
-			$bSQL  = "SELECT ";
-			$bSQL .= "   id_produto, nome, descricao, tipo, ";
-			$bSQL .= "   valor, disponivel ";
-			$bSQL .= "FROM prtb_produto ";
-
-
-			//Lista de POP
-			$cSQL  = "SELECT ";
-			$cSQL .= "   id_pop, nome, info, tipo, id_pop_ap ";
-			$cSQL .= "FROM cftb_pop ";
-
-		
-			//Lista de NAS
-			$dSQL  = "SELECT ";
-			$dSQL .= "   id_nas, nome, ip, secret, tipo_nas ";
-			$dSQL .= "FROM cftb_nas ";
-			$dSQL .= "WHERE id_nas = '$id_nas'";
-			
-			
-			
-			$lista_clientes = $this->bd->obtemRegistros($aSQL);
-			$lista_produtos = $this->bd->obtemRegistros($bSQL);
-			$lista_pop = $this->bd->obtemRegistros($cSQL);
-			$lista_nas = $this->bd->obtemRegistros($dSQL);
-			
-			
-			//Atribuição de valores ao template
-			$this->tpl->atribui($lista_clientes);
-			$this->tpl->atribui($lista_produtos);
-			$this->tpl->atribui($lista_pop);
-			$this->tpl->atribui($lista_nas);
-			
-		
-		
-		
-			$this->arquivoTemplate = "clientes_cobranca_contratacao.html";
-		
+	
 		} else if ($op == "cobranca") {
 			// Sistema de contratação de produtos e resumo de cobrança
 			$rotina = @$_REQUEST["rotina"];
@@ -485,7 +435,86 @@ class VAClientes extends VirtexAdmin {
 		} else if ($op == "produto") {
 			// PRECISA PASSAR O TIPO PRO MENU
 			$tipo = @$_REQUEST["tipo"];
+			
+			
+			//SELECTS PARA POPULAR OS CAMPOS DROP-DOWN
+						
+			//Lista de Clientes
+			$aSQL  = "SELECT ";
+			$aSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
+			$aSQL .= "   rg_inscr, expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
+			$aSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
+			$aSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
+			$aSQL .= "   ativo,obs ";
+			$aSQL .= "FROM cltb_cliente ";
+			
+			
+			//Lista de Produtos
+			$bSQL  = "SELECT ";
+			$bSQL .= "   id_produto, nome, descricao, tipo, ";
+			$bSQL .= "   valor, disponivel ";
+			$bSQL .= "FROM prtb_produto ";
+			
+			
+			//Lista de POP
+			$cSQL  = "SELECT ";
+			$cSQL .= "   id_pop, nome, info, tipo, id_pop_ap ";
+			$cSQL .= "FROM cftb_pop ";
+			
+					
+			//Lista de NAS
+			$dSQL  = "SELECT ";
+			$dSQL .= "   id_nas, nome, ip, secret, tipo_nas ";
+			$dSQL .= "FROM cftb_nas ";
+			$dSQL .= "WHERE id_nas = '$id_nas'";
+			
+			//Pega Provedor Padrão
+			$eSQL  = "SELECT ";
+			$eSQL .= "	id_provedor, dominio_padrao, nome, localidade ";
+			$eSQL .= "FROM ";
+			$eSQL .= "cftb_provedor ";
+			$eSQL .= "WHERE ";
+			$eSQL .= "id_provedor = '1'";
+			
+			//Lista Dominios
+			$fSQL  = "SELECT ";
+			$fSQL .= "	dominio, id_cliente ";
+			$fSQL .= "FROM ";
+			$fSQL .= "	dominio ";
+			$fSQL .= "WHERE ";
+			$fSQL .= "	id_cliente = '". $this->bd->escape(@$_REQUEST["id_cliente"]) ."' ";
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			$lista_clientes = $this->bd->obtemRegistros($aSQL);
+			$lista_produtos = $this->bd->obtemRegistros($bSQL);
+			$lista_pop = $this->bd->obtemRegistros($cSQL);
+			$lista_nas = $this->bd->obtemRegistros($dSQL);
+			$provedor_padrao = $this->bd->obtemUnicoRegistro($eSQL);
+			$dominios = $this->bd->obtemUnicoRegistro($fSQL);
+			
+			
+			//Atribuição de valores ao template
+			$this->tpl->atribui($lista_clientes);
+			$this->tpl->atribui($lista_produtos);
+			$this->tpl->atribui($lista_pop);
+			$this->tpl->atribui($lista_nas);
+			$this->tpl->atribui($provedor_padrao);
+			$this->tpl->atribui($dominios);
+			
 			$this->tpl->atribui("tipo",$tipo);
+			
 		
 			$this->arquivoTemplate = "cliente_produto.html";
 			
