@@ -128,33 +128,7 @@ function validaCNPJ() {
           <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td>
-				<table width="500" border="0" cellspacing="2" cellpadding="2" align="center">
-
-
-							{ if $id_cliente }
-                            <tr align="center" valign="middle">
-							<td valign="middle" align="right"></td>
-							  <td><a href="clientes.php?op=cadastro&id_cliente={$id_cliente}"><img src="template/default/images/bt_ficha_cliente.gif" width="77" height="73" border="0"></a></td>
-                              <td><a href="#"><img src="template/default/images/bt_discado.gif" width="77" height="73" border="0"></a></td>
-                              <td><a href="#"><img src="template/default/images/bt_bandalarga" width="77" height="73" border="0"></a></td>
-                              <td><a href="#"><img src="template/default/images/bt_hospedagem.gif" width="77" height="73" border="0"></a></td>
-                              <td><a href="#"><img src="template/default/images/bt_cobranca.gif" width="77" height="73" border="0"></a></td>
-                              <td><img src="template/default/images/bt_helpdesk.gif" width="77" height="73"></td>
-                            </tr>
-						{/if}
-						{if !$id_cliente }
-                            <tr align="center" valign="middle">
-							<td valign="middle" align="right"></td>
-							  <td><img src="template/default/images/bt_ficha_cliente_inativo.gif" width="77" height="73" border="0"></td>
-                              <td><img src="template/default/images/bt_discado_inativo.gif" width="77" height="73" border="0"></td>
-                              <td><img src="template/default/images/bt_bandalarga_inativo.gif" width="77" height="73" border="0"></td>
-                              <td><img src="template/default/images/bt_hospedagem_inativo.gif" width="77" height="73" border="0"></td>
-                              <td><img src="template/default/images/bt_cobranca_inativo.gif" width="77" height="73" border="0"></td>
-                              <td><img src="template/default/images/bt_helpdesk_inativo.gif" width="77" height="73"></td>
-                            </tr>
-						{ /if }
-
-                          </table>
+				{include file="cliente_menu.html"}
 
 				</td>
              </tr>

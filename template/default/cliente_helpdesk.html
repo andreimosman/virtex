@@ -17,38 +17,27 @@
               <tr>
                 <td>{include file='cliente_menu.html'}</td>
               </tr>
-              <tr>
-                <td align="center" bgcolor="#FFFFFF"><strong><font size="5" face="Arial, Helvetica, sans-serif">
-                  <h1>Cobran&ccedil;a<br>
-                     <font size="2">
-                        <a href="clientes.php?id_cliente={$id_cliente}&op=cobranca&rotina=resumo">Resumo</a> .
-                        <a href="clientes.php?id_cliente={$id_cliente}&op=cobranca&rotina=contratar">Novo Contrato</a> .
-                        <a href="clientes.php?id_cliente={$id_cliente}&op=cobranca&rotina=relatorio">Relatório</a>
-                     </font>
-                  </h1>
-                </td>
-              </tr>
-              <tr>
-
-                <td>
-
-					{if $rotina == "resumo" }
-						{include file='cliente_cobranca_resumo.html'}
-                	{/if}
-                	{if $rotina == "contratar"}
-                		{include file='cliente_cobranca_contratar.html'}
-                	{/if}
-                	{if $rotina == "relatorio"}
-                		{include file='cliente_cobranca_relatorio.html'}
-                	{/if}
 
 
-                  </td>
-              </tr>
-              <tr>
-                <td align="center"><p><a href="clientes.php?op=clientemod">Voltar
-                    para Ficha do Cliente</a></p></td>
-              </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               <tr>
                 <td align="center" valign="middle"><p>&nbsp; </p>
                   <p>&nbsp;</p></td>

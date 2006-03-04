@@ -16,9 +16,38 @@ class VAClientes extends VirtexAdmin {
 	   $erros = array();
 	   return $erros;
 	}
+	
+	private function obtemCliente($id_cliente) {
+	
+		$sSQL  = "SELECT ";
+		$sSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
+		$sSQL .= "   rg_inscr, expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
+		$sSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
+		$sSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
+		$sSQL .= "   ativo,obs ";
+		$sSQL .= "FROM ";
+		$sSQL .= "   cltb_cliente ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "   id_cliente = '$id_cliente' ";
+   
+		return( $this->bd->obtemUnicoRegistro($sSQL) );
+	
+	
+	}
 
 
 	public function processa($op=null) {
+		$id_cliente = @$_REQUEST["id_cliente"];
+		// Variáveis gerais de template
+		$this->tpl->atribui("op",$op);
+		$this->tpl->atribui("id_cliente",$id_cliente);
+		
+		// Utilizado pelo menu ou por outras funcionalidades quaisquer.
+		if( $id_cliente ) {
+			$cliente = $this->obtemCliente($id_cliente);   
+			$this->tpl->atribui("cliente",$cliente);
+		}
+
 
 		if ($op == "cadastro"){
 
@@ -41,19 +70,7 @@ class VAClientes extends VirtexAdmin {
 			} else {
 				// Se não recebe o campo ação e tem id_cliente é alteração, caso contrário é cadastro.
 				if( $id_cliente ) {
-					// SELECT
-					$sSQL  = "SELECT ";
-					$sSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
-					$sSQL .= "   rg_inscr, expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
-					$sSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
-					$sSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
-					$sSQL .= "   ativo,obs ";
-					$sSQL .= "FROM ";
-					$sSQL .= "   cltb_cliente ";
-					$sSQL .= "WHERE ";
-					$sSQL .= "   id_cliente = '$id_cliente' ";
-					
-					$reg = $this->bd->obtemUnicoRegistro($sSQL);
+					$reg = $this->obtemCliente($id_cliente);
 
 					$acao = "alt";
 					$titulo = "Alterar";
@@ -309,25 +326,6 @@ class VAClientes extends VirtexAdmin {
 			// Seta as variáveis do template.
 			$this->arquivoTemplate = "clientes_cadastro.html";
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-
 		} else if ( $op == "pesquisa" ){
 		
 		
@@ -462,7 +460,54 @@ class VAClientes extends VirtexAdmin {
 		
 		
 			$this->arquivoTemplate = "clientes_cobranca_contratacao.html";
+		
+		} else if ($op == "cobranca") {
+			// Sistema de contratação de produtos e resumo de cobrança
+			$rotina = @$_REQUEST["rotina"];
 			
+			if( !$rotina ) $rotina = "resumo";
+			
+			if( $rotina == "resumo" ) {
+			
+			} else if( $rotina == "contratar" ) {
+			
+			} else if( $rotina == "relatorio" ) {
+			
+			}
+			
+			
+			
+			//$this->tpl->atribui("conteudo",$conteudo);
+			$this->tpl->atribui("rotina",$rotina);
+			$this->arquivoTemplate = "cliente_cobranca.html";
+		
+		
+		} else if ($op == "produto") {
+			// PRECISA PASSAR O TIPO PRO MENU
+			$tipo = @$_REQUEST["tipo"];
+			$this->tpl->atribui("tipo",$tipo);
+		
+			$this->arquivoTemplate = "cliente_produto.html";
+			
+		} else if ($op == "helpdesk") {
+		
+			$this->arquivoTemplate = "cliente_helpdesk.html";
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 			
 		} else if ($op =="clientemod"){
 			$this->arquivoTemplate = "ficha_cliente.html";
