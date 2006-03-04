@@ -412,8 +412,58 @@ class VAClientes extends VirtexAdmin {
 				
 				
 				
-		} else if ($op == "eliminar"){
-			$this->arquivoTemplate = "eliminar_cliente.html";
+		} else if ($op == "produtos"){
+			//SELECTS PARA POPULAR OS CAMPOS DROP-DOWN
+			
+			//Lista de Clientes
+			$aSQL  = "SELECT ";
+			$aSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
+			$aSQL .= "   rg_inscr, expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
+			$aSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
+			$aSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
+			$aSQL .= "   ativo,obs ";
+			$aSQL .= "FROM cltb_cliente ";
+			
+			
+			//Lista de Produtos
+			$bSQL  = "SELECT ";
+			$bSQL .= "   id_produto, nome, descricao, tipo, ";
+			$bSQL .= "   valor, disponivel ";
+			$bSQL .= "FROM prtb_produto ";
+
+
+			//Lista de POP
+			$cSQL  = "SELECT ";
+			$cSQL .= "   id_pop, nome, info, tipo, id_pop_ap ";
+			$cSQL .= "FROM cftb_pop ";
+
+		
+			//Lista de NAS
+			$dSQL  = "SELECT ";
+			$dSQL .= "   id_nas, nome, ip, secret, tipo_nas ";
+			$dSQL .= "FROM cftb_nas ";
+			$dSQL .= "WHERE id_nas = '$id_nas'";
+			
+			
+			
+			$lista_clientes = $this->bd->obtemRegistros($aSQL);
+			$lista_produtos = $this->bd->obtemRegistros($bSQL);
+			$lista_pop = $this->bd->obtemRegistros($cSQL);
+			$lista_nas = $this->bd->obtemRegistros($dSQL);
+			
+			
+			//Atribuição de valores ao template
+			$this->tpl->atribui($lista_clientes);
+			$this->tpl->atribui($lista_produtos);
+			$this->tpl->atribui($lista_pop);
+			$this->tpl->atribui($lista_nas);
+			
+		
+		
+		
+			$this->arquivoTemplate = "clientes_cobranca_contratacao.html";
+			
+			
 		} else if ($op =="clientemod"){
 			$this->arquivoTemplate = "ficha_cliente.html";
 		} else if ($op == "clientedisc"){
@@ -465,7 +515,10 @@ public function __destruct() {
       	parent::__destruct();
 }
 	
+public function contrataProduto(){
+
 	
+}
 	
 
 				
