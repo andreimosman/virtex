@@ -22,9 +22,9 @@
                     <tr align="center" valign="middle">
                       <td height="50"> <p>Listar somente:</p></td>
                       <td height="50"><a href="cobranca.php?op=lista"><img src="template/default/images/bt_todos.gif" alt="Exibir Todos" width="77" height="73" border="0"></a></td>
-                      <td height="50"><a href="cobranca.php?op=lista&filtro=bl"><img src="template/default/images/bt_bandalarga.gif" alt="Exibir somente Banda Larga" width="77" height="73" border="0"></a></td>
-                      <td height="50"><a href="cobranca.php?op=lista&filtro=d"><img src="template/default/images/bt_discado.gif" alt="Exibir somente Discado" width="77" height="73" border="0"></a></td>
-                      <td height="50"><a href="cobranca.php?op=lista&filtro=h"><img src="template/default/images/bt_hospedagem.gif" alt="Exibir somente Hospedagem" width="77" height="73" border="0"></a></td>
+                      <td height="50"><a href="cobranca.php?op=lista&filtro=BL"><img src="template/default/images/bt_bandalarga.gif" alt="Exibir somente Banda Larga" width="77" height="73" border="0"></a></td>
+                      <td height="50"><a href="cobranca.php?op=lista&filtro=D"><img src="template/default/images/bt_discado.gif" alt="Exibir somente Discado" width="77" height="73" border="0"></a></td>
+                      <td height="50"><a href="cobranca.php?op=lista&filtro=H"><img src="template/default/images/bt_hospedagem.gif" alt="Exibir somente Hospedagem" width="77" height="73" border="0"></a></td>
                     </tr>
                     <tr align="center" valign="middle">
                       <td colspan="5"><form name="form1" method="post" action="cobranca.php">
@@ -66,7 +66,7 @@
                     {foreach item=v from=$lista_produtos}
                     <tr bgcolor="#FFFFFF">
                       <td align="center" width=40><p><a href="cobranca.php?op=cadastro&id_produto={$v.id_produto}&prod={$v.tipo}"><img src="template/default/images/gif_alterar.gif" width="16" height="16" border="0"></a></p></td>
-                      <td width="24" valign="middle"><img src="template/default/images/{$v.tipo}.gif" width="24" height="24">
+                      <td width="24" valign="middle"><img src="template/default/images/{$v.tipo|lower}.gif" width="24" height="24">
                       </td>
                       <td valign="middle"><p>{$v.nome}</p></td>
                       <td valign="middle"> <p>{$v.descricao}</p></td>

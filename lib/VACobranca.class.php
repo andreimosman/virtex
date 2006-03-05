@@ -17,8 +17,9 @@ class VACobranca extends VirtexAdmin {
 	   return $erros;
 	}
 
-
+	
 	public function processa($op=null) {
+
 		if ($op == "cadastro"){
 		//INICIO DO CADASTRAMENTO E ALTERAÇÃO DE PRODUTO
 			
@@ -41,13 +42,13 @@ class VACobranca extends VirtexAdmin {
 			   // Se não recebe o campo ação e tem id_produto é alteração, caso contrário é cadastro.
 			   if( $id_produto ) {
 			   
-			   	if ($prod == "bl"){
+			   	if ($prod == "BL"){
 			   
 			      // SELECT
 			      $sSQL  = "SELECT ";
 			      $sSQL .= "   p.id_produto, p.nome, p.descricao, p.tipo, ";
 			      $sSQL .= "   p.valor, p.disponivel, p.num_emails, p.quota_por_conta, p.vl_email_adicional, ";
-			      $sSQL .= "   p.permitir_outros_dominios, p.email_anexado, p.numero_contas, pbl.banda_upload_kbps, pbl.banda_download_kbps, pbl.franquia_trafego_mensal_gb, ";
+			      $sSQL .= "   p.permitir_outros_dominios, p.numero_contas, pbl.banda_upload_kbps, pbl.banda_download_kbps, pbl.franquia_trafego_mensal_gb, ";
 			      $sSQL .= "   pbl.valor_trafego_adicional_gb ";
 			      $sSQL .= "FROM prtb_produto p , prtb_produto_bandalarga pbl ";
 			      $sSQL .= "WHERE p.id_produto = pbl.id_produto ";
@@ -56,24 +57,24 @@ class VACobranca extends VirtexAdmin {
 			      //$sSQL = "SELECT * FROM prtb_produto INNER JOIN prtb_produto_bandalarga ON (prtb_produto.id_produto = $id_produto AND prtb_produto_bandalarga.id_produto = $id_produto)";
 			      
 			      
-			      } else if ($prod == "d"){
+			      } else if ($prod == "D"){
 			      
 			      $sSQL  = "SELECT ";
 			      $sSQL .= "   p.id_produto, p.nome, p.descricao, p.tipo, ";
 			      $sSQL .= "   p.valor, p.disponivel, p.num_emails, p.quota_por_conta, p.vl_email_adicional, ";
-			      $sSQL .= "   p.permitir_outros_dominios, p.email_anexado, p.numero_contas, pd.franquia_horas, pd.permitir_duplicidade, pd.valor_hora_adicional ";
+			      $sSQL .= "   p.permitir_outros_dominios, p.numero_contas, pd.franquia_horas, pd.permitir_duplicidade, pd.valor_hora_adicional ";
 			      $sSQL .= "FROM prtb_produto p , prtb_produto_discado pd ";
 			      $sSQL .= "WHERE p.id_produto = pd.id_produto ";
 			      $sSQL .= "AND p.id_produto = $id_produto ";
 
 			      //$sSQL = "SELECT * FROM prtb_produto INNER JOIN prtb_produto_discado ON (prtb_produto.id_produto = $id_produto AND prtb_produto_discado.id_produto = $id_produto)";
 			      
-			      } else if ($prod == "h"){
+			      } else if ($prod == "H"){
 			      
 			      $sSQL  = "SELECT ";
 			      $sSQL .= "   p.id_produto, p.nome, p.descricao, p.tipo, ";
 			      $sSQL .= "   p.valor, p.disponivel, p.num_emails, p.quota_por_conta, p.vl_email_adicional, ";
-			      $sSQL .= "   p.permitir_outros_dominios, p.email_anexado, p.numero_contas, ph.dominio, ph.franquia_em_mb, ph.valor_mb_adicional ";
+			      $sSQL .= "   p.permitir_outros_dominios, p.numero_contas, ph.dominio, ph.franquia_em_mb, ph.valor_mb_adicional ";
 			      $sSQL .= "FROM prtb_produto p , prtb_produto_hospedagem ph ";
 			      $sSQL .= "WHERE p.id_produto = ph.id_produto ";
 			      $sSQL .= "AND p.id_produto = $id_produto ";
@@ -126,6 +127,50 @@ class VACobranca extends VirtexAdmin {
 			      // Gravar no banco.
 			      $sSQL = "";
 			      if( $acao == "cad" ) {
+					
+					/* Início do tratamento de erros */
+			      		
+			      		$descricao = trim(@$_REQUEST["descricao"]);
+					if(!$descricao) $descricao = "Nao informado";			      
+			      		
+					$valor = number_format(trim(@$_REQUEST['valor']),2,'.',',');
+					if(!$valor) $valor = 0.00;	
+					
+					$num_emails = (int) trim(@$_REQUEST["num_emails"]);
+					if(!$num_emails) $num_emails = 0;
+					
+					$quota_por_conta = (int) trim(@$_REQUEST['quota_por_conta']);
+					if(!$quota_por_conta) $quota_por_conta = 0;
+					
+					$vl_email_adicional = number_format(trim(@$_REQUEST['vl_email_adicional']),2,'.',',');
+					if(!$vl_email_adicional) $vl_email_adicional = 0.00;
+
+					$numero_contas = (int) trim(@$_REQUEST['numero_contas']);
+					if(!$numero_contas) $numero_contas = 0;
+					
+					$prod = strtoupper(@$_REQUEST['prod']);
+					
+					$franquia_trafego_mensal_gb = (int) trim(@$_REQUEST['franquia_trafego_mensal_gb']);
+					if(!$franquia_trafego_mensal_gb) $franquia_trafego_mensal_gb = 0;
+					
+					$valor_trafego_adicional_gb = number_format(trim(@$_REQUEST['valor_trafego_adicional_gb']),2,'.',',');
+					if(!$valor_trafego_adicional_gb) $valor_trafego_adicional_gb = 0.00;
+					
+					$franquia_horas = (int) trim(@$_REQUEST['franquia_horas']);
+					if(!$franquia_horas) $franquia_horas = 0;
+					
+					$valor_hora_adicional = number_format(trim(@$_REQUEST['valor_hora_adicional']),2,'.',',');
+					if(!$valor_hora_adicional) $valor_hora_adicional = 0.00;
+					
+					$franquia_em_mb = (int) trim(@$_REQUEST['franquia_em_mb']);
+					if(!$franquia_em_mb) $franquia_em_mb = 0;					
+					
+					$valor_mb_adicional = number_format(trim(@$_REQUEST['valor_mb_adicional']),2,'.',',');
+					if(!$valor_mb_adicional) $valor_mb_adicional = 0.00;
+					
+					/* Final do tratamento de erros */
+					
+			      			
 			         	$id_produto = $this->bd->proximoID("prsq_id_produto");//?
 			         	//INICIO DO CADASTRO DE PRODUTOS
 			         
@@ -134,20 +179,19 @@ class VACobranca extends VirtexAdmin {
 				 	$sSQL .= "prtb_produto ";
 				 	$sSQL .= "(id_produto, nome, descricao, tipo, valor, disponivel, ";
 				 	$sSQL .= "num_emails, quota_por_conta, vl_email_adicional, permitir_outros_dominios, ";
-				 	$sSQL .= "email_anexado, numero_contas)";
+				 	$sSQL .= "numero_contas)";
 				 	$sSQL .= "VALUES (";
 				 	$sSQL .= " '" . $this->bd->escape($id_produto) . "', ";
 				 	$sSQL .= " '" . $this->bd->escape(@$_REQUEST['nome']) . "', ";
-				 	$sSQL .= " '" . $this->bd->escape(@$_REQUEST['descricao']) . "', ";
-				 	$sSQL .= " '" . $this->bd->escape(@$_REQUEST['tipo']) . "', ";
-				 	$sSQL .= " '" . $this->bd->escape(@$_REQUEST['valor']) . "', ";
+				 	$sSQL .= " '" . $this->bd->escape($descricao) . "', ";
+				 	$sSQL .= " '" . $this->bd->escape($prod) . "', ";
+				 	$sSQL .= " '" . $this->bd->escape($valor) . "', ";
 				 	$sSQL .= " '" . $this->bd->escape(@$_REQUEST['disponivel']) . "', ";
-				 	$sSQL .= " '" . $this->bd->escape(@$_REQUEST['num_emails']) . "', ";
-				 	$sSQL .= " '" . $this->bd->escape(@$_REQUEST['quota_por_conta']) . "', ";
-				 	$sSQL .= " '" . $this->bd->escape(@$_REQUEST['vl_email_adicional']) . "', ";
+				 	$sSQL .= " '" . $this->bd->escape($num_emails) . "', ";
+				 	$sSQL .= " '" . $this->bd->escape($quota_por_conta) . "', ";
+				 	$sSQL .= " '" . $this->bd->escape($vl_email_adicional) . "', ";
 				 	$sSQL .= " '" . $this->bd->escape(@$_REQUEST['permitir_outros_dominios']) . "', ";
-				 	$sSQL .= " '" . $this->bd->escape(@$_REQUEST['email_anexado']) . "', ";
-				 	$sSQL .= " '" . $this->bd->escape(@$_REQUEST['numero_contas']) ."' ";
+				 	$sSQL .= " '" . $this->bd->escape($numero_contas) ."' ";
 				 	$sSQL .= " )";
 
 					if ($prod == "bl"){
@@ -162,8 +206,8 @@ class VACobranca extends VirtexAdmin {
 						$tSQL .= " '" . $this->bd->escape($id_produto) . "', ";
 						$tSQL .= " '" . $this->bd->escape(@$_REQUEST['banda_upload_kbps']) ."', ";
 						$tSQL .= " '" . $this->bd->escape(@$_REQUEST['banda_download_kbps']) ."', ";
-						$tSQL .= " '" . $this->bd->escape(@$_REQUEST['franquia_trafego_mensal_gb']) ."', ";
-						$tSQL .= " '" . $this->bd->escape(@$_REQUEST['valor_trafego_adicional_gb']) ."' ";
+						$tSQL .= " '" . $this->bd->escape($franquia_trafego_mensal_gb) ."', ";
+						$tSQL .= " '" . $this->bd->escape($valor_trafego_adicional_gb) ."' ";
 						$tSQL .= " )";
 					
 								         		
@@ -179,9 +223,9 @@ class VACobranca extends VirtexAdmin {
 						$tSQL .= "valor_hora_adicional) ";
 						$tSQL .= "VALUES (";
 						$tSQL .= " '" . $this->bd->escape($id_produto) . "', ";
-						$tSQL .= " '" . $this->bd->escape(@$_REQUEST['franquia_horas']) ."', ";
+						$tSQL .= " '" . $this->bd->escape($franquia_horas) ."', ";
 						$tSQL .= " '" . $this->bd->escape(@$_REQUEST['permitir_duplicidade']) ."', ";
-						$tSQL .= " '" . $this->bd->escape(@$_REQUEST['valor_hora_adicional']) ."' ";
+						$tSQL .= " '" . $this->bd->escape($valor_hora_adicional) ."' ";
 						$tSQL .= " )";
 											
 						//$template = "cobranca_produtos_discado.html";
@@ -197,8 +241,8 @@ class VACobranca extends VirtexAdmin {
 						$tSQL .= "VALUES (";
 						$tSQL .= " '" . $this->bd->escape($id_produto) . "', ";
 						$tSQL .= " '" . $this->bd->escape(@$_REQUEST['dominio']) ."', ";
-						$tSQL .= " '" . $this->bd->escape(@$_REQUEST['franquia_em_mb']) ."', ";
-						$tSQL .= " '" . $this->bd->escape(@$_REQUEST['valor_mb_adicional']) ."' ";
+						$tSQL .= " '" . $this->bd->escape($franquia_em_mb) ."', ";
+						$tSQL .= " '" . $this->bd->escape($valor_mb_adicional) ."' ";
 						$tSQL .= " )";
 											
 						//$template = "cobranca_produtos_hospedagem.html";
@@ -220,18 +264,17 @@ class VACobranca extends VirtexAdmin {
 					$sSQL .= "   prtb_produto ";
 					$sSQL .= "SET ";
 					$sSQL .= "   nome = '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
-					$sSQL .= "   descricao = '" . $this->bd->escape(@$_REQUEST["descricao"]) . "', ";
+					$sSQL .= "   descricao = '" . $this->bd->escape($descricao) . "', ";
 					$sSQL .= "   tipo = '" . $this->bd->escape(@$_REQUEST["tipo"]) . "', ";
-					$sSQL .= "   valor = '" . $this->bd->escape(@$_REQUEST["valor"]) . "', ";
+					$sSQL .= "   valor = '" . $this->bd->escape($valor) . "', ";
 					$sSQL .= "   disponivel = '" . $this->bd->escape(@$_REQUEST["disponivel"]) . "', ";
-					$sSQL .= "   num_emails = '" . $this->bd->escape(@$_REQUEST["num_emails"]) . "', ";
-					$sSQL .= "   quota_por_conta = '" . $this->bd->escape(@$_REQUEST["quota_por_conta"]) . "', ";
-					$sSQL .= "   vl_email_adicional = '" . $this->bd->escape(@$_REQUEST["vl_email_adicional"]) . "', ";
+					$sSQL .= "   num_emails = '" . $this->bd->escape($num_emails) . "', ";
+					$sSQL .= "   quota_por_conta = '" . $this->bd->escape($quota_por_conta) . "', ";
+					$sSQL .= "   vl_email_adicional = '" . $this->bd->escape($vl_email_adicional) . "', ";
 					$sSQL .= "   permitir_outros_dominios = '" . $this->bd->escape(@$_REQUEST["permitir_outros_dominios"]) . "', ";
-					$sSQL .= "   email_anexado = '" . $this->bd->escape(@$_REQUEST["email_anexado"]) . "', ";
-					$sSQL .= "   numero_contas = '" . $this->bd->escape(@$_REQUEST["numero_contas"]) . "' ";
+					$sSQL .= "   numero_contas = '" . $this->bd->escape($numero_contas) . "' ";
 					$sSQL .= "WHERE ";
-					$sSQL .= "   id_produto = '" . $this->bd->escape(@$_REQUEST["id_produto"]) . "' ";
+					$sSQL .= "   id_produto = " . $this->bd->escape(@$_REQUEST["id_produto"]) . " ";
 										
 										
 									
@@ -244,10 +287,10 @@ class VACobranca extends VirtexAdmin {
 						$tSQL .= "SET ";
 						$tSQL .= "   banda_upload_kbps = '" . $this->bd->escape(@$_REQUEST["banda_upload_kbps"]) . "', ";
 						$tSQL .= "   banda_download_kbps = '" . $this->bd->escape(@$_REQUEST["banda_download_kbps"]) . "', ";
-						$tSQL .= "   franquia_trafego_mensal_gb = '" . $this->bd->escape(@$_REQUEST["franquia_trafego_mensal_gb"]) . "', ";
-						$tSQL .= "   valor_trafego_adicional_gb = '" . $this->bd->escape(@$_REQUEST["valor_trafego_adicional_gb"]) . "' ";
+						$tSQL .= "   franquia_trafego_mensal_gb = '" . $this->bd->escape($franquia_trafego_mensal_gb) . "', ";
+						$tSQL .= "   valor_trafego_adicional_gb = '" . $this->bd->escape($valor_trafego_adicional_gb) . "' ";
 						$tSQL .= "WHERE ";
-						$tSQL .= "   id_produto = '" . $this->bd->escape(@$_REQUEST["id_produto"]) . "' ";
+						$tSQL .= "   id_produto = " . $this->bd->escape(@$_REQUEST["id_produto"]) . " ";
 										
 								         	
 					}else if($prod=="d"){
@@ -256,11 +299,11 @@ class VACobranca extends VirtexAdmin {
 						$tSQL  = "UPDATE ";
 						$tSQL .= "   prtb_produto_discado ";
 						$tSQL .= "SET ";
-						$tSQL .= "   franquia_horas = '" . $this->bd->escape(@$_REQUEST["franquia_horas"]) . "', ";
+						$tSQL .= "   franquia_horas = '" . $this->bd->escape($franquia_horas) . "', ";
 						$tSQL .= "   permitir_duplicidade = '" . $this->bd->escape(@$_REQUEST["permitir_duplicidade"]) . "', ";
-						$tSQL .= "   valor_hora_adicional = '" . $this->bd->escape(@$_REQUEST["valor_hora_adicional"]) . "' ";
+						$tSQL .= "   valor_hora_adicional = '" . $this->bd->escape($valor_hora_adicional) . "' ";
 						$tSQL .= "WHERE ";
-						$tSQL .= "   id_produto = '" . $this->bd->escape(@$_REQUEST["id_produto"]) . "' ";
+						$tSQL .= "   id_produto = " . $this->bd->escape(@$_REQUEST["id_produto"]) . " ";
 										
 								         	
 					}else if($prod=="h"){
@@ -270,10 +313,10 @@ class VACobranca extends VirtexAdmin {
 						$tSQL .= "   prtb_produto_hospedagem ";
 						$tSQL .= "SET ";
 						$tSQL .= "   dominio = '" . $this->bd->escape(@$_REQUEST["dominio"]) . "', ";
-						$tSQL .= "   franquia_em_mb = '" . $this->bd->escape(@$_REQUEST["franquia_em_mb"]) . "', ";
-						$tSQL .= "   valor_mb_adicional = '" . $this->bd->escape(@$_REQUEST["valor_mb_adicional"]) . "' ";
+						$tSQL .= "   franquia_em_mb = '" . $this->bd->escape($franquia_em_mb) . "', ";
+						$tSQL .= "   valor_mb_adicional = '" . $this->bd->escape($valor_mb_adicional) . "' ";
 						$tSQL .= "WHERE ";
-						$tSQL .= "   id_produto = '" . $this->bd->escape(@$_REQUEST["id_produto"]) . "' ";
+						$tSQL .= "   id_produto = " . $this->bd->escape(@$_REQUEST["id_produto"]) . " ";
 					
 								         	
 			         	}
@@ -293,7 +336,7 @@ class VACobranca extends VirtexAdmin {
 
 			      // Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
 			      $this->tpl->atribui("mensagem",$msg_final); //pega o conteúdo de msg_final e envia para mensagem que é uma val do smart.
-			      $this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=listagem");
+			      $this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=lista");
 			      $this->tpl->atribui("target","_top");
 
 
