@@ -38,9 +38,11 @@ class VAClientes extends VirtexAdmin {
 
 	public function processa($op=null) {
 		$id_cliente = @$_REQUEST["id_cliente"];
+		$tipo = @$_REQUEST["tipo"];
 		// Variáveis gerais de template
 		$this->tpl->atribui("op",$op);
 		$this->tpl->atribui("id_cliente",$id_cliente);
+		$this->tpl->atribui("tipo",$tipo);
 		
 		// Utilizado pelo menu ou por outras funcionalidades quaisquer.
 		if( $id_cliente ) {
@@ -414,75 +416,158 @@ class VAClientes extends VirtexAdmin {
 		} else if ($op == "cobranca") {
 			// Sistema de contratação de produtos e resumo de cobrança
 			$rotina = @$_REQUEST["rotina"];
+
+			$this->tpl->atribui("rotina",$rotina);
+			$this->arquivoTemplate = "cliente_cobranca.html";
+
 			
 			if( !$rotina ) $rotina = "resumo";
 			
 			if( $rotina == "resumo" ) {
-			
+				$this->arquivoTemplate = "cliente_cobranca_resumo.html";
 			} else if( $rotina == "contratar" ) {
-			
+				
+
+				$this->arquivoTemplate = "cliente_cobranca_contratar.html";
+
+				$sSQL  = "SELECT ";
+				$sSQL .= "   dominio,id_cliente ";
+				$sSQL .= "FROM ";
+				$sSQL .= "   dominio ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "   id_cliente = '".$this->bd->escape($id_cliente)."' ";
+				$sSQL .= "ORDER BY ";
+				$sSQL .= "   DOMINIO ";
+
+				$lista_dominios = $this->bd->obtemRegistros($sSQL);
+				
+				$sSQL  = "SELECT ";
+				$sSQL .= "   id_produto,nome,descricao,tipo,valor ";
+				$sSQL .= "";
+				$sSQL .= "FROM ";
+				$sSQL .= "   prtb_produto ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "   disponivel is true ";
+				$sSQL .= "";
+				
+				$cond_discado    = "   AND tipo='D' ";
+				$cond_bandalarga = "   AND tipo='BL' ";
+				$cond_hospedagem = "   AND tipo='H' ";
+				
+				$ordem = "ORDER BY nome ";
+				
+				$lista_discado    = $this->bd->obtemRegistros("$sSQL $cond_discado $ordem");
+				$lista_bandalarga = $this->bd->obtemRegistros("$sSQL $cond_bandalarga $ordem");
+				$lista_hospedagem = $this->bd->obtemRegistros("$sSQL $cond_hospedagem $ordem");
+				
+				$this->tpl->atribui("lista_discado",$lista_discado);
+				$this->tpl->atribui("lista_bandalarga",$lista_bandalarga);
+				$this->tpl->atribui("lista_hospedagem",$lista_hospedagem);
+				
+				// LISTA DE POPS
+				$sSQL  = "SELECT ";
+				$sSQL .= "   id_pop, nome ";
+				$sSQL .= "FROM ";
+				$sSQL .= "   cftb_pop ";
+				$sSQL .= "ORDER BY ";
+				$sSQL .= "   nome";
+				
+				$lista_pops = $this->bd->obtemRegistros($sSQL);
+				$this->tpl->atribui("lista_pops",$lista_pops);
+				
+				// LISTA DE NAS
+				$sSQL  = "SELECT ";
+				$sSQL .= "   id_nas, nome, ip, tipo_nas ";
+				$sSQL .= "FROM ";
+				$sSQL .= "   cftb_nas ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "   tipo_nas = 'I' OR tipo_nas = 'P' ";
+				$sSQL .= "ORDER BY ";
+				$sSQL .= "   nome ";
+				
+				global $_LS_TIPO_NAS;
+
+				
+				$lista_nas = $this->bd->obtemRegistros($sSQL);
+				for($i=0;$i<count($lista_nas);$i++) {
+				   $lista_nas[$i]["tp"] = $_LS_TIPO_NAS[ $lista_nas[$i]["tipo_nas"] ];
+				}
+				
+				$this->tpl->atribui("lista_nas",$lista_nas);
+				
+				
+
+
+
+
+				$sSQL .= "";
+				$sSQL .= "";
+				$sSQL .= "";
+				$sSQL .= "";
+				
+				
+				
+				
+				
 			} else if( $rotina == "relatorio" ) {
-			
+				$this->arquivoTemplate = "cliente_cobranca_relatorio.html";
 			}
 			
 			
 			
-			//$this->tpl->atribui("conteudo",$conteudo);
-			$this->tpl->atribui("rotina",$rotina);
-			$this->arquivoTemplate = "cliente_cobranca.html";
 		
 		
 		} else if ($op == "produto") {
 			// PRECISA PASSAR O TIPO PRO MENU
-			$tipo = @$_REQUEST["tipo"];
+			//$tipo = @$_REQUEST["tipo"];
 			
 			
 			//SELECTS PARA POPULAR OS CAMPOS DROP-DOWN
 						
 			//Lista de Clientes
-			$aSQL  = "SELECT ";
-			$aSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
-			$aSQL .= "   rg_inscr, expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
-			$aSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
-			$aSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
-			$aSQL .= "   ativo,obs ";
-			$aSQL .= "FROM cltb_cliente ";
+			//$aSQL  = "SELECT ";
+			//$aSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
+			//$aSQL .= "   rg_inscr, expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
+			//$aSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
+			//$aSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
+			//$aSQL .= "   ativo,obs ";
+			//$aSQL .= "FROM cltb_cliente ";
 			
 			
 			//Lista de Produtos
-			$bSQL  = "SELECT ";
-			$bSQL .= "   id_produto, nome, descricao, tipo, ";
-			$bSQL .= "   valor, disponivel ";
-			$bSQL .= "FROM prtb_produto ";
+			//$bSQL  = "SELECT ";
+			//$bSQL .= "   id_produto, nome, descricao, tipo, ";
+			//$bSQL .= "   valor, disponivel ";
+			//$bSQL .= "FROM prtb_produto ";
 			
 			
 			//Lista de POP
-			$cSQL  = "SELECT ";
-			$cSQL .= "   id_pop, nome, info, tipo, id_pop_ap ";
-			$cSQL .= "FROM cftb_pop ";
+			//$cSQL  = "SELECT ";
+			//$cSQL .= "   id_pop, nome, info, tipo, id_pop_ap ";
+			//$cSQL .= "FROM cftb_pop ";
 			
 					
 			//Lista de NAS
-			$dSQL  = "SELECT ";
-			$dSQL .= "   id_nas, nome, ip, secret, tipo_nas ";
-			$dSQL .= "FROM cftb_nas ";
-			$dSQL .= "WHERE id_nas = '$id_nas'";
+			//$dSQL  = "SELECT ";
+			//$dSQL .= "   id_nas, nome, ip, secret, tipo_nas ";
+			//$dSQL .= "FROM cftb_nas ";
+			//$dSQL .= "WHERE id_nas = '$id_nas'";
 			
 			//Pega Provedor Padrão
-			$eSQL  = "SELECT ";
-			$eSQL .= "	id_provedor, dominio_padrao, nome, localidade ";
-			$eSQL .= "FROM ";
-			$eSQL .= "cftb_provedor ";
-			$eSQL .= "WHERE ";
-			$eSQL .= "id_provedor = '1'";
+			//$eSQL  = "SELECT ";
+			//$eSQL .= "	id_provedor, dominio_padrao, nome, localidade ";
+			//$eSQL .= "FROM ";
+			//$eSQL .= "cftb_provedor ";
+			//$eSQL .= "WHERE ";
+			//$eSQL .= "id_provedor = '1'";
 			
 			//Lista Dominios
-			$fSQL  = "SELECT ";
-			$fSQL .= "	dominio, id_cliente ";
-			$fSQL .= "FROM ";
-			$fSQL .= "	dominio ";
-			$fSQL .= "WHERE ";
-			$fSQL .= "	id_cliente = '". $this->bd->escape(@$_REQUEST["id_cliente"]) ."' ";
+			//$fSQL  = "SELECT ";
+			//$fSQL .= "	dominio, id_cliente ";
+			//$fSQL .= "FROM ";
+			//$fSQL .= "	dominio ";
+			//$fSQL .= "WHERE ";
+			//$fSQL .= "	id_cliente = '". $this->bd->escape(@$_REQUEST["id_cliente"]) ."' ";
 			
 			
 			
@@ -497,23 +582,23 @@ class VAClientes extends VirtexAdmin {
 			
 			
 			
-			$lista_clientes = $this->bd->obtemRegistros($aSQL);
-			$lista_produtos = $this->bd->obtemRegistros($bSQL);
-			$lista_pop = $this->bd->obtemRegistros($cSQL);
-			$lista_nas = $this->bd->obtemRegistros($dSQL);
-			$provedor_padrao = $this->bd->obtemUnicoRegistro($eSQL);
-			$dominios = $this->bd->obtemUnicoRegistro($fSQL);
+			//$lista_clientes = $this->bd->obtemRegistros($aSQL);
+			//$lista_produtos = $this->bd->obtemRegistros($bSQL);
+			//$lista_pop = $this->bd->obtemRegistros($cSQL);
+			//$lista_nas = $this->bd->obtemRegistros($dSQL);
+			//$provedor_padrao = $this->bd->obtemUnicoRegistro($eSQL);
+			//$dominios = $this->bd->obtemUnicoRegistro($fSQL);
 			
 			
 			//Atribuição de valores ao template
-			$this->tpl->atribui($lista_clientes);
-			$this->tpl->atribui($lista_produtos);
-			$this->tpl->atribui($lista_pop);
-			$this->tpl->atribui($lista_nas);
-			$this->tpl->atribui($provedor_padrao);
-			$this->tpl->atribui($dominios);
+			//$this->tpl->atribui($lista_clientes);
+			//$this->tpl->atribui($lista_produtos);
+			//$this->tpl->atribui($lista_pop);
+			//$this->tpl->atribui($lista_nas);
+			//$this->tpl->atribui($provedor_padrao);
+			//$this->tpl->atribui($dominios);
 			
-			$this->tpl->atribui("tipo",$tipo);
+			//$this->tpl->atribui("tipo",$tipo);
 			
 		
 			$this->arquivoTemplate = "cliente_produto.html";
