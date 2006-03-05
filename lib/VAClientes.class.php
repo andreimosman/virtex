@@ -426,7 +426,6 @@ class VAClientes extends VirtexAdmin {
 			if( $rotina == "resumo" ) {
 				$this->arquivoTemplate = "cliente_cobranca_resumo.html";
 			} else if( $rotina == "contratar" ) {
-				
 
 				$this->arquivoTemplate = "cliente_cobranca_contratar.html";
 
@@ -494,20 +493,6 @@ class VAClientes extends VirtexAdmin {
 				}
 				
 				$this->tpl->atribui("lista_nas",$lista_nas);
-				
-				
-
-
-
-
-				$sSQL .= "";
-				$sSQL .= "";
-				$sSQL .= "";
-				$sSQL .= "";
-				
-				
-				
-				
 				
 			} else if( $rotina == "relatorio" ) {
 				$this->arquivoTemplate = "cliente_cobranca_relatorio.html";
