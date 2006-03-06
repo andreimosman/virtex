@@ -107,7 +107,7 @@ class VirtexAdmin extends MWebApp {
 	   // Não faz nada por hora.
 	}
 	
-	function criptSenha($senha) {
+	public function criptSenha($senha) {
 		$sal = '$1$';
 		for($i=0;$i<8;$i++) {
 			$j = mt_rand(0,53);
