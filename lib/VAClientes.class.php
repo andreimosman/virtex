@@ -1,16 +1,12 @@
 <?
 
-
 require_once( PATH_LIB . "/VirtexAdmin.class.php" );
 
 class VAClientes extends VirtexAdmin {
 
 	public function VAClientes() {
 		parent::VirtexAdmin();
-
-
 	}
-
 
 	protected function validaFormulario() {
 	   $erros = array();
@@ -18,7 +14,7 @@ class VAClientes extends VirtexAdmin {
 	}
 	
 	private function obtemCliente($id_cliente) {
-	
+
 		$sSQL  = "SELECT ";
 		$sSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
 		$sSQL .= "   rg_inscr, expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
@@ -31,10 +27,76 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "   id_cliente = '$id_cliente' ";
    
 		return( $this->bd->obtemUnicoRegistro($sSQL) );
+
+	}
 	
+	private function obtemNAS($id_nas) {
+		$sSQL = "SELECT ";
+		$sSQL .= "   id_nas,nome,ip,secret,tipo_nas ";
+		$sSQL .= "FROM ";
+		$sSQL .= "   cftb_nas ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "   id_nas = '". $this->bd->escape($id_nas) . "' ";
+		
+		return( $this->bd->obtemUnicoRegistro($sSQL) );
+		
+	}
+	
+	private function obtemIP($id_nas) {
+
+		$sSQL = "SELECT ";
+		$sSQL .= "   	i.ipaddr ";
+		$sSQL .= "FROM ";
+		$sSQL .= "   cntb_conta_bandalarga cbl RIGHT OUTER JOIN cftb_ip i USING(ipaddr), "; 
+		$sSQL .= "   cftb_rede r,cftb_nas_rede nr, cftb_nas n ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "	nr.id_nas = n.id_nas ";
+		$sSQL .= "    AND r.rede = nr.rede ";
+	   	$sSQL .= "	AND nr.id_nas = n.id_nas ";
+	   	$sSQL .= "	AND n.id_nas=$id_nas ";
+		$sSQL .= "   	AND i.ipaddr << r.rede ";
+	   	$sSQL .= "	AND r.tipo_rede = 'C' ";
+	   	$sSQL .= "	AND cbl.ipaddr is null ";
+		$sSQL .= "ORDER BY ";
+	   	$sSQL .= "	i.ipaddr ";
+		$sSQL .= "LIMIT ";
+	   	$sSQL .= "	1 ";
+
+		return( $this->bd->obtemUnicoRegistro($sSQL) );
 	
 	}
+	
+	private function obtemRede($id_nas) {
+		$sSQL = "SELECT ";
+		$sSQL .= "   r.rede ";
+		$sSQL .= "FROM ";
+		$sSQL .= "   cntb_conta_bandalarga cbl RIGHT OUTER JOIN cftb_rede r USING(rede), cftb_nas_rede nr, cftb_nas n ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "   nr.rede = r.rede ";
+		$sSQL .= "   AND nr.id_nas = n.id_nas ";
+		$sSQL .= "   AND n.id_nas=$id_nas ";
+		$sSQL .= "   AND cbl.rede is null ";
+		$sSQL .= "   and r.tipo_rede = 'C' ";
+		$sSQL .= "ORDER BY ";
+		$sSQL .= "   r.rede DESC ";
+		$sSQL .= "LIMIT ";
+		$sSQL .= "   1 ";
 
+		return( $this->bd->obtemUnicoRegistro($sSQL) );
+	}
+	
+	private function obtemDowUp($id_produto){
+		$sSQL = "SELECT ";
+		$sSQL .= "   banda_upload_kbps, ";
+		$sSQL .= "   banda_download_kbps ";
+		$sSQL .= "FROM ";
+		$sSQL .= "   prtb_produto_bandalarga ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "   id_produto = $id_produto";
+		$sSQL .= "LIMIT ";
+		$sSQL .= "   1 ";
+		return( $this->bd->obtemUnicoRegistro($sSQL) );;	
+	}
 
 	public function processa($op=null) {
 		$id_cliente = @$_REQUEST["id_cliente"];
@@ -415,87 +477,295 @@ class VAClientes extends VirtexAdmin {
 	
 		} else if ($op == "cobranca") {
 			// Sistema de contratação de produtos e resumo de cobrança
+			
 			$rotina = @$_REQUEST["rotina"];
-
+			$acao = @$_REQUEST["acao"];
+			
 			$this->tpl->atribui("rotina",$rotina);
 			$this->arquivoTemplate = "cliente_cobranca.html";
+			
+			$erros = array();
 
 			
 			if( !$rotina ) $rotina = "resumo";
 			
 			if( $rotina == "resumo" ) {
+
 				$this->arquivoTemplate = "cliente_cobranca_resumo.html";
+
 			} else if( $rotina == "contratar" ) {
 
-				$this->arquivoTemplate = "cliente_cobranca_contratar.html";
-
-				$sSQL  = "SELECT ";
-				$sSQL .= "   dominio,id_cliente ";
-				$sSQL .= "FROM ";
-				$sSQL .= "   dominio ";
-				$sSQL .= "WHERE ";
-				$sSQL .= "   id_cliente = '".$this->bd->escape($id_cliente)."' ";
-				$sSQL .= "ORDER BY ";
-				$sSQL .= "   DOMINIO ";
-
-				$lista_dominios = $this->bd->obtemRegistros($sSQL);
+				$enviando = false;
+				$exibeForm = true;
 				
-				$sSQL  = "SELECT ";
-				$sSQL .= "   id_produto,nome,descricao,tipo,valor ";
-				$sSQL .= "";
-				$sSQL .= "FROM ";
-				$sSQL .= "   prtb_produto ";
-				$sSQL .= "WHERE ";
-				$sSQL .= "   disponivel is true ";
-				$sSQL .= "";
-				
-				$cond_discado    = "   AND tipo='D' ";
-				$cond_bandalarga = "   AND tipo='BL' ";
-				$cond_hospedagem = "   AND tipo='H' ";
-				
-				$ordem = "ORDER BY nome ";
-				
-				$lista_discado    = $this->bd->obtemRegistros("$sSQL $cond_discado $ordem");
-				$lista_bandalarga = $this->bd->obtemRegistros("$sSQL $cond_bandalarga $ordem");
-				$lista_hospedagem = $this->bd->obtemRegistros("$sSQL $cond_hospedagem $ordem");
-				
-				$this->tpl->atribui("lista_discado",$lista_discado);
-				$this->tpl->atribui("lista_bandalarga",$lista_bandalarga);
-				$this->tpl->atribui("lista_hospedagem",$lista_hospedagem);
-				
-				// LISTA DE POPS
-				$sSQL  = "SELECT ";
-				$sSQL .= "   id_pop, nome ";
-				$sSQL .= "FROM ";
-				$sSQL .= "   cftb_pop ";
-				$sSQL .= "ORDER BY ";
-				$sSQL .= "   nome";
-				
-				$lista_pops = $this->bd->obtemRegistros($sSQL);
-				$this->tpl->atribui("lista_pops",$lista_pops);
-				
-				// LISTA DE NAS
-				$sSQL  = "SELECT ";
-				$sSQL .= "   id_nas, nome, ip, tipo_nas ";
-				$sSQL .= "FROM ";
-				$sSQL .= "   cftb_nas ";
-				$sSQL .= "WHERE ";
-				$sSQL .= "   tipo_nas = 'I' OR tipo_nas = 'P' ";
-				$sSQL .= "ORDER BY ";
-				$sSQL .= "   nome ";
-				
-				global $_LS_TIPO_NAS;
-
-				
-				$lista_nas = $this->bd->obtemRegistros($sSQL);
-				for($i=0;$i<count($lista_nas);$i++) {
-				   $lista_nas[$i]["tp"] = $_LS_TIPO_NAS[ $lista_nas[$i]["tipo_nas"] ];
+				if($acao == "cad" ) {
+					$enviando = true;
 				}
+
+				if( $enviando ) {
+
+					// Pega dominio padrão 
+					$sSQL  = "select dominio_padrao from cftb_provedor";
+					$lista_dominop = $this->bd->obtemUnicoRegistro($sSQL);
+					$dominioPadrao = $lista_dominop["dominio_padrao"]; 
+
+					// Valida os dados
+					$sSQL  = "SELECT ";
+					$sSQL .= "   username";
+					$sSQL .= "FROM ";
+					$sSQL .= "   cntb_conta ";
+					$sSQL .= "WHERE ";
+					$sSQL .= "   username = '".$this->bd->escape(trim(@$_REQUEST["username"]))."' ";
+					$sSQL .= "   and tipo_conta = '". $this->bd->escape(trim(@$_REQUEST["tipo"])) ."' ";					
+					$sSQL .= "   and dominio = '".$dominioPadrao."' ";
+					$sSQL .= "ORDER BY ";
+					$sSQL .= "   username ";
+
+					$lista_user = $this->bd->obtemUnicoRegistro($sSQL);
+
+					if($lista_user["username"]){
+						// ver como processar 
+						$erros[] = "Já existe outra conta cadastrada com esse usermane";
+					}
+					
+					// Se nao tiver erros faz o cadastro
+					if( !count($erros) ) {
+					
+						// pega id_cliente_prodruto
+						$id_cliente_produto = $this->bd->proximoID("cbsq_id_cliente_produto");
+						
+						// Insere no banco de dados
+
+						$sSQL  = "INSERT INTO ";
+						$sSQL .= "   cbtb_cliente_produto( ";
+						$sSQL .= "      id_cliente_produto,id_cliente, id_produto ) ";
+						$sSQL .= "   VALUES (";
+						$sSQL .= "     " . $id_cliente_produto . ", ";
+						$sSQL .= "     " . $this->bd->escape(@$_REQUEST["id_cliente"]) . ", ";
+						$sSQL .= "     " . $this->bd->escape(@$_REQUEST["id_produto"]) . " ";
+						$sSQL .= "     )";						
+						
+						$this->bd->consulta($sSQL);  
+						if( $this->bd->obtemErro() ) {
+							echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
+							echo "SQL: $sSQL <br>\n";
+						}
+								
+						$senhaCr = $this->criptSenha($this->bd->escape(trim(@$_REQUEST["senha"])));
+						
+						$sSQL  = "INSERT INTO ";
+						$sSQL .= "   cntb_conta( ";
+						$sSQL .= "      username, dominio, tipo_conta, senha, id_cliente, id_cliente_produto, senha_cript) ";
+						$sSQL .= "   VALUES (";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["username"]) . "', ";
+						$sSQL .= "     '" . $dominioPadrao . "', ";
+						$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["tipo"])) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["senha"])) . "', "; 						
+						$sSQL .= "     '" .  $this->bd->escape(trim(@$_REQUEST["id_cliente"])) . "', "; 						
+						$sSQL .= "     '" .	$id_cliente_produto . "', ";
+						$sSQL .= "     '" . $senhaCr . "' ";
+						$sSQL .= "     )";						
+												
+						$this->bd->consulta($sSQL);  
+						if( $this->bd->obtemErro() ) {
+							echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
+							echo "SQL: $sSQL <br>\n";
+						}
+						
+						
+						$tipo = @$_REQUEST["tipo"];
+						
+						switch($tipo) {
+							case 'D':
+								// PRODUTO DISCADO
+								break;	
+							case 'BL':
+								// PRODUTO BANDA LARGA
+								$tipo_de_ip = $this->bd->escape(trim(@$_REQUEST["ip_am"]));
+								if($tipo_de_ip == "A"){
+									$nas = $this->obtemNAS($_REQUEST["id_nas"]);
+									if( $nas["tipo_nas"] == "I" ) {
+									   // Cadastrar REDE em cntb_conta
+									   $rede_disponivel = $this->obtemRede($nas["id_nas"]);
+									   $rede_disp = $rede_disponivel["rede"];
+									   $ip_disp = "Null";
+									} else if( $nas["tipo_nas"] == "P" ) {
+									   // Cadastrar IPADDR em cntb_conta
+									   $ip_disponivel = $this->obtemIP($nas["id_nas"]);
+									   $ip_disp = $ip_disponivel["ipaddr"];
+									   $rede_disp = "Null";
+									}
+								}
+								
+								
+								$id_produto = $this->bd->escape(@$_REQUEST["id_produto"]);
+								$bandaUp_dow = $this->obtemDowUp($id_produto);
+								
+								$id_conta_banda_larga = $this->bd->proximoID("clsq_id_conta_bandalarga_seq");
+								
+								// INSERE EM CNTB_CONTA_BANDALARGA
+								$sSQL  = "INSERT INTO ";
+								$sSQL .= "   cntb_conta_bandalarga( ";
+								$sSQL .= "      username, ";
+								$sSQL .= "      tipo_conta, ";
+								$sSQL .= "      dominio, ";
+								$sSQL .= "      id_pop, ";
+								$sSQL .= "      tipo_bandalarga, ";
+								$sSQL .= "      ipaddr, ";
+								$sSQL .= "      rede, ";
+								$sSQL .= "      upload_kbps, ";
+								$sSQL .= "      dowload_kbps, ";
+								$sSQL .= "      status, ";
+								$sSQL .= "      id_nas, ";
+								$sSQL .= "      mac ";
+								$sSQL .= ") ";
+								$sSQL .= "   VALUES (";
+								$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["username"])  . "', ";
+								$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["tipo"])). "', ";
+								$sSQL .= "     '" . $dominioPadrao . "', ";
+								$sSQL .= "     " . $this->bd->escape(trim(@$_REQUEST["id_pop"])) . ", ";
+								$sSQL .= "     '" . $nas["tipo_nas"] . "', ";
+								$sSQL .= "     '" . $ip_disp . "', ";
+								$sSQL .= "     '" . $rede_disp . "', ";
+								$sSQL .= "     '" . $bandaUp_dow["banda_upload_kbps"] . "', ";
+								$sSQL .= "     '" . $bandaUp_dow["banda_download_kbps"] . "', ";
+								$sSQL .= "     'A', ";
+								$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["id_nas"])) . "', ";
+								$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["mac"])) . "' ";
+								$sSQL .= "     )";						
+								
+								$this->bd->consulta($sSQL);  
+								if( $this->bd->obtemErro() ) {
+									echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
+									echo "SQL: $sSQL <br>\n";
+								}
+								
+								break;
+								
+							case 'H':
+								// PRODUTO HOSPEDAGEM
+								
+								break;
+
+						}
+						
+						
+						// Envia instrucao pra spool
+						
+						
+						
+						// Joga a mensagem de produto contratado com sucesso.
+						
+						
+						return;
+						$exibeForm = false;
+						
+						
+						
+					}
+					
+					
+					
+					
 				
-				$this->tpl->atribui("lista_nas",$lista_nas);
+				}
+
+			
+			
+				if( $exibeForm ) {
+
+					$this->arquivoTemplate = "cliente_cobranca_contratar.html";
+
+					$sSQL  = "SELECT ";
+					$sSQL .= "   dominio,id_cliente ";
+					$sSQL .= "FROM ";
+					$sSQL .= "   dominio ";
+					$sSQL .= "WHERE ";
+					$sSQL .= "   id_cliente = '".$this->bd->escape($id_cliente)."' ";
+					$sSQL .= "ORDER BY ";
+					$sSQL .= "   DOMINIO ";
+
+					$lista_dominios = $this->bd->obtemRegistros($sSQL);
+
+					$sSQL  = "SELECT ";
+					$sSQL .= "   id_produto,nome,descricao,tipo,valor ";
+					$sSQL .= "";
+					$sSQL .= "FROM ";
+					$sSQL .= "   prtb_produto ";
+					$sSQL .= "WHERE ";
+					$sSQL .= "   disponivel is true ";
+					$sSQL .= "";
+
+					$cond_discado    = "   AND tipo='D' ";
+					$cond_bandalarga = "   AND tipo='BL' ";
+					$cond_hospedagem = "   AND tipo='H' ";
+
+					$ordem = "ORDER BY nome ";
+
+					$lista_discado    = $this->bd->obtemRegistros("$sSQL $cond_discado $ordem");
+					$lista_bandalarga = $this->bd->obtemRegistros("$sSQL $cond_bandalarga $ordem");
+					$lista_hospedagem = $this->bd->obtemRegistros("$sSQL $cond_hospedagem $ordem");
+
+					$this->tpl->atribui("lista_discado",$lista_discado);
+					$this->tpl->atribui("lista_bandalarga",$lista_bandalarga);
+					$this->tpl->atribui("lista_hospedagem",$lista_hospedagem);
+
+					// LISTA DE POPS
+					$sSQL  = "SELECT ";
+					$sSQL .= "   id_pop, nome ";
+					$sSQL .= "FROM ";
+					$sSQL .= "   cftb_pop ";
+					$sSQL .= "ORDER BY ";
+					$sSQL .= "   nome";
+
+					$lista_pops = $this->bd->obtemRegistros($sSQL);
+					$this->tpl->atribui("lista_pops",$lista_pops);
+
+					// LISTA DE NAS
+					$sSQL  = "SELECT ";
+					$sSQL .= "   id_nas, nome, ip, tipo_nas ";
+					$sSQL .= "FROM ";
+					$sSQL .= "   cftb_nas ";
+					$sSQL .= "WHERE ";
+					$sSQL .= "   tipo_nas = 'I' OR tipo_nas = 'P' ";
+					$sSQL .= "ORDER BY ";
+					$sSQL .= "   nome ";
+
+					global $_LS_TIPO_NAS;
+
+
+					$lista_nas = $this->bd->obtemRegistros($sSQL);
+					for($i=0;$i<count($lista_nas);$i++) {
+					   $lista_nas[$i]["tp"] = $_LS_TIPO_NAS[ $lista_nas[$i]["tipo_nas"] ];
+					}
+
+					$this->tpl->atribui("lista_nas",$lista_nas);
+
+
+
+
+
+
+					$sSQL .= "";
+					$sSQL .= "";
+					$sSQL .= "";
+					$sSQL .= "";
+				}
+
+				
+				
+				
 				
 			} else if( $rotina == "relatorio" ) {
+				
+
 				$this->arquivoTemplate = "cliente_cobranca_relatorio.html";
+			
+			} else if( $rotina == "cad_clinte_produto" ){
+			
+			
+			
+			
 			}
 			
 			
@@ -503,6 +773,8 @@ class VAClientes extends VirtexAdmin {
 		
 		
 		} else if ($op == "produto") {
+
+
 			// PRECISA PASSAR O TIPO PRO MENU
 			//$tipo = @$_REQUEST["tipo"];
 			
@@ -588,6 +860,11 @@ class VAClientes extends VirtexAdmin {
 		
 			$this->arquivoTemplate = "cliente_produto.html";
 			
+		
+		
+		
+		
+		
 		} else if ($op == "helpdesk") {
 		
 			$this->arquivoTemplate = "cliente_helpdesk.html";
