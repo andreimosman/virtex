@@ -120,7 +120,7 @@ function validaForm() {
 		return false;
 	}
 
-	return false;
+	return true;
 
 }
 
@@ -195,12 +195,20 @@ function validaForm() {
                             </tr>
 
 
+
                             <tr>
-                              <td align="center" valign="middle"><input type="hidden" name="p" value="contrato">
-                                <input type="hidden" name="op" value="cad"> <input type="hidden" name="id_cliente" value="1031">
+                              <td align="center" valign="middle">
+                              	<input type="hidden" name="p" value="contrato">
+                                <input type="hidden" name="op" value="cobranca">
+                                <input type="hidden" name="id_cliente" value="{$id_cliente}">
+                                <input type="hidden" name="rotina" value="{$rotina}">
                                 <input type="hidden" name="id_cliente_produto" value="">
-                                <input type="hidden" name="tipo" value="H"></td>
+                                <input type="hidden" name="acao" value="cad">
+                                </td>
                             </tr>
+
+
+
                             <tr>
                               <td align="center" valign="middle"><input name="botao_enviar2" type="submit" class=input2 id="botao_enviar23" value="Cadastrar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;"></td>
                             </tr>
@@ -236,12 +244,12 @@ function validaForm() {
 	  <tr>
 		<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Seleção
 			de Rede/IP:</p></td>
-		<td bgcolor="#FFFFFF"><SELECT name='select2' onChange='javascript:verificaEndereco()'>
+		<td bgcolor="#FFFFFF"><SELECT name='ip_am'>
 			<OPTION VALUE='A' >Automática</OPTION>
 			<OPTION VALUE='M' >Manual</OPTION>
-		  </SELECT> <br> <input type="text" name="endereco2" value=""></td>
+		  </SELECT> <br> <input type="text" name="endereco_ip" id="endereco_ip" value=""></td>
 		<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>MAC:</p></td>
-		<td bgcolor="#FFFFFF" valign="top"><input type="text" name="mac2" value="" maxlength="17" size=17></td>
+		<td bgcolor="#FFFFFF" valign="top"><input type="text" name="mac" value="" maxlength="17" size=17></td>
 	  </tr>
 	</table>
 </div>
@@ -289,7 +297,7 @@ function validaForm() {
 	  </tr>
 	</table>
 </div>
-
+{ literal }
 <script language="JavaScript">
 
 // Formulario de Discado;
@@ -307,6 +315,5 @@ var o = document.getElementById("formH")
 fH=o.outerHTML;
 o.outerHTML="";
 
-
 </script>
-
+{ /literal }
