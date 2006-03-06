@@ -194,7 +194,7 @@ class VACobranca extends VirtexAdmin {
 				 	$sSQL .= " '" . $this->bd->escape($numero_contas) ."' ";
 				 	$sSQL .= " )";
 
-					if ($prod == "bl"){
+					if ($prod == "BL"){
 								         
 								         		
 						// INSERÇÃO NA TABELA prtb_produto_bandalarga
@@ -214,7 +214,7 @@ class VACobranca extends VirtexAdmin {
 						//$template = "cobranca_produtos_bandalarga.html";
 						
 								         
-					}else if ($prod == "d"){
+					}else if ($prod == "D"){
 								         		
 						//INSERÇÃO NA TABELA prtb_produto_discado
 						$tSQL  = "INSERT INTO ";
@@ -231,7 +231,7 @@ class VACobranca extends VirtexAdmin {
 						//$template = "cobranca_produtos_discado.html";
 					
 								         	
-					}else if ($prod == "h"){
+					}else if ($prod == "H"){
 										
 						//INSERÇÃO NA TABELA prtb_produto_hospedagem
 						$tSQL  = "INSERT INTO ";
@@ -258,6 +258,48 @@ class VACobranca extends VirtexAdmin {
 			        // INICIO DO UPDATE DE PRODUTOS
 			         // Alteração
 
+					/* Início do tratamento de erros */
+			      		
+			      		$descricao = trim(@$_REQUEST["descricao"]);
+					if(!$descricao) $descricao = "Nao informado";			      
+			      		
+					$valor = number_format(trim(@$_REQUEST['valor']),2,'.',',');
+					if(!$valor) $valor = 0.00;	
+					
+					$num_emails = (int) trim(@$_REQUEST["num_emails"]);
+					if(!$num_emails) $num_emails = 0;
+					
+					$quota_por_conta = (int) trim(@$_REQUEST['quota_por_conta']);
+					if(!$quota_por_conta) $quota_por_conta = 0;
+					
+					$vl_email_adicional = number_format(trim(@$_REQUEST['vl_email_adicional']),2,'.',',');
+					if(!$vl_email_adicional) $vl_email_adicional = 0.00;
+
+					$numero_contas = (int) trim(@$_REQUEST['numero_contas']);
+					if(!$numero_contas) $numero_contas = 0;
+					
+					$prod = strtoupper(@$_REQUEST['prod']);
+					
+					$franquia_trafego_mensal_gb = (int) trim(@$_REQUEST['franquia_trafego_mensal_gb']);
+					if(!$franquia_trafego_mensal_gb) $franquia_trafego_mensal_gb = 0;
+					
+					$valor_trafego_adicional_gb = number_format(trim(@$_REQUEST['valor_trafego_adicional_gb']),2,'.',',');
+					if(!$valor_trafego_adicional_gb) $valor_trafego_adicional_gb = 0.00;
+					
+					$franquia_horas = (int) trim(@$_REQUEST['franquia_horas']);
+					if(!$franquia_horas) $franquia_horas = 0;
+					
+					$valor_hora_adicional = number_format(trim(@$_REQUEST['valor_hora_adicional']),2,'.',',');
+					if(!$valor_hora_adicional) $valor_hora_adicional = 0.00;
+					
+					$franquia_em_mb = (int) trim(@$_REQUEST['franquia_em_mb']);
+					if(!$franquia_em_mb) $franquia_em_mb = 0;					
+					
+					$valor_mb_adicional = number_format(trim(@$_REQUEST['valor_mb_adicional']),2,'.',',');
+					if(!$valor_mb_adicional) $valor_mb_adicional = 0.00;
+					
+					/* Final do tratamento de erros */
+
 
 					//UPDATE DA TABELA prtb_produto
 					$sSQL  = "UPDATE ";
@@ -279,7 +321,7 @@ class VACobranca extends VirtexAdmin {
 										
 									
 								         
-					if($prod=="bl"){
+					if($prod=="BL"){
 								         	
 						//UPDATE DA TABELA prtb_produto_bandalarga
 						$tSQL  = "UPDATE ";
@@ -293,7 +335,7 @@ class VACobranca extends VirtexAdmin {
 						$tSQL .= "   id_produto = " . $this->bd->escape(@$_REQUEST["id_produto"]) . " ";
 										
 								         	
-					}else if($prod=="d"){
+					}else if($prod=="D"){
 								         	
 						//UPDATE DA TABELA prtb_produto_discado
 						$tSQL  = "UPDATE ";
@@ -306,7 +348,7 @@ class VACobranca extends VirtexAdmin {
 						$tSQL .= "   id_produto = " . $this->bd->escape(@$_REQUEST["id_produto"]) . " ";
 										
 								         	
-					}else if($prod=="h"){
+					}else if($prod=="H"){
 								         	
 						//UPDATE DA TABELA prtb_produto_hospedagem
 						$tSQL  = "UPDATE ";
