@@ -21,32 +21,34 @@
                 <td align="center" valign="middle"> <h1 align="center">ARP</h1>
                   <form action="{$smarty.server.PHP_SELF}" method=get >
                   <input type="hidden" name="op" value="{$op}">
-                    <p>IP:
+                    <p>IP: 
                       <input type="text" name="ip" value="{$ip}" class="campos">
                       <input type="submit" name="Submit" value="Ok" class="campos">
-                    </p>
+                      <br>
+                      <font color="#666666" size="1" face="Verdana, Arial, Helvetica, sans-serif">digite 
+                      <strong>-a</strong> para listar toda a tabela arp</font></p>
                   </form>
                   {if count($arp)}
 					  <p align="center"><font size=2><big><strong>{if $ip=="-a"}TABELA ARP{else}{$ip}{/if}</string></big></font></p>
 
-					  <table border=0 width=400>
-					  	<tr>
-					  		<td>IP</td>
-					  		<td>MAC</td>
-					  		<td>IFACE</td>
-					  	</tr>
-					  	{foreach item=v from=$arp}
-					  	<tr>
-					  		<td>{$v.addr}</td>
-					  		<td>{$v.mac}</td>
-					  		<td>{$v.iface}</td>
-					  	</tr>
-					  	{/foreach}
-
-					  </table>
+					  
+                  <table border=0 width=400>
+                    <tr bgcolor="#F1F1F1"> 
+                      <td><h2>IP</h2></td>
+                      <td><h2>MAC</h2></td>
+                      <td><h2>IFACE</h2></td>
+                    </tr>
+                    {foreach item=v from=$arp} 
+                    <tr> 
+                      <td><p>{$v.addr}</p></td>
+                      <td><p>{$v.mac}</p></td>
+                      <td><p>{$v.iface}</p></td>
+                    </tr>
+                    {/foreach} 
+                  </table>
 				  {else}
 				  		{if $ip}
-				  			<br><br><p align="center"><font size=1 color="#FF0000"><big><strong>sem resposta para ip {$ip}</string></big></font></p>
+				  			<br><br><p align="center"><font size=1 color="#FF0000"><big><strong><p>sem resposta para ip</p> {$ip}</string></big></font></p>
 				  		{/if}
 				  {/if}
     </td>

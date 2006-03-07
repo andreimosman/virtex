@@ -809,6 +809,9 @@ class VAConfiguracao extends VirtexAdmin {
 						
 					
 					
+					}else if ($op == "monitor"){
+					$this->arquivoTemplate = "cobranca_versaolight.html";
+					
 					}
 				
 				

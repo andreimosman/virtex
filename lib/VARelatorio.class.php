@@ -14,9 +14,11 @@ class VARelatorio extends VirtexAdmin {
 	public function processa($op=null) {
 	
 	if($op == "fatura"){	
-		$this->arquivoTemplate = "relatorio_fatura.html";
+		$this->arquivoTemplate = "cobranca_versaolight.html";
+		//$this->arquivoTemplate = "relatorio_fatura.html";
 	} else if ($op == "cortesia"){
-		$this->arquivoTemplate = "relatorio_cortesia.html";
+		$this->arquivoTemplate = "cobranca_versaolight.html";
+		//$this->arquivoTemplate = "relatorio_cortesia.html";
 	} else if ($op == "geral"){
 	// RELATORIO GERAL DE CLIENTES
 			$erros = array();
@@ -97,8 +99,8 @@ class VARelatorio extends VirtexAdmin {
 
 
 
-
-		$this->arquivoTemplate = "relatorio_estat.html";
+		$this->arquivoTemplate = "cobranca_versaolight.html";
+		//$this->arquivoTemplate = "relatorio_estat.html";
 
 
 
@@ -144,7 +146,8 @@ class VARelatorio extends VirtexAdmin {
 	
 		$this->tpl->atribui("op",$op);
 	
-		$this->arquivoTemplate = "relatorio_filtro.html";
+		$this->arquivoTemplate = "cobranca_versaolight.html";
+		//$this->arquivoTemplate = "relatorio_filtro.html";
 		
 		
 	} else if ($op == "config"){

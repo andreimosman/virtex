@@ -537,6 +537,11 @@ class VACobranca extends VirtexAdmin {
 
 				
 		
+		}else if ($op == "bloqueados"){
+		
+		$this->arquivoTemplate = "cobranca_versaolight.html";
+		
+		
 		}
 		
 	}

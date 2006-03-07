@@ -11,11 +11,14 @@ class VASuporte extends VirtexAdmin {
 	// metodo para pegar as propriedadas enviadas via menu na interface.
 	public function processa($op=null) {	
 		if($op == "graf"){	
-			$this->arquivoTemplate = "suporte_grafico.html";
+			$this->arquivoTemplate = "cobranca_versaolight.html";
+			//$this->arquivoTemplate = "suporte_grafico.html";
 		} else if ($op == "log"){
-			$this->arquivoTemplate = "suporte_logradius.html";
+			$this->arquivoTemplate = "cobranca_versaolight.html";
+			//$this->arquivoTemplate = "suporte_logradius.html";
 		} else if ($op == "monit"){
-			$this->arquivoTemplate = "suporte_monitoramento.html";
+			$this->arquivoTemplate = "cobranca_versaolight.html";
+			//$this->arquivoTemplate = "suporte_monitoramento.html";
 		} else if ($op == "calc"){
 			$this->arquivoTemplate = "suporte_calculadoraip.html";
 
@@ -112,6 +115,9 @@ class VASuporte extends VirtexAdmin {
 			$this->tpl->atribui("op",$op);
 			
 			
+		}else if ($op == "help_desk"){
+			$this->arquivoTemplate = "cobranca_versaolight.html";
+		
 		}
 	}
 
