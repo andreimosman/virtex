@@ -142,6 +142,10 @@
 
 
       }
+      
+      function mascara() {
+         return(bin2addr($this->mask));
+      }
 
 
    }

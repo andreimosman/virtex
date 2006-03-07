@@ -24,7 +24,7 @@
 	lista_hospedagem[iHospedagem++] = new Array('{$v.id_produto}','{$v.nome}','{$v.valor}');
 {/foreach}
 
-{literal}
+
 
 // Formularios
 var fD;
@@ -33,10 +33,15 @@ var fH;
 
 
 // ultimo id_produto selecionado
-var id_produto_saved;
+var id_produto_saved = '{$id_produto}';
+//window.alert(id_produto_saved);
 
-function alteraTipo(tipo) {
+{literal}
+
+
+function alteraTipo() {
 	var frm = document.frmContratacao;
+	tipo = frm.tipo;
 
 	e = frm.id_produto.options;
 
@@ -85,8 +90,33 @@ function alteraTipo(tipo) {
 	}
 }
 
-function alteraProduto(prod) {
+function alteraProduto() {
+	var frm = document.frmContratacao;
+	prod = frm.id_produto;
 	id_produto_saved = prod.value;
+}
+
+
+function init() {
+
+	// Formulario de Discado;
+	var o = document.getElementById("formD")
+	fD=o.outerHTML;
+	o.outerHTML="";
+
+	// Formulario de Banda Larga;
+	var o = document.getElementById("formBL")
+	fBL=o.outerHTML;
+	o.outerHTML="";
+
+	// Formulario de Hospedagem;
+	var o = document.getElementById("formH")
+	fH=o.outerHTML;
+	o.outerHTML="";
+
+
+	alteraTipo();
+	alteraProduto();
 }
 
 
@@ -127,29 +157,148 @@ function validaForm() {
 
 }
 
+function verificaTipoRede() {
+   frm = document.frmContratacao;
+   frm.endereco_ip.disabled = frmContratacao.selecao_ip.value == "A";
+}
+
 
 {/literal}
 
 </script>
 
+<form name="frmContratacao" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return validaForm();">
 
-				<form name="frmContratacao" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return validaForm();">
-				<script language="JavaScript">
-				{literal}
+<!-- DADOS DO FORMULARIO: INI -->
 
-				function verificaTipoRede() {
-				   frmContratacao.endereco_ip.disabled = frmContratacao.ip_am.value == "A";
-				}
 
-				{/literal}
-				</script>
+<div id="formBL">
+	<table width="450" border=0 bgcolor="#F1F1F1" id="disc">
+	  <tr>
+		<td colspan=2><p><strong>Dados da Conexão</strong></p></td>
+	  </tr>
+	  <tr>
+		<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>POP:</p></td>
+		<td bgcolor="#FFFFFF">
+		  <SELECT name='id_pop' >
+			{foreach item=v from=$lista_pops}
+			  <OPTION value="{$v.id_pop}" {if $v.id_pop == $id_pop}SELECTED{/if}>{$v.nome}</OPTION>
+			{/foreach}
+		  </SELECT>
+		</td>
+		<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>NAS:</p></td>
+		<td bgcolor="#FFFFFF">
+		  <SELECT name='id_nas' >
+			{foreach item=v from=$lista_nas}
+			  <OPTION value="{$v.id_nas}" {if $v.id_nas == $id_nas}SELECTED{/if}>{$v.tp}: {$v.nome}</OPTION>
+			{/foreach}
+		  </SELECT> </td>
+	  </tr>
+	  <tr>
+		<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Seleção
+			de Rede/IP:</p></td>
+		<td bgcolor="#FFFFFF"><SELECT name='selecao_ip' onChange='javascript:verificaTipoRede();'>
+			<OPTION VALUE='A' >Automática</OPTION>
+			<OPTION VALUE='M' >Manual</OPTION>
+		  </SELECT> <br> <input type="text" name="endereco_ip" id="endereco_ip" value="{$endereco_ip}"></td>
+		<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>MAC:</p></td>
+		<td bgcolor="#FFFFFF" valign="top"><input type="text" name="mac" value="{$mac}" maxlength="17" size=17></td>
+		{literal}
+		<script>
+		verificaTipoRede();
+		</script>
+		{/literal}
+
+	  </tr>
+	</table>
+</div>
+
+<div id="formH">
+	<table width="450" border="0" cellpadding="0" cellspacing="1" id="hosp">
+	  <tr>
+		<td align="center" valign="middle"><table border=0 width="450" bgcolor="#F1F1F1">
+			<tr>
+			  <td colspan=2><p><strong>Dados da Hospedagem</strong></p></td>
+			</tr>
+			<tr>
+			  <td bgcolor="#FFFFFF" align="right" width="70">
+				<p>Tipo: </p></td>
+			  <td bgcolor="#FFFFFF"> <SELECT name='tipo_hospedagem' onChange='javascript:verificaTipoHosp();' onFocusOut='javascript:verificaTipoHosp();' onClick='javascript:verificaTipoHosp();'>
+				  <OPTION VALUE='U' >http://firme.com.br/usuarios/username/</OPTION>
+				  <OPTION VALUE='D' >http://www.dominio.com.br/</OPTION>
+				</SELECT> </td>
+			</tr>
+			<tr>
+			  <td colspan=2><p><strong>Dados do Dominio</strong></p></td>
+			</tr>
+			<tr>
+			  <td bgcolor="#FFFFFF" align="right" width="70">
+				<p>Criar: </p></td>
+			  <td bgcolor="#FFFFFF"> <p><font color="#0000FF">
+				  www.
+				  <input type="text" name="dominio_hospedagem" value="">
+				  </font> </p></td>
+			</tr>
+		  </table></td>
+	  </tr>
+	</table>
+</div>
+
+
+<div id="formD">
+	<table width="450" border=0 bgcolor="#F1F1F1" id="disc">
+	  <tr>
+		<td colspan=2><p><strong>Dados do Acesso</strong></p></td>
+	  </tr>
+	  <tr>
+		<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Fone:</p></td>
+		<td bgcolor="#FFFFFF"><input type="text" size=15 maxlength="50" name="foneinfo" value=""></td>
+	  </tr>
+	</table>
+</div>
+
+
+<!-- DADOS DO FORMULARIO: FIM -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                  <table width="100" border="0" cellspacing="0" cellpadding="0" align="center">
                     <tr>
                       <td>
                           <table width="500" border="0" cellspacing="2" cellpadding="2">
                             <tr>
-                              <td>&nbsp;</td>
+                              <td>
+                              	{if count($erros)}
+									{foreach item=erro from=$erros}
+										<p align="center"><font color="#FF0000" face=arial size=-1><b>{$erro}</b></font></p>
+									{/foreach}
+                              	{/if}
+                              </td>
                             </tr>
                             <tr>
                               <td align="center" valign="middle">
@@ -157,17 +306,17 @@ function validaForm() {
               <tr>
                 <td colspan><font color="#000000" face="arial" size="+1"><b>Contrato</b></font>
                 </td>
-                <td colspan="3"> <select name="tipo" onChange="javascript:alteraTipo(this);">
+                <td colspan="3"> <select name="tipo" onChange="javascript:alteraTipo();">
                     <option value=""></option>
-                    <option value="BL">Banda Larga</option>
-                    <option value="D">Discado</option>
-                    <option value="H">Hospedagem</option>
+                    <option value="BL" {if $tipo=="BL"}SELECTED{/if}>Banda Larga</option>
+                    <option value="D" {if $tipo=="D"}SELECTED{/if}>Discado</option>
+                    <option value="H" {if $tipo=="H"}SELECTED{/if}>Hospedagem</option>
                   </select> </td>
               </tr>
               <tr>
                 <td width="89" height="26" align="right" bgcolor="#FFFFFF">
 <p>Produto:</p></td>
-                <td width="65" bgcolor="#FFFFFF"> <SELECT name='id_produto' onChange="javascript:alteraProduto(this);" >
+                <td width="65" bgcolor="#FFFFFF"> <SELECT name='id_produto' onChange="javascript:alteraProduto();" >
                   </SELECT> </td>
                 <td width="255" align="right" bgcolor="#FFFFFF">
 <p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Criar usuario de
@@ -234,107 +383,12 @@ function validaForm() {
 {include file='cliente_footer.html'}
 
 
-
-<div id="formBL">
-	<table width="450" border=0 bgcolor="#F1F1F1" id="disc">
-	  <tr>
-		<td colspan=2><p><strong>Dados da Conexão</strong></p></td>
-	  </tr>
-	  <tr>
-		<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>POP:</p></td>
-		<td bgcolor="#FFFFFF">
-		  <SELECT name='id_pop' >
-			{foreach item=v from=$lista_pops}
-			  <OPTION value="{$v.id_pop}" {if $v.id_pop == $id_pop}SELECTED{/if}>{$v.nome}</OPTION>
-			{/foreach}
-		  </SELECT>
-		</td>
-		<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>NAS:</p></td>
-		<td bgcolor="#FFFFFF">
-		  <SELECT name='id_nas' >
-			{foreach item=v from=$lista_nas}
-			  <OPTION value="{$v.id_nas}" {if $v.id_nas == $id_nas}SELECTED{/if}>{$v.tp}: {$v.nome}</OPTION>
-			{/foreach}
-		  </SELECT> </td>
-	  </tr>
-	  <tr>
-		<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Seleção
-			de Rede/IP:</p></td>
-		<td bgcolor="#FFFFFF"><SELECT name='ip_am' onChange='javascript:verificaTipoRede();'>
-			<OPTION VALUE='A' >Automática</OPTION>
-			<OPTION VALUE='M' >Manual</OPTION>
-		  </SELECT> <br> <input type="text" name="endereco_ip" id="endereco_ip" value=""></td>
-		<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>MAC:</p></td>
-		<td bgcolor="#FFFFFF" valign="top"><input type="text" name="mac" value="" maxlength="17" size=17></td>
-		{literal}
-		<script>
-		verificaTipoRede();
-		</script>
-		{/literal}
-
-	  </tr>
-	</table>
-</div>
-
-<div id="formH">
-	<table width="450" border="0" cellpadding="0" cellspacing="1" id="hosp">
-	  <tr>
-		<td align="center" valign="middle"><table border=0 width="450" bgcolor="#F1F1F1">
-			<tr>
-			  <td colspan=2><p><strong>Dados da Hospedagem</strong></p></td>
-			</tr>
-			<tr>
-			  <td bgcolor="#FFFFFF" align="right" width="70">
-				<p>Tipo: </p></td>
-			  <td bgcolor="#FFFFFF"> <SELECT name='tipo_hospedagem' onChange='javascript:verificaTipoHosp();' onFocusOut='javascript:verificaTipoHosp();' onClick='javascript:verificaTipoHosp();'>
-				  <OPTION VALUE='U' >http://firme.com.br/usuarios/username/</OPTION>
-				  <OPTION VALUE='D' >http://www.dominio.com.br/</OPTION>
-				</SELECT> </td>
-			</tr>
-			<tr>
-			  <td colspan=2><p><strong>Dados do Dominio</strong></p></td>
-			</tr>
-			<tr>
-			  <td bgcolor="#FFFFFF" align="right" width="70">
-				<p>Criar: </p></td>
-			  <td bgcolor="#FFFFFF"> <p><font color="#0000FF">
-				  www.
-				  <input type="text" name="dominio_hospedagem" value="">
-				  </font> </p></td>
-			</tr>
-		  </table></td>
-	  </tr>
-	</table>
-</div>
-
-
-<div id="formD">
-	<table width="450" border=0 bgcolor="#F1F1F1" id="disc">
-	  <tr>
-		<td colspan=2><p><strong>Dados do Acesso</strong></p></td>
-	  </tr>
-	  <tr>
-		<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Fone:</p></td>
-		<td bgcolor="#FFFFFF"><input type="text" size=15 maxlength="50" name="foneinfo" value=""></td>
-	  </tr>
-	</table>
-</div>
 { literal }
 <script language="JavaScript">
 
-// Formulario de Discado;
-var o = document.getElementById("formD")
-fD=o.outerHTML;
-o.outerHTML="";
+init();
 
-// Formulario de Banda Larga;
-var o = document.getElementById("formBL")
-fBL=o.outerHTML;
-o.outerHTML="";
 
-// Formulario de Hospedagem;
-var o = document.getElementById("formH")
-fH=o.outerHTML;
-o.outerHTML="";
+
 </script>
 { /literal }

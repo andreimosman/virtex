@@ -10,31 +10,61 @@
 <table width="400" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#000000">
   <tr>
     <td><table width="400" border="0" cellspacing="1" cellpadding="0">
-        <tr bgcolor="#FFFFFF"> 
+        <tr bgcolor="#FFFFFF">
+          <td bgcolor="#F1F1F1" colspan=4><B>DETALHES DA CONTA</B></td>
+        </tr>
+
+        <tr bgcolor="#FFFFFF">
           <td width="69" height="20" bgcolor="#F1F1F1">
 <p>Username:</p></td>
           <td colspan="3"><p>{$username}</p></td>
         </tr>
-        <tr bgcolor="#FFFFFF"> 
+        <tr bgcolor="#FFFFFF">
           <td height="20" bgcolor="#F1F1F1">
 <p>POP: </p></td>
           <td width="99"><p>{$pop}</p></td>
           <td width="52" bgcolor="#F1F1F1">
 <p>NAS:</p></td>
-          <td width="175"><p>{$nas}</p></td>
+          <td width="175"><p>{$n.nome}</p></td>
         </tr>
-        <tr bgcolor="#FFFFFF"> 
+
+
+{if $tipo == "BL"}
+	{if $n.tipo_nas=="I"}
+        <tr bgcolor="#FFFFFF">
           <td height="20" bgcolor="#F1F1F1">
-<p>IP:</p></td>
-          <td colspan="3"><p>{$ip}</p></td>
+			<p>IP:</p>
+		  </td>
+          <td >
+          	<p>{if $ip_cliente}{$ip_cliente}{else}{$ip}{/if}</p>
+          </td>
+		  <td height="20" bgcolor="#F1F1F1">
+			<p>Máscara:</p></td>
+		  <td><p>{$mascara}</p></td>
+
+
+
         </tr>
-        <tr bgcolor="#FFFFFF"> 
-          <td height="20" bgcolor="#F1F1F1">
-<p>MAC:</p></td>
-          <td colspan="3"><p>{$mac}</p></td>
-        </tr>
+			<tr bgcolor="#FFFFFF">
+			  <td height="20" bgcolor="#F1F1F1">
+				<p>Gateway:</p></td>
+			  <td ><p>{$ip_gateway}</p></td>
+			  <td height="20" bgcolor="#F1F1F1">
+				<p>MAC:</p></td>
+			  <td ><p>{$mac}</p></td>
+
+			</tr>
+		  </table></td>
+	  </tr>
+	{/if}
+	{if $n.tipo_nas=="P"}
+
+	{/if}
+{/if}
+
       </table></td>
   </tr>
+
 </table>
 <p>&nbsp;</p>
 <p>{include file=cliente_footer.html}</p>

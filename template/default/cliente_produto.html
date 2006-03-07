@@ -1,5 +1,15 @@
 {include file="cliente_header.html"}
 
 
+{foreach item=p from=$produtos}
+	{$p.nome}<br>
+	<ul>
+	{foreach item=c from=$p.contas}
+		<li>{$c.username}</li>
+	{/foreach}
+	</ul>
+{/foreach}
+
+
 
 {include file="cliente_footer.html"}
