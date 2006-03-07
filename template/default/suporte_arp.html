@@ -45,7 +45,9 @@
 
 					  </table>
 				  {else}
-				  		<br><br><p align="center"><font size=1 color="#FF0000"><big><strong>sem resposta para ip {$ip}</string></big></font></p>
+				  		{if $ip}
+				  			<br><br><p align="center"><font size=1 color="#FF0000"><big><strong>sem resposta para ip {$ip}</string></big></font></p>
+				  		{/if}
 				  {/if}
     </td>
               </tr>

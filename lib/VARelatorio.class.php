@@ -147,35 +147,142 @@ class VARelatorio extends VirtexAdmin {
 		$this->arquivoTemplate = "relatorio_filtro.html";
 		
 		
+	} else if ($op == "config"){
+	
+		$pg = @$_REQUEST["pg"];
+	
+		switch($pg) {
+			
+			case 'carga_ap':
+			
+				$tipo = "AP";
+			
+				$sSQL  = "SELECT ";
+				$sSQL .= "   p.id_pop,p.nome, ";
+				$sSQL .= "   CASE WHEN ";
+				$sSQL .= "      cli_pop.clientes_associados is null ";
+				$sSQL .= "   THEN ";
+				$sSQL .= "      0 ";
+				$sSQL .= "   ELSE ";
+				$sSQL .= "      cli_pop.clientes_associados ";
+				$sSQL .= "   END as clientes_associados, ";
+				$sSQL .= "   cli_pop.carga_up,cli_pop.carga_down ";
+				$sSQL .= "FROM ";
+				$sSQL .= "   cftb_pop p LEFT OUTER JOIN ";
+				$sSQL .= "   ( ";
+				$sSQL .= "  SELECT ";
+				$sSQL .= "     pop.id_ap,count(cbl.id_pop) as clientes_associados, ";
+				$sSQL .= "        sum(upload_kbps) as carga_up, sum(download_kbps) as carga_down ";
+				$sSQL .= "  FROM ";
+				$sSQL .= "     cntb_conta_bandalarga cbl, ";
+				$sSQL .= "     ( ";
+				$sSQL .= "          SELECT ";
+				$sSQL .= "             p.id_pop, ";
+				$sSQL .= "             CASE WHEN ";
+				$sSQL .= "                p.id_pop_ap is null ";
+				$sSQL .= "             THEN ";
+				$sSQL .= "                p.id_pop ";
+				$sSQL .= "             ELSE ";
+				$sSQL .= "                p.id_pop_ap ";
+				$sSQL .= "             END as id_ap ";
+				$sSQL .= "          FROM ";
+				$sSQL .= "             cftb_pop p  ";
+				$sSQL .= "     ) pop ";
+				$sSQL .= "  WHERE ";
+				$sSQL .= "     cbl.id_pop = pop.id_pop ";
+				$sSQL .= "  GROUP BY ";
+				$sSQL .= "     pop.id_ap ";
+				$sSQL .= "   ) cli_pop ON( p.id_pop = cli_pop.id_ap)  ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "   p.tipo = 'AP' ";
+				$sSQL .= "ORDER BY ";
+				$sSQL .= "   p.nome ";
+				
+				break;
+
+			case 'carga_pop':
+			
+				$tipo = "POP";
+			
+				$sSQL  = "SELECT ";
+				$sSQL .= "   p.id_pop,p.nome, ";
+				$sSQL .= "   CASE WHEN ";
+				$sSQL .= "      cli_pop.clientes_associados is null ";
+				$sSQL .= "   THEN ";
+				$sSQL .= "      0 ";
+				$sSQL .= "   ELSE ";
+				$sSQL .= "      cli_pop.clientes_associados ";
+				$sSQL .= "   END as clientes_associados, ";
+				$sSQL .= "   cli_pop.carga_up,cli_pop.carga_down ";
+				$sSQL .= "FROM ";
+				$sSQL .= "   cftb_pop p LEFT OUTER JOIN ";
+				$sSQL .= "   ( ";
+				$sSQL .= "  SELECT ";
+				$sSQL .= "     pop.id_pop,count(cbl.id_pop) as clientes_associados,sum(upload_kbps) as carga_up, sum(download_kbps) as carga_down  ";
+				$sSQL .= "  FROM ";
+				$sSQL .= "     cntb_conta_bandalarga cbl, ";
+				$sSQL .= "     cftb_pop pop ";
+				$sSQL .= "  WHERE ";
+				$sSQL .= "     cbl.id_pop = pop.id_pop ";
+				$sSQL .= "  GROUP BY ";
+				$sSQL .= "     pop.id_pop ";
+				$sSQL .= "   ) cli_pop ON( p.id_pop = cli_pop.id_pop)  ";
+				$sSQL .= "ORDER BY ";
+				$sSQL .= "   p.nome ";
+
+				break;
+				
+			case 'carga_nas':
+				$tipo = "NAS";
+
+				$sSQL  = "SELECT ";
+				$sSQL .= "   nas.id_nas,nas.nome, ";
+				$sSQL .= "   CASE WHEN ";
+				$sSQL .= "      cli_nas.clientes_associados is null ";
+				$sSQL .= "   THEN ";
+				$sSQL .= "      0 ";
+				$sSQL .= "   ELSE ";
+				$sSQL .= "      cli_nas.clientes_associados ";
+				$sSQL .= "   END as clientes_associados, ";
+				$sSQL .= "   cli_nas.carga_up,cli_nas.carga_down ";
+				$sSQL .= "FROM ";
+				$sSQL .= "   cftb_nas nas LEFT OUTER JOIN ";
+				$sSQL .= "   ( ";
+				$sSQL .= "  SELECT ";
+				$sSQL .= "     nas.id_nas,count(cbl.id_nas) as clientes_associados,sum(upload_kbps) as carga_up, sum(download_kbps) as carga_down  ";
+				$sSQL .= "  FROM ";
+				$sSQL .= "     cntb_conta_bandalarga cbl, ";
+				$sSQL .= "     cftb_nas nas ";
+				$sSQL .= "  WHERE ";
+				$sSQL .= "     cbl.id_nas = nas.id_nas ";
+				$sSQL .= "  GROUP BY ";
+				$sSQL .= "     nas.id_nas ";
+				$sSQL .= "   ) cli_nas ON( nas.id_nas = cli_nas.id_nas) ";
+				$sSQL .= "ORDER BY ";
+				$sSQL .= "   nas.nome ";
+			
+				break;
+				
+		}
 		
 		
+		$carga = $this->bd->obtemRegistros($sSQL);
+		$bgcolor1="#FFFFFF";
+		$bgcolor2="#F1F1F1";
+		$bgcolor=$bgcolor1;
+
+		for($x=0;$x<count($carga);$x++) {
+			$carga[$x]["carga_up"] = $carga[$x]["carga_up"] ? $carga[$x]["carga_up"] : "-";
+			$carga[$x]["carga_down"] = $carga[$x]["carga_down"] ? $carga[$x]["carga_down"] : "-";
+			$carga[$x]["bgcolor"] = $bgcolor;
+			$bgcolor = $bgcolor == $bgcolor1 ? $bgcolor2 : $bgcolor1;
+		}
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	} else if ($op == "ap"){
-		$this->arquivoTemplate = "relatorio_ap.html";
+		$this->tpl->atribui("tipo",$tipo);
+		$this->tpl->atribui("carga",$carga);
+
+		$this->arquivoTemplate = "relatorio_config_carga.html";
+
 	} else if ($op == "pop"){
 		$this->arquivoTemplate = "relatorio_pop.html";
 	} else if ($op == "nas"){
