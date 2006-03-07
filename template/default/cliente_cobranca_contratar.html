@@ -107,6 +107,9 @@ function validaForm() {
 			msg.push("Você não escolheu o produto");
 		} else {
 			// Validacoes gerais
+			if(frm.id_nas.value != "3" && frm.mac.value =="")
+				msg.push("Campo MAC obrigatorio");
+
 		}
 	}
 
@@ -129,7 +132,18 @@ function validaForm() {
 
 </script>
 
+
 				<form name="frmContratacao" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return validaForm();">
+				<script language="JavaScript">
+				{literal}
+
+				function verificaTipoRede() {
+				   frmContratacao.endereco_ip.disabled = frmContratacao.ip_am.value == "A";
+				}
+
+				{/literal}
+				</script>
+
                  <table width="100" border="0" cellspacing="0" cellpadding="0" align="center">
                     <tr>
                       <td>
@@ -140,25 +154,27 @@ function validaForm() {
                             <tr>
                               <td align="center" valign="middle">
                               	<table width="450" border=0 bgcolor="#F1F1F1" id="cob">
-                                  <tr>
-                                    <td colspan><font color="#000000" face="arial" size="+1"><b>Contrato</b></font>	</td>
-                                    <td>
-										<select name="tipo" onChange="javascript:alteraTipo(this);">
-										  <option value=""></option>
-										  <option value="BL">Banda Larga</option>
-										  <option value="D">Discado</option>
-										  <option value="H">Hospedagem</option>
-										</select>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td bgcolor="#FFFFFF" align="right" width="75"><p>Produto:</p></td>
-                                    <td width="304" bgcolor="#FFFFFF">
-                                      <SELECT name='id_produto' onChange="javascript:alteraProduto(this);" >
-                                      </SELECT>
-                                    </td>
-                                  </tr>
-                                 </table>
+              <tr>
+                <td colspan><font color="#000000" face="arial" size="+1"><b>Contrato</b></font>
+                </td>
+                <td colspan="3"> <select name="tipo" onChange="javascript:alteraTipo(this);">
+                    <option value=""></option>
+                    <option value="BL">Banda Larga</option>
+                    <option value="D">Discado</option>
+                    <option value="H">Hospedagem</option>
+                  </select> </td>
+              </tr>
+              <tr>
+                <td width="89" height="26" align="right" bgcolor="#FFFFFF">
+<p>Produto:</p></td>
+                <td width="65" bgcolor="#FFFFFF"> <SELECT name='id_produto' onChange="javascript:alteraProduto(this);" >
+                  </SELECT> </td>
+                <td width="255" align="right" bgcolor="#FFFFFF">
+<p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Criar usuario de
+                    e-mail com os mesmos dados?</font></p></td>
+                <td width="23" align="center" bgcolor="#FFFFFF"><input name="email_igual" type="checkbox" id="email_igual" value="1" class="checkbox"></td>
+              </tr>
+            </table>
                               </td>
                             </tr>
 
@@ -189,8 +205,8 @@ function validaForm() {
                             </tr>
 
                             <tr>
-                              <td align="center" valign="middle" id="tdados">
-                              &nbsp;
+                              <td align="center" valign="middle" id="tdados">&nbsp;
+
                               </td>
                             </tr>
 
@@ -244,12 +260,18 @@ function validaForm() {
 	  <tr>
 		<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Seleção
 			de Rede/IP:</p></td>
-		<td bgcolor="#FFFFFF"><SELECT name='ip_am'>
+		<td bgcolor="#FFFFFF"><SELECT name='ip_am' onChange='javascript:verificaTipoRede();'>
 			<OPTION VALUE='A' >Automática</OPTION>
 			<OPTION VALUE='M' >Manual</OPTION>
 		  </SELECT> <br> <input type="text" name="endereco_ip" id="endereco_ip" value=""></td>
 		<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>MAC:</p></td>
 		<td bgcolor="#FFFFFF" valign="top"><input type="text" name="mac" value="" maxlength="17" size=17></td>
+		{literal}
+		<script>
+		verificaTipoRede();
+		</script>
+		{/literal}
+
 	  </tr>
 	</table>
 </div>
@@ -314,6 +336,5 @@ o.outerHTML="";
 var o = document.getElementById("formH")
 fH=o.outerHTML;
 o.outerHTML="";
-
 </script>
 { /literal }

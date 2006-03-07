@@ -66,7 +66,7 @@
                     {foreach item=v from=$lista_produtos}
                     <tr bgcolor="#FFFFFF">
                       <td align="center" width=40><p><a href="cobranca.php?op=cadastro&id_produto={$v.id_produto}&prod={$v.tipo}"><img src="template/default/images/gif_alterar.gif" width="16" height="16" border="0"></a></p></td>
-                      <td width="24" valign="middle"><img src="template/default/images/{$v.tipo|lower}.gif" width="24" height="24">
+                      <td width="24" valign="middle"><img src="template/default/images/{$v.tipo}.gif" width="24" height="24">
                       </td>
                       <td valign="middle"><p>{$v.nome}</p></td>
                       <td valign="middle"> <p>{$v.descricao}</p></td>

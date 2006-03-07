@@ -3,6 +3,9 @@
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
 <script language="JavaScript" type="text/JavaScript">
+
+{ literal }
+
 <!--
 function MM_reloadPage(init) {  //reloads the window if Nav4 resized
   if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
@@ -11,6 +14,9 @@ function MM_reloadPage(init) {  //reloads the window if Nav4 resized
 }
 MM_reloadPage(true);
 //-->
+
+{ /literal ]
+
 </script>
 </head>
 
@@ -48,58 +54,58 @@ MM_reloadPage(true);
 			<table width="500" border="0" align="center" cellpadding="0" cellspacing="1">
 			<tr><td colspan="2"><h1 align="center">{$titulo} de Produto - Banda Larga</h1>
 </td></tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>Id = {$id_produto}</p></td>
       <td width="50%">&nbsp;</td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>Nome do Produto</p></td>
       <td width="50%"><p>Descricao</p></td>
     </tr>
-    <tr> 
-      <td valign="top"><p> 
+    <tr>
+      <td valign="top"><p>
           <input  name="nome" value="{$nome}" type="text" id="nome" size="20">
         </p></td>
-      <td rowspan=5 valign="top"><p> 
+      <td rowspan=5 valign="top"><p>
           <textarea name="descricao" rows=5 id="descricao">{$descricao}</textarea>
         </p></td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>Preço</p></td>
     </tr>
-    <tr> 
-      <td width="65%"><p> 
+    <tr>
+      <td width="65%"><p>
           <input name="valor" type="text" id="valor" value="{$valor}">
         </p></td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>Disponível para contratação?</p></td>
     </tr>
-    <tr> 
-      <td valign="top"><p> 
+    <tr>
+      <td valign="top"><p>
           <SELECT name='disponivel' id="disponivel" >
             <option value="true">Sim</option>
             <option value="false">N&atilde;o</option>
           </SELECT>
         </p></td>
     </tr>
-    <tr> 
+    <tr>
       <td colspan=2><p>Número de contas de banda larga</p></td>
     </tr>
-    <tr> 
-      <td colspan=2><p> 
+    <tr>
+      <td colspan=2><p>
           <input name="numero_contas" type="text" id="numero_contas" value="{$numero_contas}" size=4 maxlenght=4>
         </p></td>
     </tr>
-    <tr> 
+    <tr>
       <td colspan=2><hr size=1></td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>Download</p></td>
       <td width="50%"><p>Upload</p></td>
     </tr>
-    <tr> 
-      <td width="65%"><p> 
+    <tr>
+      <td width="65%"><p>
           <SELECT name='banda_download_kbps' >
             <OPTION VALUE='0' >SEM CONTROLE</OPTION>
             <OPTION VALUE='32' >32</OPTION>
@@ -114,7 +120,7 @@ MM_reloadPage(true);
             <OPTION VALUE='1024' >1024</OPTION>
           </SELECT>
           Kbps</p></td>
-      <td width="50%"><p> 
+      <td width="50%"><p>
           <SELECT name='banda_upload_kbps' >
             <OPTION VALUE='0' >SEM CONTROLE</OPTION>
             <OPTION VALUE='32' >32</OPTION>
@@ -130,55 +136,55 @@ MM_reloadPage(true);
           </SELECT>
           Kbps</p></td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>Franquia Tráfego Mensal (GB)</p></td>
       <td width="50%"><p>Valor GB Adicional</p></td>
     </tr>
-    <tr> 
-      <td width="65%"> <p> 
+    <tr>
+      <td width="65%"> <p>
           <input type="text" name="franquia_trafego_mensal_gb" value="{$franquia_trafego_mensal_gb}">
           <br>
           <font id=aviso>Ilimitado = 0</font> </p></td>
-      <td width="50%"><p> 
+      <td width="50%"><p>
           <input name="valor_trafego_adicional_gb" type="text" value="{$valor_trafego_adicional_gb}">
         </p></td>
     </tr>
-    <tr> 
+    <tr>
       <td colspan=2><hr size=1></td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>No. de Emails</p></td>
       <td width="50%"><p>Quota por conta de e-mail</p></td>
     </tr>
-    <tr> 
-      <td width="65%"><p> 
+    <tr>
+      <td width="65%"><p>
           <input name="num_emails" type="text" id="num_emails2" value="{$num_emails}">
         </p></td>
-      <td width="50%"><p> 
+      <td width="50%"><p>
           <input name="quota_por_conta"type="text" id="quota_por_conta" value="{$quota_por_conta}">
         </p></td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>Email Adicional (R$)</p></td>
       <td width="50%"><p>Permitir outros dominios?</p></td>
     </tr>
-    <tr> 
-      <td width="65%"><p> 
+    <tr>
+      <td width="65%"><p>
           <input name="vl_email_adicional"type="text" id="vl_email_adicional" value="{$vl_email_adicional}">
         </p></td>
-      <td width="50%"><p> 
+      <td width="50%"><p>
           <SELECT name='permitir_outros_dominios' id="permitir_outros_dominios" >
             <option value="true">Sim</option>
             <option value="false">N&atilde;o</option>
           </SELECT>
         </p></td>
     </tr>
-    <tr> 
+    <tr>
     <tr>
       <td><p>Email Anexado?</p></td>
       <td>&nbsp;</td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>
           <SELECT name='email_anexado' id="email_anexado" >
             <option value="true">Sim</option>
@@ -187,9 +193,9 @@ MM_reloadPage(true);
         </p></td>
       <td width="50%"><p>&nbsp;</p></td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>&nbsp;</p></td>
-      <td width="50%"><p> 
+      <td width="50%"><p>
           <input name="submit" type="submit" id="submit2"  value="{$titulo}">
         </p></td>
     </tr>
@@ -197,7 +203,7 @@ MM_reloadPage(true);
 </form>
 
 	  </div>
-	  
+
 	  <div id="divd" style="width:500; height:550px; z-index:1 { $if $prod != 'd' }visibility: hidden; { /if }">
 
 <form name=dados method="post" action="{$smarty.server.PHP_SELF}">
@@ -213,113 +219,113 @@ MM_reloadPage(true);
 		<h1 align="center">{$titulo} de Produto - Discado</h1>
 	</td>
 	</tr>
-	<tr> 
+	<tr>
       <td width="65%">&nbsp;</td>
       <td width="50%">&nbsp;</td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>Nome do Produto</p></td>
       <td width="50%"><p>Descricao</p></td>
     </tr>
-    <tr> 
-      <td valign="top"><p> 
+    <tr>
+      <td valign="top"><p>
           <input  name="nome" value="{$nome}" type="text" id="nome2" size="20">
         </p></td>
-      <td rowspan=5 valign="top"><p> 
+      <td rowspan=5 valign="top"><p>
           <textarea name="descricao" rows=5>{$descricao}</textarea>
         </p></td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>Preço</p></td>
     </tr>
-    <tr> 
-      <td width="65%"><p> 
+    <tr>
+      <td width="65%"><p>
           <input name="valor" type="text" id="rg" value="{$valor}">
         </p></td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>Disponível para contratação?</p></td>
     </tr>
-    <tr> 
-      <td valign="top"><p> 
+    <tr>
+      <td valign="top"><p>
           <SELECT name='disponivel' >
             <option value="true" selected>Sim</option>
             <option value="false">N&atilde;o</option>
           </SELECT>
         </p></td>
     </tr>
-    <tr> 
+    <tr>
       <td colspan=2><p>Número de contas de discado</p></td>
     </tr>
-    <tr> 
-      <td colspan=2><p> 
+    <tr>
+      <td colspan=2><p>
           <input type="text" name="numero_contas" value="{$numero_contas}" size=4 maxlenght=4>
         </p></td>
     </tr>
-    <tr> 
+    <tr>
       <td colspan=2><hr size=1></td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>Permitir Duplicidade</p></td>
       <td width="50%"><p>Franquia em horas</p></td>
     </tr>
-    <tr> 
-      <td width="65%"><p> 
+    <tr>
+      <td width="65%"><p>
           <SELECT name='permitir_duplicidade' id="permitir_duplicidade" >
             <option value="true" selected>Sim</option>
             <option value="false">N&atilde;o</option>
           </SELECT>
         </p></td>
-      <td width="50%"><p> 
+      <td width="50%"><p>
           <input name="franquia_horas" type="text" id="franquia_horas" value="{$franquia_horas }">
         </p></td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>Valor Hora Adicional (R$)</p></td>
       <td width="50%"><p>&nbsp;</p></td>
     </tr>
-    <tr> 
-      <td width="65%"><p> 
+    <tr>
+      <td width="65%"><p>
           <input name="valor_hora_adicional" value="{$valor_hora_adicional}"type="text" id="endereco">
         </p></td>
       <td width="50%"><p>&nbsp;</p></td>
     </tr>
-    <tr> 
+    <tr>
       <td colspan=2><hr size=1></td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>No. de Emails</p></td>
       <td width="50%"><p>Quota por conta de e-mail</p></td>
     </tr>
-    <tr> 
-      <td width="65%"><p> 
+    <tr>
+      <td width="65%"><p>
           <input type="text" name="num_emails" value="{$num_emails}">
         </p></td>
-      <td width="50%"><p> 
+      <td width="50%"><p>
           <input name="quota_por_conta" value="{$quota_por_conta}"type="text" id="email">
         </p></td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>Email Adicional (R$)</p></td>
       <td width="50%"><p>Permitir outros dominios?</p></td>
     </tr>
-    <tr> 
-      <td width="65%"><p> 
+    <tr>
+      <td width="65%"><p>
           <input name="vl_email_adicional" value="{$vl_email_adicional}"type="text" id="endereco">
         </p></td>
-      <td width="50%"><p> 
+      <td width="50%"><p>
           <SELECT name='permitir_outros_dominios' >
             <option value="true" selected>Sim</option>
             <option value="false">N&atilde;o</option>
           </SELECT>
         </p></td>
     </tr>
-    <tr> 
+    <tr>
     <tr>
       <td><p>E-Mail Anexado?</p></td>
       <td>&nbsp;</td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>
           <SELECT name='email_anexado' id="email_anexado" >
             <option value="true">Sim</option>
@@ -328,9 +334,9 @@ MM_reloadPage(true);
         </p></td>
       <td width="50%"><p>&nbsp;</p></td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>&nbsp;</p></td>
-      <td width="50%"><p> 
+      <td width="50%"><p>
           <input name="submit" type="submit" id="cadastro_cliente" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;" value="{$titulo}">
         </p></td>
     </tr>
@@ -340,7 +346,7 @@ MM_reloadPage(true);
 
 	  </div>
 	  	  <div id="divh" style="width:500; height:550px; z-index:1 { $if $prod != 'h' }visibility: hidden; { /if }">
-		  
+
 		  <h1 align="center">{$titulo} de Produto - Hospedagem</h1>
 <form name=dados method="post" action="{$smarty.server.PHP_SELF}">
 		<input type="hidden" name="op" value="{$op}">
@@ -349,132 +355,122 @@ MM_reloadPage(true);
   <input name="prod" type="hidden" id="prod" value="{$prod}">
   <input name="tipo" type="hidden" id="tipo" value="h">
   <table width="500" border="0" align="center" cellpadding="0" cellspacing="1" class=main>
-    <tr> 
+    <tr>
       <td width="65%">id: {$id_produto}</td>
       <td width="50%">&nbsp;</td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>Nome do Produto</p></td>
       <td width="50%"><p>Descricao</p></td>
     </tr>
-    <tr> 
-      <td valign="top"><p> 
+    <tr>
+      <td valign="top"><p>
           <input  name="nome" value="{$nome}" type="text" id="nome2" size="20">
         </p></td>
-      <td rowspan=5 valign="top"><p> 
+      <td rowspan=5 valign="top"><p>
           <textarea name="descricao" rows=5>{$descricao}</textarea>
         </p></td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>Preço</p></td>
     </tr>
-    <tr> 
-      <td width="65%"><p> 
+    <tr>
+      <td width="65%"><p>
           <input name="valor" type="text" id="rg" value="{$valor}">
         </p></td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>Disponível para contratação?</p></td>
     </tr>
-    <tr> 
-      <td valign="top"><p> 
+    <tr>
+      <td valign="top"><p>
           <SELECT name='disponivel' >
             <OPTION VALUE='1'  SELECTED >Sim</OPTION>
             <OPTION VALUE='0' >Não</OPTION>
           </SELECT>
         </p></td>
     </tr>
-    <tr> 
+    <tr>
       <td colspan=2><p>Número de contas de hospedagem</p></td>
     </tr>
-    <tr> 
-      <td colspan=2><p> 
+    <tr>
+      <td colspan=2><p>
           <input type="text" name="numero_contas" value="{$numero_contas}" size=4 maxlenght=4>
         </p></td>
     </tr>
-    <tr> 
+    <tr>
       <td colspan=2><hr size=1></td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>Dominio</p></td>
       <td width="50%"><p>Franquia em MB</p></td>
     </tr>
-    <tr> 
-      <td width="65%"><p> 
+    <tr>
+      <td width="65%"><p>
           <SELECT name='dominio' >
             <OPTION VALUE='1'  SELECTED >Sim</OPTION>
             <OPTION VALUE='0' >Não</OPTION>
           </SELECT>
         </p></td>
-      <td width="50%"><p> 
+      <td width="50%"><p>
           <input type="text" name="franquia_em_mb" value="{$franquia_em_mb}">
         </p></td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>Valor MB Adicional (R$)</p></td>
       <td width="50%"><p>&nbsp;</p></td>
     </tr>
-    <tr> 
-      <td width="65%"><p> 
+    <tr>
+      <td width="65%"><p>
           <input name="valor_mb_adicional" value="{$valor_mb_adicional}"type="text" id="endereco">
         </p></td>
       <td width="50%"><p>&nbsp;</p></td>
     </tr>
-    <tr> 
+    <tr>
       <td colspan=2><hr size=1></td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>No. de Emails</p></td>
       <td width="50%"><p>Quota por conta de e-mail</p></td>
     </tr>
-    <tr> 
-      <td width="65%"><p> 
+    <tr>
+      <td width="65%"><p>
           <input type="text" name="num_emails" value="{$num_emails}">
         </p></td>
-      <td width="50%"><p> 
+      <td width="50%"><p>
           <input name="quota_por_conta" value="{$quota_por_conta}"type="text" id="email">
         </p></td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>Email Adicional (R$)</p></td>
       <td width="50%"><p>Permitir outros dominios?</p></td>
     </tr>
-    <tr> 
-      <td width="65%"><p> 
+    <tr>
+      <td width="65%"><p>
           <input name="vl_email_adicional" value="{$vl_email_adicional}"type="text" id="endereco">
         </p></td>
-      <td width="50%"><p> 
+      <td width="50%"><p>
           <SELECT name='permitir_outros_dominios' >
             <OPTION VALUE='1'  SELECTED >Sim</OPTION>
             <OPTION VALUE='0' >Não</OPTION>
           </SELECT>
         </p></td>
     </tr>
-    <tr> 
-    <tr> 
+    <tr>
+    <tr>
       <td width="65%"><p>&nbsp;</p></td>
       <td width="50%"><p>&nbsp;</p></td>
     </tr>
-    <tr> 
+    <tr>
       <td width="65%"><p>&nbsp;</p></td>
-      <td width="50%"><p> 
+      <td width="50%"><p>
           <input name="submit" type="submit" id="cadastro_cliente" value="{$titulo}">
         </p></td>
     </tr>
   </table>
 </form>
 <h1 align="center">&nbsp;</h1>
-
-		  
-		  
-		  
-		  
-		  
 		  </div>
-
-	  
-	  
-	  
 </p><p>&nbsp;</p><p></p><br>
                   <p></p>
                   <p>&nbsp;</p></td>
