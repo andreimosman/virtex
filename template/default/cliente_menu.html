@@ -17,13 +17,10 @@
 			{if $id_cliente}<a href="{$smarty.server.PHP_SELF}?op=produto&tipo=D&id_cliente={$id_cliente}">{/if}<img src="template/default/images/bt_discado_inativo.gif" border=0 alt="Acesso Discado"></a>
 		{/if}
 		</td>
-		<td>
-		{if $op == "produto" && $tipo == "BL"}
-			<img src="template/default/images/bt_bandalarga.gif" border=0 alt="Acesso Banda Larga">
-		{else }
-			{if $id_cliente}<a href="{$smarty.server.PHP_SELF}?op=produto&tipo=BL&id_cliente={$id_cliente}">{/if}<img src="template/default/images/bt_bandalarga_inativo.gif" border=0 alt="Acesso Banda Larga"></a>
-		{/if}
-		</td>
+		
+    <td> {if $op == "produto" && $tipo == "BL"} <img src="template/default/images/bt_bandalarga.gif" border=0 alt="Acesso Banda Larga"> 
+      {else } {if $id_cliente}<a href="{$smarty.server.PHP_SELF}?op=produto&tipo=BL&id_cliente={$id_cliente}&msg=">{/if}<img src="template/default/images/bt_bandalarga_inativo.gif" border=0 alt="Acesso Banda Larga"></a> 
+      {/if} </td>
 		<td>
 		{if $op == "produto" && $tipo == "H"}
 			<img src="template/default/images/bt_hospedagem.gif" border=0 alt="Hospedagem">
@@ -32,13 +29,10 @@
 		{/if}
 		</td>
 		<!-- COBRANCA -->
-		<td>
-		{if $op == "cobranca"}
-			<img src="template/default/images/bt_cobranca.gif" border=0 alt="Cobrança">
-		{else }
-			{if $id_cliente}<a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}">{/if}<img src="template/default/images/bt_cobranca_inativo.gif" border=0 alt="Cobranca"></a>
-		{/if}
-		</td>
+		
+    <td> {if $op == "cobranca"} <img src="template/default/images/bt_cobranca.gif" border=0 alt="Cobrança"> 
+      {else } {if $id_cliente}<a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&msg=Cobrança">{/if}<img src="template/default/images/bt_cobranca_inativo.gif" border=0 alt="Cobranca"></a> 
+      {/if} </td>
 		<!-- HELPDESK -->
 		<td>
 		{if $op == "helpdesk"}

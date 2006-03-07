@@ -19,33 +19,36 @@
               <tr>
                 <td align="center" valign="middle"><h1>Pesquisa pelo Cliente</h1>
                   <form name="form1" method="post" action="{$smarty.server.PHP_SELF}">
-                    <table width="400" border="0" cellspacing="1" cellpadding="1">
+                    <table width="450" border="0" cellspacing="1" cellpadding="1">
                       <tr align="center">
                         <td> <input name="campo_pesquisa" value="{$campo_pesquisa}" type="text" size="50" class="campos" onfocus="this.style.backgroundColor='#E7EFEA'" onblur="this.style.backgroundColor='#FFFFFF'"> </td>
                       </tr>
                       <tr>
-                        <td> <table width="300" border="0" cellspacing="2" cellpadding="0" align="center">
-                            <tr>
-                              <td> <p>
-                                  <label>
+                        <td> <table width="450" border="0" cellspacing="2" cellpadding="0" align="center">
+                            <tr> 
+                              <td> <p> 
+                                  <label> 
                                   <input type="radio" name="cond" value="nome" class="checkbox" {if $cond=="nome"}CHECKED{/if}>
                                   Nome</label>
                                 </p></td>
-                              <td> <p>
-                                  <label>
+                              <td> <p> 
+                                  <label> 
                                   <input type="radio" name="cond" value="CPF" class="checkbox" {if $cond=="CPF"}CHECKED{/if}>
                                   CPF/CNPJ</label>
                                 </p></td>
-                              <td> <p>
-                                  <label>
+                              <td> <p> 
+                                  <label> 
                                   <input type="radio" name="cond" value="email" class="checkbox" {if $cond=="email"}CHECKED{/if}>
                                   E-mail</label>
                                 </p></td>
-                              <td> <p>
-                                  <label>
+                              <td> <p> 
+                                  <label> 
                                   <input type="radio" name="cond" value="cod" class="checkbox" {if $cond=="cod"}CHECKED{/if}>
                                   C&oacute;digo</label>
                                 </p></td>
+                              <td><label> 
+                                <input type="radio" name="cond" value="conta" class="checkbox" {if $cond=="cod"}CHECKED{/if}>
+                                Conta</label> </td>
                             </tr>
                           </table></td>
                       </tr>

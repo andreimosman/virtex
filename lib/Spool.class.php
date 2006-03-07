@@ -49,13 +49,16 @@ class Spool {
 	function bandalargaAdicionaRede($destino,$id_conta,$rede,$mac,$banda_upload_kbps,$banda_download_kbps){
 		// Insere em sptb_spool instruções para incluir um cliente de bandalarga
 		
+		
+		$parametros = "$rede,$mac,$banda_upload_kbps,$banda_download_kbps";
+		
 		$sSQL  = "INSERT INTO ";
 		$sSQL .= "sptb_spool ( ";
 		$sSQL .= "		registro,destino,tipo,op,id_conta,parametros,status ";
 		$sSQL .= ") VALUES ( ";
-		$sSQL .= "		now(), '".$destino."', 'BL', 'a', '". $rede ."', '".$id_conta.",".$mac.",".$banda_upload_kbps.",".$banda_download_kbps."','A' ";
+		$sSQL .= "		now(), '".$destino."', 'BL', 'a', '$id_conta', '$parametros' ,'A' ";
 		$sSQL .= ") ";
-		
+		echo "SPOOL SQL: " . $sSQL . ";<br>\n";
 		$this->bd->consulta($sSQL);
 		
 		
@@ -66,12 +69,15 @@ class Spool {
 	
 	function bandalargaExcluiRede($destino,$id_conta,$rede){
 	
+		$parametros = "$rede";
+	
 		$sSQL  = "INSERT INTO ";
 		$sSQL .= "sptb_spool ( ";
 		$sSQL .= "	registro,destino,tipo,op,id_conta,parametros,status ";
 		$sSQL .= ") VALUES ( ";
-		$sSQL .= "now(), '".$destino."', 'BL', 'x', '". $id_conta ."', '".$rede."' ";
+		$sSQL .= "now(), '".$destino."', 'BL', 'x', '". $id_conta ."', '".$parametros."', 'A' ";
 		$sSQL .= ") ";
+		echo "SPOOL SQL: " . $sSQL . ";<br>\n";
 
 		$this->bd->consulta($sSQL);
 		
