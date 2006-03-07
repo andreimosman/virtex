@@ -19,10 +19,20 @@
               </tr>
               <tr>
                 <td align="center" bgcolor="#FFFFFF"><strong><font size="5" face="Arial, Helvetica, sans-serif">
-                  <h1>{$msg}<br>
-              <font size="2"> <a href="clientes.php?id_cliente={$id_cliente}&op=cobranca&rotina=resumo">Resumo</a> 
-              . <a href="clientes.php?id_cliente={$id_cliente}&op=cobranca&rotina=contratar">Novo 
-              Contrato</a></font></h1>
+
+                  {if !$tipo }
+                  <h1>Cobrança</h1>
+                  {/if}
+                  <br>
+              <font size="2">
+
+              {if !$tipo }
+              <a href="clientes.php?id_cliente={$id_cliente}&op=cobranca&rotina=contratar">Novo
+              Contrato</a>
+              {/if}
+
+
+              </font>
                 </td>
               </tr>
               <tr>

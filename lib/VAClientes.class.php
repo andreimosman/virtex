@@ -504,7 +504,7 @@ class VAClientes extends VirtexAdmin {
 			$erros = array();
 
 			
-			if( !$rotina ) $rotina = "resumo";
+			if( !$rotina ) $rotina = "contratar";
 			
 			if( $rotina == "resumo" ) {
 
