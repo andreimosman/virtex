@@ -64,8 +64,8 @@ $_LS_DISPONIVEL = array (
 		"f" => "Não"
 		);
 		
-$_LS_DOWNLOAD = array(
-		"Sem controle" => "0",
+$_LS_BANDA = array(
+		"0" => "Sem controle",
 		"32"  => "32",
 		"64"  => "64",
 		"96"  => "96",
@@ -78,20 +78,6 @@ $_LS_DOWNLOAD = array(
 		"1024" => "1024"
 		);
 		
-$_LS_UPLOAD = array(
-		"Sem controle" => "0",
-		"32"  => "32",
-		"64"  => "64",
-		"96"  => "96",
-		"128" => "128",
-		"192" => "192",
-		"256" => "256",
-		"384" => "384",
-		"512" => "512",
-		"768" => "768",
-		"1024" => "1024"
-		);
-
 $_LS_DUPLICIDADE = array(
 		"t" => "Sim",
 		"f" => "Não"
@@ -131,6 +117,10 @@ $_LS_PRIVILEGIO = array(
 		"1" => "Ler e Gravar"
 		);
 
+$_LS_ST_CONTA = array(
+        "A" => "Ativo",
+        "B" => "Bloqueado"
+        ); 
 
 
 

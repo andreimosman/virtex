@@ -1,0 +1,104 @@
+
+{include file='cliente_header.html'}
+
+<table width="100" border="0" cellspacing="0" cellpadding="0" align="center">
+	<tr>
+		<td>
+			<table width="500" border="0" cellspacing="2" cellpadding="2">
+				<tr>
+					<td align="center" valign="middle">
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="middle">
+
+						<table width="450" border=0 bgcolor="#F1F1F1">
+							<tr>
+								<td colspan=2><font face=arial size="+1" color="#000000"><b>Ficha técnica</b></font></td>
+							</tr>
+							<tr>
+								<td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+								<p>Username:</p></td>
+								<td bgcolor="#FFFFFF" colspan=2><b>{$username}</b></td>
+							</tr>
+							<tr>
+								<td width="50" align="right" valign="top" bgcolor="#FFFFFF">
+								<p>Status:</p></td>
+								<td bgcolor="#FFFFFF" colspan=2>
+									<b>{$str_status}</b>
+								</td>
+							</tr>
+						</table>
+
+					</td>
+				</tr>
+
+				<tr>
+					<td align="center" valign="middle" id="tdados">&nbsp;
+
+						<table width="450" border=0 bgcolor="#F1F1F1" id="disc">
+							<tr>
+								<td colspan=2><p><strong>Dados da Conexão</strong></p></td>
+							</tr>
+							<tr>
+								<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>POP:</p></td>
+								<td bgcolor="#FFFFFF">{$pop.nome}</td>
+								<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>NAS:</p></td>
+								<td bgcolor="#FFFFFF">{$nas.tp}: {$nas.nome}</td>
+							</tr>
+							{if $nas.tipo_nas == "I"}
+							<tr>
+								<td bgcolor="#FFFFFF" align="right" width="70" valign="top">
+									<p>IP:</p>
+								</td>
+								<td bgcolor="#FFFFFF" align="right" width="70" valign="top">
+									<p>{$ip_cliente}</p>
+								</td>
+								<td bgcolor="#FFFFFF" align="right" width="70" valign="top">
+									<p>Máscara:</p>
+								</td>
+								<td bgcolor="#FFFFFF" align="right" width="70" valign="top">
+									<p>{$mascara}</p>
+								</td>
+							</tr>
+							<tr>
+								<td bgcolor="#FFFFFF" align="right" width="70" valign="top">
+									<p>Gateway:</p>
+								</td>
+								<td bgcolor="#FFFFFF">
+									<p>{$gateway}</p>
+								</td>
+								<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>MAC:</p></td>
+								<td bgcolor="#FFFFFF" valign="top"><p>{$mac}</p></td>
+							</tr>
+							{/if}
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="top">
+						<table width="450" border=0 bgcolor="#F1F1F1" id="disc">
+							<tr>
+								<td colspan=4><p><strong>Banda</strong></p></td>
+							</tr>
+							<tr>
+								<td width="75" bgcolor="#FFFFFF" align="right"> <p>Upload:</p> </td>
+								<td width="150" bgcolor="#FFFFFF"> <p>{$upload_kbps} kbps</p> </td>
+								<td width="75" bgcolor="#FFFFFF" align="right"> <p>Download:</p> </td>
+								<td width="150" bgcolor="#FFFFFF"> <p>{$download_kbps} kbps</p> </td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+
+				<tr>
+					<td align="center" valign="middle"><a href="javascript:history.back();">voltar</a></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+
+{include file='cliente_footer.html'}
+

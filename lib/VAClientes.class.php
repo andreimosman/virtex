@@ -29,6 +29,17 @@ class VAClientes extends VirtexAdmin {
 		return( $this->bd->obtemUnicoRegistro($sSQL) );
 
 	}
+
+	private function obtemPOP($id_pop) {
+		$sSQL = "SELECT ";
+		$sSQL .= "   id_pop,nome,info,tipo,id_pop_ap ";
+		$sSQL .= "FROM ";
+		$sSQL .= "   cftb_pop ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "   id_pop = '". $this->bd->escape($id_pop) . "' ";
+		
+		return( $this->bd->obtemUnicoRegistro($sSQL) );
+	}
 	
 	private function obtemNAS($id_nas) {
 		$sSQL = "SELECT ";
@@ -39,7 +50,6 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "   id_nas = '". $this->bd->escape($id_nas) . "' ";
 		
 		return( $this->bd->obtemUnicoRegistro($sSQL) );
-		
 	}
 	
 	private function obtemIP($id_nas) {
@@ -1103,16 +1113,17 @@ class VAClientes extends VirtexAdmin {
 		} else if ($op == "conta") {
 			$erros = array();
 		
-			if( $tipo == "D" || $tipo == "H" ) {
-				// Exibir mensagem de indisponivel
-				echo "indisponivel";
-				return;
-			}
-			
 			$id_cliente = @$_REQUEST["id_cliente"];
 			$username = @$_REQUEST["username"];
 			$dominio  = @$_REQUEST["dominio"];
 			$tipo_conta = @$_REQUEST["tipo_conta"];
+			
+			if( $tipo_conta != "BL" ) {
+				// Único tipo suportado
+				
+			}
+			
+			
 			
 			$this->tpl->atribui("id_cliente",$id_cliente);
 
@@ -1146,8 +1157,6 @@ class VAClientes extends VirtexAdmin {
 			}
 
 			$this->tpl->atribui("lista_nas",$lista_nas);
-
-			
 
 			$sSQL  = "SELECT ";
 			$sSQL .= "   c.username, c.dominio, c.tipo_conta, c.senha, c.status, id_conta ";
@@ -1211,14 +1220,12 @@ class VAClientes extends VirtexAdmin {
 			
 			
 			// ATRIBUI AS VARIAVEIS DE TEMPLATE COM BASE EM REQUEST.
-			global $_LS_DOWNLOAD;
-			$this->tpl->atribui("lista_download",$_LS_DOWNLOAD);
+			global $_LS_BANDA;
+			$this->tpl->atribui("lista_upload",$_LS_BANDA);
+			$this->tpl->atribui("lista_download",$_LS_BANDA);
 			
-			global $_LS_UPLOAD;
-			$this->tpl->atribui("lista_upload",$_LS_UPLOAD);
-			
-			global $_LS_ST_ADMIN;
-			$this->tpl->atribui("lista_status",$_LS_ST_ADMIN);
+			global $_LS_ST_CONTA;
+			$this->tpl->atribui("lista_status",$_LS_ST_CONTA);
 			
 			$altera_rede = @$_REQUEST["altera_rede"];
 			$this->tpl->atribui("altera_rede",$altera_rede);
@@ -1233,6 +1240,7 @@ class VAClientes extends VirtexAdmin {
 			$acao = @$_REQUEST["acao"];
 			
 			$senha = @$_REQUEST["senha"];
+			
 			
 			
 			if( $acao == "cad" ) {
@@ -1462,9 +1470,46 @@ class VAClientes extends VirtexAdmin {
 			
 			
 			
+			if( $tipo == "D" || $tipo == "H" ) {
+				// Exibir mensagem de indisponivel
+				echo "indisponivel";
+				return;
+			}
 			
 			
-			$this->arquivoTemplate = "cliente_conta.html";
+			// Trata o tipo de exibicao.
+			$pg = @$_REQUEST["pg"];
+			
+			if( $pg == "ficha" ) {
+				$nas = $this->obtemNas($conta["id_nas"]);
+				$pop = $this->obtemPop($conta["id_nas"]);
+				$this->tpl->atribui("nas",$nas);
+				$this->tpl->atribui("pop",$pop);
+				
+				$this->tpl->atribui("str_status",$_LS_ST_CONTA[ $conta["status"] ]);
+				
+				
+				
+				if( $nas["tipo_nas"] == "I" ) {
+				   $r = new RedeIP($endereco_ip);
+				   
+				   $gateway    = $r->minHost();
+				   $mascara    = $r->mascara();
+				   $ip_cliente = $r->maxHost();
+				   
+				   $this->tpl->atribui("ip_cliente",$ip_cliente);
+				   $this->tpl->atribui("gateway",$gateway);
+				   $this->tpl->atribui("mascara",$mascara);
+				
+				}
+				
+				
+				
+				
+				$this->arquivoTemplate = "cliente_ficha.html";
+			} else {
+				$this->arquivoTemplate = "cliente_conta.html";
+			}
 			
 			
 			
