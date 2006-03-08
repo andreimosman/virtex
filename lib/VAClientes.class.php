@@ -402,97 +402,164 @@ class VAClientes extends VirtexAdmin {
 			
 		} else if ( $op == "pesquisa" ){
 		
-		
-			$erros = array();
-			$cond = @$_REQUEST['cond'];
-			$campo_pesquisa = @$_REQUEST['campo_pesquisa'];
-			
-			if( !$campo_pesquisa ){
-			 	// Faz alguma coisa
-			 	
-			 	$aSQL  = "SELECT ";
-				$aSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
-				$aSQL .= "   rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
-				$aSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
-				$aSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
-				$aSQL .= "   ativo,obs ";
-				$aSQL .= "FROM cltb_cliente ";
-				$aSQL .= "ORDER BY id_cliente DESC LIMIT (10)";
+				 $texto_pesquisa = @$_REQUEST['texto_pesquisa'];
+				 $tipo_pesquisa = @$_REQUEST['tipo_pesquisa'];
+				 $a = @$_REQUEST['a'];
+				 $this->arquivoTemplate = "clientes_pesquisa.html";
+				 
+				 $texto_pesquisa = trim($texto_pesquisa);
+				 
+				 
+				 $where = "";
+
+
+				if(!$tipo_pesquisa){
+					$tipo_pesquisa = "NOME";
+					
+					$aSQL  = "SELECT ";
+					$aSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
+					$aSQL .= "   rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
+					$aSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
+					$aSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
+					$aSQL .= "   ativo,obs ";
+					$aSQL .= "FROM cltb_cliente ";
+					$aSQL .= "ORDER BY id_cliente DESC LIMIT (10)";		
+					
+					$clientes = $this->bd->obtemRegistros($aSQL);
+					
+				
+				}else{
+				
+					if ($tipo_pesquisa == "NOME" || $tipo_pesquisa == "DOCTOS"){
+
+						$sSQL  = "SELECT ";
+						$sSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
+						$sSQL .= "   rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
+						$sSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
+						$sSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
+						$sSQL .= "   ativo,obs ";
+						$sSQL .= "FROM cltb_cliente ";
+						//$sSQL .= "WHERE $campo = '$campo_pesquisa' ";
+						$sSQL .= "WHERE ";
+
+						switch($tipo_pesquisa) {
+
+						   case 'NOME':
+							  $sSQL .= "   nome_razao ilike '%$texto_pesquisa%' ";
+							  break;
+						   case 'DOCTOS':
+							  $sSQL .= "   cpf_cnpj = '" . $this->bd->escape(@$_REQUEST["texto_pesquisa"]) . "' OR rg_inscr = '" . $this->bd->escape(@$_REQUEST["texto_pesquisa"]) . "' ";
+							  break;
+						   case 'cod':
+							  $sSQL .= "   id_cliente = '" . $this->bd->escape(@$_REQUEST["texto_pesquisa"]) . "' ";
+							  break;
+						}
+						
+						$clientes = $this->bd->obtemRegistros($sSQL);
+
+											
+					}else if ($tipo_pesquisa == "CONTA" || $tipo_pesquisa == "EMAIL"){
+					
+						if( $tipo_pesquisa == "CONTA" ) {
+							$tp = "CONTA";
+							if( preg_match( '/([0-9A-Fa-f]{1,2}[:\-]){5}([0-9A-Fa-f]{1,2})/', $texto_pesquisa) ) {
+								// echo "MAC<br>\n";
+								$tp = "MAC";
+						    }
+						               
+						    if( preg_match( '/([0-9]\.){1,3}[0-9]{1,3}(\/[0-9]{1,2})*$/', $texto_pesquisa ) ) {
+						    	$tp = "IP";
+						    }
+						               
+            			} else {
+            				$tp = 'EMAIL';
+            			}
+            			
+						@list($usr,$dom) = explode("@",$texto_pesquisa);
+						
+						$campos_cliente = " cl.id_cliente,cl.nome_razao ";
+						$campos_conta   = " cn.username,cn.dominio,cn.tipo_conta ";
+						
+						$from  = "	cntb_conta cn LEFT OUTER JOIN cntb_conta_bandalarga cbl USING(username,dominio,tipo_conta),  ";
+						$from .= "	cbtb_cliente_produto cp, cltb_cliente cl ";
+						//$sSQLBase .= "WHERE ";
+						
+						$whereJoin = "	cn.id_cliente_produto = cp.id_cliente_produto ";
+						$whereJoin .= "	AND cp.id_cliente = cl.id_cliente ";
+						
+						
+						$whereFiltro = "";
+						switch($tp) {
 							
-				$listagem_clientes = $this->bd->obtemRegistros($aSQL);
-				$this->tpl->atribui("listagem_clientes", $listagem_clientes);
-			 	
-			 	
-			 	
-			 	
-			  	if( $cond ) {
-			  		$erros[] = "Você se esqueceu de preencher os parâmetros da pesquisa.";
-			  	} else {
-			  		$cond = "nome";
-			  	}
-			  
-			} else {
-			
-				if($cond == "conta"){
-				
-				
-				
-				}else if (cond == "email"){
-				
-				
-				
-				
-				
-				}
+							case 'EMAIL':
+								$whereFiltro .= "	cn.dominio = '$dom'  ";
 
-				$sSQL  = "SELECT ";
-				$sSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
-				$sSQL .= "   rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
-				$sSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
-				$sSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
-				$sSQL .= "   ativo,obs ";
-				$sSQL .= "FROM cltb_cliente ";
-				//$sSQL .= "WHERE $campo = '$campo_pesquisa' ";
-				$sSQL .= "WHERE ";
+							case 'CONTA':
+								
+								$whereFiltro .= "	cn.username ilike '$usr' ";
+							
+								break;
+							case 'MAC':
+								$whereFiltro .= "	cbl.mac = '$texto_pesquisa' ";
+								
+								break;
+							
+							case 'IP':
+								$whereFiltro .= "  ( ";
+								
+								if( strstr($texto_pesquisa,"/") ) {
+								   // Rede
+								   $whereFiltro .= " cbl.rede = '$texto_pesquisa' OR cbl.rede << '$texto_pesquisa' OR cbl.ipaddr << '$texto_pesquisa' ";
+								} else {
+								   // IP
+								   $whereFiltro .= " cbl.rede >> '$texto_pesquisa' OR cbl.ipaddr = '$texto_pesquisa' ";
+								   
+								}
+								
+								$whereFiltro .= " ) ";
+						
+								break;
+								
+						}
+						
+						$clientes = $this->bd->obtemRegistros("SELECT $campos_cliente FROM $from WHERE $whereJoin AND $whereFiltro GROUP BY $campos_cliente " );
 
-				switch($cond) {
-
-				   case 'nome':
-				      $sSQL .= "   nome_razao ilike '%$campo_pesquisa%' ";
-				      break;
-				   case 'CPF':
-				      $sSQL .= "   cpf_cnpj = '" . $this->bd->escape(@$_REQUEST["campo_pesquisa"]) . "' ";
-				      break;
-				   case 'cod':
-				      $sSQL .= "   id_cliente = '" . $this->bd->escape(@$_REQUEST["campo_pesquisa"]) . "' ";
-				      break;
-				   case 'conta':
-					  $sSQL .= ""; 
-				}
-		
-				$clientes = $this->bd->obtemRegistros($sSQL);
-		
-				//if( $this->bd->obtemErro() ) {
-				//   echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
-				//   echo "SQL: $sSQL <br>\n";
-				//}
-		
-				$this->tpl->atribui("lista_clientes", $clientes);
-				
-				if( !count($clientes) ) {
-				   $erros[] = "A pesquisa não retornou resultados";
+						// Pega as contas
+						for( $i=0;$i<count($clientes);$i++ ) {
+						   $sSQL = "SELECT $campos_conta FROM $from WHERE $whereJoin AND $whereFiltro AND cl.id_cliente = '".$clientes[$i]["id_cliente"] ."' GROUP BY $campos_conta ";
+						   $clientes[$i]["contas"] = $this->bd->obtemRegistros( $sSQL );
+						}
+						
+					}
+					
+					
 				}
 				
 				
-		
-			} //fecha o else do mostra				
-			
-			$this->tpl->atribui("erros",$erros);
-			$this->tpl->atribui("cond",$cond);
-			$this->tpl->atribui("campo_pesquisa",$campo_pesquisa);
-			
-			$this->arquivoTemplate="clientes_pesquisa.html";
+				$this->tpl->atribui("clientes",$clientes);
+										
+				$this->tpl->atribui("tipo_pesquisa",$tipo_pesquisa);
+				$this->tpl->atribui("texto_pesquisa",$texto_pesquisa);
+
 				
+				
+				
+
+
+
+
+
+
+
+
+
+
+				 
+
+
+
+
+			  				
 
 
 		
@@ -1118,12 +1185,6 @@ class VAClientes extends VirtexAdmin {
 			$dominio  = @$_REQUEST["dominio"];
 			$tipo_conta = @$_REQUEST["tipo_conta"];
 			
-			if( $tipo_conta != "BL" ) {
-				// Único tipo suportado
-				
-			}
-			
-			
 			
 			$this->tpl->atribui("id_cliente",$id_cliente);
 
@@ -1159,7 +1220,7 @@ class VAClientes extends VirtexAdmin {
 			$this->tpl->atribui("lista_nas",$lista_nas);
 
 			$sSQL  = "SELECT ";
-			$sSQL .= "   c.username, c.dominio, c.tipo_conta, c.senha, c.status, id_conta ";
+			$sSQL .= "   c.username, c.dominio, c.tipo_conta, c.senha, c.status, c.id_conta, c.id_cliente_produto ";
 			$sSQL .= "";
 			$sSQL .= "FROM ";
 			$sSQL .= "   cntb_conta c ";
@@ -1172,7 +1233,36 @@ class VAClientes extends VirtexAdmin {
 			
 			//echo "$sSQL;<br>\n";
 			
+			
 			$conta = $this->bd->obtemUnicoRegistro($sSQL);
+			
+			
+			/** PEGA O PRODUTO CONTRATADO */
+			
+			$sSQL  = "SELECT ";
+			$sSQL .= "   p.id_produto, p.nome, p.tipo ";
+			$sSQL .= "";
+			$sSQL .= "FROM ";
+			$sSQL .= "   cbtb_cliente_produto cp INNER JOIN prtb_produto p USING (id_produto) ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "   id_cliente_produto = '".$conta["id_cliente_produto"]."'";
+			$sSQL .= "";
+			
+			$produto = $this->bd->obtemUnicoRegistro($sSQL);
+			
+			$tipo = $produto["tipo"]; // DO CONTRATO
+			$this->tpl->atribui("tipo",$tipo);
+			
+			if( $tipo_conta != "BL" ) {
+				// Único tipo suportado - faz alguma coisa
+				return;
+			}
+			
+			
+
+			
+			
+			
 			
 			$sSQL  = "SELECT ";
 			$sSQL .= "   cbl.id_pop, cbl.tipo_bandalarga, cbl.ipaddr, cbl.rede, cbl.id_nas, cbl.mac, cbl.upload_kbps, cbl.download_kbps "; // alterei
