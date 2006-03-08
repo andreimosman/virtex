@@ -18,44 +18,41 @@
               </tr>
               <tr>
                 <td align="center" valign="middle"><h1>Pesquisa pelo Cliente</h1>
-                  <form name="form1" method="post" action="{$smarty.server.PHP_SELF}">
+                  <form name="form1" method="get" action="{$smarty.server.PHP_SELF}">
                     <table width="450" border="0" cellspacing="1" cellpadding="1">
                       <tr align="center">
-                        <td> <input name="campo_pesquisa" value="{$campo_pesquisa}" type="text" size="50" class="campos" onfocus="this.style.backgroundColor='#E7EFEA'" onblur="this.style.backgroundColor='#FFFFFF'"> </td>
+                        <td> <input name="texto_pesquisa" value="{$texto_pesquisa}" type="text" size="50" class="campos" onfocus="this.style.backgroundColor='#E7EFEA'" onblur="this.style.backgroundColor='#FFFFFF'"> </td>
                       </tr>
                       <tr>
-                        <td> <table width="450" border="0" cellspacing="2" cellpadding="0" align="center">
-                            <tr> 
-                              <td> <p> 
-                                  <label> 
-                                  <input type="radio" name="cond" value="nome" class="checkbox" {if $cond=="nome"}CHECKED{/if}>
+                        <td> <table width="350" border="0" cellspacing="2" cellpadding="0" align="center">
+                            <tr>
+                              <td> <p>
+                                  <label>
+                                  <input type="radio" name="tipo_pesquisa" value="NOME" class="checkbox" {if $tipo_pesquisa=="NOME"}CHECKED{/if}>
                                   Nome</label>
                                 </p></td>
-                              <td> <p> 
-                                  <label> 
-                                  <input type="radio" name="cond" value="CPF" class="checkbox" {if $cond=="CPF"}CHECKED{/if}>
-                                  CPF/CNPJ</label>
+                              <td> <p>
+                                  <label>
+                                  <input type="radio" name="tipo_pesquisa" value="DOCTOS" class="checkbox" {if $tipo_pesquisa=="DOCTOS"}CHECKED{/if}>
+                                  CPF/CNPJ/RG</label>
                                 </p></td>
-                              <td> <p> 
-                                  <label> 
-                                  <input type="radio" name="cond" value="email" class="checkbox" {if $cond=="email"}CHECKED{/if}>
-                                  E-mail</label>
+                              <td> <p>
+                                  <label>
+                                  <input type="radio" name="tipo_pesquisa" value="CONTA" class="checkbox" {if $tipo_pesquisa=="CONTA"}CHECKED{/if}>
+                                  Conta</label>
                                 </p></td>
-                              <td> <p> 
-                                  <label> 
-                                  <input type="radio" name="cond" value="cod" class="checkbox" {if $cond=="cod"}CHECKED{/if}>
-                                  C&oacute;digo</label>
+                              <td> <p>
+                                  <label>
+                                  <input type="radio" name="tipo_pesquisa" value="EMAIL" class="checkbox" {if $tipo_pesquisa=="EMAIL"}CHECKED{/if}>
+                                  E-Mail</label>
                                 </p></td>
-                              <td><label> 
-                                <input type="radio" name="cond" value="conta" class="checkbox" {if $cond=="cod"}CHECKED{/if}>
-                                Conta</label> </td>
                             </tr>
                           </table></td>
                       </tr>
                       <tr>
                         <td align="center">
                           <input type="submit" name="Submit" value="Pesquisa" class="campos">
-                          <input name="op" type="hidden" id="op" value="pesquisa"> </td>
+                          <input name="op" type="hidden" id="op" value="pesquisa"> <input name="a" type="hidden" id="a" value="pesquisa"></td>
                       </tr>
                     </table>
                   </form>
@@ -68,24 +65,24 @@
 				        </font>
 				     {else}
 
-				        {if count($lista_clientes) }
-							
+				        {if count($clientes) }
+
                   <table width="460" border="0" align="center" cellpadding="0" cellspacing="2">
-                    <tr align="center" valign="middle" bgcolor="#FAFAFA"> 
-                      <td width="113"> 
+                    <tr align="center" valign="middle" bgcolor="#FAFAFA">
+                      <td width="113">
                         <h2>Cod.</h2></td>
-								
-                      <td width="270"> 
+
+                      <td width="270">
                         <div align="center">
 									<h2>Nome</h2>
 								  </div></td>
-								
-                      <td width="77"> 
+
+                      <td width="77">
                         <div align="center"></div></td>
 							  </tr>
-							  {foreach item=v from=$lista_clientes}
+							  {foreach item=v from=$clientes}
 
-								<tr bgcolor=#FFFFFF>
+								<tr bgcolor="#DFDFDF">
 								<td align="center"><p>{$v.id_cliente}</p></td>
 								<td><p>{$v.nome_razao}</p></td>
 								<td><div align="center">
@@ -93,67 +90,81 @@
 								  <p><a href="clientes.php?op=cadastro&id_cliente={$v.id_cliente}"><img src="template/default/images/gif_alterar.gif" width="16" height="16" border="0"></a></p>
 								  </div></td>
 							  </tr>
-							<tr bgcolor=#CCCCCC>
-							  <td height="1" colspan="3" align="center"></td>
-							</tr>
+
+							    {if count($v.contas) }
+							    <tr>
+							     <td colspan=3 bgcolor="#FFFFFF">
+							     <p>
+							        {foreach item=c from=$v.contas}
+							        &nbsp;&nbsp;&nbsp;&nbsp;- <a href="{$smarty.server.PHP_SELF}?op=conta&pg=ficha&id_cliente={$v.id_cliente}&username={$c.username}&dominio={$c.dominio}&tipo_conta={$c.tipo_conta}">
+							        [{$c.tipo_conta|trim}]{$c.username}{if $c.tipo_conta|trim == 'E'}@{$c.dominio}{/if}
+							        </a><br>
+							        {/foreach}
+
+							     </td>
+							    </tr>
+							    {/if}
+
+
 
 							{/foreach}
 							</table>
-						
-                  <p>{/if} 
-				  { if !count($lista_clientes) }
+
+                  <p>{/if}
+				  { if !count($clientes) }
 				  <table width="460" border="0" align="center" cellpadding="0" cellspacing="2">
-                    <tr align="center"> 
-                      <td colspan="3"><font color="#003366" size="3" face="Arial, Helvetica, sans-serif"><strong>&Uacute;ltimos 
+                    <tr align="center">
+                      <td colspan="3"><font color="#003366" size="3" face="Arial, Helvetica, sans-serif"><strong>&Uacute;ltimos
                         clientes cadastrados</strong></font></td>
                     </tr>
-                    <tr align="center" valign="middle" bgcolor="#FAFAFA"> 
-                      <td width="113"> 
+                    <tr align="center" valign="middle" bgcolor="#FAFAFA">
+                      <td width="113">
                         <h2>Cod.</h2></td>
-                      <td width="270"> 
-                        <div align="center"> 
+                      <td width="270">
+                        <div align="center">
                           <h2>Nome</h2>
                         </div></td>
-                      <td width="77"> 
+                      <td width="77">
                         <div align="center"></div></td>
                     </tr>
-                    {foreach item=v from=$listagem_clientes} 
-                    <tr bgcolor=#FFFFFF> 
+                    {foreach item=v from=$clientes}
+                    <tr bgcolor=#FFFFFF>
                       <td align="center"><p>{$v.id_cliente}</p></td>
                       <td><p>{$v.nome_razao}</p></td>
-                      <td><div align="center"> 
+                      <td><div align="center">
                           <p><a href="clientes.php?op=cadastro&id_cliente={$v.id_cliente}"><img src="template/default/images/gif_alterar.gif" width="16" height="16" border="0"></a></p>
                         </div></td>
+
                     </tr>
-                    <tr bgcolor=#CCCCCC> 
+                    <tr bgcolor=#CCCCCC>
                       <td height="1" colspan="3" align="center"></td>
                     </tr>
-                    {/foreach} 
+                    {/foreach}
                   </table>
-				  
-				  
-				  
-				  
+
+
+
+
 				  { /if }
 				  {/if} </p>
                   <p>&nbsp; </p>
-				  
-				  
-				  
-				  
-				  
-				  
-				  
-				  
-				  
-				  
-				  
-				  
-				  
-				  
-                  
-				  
-				  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                   <p>&nbsp;</p>
       <p>&nbsp;
                   </p>

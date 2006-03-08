@@ -13,22 +13,27 @@
 					<td align="center" valign="middle">
 
 						<table width="450" border=0 bgcolor="#F1F1F1">
-							<tr>
-								<td colspan=2><font face=arial size="+1" color="#000000"><b>Ficha técnica</b></font></td>
-							</tr>
-							<tr>
-								<td bgcolor="#FFFFFF" align="right" width="50" valign="top">
-								<p>Username:</p></td>
-								<td bgcolor="#FFFFFF" colspan=2><b>{$username}</b></td>
-							</tr>
-							<tr>
-								<td width="50" align="right" valign="top" bgcolor="#FFFFFF">
-								<p>Status:</p></td>
-								<td bgcolor="#FFFFFF" colspan=2>
-									<b>{$str_status}</b>
-								</td>
-							</tr>
-						</table>
+              <tr> 
+                <td colspan=2> <table width="100%" border="0" cellspacing="2" cellpadding="0">
+                    <tr> 
+                      <td width="84%"><font face=arial size="+1" color="#000000"><b>Ficha 
+                        técnica</b></font> </td>
+                      <td width="16%" align="center"> <p>[<a href="{$smarty.server.PHP_SELF}?op=conta&id_cliente={$id_cliente}&username={$username}&dominio={$dominio}&tipo_conta={$tipo_conta}">alterar</a>]</p></td>
+                    </tr>
+                  </table></td>
+              </tr>
+              <tr> 
+                <td width="50" align="right" valign="middle" bgcolor="#FFFFFF"> 
+                  <p>Username:</p></td>
+                <td width="400" colspan=2 bgcolor="#FFFFFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>{$username}</b></font></td>
+              </tr>
+              <tr> 
+                <td width="50" align="right" valign="middle" bgcolor="#FFFFFF"> 
+                  <p>Status:</p></td>
+                <td bgcolor="#FFFFFF" colspan=2 width="400"> <font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>{$str_status}</b> 
+                  </font></td>
+              </tr>
+            </table>
 
 					</td>
 				</tr>
@@ -37,42 +42,41 @@
 					<td align="center" valign="middle" id="tdados">&nbsp;
 
 						<table width="450" border=0 bgcolor="#F1F1F1" id="disc">
-							<tr>
-								<td colspan=2><p><strong>Dados da Conexão</strong></p></td>
-							</tr>
-							<tr>
-								<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>POP:</p></td>
-								<td bgcolor="#FFFFFF">{$pop.nome}</td>
-								<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>NAS:</p></td>
-								<td bgcolor="#FFFFFF">{$nas.tp}: {$nas.nome}</td>
-							</tr>
-							{if $nas.tipo_nas == "I"}
-							<tr>
-								<td bgcolor="#FFFFFF" align="right" width="70" valign="top">
-									<p>IP:</p>
-								</td>
-								<td bgcolor="#FFFFFF" align="right" width="70" valign="top">
-									<p>{$ip_cliente}</p>
-								</td>
-								<td bgcolor="#FFFFFF" align="right" width="70" valign="top">
-									<p>Máscara:</p>
-								</td>
-								<td bgcolor="#FFFFFF" align="right" width="70" valign="top">
-									<p>{$mascara}</p>
-								</td>
-							</tr>
-							<tr>
-								<td bgcolor="#FFFFFF" align="right" width="70" valign="top">
-									<p>Gateway:</p>
-								</td>
-								<td bgcolor="#FFFFFF">
-									<p>{$gateway}</p>
-								</td>
-								<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>MAC:</p></td>
-								<td bgcolor="#FFFFFF" valign="top"><p>{$mac}</p></td>
-							</tr>
-							{/if}
-						</table>
+              <tr> 
+                <td colspan=2><p><strong>Dados da Conexão</strong></p></td>
+              </tr>
+              <tr> 
+                <td bgcolor="#FFFFFF" align="right" width="81" valign="middle">
+<p>POP:</p></td>
+                <td align="left" valign="middle" bgcolor="#FFFFFF"> 
+                  <p>{$pop.nome}</p></td>
+                <td bgcolor="#FFFFFF" align="right" width="64" valign="middle">
+<p>NAS:</p></td>
+                <td align="left" valign="middle" bgcolor="#FFFFFF"> 
+                  <p>{$nas.tp}: {$nas.nome}</p></td>
+              </tr>
+              {if $nas.tipo_nas == "I"} 
+              <tr> 
+                <td bgcolor="#FFFFFF" align="right" width="81" valign="middle"> 
+                  <p>IP:</p></td>
+                <td bgcolor="#FFFFFF" align="left" width="115" valign="middle"> 
+                  <p>{$ip_cliente}</p></td>
+                <td bgcolor="#FFFFFF" align="right" width="64" valign="middle"> 
+                  <p>Máscara:</p></td>
+                <td bgcolor="#FFFFFF" align="left" width="172" valign="middle"> 
+                  <p>{$mascara}</p></td>
+              </tr>
+              <tr> 
+                <td bgcolor="#FFFFFF" align="right" width="81" valign="middle"> 
+                  <p>Gateway:</p></td>
+                <td align="left" valign="middle" bgcolor="#FFFFFF"> 
+                  <p>{$gateway}</p></td>
+                <td bgcolor="#FFFFFF" align="right" width="64" valign="middle">
+<p>MAC:</p></td>
+                <td align="left" valign="middle" bgcolor="#FFFFFF"> 
+                  <p>{$mac}</p></td>
+              </tr>
+              {/if} </table>
 					</td>
 				</tr>
 				<tr>
