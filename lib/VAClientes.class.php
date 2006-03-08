@@ -17,7 +17,7 @@ class VAClientes extends VirtexAdmin {
 
 		$sSQL  = "SELECT ";
 		$sSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
-		$sSQL .= "   rg_inscr, expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
+		$sSQL .= "   rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
 		$sSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
 		$sSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
 		$sSQL .= "   ativo,obs ";
@@ -161,7 +161,7 @@ class VAClientes extends VirtexAdmin {
 
 					$tSQL  = "SELECT ";
 					$tSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
-					$tSQL .= "   rg_inscr, expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
+					$tSQL .= "   rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
 					$tSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
 					$tSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
 					$tSQL .= "   ativo,obs ";
@@ -185,7 +185,7 @@ class VAClientes extends VirtexAdmin {
 					$this->tpl->atribui("nome_razao",@$_REQUEST["nome_razao"]);// pega a info do db e atribui ao campo correspon do form
 					$this->tpl->atribui("tipo_pessoa",@$_REQUEST["tipo_pessoa"]);
 					$this->tpl->atribui("rg_inscr",@$_REQUEST["rg_inscr"]);
-					$this->tpl->atribui("expedicao",@$_REQUEST["expedicao"]);
+					$this->tpl->atribui("rg_expedicao",@$_REQUEST["rg_expedicao"]);
 					$this->tpl->atribui("cpf_cnpj",@$_REQUEST["cpf_cnpj"]);
 					$this->tpl->atribui("email",@$_REQUEST["email"]);
 					$this->tpl->atribui("endereco",@$_REQUEST["endereco"]);
@@ -223,7 +223,7 @@ class VAClientes extends VirtexAdmin {
 						$sSQL  = "INSERT INTO ";
 						$sSQL .= "   cltb_cliente ( ";
 						$sSQL .= "      id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
-						$sSQL .= "      rg_inscr, expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
+						$sSQL .= "      rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
 						$sSQL .= "      cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
 						$sSQL .= "      fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
 						$sSQL .= "      ativo,obs ) ";
@@ -233,7 +233,7 @@ class VAClientes extends VirtexAdmin {
 						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["nome_razao"]) . "', ";
 						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["tipo_pessoa"]) . "', ";
 						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["rg_inscr"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["expedicao"]) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["rg_expedicao"]) . "', ";
 						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["cpf_cnpj"]) . "', ";
 						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["email"]) . "', ";
 						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["endereco"]) . "', ";
@@ -267,7 +267,7 @@ class VAClientes extends VirtexAdmin {
 						$sSQL .= "   nome_razao = '" . $this->bd->escape(@$_REQUEST["nome_razao"]) . "', ";
 						$sSQL .= "   tipo_pessoa = '" . $this->bd->escape(@$_REQUEST["tipo_pessoa"]) . "', ";
 						$sSQL .= "   rg_inscr = '" . $this->bd->escape(@$_REQUEST["rg_inscr"]) . "', ";
-						$sSQL .= "   expedicao = '" . $this->bd->escape(@$_REQUEST["expedicao"]) . "', ";
+						$sSQL .= "   rg_expedicao = '" . $this->bd->escape(@$_REQUEST["rg_expedicao"]) . "', ";
 						$sSQL .= "   cpf_cnpj = '" . $this->bd->escape(@$_REQUEST["cpf_cnpj"]) . "', ";
 						$sSQL .= "   email = '" . $this->bd->escape(@$_REQUEST["email"]) . "', ";
 						$sSQL .= "   endereco = '" . $this->bd->escape(@$_REQUEST["endereco"]) . "', ";
@@ -370,7 +370,7 @@ class VAClientes extends VirtexAdmin {
 		        $this->tpl->atribui("nome_razao",@$reg["nome_razao"]);// pega a info do db e atribui ao campo correspon do form
 		        $this->tpl->atribui("tipo_pessoa",@$reg["tipo_pessoa"]);
 		        $this->tpl->atribui("rg_inscr",@$reg["rg_inscr"]);
-		        $this->tpl->atribui("expedicao",@$reg["expedicao"]);
+		        $this->tpl->atribui("rg_expedicao",@$reg["rg_expedicao"]);
 		        $this->tpl->atribui("cpf_cnpj",@$reg["cpf_cnpj"]);
 		        $this->tpl->atribui("email",@$reg["email"]);
 		        $this->tpl->atribui("endereco",@$reg["endereco"]);
@@ -412,7 +412,7 @@ class VAClientes extends VirtexAdmin {
 			 	
 			 	$aSQL  = "SELECT ";
 				$aSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
-				$aSQL .= "   rg_inscr, expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
+				$aSQL .= "   rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
 				$aSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
 				$aSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
 				$aSQL .= "   ativo,obs ";
@@ -447,7 +447,7 @@ class VAClientes extends VirtexAdmin {
 
 				$sSQL  = "SELECT ";
 				$sSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
-				$sSQL .= "   rg_inscr, expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
+				$sSQL .= "   rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
 				$sSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
 				$sSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
 				$sSQL .= "   ativo,obs ";
@@ -1001,7 +1001,7 @@ class VAClientes extends VirtexAdmin {
 			//Lista de Clientes
 			//$aSQL  = "SELECT ";
 			//$aSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
-			//$aSQL .= "   rg_inscr, expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
+			//$aSQL .= "   rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
 			//$aSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
 			//$aSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
 			//$aSQL .= "   ativo,obs ";
