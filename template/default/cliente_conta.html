@@ -1,6 +1,6 @@
 
 {include file='cliente_header.html'}
-
+{if $tipo_conta == "BL"}
 <script language="javascript">
 {literal}
 
@@ -73,13 +73,19 @@ function check(){
 
 {/literal}
 </script>
+{/if}
 
 <form name="frmConta" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="javascript:return check(this);">
 
-
+				{if $tipo_conta == "BL"}
                  <table width="100" border="0" cellspacing="0" cellpadding="0" align="center">
                     <tr>
                       <td>
+                      <table align="center">
+					              <tr>
+					                <td align="center" valign="middle"><strong><font face="arial" size="4" color="black">Banda Larga</font></strong></td>
+					              </tr>
+          				</table>
                           <table width="500" border="0" cellspacing="2" cellpadding="2">
         <tr>
                               <td>
@@ -233,9 +239,92 @@ function check(){
                               <td align="center" valign="middle"><input name="botao_enviar2" type="submit" class=input2 id="botao_enviar23" value="Alterar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;"></td>
                             </tr>
                           </table>
+
+
+
+
+                          {/if}
+
+                          {if $tipo_conta|trim == "E"}
+
+                          {literal}
+                          <script>
+                          function check(){
+						  			csenha=document.frmConta.senha.value;
+						  			cconfsenha=document.frmConta.conf_senha.value;
+
+						  			msg="";
+						  			erro=0;
+
+
+						  			if (csenha != cconfsenha || csenha == "" || cconfsenha == "") {
+						  				msg = msg + "Os campos Senha e Confirmação devem conter o mesmo conteúdo.\n";
+						  				erro = 1;
+						  			}
+						  			if (erro == 1){
+						  				alert(msg);
+						  				return false;
+						  			}
+
+						  	return true;
+
+						  }
+
+                          </script>
+                          {/literal}
+                               <input type="hidden" name="op" value="{$op}">
+						       <input type="hidden" name="id_cliente" value="{$id_cliente}">
+						  	   <input type="hidden" name="username" value="{$username}">
+						       <input type="hidden" name="dominio" value="{$dominio}">
+						       <input type="hidden" name="tipo_conta" value="{$tipo_conta}">
+						       <input type="hidden" name="acao" value="alt">
+							  <table align="center">
+								<tr>
+									<td align="center" valign="middle"><strong><font face="arial" size="4" color="black">E-Mail</font></strong></td>
+								</tr>
+							  </table>
+
+                          <table width="450" border=0 bgcolor="#F1F1F1" align="center">
+						                <tr>
+						                  <td colspan=2><h2><font color="#000000">Dados da Conta</font></h2></td>
+						                </tr>
+						                <tr>
+						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+						  					<p>Username:</p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p><input type="text" maxlength="30" name="username" disabled="true" value="{$username}">@{$dominio}</p></td>
+						                </tr>
+						                <tr>
+						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+						  					<p>Senha:</p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="senha" id="senha">
+						                  </td>
+						                </tr>
+						                <tr>
+						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+						  					<p>Confirme:</p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="conf_senha" id="conf_senha">
+						                  </td>
+						                </tr>
+						                <tr>
+						                  <td width="50" align="right" valign="top" bgcolor="#FFFFFF">
+						  					<p>Quota:</p></td>
+
+						                <td bgcolor="#FFFFFF" colspan=2> <input name="quota" type="text" id="quota" value="{$quota}"></td>
+						                </tr>
+						                <tr>
+						                <td colspan=2 align="center"><input type="submit" name="Submit" value="Alterar >>"></td>
+						                </tr>
+            			  </table>
+            			  <br>
+							<p align="center"><a href="{$smarty.server.PHP_SELF}?op=produto&tipo={$tipo}&id_cliente={$id_cliente}&msg=">voltar</a></p>
+                          {/if}
                         </form>
+
+{if $tipo_conta == "BL"}
 <br>
-<p align="center"><a href="{$smarty.server.PHP_SELF}?op=produto&tipo={$tipo}&id_cliente={$id_cliente}">voltar</a></p>
+						<p align="center"><a href="{$smarty.server.PHP_SELF}?op=produto&tipo={$tipo}&id_cliente={$id_cliente}">voltar</a></p>
+
+
 
 
 { literal }
@@ -247,7 +336,7 @@ init();
 
 </script>
 { /literal }
-
+{/if}
 
 
 {include file='cliente_footer.html'}

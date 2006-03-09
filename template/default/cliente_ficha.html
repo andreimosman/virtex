@@ -4,6 +4,7 @@
 <table width="100" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr>
 		<td>
+		{if $tipo_conta == "BL"}
 			<table width="500" border="0" cellspacing="2" cellpadding="2">
 				<tr>
 					<td align="center" valign="middle">
@@ -13,24 +14,24 @@
 					<td align="center" valign="middle">
 
 						<table width="450" border=0 bgcolor="#F1F1F1">
-              <tr> 
+              <tr>
                 <td colspan=2> <table width="100%" border="0" cellspacing="2" cellpadding="0">
-                    <tr> 
-                      <td width="84%"><font face=arial size="+1" color="#000000"><b>Ficha 
+                    <tr>
+                      <td width="84%"><font face=arial size="+1" color="#000000"><b>Ficha
                         técnica</b></font> </td>
                       <td width="16%" align="center"> <p>[<a href="{$smarty.server.PHP_SELF}?op=conta&id_cliente={$id_cliente}&username={$username}&dominio={$dominio}&tipo_conta={$tipo_conta}">alterar</a>]</p></td>
                     </tr>
                   </table></td>
               </tr>
-              <tr> 
-                <td width="50" align="right" valign="middle" bgcolor="#FFFFFF"> 
+              <tr>
+                <td width="50" align="right" valign="middle" bgcolor="#FFFFFF">
                   <p>Username:</p></td>
                 <td width="400" colspan=2 bgcolor="#FFFFFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>{$username}</b></font></td>
               </tr>
-              <tr> 
-                <td width="50" align="right" valign="middle" bgcolor="#FFFFFF"> 
+              <tr>
+                <td width="50" align="right" valign="middle" bgcolor="#FFFFFF">
                   <p>Status:</p></td>
-                <td bgcolor="#FFFFFF" colspan=2 width="400"> <font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>{$str_status}</b> 
+                <td bgcolor="#FFFFFF" colspan=2 width="400"> <font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>{$str_status}</b>
                   </font></td>
               </tr>
             </table>
@@ -42,38 +43,38 @@
 					<td align="center" valign="middle" id="tdados">&nbsp;
 
 						<table width="450" border=0 bgcolor="#F1F1F1" id="disc">
-              <tr> 
+              <tr>
                 <td colspan=2><p><strong>Dados da Conexão</strong></p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td bgcolor="#FFFFFF" align="right" width="81" valign="middle">
 <p>POP:</p></td>
-                <td align="left" valign="middle" bgcolor="#FFFFFF"> 
+                <td align="left" valign="middle" bgcolor="#FFFFFF">
                   <p>{$pop.nome}</p></td>
                 <td bgcolor="#FFFFFF" align="right" width="64" valign="middle">
 <p>NAS:</p></td>
-                <td align="left" valign="middle" bgcolor="#FFFFFF"> 
+                <td align="left" valign="middle" bgcolor="#FFFFFF">
                   <p>{$nas.tp}: {$nas.nome}</p></td>
               </tr>
-              {if $nas.tipo_nas == "I"} 
-              <tr> 
-                <td bgcolor="#FFFFFF" align="right" width="81" valign="middle"> 
+              {if $nas.tipo_nas == "I"}
+              <tr>
+                <td bgcolor="#FFFFFF" align="right" width="81" valign="middle">
                   <p>IP:</p></td>
-                <td bgcolor="#FFFFFF" align="left" width="115" valign="middle"> 
+                <td bgcolor="#FFFFFF" align="left" width="115" valign="middle">
                   <p>{$ip_cliente}</p></td>
-                <td bgcolor="#FFFFFF" align="right" width="64" valign="middle"> 
+                <td bgcolor="#FFFFFF" align="right" width="64" valign="middle">
                   <p>Máscara:</p></td>
-                <td bgcolor="#FFFFFF" align="left" width="172" valign="middle"> 
+                <td bgcolor="#FFFFFF" align="left" width="172" valign="middle">
                   <p>{$mascara}</p></td>
               </tr>
-              <tr> 
-                <td bgcolor="#FFFFFF" align="right" width="81" valign="middle"> 
+              <tr>
+                <td bgcolor="#FFFFFF" align="right" width="81" valign="middle">
                   <p>Gateway:</p></td>
-                <td align="left" valign="middle" bgcolor="#FFFFFF"> 
+                <td align="left" valign="middle" bgcolor="#FFFFFF">
                   <p>{$gateway}</p></td>
                 <td bgcolor="#FFFFFF" align="right" width="64" valign="middle">
 <p>MAC:</p></td>
-                <td align="left" valign="middle" bgcolor="#FFFFFF"> 
+                <td align="left" valign="middle" bgcolor="#FFFFFF">
                   <p>{$mac}</p></td>
               </tr>
               {/if} </table>
@@ -96,9 +97,52 @@
 				</tr>
 
 				<tr>
-					<td align="center" valign="middle"><a href="javascript:history.back();">voltar</a></td>
+					<td align="center" valign="middle"><a href="{$smarty.server.PHP_SELF}?op=produto&tipo={$tipo}&id_cliente={$id_cliente}&msg=">voltar</a></td>
 				</tr>
 			</table>
+			{/if}
+			{ if $tipo_conta|trim == "E" }
+
+			<table width="450" border=0 bgcolor="#F1F1F1">
+			              <tr>
+			                <td colspan=2> <table width="100%" border="0" cellspacing="2" cellpadding="0">
+			                    <tr>
+			                      <td width="84%"><font face=arial size="+1" color="#000000"><b>Ficha
+			                        técnica</b></font> </td>
+			                      <td width="16%" align="center"> <p>&nbsp;</p></td>
+			                    </tr>
+			                  </table></td>
+			              </tr>
+			              <tr>
+			                <td width="100" align="right" valign="middle" bgcolor="#FFFFFF">
+			                  <p>Username:</p></td>
+			                <td width="400" colspan=2 bgcolor="#FFFFFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>{$username}</b></font></td>
+			              </tr>
+			              <tr>
+			                <td width="100" align="right" valign="middle" bgcolor="#FFFFFF">
+			                  <p>Dominio:</p></td>
+			                <td bgcolor="#FFFFFF" colspan=2 width="400"> <font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>{$dominio}</b>
+			                  </font></td>
+			              </tr>
+			              <tr>
+			                <td width="100" align="right" valign="middle" bgcolor="#FFFFFF"><p>Quota:</p></td>
+			                <td bgcolor="#FFFFFF" colspan=2><p>{$quota}</p></td>
+			              </tr>
+			              <tr>
+			                <td width="100" align="right" valign="middle" bgcolor="#FFFFFF"><p>Mail Server:</p></td>
+			                <td bgcolor="#FFFFFF" colspan=2><p>{$server.mail_server}</p></td>
+			              </tr>
+			              <tr>
+						    <td width="100" align="right" valign="middle" bgcolor="#FFFFFF"><p>POP3:{$server}</p></td>
+						    <td bgcolor="#FFFFFF" colspan=2><p>{$server.pop_host}</p></td>
+						  </tr>
+			              <tr>
+			                <td width="100" align="right" valign="middle" bgcolor="#FFFFFF"><p>SMTP:</p></td>
+			                <td bgcolor="#FFFFFF" colspan=2><p>{$server.smtp_host}</p></td>
+			              </tr>
+            </table>
+							<p align="center"><a href="{$smarty.server.PHP_SELF}?op=produto&tipo={$tipo}&id_cliente={$id_cliente}&msg=">voltar</a></p>
+			{/if}
 		</td>
 	</tr>
 </table>

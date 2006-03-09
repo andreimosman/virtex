@@ -1,16 +1,38 @@
 {include file="cliente_header.html"}
   <p>{foreach item=p from=$produtos} </p>
 
-<table width="500" border="0" align="center" cellpadding="0" cellspacing="0">
+<table width="500" border="0" cellpadding="0" cellspacing="0" align="center">
+<tr align="center">
+<td align="center">
+    	{if $p.tipo|trim == "BL"}
+		  <table width="500" border="0" cellspacing="0" cellpadding="0" align="center"><tr><td><b><p align="center"><font face="arial" size="4" color="black">Banda Larga</font></p></b></td></tr></table>
+		{/if}
+		{if $p.tipo == "H"}
+		  <table width="500" border="0" cellspacing="0" cellpadding="0" align="center"><tr><td><b><p align="center"><font face="arial" size="4" color="black">Hospedagem</font></p></b></td></tr></table>
+		{/if}
+		{if $p.tipo == "D"}
+		  <table width="500" border="0" cellspacing="0" cellpadding="0" align="center"><tr><td><b><p align="center"><font face="arial" size="4" color="black">Discado</font></p></b></td></tr></table>
+		{/if}
+		{if $p.tipo == "E"}
+		  <table width="500" border="0" cellspacing="0" cellpadding="0" align="center"><tr><td><b><p align="center"><font face="arial" size="4" color="black">E-Mail</font></p></b></td></tr></table>
+		{/if}
+
+</td>
+</tr>
   <tr>
     <td width="400" bgcolor="#F1F1F1">
       <font face="arial" size="2">#{$p.id_cliente_produto} - <b>{$p.nome}</b></font></td>
-    <td width="100" align="center" bgcolor="#F1F1F1"></td>
+    <td width="100" align="center" bgcolor="#F1F1F1">
+
+    </td>
   </tr>
   <tr>
+
+
     <td colspan="2"> {foreach item=c from=$p.contas}
+
       <table width="500" border="0" cellspacing="0" cellpadding="0">
-        {if $c.tipo_conta|trim == "BL"}
+        {if $c.tipo_conta|trim == "BL" || $c.tipo_conta|trim == "E"}
         <tr>
           <td width="50"><font face="arial" size=-2>{$c.tipo_conta}</font></td>
           <td>

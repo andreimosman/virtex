@@ -8,6 +8,11 @@ class VAHome extends VirtexAdmin {
 	public function VAHome() {
 		parent::VirtexAdmin();
 	
+		$adm = $this->admLogin->obtemAdmin();
+		$this->tpl->atribui("admin",$adm);	
+
+
+
 		$this->arquivoTemplate = "home.html";
 	
 	

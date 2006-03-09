@@ -865,8 +865,10 @@ class VAClientes extends VirtexAdmin {
 							$this->tpl->atribui("tipo",$tipo);
 							$destino = $nas['ip'];	
 							
-						
-							$this->spool->bandalargaAdicionaRede($destino,$rede,$id_conta,$mac,$banda_upload_kbps,$banda_download_kbps);
+							//ECHO "BOSTA'";
+							$this->spool->bandalargaAdicionaRede($destino,$id_conta,$rede,$mac,$banda_upload_kbps,$banda_download_kbps);
+							
+							
 							
 							
 							
@@ -1185,8 +1187,15 @@ class VAClientes extends VirtexAdmin {
 			$dominio  = @$_REQUEST["dominio"];
 			$tipo_conta = @$_REQUEST["tipo_conta"];
 			
-			
 			$this->tpl->atribui("id_cliente",$id_cliente);
+			$this->tpl->atribui("username",$username);
+			$this->tpl->atribui("dominio",$dominio);
+			$this->tpl->atribui("tipo_conta",$tipo_conta);
+			
+			
+			/*******************************
+			 * DADOS GERAIS                *
+			 *******************************/
 
 			// LISTA DE POPS
 			$sSQL  = "SELECT ";
@@ -1231,9 +1240,6 @@ class VAClientes extends VirtexAdmin {
 			$sSQL .= "   AND c.tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
 			$sSQL .= "";
 			
-			//echo "$sSQL;<br>\n";
-			
-			
 			$conta = $this->bd->obtemUnicoRegistro($sSQL);
 			
 			
@@ -1253,255 +1259,346 @@ class VAClientes extends VirtexAdmin {
 			$tipo = $produto["tipo"]; // DO CONTRATO
 			$this->tpl->atribui("tipo",$tipo);
 			
-			if( $tipo_conta != "BL" ) {
-				// Único tipo suportado - faz alguma coisa
-				return;
-			}
-			
-			
-
-			
-			
-			
-			
-			$sSQL  = "SELECT ";
-			$sSQL .= "   cbl.id_pop, cbl.tipo_bandalarga, cbl.ipaddr, cbl.rede, cbl.id_nas, cbl.mac, cbl.upload_kbps, cbl.download_kbps "; // alterei
-			$sSQL .= "";
-			$sSQL .= "FROM ";
-			$sSQL .= "   cntb_conta_bandalarga cbl ";
-			$sSQL .= "";
-			$sSQL .= "WHERE ";
-			$sSQL .= "   cbl.username = '".$this->bd->escape($username)."' ";
-			$sSQL .= "   AND cbl.dominio = '".$this->bd->escape($dominio)."' ";
-			$sSQL .= "   AND cbl.tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
-			$sSQL .= "";
-			$sSQL .= "";
-			$sSQL .= "";
-			$sSQL .= "";
-			$sSQL .= "";
-			
-			//echo "$sSQL;<br>\n";
-			
-			
-
-			$cbl = $this->bd->obtemUnicoRegistro($sSQL);
-			
-			$conta = array_merge($conta,$cbl);
-			
-			
-			$this->tpl->atribui("status",@$_REQUEST["status"]);
-			$this->tpl->atribui("upload_kbps",@$_REQUEST["upload_kbps"]);
-			$this->tpl->atribui("download_kbps",@$_REQUEST["download_kbps"]);
-			
-			
-			
-			$nas = $this->obtemNas($conta["id_nas"]);			
-			$conta["endereco_ip"] = $nas["tipo_nas"] == "I" ? $conta["rede"] : $conta["ipaddr"];
-			
-			
-			
-			
-			//$nas_orig = @$_REQUEST["nas_orig"];
-			
-			$endereco_ip = @$_REQUEST["endereco_ip"];
-			if( !$endereco_ip ) $endereco_ip = $conta["endereco_ip"];
-			
-			$selecao_ip = @$_REQUEST["selecao_ip"];
-			
-			
-			// ATRIBUI AS VARIAVEIS DE TEMPLATE COM BASE EM REQUEST.
-			global $_LS_BANDA;
-			$this->tpl->atribui("lista_upload",$_LS_BANDA);
-			$this->tpl->atribui("lista_download",$_LS_BANDA);
-			
 			global $_LS_ST_CONTA;
 			$this->tpl->atribui("lista_status",$_LS_ST_CONTA);
+
 			
-			$altera_rede = @$_REQUEST["altera_rede"];
-			$this->tpl->atribui("altera_rede",$altera_rede);
-			$this->tpl->atribui("selecao_ip",$selecao_ip);
-			$this->tpl->atribui("endereco_ip",$endereco_ip);
+			/*******************************
+			 * Carrega Dados Específicos   *
+			 *******************************/
 			
+			switch($tipo_conta) {
 			
-			//if( !$nas_orig ) 
-			$nas_orig = $nas["id_nas"];
-			$this->tpl->atribui("nas_orig",$nas_orig);
-			
+				case 'D':
+					break;
+				case 'BL':
+					$sSQL  = "SELECT ";
+					$sSQL .= "   cbl.id_pop, cbl.tipo_bandalarga, cbl.ipaddr, cbl.rede, cbl.id_nas, cbl.mac, cbl.upload_kbps, cbl.download_kbps "; // alterei
+					$sSQL .= "";
+					$sSQL .= "FROM ";
+					$sSQL .= "   cntb_conta_bandalarga cbl ";
+					$sSQL .= "";
+					$sSQL .= "WHERE ";
+					$sSQL .= "   cbl.username = '".$this->bd->escape($username)."' ";
+					$sSQL .= "   AND cbl.dominio = '".$this->bd->escape($dominio)."' ";
+					$sSQL .= "   AND cbl.tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
+					$sSQL .= "";
+					$sSQL .= "";
+					$sSQL .= "";
+					$sSQL .= "";
+					$sSQL .= "";
+
+					//echo "$sSQL;<br>\n";
+
+
+
+					$cbl = $this->bd->obtemUnicoRegistro($sSQL);
+
+					$conta = array_merge($conta,$cbl);
+
+
+					$this->tpl->atribui("status",@$_REQUEST["status"]);
+					$this->tpl->atribui("upload_kbps",@$_REQUEST["upload_kbps"]);
+					$this->tpl->atribui("download_kbps",@$_REQUEST["download_kbps"]);
+
+
+
+					$nas = $this->obtemNas($conta["id_nas"]);			
+					$conta["endereco_ip"] = $nas["tipo_nas"] == "I" ? $conta["rede"] : $conta["ipaddr"];
+
+
+
+
+					//$nas_orig = @$_REQUEST["nas_orig"];
+
+					$endereco_ip = @$_REQUEST["endereco_ip"];
+					if( !$endereco_ip ) $endereco_ip = $conta["endereco_ip"];
+
+					$selecao_ip = @$_REQUEST["selecao_ip"];
+
+
+					// ATRIBUI AS VARIAVEIS DE TEMPLATE COM BASE EM REQUEST.
+					global $_LS_BANDA;
+					$this->tpl->atribui("lista_upload",$_LS_BANDA);
+					$this->tpl->atribui("lista_download",$_LS_BANDA);
+
+					$altera_rede = @$_REQUEST["altera_rede"];
+					$this->tpl->atribui("altera_rede",$altera_rede);
+					$this->tpl->atribui("selecao_ip",$selecao_ip);
+					$this->tpl->atribui("endereco_ip",$endereco_ip);
+
+
+					//if( !$nas_orig ) 
+					$nas_orig = $nas["id_nas"];
+					$this->tpl->atribui("nas_orig",$nas_orig);
+					break;
+
+				case 'E':
+					$sSQL  = "SELECT ";
+					$sSQL .= "	ce.username, ce.dominio, ce.tipo_conta, ce.quota, ce.email ";
+					$sSQL .= "FROM ";
+					$sSQL .= "	cntb_conta_email ce ";
+					$sSQL .= "WHERE ";
+					$sSQL .= "	ce.username = '$username'";
+					$sSQL .= "	AND ce.dominio = '$dominio'";
+					$sSQL .= "	AND ce.tipo_conta = '$tipo_conta'";
+					
+					$conta_email = $this->bd->obtemUnicoRegistro($sSQL);
+					$conta = array_merge($conta,$conta_email);
+					
+					$sSQL  = "SELECT ";
+					$sSQL .= "	mail_server, pop_host, smtp_host ";
+					$sSQL .= "FROM ";
+					$sSQL .= "	cftb_preferencias ";
+					
+					$server = $this->bd->obtemUnicoRegistro($sSQL);
+					
+					$this->tpl->atribui("quota",$conta["quota"]);
+					$this->tpl->atribui("server",$server);
+
+
+					break;
+
+				case 'H':
+					break;
+
+			}
+
 			$acao = @$_REQUEST["acao"];
-			
 			$senha = @$_REQUEST["senha"];
-			
-			
 			
 			if( $acao == "cad" ) {
 				// Processar
-
-				$id_nas = @$_REQUEST["id_nas"];
-				$id_pop = @$_REQUEST["id_pop"];
-				$status = @$_REQUEST["status"];
-
-				$mac    		= @$_REQUEST["mac"];
-				$upload_kbps	= @$_REQUEST["upload_kbps"];
-				$download_kbps  = @$_REQUEST["download_kbps"];
 				
-				$rede			= @$_REQUEST["rede"];
+				/********************************
+				 * Verificações                 *
+				 *******************************/
 				
-				$endereco_ip	= @$_REQUEST["endereco_ip"];
-				
-				$endereco_rede = "";
-				
-
-				$excluir = false;
-				$incluir = false;
-
-				$altstatus = false;
-
-				// VERDADES ABSOLUDAS DO ALÉM
-				// exclusão é sempre no nas antigo ($conta["id_nas"])
-				// inclusão é sempre no nas novo ($id_nas)
-				
-				
-				// SPOOL SE:
-				
-				// Alterar status
-				// Alterar mac
-				// Alterar banda
-				// Alterar endereco
-
-				$nas_atual = $this->obtemNas($conta["id_nas"]);
-				$nas_novo  = $this->obtemNas($id_nas);
-				
-				$rede = $conta["rede"];
-
-				if( $conta["mac"] != $mac || $conta["upload_kbps"] != $upload_kbps || $conta["download_kbps"] != $download_kbps ) {
-					$excluir = true;
-					$incluir = true;
-				}
-				
-				if( $altera_rede && $selecao_ip == "A" ) {
-					$endereco_rede = $this->obtemRede($id_nas);
-					$rede = $endereco_rede["rede"];
-					$excluir = true;
-					$incluir = true;
-				}
-				
-				if( $id_nas != $nas_orig ) {
+				switch ($tipo_conta) {
+					case 'D':
+						break;
 					
-					if( $nas_atual["tipo_nas"] == "I" ) {
-						$excluir = true;
-					} else {
-						$excluir = false;
-					}
-					
-					if( $nas_novo["tipo_nas"] == "I" ) {
-						$incluir = true;
-					} else {
-						$incluir = false;
-					}
-
-				}
-
-				if( $conta["status"] != $status ) {
-					if( $status != "A" ) {
-						$excluir = true;
-						$incluir = false;
-					} else {
-						$excluir = false;
-						$incluir = true;
-					}
-				}
 				
+					case 'BL':
+
+						$id_nas = @$_REQUEST["id_nas"];
+						$id_pop = @$_REQUEST["id_pop"];
+						$status = @$_REQUEST["status"];
+
+						$mac    		= @$_REQUEST["mac"];
+						$upload_kbps	= @$_REQUEST["upload_kbps"];
+						$download_kbps  = @$_REQUEST["download_kbps"];
+
+						$rede			= @$_REQUEST["rede"];
+
+						$endereco_ip	= @$_REQUEST["endereco_ip"];
+
+						$endereco_rede = "";
+
+
+						$excluir = false;
+						$incluir = false;
+
+						$altstatus = false;
+
+						// VERDADES ABSOLUDAS DO ALÉM
+						// exclusão é sempre no nas antigo ($conta["id_nas"])
+						// inclusão é sempre no nas novo ($id_nas)
+
+
+						// SPOOL SE:
+
+						// Alterar status
+						// Alterar mac
+						// Alterar banda
+						// Alterar endereco
+
+						$nas_atual = $this->obtemNas($conta["id_nas"]);
+						$nas_novo  = $this->obtemNas($id_nas);
+
+						$rede = $conta["rede"];
+
+						if( $conta["mac"] != $mac || $conta["upload_kbps"] != $upload_kbps || $conta["download_kbps"] != $download_kbps ) {
+							$excluir = true;
+							$incluir = true;
+						}
+
+						if( $altera_rede && $selecao_ip == "A" ) {
+							$endereco_rede = $this->obtemRede($id_nas);
+							$rede = $endereco_rede["rede"];
+							$excluir = true;
+							$incluir = true;
+						}
+
+						if( $id_nas != $nas_orig ) {
+
+							if( $nas_atual["tipo_nas"] == "I" ) {
+								$excluir = true;
+							} else {
+								$excluir = false;
+							}
+
+							if( $nas_novo["tipo_nas"] == "I" ) {
+								$incluir = true;
+							} else {
+								$incluir = false;
+							}
+
+						}
+
+						if( $conta["status"] != $status ) {
+							if( $status != "A" ) {
+								$excluir = true;
+								$incluir = false;
+							} else {
+								$excluir = false;
+								$incluir = true;
+							}
+						}
+
+						break;
+					case 'E':
+						break;
+
+					case 'H':
+						break;
+				
+				}
+
+
+				/********************************
+				 * PROCESSAMENTO                *
+				 * Se não houver erros	        *
+				 *******************************/
 				
 				if( !count($erros) ) {
-					// Excluir do 
-					if( $excluir ) {
-					//echo "<br>---EXCLUIR---<br>";
-						// Chamar função da spool para excluir baseado nos dados antigos ($conta)
-						//echo "<br>---EXCLUIR---|".$nas_atual["ip"]."|".$conta["id_conta"]."|".$conta["rede"]."|---<br>";
-						$this->spool->bandalargaExcluiRede($nas_atual["ip"],$conta["id_conta"],$conta["rede"]);
-					}
+				
+					switch($tipo_conta) {
+						case 'D':
+						
+							break;
 					
-					if( $incluir ) {
-					//echo "<br>---INCLUIR---|".$nas_novo["ip"]."|".$conta["id_conta"]."|".$rede."|".$mac,$upload_kbps."|".$download_kbps."|---<br>";
-						// Chamar função da spool para incluir baseado nos dados novos ($request)
-						$this->spool->bandalargaAdicionaRede($nas_novo["ip"],$conta["id_conta"],$rede,$mac,$upload_kbps,$download_kbps);
-					}
-					
-					// Faz o update nos dados em cntb_conta e cntb_conta_bandalarga
-					
-					$sSQL  = "UPDATE ";
-					$sSQL .= "   cntb_conta ";
-					$sSQL .= "SET ";
-					$sSQL .= "   status = '".$this->bd->escape($status)."' ";
-					if( $senha ) {
-						$sSQL .= "   , senha = '".$this->bd->escape($senha)."' ";
-						$sSQL .= "   , senha_cript = '".$this->criptSenha($senha)."' ";
-					}
+						case 'BL':
+				
+							// SPOOL
+							if( $excluir ) {
+								$this->spool->bandalargaExcluiRede($nas_atual["ip"],$conta["id_conta"],$conta["rede"]);
+							}
 
-					$sSQL .= "WHERE ";
-					$sSQL .= "   username = '".$this->bd->escape($username)."' ";
-					$sSQL .= "   AND dominio = '".$this->bd->escape($dominio)."' ";
-					$sSQL .= "   AND tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
-					$sSQL .= "";
-					
-					//echo "$sSQL;<br>\n";
-					
-					$this->bd->consulta($sSQL);
+							if( $incluir ) {
+								$id_conta = $conta["id_conta"];
+								$this->spool->bandalargaAdicionaRede($nas_novo["ip"],$id_conta,$rede,$mac,$upload_kbps,$download_kbps);
+							}
 
-					$sSQL  = "UPDATE ";
-					$sSQL .= "   cntb_conta_bandalarga ";
-					$sSQL .= "SET ";
-					
+							// Faz o update nos dados em cntb_conta e cntb_conta_bandalarga
 
-					$sSQL .= "   id_nas = '".$this->bd->escape($id_nas)."', ";
-					$sSQL .= "   id_pop = '".$this->bd->escape($id_pop)."', ";
-					$sSQL .= "   upload_kbps = '".$this->bd->escape($upload_kbps)."', ";
-					$sSQL .= "   download_kbps = '".$this->bd->escape($download_kbps)."', ";
-					$sSQL .= "   mac = '".$this->bd->escape($mac)."' ";
-					
-					if( $rede ) {
-						$sSQL .= ", ipaddr = null, ";
-						$sSQL .= "  rede = '".$rede."' ";
+							$sSQL  = "UPDATE ";
+							$sSQL .= "   cntb_conta ";
+							$sSQL .= "SET ";
+							$sSQL .= "   status = '".$this->bd->escape($status)."' ";
+							if( $senha ) {
+								$sSQL .= "   , senha = '".$this->bd->escape($senha)."' ";
+								$sSQL .= "   , senha_cript = '".$this->criptSenha($senha)."' ";
+							}
+
+							$sSQL .= "WHERE ";
+							$sSQL .= "   username = '".$this->bd->escape($username)."' ";
+							$sSQL .= "   AND dominio = '".$this->bd->escape($dominio)."' ";
+							$sSQL .= "   AND tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
+							$sSQL .= "";
+
+							//echo "$sSQL;<br>\n";
+
+							$this->bd->consulta($sSQL);
+
+							$sSQL  = "UPDATE ";
+							$sSQL .= "   cntb_conta_bandalarga ";
+							$sSQL .= "SET ";
+
+
+							$sSQL .= "   id_nas = '".$this->bd->escape($id_nas)."', ";
+							$sSQL .= "   id_pop = '".$this->bd->escape($id_pop)."', ";
+							$sSQL .= "   upload_kbps = '".$this->bd->escape($upload_kbps)."', ";
+							$sSQL .= "   download_kbps = '".$this->bd->escape($download_kbps)."', ";
+							$sSQL .= "   mac = '".$this->bd->escape($mac)."' ";
+
+							if( $rede ) {
+								$sSQL .= ", ipaddr = null, ";
+								$sSQL .= "  rede = '".$rede."' ";
+							}
+
+							$sSQL .= "WHERE ";
+							$sSQL .= "   username = '".$this->bd->escape($username)."' ";
+							$sSQL .= "   AND dominio = '".$this->bd->escape($dominio)."' ";
+							$sSQL .= "   AND tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
+							$sSQL .= "";
+
+							//echo "$sSQL;<br>\n";
+							$this->bd->consulta($sSQL);
+
+						break;
+						
+						case 'E':
+
+							$quota = @$_REQUEST["quota"];
+							$senha = @$_REQUEST["senha"];
+							$senha_cript = $this->criptSenha($senha);
+
+
+							$sSQL  = "UPDATE ";
+							$sSQL .= "	cntb_conta_email ";
+							$sSQL .= "SET ";
+							$sSQL .= "	quota = '$quota' ";
+							$sSQL .= "WHERE ";
+							$sSQL .= "	username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta'";
+
+							//echo "SQL1: $sSQL <br>\n";
+
+
+							$this->bd->consulta($sSQL);
+
+							$sSQL  = "UPDATE ";
+							$sSQL .= "	cntb_conta ";
+							$sSQL .= "SET ";
+							$sSQL .= "senha = '$senha', ";
+							$sSQL .= "senha_cript = '$senha_cript' ";
+							$sSQL .= "WHERE ";
+							$sSQL .= "username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta'";
+
+							//echo "SQL1: $sSQL <br>\n";
+
+							$this->bd->consulta($sSQL);
+
+
+							break;
+							
+						case 'H':
+						
+							break;
 					}
-
-					$sSQL .= "WHERE ";
-					$sSQL .= "   username = '".$this->bd->escape($username)."' ";
-					$sSQL .= "   AND dominio = '".$this->bd->escape($dominio)."' ";
-					$sSQL .= "   AND tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
-					$sSQL .= "";
-					
-					//echo "$sSQL;<br>\n";
-					$this->bd->consulta($sSQL);
 
 					// Exibe mensagem (joga pra msgredirect)
-						$this->tpl->atribui("mensagem","Conta Alterada com sucesso!");
-						$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=pesquisa");
-						$this->tpl->atribui("target","_top");
+					$this->tpl->atribui("mensagem","Conta Alterada com sucesso!");
+					$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=pesquisa");
+					$this->tpl->atribui("target","_top");
 
 								   
-						$this->arquivoTemplate = "msgredirect.html";
-
+					$this->arquivoTemplate = "msgredirect.html";
 
 					// Cai fora.
 					return;
 					
 					
-					
-					
-					
-					
 				}
 
-			   	
 
-
-					
 			   		$destino = $nas_status["ip"];
 			   		$id_conta = $status["id_conta"];
 			   		$rede = $status["rede"];
 			   		$mac = $status["mac"];
 			   		$banda_upload_kbps = $status["banda_upload_kbps"];
 			   		$banda_download_kbps = $status["banda_download_kbps"];
+			   		
 			   		
 			   		
 			   		
@@ -1524,7 +1621,7 @@ class VAClientes extends VirtexAdmin {
 						
 						$destino = $nas_status["ip"];						
 			   			
-			   			$this->spool->bandalargaAdicionaRede($destino,$id_conta,$rede,$mac,$banda_upload_kbps,$banda_download_kbps);
+			   			//$this->spool->bandalargaAdicionaRede($destino,$id_conta,$rede,$mac,$banda_upload_kbps,$banda_download_kbps);
 						
 			   			
 			   			
@@ -1548,11 +1645,7 @@ class VAClientes extends VirtexAdmin {
 			
 			
 			} else {
-				// Usar as variáveis que estão no banco.
-				//$this->tpl->atribui("conta",$conta);
 				while( list($nome,$valor)=each($conta) ){
-					//echo "$nome = $valor <br>\n";
-					//echo "$nome = $valor <br>\n";
 					$this->tpl->atribui($nome,$valor);
 				}
 			
@@ -1560,50 +1653,59 @@ class VAClientes extends VirtexAdmin {
 			
 			
 			
-			if( $tipo == "D" || $tipo == "H" ) {
+			if( $tipo_conta == "D" || $tipo_conta == "H" ) {
 				// Exibir mensagem de indisponivel
 				echo "indisponivel";
 				return;
 			}
 			
-			
 			// Trata o tipo de exibicao.
 			$pg = @$_REQUEST["pg"];
 			
 			if( $pg == "ficha" ) {
-				$nas = $this->obtemNas($conta["id_nas"]);
-				$pop = $this->obtemPop($conta["id_nas"]);
-				$this->tpl->atribui("nas",$nas);
-				$this->tpl->atribui("pop",$pop);
-				
 				$this->tpl->atribui("str_status",$_LS_ST_CONTA[ $conta["status"] ]);
 				
+				switch($tipo_conta) {
 				
-				
-				if( $nas["tipo_nas"] == "I" ) {
-				   $r = new RedeIP($endereco_ip);
-				   
-				   $gateway    = $r->minHost();
-				   $mascara    = $r->mascara();
-				   $ip_cliente = $r->maxHost();
-				   
-				   $this->tpl->atribui("ip_cliente",$ip_cliente);
-				   $this->tpl->atribui("gateway",$gateway);
-				   $this->tpl->atribui("mascara",$mascara);
-				
+					case 'D':
+						// Consulta específica de discado
+						break;
+
+					case 'BL':
+						// Consulta específica de banda larga
+						
+						$nas = $this->obtemNas($conta["id_nas"]);
+						$pop = $this->obtemPop($conta["id_nas"]);
+						$this->tpl->atribui("nas",$nas);
+						$this->tpl->atribui("pop",$pop);
+
+						if( $nas["tipo_nas"] == "I" ) {
+						   $r = new RedeIP($endereco_ip);
+
+						   $gateway    = $r->minHost();
+						   $mascara    = $r->mascara();
+						   $ip_cliente = $r->maxHost();
+
+						   $this->tpl->atribui("ip_cliente",$ip_cliente);
+						   $this->tpl->atribui("gateway",$gateway);
+						   $this->tpl->atribui("mascara",$mascara);
+						}
+						
+						break;
+						
+					case 'E':
+						// Consulta específica do e-mail
+						break;
+
+					case 'H':
+						// Consulta especifica da hospedagem
+						break;
 				}
-				
-				
-				
 				
 				$this->arquivoTemplate = "cliente_ficha.html";
 			} else {
 				$this->arquivoTemplate = "cliente_conta.html";
 			}
-			
-			
-			
-		
 
 		
 		} else if ($op == "helpdesk") {
@@ -1635,18 +1737,6 @@ class VAClientes extends VirtexAdmin {
 				$sSQL .= "WHERE ";
 				$sSQL .= "	id_conta = '". @$_REQUEST["$id_conta"] ."'";
 				
-				
-
-		
-
-		
-		
-		
-		
-		
-		
-		} else if ($op == "clientedisc"){
-			$this->arquivoTemplate = "cliente_discado.html";
 		} else if ($op == "clienteAdisc"){
 			$this->arquivoTemplate = "cliente_discado_altera.html";
 		} else if ($op == "clienteAmail"){
