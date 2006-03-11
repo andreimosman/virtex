@@ -90,6 +90,114 @@ class Spool {
 	}
 	
 	
+	function hospedagemAdicionaRede($server,$id_conta, $tipo_hospedagem,$username,$dominio_padrao,$dominio_hospedagem){
+	
+		if ($tipo_hospedagem == "U"){
+		
+			$parametros = "$tipo_hospedagem,$username,$dominio_padrao";
+		
+		} else if ($tipo_hospedagem == "D"){
+		
+			$parametros = "$tipo_hospedagem,$username,$dominio_hospedagem";
+		
+		}
+		
+		$sSQL  = "INSERT INTO ";
+		$sSQL .= "	sptb_spool ( ";
+		$sSQL .= "		registro, destino, tipo, op, id_conta, parametros, status ";
+		$sSQL .= ") VALUES ( ";
+		$sSQL .= "		now(). '$server', 'H', 'a', '$id_conta', '$parametros', 'A' ";
+		$sSQL .= ")";
+		
+		$this->bd->consulta($sSQL);
+		
+		
+		
+		
+		return;
+		
+	}
+
+	function hospedagemExcluiRede($server,$id_conta,$tipo_hospedagem,$username,$dominio_padrao,$dominio_hospedagem){
+	// INCOMPLETO !! //////////////////////////////////////	
+		if ($tipo_hospedagem == "U"){
+				
+			$parametros = "$tipo_hospedagem,$username,$dominio_padrao";// FALTA CNF ou CPL
+				
+		} else if ($tipo_hospedagem == "D"){
+				
+			$parametros = "$tipo_hospedagem,$username,$dominio_hospedagem";
+				
+		}
+
+		
+		$sSQL  = "INSERT INTO ";
+		$sSQL .= "	sptb_spool (";
+		$sSQL .= "		registro, destino, tipo, op, id_conta, parametros, status ";
+		$sSQL .= ") VALUES (";
+		$sSQL .= "		now(), '$server', 'x', '$id_conta', '$parametros', ''";
+		
+	}
+	
+	function configuraDNS ($destino, $tipo, $id_conta, $dominio){
+		
+		$sSQL  = "INSERT INTO ";
+		$sSQL .= "	sptb_spool (";
+		$sSQL .= "		registro, destino, tipo, op, id_conta, parametros, status ";
+		$sSQL .= ") VALUES (";
+		$sSQL .= "		now(), '$destino', '$tipo', 'a', '$id_conta', '$dominio, 'A' ";
+		$sSQL .= ")";
+		
+		$this->bd->consulta($sSQL);
+		
+		
+		return;
+		
+	
+	}
+	
+	
+	function adicionarEmail($server, $id_conta, $username, $dominio){
+	
+	
+		$parametros = "". $username ."@". $dominio ."";
+	
+		$sSQL  = "INSERT INTO ";
+		$sSQL .= "	sptb_spool (";
+		$sSQL .= "		registro, destino, tipo, op, id_conta, parametros, status ";
+		$sSQL .= ") VALUES (";
+		$sSQL .= "		now(), '$server', 'E', 'a', '$id_conta', '$parametros', 'A' ";
+		$sSQL .= ")";
+		
+		
+		$this->bd->consulta($sSQL);
+
+		return;	
+		
+	
+	}
+	
+	function excluirEmail($server, $id_conta, $username, $dominio){
+	
+	
+		$parametros = "". $username ."@". $dominio ."";
+	
+		$sSQL  = "INSERT INTO ";
+		$sSQL .= "	sptb_spool (";
+		$sSQL .= "		registro, destino, tipo, op, id_conta, parametros, status ";
+		$sSQL .= ") VALUES (";
+		$sSQL .= "		now(), '$server', 'E', 'x', '$id_conta', '$parametros', 'A' ";
+		$sSQL .= ")";
+		
+		
+		$this->bd->consulta($sSQL);
+
+		return;	
+		
+	
+	}	
+	
+	
 	
 
 }

@@ -103,15 +103,15 @@
 			{/if}
 			{ if $tipo_conta|trim == "E" }
 
-			<table width="450" border=0 bgcolor="#F1F1F1">
-			              <tr>
-			                <td colspan=2> <table width="100%" border="0" cellspacing="2" cellpadding="0">
-			                    <tr>
-			                      <td width="84%"><font face=arial size="+1" color="#000000"><b>Ficha
-			                        técnica</b></font> </td>
-			                      <td width="16%" align="center"> <p>&nbsp;</p></td>
-			                    </tr>
-			                  </table></td>
+						<table width="450" border=0 bgcolor="#F1F1F1">
+              <tr>
+                <td colspan=2> <table width="100%" border="0" cellspacing="2" cellpadding="0">
+                    <tr>
+                      <td width="84%"><font face=arial size="+1" color="#000000"><b>Ficha
+                        técnica</b></font> </td>
+                      <td width="16%" align="center"> <p>[<a href="{$smarty.server.PHP_SELF}?op=conta&id_cliente={$id_cliente}&username={$username}&dominio={$dominio}&tipo_conta={$tipo_conta}">alterar</a>]</p></td>
+                    </tr>
+                  </table></td>
 			              </tr>
 			              <tr>
 			                <td width="100" align="right" valign="middle" bgcolor="#FFFFFF">
@@ -143,6 +143,63 @@
             </table>
 							<p align="center"><a href="{$smarty.server.PHP_SELF}?op=produto&tipo={$tipo}&id_cliente={$id_cliente}&msg=">voltar</a></p>
 			{/if}
+
+			{ if $tipo_conta|trim == "H"}
+
+						<table width="450" border=0 bgcolor="#F1F1F1">
+              <tr>
+                <td colspan=2> <table width="100%" border="0" cellspacing="2" cellpadding="0">
+                    <tr>
+                      <td width="84%"><font face=arial size="+1" color="#000000"><b>Ficha
+                        técnica</b></font> </td>
+                      <td width="16%" align="center"> <p>[<a href="{$smarty.server.PHP_SELF}?op=conta&id_cliente={$id_cliente}&username={$username}&dominio={$dominio}&tipo_conta={$tipo_conta}">alterar</a>]</p></td>
+                    </tr>
+                  </table></td>
+						              </tr>
+						              <tr>
+						                <td width="100" align="right" valign="middle" bgcolor="#FFFFFF">
+						                  <p>Username:</p></td>
+						                <td width="400" colspan=2 bgcolor="#FFFFFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>{$username}</b></font></td>
+						              </tr>
+						              <tr>
+						                <td width="100" align="right" valign="middle" bgcolor="#FFFFFF">
+						                  <p>Dominio:</p></td>
+						                <td bgcolor="#FFFFFF" colspan=2 width="400"> <font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>www.{$dominio_hospedagem}</b>
+						                  </font></td>
+						              </tr>
+						              <tr>
+						                <td width="100" align="right" valign="middle" bgcolor="#FFFFFF"><p>FTP:</p></td>
+						                <td bgcolor="#FFFFFF" colspan=2><p>{if $tipo_hospedagem == "D"}ftp.{$dominio_hospedagem}{/if}{if $tipo_hospedagem != "D"}{$dominio_padrao}/{$username}{/if}</p></td>
+						              </tr>
+            </table>
+
+			{/if}
+
+{ if $tipo_conta|trim == "D"}
+
+						<table width="450" border=0 bgcolor="#F1F1F1">
+              <tr>
+                <td colspan=2> <table width="100%" border="0" cellspacing="2" cellpadding="0">
+                    <tr>
+                      <td width="84%"><font face=arial size="+1" color="#000000"><b>Ficha
+                        técnica</b></font> </td>
+                      <td width="16%" align="center"> <p>[<a href="{$smarty.server.PHP_SELF}?op=conta&id_cliente={$id_cliente}&username={$username}&dominio={$dominio}&tipo_conta={$tipo_conta}">alterar</a>]</p></td>
+                    </tr>
+                  </table>		</td>
+		</tr>
+		<tr>
+		<td width="100" align="right" valign="middle" bgcolor="#FFFFFF"><p>Username:</p></td>
+		<td width="400" colspan=2 bgcolor="#FFFFFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>{$username}</b></font></td>
+			</tr>
+		<tr>
+	<td width="100" align="right" valign="middle" bgcolor="#FFFFFF"><p>Foneinfo:</p></td>
+	<td bgcolor="#FFFFFF" colspan=2 width="400"> <font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>{$foneinfo}</b></font></td>
+	</tr>
+	</table>
+
+{/if}
+
+
 		</td>
 	</tr>
 </table>

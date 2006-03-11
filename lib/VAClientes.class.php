@@ -824,6 +824,13 @@ class VAClientes extends VirtexAdmin {
 							case 'H':
 								// PRODUTO HOSPEDAGEM
 								
+								//$sSQL  = "INSERT INTO ";
+								//$sSQL .= " cftb_contas_hospedagem ( ";
+								//$sSQL .= "";
+								
+								//SPOOL
+								$this->spool->hospedagemAdicionaRede($server,$id_conta,$tipo_hospedagem,$username,$dominio_padrao,$dominio_hospedagem);
+
 								break;
 
 						}
@@ -1270,6 +1277,24 @@ class VAClientes extends VirtexAdmin {
 			switch($tipo_conta) {
 			
 				case 'D':
+				
+					$sSQL  = "SELECT ";
+					$sSQL .= "	username, foneinfo ";
+					$sSQL .= "FROM ";
+					$sSQL .= "	cntb_conta_discado ";					
+					$sSQL .= "WHERE ";
+					$sSQL .= "   username = '".$this->bd->escape($username)."' ";
+					$sSQL .= "   AND dominio = '".$this->bd->escape($dominio)."' ";
+					$sSQL .= "   AND tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
+					
+					//echo "SQL: $sSQL <BR>";
+					
+					$dsc = $this->bd->obtemUnicoRegistro($sSQL);					
+					$conta = array_merge($conta,$dsc);
+
+				
+				
+				
 					break;
 				case 'BL':
 					$sSQL  = "SELECT ";
@@ -1347,7 +1372,7 @@ class VAClientes extends VirtexAdmin {
 					$conta = array_merge($conta,$conta_email);
 					
 					$sSQL  = "SELECT ";
-					$sSQL .= "	mail_server, pop_host, smtp_host ";
+					$sSQL .= "	* ";
 					$sSQL .= "FROM ";
 					$sSQL .= "	cftb_preferencias ";
 					
@@ -1360,6 +1385,29 @@ class VAClientes extends VirtexAdmin {
 					break;
 
 				case 'H':
+					$sSQL  = "SELECT ";
+					$sSQL .= "   username, dominio, tipo_conta, tipo_hospedagem, senha_cript, uid, gid, home, shell, dominio_hospedagem "; 
+					$sSQL .= "";
+					$sSQL .= "FROM ";
+					$sSQL .= "   cntb_conta_hospedagem ";
+					$sSQL .= "";
+					$sSQL .= "WHERE ";
+					$sSQL .= "   username = '".$this->bd->escape($username)."' ";
+					$sSQL .= "   AND dominio = '".$this->bd->escape($dominio)."' ";
+					$sSQL .= "   AND tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
+				
+					//echo "$sSQL;<br>\n";
+				
+				
+				
+					$hosp = $this->bd->obtemUnicoRegistro($sSQL);
+				
+					$conta = array_merge($conta,$hosp);
+					
+
+				
+				
+				
 					break;
 
 			}
@@ -1473,8 +1521,38 @@ class VAClientes extends VirtexAdmin {
 				
 				if( !count($erros) ) {
 				
+				$tipo_conta = trim(@$_REQUEST["tipo_conta"]);
+				
+				
 					switch($tipo_conta) {
 						case 'D':
+						
+							
+							$senha_cript = $this->criptSenha($senha);
+													
+														
+							$sSQL  = "UPDATE ";
+							$sSQL .= "	cntb_conta_discado ";
+							$sSQL .= "SET ";
+							$sSQL .= "	foneinfo = '".@$_REQUEST['foneinfo']."' ";
+							$sSQL .= "WHERE ";
+							$sSQL .= "	username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta'";
+							//echo "SQL: $sSQL <br>";
+													
+							$this->bd->consulta($sSQL);
+							
+							
+							$sSQL  = "UPDATE ";
+							$sSQL .= "	cntb_conta ";
+							$sSQL .= "SET ";
+							$sSQL .= "senha = '$senha', ";
+							$sSQL .= "senha_cript = '$senha_cript' ";
+							$sSQL .= "WHERE ";
+							$sSQL .= "username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta'";
+							//echo "SQL: $sSQL <br>";
+													
+							$this->bd->consulta($sSQL);
+
 						
 							break;
 					
@@ -1543,6 +1621,7 @@ class VAClientes extends VirtexAdmin {
 							$quota = @$_REQUEST["quota"];
 							$senha = @$_REQUEST["senha"];
 							$senha_cript = $this->criptSenha($senha);
+							$id_conta = $conta["id_conta"];
 
 
 							$sSQL  = "UPDATE ";
@@ -1568,11 +1647,45 @@ class VAClientes extends VirtexAdmin {
 							//echo "SQL1: $sSQL <br>\n";
 
 							$this->bd->consulta($sSQL);
+							
 
 
 							break;
 							
 						case 'H':
+							
+							$tipo_hospedagem = @$_REQUEST["tipo_hospedagem"];
+							$senha = @$_REQUEST["senha"];
+							$dominio_hospedagem = @$_REQUEST["dominio_hospedagem"];
+							$senha_cript = $this->criptSenha($senha);
+							$id_conta = $conta["id_conta"];
+							$server = $conta["mail_server"];
+							$dominio_padrao = $conta["dominio_padrao"];
+														
+							
+							$sSQL  = "UPDATE ";
+							$sSQL .= "	cntb_conta_hospedagem ";
+							$sSQL .= "SET ";
+							$sSQL .= "	dominio_hospedagem = '$dominio_hospedagem', ";
+							$sSQL .= "	senha_cript = '$senha_cript' ";
+							$sSQL .= "WHERE ";
+							$sSQL .= "	username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta'";
+							//echo "SQL: $sSQL <br>";
+						
+							$this->bd->consulta($sSQL);
+							
+							
+							$sSQL  = "UPDATE ";
+							$sSQL .= "	cntb_conta ";
+							$sSQL .= "SET ";
+							$sSQL .= "senha = '$senha', ";
+							$sSQL .= "senha_cript = '$senha_cript' ";
+							$sSQL .= "WHERE ";
+							$sSQL .= "username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta'";
+							//echo "SQL: $sSQL <br>";
+						
+							$this->bd->consulta($sSQL);
+
 						
 							break;
 					}
@@ -1655,8 +1768,8 @@ class VAClientes extends VirtexAdmin {
 			
 			if( $tipo_conta == "D" || $tipo_conta == "H" ) {
 				// Exibir mensagem de indisponivel
-				echo "indisponivel";
-				return;
+				//echo "indisponivel";
+				//return;
 			}
 			
 			// Trata o tipo de exibicao.
@@ -1699,6 +1812,10 @@ class VAClientes extends VirtexAdmin {
 
 					case 'H':
 						// Consulta especifica da hospedagem
+						
+						
+						
+						
 						break;
 				}
 				

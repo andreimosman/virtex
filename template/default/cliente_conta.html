@@ -272,12 +272,12 @@ function check(){
 
                           </script>
                           {/literal}
-                               <input type="hidden" name="op" value="{$op}">
+                               <input type="hidden" name="op" value="conta">
 						       <input type="hidden" name="id_cliente" value="{$id_cliente}">
 						  	   <input type="hidden" name="username" value="{$username}">
 						       <input type="hidden" name="dominio" value="{$dominio}">
 						       <input type="hidden" name="tipo_conta" value="{$tipo_conta}">
-						       <input type="hidden" name="acao" value="alt">
+						       <input type="hidden" name="acao" value="cad">
 							  <table align="center">
 								<tr>
 									<td align="center" valign="middle"><strong><font face="arial" size="4" color="black">E-Mail</font></strong></td>
@@ -316,16 +316,184 @@ function check(){
 						                </tr>
             			  </table>
             			  <br>
-							<p align="center"><a href="{$smarty.server.PHP_SELF}?op=produto&tipo={$tipo}&id_cliente={$id_cliente}&msg=">voltar</a></p>
                           {/if}
+                          {if $tipo_conta|trim == "H"}
+
+                          {literal}
+                          <script>
+                          function check(){
+						  			csenha=document.frmConta.senha.value;
+						  			cconfsenha=document.frmConta.conf_senha.value;
+
+						  			msg="";
+						  			erro=0;
+
+
+						  			if (csenha != cconfsenha || csenha == "" || cconfsenha == "") {
+						  				msg = msg + "Os campos Senha e Confirmação devem conter o mesmo conteúdo.\n";
+						  				erro = 1;
+						  			}
+						  			if (erro == 1){
+						  				alert(msg);
+						  				return false;
+						  			}
+
+						  	return true;
+
+						  }
+
+                          </script>
+                          {/literal}
+
+                               <input type="hidden" name="op" value="conta">
+						       <input type="hidden" name="id_cliente" value="{$id_cliente}">
+						  	   <input type="hidden" name="username" value="{$username}">
+						       <input type="hidden" name="dominio" value="{$dominio}">
+						       <input type="hidden" name="tipo_conta" value="{$tipo_conta}">
+						       <input type="hidden" name="acao" value="cad">
+						       <input type="hidden" name="tipo_hospedagem" value="{$tipo_hospedagem}">
+						       <input type="hidden" name="dominio_hospedagem" value="{$dominio_hospedagem}">
+
+							  <table align="center">
+								<tr>
+									<td align="center" valign="middle"><strong><font face="arial" size="4" color="black">Hospedagem</font></strong></td>
+								</tr>
+							  </table>
+
+                          <table width="450" border=0 bgcolor="#F1F1F1" align="center">
+						                <tr>
+						                  <td colspan=2><h2><font color="#000000">Dados da Conta</font></h2></td>
+						                </tr>
+						                <tr>
+						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+						  					<p>Username:</p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p><input type="text" maxlength="30" name="user" disabled="true" value="{$username}"></p></td>
+						                </tr>
+						                <tr>
+						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+						  					<p>Senha:</p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="senha" id="senha">
+						                  </td>
+						                </tr>
+						                <tr>
+						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+						  					<p>Confirme:</p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="conf_senha" id="conf_senha">
+						                  </td>
+						                </tr>
+						                <tr>
+						                  <td width="50" align="right" valign="top" bgcolor="#FFFFFF">
+						  					<p>Dominio:</p></td>
+
+						                <td bgcolor="#FFFFFF" colspan=2> <p>{if $tipo_hospedagem == "D"}www.{$dominio_hospedagem}{/if}{if $tipo_hospedagem != "D"}{$dominio_padrao}/{$username}{/if}</p></td>
+						                </tr>
+						                	<tr>
+												<td width="50" align="right" valign="top" bgcolor="#FFFFFF">
+												<p>FTP:</p></td>
+												<td bgcolor="#FFFFFF" colspan=2><p> {if $tipo_hospedagem == "D"}ftp.{$dominio_hospedagem}{/if}{if $tipo_hospedagem != "D"}ftp.{$dominio_padrao}{/if}</p></td>
+						                	</tr>
+						                <tr>
+						                <td colspan=2 align="center"><input type="submit" name="Submit" value="Alterar >>"></td>
+						                </tr>
+            			  </table>
+            			  <br>
+                          {/if}
+
+                          {if $tipo_conta|trim == "D"}
+
+                          {literal}
+                          <script>
+                          function check(){
+						  			csenha=document.frmConta.senha.value;
+						  			cconfsenha=document.frmConta.conf_senha.value;
+
+						  			msg="";
+						  			erro=0;
+
+
+						  			if (csenha != cconfsenha || csenha == "" || cconfsenha == "") {
+						  				msg = msg + "Os campos Senha e Confirmação devem conter o mesmo conteúdo.\n";
+						  				erro = 1;
+						  			}
+						  			if (erro == 1){
+						  				alert(msg);
+						  				return false;
+						  			}
+
+						  	return true;
+
+						  }
+
+                          </script>
+                          {/literal}
+
+                               <input type="hidden" name="op" value="conta">
+						       <input type="hidden" name="id_cliente" value="{$id_cliente}">
+						  	   <input type="hidden" name="username" value="{$username}">
+						       <input type="hidden" name="dominio" value="{$dominio}">
+						       <input type="hidden" name="tipo_conta" value="{$tipo_conta}">
+						       <input type="hidden" name="acao" value="cad">
+
+							  <table align="center">
+								<tr>
+									<td align="center" valign="middle"><strong><font face="arial" size="4" color="black">Discado</font></strong></td>
+								</tr>
+							  </table>
+
+                          <table width="450" border=0 bgcolor="#F1F1F1" align="center">
+						                <tr>
+						                  <td colspan=2><h2><font color="#000000">Dados da Conta</font></h2></td>
+						                </tr>
+						                <tr>
+						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+						  					<p>Username:</p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p><input type="text" maxlength="30" name="user" disabled="true" value="{$username}"></p></td>
+						                </tr>
+						                <tr>
+						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+						  					<p>Senha:</p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="senha" id="senha">
+						                  </td>
+						                </tr>
+						                <tr>
+						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+						  					<p>Confirme:</p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="conf_senha" id="conf_senha">
+						                  </td>
+						                </tr>
+						                <tr>
+						                  <td width="50" align="right" valign="top" bgcolor="#FFFFFF">
+						  					<p>Status:</p></td>
+
+						                <td bgcolor="#FFFFFF" colspan=2>
+						                	<SELECT name='status'>
+											{foreach key=id item=nome from=$lista_status}
+											<OPTION VALUE='{$id}'  {if $id == $status}SELECTED{/if} >{$nome}</OPTION>
+											{/foreach}
+											</SELECT>
+
+						                </td>
+						                </tr>
+						                	<tr>
+												<td width="50" align="right" valign="top" bgcolor="#FFFFFF">
+												<p>Telefone:</p></td>
+												<td bgcolor="#FFFFFF" colspan=2><input type="text" name="foneinfo" value="{$foneinfo}"></td>
+						                	</tr>
+						                <tr>
+						                <td colspan=2 align="center"><input type="submit" name="Submit" value="Alterar >>"></td>
+						                </tr>
+            			  </table>
+            			  <br>
+                          {/if}
+
                         </form>
 
-{if $tipo_conta == "BL"}
+
 <br>
 						<p align="center"><a href="{$smarty.server.PHP_SELF}?op=produto&tipo={$tipo}&id_cliente={$id_cliente}">voltar</a></p>
 
 
-
+{if $tipo_conta == "BL"}
 
 { literal }
 <script language="JavaScript">
