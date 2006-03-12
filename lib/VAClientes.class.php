@@ -581,8 +581,9 @@ class VAClientes extends VirtexAdmin {
 			$erros = array();
 
 			
-			if( !$rotina ) $rotina = "contratar";
-			
+			if( !$rotina ){ 
+			$rotina = "contratar";
+			}
 			if( $rotina == "resumo" ) {
 
 				$this->arquivoTemplate = "cliente_cobranca_resumo.html";
@@ -621,7 +622,7 @@ class VAClientes extends VirtexAdmin {
 
 					if(@$lista_user["username"]){
 						// ver como processar 
-						$erros[] = "Já existe outra conta cadastrada com esse usermane";
+						$erros[] = "Já existe outra conta cadastrada com esse username";
 					}
 					
 					// Se nao tiver erros faz o cadastro
@@ -646,7 +647,32 @@ class VAClientes extends VirtexAdmin {
 						//	echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
 						//	echo "SQL: $sSQL <br>\n";
 						//}
+						
+						$username = @$_REQUEST["username"];
+						$dominio = @$_REQUEST["dominio"];
+						$tipo_conta = @$_REQUEST["tipo_conta"];
+						$dominio_hospedagem = @$_REQUEST["dominio_hospedagem"];
+						
+						
+						//$sSQL  = "SELECT * from cntb_contas where username = '$username', dominio = '$dominio', tipo_conta = '$tipo_conta'";
+						//$prep = $this->bd->obtemUnicoRegistro($sSQL);
+
 								
+								
+//*HUGO					
+						//$erros2 = array();
+						//if (count($prep)){
+						//	$erros2 = "Já existe um usuario com este dominio neste tipo de conta cadastrado. Por favor cadastre um novo usuario";
+															
+						//	$this->tpl->atribui("username", $username);
+						//	$this->tpl->atribui("dominio_hospedagem",$dominio_hospedagem);
+						//	$this->tpl->atribui("mensagem", $erros2);
+						//	$this->tpl->atribui("url","clientes.php?op=pesquisa");
+						//	$this->arquivoTemplate = "msgredirect.html";
+						//	return;
+						//}
+//-*HUGO
+
 						$senhaCr = $this->criptSenha($this->bd->escape(trim(@$_REQUEST["senha"])));
 						
 						$id_conta = $this->bd->proximoID("cnsq_id_conta");
@@ -673,6 +699,22 @@ class VAClientes extends VirtexAdmin {
 						
 						
 						if ($email_igual == "1"){
+//*HUGO							
+							$sSQL  = "SELECT * from cftb_preferencias where id_provedor = '1'";
+							$prefs = $this->bd->obtemUnicoRegistro($sSQL);
+
+							
+							if (count($prep)){
+								$erros2 = "Já existe um usuario com este dominio neste tipo de conta cadastrado. Por favor cadastre um novo usuario";
+							
+								$this->tpl->atribui("username", $username);
+								$this->tpl->atribui("dominio_hospedagem",$dominio_hospedagem);
+								$this->tpl->atribui("mensagem", $erros2);
+								$this->tpl->atribui("url","clientes.php?op=pesquisa");
+								$this->arquivoTemplate = "msgredirect.html";
+								return;
+							}
+//-*HUGO
 						
 							$id_conta = $this->bd->proximoID("cnsq_id_conta");
 							
@@ -730,10 +772,34 @@ class VAClientes extends VirtexAdmin {
 						
 						$tipo = @$_REQUEST["tipo"];
 						
+						//PEGA CAMPOS COMUNS EM cftb_preferencias
+						
+						$sSQL  = "SELECT * from cftb_preferencias where id_provedor = '1'";
+						$prefs = $this->bd->obtemUnicoRegistro($sSQL);
+						
+						
 						switch($tipo) {
 							case 'D':
-								// PRODUTO DISCADO
-								break;	
+								
+								$username = @$_REQUEST["username"];
+								$tipo_conta = @$_REQUEST["tipo"];
+								$dominio = $prefs["dominio_padrao"];
+								$foneinfo = @$_REQUEST["foneinfo"];
+								
+								$sSQL  = "INSERT INTO ";
+								$sSQL .= "cntb_conta_discado ";
+								$sSQL .= "( ";
+								$sSQL .= "username, tipo_conta, dominio, foneinfo ";
+								$sSQL .= ")VALUES ( ";
+								$sSQL .= "'$username', '$tipo_conta', '$dominio', '$foneinfo' )";
+								
+								echo "SQL DISCADO: $sSQL <br>\n";
+								
+								$this->bd->consulta($sSQL);
+								
+								$this->tpl->atribui("foneinfo",$foneinfo);
+								
+							break;	
 							case 'BL':
 								// PRODUTO BANDA LARGA
 								$tipo_de_ip = $this->bd->escape(trim(@$_REQUEST["selecao_ip"]));
@@ -823,67 +889,100 @@ class VAClientes extends VirtexAdmin {
 								
 							case 'H':
 								// PRODUTO HOSPEDAGEM
+//*HUGO								
+								//ECHO "BOSTA";
+								$sSQL  = "SELECT * from cftb_preferencias where id_provedor = '1'";
+								$prefs = $this->bd->obtemUnicoRegistro($sSQL);
 								
-								//$sSQL  = "INSERT INTO ";
-								//$sSQL .= " cftb_contas_hospedagem ( ";
-								//$sSQL .= "";
 								
-								//SPOOL
-								$this->spool->hospedagemAdicionaRede($server,$id_conta,$tipo_hospedagem,$username,$dominio_padrao,$dominio_hospedagem);
+						
+								$username = @$_REQUEST["username"];
+								$tipo_conta = @$_REQUEST["tipo"];
+								$dominio = $prefs["dominio_padrao"];
+								$tipo_hospedagem = @$_REQUEST["tipo_hospedagem"];
+								$senha_cript = $this->criptSenha(@$_REQUEST["senha"]);
+								$uid = $prefs["hosp_uid"];
+								$gid = $prefs["hosp_gid"];
+								$home = $prefs["hosp_base"];
+								$shell = "/bin/false";
+								$dominio_hospedagem = @$_REQUEST["dominio_hospedagem"];
+								$server = $prefs["hosp_server"];
+								
+								$sSQL  = "select * from cntb_conta where username = $username AND tipo_conta = $tipo_conta AND dominio = $dominio";
+								$prep = $this->bd->obtemRegistros($sSQL);
+								
 
+
+								
+								
+								//if (!count($erros2)){
+									$sSQL  = "INSERT INTO ";
+									$sSQL .= " cntb_conta_hospedagem ( ";
+									$sSQL .= "		username, tipo_conta, dominio, tipo_hospedagem, senha_cript, uid, gid, home, shell, dominio_hospedagem ";
+									$sSQL .= ") VALUES ( ";
+									$sSQL .= " 		'$username', '$tipo_conta', '$dominio', '$tipo_hospedagem', '$senha_cript', '$uid', '$gid', '$home', '$shell', '$dominio_hospedagem' ";
+									$sSQL .= ") ";
+
+									$this->bd->consulta($sSQL);
+									//echo "QUERY INSERÇÃO: $sSQL <BR>\n";
+
+
+
+									//SPOOL
+									$this->spool->hospedagemAdicionaRede($server,$id_conta,$tipo_hospedagem,$username,$dominio,$dominio_hospedagem);
+								//}
+//*-HUGO								
 								break;
 
 						}
 						
 						
 						
+						if ($tipo && $tipo == "BL"){
 						
-						// Envia instrucao pra spool
-						if ($nas["tipo_nas"] == "I"){
-						
-							$id_nas = $_REQUEST["id_nas"];
-							$banda_upload_kbps = $bandaUp_dow["banda_upload_kbps"];
-							$banda_download_kbps = $bandaUp_dow["banda_download_kbps"];
-							$rede = $rede_disponivel["rede"];
-							$mac = $_REQUEST["mac"];
-							
-							$sSQL  = "SELECT ";
-							$sSQL .= "   id_nas, nome, ip, tipo_nas ";
-							$sSQL .= "FROM ";
-							$sSQL .= "   cftb_nas ";
-							$sSQL .= "WHERE ";
-							$sSQL .= "   id_nas = '$id_nas'";
-							//echo "SQL : " . $sSQL . "<br>\n";
-							
-							$nas = $this->bd->obtemUnicoRegistro($sSQL);
-							$this->tpl->atribui("n",$nas);
-							$this->tpl->atribui("tipo_nas",$nas["tipo_nas"]);
+						//echo $tipo;
+							// Envia instrucao pra spool
+							if ($nas && $nas["tipo_nas"] == "I"){
 
-							$r =new RedeIP($rede);
-							$ip_gateway = $r->minHost();
-							$ip_cliente	= $r->maxHost(); // TODO: ObtemProximoIP();
-							$mascara    = $r->mascara();
-							
-							$this->tpl->atribui("ip_gateway",$ip_gateway);
-							$this->tpl->atribui("mascara",$mascara);
-							$this->tpl->atribui("ip_cliente",$ip_cliente);
-							
-							
-							$this->tpl->atribui("tipo",$tipo);
-							$destino = $nas['ip'];	
-							
-							//ECHO "BOSTA'";
-							$this->spool->bandalargaAdicionaRede($destino,$id_conta,$rede,$mac,$banda_upload_kbps,$banda_download_kbps);
-							
-							
-							
-							
-							
-							
-							
+								$id_nas = $_REQUEST["id_nas"];
+								$banda_upload_kbps = $bandaUp_dow["banda_upload_kbps"];
+								$banda_download_kbps = $bandaUp_dow["banda_download_kbps"];
+								$rede = $rede_disponivel["rede"];
+								$mac = $_REQUEST["mac"];
+
+								$sSQL  = "SELECT ";
+								$sSQL .= "   id_nas, nome, ip, tipo_nas ";
+								$sSQL .= "FROM ";
+								$sSQL .= "   cftb_nas ";
+								$sSQL .= "WHERE ";
+								$sSQL .= "   id_nas = '$id_nas'";
+								//echo "SQL : " . $sSQL . "<br>\n";
+
+								$nas = $this->bd->obtemUnicoRegistro($sSQL);
+								$this->tpl->atribui("n",$nas);
+								$this->tpl->atribui("tipo_nas",$nas["tipo_nas"]);
+
+								$r =new RedeIP($rede);
+								$ip_gateway = $r->minHost();
+								$ip_cliente	= $r->maxHost(); // TODO: ObtemProximoIP();
+								$mascara    = $r->mascara();
+
+								$this->tpl->atribui("ip_gateway",$ip_gateway);
+								$this->tpl->atribui("mascara",$mascara);
+								$this->tpl->atribui("ip_cliente",$ip_cliente);
+
+
+								$this->tpl->atribui("tipo",$tipo);
+								$destino = $nas['ip'];	
+
+								//ECHO "BOSTA'";
+								$username = @$_REQUEST["username"];
+								$this->spool->bandalargaAdicionaRede($destino,$id_conta,$rede,$mac,$banda_upload_kbps,$banda_download_kbps,$username);
+
+
+
+							}
 						
-							
-						}
 							// LISTA DE POPS
 							$sSQL  = "SELECT ";
 							$sSQL .= "   id_pop, nome ";
@@ -894,7 +993,7 @@ class VAClientes extends VirtexAdmin {
 						
 							$lista_pops = $this->bd->obtemUnicoRegistro($sSQL);
 							
-							
+						}
 							
 							
 
@@ -902,10 +1001,12 @@ class VAClientes extends VirtexAdmin {
 						// Joga a mensagem de produto contratado com sucesso.
 						$this->tpl->atribui("username",@$_REQUEST["username"]);
 						//$this->tpl->atribui("tipo_produto",$tipo_produto);
-						$this->tpl->atribui("pop",$lista_pops["nome"]);
-						$this->tpl->atribui("nas",$nas["nome"]);
-						$this->tpl->atribui("mac",$_MAC);
-						$this->tpl->atribui("ip",$ip_disp);
+						$this->tpl->atribui("pop",@$lista_pops["nome"]);
+						$this->tpl->atribui("nas",@$nas["nome"]);
+						$this->tpl->atribui("mac",@$_MAC);
+						$this->tpl->atribui("ip",@$ip_disp);
+						$this->tpl->atribui("dominio",$prefs["dominio_padrao"]);
+						$this->tpl->atribui("dominio_hospedagem",@$dominio_hospedagem);
 						
 						
 						
@@ -1025,7 +1126,7 @@ class VAClientes extends VirtexAdmin {
 					
 					
 					
-					$this->tpl->atribui("lista_nas",$lista_nas);
+					$this->tpl->atribui("lista_nas",@$lista_nas);
 					
 					
 					$this->tpl->atribui("msg",@$_REQUEST["msg"]);
@@ -1039,11 +1140,6 @@ class VAClientes extends VirtexAdmin {
 					$this->tpl->atribui("mac",@$_REQUEST["mac"]);
 					
 					$this->tpl->atribui("id_produto",@$_REQUEST["id_produto"]);
-					//$this->tpl->atribui("",@$_REQUEST[""]);
-					//$this->tpl->atribui("",@$_REQUEST[""]);
-					//$this->tpl->atribui("",@$_REQUEST[""]);
-					//$this->tpl->atribui("",@$_REQUEST[""]);
-					//$this->tpl->atribui("",@$_REQUEST[""]);
 
 				}
 
@@ -1565,7 +1661,7 @@ class VAClientes extends VirtexAdmin {
 
 							if( $incluir ) {
 								$id_conta = $conta["id_conta"];
-								$this->spool->bandalargaAdicionaRede($nas_novo["ip"],$id_conta,$rede,$mac,$upload_kbps,$download_kbps);
+								$this->spool->bandalargaAdicionaRede($nas_novo["ip"],$id_conta,$rede,$mac,$upload_kbps,$download_kbps,$username);
 							}
 
 							// Faz o update nos dados em cntb_conta e cntb_conta_bandalarga

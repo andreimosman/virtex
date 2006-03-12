@@ -162,6 +162,11 @@ function verificaTipoRede() {
    frm.endereco_ip.disabled = frmContratacao.selecao_ip.value == "A";
 }
 
+function verificaTipoHosp() {
+   frm = document.frmContratacao;
+   frm.dominio_hospedagem.disabled = frmContratacao.tipo_hospedagem.value == "U";
+}
+
 
 {/literal}
 

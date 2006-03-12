@@ -46,11 +46,11 @@ class Spool {
 	
 	
 	
-	function bandalargaAdicionaRede($destino,$id_conta,$rede,$mac,$banda_upload_kbps,$banda_download_kbps){
+	function bandalargaAdicionaRede($destino,$id_conta,$rede,$mac,$banda_upload_kbps,$banda_download_kbps,$username){
 		// Insere em sptb_spool instruções para incluir um cliente de bandalarga
 		
 		
-		$parametros = "$rede,$mac,$banda_upload_kbps,$banda_download_kbps";
+		$parametros = "$rede,$mac,$banda_upload_kbps,$banda_download_kbps,$username";
 		
 		$sSQL  = "INSERT INTO ";
 		$sSQL .= "sptb_spool ( ";
@@ -90,11 +90,11 @@ class Spool {
 	}
 	
 	
-	function hospedagemAdicionaRede($server,$id_conta, $tipo_hospedagem,$username,$dominio_padrao,$dominio_hospedagem){
+	function hospedagemAdicionaRede($server,$id_conta, $tipo_hospedagem,$username,$dominio,$dominio_hospedagem){
 	
 		if ($tipo_hospedagem == "U"){
 		
-			$parametros = "$tipo_hospedagem,$username,$dominio_padrao";
+			$parametros = "$tipo_hospedagem,$username,$dominio";
 		
 		} else if ($tipo_hospedagem == "D"){
 		
@@ -106,8 +106,10 @@ class Spool {
 		$sSQL .= "	sptb_spool ( ";
 		$sSQL .= "		registro, destino, tipo, op, id_conta, parametros, status ";
 		$sSQL .= ") VALUES ( ";
-		$sSQL .= "		now(). '$server', 'H', 'a', '$id_conta', '$parametros', 'A' ";
+		$sSQL .= "		now(), '$server', 'H', 'a', '$id_conta', '$parametros', 'A' ";
 		$sSQL .= ")";
+		
+		//echo "QUERY SPOOL :  $sSQL <br>\n";
 		
 		$this->bd->consulta($sSQL);
 		
