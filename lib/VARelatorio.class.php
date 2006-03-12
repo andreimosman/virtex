@@ -159,7 +159,68 @@ class VARelatorio extends VirtexAdmin {
 			case 'carga_ap':
 			
 				$tipo = "AP";
+				break;
+
+			case 'carga_pop':
 			
+				$tipo = "POP";
+				break;
+				
+			case 'carga_nas':
+				$tipo = "NAS";
+			
+				break;
+				
+		}
+		
+		
+		//$carga = $this->bd->obtemRegistros($sSQL);
+		$carga = $this->obtemCarga($tipo);
+
+		$bgcolor1="#FFFFFF";
+		$bgcolor2="#F1F1F1";
+		$bgcolor=$bgcolor1;
+
+		for($x=0;$x<count($carga);$x++) {
+			$carga[$x]["carga_up"] = $carga[$x]["carga_up"] ? $carga[$x]["carga_up"] : "-";
+			$carga[$x]["carga_down"] = $carga[$x]["carga_down"] ? $carga[$x]["carga_down"] : "-";
+			$carga[$x]["bgcolor"] = $bgcolor;
+			$bgcolor = $bgcolor == $bgcolor1 ? $bgcolor2 : $bgcolor1;
+		}
+		
+		$this->tpl->atribui("tipo",$tipo);
+		$this->tpl->atribui("carga",$carga);
+
+		$this->arquivoTemplate = "relatorio_config_carga.html";
+
+	} else if ($op == "grafico"){
+		$this->tpl->atribui("grop",@$_REQUEST["grop"]); 	// OP enviada para o gráfico
+		$this->tpl->atribui("tipo",@$_REQUEST["tipo"]); 	// Tipo do gráfico
+		$this->tpl->atribui("rl",@$_REQUEST["rl"]);		// Parametro extra e relatório
+
+		$this->arquivoTemplate = "relatorio_grafico.html";
+
+
+	}	
+	
+}
+
+	public function __destruct() {
+			parent::__destruct();
+	}
+
+
+	/**
+	 * Métodos também usada nos gráficos
+	 */
+	 
+    public function obtemCarga($tipo) {
+    
+        $sSQL = "";
+    
+		switch(strtolower($tipo)) {
+			
+			case 'ap':
 				$sSQL  = "SELECT ";
 				$sSQL .= "   p.id_pop,p.nome, ";
 				$sSQL .= "   CASE WHEN ";
@@ -200,13 +261,9 @@ class VARelatorio extends VirtexAdmin {
 				$sSQL .= "   p.tipo = 'AP' ";
 				$sSQL .= "ORDER BY ";
 				$sSQL .= "   p.nome ";
-				
 				break;
 
-			case 'carga_pop':
-			
-				$tipo = "POP";
-			
+			case 'pop':
 				$sSQL  = "SELECT ";
 				$sSQL .= "   p.id_pop,p.nome, ";
 				$sSQL .= "   CASE WHEN ";
@@ -235,9 +292,7 @@ class VARelatorio extends VirtexAdmin {
 
 				break;
 				
-			case 'carga_nas':
-				$tipo = "NAS";
-
+			case 'nas':
 				$sSQL  = "SELECT ";
 				$sSQL .= "   nas.id_nas,nas.nome, ";
 				$sSQL .= "   CASE WHEN ";
@@ -268,35 +323,9 @@ class VARelatorio extends VirtexAdmin {
 				
 		}
 		
-		
-		$carga = $this->bd->obtemRegistros($sSQL);
-		$bgcolor1="#FFFFFF";
-		$bgcolor2="#F1F1F1";
-		$bgcolor=$bgcolor1;
-
-		for($x=0;$x<count($carga);$x++) {
-			$carga[$x]["carga_up"] = $carga[$x]["carga_up"] ? $carga[$x]["carga_up"] : "-";
-			$carga[$x]["carga_down"] = $carga[$x]["carga_down"] ? $carga[$x]["carga_down"] : "-";
-			$carga[$x]["bgcolor"] = $bgcolor;
-			$bgcolor = $bgcolor == $bgcolor1 ? $bgcolor2 : $bgcolor1;
-		}
-		
-		$this->tpl->atribui("tipo",$tipo);
-		$this->tpl->atribui("carga",$carga);
-
-		$this->arquivoTemplate = "relatorio_config_carga.html";
-
-	} else if ($op == "pop"){
-		$this->arquivoTemplate = "relatorio_pop.html";
-	} else if ($op == "nas"){
-		$this->arquivoTemplate = "relatorio_nas.html";
-	}	
-	
-}
-
-public function __destruct() {
-      	parent::__destruct();
-}
+		return $sSQL ? $this->bd->obtemRegistros($sSQL) : array();
+    
+    }
 
 
 

@@ -4,7 +4,6 @@
 
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
 </head>
-
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
@@ -25,10 +24,10 @@
                       <td colspan=3  align="center"><h2>CARGA</h2></td>
                     </tr>
                     <tr bgcolor="#FAFAFA">
-                      <td width=290 align="center"><h2>..nome..</h2></td>
-                      <td width=100 align="center"><h2>..clientes..</h2></td>
-                      <td width=170 align="center"><h2>..up (kbps)..</h2></td>
-                      <td width=170 align="center"><h2>..down (kbps)..</h2></td>
+                      <td width=290 valign="top" align="center"><p><b>..nome..</b></p></td>
+                      <td width=100 valign="top" align="center"><p><b>..clientes..</b></p></td>
+                      <td width=170 valign="top" align="center"><p><b>..up (kbps)..</b><br>[<a href="{$smarty.server.PHP_SELF}?op=grafico&grop=carga&tipo={$tipo}&rl=u">gráfico</a>]</p></td>
+                      <td width=170 valign="top" align="center"><p><b>..down (kbps)..</b>[<a href="{$smarty.server.PHP_SELF}?op=grafico&grop=carga&tipo={$tipo}&rl=d">gráfico</a>]</p></td>
                     </tr>
                     <tr>
                       <td colspan=4 bgcolor="000000"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></td>

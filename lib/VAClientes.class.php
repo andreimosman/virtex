@@ -401,16 +401,18 @@ class VAClientes extends VirtexAdmin {
 			$this->arquivoTemplate = "clientes_cadastro.html";
 			
 		} else if ( $op == "pesquisa" ){
-		
-				 $texto_pesquisa = @$_REQUEST['texto_pesquisa'];
-				 $tipo_pesquisa = @$_REQUEST['tipo_pesquisa'];
-				 $a = @$_REQUEST['a'];
-				 $this->arquivoTemplate = "clientes_pesquisa.html";
-				 
-				 $texto_pesquisa = trim($texto_pesquisa);
-				 
-				 
-				 $where = "";
+
+				$erros = array();
+
+				$texto_pesquisa = @$_REQUEST['texto_pesquisa'];
+				$tipo_pesquisa = @$_REQUEST['tipo_pesquisa'];
+				$a = @$_REQUEST['a'];
+				$this->arquivoTemplate = "clientes_pesquisa.html";
+
+				$texto_pesquisa = trim($texto_pesquisa);
+
+
+				$where = "";
 
 
 				if(!$tipo_pesquisa){
@@ -458,7 +460,7 @@ class VAClientes extends VirtexAdmin {
 						$clientes = $this->bd->obtemRegistros($sSQL);
 
 											
-					}else if ($tipo_pesquisa == "CONTA" || $tipo_pesquisa == "EMAIL"){
+					} else if ($tipo_pesquisa == "CONTA" || $tipo_pesquisa == "EMAIL"){
 					
 						if( $tipo_pesquisa == "CONTA" ) {
 							$tp = "CONTA";
@@ -469,65 +471,85 @@ class VAClientes extends VirtexAdmin {
 						               
 						    if( preg_match( '/([0-9]\.){1,3}[0-9]{1,3}(\/[0-9]{1,2})*$/', $texto_pesquisa ) ) {
 						    	$tp = "IP";
+						    	
+						    	@list($endIP,$bitsREDE) = explode("/",$texto_pesquisa);
+						    	
+						    	$qr = $bitsREDE ? $texto_pesquisa : $r = $endIP . "/24";
+						    	$r = new RedeIP($qr);
+
+						    	if( ! $r->isValid() ) {
+						    	   $erros[] = "O endereço IP entrado não é válido.";
+						    	} else {
+						    	   if( $bitsREDE ) { 
+						    	      $texto_pesquisa = $r->obtemRede() . "/" . $bitsREDE;
+						    	   }
+						    	}
 						    }
 						               
             			} else {
             				$tp = 'EMAIL';
             			}
             			
-						@list($usr,$dom) = explode("@",$texto_pesquisa);
-						
-						$campos_cliente = " cl.id_cliente,cl.nome_razao ";
-						$campos_conta   = " cn.username,cn.dominio,cn.tipo_conta ";
-						
-						$from  = "	cntb_conta cn LEFT OUTER JOIN cntb_conta_bandalarga cbl USING(username,dominio,tipo_conta),  ";
-						$from .= "	cbtb_cliente_produto cp, cltb_cliente cl ";
-						//$sSQLBase .= "WHERE ";
-						
-						$whereJoin = "	cn.id_cliente_produto = cp.id_cliente_produto ";
-						$whereJoin .= "	AND cp.id_cliente = cl.id_cliente ";
-						
-						
-						$whereFiltro = "";
-						switch($tp) {
-							
-							case 'EMAIL':
-								$whereFiltro .= "	cn.dominio = '$dom'  ";
 
-							case 'CONTA':
-								
-								$whereFiltro .= "	cn.username ilike '$usr' ";
-							
-								break;
-							case 'MAC':
-								$whereFiltro .= "	cbl.mac = '$texto_pesquisa' ";
-								
-								break;
-							
-							case 'IP':
-								$whereFiltro .= "  ( ";
-								
-								if( strstr($texto_pesquisa,"/") ) {
-								   // Rede
-								   $whereFiltro .= " cbl.rede = '$texto_pesquisa' OR cbl.rede << '$texto_pesquisa' OR cbl.ipaddr << '$texto_pesquisa' ";
-								} else {
-								   // IP
-								   $whereFiltro .= " cbl.rede >> '$texto_pesquisa' OR cbl.ipaddr = '$texto_pesquisa' ";
-								   
-								}
-								
-								$whereFiltro .= " ) ";
-						
-								break;
-								
-						}
-						
-						$clientes = $this->bd->obtemRegistros("SELECT $campos_cliente FROM $from WHERE $whereJoin AND $whereFiltro GROUP BY $campos_cliente " );
+            			if( count($erros) ) {
+            				$clientes = array();
+            			} else {
 
-						// Pega as contas
-						for( $i=0;$i<count($clientes);$i++ ) {
-						   $sSQL = "SELECT $campos_conta FROM $from WHERE $whereJoin AND $whereFiltro AND cl.id_cliente = '".$clientes[$i]["id_cliente"] ."' GROUP BY $campos_conta ";
-						   $clientes[$i]["contas"] = $this->bd->obtemRegistros( $sSQL );
+							@list($usr,$dom) = explode("@",$texto_pesquisa);
+
+							$campos_cliente = " cl.id_cliente,cl.nome_razao ";
+							$campos_conta   = " cn.username,cn.dominio,cn.tipo_conta ";
+
+							$from  = "	cntb_conta cn LEFT OUTER JOIN cntb_conta_bandalarga cbl USING(username,dominio,tipo_conta),  ";
+							$from .= "	cbtb_cliente_produto cp, cltb_cliente cl ";
+							//$sSQLBase .= "WHERE ";
+
+							$whereJoin = "	cn.id_cliente_produto = cp.id_cliente_produto ";
+							$whereJoin .= "	AND cp.id_cliente = cl.id_cliente ";
+
+
+							$whereFiltro = "";
+							switch($tp) {
+
+								case 'EMAIL':
+									$whereFiltro .= "	cn.dominio = '$dom'  ";
+
+								case 'CONTA':
+
+									$whereFiltro .= "	cn.username ilike '$usr' ";
+
+									break;
+								case 'MAC':
+									$whereFiltro .= "	cbl.mac = '$texto_pesquisa' ";
+
+									break;
+
+								case 'IP':
+									$whereFiltro .= "  ( ";
+
+									if( strstr($texto_pesquisa,"/") ) {
+									   // Rede
+									   $whereFiltro .= " cbl.rede = '$texto_pesquisa' OR cbl.rede << '$texto_pesquisa' OR cbl.ipaddr << '$texto_pesquisa' ";
+									} else {
+									   // IP
+									   $whereFiltro .= " cbl.rede >> '$texto_pesquisa' OR cbl.ipaddr = '$texto_pesquisa' ";
+
+									}
+
+									$whereFiltro .= " ) ";
+
+									break;
+
+							}
+
+							$clientes = $this->bd->obtemRegistros("SELECT $campos_cliente FROM $from WHERE $whereJoin AND $whereFiltro GROUP BY $campos_cliente " );
+
+							// Pega as contas
+							for( $i=0;$i<count($clientes);$i++ ) {
+							   $sSQL = "SELECT $campos_conta FROM $from WHERE $whereJoin AND $whereFiltro AND cl.id_cliente = '".$clientes[$i]["id_cliente"] ."' GROUP BY $campos_conta ";
+							   $clientes[$i]["contas"] = $this->bd->obtemRegistros( $sSQL );
+							}
+						
 						}
 						
 					}
@@ -535,38 +557,12 @@ class VAClientes extends VirtexAdmin {
 					
 				}
 				
-				
+				$this->tpl->atribui("erros",$erros);
 				$this->tpl->atribui("clientes",$clientes);
 										
 				$this->tpl->atribui("tipo_pesquisa",$tipo_pesquisa);
 				$this->tpl->atribui("texto_pesquisa",$texto_pesquisa);
 
-				
-				
-				
-
-
-
-
-
-
-
-
-
-
-				 
-
-
-
-
-			  				
-
-
-		
-				
-				
-				
-	
 		} else if ($op == "cobranca") {
 			// Sistema de contratação de produtos e resumo de cobrança
 			
@@ -1254,7 +1250,7 @@ class VAClientes extends VirtexAdmin {
 			$sSQL .= "FROM cbtb_cliente_produto cp INNER JOIN prtb_produto p ";
 			$sSQL .= "USING( id_produto ) ";
 			$sSQL .= "WHERE cp.id_cliente='$id_cliente' AND p.tipo = '$tipo' ";
-			//echo "SQL: ". $sSQL ."<BR>\n";
+			//echo $sSQL ."<hr>\n";
 			
 			
 			$produtos = $this->bd->obtemRegistros($sSQL);
@@ -1270,6 +1266,7 @@ class VAClientes extends VirtexAdmin {
 			   $sSQL .= "WHERE ";
 			   $sSQL .= "	id_cliente_produto = '$id_cp'";
 			   
+			   //echo $sSQL ."<hr>\n";
 			   
 			   $contas = $this->bd->obtemRegistros($sSQL);
 			   

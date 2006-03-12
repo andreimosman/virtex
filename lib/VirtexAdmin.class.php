@@ -12,7 +12,7 @@ class VirtexAdmin extends MWebApp {
 	public function VirtexAdmin() {
 	   parent::MWebApp("etc/virtex.ini",'template/default');
 
-	   session_start();
+	   @session_start();
 
 	   if( @$this->cfg->config["DB"]["dsn"] ) {
 	      // Instanciar BD;
@@ -63,7 +63,13 @@ class VirtexAdmin extends MWebApp {
 		   $this->admLogin = @$_SESSION["admLogin"];
 		   $this->admLogin->bd = $this->bd;
 		}
+		
 
+		$op = @$_REQUEST["op"];
+		$tmp = explode("/",$_SERVER["PHP_SELF"]);
+		$arquivoPHP = $tmp[ count($tmp)-1 ];
+		$veriPrimeiroLogin = !($arquivoPHP == "administrador.php" && $op == "altera");
+		
 		if( !$this->admLogin->estaLogado() ) {
 		   // Redireciona pra tela de login
 		   $url = 'login.php';
@@ -79,7 +85,7 @@ class VirtexAdmin extends MWebApp {
 
 		   return false;
 
-		} else if( $this->admLogin->primeiroLogin() ) {
+		} else if( $veriPrimeiroLogin && $this->admLogin->primeiroLogin() ) {
 		   $url = 'administrador.php?op=altera';
 		   //$mensagem = 'Tentativa de acesso invalido ao sistema';
 		   $target = '_top';
@@ -88,8 +94,6 @@ class VirtexAdmin extends MWebApp {
 		   $this->tpl->atribui('url',$url);
 		   //$this->tpl->atribui('mensagem',$mensagem);
 		   $this->tpl->atribui('target',$target);
-		   //echo "Primeiro login";
-
 
 		   $this->arquivoTemplate = 'jsredir.html';
 		   return false;

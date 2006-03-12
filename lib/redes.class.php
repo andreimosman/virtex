@@ -19,6 +19,9 @@
 
    function addr2bin($addr) {
       list($a,$b,$c,$d) = explode(".",$addr);
+      
+      if( $a > 255 || $b > 255 || $c > 255 || $d > 255 ) return -1;
+      
       return( to8bin($a).to8bin($b).to8bin($c).to8bin($d) );
    }
 
@@ -37,11 +40,11 @@
    }
 
    class RedeIP {
-      var $addr;
-      var $mask;
-      var $network;
-      var $wildcard;
-      var $broadcast;
+      protected $addr;
+      protected $mask;
+      protected $network;
+      protected $wildcard;
+      protected $broadcast;
       
       
 
@@ -91,6 +94,16 @@
       function numIPs() {
          return( b2d($this->broadcast) - b2d($this->network) + 1 );
       }
+      
+      function isValid() {
+      	return( $this->addr > 0 );
+      }
+
+      function obtemRede() {
+      	return( bin2addr($this->network) );
+      }
+      
+      
 
       /**
        * Pega o numero de bits de uma dada mascara e subclasseia a rede

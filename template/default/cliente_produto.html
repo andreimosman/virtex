@@ -31,9 +31,7 @@
 
 
     <td colspan="2"> {foreach item=c from=$p.contas}
-
       <table width="500" border="0" cellspacing="0" cellpadding="0">
-        {if $c.tipo_conta|trim == "BL" || $c.tipo_conta|trim == "E"}
         <tr>
           <td width="50"><font face="arial" size=-2>{$c.tipo_conta}</font></td>
           <td>
@@ -46,37 +44,6 @@
         <tr bgcolor="#000000">
           <td colspan="3"><img src="template/default/images/menu/spacer.gif" width=1 height=1></td>
         </tr>
-        {/if}
-        {if $c.tipo_conta|trim == "H" || $c.tipo_conta|trim == "E"}
-        <tr>
-          <td width="50"><font face="arial" size=-2>{$c.tipo_conta}</font></td>
-          <td>
-             <a href="clientes.php?op=conta&id_cliente={$id_cliente}&username={$c.username}&dominio={$c.dominio}&tipo_conta={$c.tipo_conta}">{$c.username}{if $c.tipo_conta|trim == "E"}@{$c.dominio}{/if}</a>
-          </td>
-          <td width=100>
-             <a href="clientes.php?op=conta&pg=ficha&id_cliente={$id_cliente}&username={$c.username}&dominio={$c.dominio}&tipo_conta={$c.tipo_conta}">FICHA TÉCNICA</a>
-          </td>
-        </tr>
-        <tr bgcolor="#000000">
-          <td colspan="3"><img src="template/default/images/menu/spacer.gif" width=1 height=1></td>
-        </tr>
-        {/if}
-		{if $c.tipo_conta|trim == "D" || $c.tipo_conta|trim == "E"}
-			<tr>
-				<td width="50"><font face="arial" size=-2>{$c.tipo_conta}</font></td>
-				<td>
-					<a href="clientes.php?op=conta&id_cliente={$id_cliente}&username={$c.username}&dominio={$c.dominio}&tipo_conta={$c.tipo_conta}">{$c.username}{if $c.tipo_conta|trim == "E"}@{$c.dominio}{/if}</a>
-				</td>
-				<td width=100>
-					<a href="clientes.php?op=conta&pg=ficha&id_cliente={$id_cliente}&username={$c.username}&dominio={$c.dominio}&tipo_conta={$c.tipo_conta}">FICHA TÉCNICA</a>
-				</td>
-			</tr>
-			<tr bgcolor="#000000">
-				<td colspan="3"><img src="template/default/images/menu/spacer.gif" width=1 height=1></td>
-			</tr>
-		{/if}
-
-
       </table>
       {/foreach} </td>
   </tr>

@@ -20,6 +20,7 @@ require_once(PATH_LIB . '/redes.class.php');
 require_once(PATH_LIB . '/Spool.class.php');
 require_once(PATH_LIB . '/AdminLogin.class.php');
 require_once(PATH_LIB . '/VirtexAdmin.class.php');
+require_once(PATH_LIB . '/VAGrafico.class.php');
 require_once(PATH_LIB . '/VALogin.class.php');
 require_once(PATH_LIB . '/VAHome.class.php');
 require_once(PATH_LIB . '/VAClientes.class.php');
