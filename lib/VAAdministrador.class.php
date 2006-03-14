@@ -79,6 +79,32 @@ class VAAdministrador extends VirtexAdmin {
 					$sSQL = "";
 			      if( $acao == "cad" ) {
 	  		          $primeiro_login = true; //deve receber verdadeiro;
+	  		          
+	  		          	
+	  		          	$sSQL  = "SELECT ";
+					  	$sSQL .= "   id_admin, admin, senha, status, ";
+					  	$sSQL .= "   nome, email, primeiro_login ";
+					  	$sSQL .= "FROM adtb_admin ";
+					  	$sSQL .= "WHERE admin = '".@$_REQUEST["admin"]."' OR email = '".@$_REQUEST["email"]."' ";
+					  	
+					  	$teste = $this->bd->obtemUnicoRegistro($sSQL);
+					  	
+					  	//echo "sql teste: $sSQL <br>";
+					  	
+					  	if(@$teste["admin"]){
+					  		$msg_final = "Administrador já cadastrado! <br> Tente novamente.";
+					  		
+					  		$this->tpl->atribui("mensagem",$msg_final);
+							$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=cadastro");
+							$this->tpl->atribui("target","_top");
+									      
+							$this->arquivoTemplate="msgredirect.html";
+							return;
+
+					  	}
+
+	  		          
+	  		          
                                   $id_admin = $this->bd->proximoID("adsq_id_admin");
 
                            // Cadastro
@@ -115,14 +141,15 @@ class VAAdministrador extends VirtexAdmin {
                       
                       $this->bd->consulta($sSQL);
                       
-                       if( $this->bd->obtemErro() != MDATABASE_OK ) {
-		      	 echo "ERRO: " . $this->bd->obtemMensagemErro() , "<br>\n";
-		         echo "QUERY: " . $sSQL . "<br>\n";
-		      	 }
+                 //      if( $this->bd->obtemErro() != MDATABASE_OK ) {
+		      	 //			echo "ERRO: " . $this->bd->obtemMensagemErro() , "<br>\n";
+		         //			echo "QUERY: " . $sSQL . "<br>\n";
+		      	 
+		      	//}
 
 		      // Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
 		      $this->tpl->atribui("mensagem",$msg_final);
-		      $this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=listagem");
+		      $this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=lista");
 		      $this->tpl->atribui("target","_top");
 		      
 		      $this->arquivoTemplate="msgredirect.html";
@@ -130,9 +157,9 @@ class VAAdministrador extends VirtexAdmin {
 		      // cai fora da função (ou seja, deixa de processar o resto do aplicativo: a parte de exibicao da tela);
 		      return;
 
-                 } // fim if($enviado)
+                 }
 
-}	//encerra funcion processa
+}	
 
 
 
