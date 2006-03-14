@@ -616,7 +616,7 @@ class VAClientes extends VirtexAdmin {
 					
 					$lista_user = $this->bd->obtemUnicoRegistro($sSQL);
 
-					if(@$lista_user["username"]){
+					if(count($lista_user) && $lista_user["username"]){
 						// ver como processar 
 						$erros[] = "Já existe outra conta cadastrada com esse username";
 					}
@@ -789,7 +789,7 @@ class VAClientes extends VirtexAdmin {
 								$sSQL .= ")VALUES ( ";
 								$sSQL .= "'$username', '$tipo_conta', '$dominio', '$foneinfo' )";
 								
-								echo "SQL DISCADO: $sSQL <br>\n";
+								//echo "SQL DISCADO: $sSQL <br>\n";
 								
 								$this->bd->consulta($sSQL);
 								
@@ -1020,6 +1020,33 @@ class VAClientes extends VirtexAdmin {
 						
 						
 						
+					}else{
+					
+						switch($tipo){
+						case "BL":
+						$msg_final = "Existe outro usuário de Banda Larga cadastrado com esses dados!";
+						break;
+						case "E":
+						$msg_final = "Existe outra conta de E-Mail cadastrada com esses dados!";
+						break;
+						case "H":
+						$msg_final = "Existe outra conta de Hospedagem cadastrada com esses dados!";
+						break;
+						case "D":
+						$msg_final = "Existe outro usuario de Discado cadastrado com esses dados!";
+						break;
+						}
+																	  		
+						$this->tpl->atribui("mensagem",$msg_final);
+						$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=cobranca&id_cliente=$id_cliente");
+						$this->tpl->atribui("target","_top");
+															      
+						$this->arquivoTemplate="msgredirect.html";
+						return;
+
+					
+					
+					
 					}
 					
 				
