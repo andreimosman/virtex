@@ -91,7 +91,7 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "   r.rede DESC ";
 		$sSQL .= "LIMIT ";
 		$sSQL .= "   1 ";
-
+		echo "retorno do obtemNAS: $sSQL;";
 		return( $this->bd->obtemUnicoRegistro($sSQL) );
 	}
 	
@@ -801,6 +801,7 @@ class VAClientes extends VirtexAdmin {
 								$tipo_de_ip = $this->bd->escape(trim(@$_REQUEST["selecao_ip"]));
 								if($tipo_de_ip == "A"){
 									$nas = $this->obtemNAS($_REQUEST["id_nas"]);
+									//echo "NAS: ".$nas["id_nas"]."<BR>";
 									if( $nas["tipo_nas"] == "I" ) {
 									   // Cadastrar REDE em cntb_conta
 									   $rede_disponivel = $this->obtemRede($nas["id_nas"]);
@@ -818,9 +819,10 @@ class VAClientes extends VirtexAdmin {
 								}
 								
 								
-								if($rede_disp != "NULL"){
+								/*if($rede_disp != "NULL"){
 								
 									$rede_disp = "'".$rede_disponivel["rede"]."'";
+									echo "rede:". $rede_disponivel["rede"]. "<br>";
 								
 								
 								}
@@ -830,7 +832,7 @@ class VAClientes extends VirtexAdmin {
 									$ip_disp = "'".$ip_disponivel["ipaddr"]."'";
 								
 								
-								}
+								}*/
 								
 								$id_produto = $this->bd->escape(@$_REQUEST["id_produto"]);
 								$bandaUp_dow = $this->obtemDowUp($id_produto);
@@ -878,7 +880,7 @@ class VAClientes extends VirtexAdmin {
 								$this->bd->consulta($sSQL);  
 								//if( $this->bd->obtemErro() ) {
 								//	echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
-								//	echo "SQL: $sSQL <br>\n";
+									echo "SQL: $sSQL <br>\n";
 								//}
 								
 								break;
@@ -1446,7 +1448,7 @@ class VAClientes extends VirtexAdmin {
 					$this->tpl->atribui("upload_kbps",@$_REQUEST["upload_kbps"]);
 					$this->tpl->atribui("download_kbps",@$_REQUEST["download_kbps"]);
 
-
+					//echo "ID NAS:". $conta["id_nas"] ."<BR>";
 
 					$nas = $this->obtemNas($conta["id_nas"]);			
 					$conta["endereco_ip"] = $nas["tipo_nas"] == "I" ? $conta["rede"] : $conta["ipaddr"];
@@ -1911,6 +1913,9 @@ class VAClientes extends VirtexAdmin {
 						$pop = $this->obtemPop($conta["id_nas"]);
 						$this->tpl->atribui("nas",$nas);
 						$this->tpl->atribui("pop",$pop);
+
+						//echo $nas;
+						//echo $pop;
 
 						if( $nas["tipo_nas"] == "I" ) {
 						   $r = new RedeIP($endereco_ip);

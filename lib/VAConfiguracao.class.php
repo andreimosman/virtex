@@ -280,7 +280,7 @@ class VAConfiguracao extends VirtexAdmin {
 								$sSQL .= "   cftb_nas( ";
 								$sSQL .= "      id_nas, nome, ip, secret, tipo_nas ) ";
 								$sSQL .= "   VALUES (";
-								$sSQL .= "     '" . $this->bd->escape($id_nas) . "', ";
+								$sSQL .= "     '" . $id_nas . "', ";
 								$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
 								$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["ip"]) . "', ";
 								$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["secret"]) . "', ";
@@ -291,6 +291,8 @@ class VAConfiguracao extends VirtexAdmin {
 								$this->spool->radiusAdicionaNAS($ip,$secret);
 							
 							} else if($tipo_nas == "I"){
+							
+								$id_nas = $this->bd->proximoID("cfsq_id_nas");
 								
 								$sSQL  = "INSERT INTO ";
 								$sSQL .= "   cftb_nas( ";
@@ -377,11 +379,11 @@ class VAConfiguracao extends VirtexAdmin {
 								
 						$this->bd->consulta($sSQL);  
 			
-						if( $this->bd->obtemErro() != MDATABASE_OK ) {
-						echo "ERRO: " . $this->bd->obtemMensagemErro() , "<br>\n";
-						echo "QUERY: " . $sSQL . "<br>\n";
+						//if( $this->bd->obtemErro() != MDATABASE_OK ) {
+						//echo "ERRO: " . $this->bd->obtemMensagemErro() , "<br>\n";
+						//echo "QUERY: " . $sSQL . "<br>\n";
 								
-						}
+						//}
 			
 			
 						// Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
