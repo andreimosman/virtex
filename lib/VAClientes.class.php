@@ -91,7 +91,7 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "   r.rede DESC ";
 		$sSQL .= "LIMIT ";
 		$sSQL .= "   1 ";
-		echo "retorno do obtemNAS: $sSQL;";
+		//echo "retorno do obtemNAS: $sSQL;";
 		return( $this->bd->obtemUnicoRegistro($sSQL) );
 	}
 	
@@ -880,7 +880,7 @@ class VAClientes extends VirtexAdmin {
 								$this->bd->consulta($sSQL);  
 								//if( $this->bd->obtemErro() ) {
 								//	echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
-									echo "SQL: $sSQL <br>\n";
+								//	echo "SQL: $sSQL <br>\n";
 								//}
 								
 								break;
@@ -1358,18 +1358,20 @@ class VAClientes extends VirtexAdmin {
 			$this->tpl->atribui("lista_nas",$lista_nas);
 
 			$sSQL  = "SELECT ";
-			$sSQL .= "   c.username, c.dominio, c.tipo_conta, c.senha, c.status, c.id_conta, c.id_cliente_produto ";
+			$sSQL .= "   username, dominio, tipo_conta, senha, status, id_conta, id_cliente_produto ";
 			$sSQL .= "";
 			$sSQL .= "FROM ";
-			$sSQL .= "   cntb_conta c ";
+			$sSQL .= "   cntb_conta ";
 			$sSQL .= "";
 			$sSQL .= "WHERE ";
-			$sSQL .= "   c.username = '".$this->bd->escape($username)."' ";
-			$sSQL .= "   AND c.dominio = '".$this->bd->escape($dominio)."' ";
-			$sSQL .= "   AND c.tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
+			$sSQL .= "   username = '".$this->bd->escape($username)."' ";
+			$sSQL .= "   AND dominio = '".$this->bd->escape($dominio)."' ";
+			$sSQL .= "   AND tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
 			$sSQL .= "";
 			
+			//ECHO "sql conta: $sSQL <br>/n";
 			$conta = $this->bd->obtemUnicoRegistro($sSQL);
+			
 			
 			
 			/** PEGA O PRODUTO CONTRATADO */
@@ -1587,6 +1589,12 @@ class VAClientes extends VirtexAdmin {
 						$nas_novo  = $this->obtemNas($id_nas);
 
 						$rede = $conta["rede"];
+						
+						//echo "MAC: " . $conta["mac"] . "|" . $mac . "<br>\n";
+						//echo "UP: " . $conta["upload_kbps"] . "|" . $upload_kbps . "<br>\n";
+						//echo "DN: " . $conta["download_kbps"] . "|" . $download_kbps . "<br>\n";
+						//echo "MAC: " . $conta["mac"] . "|" . $mac . "<br>\n";
+						//echo "MAC: " . $conta["mac"] . "|" . $mac . "<br>\n";
 
 						if( $conta["mac"] != $mac || $conta["upload_kbps"] != $upload_kbps || $conta["download_kbps"] != $download_kbps ) {
 							$excluir = true;
@@ -1679,13 +1687,16 @@ class VAClientes extends VirtexAdmin {
 							break;
 					
 						case 'BL':
+						//echo "TESTE";
 				
 							// SPOOL
 							if( $excluir ) {
+								//echo "excluir";
 								$this->spool->bandalargaExcluiRede($nas_atual["ip"],$conta["id_conta"],$conta["rede"]);
 							}
 
 							if( $incluir ) {
+								//echo "incluir<br>";
 								$id_conta = $conta["id_conta"];
 								$this->spool->bandalargaAdicionaRede($nas_novo["ip"],$id_conta,$rede,$mac,$upload_kbps,$download_kbps,$username);
 							}

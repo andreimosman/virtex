@@ -58,7 +58,7 @@ class Spool {
 		$sSQL .= ") VALUES ( ";
 		$sSQL .= "		now(), '".$destino."', 'BL', 'a', '$id_conta', '$parametros' ,'A' ";
 		$sSQL .= ") ";
-		//echo "SPOOL SQL: " . $sSQL . ";<br>\n";
+		//echo "SPOOL INCLUIR: " . $sSQL . ";<br>\n";
 		//echo "ID: ". $id_conta . "<br>";
 		//echo "REDE: ". $rede . "<br>";
 		$this->bd->consulta($sSQL);
@@ -79,7 +79,7 @@ class Spool {
 		$sSQL .= ") VALUES ( ";
 		$sSQL .= "now(), '".$destino."', 'BL', 'x', '". $id_conta ."', '".$parametros."', 'A' ";
 		$sSQL .= ") ";
-		//echo "SPOOL SQL: " . $sSQL . ";<br>\n";
+		//echo "SPOOL EXCLUIR: " . $sSQL . ";<br>\n";
 
 		$this->bd->consulta($sSQL);
 		
