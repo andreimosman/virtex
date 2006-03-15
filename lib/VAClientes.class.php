@@ -844,7 +844,7 @@ class VAClientes extends VirtexAdmin {
 									$_MAC = "'".$MAC."'";
 								}
 								
-								$id_conta_banda_larga = $this->bd->proximoID("clsq_id_conta_bandalarga_seq");
+								//$id_conta_banda_larga = $this->bd->proximoID("clsq_id_conta_bandalarga_seq");
 								
 								// INSERE EM CNTB_CONTA_BANDALARGA
 								$sSQL  = "INSERT INTO ";
