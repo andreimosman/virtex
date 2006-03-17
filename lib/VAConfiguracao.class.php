@@ -94,7 +94,8 @@ class VAConfiguracao extends VirtexAdmin {
 				   		$id_pop_ap = @$_REQUEST['id_pop_ap'];
 				   		
 						$msg_final = "POP Cadastrado com sucesso!";
-				   		
+						$url = "configuracao.php?op=lista_pop";
+						
 						$id_pop = $this->bd->proximoID("cfsq_id_pop");
 
 					
@@ -114,6 +115,7 @@ class VAConfiguracao extends VirtexAdmin {
 					} else {
 					   // ALTERACAO
 						$msg_final = "POP Alterado com sucesso!";
+						$url = "configuracao.php?op=lista_pop";
 
 
 						$sSQL  = "UPDATE ";
@@ -140,7 +142,7 @@ class VAConfiguracao extends VirtexAdmin {
 
 					// Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
 					$this->tpl->atribui("mensagem",$msg_final); 
-					$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=listagem");
+					$this->tpl->atribui("url",$url);
 					$this->tpl->atribui("target","_top");
 
 					$this->arquivoTemplate = "msgredirect.html";
@@ -554,6 +556,7 @@ class VAConfiguracao extends VirtexAdmin {
 										   		
 										   		
 						$msg_final = "Rede Cadastrada com sucesso!";
+						$url = "configuracao.php?op=lista_nas";
 										   		
 						
 						if($nas["tipo_nas"] == "P"){
@@ -581,6 +584,7 @@ class VAConfiguracao extends VirtexAdmin {
 						// ALTERACAO
 						
 						$msg_final = "Rede Alterada com sucesso!";
+						$url = "configuracao.php?op=lista_nas";
 						
 						$this->alteraRede($rede,$tipo_rede);
 						
@@ -594,7 +598,7 @@ class VAConfiguracao extends VirtexAdmin {
 						
 				// Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
 				$this->tpl->atribui("mensagem",$msg_final); 
-				$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=listagem");
+				$this->tpl->atribui("url",$url);
 				$this->tpl->atribui("target","_top");
 						
 				$this->arquivoTemplate = "msgredirect.html";

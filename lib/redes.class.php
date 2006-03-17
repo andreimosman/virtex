@@ -40,11 +40,11 @@
    }
 
    class RedeIP {
-      protected $addr;
-      protected $mask;
-      protected $network;
-      protected $wildcard;
-      protected $broadcast;
+      public $addr;
+      public $mask;
+      public $network;
+      public $wildcard;
+      public $broadcast;
       
       
 

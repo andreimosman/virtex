@@ -21,6 +21,10 @@ function validaCPF() {
 	cpf = document.cadastro.cpf_cnpj.value;
 	erro = new String;
 
+	if (cpf == "11111111111" || cpf == "22222222222" || cpf == "33333333333" || cpf == "44444444444" || cpf == "55555555555" || cpf == "66666666666" || cpf == "77777777777" || cpf == "88888888888" || cpf == "99999999999" || cpf == "00000000000"){
+	erro += "Número de CPF/CNPJ Inválido! ";
+	}
+
 	if (cpf.length < 11) erro += "Sao necessarios 11 digitos para verificacao do CPF! ";
 
 	//substituir os caracteres que não são números
@@ -142,7 +146,7 @@ function validaCNPJ() {
                   {/if}
 
                   </strong></font><p></p>
-                  <form action="{$smarty.server.PHP_SELF}" method="post" name=cadastro id="cadastro" onSubmit="return check()">
+                  <form action="{$smarty.server.PHP_SELF}" method="post" name=cadastro id="cadastro" onSubmit="return check(this)">
                     <input type="hidden" name="op" value="{$op}">
                      <input type="hidden" name="id_cliente" value="{$id_cliente}">
                      <input type="hidden" name="acao" value="{$acao}">
@@ -187,7 +191,7 @@ function validaCNPJ() {
                             <tr>
                               <td><input  name="rg_inscr" type="text" id="rg_inscr" value="{$rg_inscr}" maxlength="20" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
                               <td><input  name="rg_expedicao" type="text" id="rg_expedicao" value="{$rg_expedicao}" maxlength="10" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"></td>
-                              <td><input  name="cpf_cnpj" type="text" id="cpf_cnpj" value="{$cpf_cnpj}" maxlength="25"  onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'" onChange="return check(this.value)">
+                              <td><input  name="cpf_cnpj" type="text" id="cpf_cnpj" value="{$cpf_cnpj}" maxlength="25"  onfocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
                                  </td>
                             </tr>
 

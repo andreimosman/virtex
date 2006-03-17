@@ -9,6 +9,12 @@ class VASuporte extends VirtexAdmin {
 	}
 
 	// metodo para pegar as propriedadas enviadas via menu na interface.
+/*	public function obtemRede(){
+	
+	}*/
+	
+	
+	
 	public function processa($op=null) {	
 		if($op == "graf"){	
 			$this->arquivoTemplate = "cobranca_versaolight.html";
