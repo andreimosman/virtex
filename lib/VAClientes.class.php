@@ -1229,7 +1229,7 @@ class VAClientes extends VirtexAdmin {
 				
 				$id_cliente_produto = @$_REQUEST['id_cliente_produto'];
 				$id_cliente = @$_REQUEST['id_cliente'];
-				$permanente = $_REQUEST['permanente'];
+				$permanente = @$_REQUEST['permanente'];
 				
 				$this->excluiContrato($id_cliente_produto,$permanente);
 				
@@ -2149,9 +2149,158 @@ public function obtemProduto($id_produto){
 	return;
 
 }
+
 public function excluiContrato($id_cliente_produto,$permanente){
 
-	ECHO "INICIO PASSO 2 DA EXCLUSÃO: verifica se é permanente ou não";
+	/**
+	 * Verifica quais são as contas afetadas para enviar função à spool e realizar exclusão
+	 */
+	
+	$sSQL  = "SELECT ";
+	$sSQL .= "   username,dominio,tipo_conta,senha,senha_cript,id_cliente, ";
+	$sSQL .= "   id_cliente_produto,id_conta,conta_mestre,status,observacoes ";
+	$sSQL .= "FROM ";
+	$sSQL .= "   cntb_conta ";
+	$sSQL .= "WHERE ";
+	$sSQL .= "   id_cliente_produto = '".$this->bd->escape($id_cliente_produto)."' ";
+	
+	$contas = $this->bd->obtemRegistros($sSQL);
+	
+	$tabs = array( 	"D" => "cntb_conta_discado",
+					"BL" => "cntb_conta_bandalarga",
+					"E" => "cntb_conta_email",
+					"H" => "cntb_conta_hospedagem");
+	for($i=0;$i<count($contas);$i++) {
+	
+		/**
+		 * Desabilitar usuários e afins
+		 */
+
+		switch( trim($contas[$i]["tipo_conta"]) ) {
+			case 'D':
+				break;			
+			case 'BL':
+
+				// Pegar dados de cntb_conta_bandalarga
+				
+				$sSQL  = "SELECT ";
+				$sSQL .= "   id_nas,ipaddr,rede ";
+				$sSQL .= "FROM ";
+				$sSQL .= "   cntb_conta_bandalarga ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "   username = '". $this->bd->escape($contas[$i]["username"])."' ";
+				$sSQL .= "   AND dominio = '".$this->bd->escape($contas[$i]["dominio"])."'";
+				$sSQL .= "   AND tipo_conta = '".$this->bd->escape($contas[$i]["tipo_conta"])."'";
+				
+				$info = $this->bd->obtemUnicoRegistro($sSQL);
+				
+				$nas = $this->obtemNas($info["id_nas"]);
+				
+				if( $nas["tipo_nas"] == "I" ) {
+					// Nas do tipo IP, enviar instrução de excluir p/ spool.
+					
+				}
+				
+				
+				/**
+				echo "<hr>\n";
+				echo "ID_CONTA: " . $contas[$i]["id_conta"] . "<br>\n";
+				echo "USERNAME: " . $contas[$i]["username"] . "<br>\n";
+				echo "DOMINIO: " . $contas[$i]["dominio"] . "<br>\n";
+				echo "ID_NAS: " . $info["id_nas"] . "<br>\n";
+				echo "REDE: " . $info["rede"] . "<br>\n";
+				echo "IP: " . $info["ipaddr"] . "<br>\n";
+				echo "IP NAS: " . $nas["ip"] . "<br>\n";
+				echo "<hr>";
+				*/
+				
+				break;			
+			case 'E':
+				break;			
+			case 'H':
+				break;
+		
+		
+		}
+		
+		
+		
+		/**
+		 * Remover registro do sistema de acordo com regra de exclusão definida
+		 */
+		
+		
+		if( $permanente == "t" ) {
+			// Exclusão destrutiva. Eliminar registro.
+			// TODO: fazer backup dos dados excluídos em arquivo de log.
+
+			$sSQL  = "DELETE FROM ";
+			$sSQL .= "   " . $tabs[ trim( $contas[$i]["tipo_conta"]) ]. " ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "   username = '". $this->bd->escape($contas[$i]["username"])."' ";
+			$sSQL .= "   AND dominio = '".$this->bd->escape($contas[$i]["dominio"])."'";
+			$sSQL .= "   AND tipo_conta = '".$this->bd->escape($contas[$i]["tipo_conta"])."'";
+			
+			$this->bd->consulta($sSQL);
+			
+			//echo "$sSQL<hr>";
+
+		} else {
+			// Exclusão não destrutiva - Alterar flag.
+			
+			//$sSQL  = "";
+			//$sSQL .= "";
+			//$sSQL .= "";
+		
+		}
+	
+	}
+	
+	if( $permanente == "t" ) {
+		// Exclusão destrutiva. Eliminar";
+		$sSQL  = "";
+		$sSQL .= "";
+		$sSQL .= "";
+		$sSQL .= "";
+
+		$sSQL  = "DELETE FROM ";
+		$sSQL .= "cntb_conta ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "id_cliente_produto = '$id_cliente_produto' ";
+		
+		$this->bd->consulta($sSQL);
+		//echo "$sSQL<hr>";
+		
+		$sSQL  = "DELETE FROM ";
+		$sSQL .= "cbtb_cliente_produto ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "id_cliente_produto = '$id_cliente_produto' ";
+		//echo "$sSQL<hr>";
+
+		$this->bd->consulta($sSQL);
+
+
+
+	} else {
+		// Exclusão não destrutiva - Alterar flags
+		$sSQL  = "UPDATE ";
+		$sSQL .= "	cbtb_cliente_produto ";
+		$sSQL .= "SET ";
+		$sSQL .= "	excluido = 't' ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "	id_cliente_produto = '$id_cliente_produto'";
+		
+		$this->bd->consulta($sSQL);
+		
+		//echo "$sSQL<hr>";
+		
+	}
+	
+
+
+/**
+
+	//ECHO "INICIO PASSO 2 DA EXCLUSÃO: verifica se é permanente ou não";
 
 	if ($permanente != "t"){
 	ECHO "PASSO 2 DA EXCLUSÃO: a exclusão não é permanente. a variavel permanente = f. Executando update no cbtb_cliente_produto";
@@ -2163,7 +2312,7 @@ public function excluiContrato($id_cliente_produto,$permanente){
 		$sSQL .= "WHERE ";
 		$sSQL .= "	id_cliente_produto = '$id_cliente_produto'";
 		
-		$this->bd->consulta($sSQL);
+		//$this->bd->consulta($sSQL);
 
 		//echo "sql exclusão: $sSQL";
 	}else if ($permanente == "t"){
@@ -2200,18 +2349,19 @@ public function excluiContrato($id_cliente_produto,$permanente){
 		$sSQL .= "WHERE ";
 		$sSQL .= "id_cliente_produto = '$id_cliente_produto' ";
 		
-		$this->bd->consulta($sSQL);
+		//$this->bd->consulta($sSQL);
 		
 		$sSQL  = "DELETE FROM ";
 		$sSQL .= "cbtb_cliente_produto ";
 		$sSQL .= "WHERE ";
 		$sSQL .= "id_cliente_produto = '$id_cliente_produto' ";
 
-		$this->bd->consulta($sSQL);
+		//$this->bd->consulta($sSQL);
 		
 		
 			
 	}
+*/
 	return;
 }
 		
