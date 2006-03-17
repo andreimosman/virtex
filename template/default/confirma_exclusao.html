@@ -1,0 +1,50 @@
+
+ <p>{include file='cliente_header.html'} </p>
+<form name="frmExclui" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return confirm('O registro será EXCLUIDO PERMANENTEMENTE da base de dados, não sendo possivel sua recuperação. Você tem certeza?')">
+  <table width="450" border="0" align="center" cellpadding="0" cellspacing="1">
+    <tr> 
+      <td align="center"><strong><font size="+2" face="Arial, Helvetica, sans-serif">Contratos</font></strong></td>
+    </tr>
+    <tr> 
+      <td>&nbsp;</td>
+    </tr>
+    <tr> 
+      <td> {foreach item=p from=$produtos} 
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr> 
+            <td bgcolor="#F1F1F1"><table width="100%" border="0" cellspacing="2" cellpadding="3">
+                <tr> 
+                  <td><font size="2" face="Arial, Helvetica, sans-serif">#{$p.id_cliente_produto} 
+                    - <b>{$p.nome}</b></font></td>
+                </tr>
+              </table></td>
+          </tr>
+          {foreach item=c from=$p.contas} 
+          <tr> 
+            <td><p>{$c.tipo_conta} - {$c.username}{if $c.tipo_conta|trim == "E"}@{$c.dominio}{/if}</p></td>
+          </tr>
+          {/foreach} 
+        </table>
+        {/foreach} </td>
+    </tr>
+    <tr> 
+      <td>&nbsp;</td>
+    </tr>
+    <tr> 
+      <td><p>
+          <input name="permanente" type="checkbox" class="checkbox" id="permanente" value="t">
+          excluir definitivamente o registro!!</p></td>
+    </tr>
+    <tr> 
+      <td><input name="id_cliente_produto" type="hidden" id="id_cliente_produto" value="{$p.id_cliente_produto}">
+        <input name="op" type="hidden" id="op" value="cobranca">
+        <input name="rotina" type="hidden" id="rotina" value="excluir"></td>
+    </tr>
+    <tr>
+      <td align="center"><input type="submit" name="Submit" value="Excluir do Sistema"></td>
+    </tr>
+  </table>
+</form>
+<p>&nbsp;</p>
+<p>{include file='cliente_footer.html'}
+</p>

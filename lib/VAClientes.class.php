@@ -20,11 +20,12 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "   rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
 		$sSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
 		$sSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
-		$sSQL .= "   ativo,obs ";
+		$sSQL .= "   ativo, obs, excluido ";
 		$sSQL .= "FROM ";
 		$sSQL .= "   cltb_cliente ";
 		$sSQL .= "WHERE ";
-		$sSQL .= "   id_cliente = '$id_cliente' ";
+		$sSQL .= "   id_cliente = '$id_cliente' AND excluido = 'f'";
+		
    
 		return( $this->bd->obtemUnicoRegistro($sSQL) );
 
@@ -163,12 +164,12 @@ class VAClientes extends VirtexAdmin {
 					$tSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
 					$tSQL .= "   rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
 					$tSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
-					$tSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
+					$tSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, excluido ";
 					$tSQL .= "   ativo,obs ";
 					$tSQL .= "FROM ";
 					$tSQL .= "   cltb_cliente ";
 					$tSQL .= "WHERE ";
-					$tSQL .= "   cpf_cnpj = '$cpf_cnpj' ";
+					$tSQL .= "   cpf_cnpj = '$cpf_cnpj' AND excluido = 'f'";
 					
 					if( $acao == "alt" ) {
 					   $tSQL .= "   AND id_cliente != '". $id_cliente ."' ";
@@ -418,6 +419,8 @@ class VAClientes extends VirtexAdmin {
 				if(!$tipo_pesquisa){
 					$tipo_pesquisa = "NOME";
 					
+					
+					//select dos ultimos cadastrados
 					$aSQL  = "SELECT ";
 					$aSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
 					$aSQL .= "   rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
@@ -425,6 +428,7 @@ class VAClientes extends VirtexAdmin {
 					$aSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
 					$aSQL .= "   ativo,obs ";
 					$aSQL .= "FROM cltb_cliente ";
+					$aSQL .= "WHERE excluido = 'f' ";
 					$aSQL .= "ORDER BY id_cliente DESC LIMIT (10)";		
 					
 					$clientes = $this->bd->obtemRegistros($aSQL);
@@ -443,6 +447,7 @@ class VAClientes extends VirtexAdmin {
 						$sSQL .= "FROM cltb_cliente ";
 						//$sSQL .= "WHERE $campo = '$campo_pesquisa' ";
 						$sSQL .= "WHERE ";
+						$sSQL .= " excluido = 'f' AND ";
 
 						switch($tipo_pesquisa) {
 
@@ -506,6 +511,7 @@ class VAClientes extends VirtexAdmin {
 
 							$whereJoin = "	cn.id_cliente_produto = cp.id_cliente_produto ";
 							$whereJoin .= "	AND cp.id_cliente = cl.id_cliente ";
+							$whereJoin .= " AND cl.excluido = 'f' ";
 
 
 							$whereFiltro = "";
@@ -581,8 +587,48 @@ class VAClientes extends VirtexAdmin {
 			$rotina = "contratar";
 			}
 			if( $rotina == "resumo" ) {
-
+			
+				$id_cliente = @$_REQUEST['id_cliente'];
+			
+			
+				$sSQL  = "SELECT ";
+				$sSQL .= "	cp.id_cliente_produto, cp.id_cliente, cp.id_produto, cp.dominio, ";
+				$sSQL .= "	p.id_produto, p.nome, p.descricao, p.tipo, p.valor, p.disponivel, p.num_emails, p.quota_por_conta, ";
+				$sSQL .= "	p.vl_email_adicional, p.permitir_outros_dominios, p.email_anexado ";
+				$sSQL .= "FROM cbtb_cliente_produto cp INNER JOIN prtb_produto p ";
+				$sSQL .= "USING( id_produto ) ";
+				$sSQL .= "WHERE cp.id_cliente='$id_cliente' AND cp.excluido = 'f'";
+				//echo $sSQL ."<hr>\n";
+						
+				//echo "SQL: $sSQL <br>\n";		
+				$produtos = $this->bd->obtemRegistros($sSQL);
+						
+				for($i=0;$i<count($produtos);$i++) {
+			
+					$id_cp = $produtos[$i]["id_cliente_produto"];
+						   
+					$sSQL  = "SELECT ";
+					$sSQL .= "	username, dominio, tipo_conta, id_conta ";
+					$sSQL .= "FROM ";
+					$sSQL .= "	cntb_conta ";
+					$sSQL .= "WHERE ";
+					$sSQL .= "	id_cliente_produto = '$id_cp'";
+						   
+					//echo $sSQL ."<hr>\n";
+					
+					$this->tpl->atribui("id_cliente",$id_cliente);
+						   
+					$contas = $this->bd->obtemRegistros($sSQL);
+						   
+					$produtos[$i]["contas"] = $contas;
+				}
+			
+			
+				
+				$this->tpl->atribui("produtos",$produtos);
 				$this->arquivoTemplate = "cliente_cobranca_resumo.html";
+				
+				
 
 			} else if( $rotina == "contratar" ) {
 
@@ -700,7 +746,7 @@ class VAClientes extends VirtexAdmin {
 							$prefs = $this->bd->obtemUnicoRegistro($sSQL);
 
 							
-							if (count($prep)){
+							if (count($prefs)){
 								$erros2 = "Já existe um usuario com este dominio neste tipo de conta cadastrado. Por favor cadastre um novo usuario";
 							
 								$this->tpl->atribui("username", $username);
@@ -1177,9 +1223,62 @@ class VAClientes extends VirtexAdmin {
 
 				$this->arquivoTemplate = "cliente_cobranca_relatorio.html";
 			
-			} else if( $rotina == "cad_clinte_produto" ){
+			} else if( $rotina == "excluir" ){
+			
+				ECHO "PASSO 1 DA EXCLUSÃO: executa o excluiContrato";
+				
+				$id_cliente_produto = @$_REQUEST['id_cliente_produto'];
+				$id_cliente = @$_REQUEST['id_cliente'];
+				$permanente = $_REQUEST['permanente'];
+				
+				$this->excluiContrato($id_cliente_produto,$permanente);
+				
+				$this->tpl->atribui("mensagem","Conta Excluida com Sucesso! "); 
+				$this->tpl->atribui("url","clientes.php?op=cobranca&rotina=resumo&id_cliente=$id_cliente");
+				$this->tpl->atribui("target","_top");
+				
+				$this->arquivoTemplate = "msgredirect.html";
 			
 			
+			
+			
+			}else if ( $rotina == "excl_confirma"){
+			
+				$sSQL  = "SELECT ";
+				$sSQL .= "	cp.id_cliente_produto, cp.id_cliente, cp.id_produto, cp.dominio, ";
+				$sSQL .= "	p.id_produto, p.nome, p.descricao, p.tipo, p.valor, p.disponivel, p.num_emails, p.quota_por_conta, ";
+				$sSQL .= "	p.vl_email_adicional, p.permitir_outros_dominios, p.email_anexado ";
+				$sSQL .= "FROM cbtb_cliente_produto cp INNER JOIN prtb_produto p ";
+				$sSQL .= "USING( id_produto ) ";
+				$sSQL .= "WHERE cp.id_cliente_produto='".@$_REQUEST['id_cliente_produto']."' ";
+				//echo $sSQL ."<hr>\n";
+			
+			
+				$produtos = $this->bd->obtemRegistros($sSQL);
+			
+				for($i=0;$i<count($produtos);$i++) {
+
+				   $id_cp = $produtos[$i]["id_cliente_produto"];
+				   
+				   $sSQL  = "SELECT ";
+				   $sSQL .= "	username, dominio, tipo_conta, id_conta ";
+				   $sSQL .= "FROM ";
+				   $sSQL .= "	cntb_conta ";
+				   $sSQL .= "WHERE ";
+				   $sSQL .= "	id_cliente_produto = '$id_cp'";
+			   
+				   //echo $sSQL ."<hr>\n";
+			   
+				   $contas = $this->bd->obtemRegistros($sSQL);
+				   
+				   $produtos[$i]["contas"] = $contas;
+			
+				}
+			
+			
+			$this->tpl->atribui("produtos",$produtos);				
+			$this->arquivoTemplate = "confirma_exclusao.html";
+			return;
 			
 			
 			}
@@ -2050,11 +2149,81 @@ public function obtemProduto($id_produto){
 	return;
 
 }
+public function excluiContrato($id_cliente_produto,$permanente){
+
+	ECHO "INICIO PASSO 2 DA EXCLUSÃO: verifica se é permanente ou não";
+
+	if ($permanente != "t"){
+	ECHO "PASSO 2 DA EXCLUSÃO: a exclusão não é permanente. a variavel permanente = f. Executando update no cbtb_cliente_produto";
+		
+		$sSQL  = "UPDATE ";
+		$sSQL .= "	cbtb_cliente_produto ";
+		$sSQL .= "SET ";
+		$sSQL .= "	excluido = 't' ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "	id_cliente_produto = '$id_cliente_produto'";
+		
+		$this->bd->consulta($sSQL);
+
+		//echo "sql exclusão: $sSQL";
+	}else if ($permanente == "t"){
+	ECHO "PASSO 2 DA EXCLUSÃO: a exclusão é permanente. a variavel permanente = f. EXCUINDO TUDO!!! FUDEU!!!";
+
+		
+		$sSQL  = "SELECT * FROM cntb_conta WHERE id_cliente_produto = '$id_cliente_produto'";
+		$contas = $this->bd->obtemRegistros($sSQL);
+		
+		
+		$tab["BL"] = "cntb_conta_bandalarga";
+		$tab["D"]  = "cntb_conta_discado";
+		$tab["H"]  = "cntb_conta_hospedagem";
+		$tab["E"]  = "cntb_conta_email";
+		
+		for($i=0;$i<count($contas);$i++){
+		
+		// dentro do loop
+		
+			if( $tab[ trim($contas[$i]["tipo_conta"]) ] ) {
+			   $sSQL  = "DELETE FROM ".$tab[ trim($contas[$i]["tipo_conta"]) ]." ";
+			   $sSQL .= "WHERE ";
+			   $sSQL .= "username = '".$contas[$i]["username"]."' AND ";
+			   $sSQL .= "dominio = '".$contas[$i]["dominio"]."' AND ";
+			   $sSQL .= "tipo_conta = '".$contas[$i]["tipo_conta"]."' ";
+		   
+		   
+			}
+			
+		}
+		
+		$sSQL  = "DELETE FROM ";
+		$sSQL .= "cntb_conta ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "id_cliente_produto = '$id_cliente_produto' ";
+		
+		$this->bd->consulta($sSQL);
+		
+		$sSQL  = "DELETE FROM ";
+		$sSQL .= "cbtb_cliente_produto ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "id_cliente_produto = '$id_cliente_produto' ";
+
+		$this->bd->consulta($sSQL);
+		
+		
+			
+	}
+	return;
+}
+		
+	
+	
+
+}
 	
 
 				
 				
-}
+
 			
 
 

@@ -226,8 +226,8 @@ function verificaTipoHosp() {
               <tr>
                 <td bgcolor="#FFFFFF" align="right" width="70"> <p>Tipo: </p></td>
                 <td bgcolor="#FFFFFF"> <SELECT name='tipo_hospedagem' onChange='javascript:verificaTipoHosp();' onFocusOut='javascript:verificaTipoHosp();' onClick='javascript:verificaTipoHosp();'>
-                    <OPTION VALUE='U' >http://firme.com.br/usuarios/username/</OPTION>
-                    <OPTION VALUE='D' >http://www.dominio.com.br/</OPTION>
+                    <OPTION VALUE='U' >www.PROVEDOR.com.br/usuario/username</OPTION>
+                    <OPTION VALUE='D' >www.dominio.com.br/</OPTION>
                   </SELECT> </td>
               </tr>
               <tr>
@@ -301,11 +301,20 @@ function verificaTipoHosp() {
                             <tr>
 
                               <td align="center" valign="middle">
-                                                         <table>
-							                                  <tr>
-							  							    	<td><h1>Cobrança</h1></td>
-							                                	</tr>
-                            </table>
+                                                         <table width="300">
+              <tr> 
+                <td align="center"> <strong><font size="+2" face="Arial, Helvetica, sans-serif">Cobrança</font></strong></td>
+              </tr>
+              <tr>
+                <td><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                    <tr align="center"> 
+                      <td width="50%"><a href="clientes.php?op=cobranca&rotina=resumo&id_cliente={$id_cliente}">Resumo</a></td>
+                      <td width="50%"><a href="clientes.php?op=cobranca&id_cliente={$id_cliente}">Novo 
+                        Contrato</a></td>
+                    </tr>
+                  </table></td>
+              </tr>
+            </table>
                               	<table width="450" border=0 bgcolor="#F1F1F1" id="cob">
 
               <tr>

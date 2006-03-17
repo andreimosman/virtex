@@ -24,7 +24,7 @@
     <td> {if $op == "cobranca"} <a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&msg=Cobrança"><img src="template/default/images/bt_cobranca.gif" border=0 alt="Cobrança"></a>
       {else } {if $id_cliente}<a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&msg=Cobrança">{/if}<img src="template/default/images/bt_cobranca_inativo.gif" border=0 alt="Cobranca"></a>
       {/if} </td>
-		<!-- HELPDESK -->
+        <!-- HELPDESK -->
 
     <td> {if $op == "helpdesk"} <a href="{$smarty.server.PHP_SELF}?op=helpdesk&id_cliente={$id_cliente}"><img src="template/default/images/bt_helpdesk.gif" border=0 alt="Helpdesk"></a>
       {else } {if $id_cliente}<a href="{$smarty.server.PHP_SELF}?op=helpdesk&id_cliente={$id_cliente}">{/if}<img src="template/default/images/bt_helpdesk_inativo.gif" border=0 alt="Helpdesk"></a>
