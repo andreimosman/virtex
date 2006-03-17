@@ -1,6 +1,6 @@
 /*
 Created		22/2/2006
-Modified		16/3/2006
+Modified		17/3/2006
 Project		
 Model		
 Company		
@@ -73,7 +73,7 @@ Create table  cltb_cliente
 	dia_pagamento Smallint NULL ,
 	ativo Boolean NULL ,
 	obs Text NULL ,
-	provedor Boolean NULL  Default f,
+	provedor Boolean NULL  Default 'f',
 	excluido Boolean NULL  Default false,
  primary key (id_cliente)
 );
@@ -148,7 +148,7 @@ Create table  dominio
 (
 	dominio Varchar(255) NOT NULL,
 	id_cliente Smallint NULL ,
-	provedor Boolean NULL  Default f,
+	provedor Boolean NULL  Default 'f',
 	status Char(1) NULL ,
 	dominio_provedor Boolean NULL ,
  primary key (dominio)
@@ -201,7 +201,7 @@ Create table  cntb_conta
 	id_conta Smallint NULL  UNIQUE ,
 	senha_cript Varchar(64) NULL ,
 	conta_mestre Boolean NULL  Default true,
-	status Char(1) NULL  Default A,
+	status Char(1) NULL  Default 'A',
 	observacoes Text NULL ,
  primary key (username,dominio,tipo_conta)
 );
