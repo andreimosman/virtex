@@ -675,7 +675,7 @@ class VAClientes extends VirtexAdmin {
 						
 						$sSQL  = "INSERT INTO ";
 						$sSQL .= "   cntb_conta( ";
-						$sSQL .= "      id_conta, username, dominio, tipo_conta, senha, id_cliente, id_cliente_produto, senha_cript) ";
+						$sSQL .= "      id_conta, username, dominio, tipo_conta, senha, id_cliente, id_cliente_produto, senha_cript, status) ";
 						$sSQL .= "   VALUES (";
 						$sSQL .= "			'".$id_conta."', ";
 						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["username"]) . "', ";
@@ -684,8 +684,8 @@ class VAClientes extends VirtexAdmin {
 						$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["senha"])) . "', "; 						
 						$sSQL .= "     '" .  $this->bd->escape(trim(@$_REQUEST["id_cliente"])) . "', "; 						
 						$sSQL .= "     '" .	$id_cliente_produto . "', ";
-						$sSQL .= "     '" . $senhaCr . "' ";
-						$sSQL .= "     )";						
+						$sSQL .= "     '" . $senhaCr . "', ";
+						$sSQL .= "     'A' )";						
 												
 						$this->bd->consulta($sSQL);  
 						//if( $this->bd->obtemErro() ) {
@@ -716,7 +716,7 @@ class VAClientes extends VirtexAdmin {
 							
 							$sSQL  = "INSERT INTO ";
 							$sSQL .= "   cntb_conta( ";
-							$sSQL .= "      id_conta, username, dominio, tipo_conta, senha, id_cliente, id_cliente_produto, senha_cript) ";
+							$sSQL .= "      id_conta, username, dominio, tipo_conta, senha, id_cliente, id_cliente_produto, senha_cript, status) ";
 							$sSQL .= "   VALUES (";
 							$sSQL .= "			'". $id_conta. "', ";
 							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["username"]) . "', ";
@@ -725,8 +725,8 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["senha"])) . "', "; 						
 							$sSQL .= "     '" .  $this->bd->escape(trim(@$_REQUEST["id_cliente"])) . "', "; 						
 							$sSQL .= "     '" .	$id_cliente_produto . "', ";
-							$sSQL .= "     '" . $senhaCr . "' ";
-							$sSQL .= "     )";						
+							$sSQL .= "     '" . $senhaCr . "', ";
+							$sSQL .= "     'A' )";						
 																		
 							$this->bd->consulta($sSQL);  
 							//if( $this->bd->obtemErro() ) {
@@ -819,10 +819,10 @@ class VAClientes extends VirtexAdmin {
 								}
 								
 								
-								/*if($rede_disp != "NULL"){
+								if($rede_disp != "NULL"){
 								
 									$rede_disp = "'".$rede_disponivel["rede"]."'";
-									echo "rede:". $rede_disponivel["rede"]. "<br>";
+									//echo "rede:". $rede_disponivel["rede"]. "<br>";
 								
 								
 								}
@@ -832,7 +832,7 @@ class VAClientes extends VirtexAdmin {
 									$ip_disp = "'".$ip_disponivel["ipaddr"]."'";
 								
 								
-								}*/
+								}
 								
 								$id_produto = $this->bd->escape(@$_REQUEST["id_produto"]);
 								$bandaUp_dow = $this->obtemDowUp($id_produto);
@@ -877,6 +877,8 @@ class VAClientes extends VirtexAdmin {
 								$sSQL .= "     ". $_MAC ." ";
 								$sSQL .= "     )";						
 								
+								
+								//ECHO "INSERT NA BL: $sSQL <br>";
 								$this->bd->consulta($sSQL);  
 								//if( $this->bd->obtemErro() ) {
 								//	echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
