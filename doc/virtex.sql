@@ -1,6 +1,6 @@
 /*
 Created		22/2/2006
-Modified		7/3/2006
+Modified		16/3/2006
 Project		
 Model		
 Company		
@@ -8,34 +8,6 @@ Author
 Version		
 Database		PostgreSQL 7.3 (beta) 
 */
-
-
-Drop table cftb_nas_rede;
-Drop table cftb_nas;
-Drop table cftb_rede;
-Drop table cftb_ip;
-Drop table cftb_pop;
-Drop table cntb_conta_email;
-Drop table cntb_conta_discado;
-Drop table cntb_conta_bandalarga;
-Drop table cntb_conta_hospedagem;
-Drop table cntb_conta;
-Drop table adtb_privilegio;
-Drop table adtb_usuario_privilegio;
-Drop table adtb_admin;
-Drop table cbtb_cobranca;
-Drop table dominio;
-Drop table cbtb_contrato;
-Drop table cbtb_cliente_produto;
-Drop table prtb_produto_hospedagem;
-Drop table prtb_produto_bandalarga;
-Drop table prtb_produto_discado;
-Drop table prtb_produto;
-Drop table cltb_cliente;
-Drop table sptb_spool;
-Drop table cftb_cidade;
-Drop table cftb_uf;
-
 
 
 
@@ -102,6 +74,7 @@ Create table  cltb_cliente
 	ativo Boolean NULL ,
 	obs Text NULL ,
 	provedor Boolean NULL  Default f,
+	excluido Boolean NULL  Default false,
  primary key (id_cliente)
 );
 
@@ -155,6 +128,8 @@ Create table  cbtb_cliente_produto
 	id_cliente_produto Smallint NOT NULL,
 	id_cliente Smallint NOT NULL,
 	id_produto Smallint NOT NULL,
+	dominio Varchar(255) NULL ,
+	excluido Boolean NULL  Default false,
  primary key (id_cliente_produto)
 );
 
@@ -175,6 +150,7 @@ Create table  dominio
 	id_cliente Smallint NULL ,
 	provedor Boolean NULL  Default f,
 	status Char(1) NULL ,
+	dominio_provedor Boolean NULL ,
  primary key (dominio)
 );
 
@@ -257,15 +233,8 @@ Create table  cntb_conta_bandalarga
 	upload_kbps Smallint NULL ,
 	download_kbps Smallint NULL ,
 	status Char(1) NULL ,
-	id_nas Smallint NULL ,
 	mac Macaddr NULL ,
-	tipo_hospedagem Char(1) NULL ,
-	senha_cript Varchar(64) NULL ,
-	uid Smallint NULL ,
-	gid Smallint NULL ,
-	home Varchar(255) NULL ,
-	shell Varchar(255) NULL ,
-	dominio_hospedagem Varchar(255) NULL ,
+	id_nas Smallint NOT NULL,
  primary key (username,tipo_conta,dominio)
 );
 
@@ -329,6 +298,39 @@ Create table  cftb_nas_rede
  primary key (rede,id_nas)
 );
 
+Create table  cftb_preferencias
+(
+	id_provedor Smallint NOT NULL UNIQUE ,
+	dominio_padrao Varchar(150) NULL ,
+	nome Varchar(255) NULL ,
+	localidade Varchar(255) NULL ,
+	radius_server Inet NULL ,
+	hosp_server Inet NULL ,
+	hosp_ns1 Inet NULL ,
+	hosp_ns2 Inet NULL ,
+	hosp_uid Inet NULL ,
+	hosp_gid Inet NULL ,
+	mail_server Inet NULL ,
+	mail_uid Smallint NULL ,
+	mail_gid Smallint NULL ,
+	pop_host Varchar(255) NULL ,
+	smtp_host Varchar(255) NULL ,
+ primary key (id_provedor)
+);
+
+Create table  lgtb_exclusao
+(
+	id_exclusao Smallint NOT NULL,
+	admin Varchar(255) NULL ,
+	data Timestamp NULL ,
+	tipo Varchar(3) NULL ,
+	id_excluido Smallint NULL ,
+	observacao Text NULL ,
+ primary key (id_exclusao)
+);
+
+
+
 
 
 
@@ -383,6 +385,7 @@ Alter table cntb_conta_bandalarga add  foreign key (ipaddr) references cftb_ip (
 Alter table cntb_conta_bandalarga add  foreign key (rede) references cftb_rede (rede)  on update restrict  on delete restrict ;
 Alter table cftb_nas_rede add  foreign key (rede) references cftb_rede (rede)  on update restrict  on delete restrict ;
 Alter table cftb_nas_rede add  foreign key (id_nas) references cftb_nas (id_nas)  on update restrict  on delete restrict ;
+Alter table cntb_conta_bandalarga add  foreign key (id_nas) references cftb_nas (id_nas)  on update restrict  on delete restrict ;
 
 
 CREATE SEQUENCE adsq_id_admin;
@@ -397,5 +400,6 @@ CREATE SEQUENCE clsq_id_cliente_produto;
 CREATE SEQUENCE clsq_id_conta;
 CREATE SEQUENCE prsq_id_produto;
 CREATE SEQUENCE sptb_spool_id_spool;
+CREATE SEQUENCE lgsq_id_exclusao;
 
 
