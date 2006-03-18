@@ -818,6 +818,79 @@ class VAConfiguracao extends VirtexAdmin {
 					}else if ($op == "monitor"){
 					$this->arquivoTemplate = "cobranca_versaolight.html";
 					
+					}else if ($op == "preferencia"){
+						
+						$acao = @$_REQUEST["acao"];
+						
+						
+
+						$sSQL  = "SELECT ";
+						$sSQL .= "* FROM ";
+						$sSQL .= "cftb_preferencias ";
+						
+
+						$prefs = $this->bd->obtemUnicoRegistro($sSQL);
+						//echo "preferencia <br>";
+						
+						if ($acao == "alt"){
+							echo "alt";
+							if(!count($prefs)){
+						
+								$sSQL  = "INSERT INTO ";
+								$sSQL .= "  cftb_preferencias ";						
+								$sSQL .= "    (id_provedor) ";
+								$sSQL .= "VALUES ";
+								$sSQL .= "	('1')";
+	
+								echo "SQL INSERT: $sSQL <br>";
+	
+								$this->bd->consulta($sSQL);
+						
+							}
+						
+							$sSQL  = "UPDATE ";
+							$sSQL .= "  cftb_preferencias ";
+							$sSQL .= "SET ";
+							$sSQL .= "  dominio_padrao = '".@$_REQUEST["dominio_padrao"]."', ";
+							$sSQL .= "  nome = '".@$_REQUEST["nome"]."', ";
+							$sSQL .= "  localidade = '".@$_REQUEST["localidade"]."', ";
+							$sSQL .= "  radius_server = '".@$_REQUEST["radius_server"]."', ";
+							$sSQL .= "  hosp_server = '".@$_REQUEST["hosp_server"]."', ";
+							$sSQL .= "  hosp_ns1 = '".@$_REQUEST["hosp_ns1"]."', ";
+							$sSQL .= "  hosp_ns2 = '".@$_REQUEST["hosp_ns2"]."', ";
+							$sSQL .= "  hosp_uid = '".@$_REQUEST["hosp_uid"]."', ";
+							$sSQL .= "  hosp_gid = '".@$_REQUEST["hosp_gid"]."', ";
+							$sSQL .= "  mail_server = '".@$_REQUEST["mail_server"]."', ";
+							$sSQL .= "  mail_uid = '".@$_REQUEST["mail_uid"]."', ";
+							$sSQL .= "  mail_gid = '".@$_REQUEST["mail_gid"]."', ";
+							$sSQL .= "  pop_host = '".@$_REQUEST["pop_host"]."', ";
+							$sSQL .= "  smtp_host = '".@$_REQUEST["smtp_host"]."', ";
+							$sSQL .= "  hosp_base = '".@$_REQUEST["hosp_base"]."' ";
+							
+							echo "SQL UPDATE: $sSQL <br>";
+							$this->bd->consulta($sSQL);
+							
+							$this->tpl->atribui("mensagem","PREFERENCIAS GRAVADAS COM SUCESSO! "); 
+							$this->tpl->atribui("url","home.php");
+							$this->tpl->atribui("target","_top");
+													
+							$this->arquivoTemplate = "msgredirect.html";
+
+							return;
+							
+						
+						}
+						
+						
+						
+						$this->tpl->atribui("op",$op);
+						$this->tpl->atribui("acao",$acao);
+						$this->tpl->atribui("prefs",$prefs);
+						$this->arquivoTemplate = "configuracao_preferencia.html";
+												
+							
+					
+					
 					}
 				
 				

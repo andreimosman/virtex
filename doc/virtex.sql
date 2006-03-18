@@ -308,13 +308,14 @@ Create table  cftb_preferencias
 	hosp_server Inet NULL ,
 	hosp_ns1 Inet NULL ,
 	hosp_ns2 Inet NULL ,
-	hosp_uid Inet NULL ,
-	hosp_gid Inet NULL ,
+	hosp_uid Smallint NULL ,
+	hosp_gid Smallint NULL ,
 	mail_server Inet NULL ,
 	mail_uid Smallint NULL ,
 	mail_gid Smallint NULL ,
 	pop_host Varchar(255) NULL ,
 	smtp_host Varchar(255) NULL ,
+	hosp_base Varchar(255) NULL ,
  primary key (id_provedor)
 );
 
