@@ -842,9 +842,50 @@ class VAConfiguracao extends VirtexAdmin {
 								$sSQL .= "VALUES ";
 								$sSQL .= "	('1')";
 	
-								echo "SQL INSERT: $sSQL <br>";
+								//echo "SQL INSERT: $sSQL <br>";
 	
 								$this->bd->consulta($sSQL);
+								
+								$sSQL  = "SELECT * from cltb_cliente where id_cliente = '1'";
+								echo "SELECT CLIENTE: $sSQL <br>";
+																
+								$primeiro = $this->bd->obtemUnicoRegistro($sSQL);
+								
+								if (!count($primeiro)){
+								
+								echo "primeiro registro <br>";
+								
+									$id_cliente = $this->bd->proximoID("clsq_id_cliente");
+									
+									$sSQL  = "INSERT INTO ";
+									$sSQL .= "   cltb_cliente ( ";
+									$sSQL .= "      id_cliente, data_cadastro, nome_razao, provedor, excluido ";
+									$sSQL .= " )  VALUES (";
+									$sSQL .= "     '" . $this->bd->escape($id_cliente) . "', ";
+									$sSQL .= "     now(), ";
+									$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
+									$sSQL .= "     't', ";
+									$sSQL .= "     'f' ";
+									$sSQL .= "     )";									
+									echo "INSERT NO CLIENTE: $sSQL <br>";
+									$this->bd->consulta($sSQL);
+									
+									$sSQL  = "INSERT INTO ";
+									$sSQL .= "  dominio ";
+									$sSQL .= "  (dominio, id_cliente, status, dominio_provedor) ";
+									$sSQL .= "VALUES ";
+									$sSQL .= "  ('".@$_REQUEST["dominio_padrao"]."', ";
+									$sSQL .= "  '1', ";
+									$sSQL .= "  'A', ";
+									$sSQL .= "  't') ";
+									echo "INSERT NO DOMINIO: $sSQL <br>";
+									$this->bd->consulta($sSQL);
+									
+									
+									
+								}
+								
+								
 						
 							}
 						

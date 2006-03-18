@@ -1,20 +1,3 @@
-/*
-Created		22/2/2006
-Modified		17/3/2006
-Project		
-Model		
-Company		
-Author		
-Version		
-Database		PostgreSQL 7.3 (beta) 
-*/
-
-
-
-
-
-
-
 Create table  cftb_uf
 (
 	uf Char(2) NOT NULL,
@@ -49,7 +32,7 @@ Create table  sptb_spool
 Create table  cltb_cliente
 (
 	id_cliente Smallint NOT NULL,
-	data_cadastro Varchar(10) NULL ,
+	data_cadastro Date NULL ,
 	nome_razao Varchar(50) NULL ,
 	tipo_pessoa Char(1) NULL ,
 	rg_inscr Char(20) NULL ,
