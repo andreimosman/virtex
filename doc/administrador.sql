@@ -1,42 +1,17 @@
 INSERT INTO adtb_admin(id_admin,admin,senha,status,nome,email,primeiro_login) VALUES (1, 'admin', md5('admin123'), 'A','Administrador','admin@mosman.com.br',true);
-
- 
-
 INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (1, '_ADMIN', 'administradores');
-
 INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (2, '_CLIENTES', 'clientes');
-
 INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (3, '_CLIENTES_FICHA', 'clientes::ficha');
-
 INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (4, '_CLIENTES_BANDALARGA', 'clientes::contas::banda larga');
-
 INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (5, '_CLIENTES_DISCADO', 'clientes::contas::discado');
-
 INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (6, '_CLIENTES_EMAIL', 'clientes::contas::email');
-
 INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (7, '_CLIENTES_HOSPEDAGEM', 'clientes::contas::hospedagem');
-
-INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (8, '_CLIENTES_COBRANCA', 'clientes::contas::cobranXa');
-
-INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (9, '_COBRANCA', 'cobranXa');
-
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (8, '_CLIENTES_COBRANCA', 'clientes::contas::cobrança');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (9, '_COBRANCA', 'cobrança');
 INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (10, '_SUPORTE', 'suporte');
-
-INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (11, '_CONFIG', 'configuraXXes');
-
-INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (12, '_CONFIG_MONITORAMENTO', 'configuraXXes::monitoramento');
-
-INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (13, '_CLIENTES_COBRANCA_ELIMINAR_CONTRATO', 'configuraes::cobranca::eliminar contrato');
-
- 
-
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (11, '_CONFIG', 'configurações');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (12, '_CONFIG_MONITORAMENTO', 'configurações::monitoramento');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (13, '_CLIENTES_COBRANCA_ELIMINAR_CONTRATO', 'configurações::cobranca::eliminar contrato');
 INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES ( 1, 1, true);
-
- 
-
- 
-
 SELECT setval('adsq_id_admin',(select max(id_admin) from adtb_admin));
-
 SELECT setval('adsq_id_priv',(select max(id_priv) from adtb_privilegio));
-
