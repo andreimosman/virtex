@@ -399,11 +399,11 @@ class VACobranca extends VirtexAdmin {
 			global $_LS_DISPONIVEL;
 			$this->tpl->atribui("ls_disponivel",$_LS_DISPONIVEL);
 			
-			global $_LS_DOWNLOAD;
-			$this->tpl->atribui("ls_banda_download_kbps",$_LS_DOWNLOAD);
+			global $_LS_BANDA;
+			$this->tpl->atribui("ls_banda_download_kbps",$_LS_BANDA);
 
-			global $_LS_UPLOAD;
-			$this->tpl->atribui("ls_banda_upload_kbps",$_LS_UPLOAD);
+			//global $_LS_UPLOAD;
+			$this->tpl->atribui("ls_banda_upload_kbps",$_LS_BANDA);
 				
 			global $_LS_DUPLICIDADE;
 			$this->tpl->atribui("ls_permitir_duplicidade",$_LS_DUPLICIDADE);
