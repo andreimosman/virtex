@@ -1014,7 +1014,7 @@ class VAClientes extends VirtexAdmin {
 								$this->tpl->atribui("tipo",$tipo);
 								$destino = $nas['ip'];	
 
-								//ECHO "BOSTA'";
+								
 								$username = @$_REQUEST["username"];
 								$this->spool->bandalargaAdicionaRede($destino,$id_conta,$rede,$mac,$banda_upload_kbps,$banda_download_kbps,$username);
 
