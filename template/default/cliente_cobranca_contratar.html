@@ -171,7 +171,52 @@ function verificaTipoHosp() {
 {/literal}
 
 </script>
+{literal}
+<script language="JavaScript">
 
+function calculaDataCarne() {
+   if( formulario.dia_vencimento.value.length == 0 ) {
+      formulario.ini_carne.value = formulario.data_contratacao.value;
+   } else {
+      var d = new String(formulario.data_contratacao.value);
+   
+      // split;
+      var tmp = d.split("/");
+      dia = tmp[0];
+      mes = parseInt(tmp[1]);
+      ano = parseInt(tmp[2]);
+      
+      formulario.ini_carne.value = criaData( formulario.dia_vencimento.value, mes, ano );
+   }
+   
+   formulario.ini_carne.value = incrementaMes( formulario.ini_carne.value, 1 );
+   formulario.data_carne.value = incrementaMes( formulario.ini_carne.value, parseInt(formulario.vigencia.value) - 1);
+}
+
+function processaVigencia() {
+   if( !parseInt(formulario.vigencia.value) ) {
+      window.alert("A vigência não é válida.");
+      formulario.vigencia.focus();
+   } else {
+      calculaDataCarne();
+   }
+}
+
+function processaDataContrato() {
+   if( !dataValida(formulario.data_contratacao.value) ) {
+      window.alert("Data do contrato não é válida");
+      formulario.data_contratacao.focus();
+   } else {
+      // Calcula data final do carnê.
+      calculaDataCarne();
+   }
+}
+
+
+
+
+</script>
+{/literal}
 <form name="frmContratacao" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return validaForm();">
   <!-- DADOS DO FORMULARIO: INI -->
     <div id="formBL">
@@ -208,7 +253,8 @@ function verificaTipoHosp() {
               <OPTION VALUE='M' >Manual</OPTION>
             </SELECT> <br> <input type="text" name="endereco_ip" id="endereco_ip" value="{$endereco_ip}"></td>
           <td bgcolor="#FFFFFF" align="right" width="71" valign="top"><p>MAC:</p></td>
-          <td bgcolor="#FFFFFF" valign="top"><input type="text" name="mac" value="{$mac}" maxlength="17" size=17></td>
+          <td bgcolor="#FFFFFF" valign="top"><input type="text" name="mac" value="{$mac}" maxlength="17" size=17>
+    </td>
           {literal}
           <script>
 		verificaTipoRede();
@@ -325,7 +371,8 @@ function verificaTipoHosp() {
                     <option value="BL" {if $tipo=="BL"}SELECTED{/if}>Banda Larga</option>
                     <option value="D" {if $tipo=="D"}SELECTED{/if}>Discado</option>
                     <option value="H" {if $tipo=="H"}SELECTED{/if}>Hospedagem</option>
-                  </select> </td>
+                  </select>
+              </td>
               </tr>
               <tr>
                 <td width="89" height="26" align="right" bgcolor="#FFFFFF">
@@ -364,13 +411,88 @@ function verificaTipoHosp() {
 									  </tr>
 									</table>
 
-								</td>
+								
+          <table border=0 width="450" bgcolor="#F1F1F1">
+            <tr> 
+              <td colspan=2><h2><font color="#000000">Contrato</font></h2></td>
+            </tr>
+            <tr> 
+              <td bgcolor="#FFFFFF" align="right" width="70"><p>Dt Contrato:</p></td>
+              <td bgcolor="#FFFFFF"><p> 
+                  <input type="text" size=10 maxlength="10" name="data_contratacao" value="08/04/2006" onFocusOut="javascript:processaDataContrato();"  onChange="javascript:processaDataContrato();">
+                </p></td>
+            </tr>
+            <tr> 
+              <td bgcolor="#FFFFFF" align="right" width="70"><p>Vigência:</p></td>
+              <td bgcolor="#FFFFFF"><p> 
+                  <input type="text" size=2 maxlength="2" name="vigencia" value="12" onChange="javascript:processaVigencia();" onFocusOut="javascrpt:processaVigencia();">
+                  meses</p></td>
+            </tr>
+            <tr> 
+              <td bgcolor="#FFFFFF" align="right" width="70"><p>Dominio:</p></td>
+              <td bgcolor="#FFFFFF"><p> 
+                  <SELECT name='dominio' >
+                    <OPTION VALUE='' ></OPTION>
+                    <OPTION VALUE='canalpicos.com.br' >canalpicos.com.br</OPTION>
+                    <OPTION VALUE='firme.com.br'  SELECTED >firme.com.br</OPTION>
+                    <OPTION VALUE='virtex.com.br' >virtex.com.br</OPTION>
+                  </SELECT>
+                  (para cadastro de e-mails)</p></td>
+            </tr>
+            <tr> 
+              <td bgcolor="#FFFFFF" align="right" width="70"><p>Status:</p></td>
+              <td bgcolor="#FFFFFF"><p> 
+                  <SELECT name='status' >
+                    <OPTION VALUE='A'  SELECTED >Ativo</OPTION>
+                    <OPTION VALUE='S' >Suspenso</OPTION>
+                    <OPTION VALUE='C' >Cancelado</OPTION>
+                  </SELECT>
+                </p></td>
+            </tr>
+            <tr> 
+              <td bgcolor="#FFFFFF" align="right" width="70"><p>Dia Vencimento:</p></td>
+              <td bgcolor="#FFFFFF"> <p> 
+                  <input type="text" id="dia_vencimento" name="dia_vencimento" value="" size=2 maxlength=2 onFocusOut="javascript:processaDataContrato();"  onChange="javascript:processaDataContrato();">
+                  Carência: 
+                  <input type="text" id="carencia_pagamento" name="carencia_pagamento" value="" size=2 maxlength=2>
+                  dias </p></td>
+            </tr>
+            <tr> 
+              <td bgcolor="#FFFFFF" align="right" width="70"><p>Desconto</p></td>
+              <td bgcolor="#FFFFFF"><p> 
+                  <input type="text" size=7 maxlength="7" name="desconto" value="0,00">
+                  reais</p></td>
+            </tr>
+            <tr> 
+              <td colspan=2><h2><font color="#000000">Cobrança</font></h2></td>
+            </tr>
+            <tr> 
+              <td bgcolor="#FFFFFF" align="right" width="70">Opção:</td>
+              <td bgcolor="#FFFFFF"><SELECT name='gerar_carne' >
+                  <OPTION VALUE='G' >Gerar Carnê</OPTION>
+                  <OPTION VALUE='J' >Carnê já foi gerado</OPTION>
+                </SELECT> <br>
+                de 
+                <input type="text" name="ini_carne" value="" size=10 maxlength=10>
+                até <input type="text" name="data_carne" value="" size=10 maxlength=10></td>
+            </tr>
+            <tr> 
+              <td bgcolor="#FFFFFF" align="right" width="70">Adesão:</td>
+              <td bgcolor="#FFFFFF"><SELECT name='gerar_adesao' >
+                  <OPTION VALUE='1' >Sim</OPTION>
+                  <OPTION VALUE='0' >Não</OPTION>
+                </SELECT> </td>
+            </tr>
+            <script language="JavaScript">
+calculaDataCarne();
+</script> 
+          </table>
+          <p>&nbsp;</p></td>
                             </tr>
 
                             <tr>
-                              <td align="center" valign="middle" id="tdados">&nbsp;
-
-                              </td>
+                              
+        <td align="center" valign="middle" id="tdados">&nbsp;</td>
                             </tr>
 
 
