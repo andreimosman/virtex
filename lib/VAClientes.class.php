@@ -776,6 +776,10 @@ class VAClientes extends VirtexAdmin {
 							//}
 							
 							
+							require_once( PATH_LIB . "/dede.php" );					
+
+							
+							
 							$id_produto = @$_REQUEST['id_produto'];
 							$prod = $this->obtemProduto($id_produto);	
 							
@@ -1196,7 +1200,6 @@ class VAClientes extends VirtexAdmin {
 					}
 					
 					
-					require_once( PATH_LIB . "/dede.php" );					
 					
 					
 					$this->tpl->atribui("lista_nas",@$lista_nas);
