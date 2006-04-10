@@ -11,7 +11,7 @@
 					
 					//Cadastro de contrato					
 					//Pega informações sobre forma de pagamento					
-					$tipo_cobranca = @_$REQUEST['tipo_cobranca'];
+					$tipo_cobranca = @$_REQUEST['tipo_cobranca'];
 					
 					$sSQL = "SELECT * FROM cftb_forma_pagamento WHERE tipo_cobranca = $tipo_cobranca ";
 					
@@ -23,7 +23,7 @@
 					$data_renovacao = @$_REQUEST["data_renovacao"];
 					$valor_contrato = @$_REQUEST["valor_contrato"];
 					$id_cobranca = $tipo_cobranca;
-					$status = @REQUEST["status"];
+					$status = @$_REQUEST["status"];
 					
 					$sSQL = "INSERT INTO cbtb_contrato (";
 					$sSQL .= "	id_cliente_produto, vigencia, data_renovacao, valor_contrato, id_cobranca, status";

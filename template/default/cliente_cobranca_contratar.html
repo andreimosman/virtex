@@ -424,42 +424,42 @@ function processaDataContrato() {
             <tr> 
               <td bgcolor="#FFFFFF" align="right" width="75"><p>Dt Contrato:</p></td>
               <td bgcolor="#FFFFFF" colspan="3"><p> 
-                  <input type="text" size=10 maxlength="10" name="data_contratacao" value="08/04/2006" onFocusOut="javascript:processaDataContrato();"  onChange="javascript:processaDataContrato();">
+                  <input type="text" size=10 maxlength="10" name="data_contratacao" value="08/04/2006" onfocusout="javascript:processaDataContrato();"  onchange="javascript:processaDataContrato();">
                 </p></td>
             </tr>
             <tr> 
               <td bgcolor="#FFFFFF" align="right" width="75"><p>Vigência:</p></td>
               <td bgcolor="#FFFFFF" colspan="3"><p> 
-                  <input type="text" size=2 maxlength="2" name="vigencia" value="12" onChange="javascript:processaVigencia();" onFocusOut="javascrpt:processaVigencia();">
+                  <input type="text" size=2 maxlength="2" name="vigencia" value="12" onchange="javascript:processaVigencia();" onfocusout="javascrpt:processaVigencia();">
                   meses</p></td>
             </tr>
             <tr> 
               <td bgcolor="#FFFFFF" align="right" width="75"><p>Dominio:</p></td>
               <td bgcolor="#FFFFFF" colspan="3"><p> 
-                  <SELECT name='dominio' >
-                    <OPTION VALUE='' ></OPTION>
+                  <select name='dominio' >
+                    <option value='' ></option>
 					{foreach item=a from=$preferencias}
-                    <OPTION VALUE='{$a.dominio_padrao}' >{$a.dominio_padrao}</OPTION>
+                    <option value='{$a.dominio_padrao}' >{$a.dominio_padrao}</option>
 					{/foreach}
-                  </SELECT>
+                  </select>
                   (para cadastro de e-mails)</p></td>
             </tr>
             <tr> 
               <td bgcolor="#FFFFFF" align="right" width="75"><p>Status:</p></td>
               <td bgcolor="#FFFFFF" colspan="3"><p> 
-                  <SELECT name='status' >
-                    <OPTION VALUE='A'  SELECTED >Ativo</OPTION>
-                    <OPTION VALUE='S' >Suspenso</OPTION>
-                    <OPTION VALUE='C' >Cancelado</OPTION>
-                  </SELECT>
+                  <select name='status' >
+                    <option value='A'  selected >Ativo</option>
+                    <option value='S' >Suspenso</option>
+                    <option value='C' >Cancelado</option>
+                  </select>
                 </p></td>
             </tr>
             <tr> 
               <td bgcolor="#FFFFFF" align="right" width="75"><p>Dia Vencimento:</p></td>
               <td bgcolor="#FFFFFF" colspan="3"> <p> 
-                  <input type="text" id="dia_vencimento" name="dia_vencimento" value="" size=2 maxlength=2 onFocusOut="javascript:processaDataContrato();"  onChange="javascript:processaDataContrato();">
+                  <input type="text" id="dia_vencimento2" name="dia_vencimento" value="" size=2 maxlength=2 onfocusout="javascript:processaDataContrato();"  onchange="javascript:processaDataContrato();">
                   Carência: 
-                  <input type="text" id="carencia_pagamento" name="carencia_pagamento" value="" size=2 maxlength=2>
+                  <input type="text" id="carencia_pagamento2" name="carencia_pagamento" value="" size=2 maxlength=2>
                   dias </p></td>
             </tr>
             <tr> 
@@ -471,7 +471,7 @@ function processaDataContrato() {
             <tr> 
               <td bgcolor="#FFFFFF" align="right"><p>Taxa Inst.:</p></td>
               <td bgcolor="#FFFFFF" colspan="3"><p> 
-                  <input name="tx_inst" type="text" value="0,00" size=7 maxlength="7" id="tx_inst">
+                  <input name="tx_inst" type="text" value="0,00" size=7 maxlength="7" id="tx_inst2">
                   reais</p></td>
             </tr>
             <tr> 
@@ -481,7 +481,7 @@ function processaDataContrato() {
                 </p></td>
               <td bgcolor="#FFFFFF" width="46"><p>Valor:</p></td>
               <td bgcolor="#FFFFFF" width="280"><p> 
-                  <input name="vl_comodato" type="text" value="0,00" size=7 maxlength="7" id="vl_comodato">
+                  <input name="vl_comodato" type="text" value="0,00" size=7 maxlength="7" id="vl_comodato2">
                   reais</p></td>
             </tr>
             <tr> 
@@ -494,15 +494,24 @@ function processaDataContrato() {
             <tr> 
               <td bgcolor="#FFFFFF" align="right" width="75"><p>Opção:</p></td>
               <td bgcolor="#FFFFFF" colspan="3"><p> 
-                  <SELECT name='tipo_cobranca' id="tipo_cobranca" >
+                  <select name='tipo_cobranca' id="select" >
 				  {foreach item=a from=$tipo_cobranca}
-                    <OPTION VALUE='{$a.id_cobranca}' >{$a.nome_cobranca} - {$a.tipo_cobranca}</OPTION>
+                    <option value='{$a.id_cobranca}' >{$a.nome_cobranca}</option>
 					{/foreach}
-                  </SELECT>
+                  </select>
                   <br>
                 </p></td>
             </tr>
             <tr>
+              <td bgcolor="#FFFFFF" align="right"><p>Forma de Pagamento:</p></td>
+              <td bgcolor="#FFFFFF" colspan="3">
+			  <select name="forma_pagamento">
+                {foreach key=id item=nome from=$forma_pagamento}
+				  <option value="{$id}">{$nome}</option>
+				{/foreach}
+                </select></td>
+            </tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right">&nbsp;</td>
               <td bgcolor="#FFFFFF" colspan="3"><p>de 
                   <input type="text" name="ini_carne" value="" size=10 maxlength=10>
