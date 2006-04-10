@@ -121,7 +121,11 @@ $_LS_ST_CONTA = array(
         "A" => "Ativo",
         "B" => "Bloqueado"
         ); 
-
+        
+$_LS_FORMA_PAGAMENTO = array(
+		"PRE" => "Pré-Pago",
+		"POS" => "Pós-Pago"
+		);
 
 
 ?>

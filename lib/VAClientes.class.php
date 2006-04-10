@@ -1107,23 +1107,6 @@ class VAClientes extends VirtexAdmin {
 					$this->arquivoTemplate = "cliente_cobranca_contratar.html";
 					
 					
-///// HUGO
-											
-					$sSQL  = "SELECT ";
-					$sSQL .= "  id_cobranca, nome_cobranca, tipo_cobranca ";
-					$sSQL .= "FROM ";
-					$sSQL .= "cftb_forma_pagamento ";
-					$sSQL .= "WHERE ";
-					$sSQL .= "	disponivel = 't'";
-											
-					$tipo_cobranca = $this->bd->obtemRegistros($sSQL);
-					
-					
-					$sSQL  = "SELECT dominio_padrao FROM cftb_preferencias where id_provedor = '1'";
-					$preferencias = $this->bd->obtemRegistros($sSQL);
-											
-//// FIM HUGO
-
 					
 					
 					$sSQL  = "SELECT ";
@@ -1165,6 +1148,10 @@ class VAClientes extends VirtexAdmin {
 					$lista_discado    = $this->bd->obtemRegistros("$sSQL $cond_discado $ordem");
 					$lista_bandalarga = $this->bd->obtemRegistros("$sSQL $cond_bandalarga $ordem");
 					$lista_hospedagem = $this->bd->obtemRegistros("$sSQL $cond_hospedagem $ordem");
+
+
+					require_once( PATH_LIB . "/hugo.php" );
+
 
 					$this->tpl->atribui("lista_discado",$lista_discado);
 					$this->tpl->atribui("lista_bandalarga",$lista_bandalarga);
@@ -1209,56 +1196,7 @@ class VAClientes extends VirtexAdmin {
 					}
 					
 					
-//DEDÉ
-					//Verifica o cadastramento anterior do contrato
-					
-					$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
-					$sSQL = "SELECT COUNT(*) FROM cbtb_contrato WHERE id_cliente_produto = $id_cliente_produto";
-					
-					
-										
-					
-					//Cadastro de contrato					
-					//Pega informações sobre forma de pagamento					
-					$tipo_cobranca = @_$REQUEST['tipo_cobranca'];
-					
-					$sSQL = "SELECT * FROM cftb_forma_pagamento WHERE tipo_cobranca = $tipo_cobranca ";
-					
-					//Coleta informações sobre o tipo de pagamento escolhido
-					$forma_pagamento = $this->bd->obtemUnicoRegistro($sSQL);
-										
-					
-					$vigencia = @$_REQUEST["vigencia"];
-					$data_renovacao = @$_REQUEST["data_renovacao"];
-					$valor_contrato = @$_REQUEST["valor_contrato"];
-					$id_cobranca = $tipo_cobranca;
-					$status = @REQUEST["status"];
-					
-					$sSQL = "INSERT INTO cbtb_contrato (";
-					$sSQL .= "	id_cliente_produto, vigencia, data_renovacao, valor_contrato, id_cobranca, status";
-					$sSQL .= ") VALUES (";
-					$sSQL .= "	$id_cliente_produto, $vigencia, '$data_renovacao', $valor_contrato, $id_cobranca, '$status'";
-					
-					$this->bd->consulta($sSQL);
-										
-					/*
-					//Taxa de juros padrao
-					$sSQL = "SELECT * from cftb_preferencias WHERE id_provedor = 1";
-					$prov_prefs = $this->bd->obtemUnicoRegistro($sSQL);					
-					$tx_juros = prev_profs["tx_juros"];
-					
-					//Cadastro da Forma de Pagamento
-					
-					$valor = @$_RESQUEST["valor"];
-					
-					
-					$sSQL = "INSERT INTO cbtb_fatura (";
-					$sSQL .= "	id_cliente_produto, vencimento, cobranca, tx_juros, valor, qtde_faturas ",
-					$sSQL .= ") VALUES (";
-					$sSQL .= "	$id_cliente_produto, $vencimento, $cobranca, "*/
-					
-//FIM DEDÉ
-					
+					require_once( PATH_LIB . "/dede.php" );					
 					
 					
 					$this->tpl->atribui("lista_nas",@$lista_nas);
