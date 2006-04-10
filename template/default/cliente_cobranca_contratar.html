@@ -26,7 +26,7 @@
 
 
 
-// Formularios
+// frmContratacaos
 var fD;
 var fBL;
 var fH;
@@ -99,17 +99,17 @@ function alteraProduto() {
 
 function init() {
 
-	// Formulario de Discado;
+	// frmContratacao de Discado;
 	var o = document.getElementById("formD")
 	fD=o.outerHTML;
 	o.outerHTML="";
 
-	// Formulario de Banda Larga;
+	// frmContratacao de Banda Larga;
 	var o = document.getElementById("formBL")
 	fBL=o.outerHTML;
 	o.outerHTML="";
 
-	// Formulario de Hospedagem;
+	// frmContratacao de Hospedagem;
 	var o = document.getElementById("formH")
 	fH=o.outerHTML;
 	o.outerHTML="";
@@ -180,10 +180,10 @@ function verificaTipoHosp() {
 <script language="JavaScript">
 
 function calculaDataCarne() {
-   if( formulario.dia_vencimento.value.length == 0 ) {
-      formulario.ini_carne.value = formulario.data_contratacao.value;
+   if( frmContratacao.dia_vencimento.value.length == 0 ) {
+      frmContratacao.ini_carne.value = frmContratacao.data_contratacao.value;
    } else {
-      var d = new String(formulario.data_contratacao.value);
+      var d = new String(frmContratacao.data_contratacao.value);
    
       // split;
       var tmp = d.split("/");
@@ -191,26 +191,26 @@ function calculaDataCarne() {
       mes = parseInt(tmp[1]);
       ano = parseInt(tmp[2]);
       
-      formulario.ini_carne.value = criaData( formulario.dia_vencimento.value, mes, ano );
+      frmContratacao.ini_carne.value = criaData( frmContratacao.dia_vencimento.value, mes, ano );
    }
    
-   formulario.ini_carne.value = incrementaMes( formulario.ini_carne.value, 1 );
-   formulario.data_carne.value = incrementaMes( formulario.ini_carne.value, parseInt(formulario.vigencia.value) - 1);
+   frmContratacao.ini_carne.value = incrementaMes( frmContratacao.ini_carne.value, 1 );
+   frmContratacao.data_carne.value = incrementaMes( frmContratacao.ini_carne.value, parseInt(frmContratacao.vigencia.value) - 1);
 }
 
 function processaVigencia() {
-   if( !parseInt(formulario.vigencia.value) ) {
+   if( !parseInt(frmContratacao.vigencia.value) ) {
       window.alert("A vigência não é válida.");
-      formulario.vigencia.focus();
+      frmContratacao.vigencia.focus();
    } else {
       calculaDataCarne();
    }
 }
 
 function processaDataContrato() {
-   if( !dataValida(formulario.data_contratacao.value) ) {
+   if( !dataValida(frmContratacao.data_contratacao.value) ) {
       window.alert("Data do contrato não é válida");
-      formulario.data_contratacao.focus();
+      frmContratacao.data_contratacao.focus();
    } else {
       // Calcula data final do carnê.
       calculaDataCarne();
@@ -223,7 +223,7 @@ function processaDataContrato() {
 </script>
 {/literal}
 <form name="frmContratacao" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return validaForm();">
-  <!-- DADOS DO FORMULARIO: INI -->
+  <!-- DADOS DO frmContratacao: INI -->
     <div id="formBL">
       <table width="450" border=0 bgcolor="#F1F1F1" id="disc">
         <tr>
@@ -307,7 +307,7 @@ function processaDataContrato() {
     </div>
   </div>
 
-<!-- DADOS DO FORMULARIO: FIM -->
+<!-- DADOS DO frmContratacao: FIM -->
 
 
 
@@ -419,34 +419,34 @@ function processaDataContrato() {
 								
           <table border=0 width="450" bgcolor="#F1F1F1">
             <tr> 
-              <td colspan=2><h2><font color="#000000">Contrato</font></h2></td>
+              <td colspan=4><h2><font color="#000000">Contrato</font></h2></td>
             </tr>
             <tr> 
-              <td bgcolor="#FFFFFF" align="right" width="70"><p>Dt Contrato:</p></td>
-              <td bgcolor="#FFFFFF"><p> 
+              <td bgcolor="#FFFFFF" align="right" width="75"><p>Dt Contrato:</p></td>
+              <td bgcolor="#FFFFFF" colspan="3"><p> 
                   <input type="text" size=10 maxlength="10" name="data_contratacao" value="08/04/2006" onFocusOut="javascript:processaDataContrato();"  onChange="javascript:processaDataContrato();">
                 </p></td>
             </tr>
             <tr> 
-              <td bgcolor="#FFFFFF" align="right" width="70"><p>Vigência:</p></td>
-              <td bgcolor="#FFFFFF"><p> 
+              <td bgcolor="#FFFFFF" align="right" width="75"><p>Vigência:</p></td>
+              <td bgcolor="#FFFFFF" colspan="3"><p> 
                   <input type="text" size=2 maxlength="2" name="vigencia" value="12" onChange="javascript:processaVigencia();" onFocusOut="javascrpt:processaVigencia();">
                   meses</p></td>
             </tr>
             <tr> 
-              <td bgcolor="#FFFFFF" align="right" width="70"><p>Dominio:</p></td>
-              <td bgcolor="#FFFFFF"><p> 
+              <td bgcolor="#FFFFFF" align="right" width="75"><p>Dominio:</p></td>
+              <td bgcolor="#FFFFFF" colspan="3"><p> 
                   <SELECT name='dominio' >
                     <OPTION VALUE='' ></OPTION>
-                    <OPTION VALUE='canalpicos.com.br' >canalpicos.com.br</OPTION>
-                    <OPTION VALUE='firme.com.br'  SELECTED >firme.com.br</OPTION>
-                    <OPTION VALUE='virtex.com.br' >virtex.com.br</OPTION>
+					{foreach item=a from=$preferencias}
+                    <OPTION VALUE='{$a.dominio_padrao}' >{$a.dominio_padrao}</OPTION>
+					{/foreach}
                   </SELECT>
                   (para cadastro de e-mails)</p></td>
             </tr>
             <tr> 
-              <td bgcolor="#FFFFFF" align="right" width="70"><p>Status:</p></td>
-              <td bgcolor="#FFFFFF"><p> 
+              <td bgcolor="#FFFFFF" align="right" width="75"><p>Status:</p></td>
+              <td bgcolor="#FFFFFF" colspan="3"><p> 
                   <SELECT name='status' >
                     <OPTION VALUE='A'  SELECTED >Ativo</OPTION>
                     <OPTION VALUE='S' >Suspenso</OPTION>
@@ -455,44 +455,64 @@ function processaDataContrato() {
                 </p></td>
             </tr>
             <tr> 
-              <td bgcolor="#FFFFFF" align="right" width="70"><p>Dia Vencimento:</p></td>
-              <td bgcolor="#FFFFFF"> <p> 
+              <td bgcolor="#FFFFFF" align="right" width="75"><p>Dia Vencimento:</p></td>
+              <td bgcolor="#FFFFFF" colspan="3"> <p> 
                   <input type="text" id="dia_vencimento" name="dia_vencimento" value="" size=2 maxlength=2 onFocusOut="javascript:processaDataContrato();"  onChange="javascript:processaDataContrato();">
                   Carência: 
                   <input type="text" id="carencia_pagamento" name="carencia_pagamento" value="" size=2 maxlength=2>
                   dias </p></td>
             </tr>
             <tr> 
-              <td bgcolor="#FFFFFF" align="right" width="70"><p>Desconto</p></td>
-              <td bgcolor="#FFFFFF"><p> 
+              <td bgcolor="#FFFFFF" align="right" width="75"><p>Desconto</p></td>
+              <td bgcolor="#FFFFFF" colspan="3"><p> 
                   <input type="text" size=7 maxlength="7" name="desconto" value="0,00">
                   reais</p></td>
             </tr>
             <tr> 
-              <td colspan=2><h2><font color="#000000">Cobrança</font></h2></td>
+              <td bgcolor="#FFFFFF" align="right"><p>Taxa Inst.:</p></td>
+              <td bgcolor="#FFFFFF" colspan="3"><p> 
+                  <input name="tx_inst" type="text" value="0,00" size=7 maxlength="7" id="tx_inst">
+                  reais</p></td>
             </tr>
             <tr> 
-              <td bgcolor="#FFFFFF" align="right" width="70">Opção:</td>
-              <td bgcolor="#FFFFFF"><SELECT name='gerar_carne' >
-                  <OPTION VALUE='G' >Gerar Carnê</OPTION>
-                  <OPTION VALUE='J' >Carnê já foi gerado</OPTION>
-                </SELECT> <br>
-                de 
-                <input type="text" name="ini_carne" value="" size=10 maxlength=10>
-                até <input type="text" name="data_carne" value="" size=10 maxlength=10></td>
+              <td bgcolor="#FFFFFF" align="right"><p>Comodato</p></td>
+              <td bgcolor="#FFFFFF" width="31"><p> 
+                  <input type="checkbox" name="checkbox" value="checkbox" class="checkbox">
+                </p></td>
+              <td bgcolor="#FFFFFF" width="46"><p>Valor:</p></td>
+              <td bgcolor="#FFFFFF" width="280"><p> 
+                  <input name="vl_comodato" type="text" value="0,00" size=7 maxlength="7" id="vl_comodato">
+                  reais</p></td>
             </tr>
             <tr> 
-              <td bgcolor="#FFFFFF" align="right" width="70">Adesão:</td>
-              <td bgcolor="#FFFFFF"><SELECT name='gerar_adesao' >
-                  <OPTION VALUE='1' >Sim</OPTION>
-                  <OPTION VALUE='0' >Não</OPTION>
-                </SELECT> </td>
+              <td bgcolor="#FFFFFF" align="right"><p>Pro-Rata</p></td>
+              <td bgcolor="#FFFFFF" colspan="3"><input type="checkbox" name="checkbox2" value="checkbox" class="checkbox"></td>
             </tr>
-			{literal}
-            <script language="JavaScript">
+            <tr> 
+              <td colspan=4><h2><font color="#000000">Cobrança</font></h2></td>
+            </tr>
+            <tr> 
+              <td bgcolor="#FFFFFF" align="right" width="75"><p>Opção:</p></td>
+              <td bgcolor="#FFFFFF" colspan="3"><p> 
+                  <SELECT name='tipo_cobranca' id="tipo_cobranca" >
+				  {foreach item=a from=$tipo_cobranca}
+                    <OPTION VALUE='{$a.id_cobranca}' >{$a.nome_cobranca} - {$a.tipo_cobranca}</OPTION>
+					{/foreach}
+                  </SELECT>
+                  <br>
+                </p></td>
+            </tr>
+            <tr>
+              <td bgcolor="#FFFFFF" align="right">&nbsp;</td>
+              <td bgcolor="#FFFFFF" colspan="3"><p>de 
+                  <input type="text" name="ini_carne" value="" size=10 maxlength=10>
+                  até 
+                  <input type="text" name="data_carne" value="" size=10 maxlength=10>
+                </p></td>
+            </tr>
+            {literal} <script language="JavaScript">
 calculaDataCarne();
-</script> 
-{/literal}
+</script> {/literal} 
           </table>
           <p>&nbsp;</p></td>
                             </tr>

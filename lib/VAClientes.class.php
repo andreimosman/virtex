@@ -695,7 +695,6 @@ class VAClientes extends VirtexAdmin {
 						$tipo_conta = @$_REQUEST["tipo_conta"];
 						$dominio_hospedagem = @$_REQUEST["dominio_hospedagem"];
 						
-						
 						//$sSQL  = "SELECT * from cntb_contas where username = '$username', dominio = '$dominio', tipo_conta = '$tipo_conta'";
 						//$prep = $this->bd->obtemUnicoRegistro($sSQL);
 
@@ -1108,6 +1107,23 @@ class VAClientes extends VirtexAdmin {
 					$this->arquivoTemplate = "cliente_cobranca_contratar.html";
 					
 					
+///// HUGO
+											
+					$sSQL  = "SELECT ";
+					$sSQL .= "  id_cobranca, nome_cobranca, tipo_cobranca ";
+					$sSQL .= "FROM ";
+					$sSQL .= "cbtb_cobranca ";
+											
+					$tipo_cobranca = $this->bd->obtemRegistros($sSQL);
+					
+					
+					$sSQL  = "SELECT dominio_padrao FROM cftb_preferencias where id_provedor = '1'";
+					$preferencias = $this->bd->obtemRegistros($sSQL);
+											
+//// FIM HUGO
+
+					
+					
 					$sSQL  = "SELECT ";
 					$sSQL .= "	username, dominio, tipo_conta, senha, id_cliente, conta_mestre, status, observacoes, id_conta ";
 					$sSQL .= "FROM ";
@@ -1151,6 +1167,9 @@ class VAClientes extends VirtexAdmin {
 					$this->tpl->atribui("lista_discado",$lista_discado);
 					$this->tpl->atribui("lista_bandalarga",$lista_bandalarga);
 					$this->tpl->atribui("lista_hospedagem",$lista_hospedagem);
+					$this->tpl->atribui("tipo_cobranca",$tipo_cobranca);
+					$this->tpl->atribui("preferencias",$preferencias);
+					
 
 					// LISTA DE POPS
 					$sSQL  = "SELECT ";
