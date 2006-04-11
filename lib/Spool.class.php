@@ -9,6 +9,7 @@ class Spool {
 	
 	function radiusAdicionaNAS($ip,$secret) {
 		// Insere em sptb_spool instruções para adicionar um nas no radius
+		/////////////
 		
 		
 
