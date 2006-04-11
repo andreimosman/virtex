@@ -60,7 +60,7 @@
 					$sSQL .= ")";
 										
 									
-					echo "$sSQL"."<br>\n";
+					//echo "$sSQL"."<br>\n";
 					$this->bd->consulta($sSQL);
 					
 					
