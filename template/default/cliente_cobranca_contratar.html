@@ -1,6 +1,5 @@
 
 {include file='cliente_header.html'}
-
 <script language="JavaScript">
 	// Arrays
 	var lista_discado    = new Array;
@@ -13,23 +12,22 @@
 	var iHospedagem =0;
 
 {foreach item=v from=$lista_discado}
-	lista_discado[iDiscado++] = new Array('{$v.id_produto}','{$v.nome}','{$v.valor}');
+	lista_discado[iDiscado++] = new Array('{$v.id_produto}','{$v.nome}','{$v.valor}','{$v.comodato}','{$v.valor_comodato}','{$v.desconto_promo}','{$v.periodo_desconto}');
 {/foreach}
 
 {foreach item=v from=$lista_bandalarga}
-	lista_bandalarga[iBandalarga++] = new Array('{$v.id_produto}','{$v.nome}','{$v.valor}');
+	lista_bandalarga[iBandalarga++] = new Array('{$v.id_produto}','{$v.nome}','{$v.valor}','{$v.comodato}','{$v.valor_comodato}','{$v.desconto_promo}','{$v.periodo_desconto}');
 {/foreach}
 
 {foreach item=v from=$lista_hospedagem}
-	lista_hospedagem[iHospedagem++] = new Array('{$v.id_produto}','{$v.nome}','{$v.valor}');
+	lista_hospedagem[iHospedagem++] = new Array('{$v.id_produto}','{$v.nome}','{$v.valor}','{$v.comodato}','{$v.valor_comodato}','{$v.desconto_promo}','{$v.periodo_desconto}');
 {/foreach}
 
-
-
-
-function preencheDadosProduto(id_produto) {
+{literal}
+// pega os dados e preenche o resto do formulário
+/*function preencheDadosProduto(id_produto) {
    var frm = document.frmContratacao;
-   var lst;
+   var lst = "";
 
    if( frm.tipo.value == 'D' ) {
       lst = lista_discado;
@@ -45,23 +43,15 @@ function preencheDadosProduto(id_produto) {
       if( lst[i][0] == id_produto ) {
          // Achou o registro.
 
-         //frm.comodato.value = lst[i][4];
-
-
-
-
+         frm.comodato.value = lst[i][4];
+		 frm.valor_comodato.value = lst[i][5];
+		 frm.desconto_promo.value = lst[i][6];
+		 frm.periodo_desconto.value = lst[i][7];
       }
    }
-
-
-
-
-
-}
-
-
-
-
+}*/
+//final do script de preenchimento do formulário
+{/literal}
 
 // frmContratacaos
 var fD;
@@ -72,7 +62,6 @@ var fH;
 // ultimo id_produto selecionado
 var id_produto_saved = '{$id_produto}';
 //window.alert(id_produto_saved);
-
 {literal}
 
 
@@ -131,6 +120,31 @@ function alteraProduto() {
 	var frm = document.frmContratacao;
 	prod = frm.id_produto;
 	id_produto_saved = prod.value;
+	
+	var lst = "";
+
+   if( frm.tipo.value == 'D' ) {
+      lst = lista_discado;
+   } else if( frm.tipo.value == 'BL' ) {
+      lst = lista_bandalarga;
+   } else if( frm.tipo.value == 'H' ) {
+      lst = lista.hospedagem;
+   } else {
+      return;
+   }
+
+   for(i=0;i<lst.length;i++) {
+      if( lst[i][0] == id_produto ) {
+         // Achou o registro.
+
+         frm.comodato.value = lst[i][4];
+		 frm.valor_comodato.value = lst[i][5];
+		 frm.desconto_promo.value = lst[i][6];
+		 frm.periodo_desconto.value = lst[i][7];
+      }
+   }
+	
+	
 }
 
 
@@ -455,24 +469,24 @@ function processaDataContrato() {
 
 
           <table border=0 width="450" bgcolor="#F1F1F1">
-            <tr>
+            <tr> 
               <td colspan=4><h2><font color="#000000">Contrato</font></h2></td>
             </tr>
-            <tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right" width="75"><p>Dt Contrato:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p>
+              <td bgcolor="#FFFFFF" colspan="3"><p> 
                   <input type="text" size=10 maxlength="10" name="data_contratacao" value="08/04/2006" onfocusout="javascript:processaDataContrato();"  onchange="javascript:processaDataContrato();">
                 </p></td>
             </tr>
-            <tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right" width="75"><p>Vigência:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p>
+              <td bgcolor="#FFFFFF" colspan="3"><p> 
                   <input type="text" size=2 maxlength="2" name="vigencia" value="12" onchange="javascript:processaVigencia();" onfocusout="javascrpt:processaVigencia();">
                   meses</p></td>
             </tr>
-            <tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right" width="75"><p>Dominio:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p>
+              <td bgcolor="#FFFFFF" colspan="3"><p> 
                   <select name='dominio' >
                     <option value='' ></option>
 					{foreach item=a from=$preferencias}
@@ -481,9 +495,9 @@ function processaDataContrato() {
                   </select>
                   (para cadastro de e-mails)</p></td>
             </tr>
-            <tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right" width="75"><p>Status:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p>
+              <td bgcolor="#FFFFFF" colspan="3"><p> 
                   <select name='status' >
                     <option value='A'  selected >Ativo</option>
                     <option value='S' >Suspenso</option>
@@ -491,46 +505,50 @@ function processaDataContrato() {
                   </select>
                 </p></td>
             </tr>
-            <tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right" width="75"><p>Dia Vencimento:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"> <p>
+              <td bgcolor="#FFFFFF" colspan="3"> <p> 
                   <input type="text" id="dia_vencimento2" name="dia_vencimento" value="" size=2 maxlength=2 onfocusout="javascript:processaDataContrato();"  onchange="javascript:processaDataContrato();">
-                  Carência:
+                  Carência: 
                   <input type="text" id="carencia_pagamento2" name="carencia_pagamento" value="" size=2 maxlength=2>
                   dias </p></td>
             </tr>
-            <tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right" width="75"><p>Desconto</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p>
-                  <input type="text" size=7 maxlength="7" name="desconto" value="0,00">
+              <td bgcolor="#FFFFFF"><p> 
+                  <input name="desconto_promo" type="text" value="0,00" size=7 maxlength="7" id="desconto_promo">
                   reais</p></td>
+              <td bgcolor="#FFFFFF"><p>Periodo</p></td>
+              <td bgcolor="#FFFFFF"><p> 
+                  <input type="text" id="carencia_pagamento" name="periodo_desconto" value="" size=2 maxlength=2>
+                  meses</p></td>
             </tr>
-            <tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right"><p>Taxa Inst.:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p>
+              <td bgcolor="#FFFFFF" colspan="3"><p> 
                   <input name="tx_inst" type="text" value="0,00" size=7 maxlength="7" id="tx_inst2">
                   reais</p></td>
             </tr>
-            <tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right"><p>Comodato</p></td>
-              <td bgcolor="#FFFFFF" width="31"><p>
-                  <input type="checkbox" name="checkbox" value="checkbox" class="checkbox">
+              <td bgcolor="#FFFFFF" width="31"><p> 
+                  <input name="comodato" type="checkbox" value="checkbox" id="comodato" class="checkbox">
                 </p></td>
               <td bgcolor="#FFFFFF" width="46"><p>Valor:</p></td>
-              <td bgcolor="#FFFFFF" width="280"><p>
-                  <input name="vl_comodato" type="text" value="0,00" size=7 maxlength="7" id="vl_comodato2">
+              <td bgcolor="#FFFFFF" width="280"><p> 
+                  <input name="valor_comodato" type="text" value="0,00" size=7 maxlength="7" id="vl_comodato2">
                   reais</p></td>
             </tr>
-            <tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right"><p>Pro-Rata</p></td>
               <td bgcolor="#FFFFFF" colspan="3"><input type="checkbox" name="checkbox2" value="checkbox" class="checkbox"></td>
             </tr>
-            <tr>
+            <tr> 
               <td colspan=4><h2><font color="#000000">Cobrança</font></h2></td>
             </tr>
-            <tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right" width="75"><p>Opção:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p>
+              <td bgcolor="#FFFFFF" colspan="3"><p> 
                   <select name='tipo_cobranca' id="select" >
 				  {foreach item=a from=$tipo_cobranca}
                     <option value='{$a.id_cobranca}' >{$a.nome_cobranca}</option>
@@ -539,26 +557,25 @@ function processaDataContrato() {
                   <br>
                 </p></td>
             </tr>
-            <tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right"><p>Forma de Pagamento:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3">
-			  <select name="forma_pagamento">
+              <td bgcolor="#FFFFFF" colspan="3"> <select name="forma_pagamento">
                 {foreach key=id item=nome from=$forma_pagamento}
 				  <option value="{$id}">{$nome}</option>
 				{/foreach}
                 </select></td>
             </tr>
-            <tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right">&nbsp;</td>
-              <td bgcolor="#FFFFFF" colspan="3"><p>de
+              <td bgcolor="#FFFFFF" colspan="3"><p>de 
                   <input type="text" name="ini_carne" value="" size=10 maxlength=10>
-                  até
+                  até 
                   <input type="text" name="data_carne" value="" size=10 maxlength=10>
                 </p></td>
             </tr>
             {literal} <script language="JavaScript">
 calculaDataCarne();
-</script> {/literal}
+</script> {/literal} 
           </table>
           <p>&nbsp;</p></td>
                             </tr>
