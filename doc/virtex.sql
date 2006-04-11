@@ -1,3 +1,20 @@
+/*
+Created		22/2/2006
+Modified		9/4/2006
+Project		
+Model		
+Company		
+Author		
+Version		
+Database		PostgreSQL 7.3 (beta) 
+*/
+
+
+
+
+
+
+
 Create table  cftb_uf
 (
 	uf Char(2) NOT NULL,
@@ -75,6 +92,10 @@ Create table  prtb_produto
 	permitir_outros_dominios Boolean NULL ,
 	email_anexado Boolean NULL ,
 	numero_contas Smallint NULL ,
+	comodato Boolean NULL ,
+	valor_comodato Numeric(7,2) NULL ,
+	desconto_promo Numeric(7,2) NULL ,
+	periodo_desconto Smallint NULL ,
  primary key (id_produto)
 );
 
@@ -119,12 +140,31 @@ Create table  cbtb_cliente_produto
 Create table  cbtb_contrato
 (
 	id_cliente_produto Smallint NOT NULL,
-	id_cobranca Smallint NOT NULL,
 	data_contratacao Date NULL ,
 	vigencia Smallint NULL ,
 	data_renovacao Date NULL ,
 	valor_contrato Numeric(30,6) NULL ,
- primary key (id_cliente_produto,id_cobranca)
+	id_cobranca Smallint NOT NULL,
+	status Char(2) NULL ,
+	tipo_produto Char(2) NULL ,
+	valor_produto Numeric(7,2) NULL ,
+	num_emails Smallint NULL ,
+	quota_por_conta Smallint NULL ,
+	comodato Boolean NULL ,
+	valor_comodato Numeric(7,2) NULL ,
+	desconto_promo Numeric(7,2) NULL ,
+	periodo_desconto Smallint NULL ,
+	hosp_dominio Boolean NULL ,
+	hosp_franquia_em_mb Smallint NULL ,
+	hosp_valor_mb_adicional Numeric(7,2) NULL ,
+	disc_franquia_horas Smallint NULL ,
+	disc_permitir_duplicidade Boolean NULL ,
+	disc_valor_hora_adicional Numeric(7,2) NULL ,
+	bl_banda_upload_kbps Smallint NULL ,
+	bl_banda_download_kbps Smallint NULL ,
+	bl_franquia_trafego_mensal_gb Smallint NULL ,
+	bl_valor_trafego_adicional_gb Numeric(7,2) NULL ,
+ primary key (id_cliente_produto)
 );
 
 Create table  dominio
@@ -137,11 +177,11 @@ Create table  dominio
  primary key (dominio)
 );
 
-Create table  cbtb_cobranca
+Create table  cftb_forma_pagamento
 (
 	id_cobranca Smallint NOT NULL,
 	nome_cobranca Varchar(20) NULL ,
-	tipo_cobranca Varchar(3) NULL ,
+	disponivel Boolean NULL ,
  primary key (id_cobranca)
 );
 
@@ -299,6 +339,9 @@ Create table  cftb_preferencias
 	pop_host Varchar(255) NULL ,
 	smtp_host Varchar(255) NULL ,
 	hosp_base Varchar(255) NULL ,
+	tx_juros Smallint NULL ,
+	multa Smallint NULL ,
+	dia_venc Smallint NULL ,
  primary key (id_provedor)
 );
 
@@ -312,6 +355,18 @@ Create table  lgtb_exclusao
 	observacao Text NULL ,
  primary key (id_exclusao)
 );
+
+Create table  cbtb_faturas
+(
+	id_cliente_produto Smallint NOT NULL,
+	vencimento Date NOT NULL,
+	tipo_cobranca Smallint NULL ,
+	tx_juros Smallint NULL ,
+	valor Numeric(7,2) NULL ,
+	qtde_faturas Smallint NULL ,
+ primary key (id_cliente_produto,vencimento)
+);
+
 
 
 
@@ -355,8 +410,9 @@ Alter table prtb_produto_hospedagem add  foreign key (id_produto) references prt
 Alter table cbtb_cliente_produto add  foreign key (id_produto) references prtb_produto (id_produto)  on update restrict  on delete restrict ;
 Alter table cbtb_contrato add  foreign key (id_cliente_produto) references cbtb_cliente_produto (id_cliente_produto)  on update restrict  on delete restrict ;
 Alter table cntb_conta add  foreign key (id_cliente_produto) references cbtb_cliente_produto (id_cliente_produto)  on update restrict  on delete restrict ;
+Alter table cbtb_faturas add  foreign key (id_cliente_produto) references cbtb_contrato (id_cliente_produto)  on update restrict  on delete restrict ;
 Alter table cntb_conta add  foreign key (dominio) references dominio (dominio)  on update restrict  on delete restrict ;
-Alter table cbtb_contrato add  foreign key (id_cobranca) references cbtb_cobranca (id_cobranca)  on update restrict  on delete restrict ;
+Alter table cbtb_contrato add  foreign key (id_cobranca) references cftb_forma_pagamento (id_cobranca)  on update restrict  on delete restrict ;
 Alter table adtb_usuario_privilegio add  foreign key (id_admin) references adtb_admin (id_admin)  on update restrict  on delete restrict ;
 Alter table adtb_usuario_privilegio add  foreign key (id_priv) references adtb_privilegio (id_priv)  on update restrict  on delete restrict ;
 Alter table cntb_conta_email add  foreign key (username,dominio,tipo_conta) references cntb_conta (username,dominio,tipo_conta)  on update restrict  on delete restrict ;
