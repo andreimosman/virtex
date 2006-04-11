@@ -303,7 +303,21 @@ function processaDataContrato() {
       calculaDataCarne();
    }
 }
-
+function checaProRata(){
+	var frm = document.frmContratacao;
+	var data_padrao = "{$dia_venc}"
+	var data_contrato = frm.data_contratacao.value;
+	var quant_dias;
+	
+	if(data_padrao != data_contrato){
+		quant_dias = data_padrao - data_contrato;
+		window.alert(quant_dias);
+		return
+		
+	
+	}
+	return;
+}
 
 
 
@@ -545,7 +559,7 @@ function processaDataContrato() {
             </tr>
             <tr> 
               <td bgcolor="#FFFFFF" align="right"><p>Pro-Rata</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><input type="checkbox" name="prorata" value="checkbox" class="checkbox" id="prorata"></td>
+              <td bgcolor="#FFFFFF" colspan="3"><input type="checkbox" name="prorata" value="checkbox" class="checkbox" id="prorata" onChange="javascript:checaProRata()"></td>
             </tr>
             <tr> 
               <td bgcolor="#FFFFFF" align="right" width="123"><p>Forma de Pagamento:</p></td>
