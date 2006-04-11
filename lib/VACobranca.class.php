@@ -363,7 +363,7 @@ class VACobranca extends VirtexAdmin {
 								         	
 			         	}
 			         
-    		         		//FINAL DO UPDATE DE PRODUTOS
+    		         	//FINAL DO UPDATE DE PRODUTOS
 			      }
 
 					$this->bd->consulta($sSQL);  //mostra mensagem de erro

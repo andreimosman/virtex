@@ -776,7 +776,6 @@ class VAClientes extends VirtexAdmin {
 							//}
 							
 							
-							require_once( PATH_LIB . "/dede.php" );					
 
 							
 							
@@ -979,7 +978,8 @@ class VAClientes extends VirtexAdmin {
 						}
 						
 						
-						
+						require_once( PATH_LIB . "/dede.php" );					
+
 						if ($tipo && $tipo == "BL"){
 						
 						//echo $tipo;

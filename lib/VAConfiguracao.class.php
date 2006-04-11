@@ -833,7 +833,7 @@ class VAConfiguracao extends VirtexAdmin {
 						//echo "preferencia <br>";
 						
 						if ($acao == "alt"){
-							echo "alt";
+							//echo "alt";
 							if(!count($prefs)){
 						
 								$sSQL  = "INSERT INTO ";
@@ -847,13 +847,13 @@ class VAConfiguracao extends VirtexAdmin {
 								$this->bd->consulta($sSQL);
 								
 								$sSQL  = "SELECT * from cltb_cliente where id_cliente = '1'";
-								echo "SELECT CLIENTE: $sSQL <br>";
+								//echo "SELECT CLIENTE: $sSQL <br>";
 																
 								$primeiro = $this->bd->obtemUnicoRegistro($sSQL);
 								
 								if (!count($primeiro)){
 								
-								echo "primeiro registro <br>";
+								//echo "primeiro registro <br>";
 								
 									$id_cliente = $this->bd->proximoID("clsq_id_cliente");
 									
@@ -867,7 +867,7 @@ class VAConfiguracao extends VirtexAdmin {
 									$sSQL .= "     't', ";
 									$sSQL .= "     'f' ";
 									$sSQL .= "     )";									
-									echo "INSERT NO CLIENTE: $sSQL <br>";
+									//echo "INSERT NO CLIENTE: $sSQL <br>";
 									$this->bd->consulta($sSQL);
 									
 									$sSQL  = "INSERT INTO ";
@@ -878,7 +878,7 @@ class VAConfiguracao extends VirtexAdmin {
 									$sSQL .= "  '1', ";
 									$sSQL .= "  'A', ";
 									$sSQL .= "  't') ";
-									echo "INSERT NO DOMINIO: $sSQL <br>";
+									//echo "INSERT NO DOMINIO: $sSQL <br>";
 									$this->bd->consulta($sSQL);
 									
 									
@@ -906,9 +906,12 @@ class VAConfiguracao extends VirtexAdmin {
 							$sSQL .= "  mail_gid = '".@$_REQUEST["mail_gid"]."', ";
 							$sSQL .= "  pop_host = '".@$_REQUEST["pop_host"]."', ";
 							$sSQL .= "  smtp_host = '".@$_REQUEST["smtp_host"]."', ";
-							$sSQL .= "  hosp_base = '".@$_REQUEST["hosp_base"]."' ";
+							$sSQL .= "  hosp_base = '".@$_REQUEST["hosp_base"]."', ";
+							$sSQL .= "  tx_juros = '".@$_REQUEST["tx_juros"]."', ";
+							$sSQL .= "  multa = '".@$_REQUEST["multa"]."', ";
+							$sSQL .= "  dia_venc = '".@$_REQUEST["dia_venc"]."', ";
 							
-							echo "SQL UPDATE: $sSQL <br>";
+							//echo "SQL UPDATE: $sSQL <br>";
 							$this->bd->consulta($sSQL);
 							
 							$this->tpl->atribui("mensagem","PREFERENCIAS GRAVADAS COM SUCESSO! "); 
