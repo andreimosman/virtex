@@ -26,6 +26,43 @@
 
 
 
+
+function preencheDadosProduto(id_produto) {
+   var frm = document.frmContratacao;
+   var lst;
+
+   if( frm.tipo.value == 'D' ) {
+      lst = lista_discado;
+   } else if( frm.tipo.value == 'BL' ) {
+      lst = lista_bandalarga;
+   } else if( frm.tipo.value == 'H' ) {
+      lst = lista.hospedagem;
+   } else {
+      return;
+   }
+
+   for(i=0;i<lst.length;i++) {
+      if( lst[i][0] == id_produto ) {
+         // Achou o registro.
+
+         //frm.comodato.value = lst[i][4];
+
+
+
+
+      }
+   }
+
+
+
+
+
+}
+
+
+
+
+
 // frmContratacaos
 var fD;
 var fBL;
@@ -184,16 +221,16 @@ function calculaDataCarne() {
       frmContratacao.ini_carne.value = frmContratacao.data_contratacao.value;
    } else {
       var d = new String(frmContratacao.data_contratacao.value);
-   
+
       // split;
       var tmp = d.split("/");
       dia = tmp[0];
       mes = parseInt(tmp[1]);
       ano = parseInt(tmp[2]);
-      
+
       frmContratacao.ini_carne.value = criaData( frmContratacao.dia_vencimento.value, mes, ano );
    }
-   
+
    frmContratacao.ini_carne.value = incrementaMes( frmContratacao.ini_carne.value, 1 );
    frmContratacao.data_carne.value = incrementaMes( frmContratacao.ini_carne.value, parseInt(frmContratacao.vigencia.value) - 1);
 }
@@ -353,14 +390,14 @@ function processaDataContrato() {
 
                               <td align="center" valign="middle">
                                                          <table width="300">
-              <tr> 
+              <tr>
                 <td align="center"> <strong><font size="+2" face="Arial, Helvetica, sans-serif">Cobrança</font></strong></td>
               </tr>
               <tr>
                 <td><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                    <tr align="center"> 
+                    <tr align="center">
                       <td width="50%"><a href="clientes.php?op=cobranca&rotina=resumo&id_cliente={$id_cliente}">Resumo</a></td>
-                      <td width="50%"><a href="clientes.php?op=cobranca&id_cliente={$id_cliente}">Novo 
+                      <td width="50%"><a href="clientes.php?op=cobranca&id_cliente={$id_cliente}">Novo
                         Contrato</a></td>
                     </tr>
                   </table></td>
@@ -416,26 +453,26 @@ function processaDataContrato() {
 									  </tr>
 									</table>
 
-								
+
           <table border=0 width="450" bgcolor="#F1F1F1">
-            <tr> 
+            <tr>
               <td colspan=4><h2><font color="#000000">Contrato</font></h2></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right" width="75"><p>Dt Contrato:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p> 
+              <td bgcolor="#FFFFFF" colspan="3"><p>
                   <input type="text" size=10 maxlength="10" name="data_contratacao" value="08/04/2006" onfocusout="javascript:processaDataContrato();"  onchange="javascript:processaDataContrato();">
                 </p></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right" width="75"><p>Vigência:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p> 
+              <td bgcolor="#FFFFFF" colspan="3"><p>
                   <input type="text" size=2 maxlength="2" name="vigencia" value="12" onchange="javascript:processaVigencia();" onfocusout="javascrpt:processaVigencia();">
                   meses</p></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right" width="75"><p>Dominio:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p> 
+              <td bgcolor="#FFFFFF" colspan="3"><p>
                   <select name='dominio' >
                     <option value='' ></option>
 					{foreach item=a from=$preferencias}
@@ -444,9 +481,9 @@ function processaDataContrato() {
                   </select>
                   (para cadastro de e-mails)</p></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right" width="75"><p>Status:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p> 
+              <td bgcolor="#FFFFFF" colspan="3"><p>
                   <select name='status' >
                     <option value='A'  selected >Ativo</option>
                     <option value='S' >Suspenso</option>
@@ -454,46 +491,46 @@ function processaDataContrato() {
                   </select>
                 </p></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right" width="75"><p>Dia Vencimento:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"> <p> 
+              <td bgcolor="#FFFFFF" colspan="3"> <p>
                   <input type="text" id="dia_vencimento2" name="dia_vencimento" value="" size=2 maxlength=2 onfocusout="javascript:processaDataContrato();"  onchange="javascript:processaDataContrato();">
-                  Carência: 
+                  Carência:
                   <input type="text" id="carencia_pagamento2" name="carencia_pagamento" value="" size=2 maxlength=2>
                   dias </p></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right" width="75"><p>Desconto</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p> 
+              <td bgcolor="#FFFFFF" colspan="3"><p>
                   <input type="text" size=7 maxlength="7" name="desconto" value="0,00">
                   reais</p></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right"><p>Taxa Inst.:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p> 
+              <td bgcolor="#FFFFFF" colspan="3"><p>
                   <input name="tx_inst" type="text" value="0,00" size=7 maxlength="7" id="tx_inst2">
                   reais</p></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right"><p>Comodato</p></td>
-              <td bgcolor="#FFFFFF" width="31"><p> 
+              <td bgcolor="#FFFFFF" width="31"><p>
                   <input type="checkbox" name="checkbox" value="checkbox" class="checkbox">
                 </p></td>
               <td bgcolor="#FFFFFF" width="46"><p>Valor:</p></td>
-              <td bgcolor="#FFFFFF" width="280"><p> 
+              <td bgcolor="#FFFFFF" width="280"><p>
                   <input name="vl_comodato" type="text" value="0,00" size=7 maxlength="7" id="vl_comodato2">
                   reais</p></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right"><p>Pro-Rata</p></td>
               <td bgcolor="#FFFFFF" colspan="3"><input type="checkbox" name="checkbox2" value="checkbox" class="checkbox"></td>
             </tr>
-            <tr> 
+            <tr>
               <td colspan=4><h2><font color="#000000">Cobrança</font></h2></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right" width="75"><p>Opção:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p> 
+              <td bgcolor="#FFFFFF" colspan="3"><p>
                   <select name='tipo_cobranca' id="select" >
 				  {foreach item=a from=$tipo_cobranca}
                     <option value='{$a.id_cobranca}' >{$a.nome_cobranca}</option>
@@ -511,23 +548,23 @@ function processaDataContrato() {
 				{/foreach}
                 </select></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right">&nbsp;</td>
-              <td bgcolor="#FFFFFF" colspan="3"><p>de 
+              <td bgcolor="#FFFFFF" colspan="3"><p>de
                   <input type="text" name="ini_carne" value="" size=10 maxlength=10>
-                  até 
+                  até
                   <input type="text" name="data_carne" value="" size=10 maxlength=10>
                 </p></td>
             </tr>
             {literal} <script language="JavaScript">
 calculaDataCarne();
-</script> {/literal} 
+</script> {/literal}
           </table>
           <p>&nbsp;</p></td>
                             </tr>
 
                             <tr>
-                              
+
         <td align="center" valign="middle" id="tdados">&nbsp;</td>
                             </tr>
 
