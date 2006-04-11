@@ -623,7 +623,7 @@ class VAClientes extends VirtexAdmin {
 					$produtos[$i]["contas"] = $contas;
 				}
 			
-			
+				$
 				
 				$this->tpl->atribui("produtos",$produtos);
 				$this->arquivoTemplate = "cliente_cobranca_resumo.html";
@@ -1135,8 +1135,8 @@ class VAClientes extends VirtexAdmin {
 					$lista_dominios = $this->bd->obtemRegistros($sSQL);
 
 					$sSQL  = "SELECT ";
-					$sSQL .= "   id_produto,nome,descricao,tipo,valor ";
-					$sSQL .= "";
+					//$sSQL .= "   id_produto,nome,descricao,tipo,valor ";
+					$sSQL .= " * ";
 					$sSQL .= "FROM ";
 					$sSQL .= "   prtb_produto ";
 					$sSQL .= "WHERE ";
