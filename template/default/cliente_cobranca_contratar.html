@@ -167,6 +167,10 @@ function alteraProduto() {
 
 function init() {
 
+	var frm = document.frmContratacao;
+	frm.ini_carne.disabled=true;
+	frm.data_carne.disabled=true;
+	
 	// frmContratacao de Discado;
 	var o = document.getElementById("formD")
 	fD=o.outerHTML;
@@ -193,6 +197,21 @@ function validaUsername(user) {
 	return true;
 }
 
+function checaFormaCobranca(){
+	var frm = document.frmContratacao;
+	var msg;
+	if(frm.tipo_cobranca.value == "2"){
+	msg = "O sistema de carnê não suporta cobranças adicionais. Caso o contrato seja firmado os valores excedentes existentes serão desconsiderados, tanto no contrato quanto na fatura";
+	window.alert(msg);
+	frm.data_carne.disabled=false;
+	frm.ini_carne.disabled=false;
+	}else{
+	frm.data_carne.disabled=true;
+	frm.ini_carne.disabled=true;
+	}
+	return;
+}
+
 
 function validaForm() {
 	var frm = document.frmContratacao;
@@ -203,13 +222,13 @@ function validaForm() {
 	} else {
 		if( frm.id_produto.value == "" ) {
 			msg.push("Você não escolheu o produto");
-		} else {
+		}}/* else {
 			// Validacoes gerais
 			if(frm.id_nas.value != "3" && frm.mac.value =="")
 				msg.push("Campo MAC obrigatorio");
 
 		}
-	}
+	}*/
 
 	if( msg.length > 0 ) {
 		mensagem = "Foram encontrados erros ao processar seu formulário:\n\n";
@@ -468,7 +487,7 @@ function processaDataContrato() {
             <tr> 
               <td bgcolor="#FFFFFF" align="right" width="123"><p>Dt Contrato:</p></td>
               <td bgcolor="#FFFFFF" colspan="3"><p> 
-                  <input type="text" size=10 maxlength="10" name="data_contratacao" value="{$hoje}" onfocusout="javascript:processaDataContrato();"  onchange="javascript:processaDataContrato();">
+                  <input type="text" size=11 maxlength="10" name="data_contratacao" value="{$hoje}" onfocusout="javascript:processaDataContrato();"  onchange="javascript:processaDataContrato();">
                 </p></td>
             </tr>
             <tr> 
@@ -529,9 +548,9 @@ function processaDataContrato() {
               <td bgcolor="#FFFFFF" colspan="3"><input type="checkbox" name="prorata" value="checkbox" class="checkbox" id="prorata"></td>
             </tr>
             <tr> 
-              <td bgcolor="#FFFFFF" align="right" width="123"><p>Opção:</p></td>
+              <td bgcolor="#FFFFFF" align="right" width="123"><p>Forma de Pagamento:</p></td>
               <td bgcolor="#FFFFFF" colspan="3"><p> 
-                  <select name='tipo_cobranca' id="select" >
+                  <select name='tipo_cobranca' id="tipo_cobranca" onChange="javascript:checaFormaCobranca();">
 				  {foreach item=a from=$tipo_cobranca}
                     <option value='{$a.id_cobranca}' >{$a.nome_cobranca}</option>
 					{/foreach}
@@ -540,7 +559,7 @@ function processaDataContrato() {
                 </p></td>
             </tr>
             <tr> 
-              <td bgcolor="#FFFFFF" align="right"><p>Forma de Pagamento:</p></td>
+              <td bgcolor="#FFFFFF" align="right"><p>Pagamento:</p></td>
               <td bgcolor="#FFFFFF" colspan="3"> <select name="forma_pagamento">
                 {foreach key=id item=nome from=$forma_pagamento}
 				  <option value="{$id}">{$nome}</option>
