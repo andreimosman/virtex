@@ -591,16 +591,24 @@ class VAClientes extends VirtexAdmin {
 				$id_cliente = @$_REQUEST['id_cliente'];
 			
 			
+				//$sSQL  = "SELECT ";
+				//$sSQL .= "	cp.id_cliente_produto, cp.id_cliente, cp.id_produto, cp.dominio, ";
+				//$sSQL .= "	p.id_produto, p.nome, p.descricao, p.tipo, p.valor, p.disponivel, p.num_emails, p.quota_por_conta, ";
+				//$sSQL .= "	p.vl_email_adicional, p.permitir_outros_dominios, p.email_anexado, ";
+				//$sSQL .= "FROM cbtb_cliente_produto cp INNER JOIN prtb_produto p ";
+				//$sSQL .= "FROM cbtb_cliente_produto cp, prtb_produto p ";
+				//$sSQL .= "USING( id_produto ) ";
+				//$sSQL .= "WHERE cp.id_cliente='$id_cliente' AND cp.excluido = 'f'";
+				
 				$sSQL  = "SELECT ";
-				$sSQL .= "	cp.id_cliente_produto, cp.id_cliente, cp.id_produto, cp.dominio, ";
-				$sSQL .= "	p.id_produto, p.nome, p.descricao, p.tipo, p.valor, p.disponivel, p.num_emails, p.quota_por_conta, ";
-				$sSQL .= "	p.vl_email_adicional, p.permitir_outros_dominios, p.email_anexado ";
-				$sSQL .= "FROM cbtb_cliente_produto cp INNER JOIN prtb_produto p ";
+				$sSQL .= "  ct.id_cliente_produto, ct.vigencia, ct.data_contratacao, ct.valor_contrato, ct.status, ct.tipo_produto, ";
+				$sSQL .= "  cp.id_cliente_produto, cp.id_cliente, cp.id_produto, cp.dominio ";
+				$sSQL .= "FROM ";
+				$sSQL .= "  cbtb_cliente_produto cp INNER JOIN cbtb_contrato ct ";
 				$sSQL .= "USING( id_produto ) ";
 				$sSQL .= "WHERE cp.id_cliente='$id_cliente' AND cp.excluido = 'f'";
-				//echo $sSQL ."<hr>\n";
-						
-				//echo "SQL: $sSQL <br>\n";		
+								
+				echo "SQL: $sSQL <br>\n";		
 				$produtos = $this->bd->obtemRegistros($sSQL);
 						
 				for($i=0;$i<count($produtos);$i++) {

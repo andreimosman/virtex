@@ -9,8 +9,16 @@
 															
 															
 					$tipo_cobranca = $this->bd->obtemRegistros($sSQL);
-										
-					$sSQL  = "SELECT carencia, tx_juros, multa, dia_venc, dominio_padrao FROM cftb_preferencias where id_provedor = '1'";
+					
+					
+					$sSQL  = "SELECT ";
+					$sSQL .= " dominio_padrao, nome, localidade, tx_juros, multa, dia_venc, carencia, ";
+					$sSQL .= " cod_banco, carteira, agencia, num_conta, convenio, observacoes, cnpj, pagamento ";
+					$sSQL .= "FROM ";
+					$sSQL .= " cftb_preferencias ";
+					$sSQL .= "WHERE ";
+					$sSQL .= " id_provedor = '1'";
+					
 					$preferencias = $this->bd->obtemUnicoRegistro($sSQL);
 
 
@@ -37,6 +45,19 @@
 					$this->tpl->atribui("tx_juros", $preferencias["tx_juros"]);
 					$this->tpl->atribui("multa", $preferencias["multa"]);
 					$this->tpl->atribui("dia_venc", $preferencias["dia_venc"]);
+					$this->tpl->atribui("dominio_padrao",$preferencias["dominio_padrao"]);
+					$this->tpl->atribui("nome_provedor",$preferencias["nome"]);
+					$this->tpl->atribui("localidade",$preferencias["localidade"]);
+					$this->tpl->atribui("cod_banco",$preferencias["cod_banco"]);
+					$this->tpl->atribui("carteira",$preferencias["carteira"]);
+					$this->tpl->atribui("agencia",$preferencias["agencia"]);
+					$this->tpl->atribui("num_conta",$preferencias["num_conta"]);
+					$this->tpl->atribui("convenio",$preferencias["convenio"]);
+					$this->tpl->atribui("observacoes",$preferencias["observacoes"]);
+					$this->tpl->atribui("cnpj",$preferencias["cnpj"]);
+					$this->tpl->atribui("pagamento",$preferencias["pagamento"]);
 					$this->tpl->atribui("hoje",$hoje);
+
+					
 
 ?>
