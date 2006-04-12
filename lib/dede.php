@@ -149,9 +149,9 @@
 									$fatura_valor = $valor_contrato;
 									
 									//desconto sobre a fatura.
-									if(qt_descontos > 0) {
+									if($qt_descontos > 0) {
 										$fatura_desconto = $desconto_promo;
-										qt_descontos--;
+										$qt_descontos--;
 									} else
 										$fatura_desconto = 0;
 									
