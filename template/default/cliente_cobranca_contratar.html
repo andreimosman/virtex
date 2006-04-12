@@ -1,6 +1,24 @@
+ {literal}
+ <script language="JavaScript" type="text/JavaScript">
+<!--
+function MM_reloadPage(init) {  //reloads the window if Nav4 resized
+  if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
+    document.MM_pgW=innerWidth; document.MM_pgH=innerHeight; onresize=MM_reloadPage; }}
+  else if (innerWidth!=document.MM_pgW || innerHeight!=document.MM_pgH) location.reload();
+}
+MM_reloadPage(true);
+//-->
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+</script> 
 
-{include file='cliente_header.html'}
-<script language="JavaScript">
+{/literal}
+ {include file='cliente_header.html'} <script language="JavaScript">
 	// Arrays
 	var lista_discado    = new Array;
 	var lista_bandalarga = new Array;
@@ -13,7 +31,8 @@
 
 	var dia_venc='{$dia_venc}';
 	var prorata;
-
+	var mens = "";
+	var newClass = "disabled";
 
 {foreach item=v from=$lista_discado}
 	lista_discado[iDiscado++] = new Array('{$v.id_produto}','{$v.nome}','{$v.valor}','{$v.comodato}','{$v.valor_comodato}','{$v.desconto_promo}','{$v.periodo_desconto}','{$v.tx_instalacao}');
@@ -40,18 +59,23 @@ function preencheDadosProduto(id_produto) {
       lst = lista_discado;
 	  frm.comodato.disabled=true;
 	  frm.valor_comodato.disabled=true;
+	  change("valor_comodato","disabled");
+	  
    } else if( frm.tipo.value == "BL" ) {
       lst = lista_bandalarga;
 	  frm.comodato.disabled=false;
 	  frm.valor_comodato.disabled=false;
+	  change("valor_comodato","enabled");
 
    } else if( frm.tipo.value == "H" ) {
       lst = lista.hospedagem;
 	  frm.comodato.disabled=true;
-	  frm.valor_comodato.disabled=true;   
+	  frm.valor_comodato.disabled=true; 
+	  change("valor_comodato","disabled");  
 	} else {
 	  frm.comodato.disabled=true;
 	  frm.valor_comodato.disabled=true;
+	  change("valor_comodato","disabled");
       return;
    }
 
@@ -110,6 +134,9 @@ function alteraTipo() {
 	frm.username.disabled=false;
 	frm.senha.disabled=false;
 	frm.conf_senha.disabled=false;
+	change("username","enabled");
+	change("senha","enabled");
+	change("conf_senha","enabled");
 	
 	if(dia_venc == ""){
 	frm.prorata.disabled=true;
@@ -132,7 +159,10 @@ function alteraTipo() {
 		frm.conf_senha.disabled=true;
 	    frm.comodato.disabled=true;
 	    frm.valor_comodato.disabled=true;   
-
+		change("username","disabled");
+		change("senha","disabled");
+		change("conf_senha","disabled");
+		change("valor_comodato","disabled");
 	}
 
 	// Adiciona os elementos de um tipo especifico
@@ -170,6 +200,8 @@ function init() {
 	var frm = document.frmContratacao;
 	frm.ini_carne.disabled=true;
 	frm.data_carne.disabled=true;
+	change("ini_carne","disabled");
+	change("data_carne","disabled");
 	
 	// frmContratacao de Discado;
 	var o = document.getElementById("formD")
@@ -185,7 +217,19 @@ function init() {
 	var o = document.getElementById("formH")
 	fH=o.outerHTML;
 	o.outerHTML="";
-
+	
+	frm.valor_comodato.disabled=true;
+	change("valor_comodato","disabled");
+	
+	if(frm.comodato.checked){
+	
+		frm.valor_comodato.disabled=false;
+		change("valor_comodato","enabled");
+	}else{
+		frm.valor_comodato.disabled=true;
+		change("valor_comodato","disabled");
+	}
+	
 
 	alteraTipo();
 	alteraProduto();
@@ -201,15 +245,39 @@ function checaFormaCobranca(){
 	var frm = document.frmContratacao;
 	var msg;
 	if(frm.tipo_cobranca.value == "2"){
-	msg = "O sistema de carnê não suporta cobranças adicionais. Caso o contrato seja firmado os valores excedentes existentes serão desconsiderados, tanto no contrato quanto na fatura";
-	window.alert(msg);
+	MM_showHideLayers('formaPag','','show');
+	//msg = "O sistema de carnê não suporta cobranças adicionais. Caso o contrato seja firmado os valores excedentes existentes serão desconsiderados, tanto no contrato quanto na fatura";
+	//window.alert(msg);
 	frm.data_carne.disabled=false;
 	frm.ini_carne.disabled=false;
+	change("ini_carne","enabled");
+	change("data_carne","enabled");
 	}else{
 	frm.data_carne.disabled=true;
 	frm.ini_carne.disabled=true;
+	change("data_carne","disabled");
+	change("ini_carne","disabled");
+	MM_showHideLayers('formaPag','','hide');
 	}
 	return;
+}
+
+function Comodato(){
+	var frm = document.frmContratacao;
+	
+	frm.valor_comodato.disabled=true;
+	change("valor_comodato","disabled");
+	
+	if(frm.comodato.checked){
+	
+		frm.valor_comodato.disabled=false;
+		change("valor_comodato","enabled");
+	
+	}else{
+		frm.valor_comodato.disabled=true;
+		change("valor_comodato","disabled");
+	}
+
 }
 
 
@@ -246,25 +314,33 @@ function validaForm() {
 
 function verificaTipoRede() {
    frm = document.frmContratacao;
-   frm.endereco_ip.disabled = frmContratacao.selecao_ip.value == "A";
+   //frm.endereco_ip.disabled = frmContratacao.selecao_ip.value == "A";
+   
+   if(frmContratacao.selecao_ip.value == "A"){
+   frm.endereco_ip.disabled=true;
+   change("endereco_ip","disabled");
+   }else{
+   frm.endereco_ip.disabled=false;
+   change("endereco_ip","enabled");
+   }
 }
 
 function verificaTipoHosp() {
    frm = document.frmContratacao;
-   frm.dominio_hospedagem.disabled = frmContratacao.tipo_hospedagem.value == "U";
+   //frm.dominio_hospedagem.disabled = frmContratacao.tipo_hospedagem.value == "U";
+   if(frmContratacao.tipo_hospedagem.value == "U"){
+   frm.dominio_hospedagem.disabled=true;
+   change("dominio_hospedagem","disabled");
+   }else{
+   frm.dominio_hospedagem.disabled=false;
+   change("dominio_hospedagem","enabled");
+   }
 }
 
 
 {/literal}
 
-</script>
-{literal}
-<script language="JavaScript" src="util.js"></script>
-
-
-
-
-<script language="JavaScript">
+</script> {literal} <script language="JavaScript" src="util.js"></script> <script language="JavaScript">
 
 function calculaDataCarne() {
    if( frmContratacao.dia_vencimento.value.length == 0 ) {
@@ -305,28 +381,46 @@ function processaDataContrato() {
 }
 function checaProRata(){
 	var frm = document.frmContratacao;
-	var data_padrao = "{$dia_venc}"
-	var data_contrato = frm.data_contratacao.value;
-	var quant_dias;
+	var qDias;
+	var dia;
+	var vProrata;
+	//var dVenc = '{$dia_venc}';
+	var dVenc = frm.dia_vencimento.value;
+	var mens;
 	
-	if(data_padrao != data_contrato){
-		quant_dias = data_padrao - data_contrato;
-		window.alert(quant_dias);
-		return
-		
+	data = new Date();
+	dia = data.getDate();
 	
+	qDias = dia - dVenc;
+	window.alert(qDias);
+	
+	if(qDias < "30" && qDias >"0"){
+	mens = "Quant. Dias: "+qDias;
+	//window.alert(mens);
+	frm.qDias.value = mens;
+	return;
 	}
 	return;
 }
+function change(id, newClass) {
 
+identity=document.getElementById(id);
 
+identity.className=newClass;
 
-</script>
-{/literal}
-<form name="frmContratacao" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return validaForm();">
-  <!-- DADOS DO frmContratacao: INI -->
-    <div id="formBL">
-      <table width="450" border=0 bgcolor="#F1F1F1" id="disc">
+}
+
+function MM_showHideLayers() { //v6.0
+  var i,p,v,obj,args=MM_showHideLayers.arguments;
+  for (i=0; i<(args.length-2); i+=3) if ((obj=MM_findObj(args[i]))!=null) { v=args[i+2];
+    if (obj.style) { obj=obj.style; v=(v=='show')?'visible':(v=='hide')?'hidden':v; }
+    obj.visibility=v; }
+}
+
+</script> {/literal} <form name="frmContratacao" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return validaForm();"> 
+<!-- DADOS DO frmContratacao: INI -->
+<div id="formBL"> 
+<table width="450" border=0 bgcolor="#F1F1F1" id="disc">
         <tr>
           <td colspan=4><p><strong>Dados da Conexão</strong></p></td>
         </tr>
@@ -459,12 +553,10 @@ function checaProRata(){
               </tr>
               <tr>
                 <td><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                    <tr align="center">
-                      <td width="50%"><a href="clientes.php?op=cobranca&rotina=resumo&id_cliente={$id_cliente}">Resumo</a></td>
-                      <td width="50%"><a href="clientes.php?op=cobranca&id_cliente={$id_cliente}">Novo
-                        Contrato</a></td>
-                    </tr>
-                  </table></td>
+                  <tr align="center"> 
+                    <td><a href="clientes.php?op=cobranca&rotina=resumo&id_cliente={$id_cliente}">Resumo</a></td>
+                  </tr>
+                </table></td>
               </tr>
             </table>
                               	<table width="450" border=0 bgcolor="#F1F1F1" id="cob">
@@ -499,19 +591,19 @@ function checaProRata(){
         <td align="center" valign="middle"> 
           <table border=0 width="450" bgcolor="#F1F1F1">
             <tr> 
-              <td bgcolor="#FFFFFF" align="right" width="123"><p>Dt Contrato:</p></td>
+              <td bgcolor="#FFFFFF" align="right" width="98"><p>Dt Contrato:</p></td>
               <td bgcolor="#FFFFFF" colspan="3"><p> 
                   <input type="text" size=11 maxlength="10" name="data_contratacao" value="{$hoje}" onfocusout="javascript:processaDataContrato();"  onchange="javascript:processaDataContrato();">
                 </p></td>
             </tr>
             <tr> 
-              <td bgcolor="#FFFFFF" align="right" width="123"><p>Vigência:</p></td>
+              <td bgcolor="#FFFFFF" align="right" width="98"><p>Vigência:</p></td>
               <td bgcolor="#FFFFFF" colspan="3"><p> 
                   <input type="text" size=2 maxlength="2" name="vigencia" value="12" onchange="javascript:processaVigencia();" onfocusout="javascrpt:processaVigencia();">
                   meses</p></td>
             </tr>
             <tr> 
-              <td bgcolor="#FFFFFF" align="right" width="123"><p>Status:</p></td>
+              <td bgcolor="#FFFFFF" align="right" width="98"><p>Status:</p></td>
               <td bgcolor="#FFFFFF" colspan="3"><p> 
                   <select name='status' >
                     <option value='A'  selected >Ativo</option>
@@ -521,7 +613,7 @@ function checaProRata(){
                 </p></td>
             </tr>
             <tr> 
-              <td bgcolor="#FFFFFF" align="right" width="123"><p>Dia Vencimento:</p></td>
+              <td bgcolor="#FFFFFF" align="right" width="98"><p>Dia Vencimento:</p></td>
               <td bgcolor="#FFFFFF" colspan="3"> <p> 
                   <input type="text" id="dia_vencimento" name="dia_vencimento" value="{$dia_venc}" size=2 maxlength=2 onfocusout="javascript:processaDataContrato();"  onchange="javascript:processaDataContrato();">
                   Carência: 
@@ -529,7 +621,7 @@ function checaProRata(){
                   dias </p></td>
             </tr>
             <tr> 
-              <td bgcolor="#FFFFFF" align="right" width="123"><p>Desconto</p></td>
+              <td bgcolor="#FFFFFF" align="right" width="98"><p>Desconto</p></td>
               <td bgcolor="#FFFFFF"><p> 
                   <input name="desconto_promo" type="text" value="0,00" size=7 maxlength="7" id="desconto_promo">
                   reais</p></td>
@@ -539,18 +631,18 @@ function checaProRata(){
                   meses</p></td>
             </tr>
             <tr> 
-              <td bgcolor="#FFFFFF" align="right"><p>Taxa Inst.: {$lista_bandalarga.tx_instalacao}</p></td>
+              <td bgcolor="#FFFFFF" align="right"><p>Taxa Inst.</p></td>
               <td bgcolor="#FFFFFF" colspan="3"><p> 
                   <input name="tx_instalacao" type="text" value="" size=7 maxlength="7" id="tx_instalacao">
                   reais</p></td>
             </tr>
             <tr> 
               <td bgcolor="#FFFFFF" align="right"><p>Comodato</p></td>
-              <td bgcolor="#FFFFFF" width="83"><p> 
-                  <input name="comodato" type="checkbox" value="t" id="comodato" class="checkbox" {if $comodato == "t"}CHECKED{/if} checked>
+              <td bgcolor="#FFFFFF" width="137"><p> 
+                  <input name="comodato" type="checkbox" value="true" id="comodato" onClick="javascript:Comodato()" class="checkbox" {if $comodato == "t"}CHECKED{/if} checked>
                 </p></td>
-              <td bgcolor="#FFFFFF" width="48"><p>Valor:</p></td>
-              <td bgcolor="#FFFFFF" width="178"><p> 
+              <td bgcolor="#FFFFFF" width="76"><p>Valor:</p></td>
+              <td bgcolor="#FFFFFF" width="121"><p> 
                   <input name="valor_comodato" type="text" value="0,00" size=7 maxlength="7" id="vl_comodato">
                   reais</p></td>
             </tr>
@@ -559,34 +651,49 @@ function checaProRata(){
             </tr>
             <tr> 
               <td bgcolor="#FFFFFF" align="right"><p>Pro-Rata</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><input type="checkbox" name="prorata" value="checkbox" class="checkbox" id="prorata" onChange="javascript:checaProRata()"></td>
+              <td bgcolor="#FFFFFF" colspan="3"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr> 
+                    <td width="8%"><input name="prorata" type="checkbox" value="true" id="prorata3"  onclick="javascript:checaProRata()" class="checkbox" checked></td>
+                    <td width="92%"></td>
+                  </tr>
+                </table></td>
             </tr>
             <tr> 
-              <td bgcolor="#FFFFFF" align="right" width="123"><p>Forma de Pagamento:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p> 
-                  <select name='tipo_cobranca' id="tipo_cobranca" onChange="javascript:checaFormaCobranca();">
+              <td bgcolor="#FFFFFF" align="right" width="98"><p>Forma de Pagamento:</p></td>
+              <td bgcolor="#FFFFFF"> <select name='tipo_cobranca' id="tipo_cobranca" onChange="javascript:checaFormaCobranca();">
 				  {foreach item=a from=$tipo_cobranca}
-                    <option value='{$a.id_cobranca}' >{$a.nome_cobranca}</option>
+                    
+                  <option value='{$a.id_cobranca}' >{$a.nome_cobranca}</option>
 					{/foreach}
-                  </select>
-                  <br>
-                </p></td>
-            </tr>
-            <tr> 
-              <td bgcolor="#FFFFFF" align="right"><p>Pagamento:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"> <select name="forma_pagamento">
+                  
+                </select> </td>
+              <td bgcolor="#FFFFFF"><p>Pagamento:</p></td>
+              <td bgcolor="#FFFFFF"><select name="forma_pagamento">
                 {foreach key=id item=nome from=$forma_pagamento}
 				  <option value="{$id}">{$nome}</option>
 				{/foreach}
                 </select></td>
             </tr>
             <tr> 
-              <td bgcolor="#FFFFFF" align="right">&nbsp;</td>
-              <td bgcolor="#FFFFFF" colspan="3"><p>de 
-                  <input type="text" name="ini_carne" value="" size=10 maxlength=10>
-                  até 
-                  <input type="text" name="data_carne" value="" size=10 maxlength=10>
-                </p></td>
+              <td bgcolor="#FFFFFF" align="right" height="1">&nbsp;</td>
+              <td bgcolor="#FFFFFF" colspan="3" height="1"> <div id="formaPag" style="visibility: hidden;"> 
+                <table width="100%" border="0" cellspacing="3" cellpadding="0">
+                  <tr> 
+                    <td><p>de 
+                        <input type="text" name="ini_carne" value="" size=11 maxlength=10>
+                        até 
+                        <input type="text" name="data_carne" value="" size=11 maxlength=10>
+                      </p></td>
+                  </tr>
+                  <tr> 
+                    <td><p><strong><font color="#CC0000">O sistema de carn&ecirc; 
+                        n&atilde;o suporta cobran&ccedil;as adicionais. Caso o 
+                        contrato seja firmado os valores excedentes existentes 
+                        ser&atilde;o desconsiderados, tanto no contrato quanto 
+                        na fatura</font></strong></p></td>
+                  </tr>
+                </table>
+                </div></td>
             </tr>
             {literal} <script language="JavaScript">
 calculaDataCarne();
@@ -620,9 +727,6 @@ calculaDataCarne();
 
         <td align="center" valign="middle" id="tdados">&nbsp;</td>
                             </tr>
-
-
-
                             <tr>
                               <td align="center" valign="middle">
                               	<input type="hidden" name="p" value="contrato">
@@ -633,9 +737,6 @@ calculaDataCarne();
                                 <input type="hidden" name="acao" value="cad">
                                 </td>
                             </tr>
-
-
-
                             <tr>
                               <td align="center" valign="middle"><input name="botao_enviar2" type="submit" class=input2 id="botao_enviar23" value="Cadastrar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;"></td>
                             </tr>

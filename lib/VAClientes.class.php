@@ -623,7 +623,6 @@ class VAClientes extends VirtexAdmin {
 					$produtos[$i]["contas"] = $contas;
 				}
 			
-				$
 				
 				$this->tpl->atribui("produtos",$produtos);
 				$this->arquivoTemplate = "cliente_cobranca_resumo.html";

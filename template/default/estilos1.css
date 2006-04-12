@@ -4,6 +4,25 @@ INPUT{
 	font-size : 10px;
 	border : 1 solid #000000;
 }
+INPUT.escondido{
+	background: white;
+	font-family : Verdana;
+	font-size : 10px;
+	border : 0 solid #FFFFFF;
+}
+INPUT.disabled{
+	background: white;
+	font-family : Verdana;
+	font-size : 10px;
+	border : 1 solid #CCCCCC;
+}
+INPUT.enabled{
+	background: white;
+	font-family : Verdana;
+	font-size : 10px;
+	border : 1 solid #000000;
+}
+
 input.checkbox{
 	background: white;
 	font-family : Verdana;
