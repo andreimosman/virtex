@@ -15,7 +15,7 @@ function MM_findObj(n, d) { //v4.01
   for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
   if(!x && d.getElementById) x=d.getElementById(n); return x;
 }
-</script> 
+</script>
 
 {/literal}
  {include file='cliente_header.html'} <script language="JavaScript">
@@ -60,7 +60,7 @@ function preencheDadosProduto(id_produto) {
 	  frm.comodato.disabled=true;
 	  frm.valor_comodato.disabled=true;
 	  change("valor_comodato","disabled");
-	  
+
    } else if( frm.tipo.value == "BL" ) {
       lst = lista_bandalarga;
 	  frm.comodato.disabled=false;
@@ -70,8 +70,8 @@ function preencheDadosProduto(id_produto) {
    } else if( frm.tipo.value == "H" ) {
       lst = lista.hospedagem;
 	  frm.comodato.disabled=true;
-	  frm.valor_comodato.disabled=true; 
-	  change("valor_comodato","disabled");  
+	  frm.valor_comodato.disabled=true;
+	  change("valor_comodato","disabled");
 	} else {
 	  frm.comodato.disabled=true;
 	  frm.valor_comodato.disabled=true;
@@ -86,16 +86,16 @@ function preencheDadosProduto(id_produto) {
          if( frm.tipo.value == "BL" ) {
 
 			com = lst[i][3];
-			
+
 		    frm.valor_comodato.value = lst[i][4];
 		 }
 
 		 frm.desconto_promo.value = lst[i][5];
 		 frm.periodo_desconto.value = lst[i][6];
-		 
+
 		 frm.tx_instalacao.value = lst[i][7];
-		
-			
+
+
       }
    }
 
@@ -137,10 +137,10 @@ function alteraTipo() {
 	change("username","enabled");
 	change("senha","enabled");
 	change("conf_senha","enabled");
-	
+
 	if(dia_venc == ""){
 	frm.prorata.disabled=true;
-	
+
 	}
 
 	if( tipo.value == "D" ) {
@@ -158,7 +158,7 @@ function alteraTipo() {
 		frm.senha.disabled=true;
 		frm.conf_senha.disabled=true;
 	    frm.comodato.disabled=true;
-	    frm.valor_comodato.disabled=true;   
+	    frm.valor_comodato.disabled=true;
 		change("username","disabled");
 		change("senha","disabled");
 		change("conf_senha","disabled");
@@ -189,7 +189,24 @@ function alteraProduto() {
 
 	// Preenche os dados com base no produto.
 	preencheDadosProduto(id_produto_saved)
+	if(frm.valor_comodato > "0.00" && frm.id_produto.value != ""){
+		frm.comodato.checked=true;
+	}
 
+	if (frm.valor_comodato.value == "0.00" || frm.valor_comodato.value == ""){
+
+		frm.valor_comodato.value = "";
+
+	}
+
+	if (frm.id_produto.value == ""){
+	frm.desconto_promo.value = "";
+	frm.periodo_desconto.value = "";
+	frm.tx_instalacao.value = "";
+	frm.comodato.checked=false;
+	frm.comodato.disabled=true;
+	frm.valor_comodato.value="";
+	}
 	//window.alert(id_produto_saved);
 
 }
@@ -202,7 +219,7 @@ function init() {
 	frm.data_carne.disabled=true;
 	change("ini_carne","disabled");
 	change("data_carne","disabled");
-	
+
 	// frmContratacao de Discado;
 	var o = document.getElementById("formD")
 	fD=o.outerHTML;
@@ -217,19 +234,19 @@ function init() {
 	var o = document.getElementById("formH")
 	fH=o.outerHTML;
 	o.outerHTML="";
-	
+
 	frm.valor_comodato.disabled=true;
 	change("valor_comodato","disabled");
-	
+
 	if(frm.comodato.checked){
-	
+
 		frm.valor_comodato.disabled=false;
 		change("valor_comodato","enabled");
 	}else{
 		frm.valor_comodato.disabled=true;
 		change("valor_comodato","disabled");
 	}
-	
+
 
 	alteraTipo();
 	alteraProduto();
@@ -264,15 +281,15 @@ function checaFormaCobranca(){
 
 function Comodato(){
 	var frm = document.frmContratacao;
-	
+
 	frm.valor_comodato.disabled=true;
 	change("valor_comodato","disabled");
-	
+
 	if(frm.comodato.checked){
-	
+
 		frm.valor_comodato.disabled=false;
 		change("valor_comodato","enabled");
-	
+
 	}else{
 		frm.valor_comodato.disabled=true;
 		change("valor_comodato","disabled");
@@ -315,7 +332,7 @@ function validaForm() {
 function verificaTipoRede() {
    frm = document.frmContratacao;
    //frm.endereco_ip.disabled = frmContratacao.selecao_ip.value == "A";
-   
+
    if(frmContratacao.selecao_ip.value == "A"){
    frm.endereco_ip.disabled=true;
    change("endereco_ip","disabled");
@@ -371,6 +388,20 @@ function processaVigencia() {
 }
 
 function processaDataContrato() {
+	var frm = document.frmContratacao;
+	var dVenc = frm.dia_vencimento.value;
+
+	// checa se está diferente a data docontrato com a data da bagaça.
+	data = new Date();
+	dia = data.getDate();
+	window.alert("dia:"+dia+"\n Data:"+dVenc+"\n");
+
+	if (data != dia){
+		frm.comodato.disabled=true;
+	}else{
+		frm.comodato.disabled=false;
+	}
+
    if( !dataValida(frmContratacao.data_contratacao.value) ) {
       window.alert("Data do contrato não é válida");
       frmContratacao.data_contratacao.focus();
@@ -387,13 +418,13 @@ function checaProRata(){
 	//var dVenc = '{$dia_venc}';
 	var dVenc = frm.dia_vencimento.value;
 	var mens;
-	
+
 	data = new Date();
 	dia = data.getDate();
-	
+
 	qDias = dia - dVenc;
-	window.alert(qDias);
-	
+	//window.alert(qDias);
+
 	if(qDias < "30" && qDias >"0"){
 	mens = "Quant. Dias: "+qDias;
 	//window.alert(mens);
@@ -417,9 +448,9 @@ function MM_showHideLayers() { //v6.0
     obj.visibility=v; }
 }
 
-</script> {/literal} <form name="frmContratacao" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return validaForm();"> 
+</script> {/literal} <form name="frmContratacao" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return validaForm();">
 <!-- DADOS DO frmContratacao: INI -->
-<div id="formBL"> 
+<div id="formBL">
 <table width="450" border=0 bgcolor="#F1F1F1" id="disc">
         <tr>
           <td colspan=4><p><strong>Dados da Conexão</strong></p></td>
@@ -553,7 +584,7 @@ function MM_showHideLayers() { //v6.0
               </tr>
               <tr>
                 <td><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                  <tr align="center"> 
+                  <tr align="center">
                     <td><a href="clientes.php?op=cobranca&rotina=resumo&id_cliente={$id_cliente}">Resumo</a></td>
                   </tr>
                 </table></td>
@@ -587,24 +618,24 @@ function MM_showHideLayers() { //v6.0
                             </tr>
 
                             <tr>
-                              
-        <td align="center" valign="middle"> 
+
+        <td align="center" valign="middle">
           <table border=0 width="450" bgcolor="#F1F1F1">
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right" width="98"><p>Dt Contrato:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p> 
+              <td bgcolor="#FFFFFF" colspan="3"><p>
                   <input type="text" size=11 maxlength="10" name="data_contratacao" value="{$hoje}" onfocusout="javascript:processaDataContrato();"  onchange="javascript:processaDataContrato();">
                 </p></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right" width="98"><p>Vigência:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p> 
+              <td bgcolor="#FFFFFF" colspan="3"><p>
                   <input type="text" size=2 maxlength="2" name="vigencia" value="12" onchange="javascript:processaVigencia();" onfocusout="javascrpt:processaVigencia();">
                   meses</p></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right" width="98"><p>Status:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p> 
+              <td bgcolor="#FFFFFF" colspan="3"><p>
                   <select name='status' >
                     <option value='A'  selected >Ativo</option>
                     <option value='S' >Suspenso</option>
@@ -612,60 +643,60 @@ function MM_showHideLayers() { //v6.0
                   </select>
                 </p></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right" width="98"><p>Dia Vencimento:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"> <p> 
+              <td bgcolor="#FFFFFF" colspan="3"> <p>
                   <input type="text" id="dia_vencimento" name="dia_vencimento" value="{$dia_venc}" size=2 maxlength=2 onfocusout="javascript:processaDataContrato();"  onchange="javascript:processaDataContrato();">
-                  Carência: 
+                  Carência:
                   <input type="text" id="carencia_pagamento" name="carencia_pagamento" value="{$carencia}" size=2 maxlength=2>
                   dias </p></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right" width="98"><p>Desconto</p></td>
-              <td bgcolor="#FFFFFF"><p> 
+              <td bgcolor="#FFFFFF"><p>
                   <input name="desconto_promo" type="text" value="0.00" size=7 maxlength="7" id="desconto_promo">
                   reais</p></td>
               <td bgcolor="#FFFFFF"><p>Periodo</p></td>
-              <td bgcolor="#FFFFFF"><p> 
+              <td bgcolor="#FFFFFF"><p>
                   <input type="text" id="periodo_desconto" name="periodo_desconto" value="" size=2 maxlength=2>
                   meses</p></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right"><p>Taxa Inst.</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p> 
+              <td bgcolor="#FFFFFF" colspan="3"><p>
                   <input name="tx_instalacao" type="text" value="0.00" size=7 maxlength="7" id="tx_instalacao">
                   reais</p></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right"><p>Comodato</p></td>
-              <td bgcolor="#FFFFFF" width="137"><p> 
+              <td bgcolor="#FFFFFF" width="137"><p>
                   <input name="comodato" type="checkbox" value="true" id="comodato" onClick="javascript:Comodato()" class="checkbox" {if $comodato == "t"}CHECKED{/if} checked>
                 </p></td>
               <td bgcolor="#FFFFFF" width="76"><p>Valor:</p></td>
-              <td bgcolor="#FFFFFF" width="121"><p> 
+              <td bgcolor="#FFFFFF" width="121"><p>
                   <input name="valor_comodato" type="text" value="0.00" size=7 maxlength="7" id="vl_comodato">
                   reais</p></td>
             </tr>
-            <tr> 
+            <tr>
               <td colspan=4><h2><font color="#000000">Cobrança</font></h2></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right"><p>Pro-Rata</p></td>
               <td bgcolor="#FFFFFF" colspan="3"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                  <tr> 
+                  <tr>
                     <td width="8%"><input name="prorata" type="checkbox" value="true" id="prorata3"  onclick="javascript:checaProRata()" class="checkbox" checked></td>
                     <td width="92%"></td>
                   </tr>
                 </table></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right" width="98"><p>Forma de Pagamento:</p></td>
               <td bgcolor="#FFFFFF"> <select name='tipo_cobranca' id="tipo_cobranca" onChange="javascript:checaFormaCobranca();">
 				  {foreach item=a from=$tipo_cobranca}
-                    
+
                   <option value='{$a.id_cobranca}' >{$a.nome_cobranca}</option>
 					{/foreach}
-                  
+
                 </select> </td>
               <td bgcolor="#FFFFFF"><p>Pagamento:</p></td>
               <td bgcolor="#FFFFFF"><select name="forma_pagamento">
@@ -674,22 +705,22 @@ function MM_showHideLayers() { //v6.0
 				{/foreach}
                 </select></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right" height="1">&nbsp;</td>
-              <td bgcolor="#FFFFFF" colspan="3" height="1"> <div id="formaPag" style="visibility: hidden;"> 
+              <td bgcolor="#FFFFFF" colspan="3" height="1"> <div id="formaPag" style="visibility: hidden;">
                 <table width="100%" border="0" cellspacing="3" cellpadding="0">
-                  <tr> 
-                    <td><p>de 
+                  <tr>
+                    <td><p>de
                         <input type="text" name="ini_carne" value="" size=11 maxlength=10>
-                        até 
+                        até
                         <input type="text" name="data_carne" value="" size=11 maxlength=10>
                       </p></td>
                   </tr>
-                  <tr> 
-                    <td><p><strong><font color="#CC0000">O sistema de carn&ecirc; 
-                        n&atilde;o suporta cobran&ccedil;as adicionais. Caso o 
-                        contrato seja firmado os valores excedentes existentes 
-                        ser&atilde;o desconsiderados, tanto no contrato quanto 
+                  <tr>
+                    <td><p><strong><font color="#CC0000">O sistema de carn&ecirc;
+                        n&atilde;o suporta cobran&ccedil;as adicionais. Caso o
+                        contrato seja firmado os valores excedentes existentes
+                        ser&atilde;o desconsiderados, tanto no contrato quanto
                         na fatura</font></strong></p></td>
                   </tr>
                 </table>
@@ -697,29 +728,29 @@ function MM_showHideLayers() { //v6.0
             </tr>
             {literal} <script language="JavaScript">
 calculaDataCarne();
-</script> {/literal} 
+</script> {/literal}
           </table>
           <br>
           <table width="450" border=0 bgcolor="#F1F1F1">
-            <tr> 
+            <tr>
               <td colspan=2><h2><font color="#000000">Dados do Usuário</font></h2></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Username:</p></td>
               <td bgcolor="#FFFFFF" colspan=2><input type="text" maxlength="30" name="username" disabled="true" value="{$username}"></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Senha:</p></td>
-              <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="senha" disabled="true"> 
+              <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="senha" disabled="true">
               </td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Confirme:</p></td>
-              <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="conf_senha" disabled="true"> 
+              <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="conf_senha" disabled="true">
               </td>
             </tr>
           </table>
-          
+
         </td>
                             </tr>
 
