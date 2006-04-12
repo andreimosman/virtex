@@ -44,7 +44,7 @@
 					//$valor_contrato = ($valor_produto *  $vigencia) - ($desconto_promo * $periodo_desconto);
 					//$valor_contrato += $valor_comodato + $tx_instalacao;
 					
-					$valor_contrato = $valor_produto + $valor_comodato;					
+					$valor_contrato = $valor_produto + $valor_comodato;
 					
 					//Diminui o desconto no valor real do contrato caso este tenha mesmo período que a vigência do contrato
 					//if ($periodo_desconto >= $vigencia) $valor_contrato -= $desconto;
@@ -127,14 +127,13 @@
 					$fatura_status = "A";
 					$fatura_v_pago = 0;
 					$fatura_dt_vencimento="";
-					$fatura_dt_pagamento="";
-					$fatura_dt_reagendamento="";
 					$fatura_obs="";
 					$fatura_desc="";
 					$fatura_pg_acrescimo = 0;
 					$fatura_pg_parcial=0;
 					$fatura_vl_pago=0;
 					$fatura_desconto=0;
+					
 					$pos = 0; //Jogar para o próximo mês
 					
 					$forma_pagamento = @$_REQUEST["forma_pagamento"];
@@ -145,27 +144,38 @@
 					
 					switch($forma_pagamento) {
 						case 'POS':
+								if ($cd > $dia_vencimento) $pos = 1;
+																	
+								
 								for ($i=0; $i < $vigencia; $i++) {									
+									
 									$fatura_valor = $valor_contrato;
+									$fatura_adesao = 'f';
+									
+									//Primeira fatura é a taxa de instalação
+									if($i==0) {
+										$fatura_valor = $tx_instalacao;	
+										$fatura_adesao = 't';
+									}
 									
 									//desconto sobre a fatura.
-									if($qt_descontos > 0) {
+									if($qt_descontos > 0 && $fatura_adesao != 't') {
 										$fatura_desconto = $desconto_promo;
 										$qt_descontos--;
 									} else
 										$fatura_desconto = 0;
-									
+																		
 									
 									$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $cm+$i+$pos, $dia_vencimento, $ca));
 									
-									$sSQL =  "INSERT INTO (";
-									$sSQL .= "	id_cliente_produto, data, valor, status, observacoes, ";
+									$sSQL =  "INSERT INTO cbtb_faturas(";
+									$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
 									$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
 									$sSQL .= "	acrescimo, valor_pago, adesao ";
 									$sSQL .= ") VALUES (";
-									$sSQL .= "	$id_cliente_produto, '$fatura_dt_vencimento', $fatura_valor, '$fatura_status', '$fatura_obs', ";
-									$sSQL .= "	'$fatura_dt_reagendamento', $fatura_pg_parcial, '$fatura_dt_pagamento', $fatura_desconto, ";
-									$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago, 'f' ";
+									$sSQL .= "	$id_cliente_produto, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
+									$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
+									$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago, '$fatura_adesao' ";
 									$sSQL .= ")";
 									
 									//echo "$sSQL<br>";
@@ -174,22 +184,36 @@
 							break;
 							
 						case 'PRE':
+								
+								
 								for ($i=0; $i < $vigencia; $i++) {									
-									$fatura_valor = $valor_contrato;
+									
+									$fatura_valor = $valor_contrato ;
+									
+									//desconto sobre a fatura.
+									if($qt_descontos > 0) {
+										$fatura_desconto = $desconto_promo;
+										$qt_descontos--;
+									} else
+										$fatura_desconto = 0;
+
+																		
 									$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $cm+$i, $dia_vencimento, $ca));
 									
-									$sSQL =  "INSERT INTO (";
-									$sSQL .= "	id_cliente_produto, data, valor, status, observacoes, ";
+									$sSQL =  "INSERT INTO cbtb_faturas(";
+									$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
 									$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
 									$sSQL .= "	acrescimo, valor_pago, adesao ";
 									$sSQL .= ") VALUES (";
-									$sSQL .= "	$id_cliente_produto, '$fatura_dt_vencimento', $fatura_valor, '$fatura_status', '$fatura_obs', ";
-									$sSQL .= "	'$fatura_dt_reagendamento', $fatura_pg_parcial, '$fatura_dt_pagamento', $fatura_desconto, ";
-									$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago, 'f' ";
+									$sSQL .= "	$id_cliente_produto, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
+									$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
+									$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago, '$fatura_adesao' ";
 									$sSQL .= ")";
+																		
+									//echo "$sSQL<br>";
+									$this->bd->consulta($sSQL);
 								}
-							break;
-								
+							break;						
 					}
 						
 					
