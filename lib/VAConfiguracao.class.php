@@ -832,6 +832,9 @@ class VAConfiguracao extends VirtexAdmin {
 						$prefs = $this->bd->obtemUnicoRegistro($sSQL);
 						//echo "preferencia <br>";
 						
+						$sSQL  = "SELECT id_cobranca, nome_cobranca, disponivel FROM cftb_forma_pagamento ORDER BY id_cobranca asc";
+						$frm_pagamento = $this->bd->obtemRegistros($sSQL);
+						
 						if ($acao == "alt"){
 							//echo "alt";
 							if(!count($prefs)){
@@ -919,6 +922,23 @@ class VAConfiguracao extends VirtexAdmin {
 							//echo "SQL UPDATE: $sSQL <br>";
 							$this->bd->consulta($sSQL);
 							
+							$sSQL = "UPDATE cftb_forma_pagamento SET disponivel = 'f'";
+							$this->bd->consulta($sSQL);
+							
+							while(list($id,$valor)=each($_REQUEST['disponivel'])){
+
+													
+								$uSQL  = "UPDATE ";
+								$uSQL .= "   cftb_forma_pagamento ";
+								$uSQL .= "SET ";
+								$uSQL .= "   disponivel = '$valor' ";
+								$uSQL .= "WHERE ";
+								$uSQL .= "   id_cobranca = '$id' ";
+																		
+								$this->bd->consulta($uSQL);
+								echo $uSQL ."<br>";						
+							}
+							
 							$this->tpl->atribui("mensagem","PREFERENCIAS GRAVADAS COM SUCESSO! "); 
 							$this->tpl->atribui("url","home.php");
 							$this->tpl->atribui("target","_top");
@@ -935,6 +955,7 @@ class VAConfiguracao extends VirtexAdmin {
 						$this->tpl->atribui("op",$op);
 						$this->tpl->atribui("acao",$acao);
 						$this->tpl->atribui("prefs",$prefs);
+						$this->tpl->atribui("frm_pagamento",$frm_pagamento);
 						$this->arquivoTemplate = "configuracao_preferencia.html";
 												
 							

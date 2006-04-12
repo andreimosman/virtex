@@ -2,6 +2,7 @@
 
 require_once("MWebApp.class.php");
 require_once("MDatabase.class.php");
+require_once("MBoleto.class.php");
 
 class VirtexAdmin extends MWebApp {
 

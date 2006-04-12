@@ -542,6 +542,35 @@ class VACobranca extends VirtexAdmin {
 		$this->arquivoTemplate = "cobranca_versaolight.html";
 		
 		
+		} else if ($op == "boleto"){
+		
+			
+			// PEGANDO INFORMAÇÕES DAS PREFERENCIAS
+			$sSQL  = "SELECT ";
+			$sSQL .= " tx_juros, multa, dia_venc, carencia, cod_banco, carteira, agencia, num_conta, convenio, cnpj, observacoes,nome ";
+			$sSQL .= "FROM ";
+			$sSQL .= " cftb_preferencias ";
+			$sSQL .= "WHERE id_provedor = '1'";
+			
+			$bol = $this->bd->obtemUnicoRegistro($sSQL);
+			
+			$codigo = @$_REQUEST["codigo"];
+			$data_venc = "30/04/2006";
+			//echo $codigo;
+			
+			if( $codigo ) {
+				MBoleto::barCode($codigo);
+			} else {
+				$this->b = new MBoleto($bol["cod_banco"],$bol["carteira"],$bol["agencia"],$bol["num_conta"],$bol["convenio"],$data_venc,"125.50","22222","José da Silva","171607858-00",$bol["nome"],$bol["cnpj"],$bol["tx_juros"],$bol["multa"],"Rua dos Bobos,00 - São Pedro - SP",$bol["observacoes"]);
+				$this->b->setTplPath("template/boletos/");
+				$this->b->setImgPath("template/boletos/imagens");
+				
+				$this->b->exibe("001"); // Gera boleto para o banco "001";
+			}
+		
+			//$this->arquivoTemplate = "";
+			
+		
 		}
 		
 	}
