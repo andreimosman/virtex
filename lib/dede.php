@@ -150,7 +150,9 @@
 					$fatura_v_pago = 0;
 					$fatura_dt_vencimento="";
 					$fatura_obs="";
-					$fatura_desc="";
+					
+					$fatura_desc = $info_produto["nome"];
+					
 					$fatura_pg_acrescimo = 0;
 					$fatura_pg_parcial=0;
 					$fatura_vl_pago=0;
