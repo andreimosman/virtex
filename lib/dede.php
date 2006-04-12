@@ -1,5 +1,6 @@
 <? 
-					
+
+					/*<<=====INICIO DA PARTE DE CONTRATAÇÃO=====>>*/
 														
 					//Cadastra o contrato do cliente.
 					$id_produto = @$_REQUEST["id_produto"];
@@ -54,7 +55,7 @@
 					//$valor_contrato = ($valor_produto *  $vigencia) - ($desconto_promo * $periodo_desconto);
 					//$valor_contrato += $valor_comodato + $tx_instalacao;
 					
-					$valor_contrato = $valor_produto + $valor_comodato;
+					$valor_contrato = number_format($valor_produto + $valor_comodato, 2, '.', '');					
 					$valor_cont_temp = $valor_contrato;
 					//Diminui o desconto no valor real do contrato caso este tenha mesmo período que a vigência do contrato
 					if ($periodo_desconto >= $vigencia) $valor_contrato -= $desconto_promo;
@@ -129,7 +130,12 @@
 					
 					//echo "<br>$sSQL<br>";
 					$this->bd->consulta($sSQL);
-					
+
+					/*<<=====FIM DA PARTE DE CONTRATAÇÃO=====>>*/
+
+
+					/*<<=====INICIO DA PARTE DE CADASTRO DE FATURAS=====>>*/
+
 										
 					//Cadastro de faturas do contrato.
 					
@@ -250,6 +256,7 @@
 									//Aplica descontos, caso haja algum período de desconto declarado
 									if($qt_desconto > 0)
 										$fatura_desconto = $desconto_promo;
+										$qt_desconto--;
 									else
 										$fatura_desconto = 0;
 
@@ -382,5 +389,5 @@
 							break;						
 					}
 
-					
+					/*<<=====INICIO DA PARTE DE CADASTRO DE FATURAS=====>>*/
 ?>
