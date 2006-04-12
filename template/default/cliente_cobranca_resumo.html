@@ -24,16 +24,18 @@
             </table></td>
         </tr>
         <tr> 
-          <td><table width="100%" border="0" cellspacing="2" cellpadding="3">
+          <td> {foreach item=a from=$lista_faturas} 
+            <table width="100%" border="0" cellspacing="2" cellpadding="3">
               <tr> 
-                <td width="75"><p>Vencimento</p></td>
-                <td width="154"><p>Descri&ccedil;&atilde;o</p></td>
-                <td width="84"><p>Valor</p></td>
-                <td width="52"><p>Status</p></td>
+                <td width="106"><p>{$a.data}</p></td>
+                <td width="118"><p>{$a.id_cliente_produto}</p></td>
+                <td width="73"><p>{$a.valor}</p></td>
+                <td width="68"><p>{$a.status}</p></td>
                 <td width="15" align="center"><img src="template/default/images/viewer.gif" alt="Ver Contrato" width="15" height="15"></td>
                 <td width="18" align="center"><a href="clientes.php?op=cobranca&rotina=excl_confirma&id_cliente={$p.id_cliente}&id_cliente_produto={$p.id_cliente_produto}"><img src="template/default/images/delete.gif" alt="Excluir Definitivamente o Contrato" width="15" height="15" border="0"></a></td>
               </tr>
             </table>
+			{/foreach}
             <p>&nbsp;</p></td>
         </tr>
       </table></td>
