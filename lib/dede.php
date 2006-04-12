@@ -69,7 +69,7 @@
 					$sSQL .= ")";
 										
 									
-					echo "$sSQL"."<br>\n";
+					//echo "$sSQL"."<br>\n";
 					$this->bd->consulta($sSQL);	//Salva as configurações de contrato
 					
 					
@@ -137,7 +137,7 @@
 					
 					$dia_vencimento = @$_REQUEST["dia_vencimento"];
 										
-					$qt_descontos = $periodo_desconto;
+					$qt_desconto = $periodo_desconto;
 					
 					$fatura_status = "A";
 					$fatura_v_pago = 0;
@@ -160,85 +160,196 @@
 					switch($forma_pagamento) {
 						case 'POS':
 								
-								for ($i=0; $i < $vigencia; $i++) {
+								if($id_cobranca == 2) { //Tipo de pagamento for carnê
+								
+									$ini_carne = @$_REQUEST["ini_carne"];
+									$data_carne = @$_REQUEST["data_carne"];
+									
+									list($ini_d, $ini_m, $ini_a) = explode("/", $ini_carne);
+									list($dat_d, $dat_m, $dat_a) = explode("/", $data_carne);
+									
+									$stamp_inicial = mktime(0,0,0, $ini_m, $ini_d, $ini_a);
+									$stamp_final = mktime(0,0,0, $dat_m, $dat_d, $dat_a);
+									
+									diferenca_meses = (($stamp_final - $stamp_inicial) / 86400) / 30;
+									
+									$i=0;
+									
+									for
+									
+										$fatura_valor = $valor_cont_temp;
+
+										//Aplica descontos, caso haja algum período de desconto declarado
+										if($qt_desconto > 0) {
+											$fatura_desconto = $desconto_promo;
+											$qt_desconto--; 
+										} else
+											$fatura_desconto = 0;
+
+										//Adiciona taxa de instalação na fatura, caso haja.
+										if ($i==0) { //Cria primeira fatura pós-paga
+
+											//Adiciona-se ao valor da fatura o valor do pro-rata																														
+
+											//Se houver taxa de instalação no pós pago, então a primeira fatura será referente à taxa de instalação
+											if($tx_instalacao != 0) {
+												$fatura_valor = $tx_instalacao;
+												
+												//Calcula a data dos próximos pagamentos de fatura.
+												$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $ini_m, $ini_d, $ini_a));
+
+
+												$sSQL =  "INSERT INTO cbtb_faturas(";
+												$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
+												$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
+												$sSQL .= "	acrescimo, valor_pago ";
+												$sSQL .= ") VALUES (";
+												$sSQL .= "	$id_cliente_produto, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
+												$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
+												$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
+												$sSQL .= ")";												
+													
+											}
+
+										} else {
+											//Calcula o desconto sobre a fatura.
+											$fatura_valor -= $fatura_desconto;									
+										}
+
+										//Calcula a data dos próximos pagamentos de fatura.
+										$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $ini_m+$i, $ini_d, $ini_a));
+
+
+										$sSQL =  "INSERT INTO cbtb_faturas(";
+										$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
+										$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
+										$sSQL .= "	acrescimo, valor_pago ";
+										$sSQL .= ") VALUES (";
+										$sSQL .= "	$id_cliente_produto, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
+										$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
+										$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
+										$sSQL .= ")";
+
+										echo "$sSQL<br>";
+										$this->bd->consulta($sSQL);
+										
+										list($dt_final_a, $dt_final_m, $dt_final_d) = explode("-", $fatura_dt_vencimento);
+										
+										$stamp_dt1 = mktime(0,0,0,$dt_final_m, $dt_final_d, $dt_final_a);
+										
+										//if("$dt_final_d/$dt_final_m/$dt_final_a" == "$data_carne") break;
+										
+									}																	
+								} else { //Caso a cobrança não seja do tipo carnê.
+
 									
 									$fatura_valor = $valor_cont_temp;
 
 									//Aplica descontos, caso haja algum período de desconto declarado
-									if($qt_descontos > 0) {
+									if($qt_desconto > 0)
 										$fatura_desconto = $desconto_promo;
-										$qt_desconto--; 
-									} else
+									else
 										$fatura_desconto = 0;
 
 									//Adiciona taxa de instalação na fatura, caso haja.
-									if ($i==0) { //Cria primeira fatura pré-paga
-									
-										//Adiciona-se ao valor da fatura o valor do pro-rata																														
+									if($tx_instalacao != 0) {
+										$fatura_valor = $tx_instalacao;
 										
-										//TODO: Procurar função de adição do pro-rata
-										if($tx_instalacao != 0) {
-											$fatura_valor = $tx_instalacao;
-											$vigencia++;
-										}
+										//Calcula a data dos próximos pagamentos de fatura.
+										$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $cm, $cd, $ca));										
+										
+										$sSQL =  "INSERT INTO cbtb_faturas(";
+										$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
+										$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
+										$sSQL .= "	acrescimo, valor_pago ";
+										$sSQL .= ") VALUES (";
+										$sSQL .= "	$id_cliente_produto, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
+										$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
+										$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
+										$sSQL .= ")";
 
-									} else {
-										//Calcula o desconto sobre a fatura.
-										$fatura_valor -= $fatura_desconto;									
-									}
+										echo "$sSQL<br>";
+										$this->bd->consulta($sSQL);										
+									}								
 									
-									//Calcula a data dos próximos pagamentos de fatura.
-									$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $cm+$i, $dia_vencimento, $ca));
-									
-									
-									$sSQL =  "INSERT INTO cbtb_faturas(";
-									$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
-									$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
-									$sSQL .= "	acrescimo, valor_pago ";
-									$sSQL .= ") VALUES (";
-									$sSQL .= "	$id_cliente_produto, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
-									$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
-									$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
-									$sSQL .= ")";
-																		
-									echo "$sSQL<br>";
-									$this->bd->consulta($sSQL);
-								
-								}
+								}									
 								
 							break;
 							
 						case 'PRE':
-						
-								for ($i=0; $i < $vigencia; $i++) {									
+								if($id_cobranca == 2) {	//Tipo pagamento for Carnê.
+								
+									$ini_carne = @$_REQUEST["ini_carne"];
+									$data_carne = @$_REQUEST["data_carne"];
 									
+									list($ini_d, $ini_m, $ini_a) = explode("/", $ini_carne);
+									list($dat_d, $dat_m, $dat_a) = explode("/", $data_carne);
+																		
+									for ($i=0; $i < $vigencia; $i++) {									
+
+										$fatura_valor = $valor_cont_temp;
+
+										//Aplica descontos, caso haja algum período de desconto declarado
+										if($qt_desconto > 0) {
+											$fatura_desconto = $desconto_promo;
+											$qt_desconto--; 
+										} else
+											$fatura_desconto = 0;
+
+
+										//Adiciona taxa de instalação na fatura, caso haja.
+										if ($i==0) { //Cria primeira fatura pré-paga
+
+											//Adiciona-se ao valor da fatura o valor do pro-rata																														
+
+											//TODO: Procurar função de adição do pro-rata
+											if($tx_instalacao != 0) $fatura_valor += $tx_instalacao;
+
+										}
+
+										//Calcula a data dos próximos pagamentos de fatura.
+										$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $cm+$i, $dia_vencimento, $ca));
+
+										//Calcula o desconto sobre a fatura.
+										$fatura_valor -= $fatura_desconto;
+
+
+										$sSQL =  "INSERT INTO cbtb_faturas(";
+										$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
+										$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
+										$sSQL .= "	acrescimo, valor_pago ";
+										$sSQL .= ") VALUES (";
+										$sSQL .= "	$id_cliente_produto, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
+										$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
+										$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
+										$sSQL .= ")";
+
+										//echo "$sSQL<br>";
+										$this->bd->consulta($sSQL);
+									}
+								} else {
+								
+								
 									$fatura_valor = $valor_cont_temp;
 
 									//Aplica descontos, caso haja algum período de desconto declarado
-									if($qt_descontos > 0) {
+									if($qt_desconto > 0) {
 										$fatura_desconto = $desconto_promo;
 										$qt_desconto--; 
 									} else
 										$fatura_desconto = 0;
 
-									
-									//Adiciona taxa de instalação na fatura, caso haja.
-									if ($i==0) { //Cria primeira fatura pré-paga
-									
-										//Adiciona-se ao valor da fatura o valor do pro-rata																														
-										
-										//TODO: Procurar função de adição do pro-rata
-										if($tx_instalacao != 0) $fatura_valor += $tx_instalacao;
 
-									}
-									
+									if($tx_instalacao != 0) $fatura_valor += $tx_instalacao;
+
 									//Calcula a data dos próximos pagamentos de fatura.
-									$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $cm+$i, $dia_vencimento, $ca));
 									
+									$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $cm, $dia_vencimento, $ca));
+
 									//Calcula o desconto sobre a fatura.
 									$fatura_valor -= $fatura_desconto;
-									
-									
+
+
 									$sSQL =  "INSERT INTO cbtb_faturas(";
 									$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
 									$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
@@ -248,7 +359,7 @@
 									$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
 									$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
 									$sSQL .= ")";
-																		
+
 									//echo "$sSQL<br>";
 									$this->bd->consulta($sSQL);
 								}
