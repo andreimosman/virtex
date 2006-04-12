@@ -649,11 +649,16 @@ class VAClientes extends VirtexAdmin {
 				}
 			
 				
+				require_once( PATH_LIB . "/hugo2.php" );
+				
 				$this->tpl->atribui("produtos",$produtos);
 				$this->arquivoTemplate = "cliente_cobranca_resumo.html";
 				
 				
 
+			} else if ( $rotina == "confirmar") {
+				
+			
 			} else if( $rotina == "contratar" ) {
 
 				$enviando = false;
@@ -1002,7 +1007,7 @@ class VAClientes extends VirtexAdmin {
 						}
 						
 						
-						require_once( PATH_LIB . "/dede.php" );					
+											
 
 						if ($tipo && $tipo == "BL"){
 						
@@ -1061,7 +1066,7 @@ class VAClientes extends VirtexAdmin {
 							
 						}
 							
-							
+						require_once( PATH_LIB . "/dede.php" );	
 
 						
 						// Joga a mensagem de produto contratado com sucesso.
