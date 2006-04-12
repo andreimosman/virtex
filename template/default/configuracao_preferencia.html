@@ -24,42 +24,42 @@
                     
                   <table width="500" border="0" cellspacing="2" cellpadding="0">
                     <tr> 
-                      <td width="164"><p><strong>Dominio Padr&atilde;o:</strong></p></td>
-                      <td width="330"><input name="dominio_padrao" type="text" id="dominio_padrao" value="{$prefs.dominio_padrao}" size="40"></td>
+                      <td width="122"><p><strong>Dominio Padr&atilde;o:</strong></p></td>
+                      <td colspan="3"><input name="dominio_padrao" type="text" id="dominio_padrao" value="{$prefs.dominio_padrao}" size="40"></td>
                     </tr>
                     <tr> 
                       <td><p><strong>Nome:</strong></p></td>
-                      <td><input name="nome" type="text" id="nome" value="{$prefs.nome}" size="40"></td>
+                      <td colspan="3"><input name="nome" type="text" id="nome" value="{$prefs.nome}" size="40"></td>
                     </tr>
                     <tr> 
                       <td><p><strong>Localidade</strong></p></td>
-                      <td><input name="localidade" type="text" id="localidade" value="{$prefs.localidade}" size="40"></td>
+                      <td colspan="3"><input name="localidade" type="text" id="localidade" value="{$prefs.localidade}" size="40"></td>
                     </tr>
                     <tr> 
                       <td><p><strong>Radius Server:</strong></p></td>
-                      <td><input name="radius_server" type="text" id="radius_server" value="{$prefs.radius_server}" size="30"></td>
+                      <td colspan="3"><input name="radius_server" type="text" id="radius_server" value="{$prefs.radius_server}" size="30"></td>
                     </tr>
                     <tr> 
                       <td><p>&nbsp;</p></td>
-                      <td>&nbsp;</td>
+                      <td colspan="3">&nbsp;</td>
                     </tr>
                     <tr> 
                       <td><p><strong>Servidor de Hospedagem:</strong></p></td>
-                      <td><input name="hosp_server" type="text" id="hosp_server" value="{$prefs.hosp_server}" size="30"></td>
+                      <td colspan="3"><input name="hosp_server" type="text" id="hosp_server" value="{$prefs.hosp_server}" size="30"></td>
                     </tr>
                     <tr> 
                       <td><p><strong>NS1</strong></p></td>
-                      <td><input name="hosp_ns1" type="text" id="hosp_ns1" value="{$prefs.hosp_ns1}" size="30"></td>
+                      <td colspan="3"><input name="hosp_ns1" type="text" id="hosp_ns1" value="{$prefs.hosp_ns1}" size="30"></td>
                     </tr>
                     <tr> 
                       <td><p><strong>NS2</strong></p></td>
-                      <td><input name="hosp_ns2" type="text" id="hosp_ns2" value="{$prefs.hosp_ns2}" size="30"></td>
+                      <td colspan="3"><input name="hosp_ns2" type="text" id="hosp_ns2" value="{$prefs.hosp_ns2}" size="30"></td>
                     </tr>
                     <tr> 
-                      <td colspan="2"> <table width="100%" border="0" cellspacing="2" cellpadding="0">
+                      <td colspan="4"> <table width="100%" border="0" cellspacing="2" cellpadding="0">
                           <tr> 
-                            <td width="33%"><p><strong>UID Hospedagem</strong></p></td>
-                            <td width="17%"><strong> 
+                            <td width="30%"><p><strong>UID Hospedagem</strong></p></td>
+                            <td width="20%"><strong> 
                               <input name="hosp_uid" type="text" id="hosp_uid" value="{$prefs.hosp_uid}" size="10">
                               </strong></td>
                             <td width="32%" align="center"><strong> 
@@ -73,21 +73,21 @@
                     </tr>
                     <tr> 
                       <td><p><strong>Diret&oacute;rio base de Hosp.</strong></p></td>
-                      <td><input name="hosp_base" type="text" id="hosp_base2" value="{$prefs.hosp_base}" size="40"></td>
+                      <td colspan="3"><input name="hosp_base" type="text" id="hosp_base2" value="{$prefs.hosp_base}" size="40"></td>
                     </tr>
                     <tr> 
                       <td><p>&nbsp;</p></td>
-                      <td>&nbsp;</td>
+                      <td colspan="3">&nbsp;</td>
                     </tr>
                     <tr> 
                       <td><p><strong>Servidor de E-Mail</strong></p></td>
-                      <td><input name="mail_server" type="text" id="mail_server" value="{$prefs.mail_server}" size="40"></td>
+                      <td colspan="3"><input name="mail_server" type="text" id="mail_server" value="{$prefs.mail_server}" size="40"></td>
                     </tr>
                     <tr> 
-                      <td colspan="2"><table width="100%" border="0" cellspacing="2" cellpadding="0">
+                      <td colspan="4"><table width="100%" border="0" cellspacing="2" cellpadding="0">
                           <tr> 
-                            <td width="33%"><p><strong>UID E-mail</strong></p></td>
-                            <td width="17%"><strong> 
+                            <td width="30%"><p><strong>UID E-mail</strong></p></td>
+                            <td width="20%"><strong> 
                               <input name="mail_uid" type="text" id="mail_uid" value="{$prefs.mail_uid}" size="10">
                               </strong></td>
                             <td width="32%" align="center"> <p><strong>GID E-mail</strong></p></td>
@@ -99,47 +99,79 @@
                     </tr>
                     <tr> 
                       <td><p><strong>POP</strong></p></td>
-                      <td><input name="pop_host" type="text" id="pop_host" value="{$prefs.pop_host}" size="40"></td>
+                      <td colspan="3"><input name="pop_host" type="text" id="pop_host" value="{$prefs.pop_host}" size="40"></td>
                     </tr>
                     <tr> 
                       <td><p><strong>SMTP</strong></p></td>
-                      <td><input name="smtp_host" type="text" id="smtp_host" value="{$prefs.smtp_host}" size="40"></td>
+                      <td colspan="3"><input name="smtp_host" type="text" id="smtp_host" value="{$prefs.smtp_host}" size="40"></td>
                     </tr>
                     <tr> 
                       <td><p><strong>Taxa de Juros</strong></p></td>
-                      <td><p><strong> 
+                      <td colspan="3"><p><strong> 
                           <input name="tx_juros" type="text" id="tx_juros" value="{$prefs.tx_juros}" size="10">
                           </strong>%</p></td>
                     </tr>
                     <tr> 
                       <td><p><strong>Multa</strong></p></td>
-                      <td><p><strong> 
+                      <td colspan="3"><p><strong> 
                           <input name="multa" type="text" id="multa" value="{$prefs.multa}" size="10">
                           </strong>%</p></td>
                     </tr>
                     <tr> 
                       <td><p><strong>Dia de Vencimento</strong></p></td>
-                      <td><p><strong> 
+                      <td colspan="3"><p><strong> 
                           <input name="dia_venc" type="text" id="dia_venc" value="{$prefs.dia_venc}" size="2">
                           </strong></p></td>
                     </tr>
-                    <tr>
+                    <tr> 
                       <td><p><strong>Car&ecirc;ncia</strong></p></td>
-                      <td><p><strong> 
+                      <td colspan="3"><p><strong> 
                           <input name="carencia" type="text" id="carencia" value="{$prefs.carencia}" size="2">
                           </strong>dias </p></td>
                     </tr>
                     <tr> 
                       <td>&nbsp;</td>
-                      <td><input name="op" type="hidden" id="op" value="{$op}"> 
+                      <td colspan="3">&nbsp;</td>
+                    </tr>
+                    <tr> 
+                      <td colspan="4"><div align="CENTER"> <h2><strong>No caso 
+                        de utilizar de Boleto banc&aacute;rio, preencha os campos 
+                        abaixo</strong></h2></div></td>
+                    </tr>
+                    <tr> 
+                      <td><p><strong>Cod. Banco:</strong></p></td>
+                      <td colspan="3"><input name="cod_banco" type="text" size="5" id="cod_banco"></td>
+                    </tr>
+                    <tr> 
+                      <td height="24">
+<p><strong>Carteira:</strong></p></td>
+                      <td colspan="3"><input name="carteira" type="text" size="12" id="carteira"></td>
+                    </tr>
+                    <tr> 
+                      <td><p><strong>Ag&ecirc;ncia:</strong></p></td>
+                      <td width="148"><input name="agencia" type="text" size="12" id="agencia"></td>
+                      <td width="120"><p><strong>Num. Conta</strong></p></td>
+                      <td width="100"><input name="num_conta" type="text" size="12" id="num_conta"></td>
+                    </tr>
+                    <tr> 
+                      <td><p><strong>Conv&ecirc;nio:</strong></p></td>
+                      <td colspan="3"><input name="convenio" type="text" id="convenio"></td>
+                    </tr>
+                    <tr> 
+                      <td>&nbsp;</td>
+                      <td colspan="3">&nbsp;</td>
+                    </tr>
+                    <tr> 
+                      <td>&nbsp;</td>
+                      <td colspan="3"><input name="op" type="hidden" id="op" value="{$op}"> 
                         <input name="id_preferencia" type="hidden" id="id_preferencia" value="{$prefs.id_preferencia}"> 
                         <input name="acao" type="hidden" id="acao" value="alt"></td>
                     </tr>
                     <tr align="center"> 
-                      <td colspan="2">&nbsp;</td>
+                      <td colspan="4">&nbsp;</td>
                     </tr>
                     <tr align="center"> 
-                      <td colspan="2"><input type="submit" name="Submit" value="Cadastrar"></td>
+                      <td colspan="4"><input type="submit" name="Submit" value="Cadastrar"></td>
                     </tr>
                   </table>
                   </form>

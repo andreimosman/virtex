@@ -910,6 +910,11 @@ class VAConfiguracao extends VirtexAdmin {
 							$sSQL .= "  tx_juros = '".@$_REQUEST["tx_juros"]."', ";
 							$sSQL .= "  multa = '".@$_REQUEST["multa"]."', ";
 							$sSQL .= "  dia_venc = '".@$_REQUEST["dia_venc"]."', ";
+							$sSQL .= "  cod_banco = '".@$_REQUEST["cod_banco"]."', ";
+							$sSQL .= "  carteira = '".@$_REQUEST["carteira"]."', ";
+							$sSQL .= "  agencia = '".@$_REQUEST["agencia"]."', ";
+							$sSQL .= "  num_conta = '".@$_REQUEST["num_conta"]."', ";
+							$sSQL .= "  convenio = '".@$_REQUEST["convenio"]."' ";
 							
 							//echo "SQL UPDATE: $sSQL <br>";
 							$this->bd->consulta($sSQL);
