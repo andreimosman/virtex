@@ -657,8 +657,7 @@ class VAClientes extends VirtexAdmin {
 				
 
 			} else if ( $rotina == "confirmar") {
-				
-			
+				require_once( PATH_LIB . "/dede2.php" );	
 			} else if( $rotina == "contratar" ) {
 
 				$enviando = false;
