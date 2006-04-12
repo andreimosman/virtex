@@ -607,8 +607,25 @@ class VAClientes extends VirtexAdmin {
 				$sSQL .= "  cbtb_cliente_produto cp INNER JOIN cbtb_contrato ct ";
 				$sSQL .= "USING( id_produto ) ";
 				$sSQL .= "WHERE cp.id_cliente='$id_cliente' AND cp.excluido = 'f'";
-								
-				echo "SQL: $sSQL <br>\n";		
+				
+				//$sSQL  = "SELECT ";
+				//$sSQL .= "  ct.id_cliente_produto, ct.vigencia, ct.data_contratacao, ct.valor_contrato, ct.status, ct.tipo_produto, ";
+				//$sSQL .= "  cp.id_cliente_produto, cp.id_cliente, cp.id_produto, cp.dominio ";
+				//$sSQL .= "FROM ";
+				//$sSQL .= "  cbtb_cliente_produto cp, cbtb_contrato ct ";
+				//$sSQL .= "WHERE cp.id_produto = ct.id_produto AND cp.id_cliente_produto in(SELECT * FROM cbtb_cliente_produto WHERE id_cliente = '$id_cliente') ";
+				
+				
+				
+				//echo "SQL: $sSQL <br>\n";		
+				
+				
+				
+				
+				
+				
+				
+				
 				$produtos = $this->bd->obtemRegistros($sSQL);
 						
 				for($i=0;$i<count($produtos);$i++) {

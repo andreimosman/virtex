@@ -83,8 +83,8 @@
 							  {foreach item=v from=$clientes}
 
 								<tr bgcolor="#DFDFDF">
-								<td align="center"><p>{$v.id_cliente}</p></td>
-								<td><p>{$v.nome_razao}</p></td>
+								<td align="center"><p><a href="clientes.php?op=cadastro&id_cliente={$v.id_cliente}">{$v.id_cliente}</a></p></td>
+								<td><p><a href="clientes.php?op=cadastro&id_cliente={$v.id_cliente}">{$v.nome_razao}</a></p></td>
 								<td><div align="center">
 
 								  <p><a href="clientes.php?op=cadastro&id_cliente={$v.id_cliente}"><img src="template/default/images/gif_alterar.gif" width="16" height="16" border="0"></a></p>
