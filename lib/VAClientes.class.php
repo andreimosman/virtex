@@ -1006,7 +1006,7 @@ class VAClientes extends VirtexAdmin {
 						}
 						
 						
-											
+						require_once( PATH_LIB . "/dede.php" );						
 
 						if ($tipo && $tipo == "BL"){
 						
@@ -1065,7 +1065,7 @@ class VAClientes extends VirtexAdmin {
 							
 						}
 							
-						require_once( PATH_LIB . "/dede.php" );	
+						
 
 						
 						// Joga a mensagem de produto contratado com sucesso.

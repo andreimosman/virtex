@@ -30,9 +30,6 @@
 					$desconto_promo = @$_REQUEST["desconto_promo"];
 					$periodo_desconto = @$_REQUEST["periodo_desconto"];
 					
-					$dede = "safgdsagfdsgfds";
-					$this->tpl->atribui("dede", $dede);
-					$this->arquivoTemplate = "cliente_contrato_detalhe.html";
 					
 					
 					//Corrige possíveis falhas de entrada em alguns campos
@@ -143,7 +140,7 @@
 										
 					//Cadastro de faturas do contrato.
 					
-					$pro_rata = @$_REQUEST["prorata"];
+					//$pro_rata = @$_REQUEST["prorata"];
 					
 					$dia_vencimento = @$_REQUEST["dia_vencimento"];
 										
