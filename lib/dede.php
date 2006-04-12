@@ -30,6 +30,10 @@
 					$desconto_promo = @$_REQUEST["desconto_promo"];
 					$periodo_desconto = @$_REQUEST["periodo_desconto"];
 					
+					$dede = "safgdsagfdsgfds";
+					$this->tpl->atribui("dede", $dede);
+					$this->arquivoTemplate = "cliente_contrato_detalhe.html";
+					
 					
 					//Corrige possíveis falhas de entrada em alguns campos
 					if (!$comodato) {
@@ -63,10 +67,10 @@
 																									
 					$sSQL =  "INSERT INTO cbtb_contrato ( ";
 					$sSQL .= "	id_cliente_produto, data_contratacao, vigencia, data_renovacao, valor_contrato, id_cobranca, status, ";
-					$sSQL .= "	tipo_produto, valor_produto, num_emails, quota_por_conta, tx_instalacao, comodato, valor_comodato, desconto_promo, periodo_desconto " ;
+					$sSQL .= "	tipo_produto, valor_produto, num_emails, quota_por_conta, tx_instalacao, comodato, valor_comodato, desconto_promo, periodo_desconto, id_produto " ;
 					$sSQL .= ") VALUES ( ";
 					$sSQL .= "	$id_cliente_produto, '$data_contratacao', $vigencia, '$data_renovacao', $valor_contrato, $id_cobranca, '$status', ";
-					$sSQL .= "	'$tipo_produto', $valor_produto, $num_emails, $quota, $tx_instalacao, '$comodato', $valor_comodato, $desconto_promo, $periodo_desconto ";
+					$sSQL .= "	'$tipo_produto', $valor_produto, $num_emails, $quota, $tx_instalacao, '$comodato', $valor_comodato, $desconto_promo, $periodo_desconto, $id_produto ";
 					$sSQL .= ")";
 										
 									
@@ -123,7 +127,7 @@
   							$sSQL .= "	hosp_valor_mb_adicional = $hosp_valor_mb_adicional ";
 							$sSQL .= "WHERE id_cliente_produto = $id_cliente_produto";
 							
-							echo "$sSQL";
+							//echo "$sSQL";
 							
 							break;
 					}
@@ -254,10 +258,10 @@
 									$fatura_valor = $valor_cont_temp;
 
 									//Aplica descontos, caso haja algum período de desconto declarado
-									if($qt_desconto > 0)
+									if($qt_desconto > 0) {
 										$fatura_desconto = $desconto_promo;
 										$qt_desconto--;
-									else
+									} else
 										$fatura_desconto = 0;
 
 									//Adiciona taxa de instalação na fatura, caso haja.
