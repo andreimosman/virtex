@@ -168,7 +168,7 @@
 									$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago, 'f' ";
 									$sSQL .= ")";
 									
-									echo "$sSQL<br>";
+									//echo "$sSQL<br>";
 									$this->bd->consulta($sSQL);
 								}
 							break;
