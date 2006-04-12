@@ -171,14 +171,11 @@
 									$stamp_inicial = mktime(0,0,0, $ini_m, $ini_d, $ini_a);
 									$stamp_final = mktime(0,0,0, $dat_m, $dat_d, $dat_a);
 									
-									diferenca_meses = (($stamp_final - $stamp_inicial) / 86400) / 30;
+									$diferenca_meses = (($stamp_final - $stamp_inicial) / 86400) / 30;
 									
-									$i=0;
 									
-									for
+									for($i=0; $i<=floor($diferenca_meses); $i++) {
 									
-										$fatura_valor = $valor_cont_temp;
-
 										//Aplica descontos, caso haja algum período de desconto declarado
 										if($qt_desconto > 0) {
 											$fatura_desconto = $desconto_promo;
@@ -191,8 +188,8 @@
 
 											//Adiciona-se ao valor da fatura o valor do pro-rata																														
 
-											//Se houver taxa de instalação no pós pago, então a primeira fatura será referente à taxa de instalação
-											if($tx_instalacao != 0) {
+											//Se houver taxa de instalação no pós pago, então a primeira fatura do carnê será referente à taxa de instalação
+											if($tx_instalacao > 0) {
 												$fatura_valor = $tx_instalacao;
 												
 												//Calcula a data dos próximos pagamentos de fatura.
@@ -208,16 +205,20 @@
 												$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
 												$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
 												$sSQL .= ")";												
+												$this->bd->consulta($sSQL);
 													
 											}
 
-										} else {
-											//Calcula o desconto sobre a fatura.
-											$fatura_valor -= $fatura_desconto;									
-										}
+										} 
+										
+										
+										$fatura_valor = $valor_cont_temp;
+										
+										//Calcula o desconto sobre a fatura.
+										$fatura_valor -= $fatura_desconto;
 
 										//Calcula a data dos próximos pagamentos de fatura.
-										$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $ini_m+$i, $ini_d, $ini_a));
+										$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $ini_m+$i+1, $ini_d, $ini_a));
 
 
 										$sSQL =  "INSERT INTO cbtb_faturas(";
@@ -230,14 +231,15 @@
 										$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
 										$sSQL .= ")";
 
-										echo "$sSQL<br>";
+										//echo "$sSQL<br>";
 										$this->bd->consulta($sSQL);
 										
+										/*
 										list($dt_final_a, $dt_final_m, $dt_final_d) = explode("-", $fatura_dt_vencimento);
 										
 										$stamp_dt1 = mktime(0,0,0,$dt_final_m, $dt_final_d, $dt_final_a);
 										
-										//if("$dt_final_d/$dt_final_m/$dt_final_a" == "$data_carne") break;
+										//if("$dt_final_d/$dt_final_m/$dt_final_a" == "$data_carne") break; */
 										
 									}																	
 								} else { //Caso a cobrança não seja do tipo carnê.
@@ -278,14 +280,28 @@
 							
 						case 'PRE':
 								if($id_cobranca == 2) {	//Tipo pagamento for Carnê.
-								
+									/*
 									$ini_carne = @$_REQUEST["ini_carne"];
 									$data_carne = @$_REQUEST["data_carne"];
 									
 									list($ini_d, $ini_m, $ini_a) = explode("/", $ini_carne);
 									list($dat_d, $dat_m, $dat_a) = explode("/", $data_carne);
 																		
-									for ($i=0; $i < $vigencia; $i++) {									
+									for ($i=0; $i < $vigencia; $i++) */
+									
+									$ini_carne = @$_REQUEST["ini_carne"];
+									$data_carne = @$_REQUEST["data_carne"];
+																		
+									list($ini_d, $ini_m, $ini_a) = explode("/", $ini_carne);
+									list($dat_d, $dat_m, $dat_a) = explode("/", $data_carne);
+																		
+									$stamp_inicial = mktime(0,0,0, $ini_m, $ini_d, $ini_a);
+									$stamp_final = mktime(0,0,0, $dat_m, $dat_d, $dat_a);
+																		
+									$diferenca_meses = (($stamp_final - $stamp_inicial) / 86400) / 30;
+																		
+																		
+									for($i=0; $i<=floor($diferenca_meses); $i++) {									
 
 										$fatura_valor = $valor_cont_temp;
 
@@ -303,7 +319,7 @@
 											//Adiciona-se ao valor da fatura o valor do pro-rata																														
 
 											//TODO: Procurar função de adição do pro-rata
-											if($tx_instalacao != 0) $fatura_valor += $tx_instalacao;
+											if($tx_instalacao > 0) $fatura_valor += $tx_instalacao;
 
 										}
 
