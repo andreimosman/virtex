@@ -31,7 +31,7 @@
 	
 	$lista_contrato = $this->bd->obtemRegistros($sSQL);
 	
-	echo "lista: $sSQL <br>";
+	//echo "lista: $sSQL <br>";
 	
 	$this->tpl->atribui("lista_contrato",$lista_contrato);
 	$this->tpl->atribui("cliente",$cliente);

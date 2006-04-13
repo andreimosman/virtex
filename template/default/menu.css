@@ -675,7 +675,10 @@ td img {
 
 .MMMIFVStyleMMMenu0205174422_1_3 {
 /* This class determines the general characteristics of the menu items in menu MMMenu0205174422_1_3 */
-	margin:-3px;
+	margin-top:0px;
+	margin-bottom:0px;
+	margin-left:0px;
+	margin-right:0px;
 	border-top:0px solid #ffffff;
 	border-left:0px solid #ffffff;
 	border-bottom:0px solid #555555;
@@ -688,7 +691,10 @@ td img {
 
 .MMMIVStyleMMMenu0205174422_1_3 {
 /* This class determines the general characteristics of the menu items in menu MMMenu0205174422_1_3 */
-	margin:-3px;
+	margin-top:0px;
+	margin-bottom:0px;
+	margin-left:0px;
+	margin-right:0px;
 	border-top:0px;
 	border-left:0px solid #ffffff;
 	border-bottom:0px solid #555555;

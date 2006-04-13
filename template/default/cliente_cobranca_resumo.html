@@ -74,16 +74,18 @@
           <td> {foreach item=a from=$lista_contrato} 
             <table width="100%" border="0" cellspacing="1" cellpadding="0">
               <tr> 
-                <td width="23%" align="center"> <p>{$a.data_contratacao}</p></td>
-                <td width="75" align="center"> 
+                <td width="23%" align="center" height="15"> 
+                  <p>{$a.data_contratacao}</p></td>
+                <td width="75" align="center" height="15"> 
                   <p>{$a.vigencia}</p></td>
-                <td width="28%" align="LEFT"> 
+                <td width="28%" align="LEFT" height="15"> 
                   <p>{$a.nome}</p></td>
-                <td width="7%" align="center"> <p>{$a.tipo_produto}</p></td>
-                <td width="75" align="RIGHT"> 
+                <td width="7%" align="center" height="15"> 
+                  <p>{$a.tipo_produto}</p></td>
+                <td width="75" align="RIGHT" height="15"> 
                   <p>{$a.valor_contrato}</p></td>
-                <td width="75" align="center">
-<p>{$a.status}</p></td>
+                <td width="75" align="center" height="15"> 
+                  <p>{$a.status}</p></td>
               </tr>
               <tr bgcolor="#CCCCCC"> 
                 <td colspan="6" align="center" height="1"></td>
