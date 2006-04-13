@@ -664,6 +664,7 @@ td img {
 #MMMenu0205174422_1_3 {
 /* This class defines things about menu MMMenu0205174422_1_3's div. */
 	position:absolute;
+	border=1px;
 	left:96px;
 	top:40px;
 	visibility:hidden;
@@ -674,12 +675,11 @@ td img {
 
 .MMMIFVStyleMMMenu0205174422_1_3 {
 /* This class determines the general characteristics of the menu items in menu MMMenu0205174422_1_3 */
+	margin:-3px;
 	border-top:0px solid #ffffff;
 	border-left:0px solid #ffffff;
 	border-bottom:0px solid #555555;
 	border-right:0px solid #555555;
-	width:96px;
-	height:20px;
 	voice-family: "\"}\"";
 	voice-family:inherit;
 	width:90px;
@@ -688,12 +688,11 @@ td img {
 
 .MMMIVStyleMMMenu0205174422_1_3 {
 /* This class determines the general characteristics of the menu items in menu MMMenu0205174422_1_3 */
+	margin:-3px;
 	border-top:0px;
 	border-left:0px solid #ffffff;
 	border-bottom:0px solid #555555;
 	border-right:0px solid #555555;
-	width:96px;
-	height:20px;
 	voice-family: "\"}\"";
 	voice-family:inherit;
 	width:90px;
