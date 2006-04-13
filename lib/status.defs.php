@@ -126,6 +126,12 @@ $_LS_FORMA_PAGAMENTO = array(
 		"PRE" => "Pré-Pago",
 		"POS" => "Pós-Pago"
 		);
-
+$_LS_STATUS_FATURA = array(
+		"A" => "Aberto",
+		"P" => "Paga",
+		"R" => "Paga Parcial",
+		"E" => "Estornadas",
+		"C" => "Canceladas"
+		)
 
 ?>

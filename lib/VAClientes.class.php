@@ -571,7 +571,7 @@ class VAClientes extends VirtexAdmin {
 
 		} else if ($op == "cobranca") {
 			// Sistema de contratação de produtos e resumo de cobrança
-			
+			//echo "cobranca<br>";
 					
 			$rotina = @$_REQUEST["rotina"];
 			$acao = @$_REQUEST["acao"];
@@ -588,18 +588,10 @@ class VAClientes extends VirtexAdmin {
 			$rotina = "contratar";
 			}
 			if( $rotina == "resumo" ) {
-			
+			//echo "resumo<br>";
 				$id_cliente = @$_REQUEST['id_cliente'];
 			
 			
-				//$sSQL  = "SELECT ";
-				//$sSQL .= "	cp.id_cliente_produto, cp.id_cliente, cp.id_produto, cp.dominio, ";
-				//$sSQL .= "	p.id_produto, p.nome, p.descricao, p.tipo, p.valor, p.disponivel, p.num_emails, p.quota_por_conta, ";
-				//$sSQL .= "	p.vl_email_adicional, p.permitir_outros_dominios, p.email_anexado, ";
-				//$sSQL .= "FROM cbtb_cliente_produto cp INNER JOIN prtb_produto p ";
-				//$sSQL .= "FROM cbtb_cliente_produto cp, prtb_produto p ";
-				//$sSQL .= "USING( id_produto ) ";
-				//$sSQL .= "WHERE cp.id_cliente='$id_cliente' AND cp.excluido = 'f'";
 				
 				$sSQL  = "SELECT ";
 				$sSQL .= "  ct.id_cliente_produto, ct.vigencia, ct.data_contratacao, ct.valor_contrato, ct.status, ct.tipo_produto, ";
@@ -608,22 +600,6 @@ class VAClientes extends VirtexAdmin {
 				$sSQL .= "  cbtb_cliente_produto cp INNER JOIN cbtb_contrato ct ";
 				$sSQL .= "USING( id_produto ) ";
 				$sSQL .= "WHERE cp.id_cliente='$id_cliente' AND cp.excluido = 'f'";
-				
-				//$sSQL  = "SELECT ";
-				//$sSQL .= "  ct.id_cliente_produto, ct.vigencia, ct.data_contratacao, ct.valor_contrato, ct.status, ct.tipo_produto, ";
-				//$sSQL .= "  cp.id_cliente_produto, cp.id_cliente, cp.id_produto, cp.dominio ";
-				//$sSQL .= "FROM ";
-				//$sSQL .= "  cbtb_cliente_produto cp, cbtb_contrato ct ";
-				//$sSQL .= "WHERE cp.id_produto = ct.id_produto AND cp.id_cliente_produto in(SELECT * FROM cbtb_cliente_produto WHERE id_cliente = '$id_cliente') ";
-				
-				
-				
-				//echo "SQL: $sSQL <br>\n";		
-				
-				
-				
-				
-				
 				
 				
 				
@@ -649,7 +625,7 @@ class VAClientes extends VirtexAdmin {
 					$produtos[$i]["contas"] = $contas;
 				}
 			
-				
+				//echo "BOSTA";
 				require_once( PATH_LIB . "/hugo2.php" );
 				
 				$this->tpl->atribui("produtos",$produtos);
@@ -1144,7 +1120,7 @@ class VAClientes extends VirtexAdmin {
 					
 					
 
-					$this->arquivoTemplate = "clientes_cobranca_contratar.html";
+					$this->arquivoTemplate = "cliente_cobranca_contratar.html";
 					
 					
 					

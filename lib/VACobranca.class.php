@@ -571,9 +571,138 @@ class VACobranca extends VirtexAdmin {
 			//$this->arquivoTemplate = "";
 			
 		
-		}
+		}else if ($op == "amortizacao"){
 		
+			$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
+			$data = @$_REQUEST["data"];
+			$acao = @$_REQUEST["acao"];
+			$id_cliente = @$_REQUEST["id_cliente"];
+						
+			$sSQL  = "SELECT ";
+			$sSQL .= "* ";
+			$sSQL .= "FROM ";
+			$sSQL .= "cbtb_faturas ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "id_cliente_produto = '$id_cliente_produto' AND ";
+			$sSQL .= "data = '$data'";
+			
+			//ECHO "AMORT: $sSQL<br>";
+			
+			$amort = $this->bd->obtemUnicoRegistro($sSQL);
+			
+			$sSQL = "SELECT nome_razao FROM cltb_cliente WHERE id_cliente = '$id_cliente'";
+			$cliente = $this->bd->obtemUnicoRegistro($sSQL);
+				
+			//echo "sql: $sSQL<br> Nome:".$cliente["nome_razao"]."<br> ";
+				
+			$this->tpl->atribui("cliente",$cliente);
+
+		
+			global $_LS_STATUS_FATURA;
+			$this->tpl->atribui("ls_status_fatura",$_LS_STATUS_FATURA);
+
+			$data = $amort["data"];
+
+			    if (strstr($data, "/")){ 
+			        $A = explode ("/", $data); 
+			        $data = $A[2] . "-". $A[1] . "-" . $A[0]; 
+			    } 
+			    else{ 
+			        $A = explode ("-", $data); 
+			        $data = $A[2] . "/". $A[1] . "/" . $A[0];     
+			    } 
+
+
+			//echo $data;
+			$this->tpl->atribui("id_cliente",$id_cliente);
+			$this->tpl->atribui("data",$data);
+			$this->tpl->atribui("amort",$amort);
+			$this->arquivoTemplate = "cliente_cobranca_amortizacao.html";
+			
+			
+			if ($acao == "alt"){
+					
+				
+				$this->amortizar();
+				
+				
+				$msg_final = "Amortização/Pagamento efetuado com sucesso!";
+				
+				$this->tpl->atribui("mensagem",$msg_final); 
+				$this->tpl->atribui("url", "clientes.php?op=cobranca&id_cliente=".$id_cliente."&rotina=resumo");
+				$this->tpl->atribui("target","_top");
+				
+				
+				$this->arquivoTemplate="msgredirect.html";
+
+			}
 	}
+	
+}
+	
+public function amortizar(){
+
+
+	$data = @$_REQUEST["reagendamento"];
+	$data_pagamento = @$_REQUEST["data_pagamento"];
+		
+	
+	if (strstr($data, "/")){ 
+		$A = explode ("/", $data); 
+		$data = $A[2] . "-". $A[1] . "-" . $A[0]; 
+	} else { 
+		$A = explode ("-", $data); 
+		$data = $A[2] . "/". $A[1] . "/" . $A[0];     
+	} 
+			 
+			 
+	if (strstr($data_pagamento, "/")){ 
+		$A = explode ("/", $data_pagamento); 
+		$data_pagamento = $A[2] . "-". $A[1] . "-" . $A[0]; 
+	} else { 
+		$A = explode ("-", $data_pagamento); 
+		$data_pagamento = $A[2] . "/". $A[1] . "/" . $A[0];     
+	} 
+			 
+	$amortizar = str_replace(",",".",@$_REQUEST["amortizar"]);
+	$desconto = str_replace(",",".",@$_REQUEST["desconto"]);
+	$acrescimo = str_replace(",",".",@$_REQUEST["acrescimo"]);
+	
+	
+	
+	//$sSQL  = "SELECT status FROM cntb_conta WHERE id_cliente_produto = '".$_REQUEST["id_cliente_produto"]."' AND data = '".$_REQUEST["data"]."' ";
+	//$checa_status = $this->bd->obtemUnicoRegistro($sSQL);
+	
+	//$_status = $checa_status["status"];
+	
+	//if ($_status != "A"){
+	//}
+	
+	
+	$sSQL  = "UPDATE ";
+	$sSQL .= "	cbtb_faturas ";
+	$sSQL .= "SET ";
+	$sSQL .= "	status = '".@$_REQUEST["status"]."', ";
+	$sSQL .= "	observacoes = '".@$_REQUEST["observacoes"]."', ";
+	$sSQL .= "	reagendamento = '".$data."', ";
+	$sSQL .= "	pagto_parcial = pagto_parcial + '".$amortizar."', ";
+	$sSQL .= "	data_pagamento = '".$data_pagamento."', ";
+	$sSQL .= "	desconto = '".$desconto."', ";
+	$sSQL .= "	acrescimo = '".$acrescimo."', ";
+	$sSQL .= "	valor_pago = '".$amortizar."' ";
+	$sSQL .= "WHERE ";
+	$sSQL .= "	id_cliente_produto = '".@$_REQUEST["id_cliente_produto"]."' AND ";
+	$sSQL .= "	data = '".@$_REQUEST["data"]."' ";
+				
+				
+	echo "QUERY: $sSQL <br>\n";
+	$this->bd->consulta($sSQL);
+	
+	return;
+
+
+
+}
 	
 public function __destruct() {
       	parent::__destruct();

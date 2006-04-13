@@ -1,8 +1,7 @@
-<html>
-<head>
-<title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
-
-<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+<script>
+var dataVenc = '{$data}';
+</script>
+{literal}
 <script language="JavaScript" src="util.js"></script>
 
 <script language="JavaScript">
@@ -12,11 +11,13 @@ function pagamentoHoje() {
 }
 
 function pagamentoVencimento() {
-   formulario.data_pagamento.value = '{vencimento}';
+
+
+   formulario.data_pagamento.value = dataVenc;
 }
 
 function verificaReagendamento() {
-   formulario.data_reagendamento.disabled = !formulario.reagendar.checked;
+   formulario.reagendamento.disabled = !formulario.reagendar.checked;
 }
 
 function calculaValores() {
@@ -26,33 +27,33 @@ function calculaValores() {
    tmpDesc  = new String( formulario.desconto.value );
    tmpAcres = new String( formulario.acrescimo.value );
    tmpAmort = new String( formulario.amortizar.value );
-   
+
    tt = RoundToNdp(tmpTotal.replace(/\,/,"."),2);
    tp = RoundToNdp(tmpPago.replace(/\,/,"."),2);
    td = RoundToNdp(tmpDesc.replace(/\,/,"."),2);
    ta = RoundToNdp(tmpAcres.replace(/\,/,"."),2);
    am = RoundToNdp(tmpAmort.replace(/\,/,"."),2);
-   
+
    if( isNaN(td) ) td = 0;
    if( isNaN(ta) ) ta = 0;
    if( isNaN(am) ) am = 0;
-   
+
    tr = tt - tp;
    tr = RoundToNdp(tr,2); // Tive que usar essa merda por conta de um pau no floatpoint do javascript!!! Bah
    tr = tr - td + ta;
-   
+
    vp = RoundToNdp(tr - am,2); // Mesma merda
-   
-   if( am == 0 && tt-td+ta == tr ) { 
+
+   if( am == 0 && tt-td+ta == tr ) {
       formulario.status.value = "A";
    } else if( vp > 0 ) {
-      formulario.status.value = "PP";
+      formulario.status.value = "R";
    } else {
-      formulario.status.value = "PG";
+      formulario.status.value = "P";
    }
-   
+
    formulario.status_fatura.value = formulario.status.value;
-   
+
    debug = 0;
    if( debug ) {
       window.alert("TT: "+tt);
@@ -63,7 +64,7 @@ function calculaValores() {
       window.alert("AM: "+am);
       window.alert("VP: "+vp);
    }
-   
+
    formulario.valor_total.value = numberFormat(tt);
    formulario.valor_pago.value = numberFormat(tp);
    formulario.desconto.value = numberFormat(td);
@@ -73,142 +74,200 @@ function calculaValores() {
    formulario.valor_pendente.value = numberFormat(vp);
 
    return true;
-   
+
 }
 
 
 
 </script>
-</head>
+{/literal}
+<html>
+<head>
+<title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
 
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+</head>
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
           <td>{ include file='menu_principal.html' }</td>
         </tr>
+		<td>
+		<table width="500" border="0" cellspacing="2" cellpadding="2" align="center">
+	<tr>
+
+    <td>
+      <!-- FICHA CADASTRAL -->
+      {if $op == "cadastro" } <a href="clientes.php?op=cadastro&id_cliente={$id_cliente}"><img src="template/default/images/bt_ficha_cliente.gif" border=0 alt="Ficha do Cliente"></a>
+      {else } <a href="clientes.php?op=cadastro&id_cliente={$id_cliente}"><img src="template/default/images/bt_ficha_cliente_inativo.gif" border=0 alt="Ficha do Cliente"></a>
+      {/if} </td>
+		<!-- PRODUTOS -->
+
+    <td> {if ($op == "produto" || $op == "conta") && $tipo == "D"} <a href="clientes.php?op=produto&tipo=D&id_cliente={$id_cliente}"><img src="template/default/images/bt_discado.gif" border=0 alt="Acesso Discado"></a>
+      {else } {if $id_cliente}<a href="clientes.php?op=produto&tipo=D&id_cliente={$id_cliente}">{/if}<img src="template/default/images/bt_discado_inativo.gif" border=0 alt="Acesso Discado"></a>
+      {/if} </td>
+
+    <td> {if ($op == "produto" || $op == "conta") && $tipo == "BL"} <a href="clientes.php?op=produto&tipo=BL&id_cliente={$id_cliente}&msg="><img src="template/default/images/bt_bandalarga.gif" border=0 alt="Acesso Banda Larga"></a>
+      {else } {if $id_cliente}<a href="clientes.php?op=produto&tipo=BL&id_cliente={$id_cliente}&msg=">{/if}<img src="template/default/images/bt_bandalarga_inativo.gif" border=0 alt="Acesso Banda Larga"></a>
+      {/if} </td>
+    <td> {if ($op == "produto" || $op == "conta") && $tipo == "H"} <a href="clientes.php?op=produto&tipo=H&id_cliente={$id_cliente}"><img src="template/default/images/bt_hospedagem.gif" border=0 alt="Hospedagem"></a>
+      {else } {if $id_cliente}<a href="clientes.php?op=produto&tipo=H&id_cliente={$id_cliente}">{/if}<img src="template/default/images/bt_hospedagem_inativo.gif" border=0 alt="Cobranca"></a>
+      {/if} </td>
+		<!-- COBRANCA -->
+
+    <td> {if $op == "cobranca"} <a href="clientes.php?op=cobranca&id_cliente={$id_cliente}&rotina=resumo"><img src="template/default/images/bt_cobranca.gif" border=0 alt="Cobrança"></a>
+      {else } {if $id_cliente}<a href="clientes.php?op=cobranca&id_cliente={$id_cliente}&rotina=resumo">{/if}<img src="template/default/images/bt_cobranca_inativo.gif" border=0 alt="Cobranca"></a>
+      {/if} </td>
+        <!-- HELPDESK -->
+
+    <td> {if $op == "helpdesk"} <a href="clientes.php?op=helpdesk&id_cliente={$id_cliente}"><img src="template/default/images/bt_helpdesk.gif" border=0 alt="Helpdesk"></a>
+      {else } {if $id_cliente}<a href="clientes.php?op=helpdesk&id_cliente={$id_cliente}">{/if}<img src="template/default/images/bt_helpdesk_inativo.gif" border=0 alt="Helpdesk"></a>
+      {/if} </td>
+	</tr>
+	{if $id_cliente}
+
+  <tr align="center">
+    <td colspan="6" bgcolor="#779977"> <font face="arial" size=+1><b><font color="#FFFFFF">{$cliente.nome_razao}</font></b></font>
+      <font color="#FFFFFF">
+      <!--table width="100%" cellpadding=2 cellspacing=1 bgcolor="#559955">
+				<tr bgcolor="#FFFFFF">
+					<td width="50%"><u><small>CLIENTE:</small></u>&nbsp;{$cliente.nome_razao}</td>
+					<td width="50%"><u><small>CPF/CNPJ:</small></u>&nbsp;{$cliente.cpf_cnpj}</td>
+				</tr>
+			</table-->
+      </font> </td>
+	</tr>
+	{/if}
+</table>
+		</td>
         <tr>
           <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
-                <td align="CENTER" valign="MIDDLE"> <form name=formulario method="post" action="{PHP_SELF}" > 
+                <td align="CENTER" valign="MIDDLE"> <form name=formulario method="post" action="{$smarty.server.PHP_SELF}" >
                   <h1>Amortiza&ccedil;&atilde;o</h1>
-                  <p> 
-                    <input type="hidden" name="oper" value="{oper}">
-                    <input type="hidden" name="sessao" value="{sessao}">
-                    <input type="hidden" name="subsess" value="{subsess}">
-                    <input type="hidden" name="p" value="{p}">
-                    <input type="hidden" name="op" value="{op}">
-                    <input type="hidden" name="id_cliente" value="{id_cliente}">
-                    <input type="hidden" name="id_cliente_produto" value="{id_cliente_produto}">
-                    <input type="hidden" name="data" value="{data}">
-                    <input type="hidden" name="valor" value="{valor}">
-                    <input type="hidden" name="descricao" value="{descricao}">
-                    <input type="hidden" name="vt" value="{vt}">
-                    <input type="hidden" name="vp" value="{vp}">
-                    <!--input type="hidden" name="" value="{}"-->
+                  <p>
+                    <input type="hidden" name="acao" value="alt">
+                    <input type="hidden" name="op" value="amortizacao">
+                    <input type="hidden" name="id_cliente" value="{$id_cliente}">
+                    <input type="hidden" name="id_cliente_produto" value="{$amort.id_cliente_produto}">
+                    <input type="hidden" name="data" value="{$amort.data}">
+                    <input type="hidden" name="valor" value="{$amort.valor}">
+                    <input type="hidden" name="descricao" value="{$amort.descricao}">
+                    <input type="hidden" name="vt" value="{$vt}">
+                    <input type="hidden" name="vp" value="{$vp}">
                     <input type="hidden" name="status_fatura" value="">
-                    <input type="hidden" name="popup" value="{popup}">
+                    <input type="hidden" name="popup" value="{$amort.popup}">
                   </p>
                   <table border=0  _bgcolor="#000000" cellspacing=1 cellpadding=1>
 		<tr>
 			<td align="center">
 				<table border=0 width=390 cellspacing=0 cellpadding=0>
-				   <tr><td><font color="#FF0000"><b>{sErro}<b></font></td></tr>
+				   <tr><td><font color="#FF0000"><b>{$sErro}<b></font></td></tr>
 				</table>
 				        <table border=0 width="390" bgcolor="#A0A0A0">
-                          <tr bgcolor="#fafafa"> 
+                          <tr bgcolor="#fafafa">
                             <td colspan=2><h2><font color="#000000">Fatura</font></h2></td>
                           </tr>
-                          <tr> 
-                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Referente 
+                          <tr>
+                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Referente
                                 à:</p></td>
-                            <td bgcolor="#FFFFFF"><p>{$lista_faturas.descricao}</p></td>
+                            <td bgcolor="#FFFFFF"><p>{$amort.descricao}</p></td>
                           </tr>
-                          <tr> 
+                          <tr>
                             <td bgcolor="#FFFFFF" align="right" width="120"><p>Vencimento:</p></td>
-                            <td bgcolor="#FFFFFF"><p>{$lista_faturas.vencimento}</p></td>
+                            <td bgcolor="#FFFFFF"><p>{$data}</p></td>
                           </tr>
-                          <tr> 
-                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Valor 
+                          <tr>
+                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Valor
                                 Total:</p></td>
-                            <td bgcolor="#FFFFFF"><p> 
-                                <input type="text" name="valor_total" value="{$lista_faturas.valor_total}" disabled="true">
+                            <td bgcolor="#FFFFFF"><p>
+                                <input type="text" name="valor_total" value="{$amort.valor}" disabled="true">
                               </p></td>
                           </tr>
-                          <tr> 
-                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Valor 
+                          <tr>
+                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Valor
                                 já pago(-):</p></td>
-                            <td bgcolor="#FFFFFF"><p> 
-                                <input type="text" name="valor_pago" value="{$lista_faturas.valor_pago}" disabled="1">
+                            <td bgcolor="#FFFFFF"><p>
+                                <input type="text" name="valor_pago" value="{$amort.valor_pago}" disabled="1">
                               </p></td>
                           </tr>
-                          <tr> 
+                          <tr>
                             <td bgcolor="#FFFFFF" align="right" width="120"><p>Desconto(-):</p></td>
-                            <td bgcolor="#FFFFFF"><p> 
-                                <input type="text" name="desconto" value="{$lista_faturas.desconto}" onChange="javascript:calculaValores();" onFocusOut="javascript:calculaValores();">
+                            <td bgcolor="#FFFFFF"><p>
+                                <!--<input type="text" name="desconto" value="{$amort.desconto}" onChange="javascript:calculaValores();" onFocusOut="javascript:calculaValores();"> -->
+								<input type="text" name="desconto" value="0,00" onChange="javascript:calculaValores();" onFocusOut="javascript:calculaValores();">
                               </p></td>
                           </tr>
-                          <tr> 
+                          <tr>
                             <td bgcolor="#FFFFFF" align="right" width="120"><p>Acrescimo(+):</p></td>
-                            <td bgcolor="#FFFFFF"><p> 
-                                <input type="text" name="acrescimo" value="{acrescimo}" onChange="javascript:calculaValores();" onFocusOut="javascript:calculaValores();">
+                            <td bgcolor="#FFFFFF"><p>
+                                <input type="text" name="acrescimo" value="{$amort.acrescimo}" onChange="javascript:calculaValores();" onFocusOut="javascript:calculaValores();">
                               </p></td>
                           </tr>
-                          <tr> 
-                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Valor 
+                          <tr>
+                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Valor
                                 a ser pago(=):</p></td>
-                            <td bgcolor="#FFFFFF"><p> 
-                                <input type="text" name="valor_restante" value="{valor_restante}" disabled=1>
+                            <td bgcolor="#FFFFFF"><p>
+                                <input type="text" name="valor_restante" value="{$amort.valor_restante}" disabled=1>
                               </p></td>
                           </tr>
-                          <tr> 
+                          <tr>
                             <td bgcolor="#FFFFFF" align="right" width="120"><p>Amortizar(-):</p></td>
-                            <td bgcolor="#FFFFFF"><p> 
-                                <input type="text" name="amortizar" value="{amortizar}" onChange="javascript:calculaValores();" onFocusOut="javascript:calculaValores();">
+                            <td bgcolor="#FFFFFF"><p>
+                                <input type="text" name="amortizar" value="{$amort.amortizar}" onChange="javascript:calculaValores();" onFocusOut="javascript:calculaValores();">
                               </p></td>
                           </tr>
-                          <tr> 
-                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Valor 
+                          <tr>
+                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Valor
                                 Pendente(=):</p></td>
-                            <td bgcolor="#FFFFFF"><p> 
-                                <input type="text" name="valor_pendente" value="{valor_pendente}" disabled=1>
+                            <td bgcolor="#FFFFFF"><p>
+                                <input type="text" name="valor_pendente" value="{$amort.valor_pendente}" disabled=1>
                               </p></td>
                           </tr>
-                          <tr> 
+                          <tr>
                             <td bgcolor="#FFFFFF" align="right" width="120"><p>Status:</p></td>
-                            <td bgcolor="#FFFFFF"><p>{status_select}</p></td>
+                            <td bgcolor="#FFFFFF">
+							<SELECT id="status" name="status">
+							{foreach key=id item=nome from=$ls_status_fatura}
+							<OPTION value="{$id}" {if $id == $amort.status}SELECTED{/if}>{$nome}</OPTION>
+							{/foreach}
+							</SELECT>
+							</td>
                           </tr>
-                          <tr> 
-                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Data 
+                          <tr>
+                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Data
                                 do Pagamento:</p></td>
-                            <td bgcolor="#FFFFFF"><p> 
-                                <input type="text" name="data_pagamento" value="{data_pagamento}">
+                            <td bgcolor="#FFFFFF"><p>
+                                <input type="text" name="data_pagamento" value="{$data_pagamento}">
                                 <input type="button" name="hoje" value="Hoje" onClick="javascript:pagamentoHoje();" &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
                                 <input type="button" name="venc" value="Venc." onClick="javascript:pagamentoVencimento();" &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
                               </p></td>
                           </tr>
-                          <tr bgcolor="#fafafa"> 
+                          <tr bgcolor="#fafafa">
                             <td colspan=2><h2><font color="#000000">Opções</font></h2></td>
                           </tr>
-                          <tr> 
-                            <td bgcolor="#FFFFFF" align="right" width="120"> <p> 
-                                <input type="checkbox" name="reagendar" value="1" onClick="javascript:verificaReagendamento();" onChange="javascript:verificaReagendamento();" {reagendamento_checked}>
+                          <tr>
+                            <td bgcolor="#FFFFFF" align="right" width="120"> <p>
+                                <input type="checkbox" name="reagendar" value="1"  class="checkbox" onClick="javascript:verificaReagendamento();" onChange="javascript:verificaReagendamento();" {$reagendamento_checked}>
                                 re-agendar cobrança para dia: </p></td>
-                            <td bgcolor="#FFFFFF"><input type="text" name="data_reagendamento" value="{data_reagendamento}" size=10 maxlength=10></td>
+                            <td bgcolor="#FFFFFF"><input name="reagendamento" type="text" value="{$data_reagendamento}" size=10 maxlength=10 id="reagendamento"></td>
                           </tr>
-                          <tr> 
+                          <tr>
                             <td bgcolor="#FFFFFF" align="right" width="120" valign="top"><p>Observações:</p></td>
-                            <td bgcolor="#FFFFFF"><textarea name="observacoes" rows=5 cols=29>{observacoes}</textarea></td>
+                            <td bgcolor="#FFFFFF"><textarea name="observacoes" rows=5 cols=29>{$amort.observacoes}</textarea></td>
                           </tr>
                         </table>
 				<hr size=1>
-				<input name="botao_enviar" type="submit" class=input2 id="submit" value="{submit} &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
+				<input name="botao_enviar" type="submit" class=input2 id="submit" value="Amortizar >>" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
 			</td>
 		</tr>
 	</table>
 	</form>
-				
+
 				</td>
               </tr>
             </table></td>
@@ -224,6 +283,12 @@ function calculaValores() {
       </table></td>
   </tr>
 </table>
+{literal}
+<script language="JavaScript">
+calculaValores();
+verificaReagendamento();
+</script>
+{/literal}
 </body>
 
 
