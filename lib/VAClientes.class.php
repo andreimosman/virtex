@@ -572,6 +572,7 @@ class VAClientes extends VirtexAdmin {
 		} else if ($op == "cobranca") {
 			// Sistema de contratação de produtos e resumo de cobrança
 			
+					
 			$rotina = @$_REQUEST["rotina"];
 			$acao = @$_REQUEST["acao"];
 			$email_igual = @$_REQUEST['email_igual'];
@@ -656,15 +657,20 @@ class VAClientes extends VirtexAdmin {
 				
 				
 
-			} else if ( $rotina == "confirmar") {
-				require_once( PATH_LIB . "/dede2.php" );	
 			} else if( $rotina == "contratar" ) {
-
+				
+								
 				$enviando = false;
 				$exibeForm = true;
+												
 				
 				if($acao == "cad" ) {
 					$enviando = true;
+				}
+				
+				if( $acao == "conf" ) {
+					require_once( PATH_LIB . "/dede2.php" );
+					return;
 				}
 
 				if( $enviando ) {
@@ -1124,7 +1130,9 @@ class VAClientes extends VirtexAdmin {
 					}
 					
 				
-				}
+				} 
+					
+				
 				
 				$this->tpl->atribui("erros",$erros);
 
@@ -1136,7 +1144,7 @@ class VAClientes extends VirtexAdmin {
 					
 					
 
-					$this->arquivoTemplate = "cliente_cobranca_contratar.html";
+					$this->arquivoTemplate = "clientes_cobranca_contratar.html";
 					
 					
 					
@@ -1246,7 +1254,8 @@ class VAClientes extends VirtexAdmin {
 					$this->tpl->atribui("id_produto",@$_REQUEST["id_produto"]);
 
 				}
-
+				
+				
 				
 				
 			} else if( $rotina == "relatorio" ) {
