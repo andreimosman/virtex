@@ -1,6 +1,4 @@
 <?
-
-
 require_once( PATH_LIB . "/VirtexAdmin.class.php" );
 
 class VACobranca extends VirtexAdmin {
@@ -695,7 +693,7 @@ public function amortizar(){
 	$sSQL .= "	data = '".@$_REQUEST["data"]."' ";
 				
 				
-	echo "QUERY: $sSQL <br>\n";
+	//echo "QUERY: $sSQL <br>\n";
 	$this->bd->consulta($sSQL);
 	
 	return;
@@ -707,9 +705,5 @@ public function amortizar(){
 public function __destruct() {
       	parent::__destruct();
 }
-
-
 }
-
-
 ?>

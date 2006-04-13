@@ -936,7 +936,7 @@ class VAConfiguracao extends VirtexAdmin {
 								$uSQL .= "   id_cobranca = '$id' ";
 																		
 								$this->bd->consulta($uSQL);
-								echo $uSQL ."<br>";						
+								//echo $uSQL ."<br>";						
 							}
 							
 							$this->tpl->atribui("mensagem","PREFERENCIAS GRAVADAS COM SUCESSO! "); 

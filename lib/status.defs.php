@@ -132,6 +132,12 @@ $_LS_STATUS_FATURA = array(
 		"R" => "Paga Parcial",
 		"E" => "Estornadas",
 		"C" => "Canceladas"
-		)
-
+		);
+$_LS_OPERADORAS_CC = array(
+		"MC" => "MasterCard",
+		"VI" => "VISA",
+		"AE" => "American Express",
+		"DN" => "Dinners"
+		);
+		
 ?>
