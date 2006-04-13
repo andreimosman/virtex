@@ -202,6 +202,30 @@
 	
 		$this->arquivoTemplate="cliente_contrato_detalhe.html";
 		return;
-	} 
+		
+	} else{					
+		switch($tipo){
+		case "BL":
+		$msg_final = "Existe outro usuário de Banda Larga cadastrado com esses dados!";
+		break;
+		case "E":
+		$msg_final = "Existe outra conta de E-Mail cadastrada com esses dados!";
+		break;
+		case "H":
+		$msg_final = "Existe outra conta de Hospedagem cadastrada com esses dados!";
+		break;
+		case "D":
+		$msg_final = "Existe outro usuario de Discado cadastrado com esses dados!";
+		break;
+		}
+
+		$this->tpl->atribui("mensagem",$msg_final);
+		//$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=cobranca&rotina=contratar&id_cliente=$id_cliente");
+		$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=cobranca&id_cliente=$id_cliente");
+		$this->tpl->atribui("target","_top");
+
+		$this->arquivoTemplate="msgredirect.html";
+		return;
+	}
 
 ?>

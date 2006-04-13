@@ -181,8 +181,6 @@ function alteraTipo() {
 		}
 	}
 }
-///////////////////////////////////////////////////////
-
 
 function alteraProduto() {
 	var frm = document.frmContratacao;
@@ -264,38 +262,19 @@ function checaFormaCobranca(){
 	var frm = document.frmContratacao;
 	var msg;
 	if(frm.tipo_cobranca.value == "2"){
-		MM_showHideLayers('formaPag','','show');
-		MM_showHideLayers('formaPagBanco','','hide');
-		//msg = "O sistema de carnê não suporta cobranças adicionais. Caso o contrato seja firmado os valores excedentes existentes serão desconsiderados, tanto no contrato quanto na fatura";
-		//window.alert(msg);
-		frm.data_carne.disabled=false;
-		frm.ini_carne.disabled=false;
-		change("ini_carne","enabled");
-		change("data_carne","enabled");
-	}if(frm.tipo_cobranca.value == "3"){
-		MM_showHideLayers('formaPag','','hide');
-		MM_showHideLayers('formaPagBanco','','show');
-		//msg = "O sistema de carnê não suporta cobranças adicionais. Caso o contrato seja firmado os valores excedentes existentes serão desconsiderados, tanto no contrato quanto na fatura";
-		//window.alert(msg);
-		frm.data_carne.disabled=false;
-		frm.ini_carne.disabled=false;
-		change("ini_carne","enabled");
-		change("data_carne","enabled");
-	}if(frm.tipo_cobranca.value == "3"){
-		MM_showHideLayers('formaPag','','hide');
-		MM_showHideLayers('formaPagBanco','','show');
-		//msg = "O sistema de carnê não suporta cobranças adicionais. Caso o contrato seja firmado os valores excedentes existentes serão desconsiderados, tanto no contrato quanto na fatura";
-		//window.alert(msg);
-		frm.data_carne.disabled=false;
-		frm.ini_carne.disabled=false;
-		change("ini_carne","enabled");
-		change("data_carne","enabled");
+	MM_showHideLayers('formaPag','','show');
+	//msg = "O sistema de carnê não suporta cobranças adicionais. Caso o contrato seja firmado os valores excedentes existentes serão desconsiderados, tanto no contrato quanto na fatura";
+	//window.alert(msg);
+	frm.data_carne.disabled=false;
+	frm.ini_carne.disabled=false;
+	change("ini_carne","enabled");
+	change("data_carne","enabled");
 	}else{
-		frm.data_carne.disabled=true;
-		frm.ini_carne.disabled=true;
-		change("data_carne","disabled");
-		change("ini_carne","disabled");
-		MM_showHideLayers('formaPag','','hide');
+	frm.data_carne.disabled=true;
+	frm.ini_carne.disabled=true;
+	change("data_carne","disabled");
+	change("ini_carne","disabled");
+	MM_showHideLayers('formaPag','','hide');
 	}
 	return;
 }
@@ -328,13 +307,7 @@ function validaForm() {
 	} else {
 		if( frm.id_produto.value == "" ) {
 			msg.push("Você não escolheu o produto");
-		} else {
-			if ( frm.username.value="" ) {
-				msg.push("Você não especificou um username");
-			}
-		}}
-
-		/* else {
+		}}/* else {
 			// Validacoes gerais
 			if(frm.id_nas.value != "3" && frm.mac.value =="")
 				msg.push("Campo MAC obrigatorio");
@@ -717,67 +690,24 @@ function MM_showHideLayers() { //v6.0
             </tr>
             <tr>
               <td bgcolor="#FFFFFF" align="right" height="1">&nbsp;</td>
-              <td bgcolor="#FFFFFF" colspan="3" height="1"> 
-				  <div id="formaPag" style="visibility: hidden;">
-					<table width="100%" border="0" cellspacing="3" cellpadding="0">
-					  <tr>
-						<td><p>de
-							<input type="text" name="ini_carne" value="" size=11 maxlength=10>
-							até
-							<input type="text" name="data_carne" value="" size=11 maxlength=10>
-						  </p></td>
-					  </tr>
-					  <tr>
-						<td><p><strong><font color="#CC0000">O sistema de carn&ecirc;
-							n&atilde;o suporta cobran&ccedil;as adicionais. Caso o
-							contrato seja firmado os valores excedentes existentes
-							ser&atilde;o desconsiderados, tanto no contrato quanto
-							na fatura</font></strong></p></td>
-					  </tr>
-					</table>
-				   </div>
-				   
-				   <!-- Inicio DDS -->
-				   <div id="formaPagBanco" style="visibility: hidden;">
-					<table width="100%" border="0" cellspacing="3" cellpadding="0">
-					  <tr>
-						<td><p>Banco
-							<input type="text" name="db_banco" value="" size=11 maxlength=10>
-							Agência
-							<input type="text" name="db_agencia" value="" size=11 maxlength=10>
-							Conta
-							<input type="text" name="db_conta" value="" size=11 maxlength=10>
-							
-						  </p></td>
-					  </tr>
-					  <tr>
-						<td><p><strong></strong></p></td>
-					  </tr>
-					</table>
-				   </div>
-				   
-				   <div id="formaPagCartao" style="visibility: hidden;">
-					<table width="100%" border="0" cellspacing="3" cellpadding="0">
-					  <tr>
-						<td><p>Vencimento
-							<input type="text" name="cc_vencimnto" value="" size=11 maxlength=10>
-							Numero
-							<input type="text" name="cc_numero" value="" size=11 maxlength=10>
-							Operadora
-							<select name="cc_operadora">
-							
-							</select>
-							
-						  </p></td>
-					  </tr>
-					  <tr>
-						<td><p><strong></strong></p></td>
-					  </tr>
-					</table>
-				   </div>
-				   
-				   <!-- Fim DDS -->
-				</td>
+              <td bgcolor="#FFFFFF" colspan="3" height="1"> <div id="formaPag" style="visibility: hidden;">
+                <table width="100%" border="0" cellspacing="3" cellpadding="0">
+                  <tr>
+                    <td><p>de
+                        <input type="text" name="ini_carne" value="" size=11 maxlength=10>
+                        até
+                        <input type="text" name="data_carne" value="" size=11 maxlength=10>
+                      </p></td>
+                  </tr>
+                  <tr>
+                    <td><p><strong><font color="#CC0000">O sistema de carn&ecirc;
+                        n&atilde;o suporta cobran&ccedil;as adicionais. Caso o
+                        contrato seja firmado os valores excedentes existentes
+                        ser&atilde;o desconsiderados, tanto no contrato quanto
+                        na fatura</font></strong></p></td>
+                  </tr>
+                </table>
+                </div></td>
             </tr>
             {literal} <script language="JavaScript">
 calculaDataCarne();
@@ -816,9 +746,9 @@ calculaDataCarne();
                               	<input type="hidden" name="p" value="contrato">
                                 <input type="hidden" name="op" value="cobranca">
                                 <input type="hidden" name="id_cliente" value="{$id_cliente}">
-                                <input type="hidden" name="rotina" value="{$rotina}">
+                                <input type="hidden" name="rotina" value="contratar">
                                 <input type="hidden" name="id_cliente_produto" value="">
-                                <input type="hidden" name="acao" value="cad">
+                                <input type="hidden" name="acao" value="conf">
                                 </td>
                             </tr>
                             <tr>
