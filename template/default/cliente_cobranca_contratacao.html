@@ -263,40 +263,62 @@ function validaUsername(user) {
 function checaFormaCobranca(){
 	var frm = document.frmContratacao;
 	var msg;
+	
+	frm.data_carne.disabled=false;
+	frm.ini_carne.disabled=false;
+	change("ini_carne","disabled");
+	change("data_carne","disabled");
+	
+	frm.cc_vencimento.disabled=false;
+	frm.cc_numero.disabled=false;
+	frm.cc_operadora.disable=false;
+	change("cc_vencimento","disabled");
+	change("cc_numero","disabled");
+	change("cc_operadora","disabled");
+	
+	frm.db_banco.disabled=false;
+	frm.db_agencia.disabled=false;
+	frm.db_conta.disable=false;
+	change("db_banco","disabled");
+	change("db_agencia","disabled");
+	change("db_conta","disabled");
+	
 	if(frm.tipo_cobranca.value == "2"){
 		MM_showHideLayers('formaPag','','show');
 		MM_showHideLayers('formaPagBanco','','hide');
+		MM_showHideLayers('formaPagCartao','','hide');
 		//msg = "O sistema de carnê não suporta cobranças adicionais. Caso o contrato seja firmado os valores excedentes existentes serão desconsiderados, tanto no contrato quanto na fatura";
 		//window.alert(msg);
 		frm.data_carne.disabled=false;
 		frm.ini_carne.disabled=false;
 		change("ini_carne","enabled");
 		change("data_carne","enabled");
-	}if(frm.tipo_cobranca.value == "3"){
+	}else if(frm.tipo_cobranca.value == "3"){
 		MM_showHideLayers('formaPag','','hide');
 		MM_showHideLayers('formaPagBanco','','show');
+		MM_showHideLayers('formaPagCartao','','hide');
 		//msg = "O sistema de carnê não suporta cobranças adicionais. Caso o contrato seja firmado os valores excedentes existentes serão desconsiderados, tanto no contrato quanto na fatura";
 		//window.alert(msg);
-		frm.data_carne.disabled=false;
-		frm.ini_carne.disabled=false;
-		change("ini_carne","enabled");
-		change("data_carne","enabled");
-	}if(frm.tipo_cobranca.value == "3"){
+		
+	}else if(frm.tipo_cobranca.value == "4"){
 		MM_showHideLayers('formaPag','','hide');
-		MM_showHideLayers('formaPagBanco','','show');
+		MM_showHideLayers('formaPagBanco','','hide');
+		MM_showHideLayers('formaPagCartao','','show');
 		//msg = "O sistema de carnê não suporta cobranças adicionais. Caso o contrato seja firmado os valores excedentes existentes serão desconsiderados, tanto no contrato quanto na fatura";
 		//window.alert(msg);
-		frm.data_carne.disabled=false;
-		frm.ini_carne.disabled=false;
-		change("ini_carne","enabled");
-		change("data_carne","enabled");
-	}else{
+		frm.cc_vencimento.disabled=false;
+		frm.cc_numero.disabled=false;
+		frm.cc_operadora.disable=false;
+		change("cc_vencimento","enabled");
+		change("cc_numero","enabled");
+		change("cc_operadora","enabled");
+	}/*else{
 		frm.data_carne.disabled=true;
 		frm.ini_carne.disabled=true;
 		change("data_carne","disabled");
 		change("ini_carne","disabled");
 		MM_showHideLayers('formaPag','','hide');
-	}
+	}*/
 	return;
 }
 
