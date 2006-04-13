@@ -18,8 +18,8 @@
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td align="center" valign="middle" width="100%">
-					<form nome=formulario method="POST" action=>
+                <td align="center" name="frmConfirma" valign="middle" width="100%">
+					<form nome=formulario method="POST" action="{$smarty.server.PHP_SELF}">
 						<!-- Informações sobre cadastro do contrato -->
 								<input type="hidden" name="tipo" value="{$tipo}">
 								<input type="hidden" name="id_produto" value="{$id_produto}">
@@ -134,10 +134,71 @@
 					<br>
 
 					<br><br>
-					<input type="submit" value="Confirmar" name="confirmar">
-					<input type="button" value="Cancelar"  name="cancelar">
 					</p>
-                  </form>
+
+					<input type="submit" value="Confirmar" name="confirmar">
+					</form>
+
+					<!-- Formulário de retorno -->
+					<form method="post" action="{$smarty.server.PHP_SELF}">
+
+							<input type="hidden" name="tipo" value="{$tipo}">
+							<input type="hidden" name="id_produto" value="{$id_produto}">
+							<input type="hidden" name="email_igual" value="{$email_igual}">
+							<input type="hidden" name="data_contratacao" value="{$data_contratacao}">
+							<input type="hidden" name="vigencia" value="{$vigencia}">
+							<input type="hidden" name="status" value="{$status}">
+							<input type="hidden" name="dia_vencimento" value="{$dia_vencimento}">
+							<input type="hidden" name="carencia_pagamento" value="{$carencia_pagamento}">
+							<input type="hidden" name="desconto_promo" value="{$desconto_promo}">
+							<input type="hidden" name="periodo_desconto" value="{$periodo_desconto}">
+							<input type="hidden" name="tx_instalacao" value="{$tx_instalacao}">
+							<input type="hidden" name="comodato" value="{$comodato}">
+							<input type="hidden" name="valor_comodato" value="{$valor_comodato}">
+							<input type="hidden" name="prorata" value="{$prorata}">
+							<input type="hidden" name="tipo_cobranca" value="{$tipo_cobranca}">
+							<input type="hidden" name="forma_pagamento" value="{$forma_pagamento}">
+							<input type="hidden" name="ini_carne" value="{$ini_carne}">
+							<input type="hidden" name="data_carne" value="{$data_carne}">
+							<input type="hidden" name="username" value="{$username}">
+							<input type="hidden" name="senha" value="{$senha}">
+							<input type="hidden" name="conf_senha" value="{$conf_senha}">
+							<input type="hidden" name="id_nas" value="{$id_nas}">
+							<input type="hidden" name="selecao_ip" value="{$selecao_ip}">
+							<input type="hidden" name="mac" value="{$mac}">
+							<input type="hidden" name="id_cliente" value="{$id_cliente}">
+							<input type="hidden" name="rotina" value="{$rotina}">
+							<input type="hidden" name="id_cliente_produto" value="{$id_cliente_produto}">
+
+						{if $tipo == "D"}
+							<input type="hidden" name="foneinfo" value="{$foneinfo}">
+							<input type="hidden" name="d_franquia_horas" value="{$d_franquia_horas}">
+							<input type="hidden" name="d_permitir_duplicidade" value="{$d_permitir_duplicidade}">
+							<input type="hidden" name="d_valor_hora_adicional" value="{$d_valor_hora_adicional}">
+						{/if}
+
+						{if $tipo == "H"}
+							<input type="hidden" name="h_dominio" value="{$h_dominio}">
+							<input type="hidden" name="h_franquia_em_mb" value="{$h_franquia_em_mb}">
+							<input type="hidden" name="h_valor_mb_adicional" value="{$h_valor_mb_adicional}">
+							<input type="hidden" name="dominio_hospedagem" value="{$dominio_hospedagem}">
+						{/if}
+
+						{if $tipo == "BL"}
+							<input type="hidden" name="bl_banda_upload_kbps" value="{$bl_banda_upload_kbps}">
+							<input type="hidden" name="bl_banda_download_kbps" value="{$bl_banda_download_kbps}">
+							<input type="hidden" name="bl_franquia_trafego_mensal_gb" value="{$bl_franquia_trafego_mensal_gb}">
+							<input type="hidden" name="bl_valor_trafego_adicional_gb" value="{$bl_valor_trafego_adicional_gb}">
+						{/if}
+
+							<!--Funções de operação de formulário -->:
+							<input type="hidden" name="p" value="{$p}">
+							<input type="hidden" name="op" value="{$op}">
+							<input type="hidden" name="acao" value="cad">
+						<input type="submit" value="Voltar" name="voltar">
+					</form>
+
+
 
                   <p>&nbsp;</p></td>
               </tr>
