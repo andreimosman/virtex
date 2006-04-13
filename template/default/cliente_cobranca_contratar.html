@@ -309,7 +309,13 @@ function validaForm() {
 	} else {
 		if( frm.id_produto.value == "" ) {
 			msg.push("Você não escolheu o produto");
-		}}/* else {
+		} else {
+			if ( frm.username.value="" ) {
+				msg.push("Você não especificou um username");
+			}
+		}}
+
+		/* else {
 			// Validacoes gerais
 			if(frm.id_nas.value != "3" && frm.mac.value =="")
 				msg.push("Campo MAC obrigatorio");
