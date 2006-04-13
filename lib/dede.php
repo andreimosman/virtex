@@ -1,7 +1,7 @@
 <? 
 
 					/*<<=====INICIO DA PARTE DE CONTRATAÇÃO=====>>*/
-														
+					
 					//Cadastra o contrato do cliente.
 					$id_produto = @$_REQUEST["id_produto"];
 					
@@ -391,6 +391,7 @@
 								}
 							break;						
 					}
+										
 
 					/*<<=====INICIO DA PARTE DE CADASTRO DE FATURAS=====>>*/
 ?>

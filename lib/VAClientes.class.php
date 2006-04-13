@@ -579,7 +579,7 @@ class VAClientes extends VirtexAdmin {
 
 			
 			$this->tpl->atribui("rotina",$rotina);
-			$this->arquivoTemplate = "cliente_cobranca.html";
+			$this->arquivoTemplate = "cliente_cobrancas.html";
 			
 			$erros = array();
 

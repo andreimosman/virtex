@@ -1,0 +1,21 @@
+{include file='cliente_header.html'}
+
+
+
+
+
+					{if $rotina == "resumo" }
+						{include file='cliente_cobranca_resumo.html'}
+                	{/if}
+                	{if $rotina == "contratar"}
+                		{include file='cliente_cobranca_contratacoes.html'}
+                	{/if}
+                	{if $rotina == "relatorio"}
+                		{include file='cliente_cobranca_relatorio.html'}
+                	{/if}
+
+
+
+
+
+{include file='cliente_footer.html'}
