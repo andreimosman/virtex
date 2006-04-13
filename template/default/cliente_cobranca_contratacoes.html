@@ -264,26 +264,27 @@ function checaFormaCobranca(){
 	var frm = document.frmContratacao;
 	var msg;
 
-	frm.data_carne.disabled=false;
-	frm.ini_carne.disabled=false;
+	frm.data_carne.disabled=true;
+	frm.ini_carne.disabled=true;
 	change("ini_carne","disabled");
 	change("data_carne","disabled");
 
-	frm.cc_vencimento.disabled=false;
-	frm.cc_numero.disabled=false;
-	frm.cc_operadora.disable=false;
+	frm.cc_vencimento.disabled=true;
+	frm.cc_numero.disabled=true;
+	frm.cc_operadora.disable=true;
 	change("cc_vencimento","disabled");
 	change("cc_numero","disabled");
 	change("cc_operadora","disabled");
 
-	frm.db_banco.disabled=false;
-	frm.db_agencia.disabled=false;
-	frm.db_conta.disable=false;
+	frm.db_banco.disabled=true;
+	frm.db_agencia.disabled=true;
+	frm.db_conta.disable=true;
 	change("db_banco","disabled");
 	change("db_agencia","disabled");
 	change("db_conta","disabled");
 
-	if(frm.tipo_cobranca.value == "2"){
+	if(frm.tipo_cobranca.value == "2"){ //Carnê
+
 		MM_showHideLayers('formaPag','','show');
 		MM_showHideLayers('formaPagBanco','','hide');
 		MM_showHideLayers('formaPagCartao','','hide');
@@ -293,14 +294,23 @@ function checaFormaCobranca(){
 		frm.ini_carne.disabled=false;
 		change("ini_carne","enabled");
 		change("data_carne","enabled");
-	}else if(frm.tipo_cobranca.value == "3"){
+
+	}else if(frm.tipo_cobranca.value == "3"){	//Depósito Bancário
+
 		MM_showHideLayers('formaPag','','hide');
 		MM_showHideLayers('formaPagBanco','','show');
 		MM_showHideLayers('formaPagCartao','','hide');
 		//msg = "O sistema de carnê não suporta cobranças adicionais. Caso o contrato seja firmado os valores excedentes existentes serão desconsiderados, tanto no contrato quanto na fatura";
 		//window.alert(msg);
+		frm.db_banco.disabled=false;
+		frm.db_conta.disabled=false;
+		frm.db_agencia.disable=false;
+		change("cc_vencimento","enabled");
+		change("cc_numero","enabled");
+		change("cc_operadora","enabled");
 
-	}else if(frm.tipo_cobranca.value == "4"){
+	}else if(frm.tipo_cobranca.value == "4"){	//Cartão de Credito
+
 		MM_showHideLayers('formaPag','','hide');
 		MM_showHideLayers('formaPagBanco','','hide');
 		MM_showHideLayers('formaPagCartao','','show');
@@ -312,6 +322,7 @@ function checaFormaCobranca(){
 		change("cc_vencimento","enabled");
 		change("cc_numero","enabled");
 		change("cc_operadora","enabled");
+
 	}/*else{
 		frm.data_carne.disabled=true;
 		frm.ini_carne.disabled=true;
