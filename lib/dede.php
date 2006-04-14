@@ -5,6 +5,21 @@
 					//Cadastra o contrato do cliente.
 					$id_produto = @$_REQUEST["id_produto"];
 					
+					//Informações sobre o provedor
+					$sSQL = "SELECT * FROM cftb_preferencias WHERE id_provedor = 1";
+					$info_prov = $this->bd->obtemUnicoRegistro($sSQL);
+					
+					$cod_banco = $info_prov["cod_banco"];
+					$carteira = $info_prov["carteira"];
+					$agencia = $info_prov["agencia"];
+					$num_conta = $info_prov["num_conta"];
+					$convenio = $info_prov["convenio"];
+					
+					if (!$cod_banco) $cod_banco = 0;
+					if (!$carteira) $carteira = 0;
+					if (!$agencia) $agencia = 0;
+					if (!$num_conta) $num_conta = 0;
+					if (!$convenio) $convenio = 0;
 					
 					//Informações sobre o produto
 					$sSQL = "SELECT * from prtb_produto where id_produto = $id_produto";
@@ -30,8 +45,17 @@
 					$desconto_promo = @$_REQUEST["desconto_promo"];
 					$periodo_desconto = @$_REQUEST["periodo_desconto"];
 					
+					//Informações sobre banco e cartão de crédito
+					$cc_vencimento = @$_REQUEST["cc_vencimento"];
+					$cc_numero = @$_REQUEST["cc_numero"];
+					$cc_operadora = @$_REQUEST["cc_operadora"];
+					
+					$db_banco = @$_REQUEST["db_banco"];
+					$db_agencia = @$_REQUEST["db_agencia"];
+					$db_conta = @$_REQUEST["db_conta"];
 					
 					
+
 					//Corrige possíveis falhas de entrada em alguns campos
 					if (!$comodato) {
 						$comodato = 'f';
@@ -40,7 +64,7 @@
 						$valor_comodato = 0;
 					}
 					
-										
+					
 					if (!$desconto_promo) $desconto_promo = 0;
 					if (!$periodo_desconto) $periodo_desconto = 0;
 					if (!$tx_instalacao) $tx_instalacao = 0;
@@ -64,14 +88,19 @@
 																									
 					$sSQL =  "INSERT INTO cbtb_contrato ( ";
 					$sSQL .= "	id_cliente_produto, data_contratacao, vigencia, data_renovacao, valor_contrato, id_cobranca, status, ";
-					$sSQL .= "	tipo_produto, valor_produto, num_emails, quota_por_conta, tx_instalacao, comodato, valor_comodato, desconto_promo, periodo_desconto, id_produto " ;
+					$sSQL .= "	tipo_produto, valor_produto, num_emails, quota_por_conta, tx_instalacao, comodato, valor_comodato, ";
+					$sSQL .= "	desconto_promo, periodo_desconto, id_produto, cod_banco, agencia, num_conta, carteira, ";
+					$sSQL .= "	convenio, cc_vencimento, cc_numero, cc_operadora, db_banco, db_agencia, db_conta";
 					$sSQL .= ") VALUES ( ";
 					$sSQL .= "	$id_cliente_produto, '$data_contratacao', $vigencia, '$data_renovacao', $valor_contrato, $id_cobranca, '$status', ";
-					$sSQL .= "	'$tipo_produto', $valor_produto, $num_emails, $quota, $tx_instalacao, '$comodato', $valor_comodato, $desconto_promo, $periodo_desconto, $id_produto ";
+					$sSQL .= "	'$tipo_produto', $valor_produto, $num_emails, $quota, $tx_instalacao, '$comodato', $valor_comodato, ";
+					$sSQL .= "	$desconto_promo, $periodo_desconto, $id_produto, $cod_banco, $agencia, $num_conta, $carteira, ";
+					$sSQL .= "	$convenio, '$cc_vencimento', '$cc_numero', '$cc_operadora', $db_banco, $db_agencia, $db_conta";
 					$sSQL .= ")";
-										
-									
-					//echo "$sSQL"."<br>\n";
+					
+					
+								
+					echo "$sSQL"."<br>\n";
 					$this->bd->consulta($sSQL);	//Salva as configurações de contrato
 					
 					

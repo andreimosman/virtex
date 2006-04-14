@@ -1198,6 +1198,8 @@ class VAClientes extends VirtexAdmin {
 					$sSQL .= "   tipo_nas,nome ";
 					
 					global $_LS_TIPO_NAS;
+					
+					
 
 
 					$lista_nas = $this->bd->obtemRegistros($sSQL);
@@ -1212,8 +1214,10 @@ class VAClientes extends VirtexAdmin {
 					}
 					
 					
+					global $_LS_OPERADORAS_CC;
 					
 					
+					$this->tpl->atribui("cc_operadoras", $_LS_OPERADORAS_CC);
 					$this->tpl->atribui("lista_nas",@$lista_nas);
 					
 					

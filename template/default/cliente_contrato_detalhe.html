@@ -49,6 +49,15 @@
 								<input type="hidden" name="rotina" value="{$rotina}">
 								<input type="hidden" name="id_cliente_produto" value="{$id_cliente_produto}">
 
+
+								<input type="hidden" name="cc_vencimento" value="{$cc_vencimento}">
+								<input type="hidden" name="cc_numero" value="{$cc_numero}">
+								<input type="hidden" name="cc_operadora" value="{$cc_operadora}">
+								<input type="hidden" name="db_banco" value="{$db_banco}">
+								<input type="hidden" name="db_agencia" value="{$db_agencia}">
+								<input type="hidden" name="db_conta" value="{$db_conta}">
+
+
 							{if $tipo == "D"}
 								<input type="hidden" name="foneinfo" value="{$foneinfo}">
 								<input type="hidden" name="d_franquia_horas" value="{$d_franquia_horas}">
@@ -84,132 +93,190 @@
                     </tr>
                     <tr>
                       <td><table width="550" border="0" cellspacing="2" cellpadding="0">
-                          <tr bgcolor="#fafafa"> 
-                            <td><p><strong>- <font size="2">Informa&ccedil;&otilde;es 
+                          <tr bgcolor="#fafafa">
+                            <td><p><strong>- <font size="2">Informa&ccedil;&otilde;es
                                 Gerais</font></strong></p></td>
                           </tr>
-                          <tr> 
+                          <tr>
                             <td width="97"><table width="550" border="0" cellspacing="2" cellpadding="0">
-                                <tr> 
+                                <tr>
                                   <td width="139"><p><strong>Contratante: </strong></p></td>
                                   <td width="397"><p>{$info_cliente.nome_razao}</p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td width="139"> <p><strong>Data da contratação:</strong></p></td>
                                   <td><p>{$data_contratacao}</p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td width="139"> <p><strong>Data da renovação</strong></p></td>
                                   <td><p>{$data_renovacao}</p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td width="139"> <p><strong>Vigencia</strong></p></td>
                                   <td><p>{$vigencia}</p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td width="139"> <p><strong>Pagamento:</strong></p></td>
                                   <td><p>{$forma_pagamento}</p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td width="139"> <p><strong>Forma de pagamento:</strong></p></td>
                                   <td><p>{$info_pagamento.nome_cobranca}</p></td>
                                 </tr>
+
+                                {if $tipo_cobranca == 2 }
+									<tr>
+									  <td width="139"> <p><strong>Data primeiro boleto</strong></p></td>
+									  <td><p>{$ini_carne}</p></td>
+									</tr>
+									<tr>
+									  <td width="139"> <p><strong>Data ultimo boleto</strong></p></td>
+									  <td><p>{$data_carne}</p></td>
+									</tr>
+								{/if}
+								{if $tipo_cobranca == 3}
+									<tr>
+									  <td width="139"> <p><strong>Banco</strong></p></td>
+									  <td><p>{$db_banco}</p></td>
+									</tr>
+									<tr>
+									  <td width="139"> <p><strong>Agencia</strong></p></td>
+									  <td><p>{$db_agencia}</p></td>
+									</tr>
+									<tr>
+									  <td width="139"> <p><strong>Conta</strong></p></td>
+									  <td><p>{$db_conta}</p></td>
+									</tr>
+								{/if}
+								{if $tipo_cobranca == 4}
+									<tr>
+									  <td width="139"> <p><strong>Vencimento:</strong></p></td>
+									  <td><p>{$cc_vencimento}</p></td>
+									</tr>
+									<tr>
+									  <td width="139"> <p><strong>Operadora</strong></p></td>
+									  <td>
+									  	{if $cc_operadora == "AE"}
+									  		<p>Ameniran Express</p></td>
+									  	{/if}
+									  	{if $cc_operadora == "DN"}
+											<p>Dinners</p></td>
+									  	{/if}
+									  	{if $cc_operadora == "VI"}
+											<p>VISA</p></td>
+									  	{/if}
+									  	{if $cc_operadora == "MC"}
+											<p>MasterCard</p></td>
+									  	{/if}
+									</tr>
+									<tr>
+									  <td width="139"> <p><strong>Número</strong></p></td>
+									  <td><p>{$cc_numero}</p></td>
+									</tr>
+								{/if}
+
+                                <tr>
+								  <td width="139"> <p><strong>Forma de pagamento:</strong></p></td>
+								  <td><p>{$info_pagamento.nome_cobranca}</p></td>
+                                </tr>
+
+
                               </table></td>
                           </tr>
-                          <tr> 
-                            <td><strong>- <font size="2">Produto Contratado</font></strong></td>
+                          <tr>
+                            <td bgcolor="#fafafa"><strong>- <font size="2">Produto Contratado</font></strong></td>
                           </tr>
-                          <tr> 
+                          <tr>
                             <td><table width="550" border="0" cellspacing="2" cellpadding="0">
-                                <tr> 
+                                <tr>
                                   <td width="139"><p><strong>Produto:</strong></p></td>
                                   <td width="402"><p>{$info_produto.nome}</p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td width="139"><p><strong>Tipo:</strong></p></td>
-                                  <td><p>{if $tipo == &quot;D&quot;}Discado{/if}{if 
-                                      $tipo == &quot;H&quot;}Hospedagem{/if}{if 
-                                      $tipo == &quot;BL&quot;}Banda Larga{/if}</p></td>
+                                  <td><p>{if $tipo == "D"}Discado{/if}{if
+                                      $tipo == "H"}Hospedagem{/if}{if
+                                      $tipo == "BL"}Banda Larga{/if}</p></td>
                                 </tr>
-                                {if $tipo == "D"} 
-                                <tr> 
+                                {if $tipo == "D"}
+                                <tr>
                                   <td width="139"><p><strong>Franquia mensal(horas):</strong></p></td>
                                   <td><p>{$info_adicional.franquia_horas}</p></td>
                                 </tr>
-                                <tr> 
-                                  <td width="139"><p><strong>Valor hora adicional: 
+                                <tr>
+                                  <td width="139"><p><strong>Valor hora adicional:
                                       </strong></p></td>
                                   <td><p>{$info_adicional.valor_hora_adicional}</p></td>
                                 </tr>
-                                {/if} {if $tipo == "H"} 
-                                <tr> 
+                                {/if} {if $tipo == "H"}
+                                <tr>
                                   <td width="139"><p><strong>Dominio:</strong></p></td>
                                   <td><p>{$dominio_hospedagem}</p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td width="139"><p><strong>Franquia em mb:</strong></p></td>
                                   <td><p>{$info_adicional.franqua_em_mb}</p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td width="139"><p><strong>Valor franquia adicional(MB):</strong></p></td>
                                   <td> <p>{$info_adicional.valor_mb_adicional}</p></td>
                                 </tr>
-                                {/if} {if $tipo == "BL"} 
-                                <tr> 
-                                  <td width="139"><p><strong>Franquia mensal(GB): 
+                                {/if} {if $tipo == "BL"}
+                                <tr>
+                                  <td width="139"><p><strong>Franquia mensal(GB):
                                       </strong></p></td>
                                   <td><p>{$info_adicional.franquia_trafego_mensal_gb}</p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td width="139"><p><strong>Banda Upload: </strong></p></td>
                                   <td><p>{$info_adicional.banda_upload_kbps}kbps</p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td width="139"><p><strong>Banda Download:</strong></p></td>
                                   <td><p>{$info_adicional.banda_download_kbps}kbps</p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td width="139"><p><strong>Valor adicional franquia(GB):</strong></p></td>
                                   <td><p>{$info_adicional.valor_trafego_adicional_gb}</p></td>
                                 </tr>
                                 {/if} </table></td>
                           </tr>
-                          <tr> 
+                          <tr>
                             <td bgcolor="#fafafa"><strong>- <font size="2">Valores</font></strong></td>
                           </tr>
-                          <tr> 
+                          <tr>
                             <td><table width="550" border="0" cellspacing="2" cellpadding="0">
-                                <tr> 
+                                <tr>
                                   <td width="139"><p><strong>Valor Produto:</strong></p></td>
                                   <td width="406"><p>{$valor_contrato}</p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td width="139"><p><strong>Comodato:</strong></p></td>
-                                  <td><p>{if $comodato}Sim({$valor_comodato}) 
+                                  <td><p>{if $comodato}Sim({$valor_comodato})
                                       {else}Sem comodato {/if}</p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td width="139"><p><strong>Taxa de instalação:</strong></p></td>
-                                  <td><p>{if $tx_instalacao > 0} {$tx_instalacao} 
+                                  <td><p>{if $tx_instalacao > 0} {$tx_instalacao}
                                       {else} Sem taxa de instalação {/if}</p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td width="139"><p><strong>Desconto:</strong></p></td>
-                                  <td><p>{if $desconto_promo > 0 && $periodo_desconto 
-                                      > 0} {$desconto_promo} em {$periodo_desconto} 
+                                  <td><p>{if $desconto_promo > 0 && $periodo_desconto
+                                      > 0} {$desconto_promo} em {$periodo_desconto}
                                       parcela(s) {else} Sem Desconto {/if}</p></td>
                                 </tr>
-                                <tr> 
-                                  <td width="139"><p><strong>Valor do Contrato: 
+                                <tr>
+                                  <td width="139"><p><strong>Valor do Contrato:
                                       </strong></p></td>
                                   <td><p>{$valor_contrato}</p></td>
                                 </tr>
                               </table></td>
                           </tr>
-                          <tr> 
+                          <tr>
                             <td>&nbsp;</td>
                           </tr>
-                          <tr> 
+                          <tr>
                             <td>&nbsp;</td>
                           </tr>
                         </table></td>

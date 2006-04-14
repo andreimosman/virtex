@@ -68,6 +68,21 @@
 		$tipo_hospedagem = @$_REQUEST["tipo_hospedagem"];
 		$dominio_hospedagem = @$_REQUEST["dominio_hospedagem"];
 		
+		
+		//Informações de banco e cartão de crédito
+		$cc_vencimento = @$_REQUEST["cc_vencimento"];
+		$cc_numero = @$_REQUEST["cc_numero"];
+		$cc_operadora = @$_REQUEST["cc_operadora"];
+		$db_banco = @$_REQUEST["db_banco"];
+		$db_agencia = @$_REQUEST["db_agencia"];
+		$db_conta = @$_REQUEST["db_conta"];
+		
+		if(!$db_banco) $db_banco=0;
+		if(!$db_agencia) $db_banco=0;
+		if(!$db_conta) $db_banco=0;
+		
+		
+		
 		//Calcula a data de renovação do cotrato
 		list($cd, $cm, $ca) = explode("/", $data_contratacao);
 		$data_renovacao = date("d/m/Y", mktime(0,0,0, $cm + $vigencia, $cd, $ca));
@@ -151,6 +166,14 @@
 		$this->tpl->atribui("valor_contrato", $valor_contrato);
 		$this->tpl->atribui("dominio_hospedagem", $dominio_hospedagem);
 		$this->tpl->atribui("tipo_hospedagem", $tipo_hospedagem);
+		
+		
+		$this->tpl->atribui("cc_vencimento",$cc_vencimento); 
+		$this->tpl->atribui("cc_numero",$cc_numero);
+		$this->tpl->atribui("cc_operadora",$cc_operadora);
+		$this->tpl->atribui("db_banco",$db_banco);
+		$this->tpl->atribui("db_agencia",$db_agencia);
+		$this->tpl->atribui("db_conta",$db_conta);
 		
 
 		//Adquire informações adicionais do produto e os envia para o template

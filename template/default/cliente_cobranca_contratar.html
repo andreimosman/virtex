@@ -263,39 +263,78 @@ function validaUsername(user) {
 function checaFormaCobranca(){
 	var frm = document.frmContratacao;
 	var msg;
-	if(frm.tipo_cobranca.value == "2"){
+
+	frm.data_carne.disabled=true;
+	frm.ini_carne.disabled=true;
+	change("ini_carne","disabled");
+	change("data_carne","disabled");
+
+	frm.cc_vencimento.disabled=true;
+	frm.cc_numero.disabled=true;
+	frm.cc_operadora.disabled=true;
+	change("cc_vencimento","disabled");
+	change("cc_numero","disabled");
+	change("cc_operadora","disabled");
+
+	frm.db_banco.disabled=true;
+	frm.db_agencia.disabled=true;
+	frm.db_conta.disabled=true;
+	change("db_banco","disabled");
+	change("db_agencia","disabled");
+	change("db_conta","disabled");
+
+	if(frm.tipo_cobranca.value == "2"){ //Carnê
+
 		MM_showHideLayers('formaPag','','show');
 		MM_showHideLayers('formaPagBanco','','hide');
+		MM_showHideLayers('formaPagCartao','','hide');
 		//msg = "O sistema de carnê não suporta cobranças adicionais. Caso o contrato seja firmado os valores excedentes existentes serão desconsiderados, tanto no contrato quanto na fatura";
 		//window.alert(msg);
 		frm.data_carne.disabled=false;
 		frm.ini_carne.disabled=false;
 		change("ini_carne","enabled");
 		change("data_carne","enabled");
-	}if(frm.tipo_cobranca.value == "3"){
+
+	}else if(frm.tipo_cobranca.value == "3"){	//Depósito Bancário
+
 		MM_showHideLayers('formaPag','','hide');
 		MM_showHideLayers('formaPagBanco','','show');
+		MM_showHideLayers('formaPagCartao','','hide');
 		//msg = "O sistema de carnê não suporta cobranças adicionais. Caso o contrato seja firmado os valores excedentes existentes serão desconsiderados, tanto no contrato quanto na fatura";
 		//window.alert(msg);
-		frm.data_carne.disabled=false;
-		frm.ini_carne.disabled=false;
-		change("ini_carne","enabled");
-		change("data_carne","enabled");
-	}if(frm.tipo_cobranca.value == "3"){
+		frm.db_banco.disabled=false;
+		frm.db_conta.disabled=false;
+		frm.db_agencia.disabled=false;
+		change("db_banco","enabled");
+		change("db_agencia","enabled");
+		change("db_conta","enabled");
+
+	}else if(frm.tipo_cobranca.value == "4"){	//Cartão de Credito
+
 		MM_showHideLayers('formaPag','','hide');
-		MM_showHideLayers('formaPagBanco','','show');
+		MM_showHideLayers('formaPagBanco','','hide');
+		MM_showHideLayers('formaPagCartao','','show');
 		//msg = "O sistema de carnê não suporta cobranças adicionais. Caso o contrato seja firmado os valores excedentes existentes serão desconsiderados, tanto no contrato quanto na fatura";
 		//window.alert(msg);
-		frm.data_carne.disabled=false;
-		frm.ini_carne.disabled=false;
-		change("ini_carne","enabled");
-		change("data_carne","enabled");
+		frm.cc_vencimento.disabled=false;
+		frm.cc_numero.disabled=false;
+		frm.cc_operadora.disabled=false;
+		change("cc_vencimento","enabled");
+		change("cc_numero","enabled");
+		change("cc_operadora","enabled");
+
 	}else{
+		MM_showHideLayers('formaPag','','hide');
+		MM_showHideLayers('formaPagBanco','','hide');
+		MM_showHideLayers('formaPagCartao','','hide');
 		frm.data_carne.disabled=true;
 		frm.ini_carne.disabled=true;
-		change("data_carne","disabled");
-		change("ini_carne","disabled");
-		MM_showHideLayers('formaPag','','hide');
+		frm.cc_vencimento.disabled=false;
+		frm.cc_numero.disabled=false;
+		frm.cc_operadora.disabled=false;
+		frm.db_banco.disabled=false;
+		frm.db_conta.disabled=false;
+		frm.db_agencia.disabled=false;
 	}
 	return;
 }
@@ -717,66 +756,67 @@ function MM_showHideLayers() { //v6.0
             </tr>
             <tr>
               <td bgcolor="#FFFFFF" align="right" height="1">&nbsp;</td>
-              <td bgcolor="#FFFFFF" colspan="3" height="1"> 
-				  <div id="formaPag" style="visibility: hidden;">
-					<table width="100%" border="0" cellspacing="3" cellpadding="0">
-					  <tr>
-						<td><p>de
-							<input type="text" name="ini_carne" value="" size=11 maxlength=10>
-							até
-							<input type="text" name="data_carne" value="" size=11 maxlength=10>
-						  </p></td>
-					  </tr>
-					  <tr>
-						<td><p><strong><font color="#CC0000">O sistema de carn&ecirc;
-							n&atilde;o suporta cobran&ccedil;as adicionais. Caso o
-							contrato seja firmado os valores excedentes existentes
-							ser&atilde;o desconsiderados, tanto no contrato quanto
-							na fatura</font></strong></p></td>
-					  </tr>
-					</table>
-				   </div>
-				   
-				   <!-- Inicio DDS -->
-				   <div id="formaPagBanco" style="visibility: hidden;">
-					<table width="100%" border="0" cellspacing="3" cellpadding="0">
-					  <tr>
-						<td><p>Banco
-							<input type="text" name="db_banco" value="" size=11 maxlength=10>
-							Agência
-							<input type="text" name="db_agencia" value="" size=11 maxlength=10>
-							Conta
-							<input type="text" name="db_conta" value="" size=11 maxlength=10>
-							
-						  </p></td>
-					  </tr>
-					  <tr>
-						<td><p><strong></strong></p></td>
-					  </tr>
-					</table>
-				   </div>
-				   
-				   <div id="formaPagCartao" style="visibility: hidden;">
-					<table width="100%" border="0" cellspacing="3" cellpadding="0">
-					  <tr>
-						<td><p>Vencimento
-							<input type="text" name="cc_vencimnto" value="" size=11 maxlength=10>
-							Numero
-							<input type="text" name="cc_numero" value="" size=11 maxlength=10>
-							Operadora
-							<select name="cc_operadora">
-							
-							</select>
-							
-						  </p></td>
-					  </tr>
-					  <tr>
-						<td><p><strong></strong></p></td>
-					  </tr>
-					</table>
-				   </div>
-				   
-				   <!-- Fim DDS -->
+              <td bgcolor="#FFFFFF" colspan="3" height="1">
+				  <div id="formaPag" >
+						<table width="100%" border="0" cellspacing="3" cellpadding="0">
+						  <tr>
+							<td><p>de
+								<input type="text" name="ini_carne" value="" size=11 maxlength=10>
+								até
+								<input type="text" name="data_carne" value="" size=11 maxlength=10>
+							  </p></td>
+						  </tr>
+						  <tr>
+							<td><p><strong><font color="#CC0000">O sistema de carn&ecirc;
+								n&atilde;o suporta cobran&ccedil;as adicionais. Caso o
+								contrato seja firmado os valores excedentes existentes
+								ser&atilde;o desconsiderados, tanto no contrato quanto
+								na fatura</font></strong></p></td>
+						  </tr>
+						</table>
+					   </div>
+
+					   <!-- Inicio DDS -->
+					   <div id="formaPagBanco" style="visibility: hidden;">
+						<table width="100%" border="0" cellspacing="3" cellpadding="0">
+						  <tr>
+							<td><p>Banco
+								<input type="text" name="db_banco" value="" size=7 maxlength=10>
+								Agência
+								<input type="text" name="db_agencia" value="" size=7 maxlength=10>
+								Conta
+								<input type="text" name="db_conta" value="" size=7 maxlength=10>
+
+							  </p></td>
+						  </tr>
+						  <tr>
+							<td><p><strong></strong></p></td>
+						  </tr>
+						</table>
+					   </div>
+
+					   <div id="formaPagCartao" style="visibility: hidden;">
+						<table width="100%" border="0" cellspacing="3" cellpadding="0">
+						  <tr>
+							<td><p>Vencimento
+								<input type="text" name="cc_vencimento" value="" size=6 maxlength=5>
+								Numero
+								<input type="text" name="cc_numero" value="" size=11 maxlength=25>
+								<br>Operadora
+								<select name="cc_operadora">
+									{foreach key=id item=nome from=$cc_operadoras}
+										  <option value="{$id}"> {$nome}</option>
+									{/foreach}
+								</select>
+
+							  </p></td>
+						  </tr>
+						  <tr>
+							<td><p><strong></strong></p></td>
+						  </tr>
+						</table>
+					   </div>
+						<!-- Fim DDS -->
 				</td>
             </tr>
             {literal} <script language="JavaScript">
@@ -818,7 +858,7 @@ calculaDataCarne();
                                 <input type="hidden" name="id_cliente" value="{$id_cliente}">
                                 <input type="hidden" name="rotina" value="{$rotina}">
                                 <input type="hidden" name="id_cliente_produto" value="">
-                                <input type="hidden" name="acao" value="cad">
+                                <input type="hidden" name="acao" value="conf">
                                 </td>
                             </tr>
                             <tr>
