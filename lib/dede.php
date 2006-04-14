@@ -101,7 +101,7 @@
 					
 					
 								
-					echo "$sSQL"."<br>\n";
+					//echo "$sSQL"."<br>\n";
 					$this->bd->consulta($sSQL);	//Salva as configurações de contrato
 					
 					
@@ -310,7 +310,7 @@
 										$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
 										$sSQL .= ")";
 
-										echo "$sSQL<br>";
+										//echo "$sSQL<br>";
 										$this->bd->consulta($sSQL);										
 									}								
 									
@@ -422,7 +422,7 @@
 							break;						
 					}
 					
-					echo "<br>$username";
+					//echo "<br>$username";
 										
 
 					/*<<=====INICIO DA PARTE DE CADASTRO DE FATURAS=====>>*/
