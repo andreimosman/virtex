@@ -45,6 +45,7 @@
 					$desconto_promo = @$_REQUEST["desconto_promo"];
 					$periodo_desconto = @$_REQUEST["periodo_desconto"];
 					
+					
 					//Informações sobre banco e cartão de crédito
 					$cc_vencimento = @$_REQUEST["cc_vencimento"];
 					$cc_numero = @$_REQUEST["cc_numero"];
@@ -420,6 +421,8 @@
 								}
 							break;						
 					}
+					
+					echo "<br>$username";
 										
 
 					/*<<=====INICIO DA PARTE DE CADASTRO DE FATURAS=====>>*/
