@@ -13,9 +13,157 @@ class VARelatorio extends VirtexAdmin {
 		
 	public function processa($op=null) {
 	
-	if($op == "fatura"){	
-		$this->arquivoTemplate = "cobranca_versaolight.html";
-		//$this->arquivoTemplate = "relatorio_fatura.html";
+	if($op == "fatura"){
+		$this->arquivoTemplate = "relatorio_fatura.html";
+		
+		$acao = @$_REQUEST["acao"];
+		
+		$data_ini = @$_REQUEST["data_ini"];
+		$data_fim = @$_REQUEST["data_fim"];
+			
+		if(!$data_ini) $data_ini = date("d") . "/" . date("m") ."/". date("Y");
+		if(!$data_fim) $data_fim = date("d") . "/" . date("m") ."/". date("Y");
+		
+		$this->tpl->atribui("data_ini", $data_ini);
+		$this->tpl->atribui("data_fim", $data_fim);
+		$this->tpl->atribui("acao", $acao);
+		
+		
+		if ($acao == "consultar"){ 
+			//echo "fdsafdsafdsa<br>";
+			//Pega datas nevessárias Á consulta
+						
+			
+			list($d, $m, $a) = explode("/", $data_ini);
+			$data_ini = "$a-$m-$d";
+
+			list($d, $m, $a) = explode("/", $data_fim);
+			$data_fim = "$a-$m-$d";
+
+			$tipo_relatorio = @$_REQUEST["tipo_relatorio"];
+
+			
+			if($tipo_relatorio == "PG") { //Faturas pagas
+
+				$sSQL =  "SELECT ";
+				$sSQL .= "	cl.id_cliente, cl.nome_razao, cp.id_cliente_produto, cp.id_produto, ";
+				$sSQL .= "	ft.data, ft.data_pagamento, ft.valor, ft.desconto, ft.reagendamento, ft.valor_pago, ";
+				$sSQL .= "	ft.data, ft.desconto, ft.acrescimo ";
+				$sSQL .= "FROM ";
+				$sSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "	cl.id_cliente = cp.id_cliente AND ";
+				$sSQL .= "	ft.id_cliente_produto = cp.id_cliente_produto AND ";
+				//$sSQL .= "	ft.status = 'R' AND ";
+				$sSQL .= "	ft.data BETWEEN '$data_ini' AND '$data_fim'";
+				$sSQL .= "ORDER BY ";
+				$sSQL .= "	cl.id_cliente ";
+				
+				echo ("<br>$sSQL<br><br>");
+				
+				
+				$eSQL =  "SELECT ";
+				$eSQL .= "	COUNT(ft.data) AS faturas, "; 
+				$eSQL .= "	SUM(ft.valor) as estimativa, ";
+				$eSQL .= "	SUM(ft.desconto) as descontos, ";
+				$eSQL .= "	SUM(ft.acrescimo) as acrescimos, "; 
+				$eSQL .= "	COUNT(ft.reagendamento) as reagendamentos, ";
+				$eSQL .= "	SUM(ft.valor_pago) as recebido ";
+				$eSQL .= "FROM ";
+				$eSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft ";
+				$eSQL .= "WHERE ";
+				$eSQL .= "	cl.id_cliente = cp.id_cliente AND ";
+				$eSQL .= "	ft.id_cliente_produto = cp.id_cliente_produto AND ";
+				//$sSQL .= "	ft.status = 'R' AND ";
+				$eSQL .= "	ft.data BETWEEN '$data_ini' AND '$data_fim'";
+				
+				
+				echo "$eSQL<br>";
+				
+			} else if($tipo_relatorio == "PG+") { //Pagas incluindo adesão
+
+				$sSQL =  "SELECT";
+				$sSQL .= "	cl.id_cliente, cl.nome_razao, cp.id_cliente_produto, cp.id_produto, ";
+				$sSQL .= "	ft.data, ft.data_pagamento, ft.valor, ft.desconto, ft.reagendamento, ft.valor_pago";
+				$sSQL .= "FROM ";
+				$sSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft";
+				$sSQL .= "WHERE ";
+				$sSQL .= "cl.id_cliente = cp.id_cliente AND ft.id_cliente_produto = cp.id_cliente_produto AND ft.status = 'R' ";
+				$sSQL .= "AND ft.data > '$data_ini' AND dt.data < '$data_fim' AND ";
+
+			} else if($tipo_relatorio == "PD+") { //Pagas com desconto
+
+				$sSQL =  "SELECT";
+				$sSQL .= "	cl.id_cliente, cl.nome_razao, cp.id_cliente_produto, cp.id_produto, ";
+				$sSQL .= "	ft.data, ft.data_pagamento, ft.valor, ft.desconto, ft.reagendamento, ft.valor_pago";
+				$sSQL .= "FROM ";
+				$sSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft";
+				$sSQL .= "WHERE ";
+				$sSQL .= "cl.id_cliente = cp.id_cliente AND ft.id_cliente_produto = cp.id_cliente_produto AND ft.status = 'R' ";
+				$sSQL .= "AND ft.data > '$data_ini' AND dt.data < '$data_fim' AND ";
+
+			} else if($tipo_relatorio == "AT") { //Em atraso
+
+				$sSQL =  "SELECT";
+				$sSQL .= "	cl.id_cliente, cl.nome_razao, cp.id_cliente_produto, cp.id_produto, ";
+				$sSQL .= "	ft.data, ft.data_pagamento, ft.valor, ft.desconto, ft.reagendamento, ft.valor_pago";
+				$sSQL .= "FROM ";
+				$sSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft";
+				$sSQL .= "WHERE ";
+				$sSQL .= "cl.id_cliente = cp.id_cliente AND ft.id_cliente_produto = cp.id_cliente_produto AND ft.status = 'R' ";
+				$sSQL .= "AND ft.data > '$data_ini' AND dt.data < '$data_fim' AND ";
+
+			} else if($tipo_relatorio == "AD") { //Adesões
+
+				$sSQL =  "SELECT";
+				$sSQL .= "	cl.id_cliente, cl.nome_razao, cp.id_cliente_produto, cp.id_produto, ";
+				$sSQL .= "	ft.data, ft.data_pagamento, ft.valor, ft.desconto, ft.reagendamento, ft.valor_pago";
+				$sSQL .= "FROM ";
+				$sSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft";
+				$sSQL .= "WHERE ";
+				$sSQL .= "cl.id_cliente = cp.id_cliente AND ft.id_cliente_produto = cp.id_cliente_produto AND ft.status = 'R' ";
+				$sSQL .= "AND ft.data > '$data_ini' AND dt.data < '$data_fim' AND ";
+
+			} else if($tipo_relatorio == "AB") { //Em aberto incluindo atrazadas
+
+				$sSQL =  "SELECT";
+				$sSQL .= "	cl.id_cliente, cl.nome_razao, cp.id_cliente_produto, cp.id_produto, ";
+				$sSQL .= "	ft.data, ft.data_pagamento, ft.valor, ft.desconto, ft.reagendamento, ft.valor_pago";
+				$sSQL .= "FROM ";
+				$sSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft";
+				$sSQL .= "WHERE ";
+				$sSQL .= "cl.id_cliente = cp.id_cliente AND ft.id_cliente_produto = cp.id_cliente_produto AND ft.status = 'R' ";
+				$sSQL .= "AND ft.data > '$data_ini' AND dt.data < '$data_fim' AND ";
+
+			}/* else if($tipo_relatorio == "AB-") { //Em aberto excluindo atrazadas
+
+				$sSQL =  "SELECT";
+				$sSQL .= "	cl.id_cliente, cl.nome_razao, cp.id_cliente_produto, cp.id_produto, ";
+				$sSQL .= "	ft.data, ft.data_pagamento, ft.valor, ft.desconto, ft.reagendamento, ft.valor_pago";
+				$sSQL .= "FROM ";
+				$sSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft";
+				$sSQL .= "WHERE ";
+				$sSQL .= "cl.id_cliente = cp.id_cliente AND ft.id_cliente_produto = cp.id_cliente_produto AND ft.status = 'R' ";
+				$sSQL .= "AND ft.data > '$data_ini' AND dt.data < '$data_fim' AND ";
+
+			}*/
+
+			
+			$rel_faturas = $this->bd->obtemRegistros($sSQL);
+			$rel_totais = $this->bd->obtemUnicoRegistro($eSQL);
+			
+			$this->tpl->atribui("rel_faturas", $rel_faturas);
+			$this->tpl->atribui("rel_totais", $rel_totais);
+			$this->arquivoTemplate = "relatorio_fatura.html";
+			return;
+		
+		}
+		
+
+		
+	
+		//$this->arquivoTemplate = "cobranca_versaolight.html";
+		
 	} else if ($op == "cortesia"){
 		$this->arquivoTemplate = "cobranca_versaolight.html";
 		//$this->arquivoTemplate = "relatorio_cortesia.html";

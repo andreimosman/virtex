@@ -3,7 +3,7 @@
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
 
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
-</head> 
+</head>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
@@ -20,81 +20,168 @@
               <tr>
                 <td align="center" valign="middle"><h1>Faturas</h1>
                   <table width="97%" border="0" align="center" cellpadding="0" cellspacing="1" class=main>
-                    <tr> 
-                      <td colspan="2" align="center" valign="top"> 
-                        <table border=0 width=350 align="center">
-                          <tr> 
-                            <td align="right" valing="bottom" bgcolor="#FFFFFF"> 
-                              Período: </td>
-                            <td valing="bottom"> Entre 
-                              <input type="text" name="data_ini" value="02/02/2006" size=10 maxlenght="10">
-                              e 
-                              <input type="text" name="data_fim" value="02/02/2006" size=10 maxlenght="10"> 
-                            </td>
-                          </tr>
-                          <tr> 
-                            <td align="right" valing="bottom" bgcolor="#FFFFFF"> 
-                              Faturas: </td>
-                            <td valing="bottom"> <SELECT name='tipo_relatorio'>
-                                <OPTION VALUE='PG' >Pagas</OPTION>
-                                <OPTION VALUE='PG+' >Pagas (incluindo adesões)</OPTION>
-                                <OPTION VALUE='PD' >Pagas (com desconto)</OPTION>
-                                <OPTION VALUE='AT' >Em atrazo</OPTION>
-                                <OPTION VALUE='AD' >Adesões</OPTION>
-                                <OPTION VALUE='AB' >Em aberto (incluindo atrazadas)</OPTION>
-                                <OPTION VALUE='AB-' >Em aberto (excluindo atrazadas)</OPTION>
-                              </SELECT> <input name="submit" type="submit"value="OK"> 
-                            </td>
-                          </tr>
-                        </table>
+                    <tr>
+                      <td colspan="2" align="center" valign="top">
+
+                        <form method="post" action="{$smarty.server.PHP_SELF}">
+                        	<input type="hidden" name="acao" value="consultar">
+                        	<input type="hidden" name="op" value="fatura">
+							<table border=0 width=350 align="center">
+							  <tr>
+								<td align="right" valing="bottom" bgcolor="#FFFFFF">
+								  Período: </td>
+								<td valing="bottom"> Entre
+								  
+                              <input type="text" name="data_ini" value="{$data_ini}" size=13 maxlenght="10">
+								  e
+								  
+                              <input type="text" name="data_fim" value="{$data_fim}" size=13 maxlenght="10">
+								</td>
+							  </tr>
+							  <tr>
+								<td align="right" valing="bottom" bgcolor="#FFFFFF">
+								  Faturas: </td>
+								<td valing="bottom"> <SELECT name='tipo_relatorio'>
+									<OPTION VALUE='PG' >Pagas</OPTION>
+									<OPTION VALUE='PG+' >Pagas (incluindo adesões)</OPTION>
+									<OPTION VALUE='PD' >Pagas (com desconto)</OPTION>
+									<OPTION VALUE='AT' >Em atrazo</OPTION>
+									<OPTION VALUE='AD' >Adesões</OPTION>
+									<OPTION VALUE='AB' >Em aberto (incluindo atrazadas)</OPTION>
+									<OPTION VALUE='AB-' >Em aberto (excluindo atrazadas)</OPTION>
+								  </SELECT> <input name="submit" type="submit"value="OK">
+								</td>
+							  </tr>
+							</table>
+						</form>
+
                         <p>&nbsp;</p>
-                        <p><strong>AINDA NÃO FORAM DEFINIDOS OS PARÂMETROS DE 
-                          PESQUISA</strong></p>
-                        <table border=0 width="480" cellspacing=1 cellpadding=1 bgcolor="#000000">
+                        {if !$acao} <p><strong>AINDA NÃO FORAM DEFINIDOS OS PARÂMETROS DE PESQUISA</strong></p> {/if}
+                        <table width="75%" border="0" cellpadding="2" cellspacing="2">
+                          <tr align="center" valign="middle" bgcolor="#FAFAFA"> 
+                            <td colspan="7"><strong>SACADO</strong></td>
+                          </tr>
+                          <tr bgcolor="#DFDFDF"> 
+                            <td width="14%"><p align="center" >Vencimento</p></td>
+                            <td width="14%"><p align="center" >Data_Pagamento</p></td>
+                            <td width="14%"><p align="center" >Valor Fatura</p></td>
+                            <td width="14%"><p align="center" >Desconto</p></td>
+                            <td width="14%"><p align="center" >Acrescimo</p></td>
+                            <td width="14%"><p align="center" >Reagendamento</p></td>
+                            <td width="14%"><p align="center" >Valor Pago</p></td>
+                          </tr>
+                          {foreach item=rel_fatura from=$rel_faturas} 
+                          <tr bgcolor="#FFFFFF"> 
+                            <td colspan=7>{$rel_fatura.nome_razao}</td>
+                          </tr>
                           <tr bgcolor="#F0F0F0"> 
-                            <td align="left" colspan=8><div align="center">
+                            <td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.data}</a></p></td>
+                            <td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.data_pagamento}</a></p></td>
+                            <td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.valor}</a></p></td>
+                            <td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.desconto}</a></p></td>
+                            <td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.acrescimo}</a></p></td>
+                            <td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.reagendamento}</a></p></td>
+                            <td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto=($rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.valor_pago}</a></p></td>
+                          </tr>
+                          {/foreach} 
+                        </table>
+						
+						<br><br>
+						
+						<table width="75%" border="0" cellpadding="2" cellspacing="2">
+                          <tr align="center" valign="middle" bgcolor="#FAFAFA"> 
+                            <td colspan="7"><strong>TOTAIS</strong></td>
+                          </tr>
+                          <tr bgcolor="#DFDFDF"> 
+                            <td width="14%"><p align="center" >#Faturas</p></td>
+                            <td width="14%"><p align="center" >&nbsp;</p></td>
+                            <td width="14%"><p align="center" >Estimtiva</p></td>
+                            <td width="14%"><p align="center" >Descontos</p></td>
+                            <td width="14%"><p align="center" >Acrescimos</p></td>
+                            <td width="14%"><p align="center" >Reagendamentos</p></td>
+                            <td width="14%"><p align="center" >Recebido</p></td>
+                          </tr>
+
+                          <tr bgcolor="#F0F0F0"> 
+                            <td align="center"> <p>{$rel_totais.faturas}</p></td>
+                            <td align="center"> <p></p></td>
+                            <td align="center"> <p>{$rel_totais.estimativa}</p></td>
+                            <td align="center"> <p>{$rel_totais.descontos}</p></td>
+                            <td align="center"> <p>{$rel_totais.acrescimos}</p></td>
+                            <td align="center"> <p>{$rel_totais.reagendamentos}</p></td>
+                            <td align="center"> <p>{$rel_totais.recebido}</p></td>
+                          </tr>
+
+                        </table>
+						
+						
+						
+						
+						<!--
+                        <p>&nbsp;</p>
+                        <table border=0 width="480" cellspacing=1 cellpadding=1 bgcolor="#000000">
+                          <tr bgcolor="#999999"> 
+                            <td colspan=7 align="left"> <div align="center"> 
                                 <h2>SACADO</h2>
                               </div></td>
                           </tr>
                           <tr bgcolor="#F0F0F0"> 
-                            <td align="center" width="12%"><div align="center"> 
+                            <td width="12%" align="center" bordercolor="#999999"> 
+                              <div align="center"> 
                                 <p>Venc.</p>
                               </div></td>
-                            <td align="center" width="12%"><div align="center"> 
+                            <td width="12%" align="center" bgcolor="#CCCCCC"> 
+                              <div align="center"> 
                                 <p>Dt. Pgto</p>
                               </div></td>
-                            <td align="center" width="12%"><div align="center"> 
+                            <td width="12%" align="center" bgcolor="#CCCCCC"> 
+                              <div align="center"> 
                                 <p>Vl Fatura</p>
                               </div></td>
-                            <td align="center" width="12%"><div align="center"> 
+                            <td width="12%" align="center" bgcolor="#CCCCCC"> 
+                              <div align="center"> 
                                 <p>Desconto</p>
                               </div></td>
-                            <td align="center" width="12%"><div align="center"> 
+                            <td width="12%" align="center" bgcolor="#CCCCCC"> 
+                              <div align="center"> 
                                 <p>Acrescimo</p>
                               </div></td>
-                            <td align="center" width="12%"><div align="center"> 
+                            <td width="12%" align="center" bgcolor="#CCCCCC"> 
+                              <div align="center"> 
                                 <p>Re-agend</p>
                               </div></td>
-                            <td align="center" width="12%"><div align="center"> 
+                            <td width="12%" align="center" bgcolor="#CCCCCC"> 
+                              <div align="center"> 
                                 <p>Vl Pago</p>
                               </div></td>
-                            <td align="center" width="12%"><div align="center"> 
-                                <p>Adesao</p>
-                              </div></td>
                           </tr>
-                          <tr bgcolor="#000000"> 
-                            <td colspan=8><img src="img/nada.gif" width=1 height=1></td>
+                          {foreach item="nome_razao" from=$rel_faturas} 
+                          <tr bgcolor="#FFFFFF"> 
+                            <td colspan=7>$rel_fatura.nome_razao</td>
                           </tr>
-                        </table>
-                        <div align="center"></div>
-                        <table border=0 width="480" cellspacing=1 cellpadding=1 bgcolor="#000000">
-                        </table>
-                        <br> 
-                        <table border=0 width="480" cellspacing=1 cellpadding=1 bgcolor="#000000">
                           <tr bgcolor="#F0F0F0"> 
+                            <td align="center" width="12%"><div align="center"> 
+                              <p>{$rel_fatura.data}</p></td>
+                            <td align="center" width="12%"> <p>{$rel_fatura.data_pagamento}</p></td>
+                            <td align="center" width="12%"> <p>{$rel_fatura.valor}</p></td>
+                            <td align="center" width="12%"> <p>{$rel_fatura.desconto}</p></td>
+                            <td align="center" width="12%"> <p>{$rel_fatura.acrescimo}</p></td>
+                            <td align="center" width="12%"> <p>{$rel_fatura.reagendamento}</p></td>
+                            <td align="center" width="12%"> <p>{$rel_fatura.valor_pago}</p></td>
+                          </tr>
+                          {/foreach} 
+                        </table> -->
+                        
+						<!--
+						<div align="center"></div>
+                        <table border=0 width="480" cellspacing=1 cellpadding=1 bgcolor="#000000">
+                        </table>
+                        <br>
+                        <table border=0 width="480" cellspacing=1 cellpadding=1 bgcolor="#000000">
+                          <tr bgcolor="#F0F0F0">
                             <td align="left" colspan=8><div align="center"><h2>TOTAIS</h2></div></td>
                           </tr>
-                          <tr bgcolor="#F0F0F0"> 
+                          <tr bgcolor="#F0F0F0">
                             <td align="center" width="12%"><p># Faturas</p></td>
                             <td align="center" width="12%">&nbsp;</td>
                             <td align="center" width="12%"><p>Estimativa</p></td>
@@ -104,7 +191,7 @@
                             <td align="center" width="12%"><p>Recebido</p></td>
                             <td align="center" width="12%"><p>Adesões</p></td>
                           </tr>
-                          <tr bgcolor="#F0F0F0"> 
+                          <tr bgcolor="#F0F0F0">
                             <td align="center" width="12%"><p>0</p></td>
                             <td align="center" width="12%">&nbsp;</td>
                             <td align="center" width="12%"><p>0,00</p></td>
@@ -114,12 +201,12 @@
                             <td align="center" width="12%"><p>0,00</p></td>
                             <td align="center" width="12%"><p>0</p></td>
                           </tr>
-                          <tr bgcolor="#000000"> 
+                          <tr bgcolor="#000000">
                             <td colspan=8><img src="img/nada.gif" width=1 height=1></td>
                           </tr>
                         </table></td>
                     </tr>
-                  </table>
+                  </table> -->
                   <p>&nbsp;</p>
                   <p>&nbsp;
                   </p>
@@ -132,7 +219,7 @@
   <tr>
     <td height="20" align="center" bgcolor="#BCD3C4"><table width="400" border="0" cellspacing="0" cellpadding="0">
         <tr>
-          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy; 
+          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy;
               Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
         </tr>
       </table></td>

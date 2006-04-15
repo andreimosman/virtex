@@ -644,24 +644,28 @@ public function amortizar(){
 	$data = @$_REQUEST["reagendamento"];
 	$data_pagamento = @$_REQUEST["data_pagamento"];
 		
+
+	if ($data) {
+		if (strstr($data, "/")){ 
+			$A = explode ("/", $data); 
+			$data = $A[2] . "-". $A[1] . "-" . $A[0]; 
+		} else { 
+			$A = explode ("-", $data); 
+			$data = $A[2] . "/". $A[1] . "/" . $A[0];     
+		} 
+
+	}
 	
-	if (strstr($data, "/")){ 
-		$A = explode ("/", $data); 
-		$data = $A[2] . "-". $A[1] . "-" . $A[0]; 
-	} else { 
-		$A = explode ("-", $data); 
-		$data = $A[2] . "/". $A[1] . "/" . $A[0];     
-	} 
-			 
-			 
-	if (strstr($data_pagamento, "/")){ 
-		$A = explode ("/", $data_pagamento); 
-		$data_pagamento = $A[2] . "-". $A[1] . "-" . $A[0]; 
-	} else { 
-		$A = explode ("-", $data_pagamento); 
-		$data_pagamento = $A[2] . "/". $A[1] . "/" . $A[0];     
-	} 
-			 
+	if ($data_pagamento) {
+		if (strstr($data_pagamento, "/")){ 
+			$A = explode ("/", $data_pagamento); 
+			$data_pagamento = $A[2] . "-". $A[1] . "-" . $A[0]; 
+		} else { 
+			$A = explode ("-", $data_pagamento); 
+			$data_pagamento = $A[2] . "/". $A[1] . "/" . $A[0];     
+		} 
+	}
+	
 	$amortizar = str_replace(",",".",@$_REQUEST["amortizar"]);
 	$desconto = str_replace(",",".",@$_REQUEST["desconto"]);
 	$acrescimo = str_replace(",",".",@$_REQUEST["acrescimo"]);
@@ -693,7 +697,7 @@ public function amortizar(){
 	$sSQL .= "	data = '".@$_REQUEST["data"]."' ";
 				
 				
-	//echo "QUERY: $sSQL <br>\n";
+	echo "QUERY: $sSQL <br>\n";
 	$this->bd->consulta($sSQL);
 	
 	return;

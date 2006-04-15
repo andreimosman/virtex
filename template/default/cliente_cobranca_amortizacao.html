@@ -6,6 +6,39 @@ var dataVenc = '{$data}';
 
 <script language="JavaScript">
 
+//Inicio Dedé
+//Faz a validação do formulário
+function validaForm() {
+
+	f = document.formulario;
+
+	if (f.data_pagamento.value != "") {
+
+
+		barras = f.data_pagamento.value.split("/");
+
+		if (barras.length == 3){
+			dia = barras[0];
+			mes = barras[1];
+			ano = barras[2];
+			resultado = (!isNaN(dia) && (dia > 0) && (dia < 32)) && (!isNaN(mes) && (mes > 0) && (mes < 13)) && (!isNaN(ano) && (ano.length == 4));
+
+			if (!resultado) {
+				alert("Formato de data invalido!");
+				return false;
+			}
+		}
+	} else {
+		alert("O campo data do pagamento não pode ser deixado em branco.");
+		return false;
+	}
+
+	return true;
+}
+
+//Fim Dedé
+
+
 function pagamentoHoje() {
    formulario.data_pagamento.value = hoje();
 }
@@ -79,6 +112,7 @@ function calculaValores() {
 
 
 
+
 </script>
 {/literal}
 <html>
@@ -147,7 +181,7 @@ function calculaValores() {
         <tr>
           <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
-                <td align="CENTER" valign="MIDDLE"> <form name=formulario method="post" action="{$smarty.server.PHP_SELF}" >
+                <td align="CENTER" valign="MIDDLE"> <form name=formulario method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return validaForm()" >
                   <h1>Amortiza&ccedil;&atilde;o</h1>
                   <p>
                     <input type="hidden" name="acao" value="alt">

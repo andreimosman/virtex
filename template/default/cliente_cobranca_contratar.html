@@ -252,6 +252,10 @@ function init() {
 
 	alteraTipo();
 	alteraProduto();
+	
+		MM_showHideLayers('formaPag','','hide');
+		MM_showHideLayers('formaPagBanco','','hide');
+		MM_showHideLayers('formaPagCartao','','hide');
 }
 
 
@@ -757,7 +761,7 @@ function MM_showHideLayers() { //v6.0
             <tr>
               <td bgcolor="#FFFFFF" align="right" height="1">&nbsp;</td>
               <td bgcolor="#FFFFFF" colspan="3" height="1">
-				  <div id="formaPag" >
+				  <div id="formaPag" style="visible: hidden"  >
 						<table width="100%" border="0" cellspacing="3" cellpadding="0">
 						  <tr>
 							<td><p>de
@@ -771,7 +775,7 @@ function MM_showHideLayers() { //v6.0
 								n&atilde;o suporta cobran&ccedil;as adicionais. Caso o
 								contrato seja firmado os valores excedentes existentes
 								ser&atilde;o desconsiderados, tanto no contrato quanto
-								na fatura</font></strong></p></td>
+								na fatura aaa</font></strong></p></td>
 						  </tr>
 						</table>
 					   </div>

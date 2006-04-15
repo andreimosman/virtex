@@ -180,11 +180,11 @@
 		switch($tipo) {
 			case 'D':
 					$sSQL = "SELECT * FROM prtb_produto_discado WHERE id_produto = $id_produto";
-					$info_pr_adicional = $this->bd->obtemUnicoRegistro($sSQL);
+					$info_produto = $this->bd->obtemUnicoRegistro($sSQL);
 					
-					$d_franquia_horas = $info_pr_adicional["franquia_horas"];
-					$d_permitir_duplicidade = $info_pr_adicional["permitir_duplicidade"];
-					$d_valor_hora_adicional = $info_pr_adicional["valor_hora_adicional"];
+					$d_franquia_horas = $info_produto["franquia_horas"];
+					$d_permitir_duplicidade = $info_produto["permitir_duplicidade"];
+					$d_valor_hora_adicional = $info_produto["valor_hora_adicional"];
 					
 					$this->tpl->atribui("foneinfo", $foneinfo );
 					$this->tpl->atribui("d_franquia_horas", $d_franquia_horas);
@@ -194,11 +194,11 @@
 				break;
 			case 'H':
 					$sSQL = "SELECT * FROM prtb_produto_hospedagem WHERE id_produto = $id_produto";
-					$info_pr_adicional = $this->bd->obtemUnicoRegistro($sSQL);
+					$info_produto = $this->bd->obtemUnicoRegistro($sSQL);
 					
-					$h_dominio = $info_pr_adicional["dominio"];
-					$h_franquia_em_mb = $info_pr_adicional["franquia_em_mb"];
-					$h_valor_mb_adicional = $info_pr_adicional["valor_mb_adicional"];
+					$h_dominio = $info_produto["dominio"];
+					$h_franquia_em_mb = $info_produto["franquia_em_mb"];
+					$h_valor_mb_adicional = $info_produto["valor_mb_adicional"];
 					
 					$this->tpl->atribui("h_dominio", $h_dominio);
 					$this->tpl->atribui("h_franquia_em_mb", $h_franquia_em_mb);
@@ -207,12 +207,12 @@
 				break;
 			case 'BL':
 					$sSQL = "SELECT * FROM prtb_produto_bandalarga WHERE id_produto = $id_produto";
-					$info_pr_adicional = $this->bd->obtemUnicoRegistro($sSQL);
+					$info_produto = $this->bd->obtemUnicoRegistro($sSQL);
 			
-					$bl_banda_upload_kbps = $info_pr_adicional["banda_upload_kbps"];
-					$bl_banda_download_kbps = $info_pr_adicional["banda_download_kbps"];
-					$bl_franquia_trafego_mensal_gb = $info_pr_adicional["franquia_trafego_mensal_mb"];
-					$bl_valor_trafego_adicional_gb = $info_pr_adicional["valor_trafego_adicional_gb"];
+					$bl_banda_upload_kbps = $info_produto["banda_upload_kbps"];
+					$bl_banda_download_kbps = $info_produto["banda_download_kbps"];
+					$bl_franquia_trafego_mensal_gb = $info_produto["franquia_trafego_mensal_mb"];
+					$bl_valor_trafego_adicional_gb = $info_produto["valor_trafego_adicional_gb"];
 					
 					$this->tpl->atribui("bl_banda_upload_kbps", $bl_banda_upload_kbps);
 					$this->tpl->atribui("bl_banda_download_kbps", $bl_banda_download_kbps);
@@ -221,7 +221,7 @@
 				break;
 		}
 		
-		$this->tpl->atribui("info_adicional", $info_pr_adicional);
+		$this->tpl->atribui("info_adicional", $info_produto);
 	
 		$this->arquivoTemplate="cliente_contrato_detalhe.html";
 		return;
