@@ -24,27 +24,82 @@
                       <td class=td_main > <table width="97%" border="0" align="center" cellpadding="0" cellspacing="1" class=main>
                           <tr> 
                             <td colspan="2" align="center"> 
-                              <table border=0 width=90% align="center">
-                                <tr> 
-                                  <td align="right" valing="bottom" bgcolor="#E0E0E0"> 
-                                    <p>Filtro: </p></td>
-                                  <td valing="bottom"> <p> 
-                                      <SELECT name='tipo_relatorio' >
-                                        <OPTION VALUE='' >TODOS</OPTION>
-                                        <OPTION VALUE='D' >Acesso Discado</OPTION>
-                                        <OPTION VALUE='BL' >Banda Larga</OPTION>
-                                        <OPTION VALUE='E' >E-Mail</OPTION>
-                                        <OPTION VALUE='H' >Hospedagem</OPTION>
-                                      </SELECT>
-                                      <input name="submit" type="submit" class=input2 id="cadastro_cliente" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;" value="&gt;&gt;">
-                                    </p></td>
-                                </tr>
-                              </table>
-                              <hr size=1>
-                              <h2><font color="#000000">TODAS AS CORTESIAS</font><br>
-                                <br>
-                              </h2>
-                              <table border=0 width="480" cellspacing=1 cellpadding=1 bgcolor="#000000">
+                              <form action="{$smarty.server.PHP_SELF}" method="post">
+							  		<input type="hidden" name="op" value="cortesia">
+									<input type="hidden" name="acao" value="consultar">
+									
+								  <table border=0 width=90% align="center">
+									<tr> 
+									  <td align="center" valing="bottom" bgcolor="#FFFFFF"> 
+										<p>Filtro: 
+									  
+										  <SELECT name='tipo_relatorio' >
+											<OPTION VALUE='' {if $tipo_relatorio == "todos"} SELECTED {/if}>TODOS </OPTION>
+											<OPTION VALUE='D' {if $tipo_relatorio == "D"} SELECTED {/if}>Acesso Discado</OPTION>
+											<OPTION VALUE='BL' {if $tipo_relatorio == "BL"} SELECTED {/if}>Banda Larga</OPTION>
+											<OPTION VALUE='E' {if $tipo_relatorio == "E"} SELECTED {/if}>E-Mail</OPTION>
+											<OPTION VALUE='H' {if $tipo_relatorio == "H"} SELECTED {/if}>Hospedagem</OPTION>
+										  </SELECT>
+										  <input name="submit" type="submit" class=input2 id="cadastro_cliente" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;" value="&gt;&gt;">
+										</p></td>
+									</tr>
+								  </table>
+							  </form>
+							
+							{if !$acao} <p><strong>AINDA NÃO FORAM DEFINIDOS OS PARÂMETROS DE PESQUISA</strong></p> {/if}
+							  
+						<table width="65%" border="0" cellpadding="2" cellspacing="2">
+                          <tr align="center" valign="middle" bgcolor="#FAFAFA"> 
+                            <td colspan="7"><strong>CORTESIAS</strong></td>
+                          </tr>
+                          <tr bgcolor="#DFDFDF"> 
+                            <td width="20%"><p align="center" >Data</p></td>
+                            <td width="35%"><p align="center" >Produto</p></td>
+                            <td width="5%"><p align="center" >Tipo</p></td>
+                            <td width="50%"><p align="center" >Conta Principal</p></td>                            
+                          </tr>
+                          {foreach item=rel_fatura from=$rel_faturas} 
+							  <tr bgcolor="#FFFFFF"> 
+								<td colspan=4><p>{$rel_fatura.nome_razao}</p></td>
+							  </tr>
+							  <tr bgcolor="#F0F0F0"> 
+								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.data}</a></p></td>
+								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.data_pagamento}</a></p></td>
+								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.valor}</a></p></td>
+								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.desconto}</a></p></td>								
+							  </tr>
+                          {/foreach} 
+                        </table>
+						
+						<br> 
+						
+						<table width="65%" border="0" cellpadding="2" cellspacing="2">
+                          <tr align="center" valign="middle" bgcolor="#FAFAFA"> 
+                                  <td colspan="5"><strong>TOTAIS</strong></td>
+                          </tr>
+                          <tr bgcolor="#DFDFDF"> 
+                            <td width="20%"><p align="center" >Banda Larga</p></td>
+                            <td width="20%"><p align="center" >Discada</p></td>
+                            <td width="20%"><p align="center" >Email</p></td>
+                            <td width="20%"><p align="center" >Hospedagem</p></td>
+                            <td width="20%"><p align="center" >#Total</p></td>							                            
+                          </tr>
+                          {foreach item=rel_fatura from=$rel_faturas} 
+							  <tr bgcolor="#FFFFFF"> 
+								<td colspan=4><p>{$rel_fatura.nome_razao}</p></td>
+							  </tr>
+							  <tr bgcolor="#F0F0F0"> 
+								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.data}</a></p></td>
+								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.data_pagamento}</a></p></td>
+								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.valor}</a></p></td>
+								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.desconto}</a></p></td>
+								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.desconto}</a></p></td>								
+							  </tr>
+                          {/foreach} 
+                        </table>
+                              
+							  <!--
+							  <table border=0 width="480" cellspacing=1 cellpadding=1 bgcolor="#000000">
                                 <tr bgcolor="#F0F0F0"> 
                                   <td align="left" colspan=4><h2>CLIENTE</h2></td>
                                 </tr>
@@ -58,8 +113,10 @@
                                   <td colspan=4><img src="img/nada.gif" width=1 height=1></td>
                                 </tr>
                               </table>
+							  
                               <br> 
-                              <table border=0 width="480" cellspacing=1 cellpadding=1 bgcolor="#000000">
+                              
+							  <table border=0 width="480" cellspacing=1 cellpadding=1 bgcolor="#000000">
                                 <tr bgcolor="#F0F0F0"> 
                                   <td align="left" colspan=4><p><a href="?sessao=clientes&subsess=pesquisa&id_cliente=292" target="_self">3 
                                       BATALHAO DE ENG. DE CONSTRUCAO</a></p></td>
@@ -652,8 +709,15 @@
                                   <td colspan=5><img src="img/nada.gif" width=1 height=1></td>
                                 </tr>
                               </table></td>
+							  -->
                           </tr>
                         </table>
+						
+						<br>
+						
+						
+						
+						
                         <p></p></td>
                     </tr>
                   </table>

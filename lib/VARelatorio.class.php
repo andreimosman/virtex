@@ -18,16 +18,24 @@ class VARelatorio extends VirtexAdmin {
 		
 		$acao = @$_REQUEST["acao"];
 		
+		$tipo_relatorio = @$_REQUEST["tipo_relatorio"];
+		if (!$tipo_relatorio) $tipo_relatorio = 'PG';
+		
 		$data_ini = @$_REQUEST["data_ini"];
 		$data_fim = @$_REQUEST["data_fim"];
-			
+					
 		if(!$data_ini) $data_ini = date("d") . "/" . date("m") ."/". date("Y");
 		if(!$data_fim) $data_fim = date("d") . "/" . date("m") ."/". date("Y");
 		
+		$this->tpl->atribui("tipo_relatorio", $tipo_relatorio);
 		$this->tpl->atribui("data_ini", $data_ini);
 		$this->tpl->atribui("data_fim", $data_fim);
 		$this->tpl->atribui("acao", $acao);
 		
+		
+		//TODO: comentas as duas linhas abaixo que serão usadas somente pra evitar erros até o termino do projeto
+		$eSQL = "";
+		$sSQL = "";
 		
 		if ($acao == "consultar"){ 
 			//echo "fdsafdsafdsa<br>";
@@ -40,28 +48,25 @@ class VARelatorio extends VirtexAdmin {
 			list($d, $m, $a) = explode("/", $data_fim);
 			$data_fim = "$a-$m-$d";
 
-			$tipo_relatorio = @$_REQUEST["tipo_relatorio"];
-
+						
 			
 			if($tipo_relatorio == "PG") { //Faturas pagas
-
+				
 				$sSQL =  "SELECT ";
-				$sSQL .= "	cl.id_cliente, cl.nome_razao, cp.id_cliente_produto, cp.id_produto, ";
-				$sSQL .= "	ft.data, ft.data_pagamento, ft.valor, ft.desconto, ft.reagendamento, ft.valor_pago, ";
-				$sSQL .= "	ft.data, ft.desconto, ft.acrescimo ";
+				$sSQL .= "	cl.id_cliente, cl.nome_razao, cp.id_cliente_produto, ";
+				$sSQL .= "	cp.id_produto, ft.data, ft.data_pagamento, ";
+				$sSQL .= "	ft.valor, ft.desconto, ft.reagendamento, ";
+				$sSQL .= "	ft.valor_pago, ft.data, ft.desconto, ft.acrescimo ";
 				$sSQL .= "FROM ";
 				$sSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft ";
 				$sSQL .= "WHERE ";
 				$sSQL .= "	cl.id_cliente = cp.id_cliente AND ";
 				$sSQL .= "	ft.id_cliente_produto = cp.id_cliente_produto AND ";
-				//$sSQL .= "	ft.status = 'R' AND ";
-				$sSQL .= "	ft.data BETWEEN '$data_ini' AND '$data_fim'";
-				$sSQL .= "ORDER BY ";
-				$sSQL .= "	cl.id_cliente ";
-				
-				echo ("<br>$sSQL<br><br>");
-				
-				
+				$sSQL .= "	ft.status = 'P' AND ";
+				$sSQL .= "	ft.data_pagamento BETWEEN '$data_ini' AND '$data_fim'";
+				$sSQL .= "ORDER BY cl.id_cliente";
+
+
 				$eSQL =  "SELECT ";
 				$eSQL .= "	COUNT(ft.data) AS faturas, "; 
 				$eSQL .= "	SUM(ft.valor) as estimativa, ";
@@ -74,47 +79,110 @@ class VARelatorio extends VirtexAdmin {
 				$eSQL .= "WHERE ";
 				$eSQL .= "	cl.id_cliente = cp.id_cliente AND ";
 				$eSQL .= "	ft.id_cliente_produto = cp.id_cliente_produto AND ";
-				//$sSQL .= "	ft.status = 'R' AND ";
-				$eSQL .= "	ft.data BETWEEN '$data_ini' AND '$data_fim'";
-				
-				
-				echo "$eSQL<br>";
+				$eSQL .= "	ft.status = 'P' AND ";
+				$eSQL .= "	ft.data_pagamento BETWEEN '$data_ini' AND '$data_fim'";											
 				
 			} else if($tipo_relatorio == "PG+") { //Pagas incluindo adesão
-
-				$sSQL =  "SELECT";
-				$sSQL .= "	cl.id_cliente, cl.nome_razao, cp.id_cliente_produto, cp.id_produto, ";
-				$sSQL .= "	ft.data, ft.data_pagamento, ft.valor, ft.desconto, ft.reagendamento, ft.valor_pago";
+				
+				//TODO: ainda falta fazer as pagas incluindo adesão
+				$sSQL =  "SELECT ";
+				$sSQL .= "	cl.id_cliente, cl.nome_razao, cp.id_cliente_produto, ";
+				$sSQL .= "	cp.id_produto, ft.data, ft.data_pagamento, ";
+				$sSQL .= "	ft.valor, ft.desconto, ft.reagendamento, ";
+				$sSQL .= "	ft.valor_pago, ft.data, ft.desconto, ft.acrescimo ";
 				$sSQL .= "FROM ";
-				$sSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft";
+				$sSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft ";
 				$sSQL .= "WHERE ";
-				$sSQL .= "cl.id_cliente = cp.id_cliente AND ft.id_cliente_produto = cp.id_cliente_produto AND ft.status = 'R' ";
-				$sSQL .= "AND ft.data > '$data_ini' AND dt.data < '$data_fim' AND ";
+				$sSQL .= "	cl.id_cliente = cp.id_cliente AND ";
+				$sSQL .= "	ft.id_cliente_produto = cp.id_cliente_produto AND ";
+				$sSQL .= "	ft.status = 'P' AND ";
+				$sSQL .= "	ft.data_pagamento BETWEEN '2006-04-15' AND '2006-04-15' ";
+				$sSQL .= "ORDER BY cl.id_cliente";
+
+
+				$eSQL =  "SELECT ";
+				$eSQL .= "	COUNT(ft.data) AS faturas, "; 
+				$eSQL .= "	SUM(ft.valor) as estimativa, ";
+				$eSQL .= "	SUM(ft.desconto) as descontos, ";
+				$eSQL .= "	SUM(ft.acrescimo) as acrescimos, "; 
+				$eSQL .= "	COUNT(ft.reagendamento) as reagendamentos, ";
+				$eSQL .= "	SUM(ft.valor_pago) as recebido ";
+				$eSQL .= "FROM ";
+				$eSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft ";
+				$eSQL .= "WHERE ";
+				$eSQL .= "	cl.id_cliente = cp.id_cliente AND ";
+				$eSQL .= "	ft.id_cliente_produto = cp.id_cliente_produto AND ";
+				$eSQL .= "	ft.status = 'P' AND ";
+				$eSQL .= "	ft.data_pagamento BETWEEN '$data_ini' AND '$data_fim'";
+				
 
 			} else if($tipo_relatorio == "PD+") { //Pagas com desconto
 
-				$sSQL =  "SELECT";
-				$sSQL .= "	cl.id_cliente, cl.nome_razao, cp.id_cliente_produto, cp.id_produto, ";
-				$sSQL .= "	ft.data, ft.data_pagamento, ft.valor, ft.desconto, ft.reagendamento, ft.valor_pago";
+				$sSQL = "SELECT ";
+				$sSQL .= "	cl.id_cliente, cl.nome_razao, cp.id_cliente_produto, ";
+				$sSQL .= "	cp.id_produto, ft.data, ft.data_pagamento, ";
+				$sSQL .= "	ft.valor, ft.desconto, ft.reagendamento, ";
+				$sSQL .= "	ft.valor_pago, ft.data, ft.desconto, ft.acrescimo ";
 				$sSQL .= "FROM ";
-				$sSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft";
+				$sSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft ";
 				$sSQL .= "WHERE ";
-				$sSQL .= "cl.id_cliente = cp.id_cliente AND ft.id_cliente_produto = cp.id_cliente_produto AND ft.status = 'R' ";
-				$sSQL .= "AND ft.data > '$data_ini' AND dt.data < '$data_fim' AND ";
+				$sSQL .= "	cl.id_cliente = cp.id_cliente AND ";
+				$sSQL .= "	ft.id_cliente_produto = cp.id_cliente_produto AND ";
+				$sSQL .= "	ft.status = 'P' AND ";
+				$sSQL .= "	ft.desconto > 0 AND ";
+				$sSQL .= "	ft.data_pagamento BETWEEN '$data_ini' AND '$data_fim' ";
+				$sSQL .= "ORDER BY cl.id_cliente";
+
+				$eSQL =  "SELECT ";
+				$eSQL .= "	COUNT(ft.data) AS faturas, "; 
+				$eSQL .= "	SUM(ft.valor) as estimativa, ";
+				$eSQL .= "	SUM(ft.desconto) as descontos, ";
+				$eSQL .= "	SUM(ft.acrescimo) as acrescimos, "; 
+				$eSQL .= "	COUNT(ft.reagendamento) as reagendamentos, ";
+				$eSQL .= "	SUM(ft.valor_pago) as recebido ";
+				$eSQL .= "FROM ";
+				$eSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "	cl.id_cliente = cp.id_cliente AND ";
+				$sSQL .= "	ft.id_cliente_produto = cp.id_cliente_produto AND ";
+				$sSQL .= "	ft.status = 'P' AND ";
+				$sSQL .= "	ft.desconto > 0 AND ";
+				$sSQL .= "	ft.data_pagamento BETWEEN '$data_ini' AND '$data_fim' ";
 
 			} else if($tipo_relatorio == "AT") { //Em atraso
 
-				$sSQL =  "SELECT";
-				$sSQL .= "	cl.id_cliente, cl.nome_razao, cp.id_cliente_produto, cp.id_produto, ";
-				$sSQL .= "	ft.data, ft.data_pagamento, ft.valor, ft.desconto, ft.reagendamento, ft.valor_pago";
+				$sSQL = "SELECT ";
+				$sSQL .= "	cl.id_cliente, cl.nome_razao, cp.id_cliente_produto, ";
+				$sSQL .= "	cp.id_produto, ft.data, ft.data_pagamento, ";
+				$sSQL .= "	ft.valor, ft.desconto, ft.reagendamento, ";
+				$sSQL .= "	ft.valor_pago, ft.data, ft.desconto, ft.acrescimo ";
 				$sSQL .= "FROM ";
-				$sSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft";
+				$sSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft ";
 				$sSQL .= "WHERE ";
-				$sSQL .= "cl.id_cliente = cp.id_cliente AND ft.id_cliente_produto = cp.id_cliente_produto AND ft.status = 'R' ";
-				$sSQL .= "AND ft.data > '$data_ini' AND dt.data < '$data_fim' AND ";
+				$sSQL .= "	cl.id_cliente = cp.id_cliente AND ";
+				$sSQL .= "	ft.id_cliente_produto = cp.id_cliente_produto AND ";
+				$sSQL .= "	((ft.data < CURRENT_DATE AND ft.status = 'A' AND ft.data BETWEEN '$data_ini' AND '$data_fim' ) OR ";
+				$sSQL .= "	(ft.reagendamento < CURRENT_DATE AND ft.status = 'R' AND ft.reagendamento BETWEEN '$data_ini' AND '$data_fim'))";
+				$sSQL .= "ORDER BY cl.id_cliente";
+
+
+				$eSQL =  "SELECT ";
+				$eSQL .= "	COUNT(ft.data) AS faturas, "; 
+				$eSQL .= "	SUM(ft.valor) as estimativa, ";
+				$eSQL .= "	SUM(ft.desconto) as descontos, ";
+				$eSQL .= "	SUM(ft.acrescimo) as acrescimos, "; 
+				$eSQL .= "	COUNT(ft.reagendamento) as reagendamentos, ";
+				$eSQL .= "	SUM(ft.valor_pago) as recebido ";
+				$eSQL .= "FROM ";
+				$eSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft ";
+				$eSQL .= "WHERE ";
+				$eSQL .= "	cl.id_cliente = cp.id_cliente AND ";
+				$eSQL .= "	ft.id_cliente_produto = cp.id_cliente_produto AND ";
+				$eSQL .= "	((ft.data < CURRENT_DATE AND ft.status = 'A' AND ft.data BETWEEN '$data_ini' AND '$data_fim' ) OR ";
+				$eSQL .= "	(ft.reagendamento < CURRENT_DATE AND ft.status = 'R' AND ft.reagendamento BETWEEN '$data_ini' AND '$data_fim'))";
 
 			} else if($tipo_relatorio == "AD") { //Adesões
-
+				//TODO: Fazer consulta de adesões
 				$sSQL =  "SELECT";
 				$sSQL .= "	cl.id_cliente, cl.nome_razao, cp.id_cliente_produto, cp.id_produto, ";
 				$sSQL .= "	ft.data, ft.data_pagamento, ft.valor, ft.desconto, ft.reagendamento, ft.valor_pago";
@@ -125,29 +193,81 @@ class VARelatorio extends VirtexAdmin {
 				$sSQL .= "AND ft.data > '$data_ini' AND dt.data < '$data_fim' AND ";
 
 			} else if($tipo_relatorio == "AB") { //Em aberto incluindo atrazadas
-
-				$sSQL =  "SELECT";
-				$sSQL .= "	cl.id_cliente, cl.nome_razao, cp.id_cliente_produto, cp.id_produto, ";
-				$sSQL .= "	ft.data, ft.data_pagamento, ft.valor, ft.desconto, ft.reagendamento, ft.valor_pago";
+				//TODO: Fazer consulta de adesões em atraso
+				$sSQL = "SELECT ";
+				$sSQL .= "	cl.id_cliente, cl.nome_razao, cp.id_cliente_produto, ";
+				$sSQL .= "	cp.id_produto, ft.data, ft.data_pagamento, ";
+				$sSQL .= "	ft.valor, ft.desconto, ft.reagendamento, ";
+				$sSQL .= "	ft.valor_pago, ft.data, ft.desconto, ft.acrescimo ";
 				$sSQL .= "FROM ";
-				$sSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft";
+				$sSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft ";
 				$sSQL .= "WHERE ";
-				$sSQL .= "cl.id_cliente = cp.id_cliente AND ft.id_cliente_produto = cp.id_cliente_produto AND ft.status = 'R' ";
-				$sSQL .= "AND ft.data > '$data_ini' AND dt.data < '$data_fim' AND ";
+				$sSQL .= "	cl.id_cliente = cp.id_cliente AND ";
+				$sSQL .= "	ft.id_cliente_produto = cp.id_cliente_produto AND ";
+				$sSQL .= "	(((ft.data < CURRENT_DATE AND ft.status = 'A' AND ft.data BETWEEN $data_ini AND $data_fim ) OR ";
+				$sSQL .= "	(ft.reagendamento < CURRENT_DATE AND ft.status = 'R' AND ft.reagendamento BETWEEN '$data_ini' AND '$data_fim'))) ";
+				$sSQL .= "	OR ft.status = 'A'";
+				$sSQL .= "ORDER BY cl.id_cliente";
 
-			}/* else if($tipo_relatorio == "AB-") { //Em aberto excluindo atrazadas
 
-				$sSQL =  "SELECT";
-				$sSQL .= "	cl.id_cliente, cl.nome_razao, cp.id_cliente_produto, cp.id_produto, ";
-				$sSQL .= "	ft.data, ft.data_pagamento, ft.valor, ft.desconto, ft.reagendamento, ft.valor_pago";
+				$eSQL =  "SELECT ";
+				$eSQL .= "	COUNT(ft.data) AS faturas, "; 
+				$eSQL .= "	SUM(ft.valor) as estimativa, ";
+				$eSQL .= "	SUM(ft.desconto) as descontos, ";
+				$eSQL .= "	SUM(ft.acrescimo) as acrescimos, "; 
+				$eSQL .= "	COUNT(ft.reagendamento) as reagendamentos, ";
+				$eSQL .= "	SUM(ft.valor_pago) as recebido ";
+				$eSQL .= "FROM ";
+				$eSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft ";
+				$eSQL .= "WHERE ";
+				$eSQL .= "	cl.id_cliente = cp.id_cliente AND ";
+				$eSQL .= "	ft.id_cliente_produto = cp.id_cliente_produto AND ";
+				$eSQL .= "	(((ft.data < CURRENT_DATE AND ft.status = 'A' AND ft.data BETWEEN $data_ini AND $data_fim ) OR ";
+				$eSQL .= "	(ft.reagendamento < CURRENT_DATE AND ft.status = 'R' AND ft.reagendamento BETWEEN '$data_ini' AND '$data_fim'))) ";
+				$eSQL .= "	OR ft.status = 'A'";
+				$eSQL .= "ORDER BY cl.id_cliente";
+				
+			} else if($tipo_relatorio == "AB-") { //Em aberto ixcluindo atrazadas
+				
+				$sSQL = "SELECT ";
+				$sSQL .= "	cl.id_cliente, cl.nome_razao, cp.id_cliente_produto, ";
+				$sSQL .= "	cp.id_produto, ft.data, ft.data_pagamento, ";
+				$sSQL .= "	ft.valor, ft.desconto, ft.reagendamento, ";
+				$sSQL .= "	ft.valor_pago, ft.data, ft.desconto, ft.acrescimo ";
 				$sSQL .= "FROM ";
-				$sSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft";
+				$sSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft ";
 				$sSQL .= "WHERE ";
-				$sSQL .= "cl.id_cliente = cp.id_cliente AND ft.id_cliente_produto = cp.id_cliente_produto AND ft.status = 'R' ";
-				$sSQL .= "AND ft.data > '$data_ini' AND dt.data < '$data_fim' AND ";
+				$sSQL .= "	cl.id_cliente = cp.id_cliente AND ";
+				$sSQL .= "	ft.id_cliente_produto = cp.id_cliente_produto AND ";
+				$sSQL .= "	(((ft.data < CURRENT_DATE AND ft.status = 'A' AND ft.data BETWEEN $data_ini AND $data_fim ) OR ";
+				$sSQL .= "	(ft.reagendamento < CURRENT_DATE AND ft.status = 'R' AND ft.reagendamento BETWEEN '$data_ini' AND '$data_fim'))) ";
+				$sSQL .= "	OR ft.status = 'A'";
+				$sSQL .= "ORDER BY cl.id_cliente";
 
-			}*/
 
+				$eSQL =  "SELECT ";
+				$eSQL .= "	COUNT(ft.data) AS faturas, "; 
+				$eSQL .= "	SUM(ft.valor) as estimativa, ";
+				$eSQL .= "	SUM(ft.desconto) as descontos, ";
+				$eSQL .= "	SUM(ft.acrescimo) as acrescimos, "; 
+				$eSQL .= "	COUNT(ft.reagendamento) as reagendamentos, ";
+				$eSQL .= "	SUM(ft.valor_pago) as recebido ";
+				$eSQL .= "FROM ";
+				$eSQL .= "	cltb_cliente cl, cbtb_cliente_produto cp, cbtb_faturas ft ";
+				$eSQL .= "WHERE ";
+				$eSQL .= "	cl.id_cliente = cp.id_cliente AND ";
+				$eSQL .= "	ft.id_cliente_produto = cp.id_cliente_produto AND ";
+				$eSQL .= "	(((ft.data < CURRENT_DATE AND ft.status = 'A' AND ft.data BETWEEN $data_ini AND $data_fim ) OR ";
+				$eSQL .= "	(ft.reagendamento < CURRENT_DATE AND ft.status = 'R' AND ft.reagendamento BETWEEN '$data_ini' AND '$data_fim'))) ";
+				$eSQL .= "	OR ft.status = 'A'";
+				$eSQL .= "ORDER BY cl.id_cliente";
+				
+			}
+
+
+			
+			echo "<br>$sSQL<br>";
+			echo "<br>$eSQL<br>";
 			
 			$rel_faturas = $this->bd->obtemRegistros($sSQL);
 			$rel_totais = $this->bd->obtemUnicoRegistro($eSQL);
@@ -165,8 +285,31 @@ class VARelatorio extends VirtexAdmin {
 		//$this->arquivoTemplate = "cobranca_versaolight.html";
 		
 	} else if ($op == "cortesia"){
-		$this->arquivoTemplate = "cobranca_versaolight.html";
-		//$this->arquivoTemplate = "relatorio_cortesia.html";
+		//$this->arquivoTemplate = "cobranca_versaolight.html";
+		$this->arquivoTemplate = "relatorio_cortesia.html";
+					
+		$acao = @$_REQUEST["acao"];
+		
+		$tipo_relatorio = @$_REQUEST["tipo_relatorio"];
+		if (!$tipo_relatorio) $tipo_relatorio = "todos";
+					
+		$this->tpl->atribui("tipo_relatorio", $tipo_relatorio);
+		$this->tpl->atribui("acao", $acao);
+		
+		if ($acao == "consultar") {
+		
+			//TODO: Fazer a entrada das SQL's
+			
+			if ($tipo_relatorio == "todos") {
+			} else if($tipo_relatorio == "D") {
+			} else if($tipo_relatorio == "H") {
+			} else if($tipo_relatorio == "BL") {
+			} else if($tipo_relatorio == "E") {
+			}
+		}
+			
+		
+		
 	} else if ($op == "geral"){
 	// RELATORIO GERAL DE CLIENTES
 			$erros = array();

@@ -643,8 +643,19 @@ public function amortizar(){
 
 	$data = @$_REQUEST["reagendamento"];
 	$data_pagamento = @$_REQUEST["data_pagamento"];
-		
+	$reagendamento = @$_REQUES["reagendamento"];
+	$reagendar = @$_REQUEST["reagendar"];
+	
+	
+	//Se existir uma data de reagendamento então faz 
+	//o tratamento dessa data de reagendamento
+	if($reagendamento) {
+		list($d, $m, $a) = explode("/", $reagendamento);
+		$reagendamento = "$a-$m-$d";
+	}
 
+	//Se existir uma data de vencimento então faz 
+	//o tratamento dessa data de vencimento
 	if ($data) {
 		if (strstr($data, "/")){ 
 			$A = explode ("/", $data); 
@@ -656,6 +667,9 @@ public function amortizar(){
 
 	}
 	
+	
+	//Se existir uma data de pagamento então faz 
+	//o tratamento dessa data de pagamento
 	if ($data_pagamento) {
 		if (strstr($data_pagamento, "/")){ 
 			$A = explode ("/", $data_pagamento); 
@@ -686,7 +700,10 @@ public function amortizar(){
 	$sSQL .= "SET ";
 	$sSQL .= "	status = '".@$_REQUEST["status"]."', ";
 	$sSQL .= "	observacoes = '".@$_REQUEST["observacoes"]."', ";
-	$sSQL .= "	reagendamento = '".$data."', ";
+	
+	if ($reagendar && $reagendamento)
+		$sSQL .= "	reagendamento = '$reagendamento', ";
+	
 	$sSQL .= "	pagto_parcial = pagto_parcial + '".$amortizar."', ";
 	$sSQL .= "	data_pagamento = '".$data_pagamento."', ";
 	$sSQL .= "	desconto = '".$desconto."', ";

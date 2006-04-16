@@ -42,13 +42,13 @@
 								<td align="right" valing="bottom" bgcolor="#FFFFFF">
 								  Faturas: </td>
 								<td valing="bottom"> <SELECT name='tipo_relatorio'>
-									<OPTION VALUE='PG' >Pagas</OPTION>
-									<OPTION VALUE='PG+' >Pagas (incluindo adesões)</OPTION>
-									<OPTION VALUE='PD' >Pagas (com desconto)</OPTION>
-									<OPTION VALUE='AT' >Em atrazo</OPTION>
-									<OPTION VALUE='AD' >Adesões</OPTION>
-									<OPTION VALUE='AB' >Em aberto (incluindo atrazadas)</OPTION>
-									<OPTION VALUE='AB-' >Em aberto (excluindo atrazadas)</OPTION>
+									<OPTION VALUE='PG' {if $tipo_relatorio == "PG"} SELECTED {/if}>Pagas</OPTION>
+									<OPTION VALUE='PG+' {if $tipo_relatorio == "PG+"} SELECTED {/if}>Pagas (incluindo adesões)</OPTION>
+									<OPTION VALUE='PD'{if $tipo_relatorio == "PD"} SELECTED {/if} >Pagas (com desconto)</OPTION>
+									<OPTION VALUE='AT' {if $tipo_relatorio == "AT"} SELECTED {/if}>Em atrazo</OPTION>
+									<OPTION VALUE='AD' {if $tipo_relatorio == "AD"} SELECTED {/if}>Adesões</OPTION>
+									<OPTION VALUE='AB' {if $tipo_relatorio == "AB"} SELECTED {/if} >Em aberto (incluindo atrazadas)</OPTION>
+									<OPTION VALUE='AB-' {if $tipo_relatorio == "AB-"} SELECTED {/if}>Em aberto (excluindo atrazadas)</OPTION>
 								  </SELECT> <input name="submit" type="submit"value="OK">
 								</td>
 							  </tr>
@@ -71,18 +71,18 @@
                             <td width="14%"><p align="center" >Valor Pago</p></td>
                           </tr>
                           {foreach item=rel_fatura from=$rel_faturas} 
-                          <tr bgcolor="#FFFFFF"> 
-                            <td colspan=7>{$rel_fatura.nome_razao}</td>
-                          </tr>
-                          <tr bgcolor="#F0F0F0"> 
-                            <td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.data}</a></p></td>
-                            <td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.data_pagamento}</a></p></td>
-                            <td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.valor}</a></p></td>
-                            <td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.desconto}</a></p></td>
-                            <td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.acrescimo}</a></p></td>
-                            <td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.reagendamento}</a></p></td>
-                            <td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto=($rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.valor_pago}</a></p></td>
-                          </tr>
+							  <tr bgcolor="#FFFFFF"> 
+								<td colspan=7><p>{$rel_fatura.nome_razao}</p></td>
+							  </tr>
+							  <tr bgcolor="#F0F0F0"> 
+								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.data}</a></p></td>
+								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.data_pagamento}</a></p></td>
+								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.valor}</a></p></td>
+								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.desconto}</a></p></td>
+								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.acrescimo}</a></p></td>
+								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.reagendamento}</a></p></td>
+								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto=($rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.valor_pago}</a></p></td>
+							  </tr>
                           {/foreach} 
                         </table>
 						
@@ -225,7 +225,7 @@
       </table></td>
   </tr>
 </table>
-</body>
+</table></body>
 
 
 </html>
