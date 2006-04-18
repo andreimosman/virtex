@@ -96,15 +96,15 @@
 		$sSQL .= "	fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
 		$sSQL .= "	ativo,obs ";
 		$sSQL .= "FROM ";
-		$sSQL .= "	cltb_cliente WHERE id_cliente = $id_cliente";
+		$sSQL .= "	cltb_cliente WHERE id_cliente = '$id_cliente'";
 		$info_cliente = $this->bd->obtemUnicoRegistro($sSQL);
 		
 		//echo ("$sSQL");
 		
-		$sSQL = "SELECT * FROM prtb_produto WHERE id_produto = $id_produto";
+		$sSQL = "SELECT * FROM prtb_produto WHERE id_produto = '$id_produto'";
 		$info_produto = $this->bd->obtemUnicoRegistro($sSQL);
 		
-		$sSQL = "SELECT nome_cobranca FROM cftb_forma_pagamento WHERE id_cobranca = $tipo_cobranca";
+		$sSQL = "SELECT nome_cobranca FROM cftb_forma_pagamento WHERE id_cobranca = '$tipo_cobranca'";
 		$info_pagamento = $this->bd->obtemUnicoRegistro($sSQL);
 		
 		
@@ -179,7 +179,7 @@
 		//Adquire informações adicionais do produto e os envia para o template
 		switch($tipo) {
 			case 'D':
-					$sSQL = "SELECT * FROM prtb_produto_discado WHERE id_produto = $id_produto";
+					$sSQL = "SELECT * FROM prtb_produto_discado WHERE id_produto = '$id_produto'";
 					$info_produto = $this->bd->obtemUnicoRegistro($sSQL);
 					
 					$d_franquia_horas = $info_produto["franquia_horas"];
@@ -193,7 +193,7 @@
 
 				break;
 			case 'H':
-					$sSQL = "SELECT * FROM prtb_produto_hospedagem WHERE id_produto = $id_produto";
+					$sSQL = "SELECT * FROM prtb_produto_hospedagem WHERE id_produto = '$id_produto'";
 					$info_produto = $this->bd->obtemUnicoRegistro($sSQL);
 					
 					$h_dominio = $info_produto["dominio"];
@@ -206,7 +206,9 @@
 					
 				break;
 			case 'BL':
-					$sSQL = "SELECT * FROM prtb_produto_bandalarga WHERE id_produto = $id_produto";
+					$sSQL = "SELECT * FROM prtb_produto_bandalarga WHERE id_produto = '$id_produto'";
+					echo "query: $sSQL <br>";
+					
 					$info_produto = $this->bd->obtemUnicoRegistro($sSQL);
 			
 					$bl_banda_upload_kbps = $info_produto["banda_upload_kbps"];

@@ -394,7 +394,7 @@ function processaDataContrato() {
 	// checa se está diferente a data do contrato com a data da bagaça.
 	data = new Date();
 	dia = data.getDate();
-	window.alert("dia:"+dia+"\n Data:"+dVenc+"\n");
+	//window.alert("dia:"+dia+"\n Data:"+dVenc+"\n");
 
 	if (data != dia){
 		frm.comodato.disabled=true;
@@ -415,7 +415,6 @@ function checaProRata(){
 	var qDias;
 	var dia;
 	var vProrata;
-	//var dVenc = '{$dia_venc}';
 	var dVenc = frm.dia_vencimento.value;
 	var mens;
 
@@ -423,7 +422,6 @@ function checaProRata(){
 	dia = data.getDate();
 
 	qDias = dia - dVenc;
-	//window.alert(qDias);
 
 	if(qDias < "30" && qDias >"0"){
 	mens = "Quant. Dias: "+qDias;

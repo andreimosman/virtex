@@ -109,6 +109,43 @@ function calculaValores() {
    return true;
 
 }
+function pago(){
+	//alert(formulario.status.value);
+	if (formulario.status.value == "P"){
+		//alert(formulario.status.value);
+		formulario.valor_pago.disabled=true;
+		formulario.desconto.disabled=true;
+		formulario.acrescimo.disabled=true;
+		formulario.valor_restante.disabled=true;
+		formulario.amortizar.disabled=true;
+		formulario.valor_pendente.disabled=true;
+		formulario.status.disabled=true;
+		formulario.data_pagamento.disabled=true;
+		formulario.reagendar.disabled=true;
+		formulario.reagendamento.disabled=true;
+		formulario.observacoes.disabled=true;
+		formulario.hoje.disabled=true;
+		formulario.venc.disabled=true;
+		change("valor_pago","disabled");
+		change("desconto","disabled");
+		change("acrescimo","disabled");
+		change("valor_restante","disabled");
+		change("amortizar","disabled");
+		change("status","disabled");
+		change("data_pagamento","disabled");
+		change("valor_pendente","disabled");
+		change("reagendamento","disabled");
+		change("observacoes","disabled");
+		change("valor_total","disabled");
+	}
+	return true;
+
+}
+function change(id, newClass) {
+	identity=document.getElementById(id);
+	identity.className=newClass;
+}
+
 
 
 
@@ -200,7 +237,7 @@ function calculaValores() {
 		<tr>
 			<td align="center">
 				<table border=0 width=390 cellspacing=0 cellpadding=0>
-				   <tr><td><font color="#FF0000"><b>{$sErro}<b></font></td></tr>
+				   <tr><td><font color="#FF0000"><b>{$sErro}</b></font></td></tr>
 				</table>
 				        <table border=0 width="390" bgcolor="#A0A0A0">
                           <tr bgcolor="#fafafa">
@@ -288,7 +325,7 @@ function calculaValores() {
                             <td bgcolor="#FFFFFF" align="right" width="120"> <p>
                                 <input type="checkbox" name="reagendar" value="1"  class="checkbox" onClick="javascript:verificaReagendamento();" onChange="javascript:verificaReagendamento();" {$reagendamento_checked}>
                                 re-agendar cobrança para dia: </p></td>
-                            <td bgcolor="#FFFFFF"><input name="reagendamento" type="text" value="{$data_reagendamento}" size=10 maxlength=10 id="reagendamento"></td>
+                            <td bgcolor="#FFFFFF"><input name="reagendamento" type="text" value="{$reagendamento}" size=10 maxlength=10 id="reagendamento"></td>
                           </tr>
                           <tr>
                             <td bgcolor="#FFFFFF" align="right" width="120" valign="top"><p>Observações:</p></td>
@@ -321,6 +358,7 @@ function calculaValores() {
 <script language="JavaScript">
 calculaValores();
 verificaReagendamento();
+pago();
 </script>
 {/literal}
 </body>

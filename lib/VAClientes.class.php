@@ -625,8 +625,120 @@ class VAClientes extends VirtexAdmin {
 					$produtos[$i]["contas"] = $contas;
 				}
 			
-				//echo "BOSTA";
-				require_once( PATH_LIB . "/hugo2.php" );
+				//require_once( PATH_LIB . "/hugo2.php" );
+///////////////////HUGO2
+
+	$hoje = date("d/m/Y");
+	$id_cliente = @$_REQUEST["id_cliente"];
+	$tipo_lista = @$_REQUEST["tipo_lista"];
+	
+	if ($tipo_lista == 'tudo'){
+	
+		$sSQL  = "SELECT ";
+		$sSQL .= "f.id_cliente_produto, to_char(f.data, 'DD/mm/YYYY') as data_conv,f.data, f.valor, f.observacoes,f.descricao,to_char(f.reagendamento, 'DD/mm/YYYY') as reagendamento, f.pagto_parcial, ";
+		$sSQL .= "to_char(f.data_pagamento, 'DD/mm/YYYY') as data_pagamento, f.desconto, f.acrescimo, f.valor_pago, ";
+		$sSQL .= "c.id_cliente_produto, c.id_cliente, ";
+		$sSQL .= "CASE WHEN (f.data < now() AND f.status='A') OR (f.reagendamento < now() AND f.status='R') ";
+		$sSQL .= "THEN 'S' ELSE ";
+		$sSQL .= "CASE WHEN f.reagendamento is not null AND f.status != 'P' ";
+		$sSQL .= "THEN 'G' ELSE f.status ";
+		$sSQL .= "END ";
+		$sSQL .= "END as extstatus ";
+		$sSQL .= "FROM ";
+		$sSQL .= "cbtb_faturas f, cbtb_cliente_produto c ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "id_cliente = '$id_cliente' ";
+		$sSQL .= "AND ";
+		$sSQL .= "f.id_cliente_produto = c.id_cliente_produto ";
+		//$sSQL .= "AND (f.status = 'A' OR f.status = 'R') ";
+		//$sSQL .= "AND f.data < now() + interval '10 day' ";
+		$sSQL .= "ORDER BY f.data ASC ";
+
+
+
+
+
+
+
+		$lista_faturas = $this->bd->obtemRegistros($sSQL);
+		//echo "Lista: $sSQL <br>";
+		
+		$sSQL = "SELECT nome_razao FROM cltb_cliente WHERE id_cliente = '$id_cliente'";
+		$cliente = $this->bd->obtemUnicoRegistro($sSQL);
+		
+		//$this->tpl->atribui("lista_contrato",$lista_contrato);
+		$this->tpl->atribui("hoje",$hoje);
+		$this->tpl->atribui("cliente",$cliente);
+		$this->tpl->atribui("id_cliente", $id_cliente);
+		$this->tpl->atribui("lista_faturas",$lista_faturas);
+
+		$this->arquivoTemplate = "cliente_cobranca_resumo_faturas.html";
+		return;
+
+	}else{
+		
+		$sSQL  = "SELECT ";
+		$sSQL .= "f.id_cliente_produto, to_char(f.data, 'DD/mm/YYYY') as data_conv,f.data, f.valor, f.observacoes,f.descricao, to_char(f.reagendamento, 'DD/mm/YYYY') as reagendamento, f.pagto_parcial, ";
+		$sSQL .= "to_char(f.data_pagamento, 'DD/mm/YYYY') as data_pagamento, f.desconto, f.acrescimo, f.valor_pago, ";
+		$sSQL .= "c.id_cliente_produto, c.id_cliente, ";
+		$sSQL .= "CASE WHEN (f.data < now() AND f.status='A') OR (f.reagendamento < now() AND f.status='R') ";
+		$sSQL .= "THEN 'S' ELSE ";
+		$sSQL .= "CASE WHEN f.reagendamento is not null AND f.status != 'P' ";
+		$sSQL .= "THEN 'G' ELSE f.status ";
+		$sSQL .= "END ";
+		$sSQL .= "END as extstatus ";
+		$sSQL .= "FROM ";
+		$sSQL .= "cbtb_faturas f, cbtb_cliente_produto c ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "id_cliente = '$id_cliente' ";
+		$sSQL .= "AND ";
+		$sSQL .= "f.id_cliente_produto = c.id_cliente_produto ";
+		$sSQL .= "AND (f.status = 'A' OR f.status = 'R') ";
+		$sSQL .= "AND f.data < now() + interval '10 day' ";
+		$sSQL .= "ORDER BY f.data ASC ";
+		
+		$lista_faturas = $this->bd->obtemRegistros($sSQL);
+		//echo "Lista: $sSQL <br>";
+		
+		$sSQL = "SELECT nome_razao FROM cltb_cliente WHERE id_cliente = '$id_cliente'";
+		$cliente = $this->bd->obtemUnicoRegistro($sSQL);
+		
+		
+		$sSQL  = "SELECT ";
+		$sSQL .= "	ct.id_cliente_produto, ct.data_contratacao, ct.vigencia, ct.id_produto, ct.tipo_produto, ct.valor_contrato, ct.status, ";
+		$sSQL .= "	cl.id_cliente_produto, cl.id_cliente, ";
+		$sSQL .= "	pr.id_produto, pr.nome ";
+		$sSQL .= "FROM ";
+		$sSQL .= "	cbtb_contrato ct, cbtb_cliente_produto cl, prtb_produto pr ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "	cl.id_cliente_produto = ct.id_cliente_produto  AND cl.id_cliente = '$id_cliente' AND ct.id_produto = pr.id_produto";
+		
+		$lista_contrato = $this->bd->obtemRegistros($sSQL);
+		
+		//echo "lista: $sSQL <br>";
+			$this->tpl->atribui("lista_contrato",$lista_contrato);
+			$this->tpl->atribui("cliente",$cliente);
+			$this->tpl->atribui("id_cliente", $id_cliente);
+			$this->tpl->atribui("lista_faturas",$lista_faturas);
+
+
+	
+	}
+
+
+
+
+
+
+
+//////////////////HUGO2 FIM
+				
+				
+				
+				
+				
+				
+				
 				
 				$this->tpl->atribui("produtos",$produtos);
 				$this->arquivoTemplate = "cliente_cobranca_resumo.html";
@@ -981,6 +1093,7 @@ class VAClientes extends VirtexAdmin {
 
 
 									//SPOOL
+									//ECHO "Tipo: $tipo_hospedagem <br> Username: $username <br> Dominio: $dominio <br> DominioHosp: $dominio_hospedagem<br>";
 									$this->spool->hospedagemAdicionaRede($server,$id_conta,$tipo_hospedagem,$username,$dominio,$dominio_hospedagem);
 								//}
 								break;
@@ -2295,6 +2408,63 @@ class VAClientes extends VirtexAdmin {
 		
 		}else if ($op =="confirmaaltcli"){
 			$this->arquivoTemplate = "confirma_alteracao_pops.html";
+			
+			
+		}else if ($op == "imprime_contrato"){
+		
+			$hoje = date("Y-m-d");
+		
+			$sSQL  = "SELECT nome, localidade, cnpj ";
+			$sSQL .= "FROM ";
+			$sSQL .= "cftb_preferencias ";
+			$sSQL .= "WHERE id_provedor = '1'";
+			
+			$provedor = $this->bd->obtemUnicoRegistro($sSQL);
+			
+			$this->tpl->atribui("nome_provedor",$provedor["nome"]);
+			$this->tpl->atribui("localidade",$provedor["localidade"]);
+			$this->tpl->atribui("cnpj_provedor",$provedor["cnpj"]);
+			
+			$sSQL  = "SELECT ";
+			$sSQL .= "	ct.id_cliente_produto, ct.data_contratacao, ct.vigencia, ct.data_renovacao, ct.valor_contrato, ct.id_cobranca, ct.status, ";
+			$sSQL .= "	ct.tipo_produto, ct.valor_produto, ct.num_emails, ct.quota_por_conta, ct.comodato, ct.valor_comodato, ct.desconto_promo, ";
+			$sSQL .= "	ct.periodo_desconto, ct.bl_banda_download_kbps, ct.id_produto, ";
+			$sSQL .= "	pr.id_produto,pr.nome ";
+			$sSQL .= "FROM ";
+			$sSQL .= "	cbtb_contrato ct, prtb_produto pr ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "ct.id_cliente_produto = '".$_REQUEST["id_cliente_produto"]."' ";
+			$sSQL .= "AND ct.id_produto = pr.id_produto ";
+		
+			$contrato = $this->bd->obtemUnicoRegistro($sSQL);
+			
+			//echo "SQL: $sSQL <br>";
+			
+			$this->tpl->atribui("data_contratacao", $contrato["data_contratacao"]);
+			$this->tpl->atribui("vigencia", $contrato["vigencia"]);
+			$this->tpl->atribui("valor_contrato", $contrato["valor_contrato"]);
+			$this->tpl->atribui("tipo_produto", $contrato["tipo_produto"]);
+			$this->tpl->atribui("valor_produto", $contrato["valor_produto"]);
+			$this->tpl->atribui("banda_kbps", $contrato["bl_banda_download_kbps"]);
+			$this->tpl->atribui("id_produto", $contrato["id_produto"]);
+			$this->tpl->atribui("nome_produto", $contrato["nome"]);
+			
+			$sSQL  = "SELECT * FROM cltb_cliente WHERE id_cliente = '".$_REQUEST["id_cliente"]."' ";
+
+			$cli = $this->bd->obtemUnicoRegistro($sSQL);
+			
+			
+			$valor_extenso = $this->extenso($contrato["valor_contrato"]);
+			$hoje_extenso = $this->escreveData($hoje);
+			$data_extenso = $this->escreveData($contrato["data_contratacao"]);
+			$this->tpl->atribui("data_extenso",$data_extenso);
+			$this->tpl->atribui("valor_extenso",$valor_extenso);
+			$this->tpl->atribui("hoje_extenso",$hoje_extenso);
+			$this->tpl->atribui("cli",$cli);
+			
+			$this->arquivoTemplate = "contrato1.html";
+			
+		
 		}
 	}
 	
@@ -2493,6 +2663,71 @@ public function gravarLogExclusao($id_excluido,$tipo,$obs=""){
 
 
 }
+
+public function extenso($valor=0, $maiusculas=false) { 
+
+	$rt = null;
+    // verifica se tem virgula decimal 
+    if (strpos($valor,",") > 0) 
+    { 
+      // retira o ponto de milhar, se tiver 
+      $valor = str_replace(".","",$valor); 
+
+      // troca a virgula decimal por ponto decimal 
+      $valor = str_replace(",",".",$valor); 
+    } 
+
+        $singular = array("centavo", "real", "mil", "milhão", "bilhão", "trilhão", "quatrilhão"); 
+        $plural = array("centavos", "reais", "mil", "milhões", "bilhões", "trilhões", "quatrilhões"); 
+
+        $c = array("", "cem", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos"); 
+        $d = array("", "dez", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa"); 
+        $d10 = array("dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezesete", "dezoito", "dezenove"); 
+        $u = array("", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove"); 
+
+        $z=0; 
+
+        $valor = number_format($valor, 2, ".", "."); 
+        $inteiro = explode(".", $valor); 
+        for($i=0;$i<count($inteiro);$i++) 
+                for($ii=strlen($inteiro[$i]);$ii<3;$ii++) 
+                        $inteiro[$i] = "0".$inteiro[$i]; 
+
+        $fim = count($inteiro) - ($inteiro[count($inteiro)-1] > 0 ? 1 : 2); 
+        for ($i=0;$i<count($inteiro);$i++) { 
+                $valor = $inteiro[$i]; 
+                $rc = (($valor > 100) && ($valor < 200)) ? "cento" : $c[$valor[0]]; 
+                $rd = ($valor[1] < 2) ? "" : $d[$valor[1]]; 
+                $ru = ($valor > 0) ? (($valor[1] == 1) ? $d10[$valor[2]] : $u[$valor[2]]) : ""; 
+
+                $r = $rc.(($rc && ($rd || $ru)) ? " e " : "").$rd.(($rd && $ru) ? " e " : "").$ru; 
+                $t = count($inteiro)-1-$i; 
+                $r .= $r ? " ".($valor > 1 ? $plural[$t] : $singular[$t]) : ""; 
+                if ($valor == "000")$z++; elseif ($z > 0) $z--; 
+                if (($t==1) && ($z>0) && ($inteiro[0] > 0)) $r .= (($z>1) ? " de " : "").$plural[$t]; 
+                if ($r) $rt = $rt . ((($i > 0) && ($i <= $fim) && ($inteiro[0] > 0) && ($z < 1)) ? ( ($i < $fim) ? ", " : " e ") : " ") . $r; 
+        } 
+
+         if(!$maiusculas){ 
+                          return($rt ? $rt : "zero"); 
+         } elseif($maiusculas == "2") { 
+                          return (strtoupper($rt) ? strtoupper($rt) : "Zero"); 
+         } else { 
+                          return (ucwords($rt) ? ucwords($rt) : "Zero"); 
+         } 
+         
+        
+
+}
+
+public function escreveData($data)  {  
+	list($ano,$mes,$dia) = explode("-",$data);
+	$mes_array = array("janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"); 
+	return $dia ." de ". $mes_array[(int)$mes-1] ." de ". $ano;
+
+}  
+
+
 	
 	
 

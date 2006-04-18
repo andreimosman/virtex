@@ -542,6 +542,30 @@ class VACobranca extends VirtexAdmin {
 		
 		} else if ($op == "boleto"){
 		
+			$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
+			$data = @$_REQUEST["data"];
+			$id_cliente = @$_REQUEST["id_cliente"];
+			
+			$sSQL  = "SELECT cl.nome_razao, cl.endereco, cl.id_cidade, cl.estado, cl.cep, cl.cpf_cnpj, cd.cidade as nome_cidade, cd.id_cidade  ";
+			$sSQL .= "FROM";
+			$sSQL .= "cltb_cliente cl, cftb_cidade cd ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "cl.id_cliente = '$id_cliente' AND ";
+			$sSQL .= "cd.id_cidade = cl.id_cidade";
+			
+			$cliente = $this->bd->obtemUnicoRegistro($sSQL);
+			
+			
+			$sSQL  = "SELECT valor, id_cobranca,  FROM ";
+			$sSQL .= "cbtb_faturas ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "id_cliente_produto = '$id_cliente_produto' AND ";
+			$sSQL .= "data = '$data' ";
+			
+			//echo "fatura: $sSQL<br>";
+
+			$fatura = $this->bd->obtemRegistros($sSQL);
+			
 			
 			// PEGANDO INFORMAÇÕES DAS PREFERENCIAS
 			$sSQL  = "SELECT ";
@@ -550,16 +574,19 @@ class VACobranca extends VirtexAdmin {
 			$sSQL .= " cftb_preferencias ";
 			$sSQL .= "WHERE id_provedor = '1'";
 			
-			$bol = $this->bd->obtemUnicoRegistro($sSQL);
+			$provedor = $this->bd->obtemUnicoRegistro($sSQL);
 			
 			$codigo = @$_REQUEST["codigo"];
 			$data_venc = "30/04/2006";
 			//echo $codigo;
+			$endereco = $cliente["endereco"]." - ". $cliente["nome_cidade"]." - ".$cliente["estado"]."<br> CEP: ".$cliente["cep"];
+			
+			
 			
 			if( $codigo ) {
 				MBoleto::barCode($codigo);
 			} else {
-				$this->b = new MBoleto($bol["cod_banco"],$bol["carteira"],$bol["agencia"],$bol["num_conta"],$bol["convenio"],$data_venc,"125.50","22222","José da Silva","171607858-00",$bol["nome"],$bol["cnpj"],$bol["tx_juros"],$bol["multa"],"Rua dos Bobos,00 - São Pedro - SP",$bol["observacoes"]);
+				$this->b = new MBoleto($provedor["cod_banco"],$provedor["carteira"],$provedor["agencia"],$$provedor["num_conta"],$provedor["convenio"],$data_venc,$fatura["valor"],$fatura["id_cobranca"],$cliente["nome_razao"],$cliente["cpf_cnpj"],$provedor["nome"],$provedor["cnpj"],$provedor["tx_juros"],$provedor["multa"],$endereco,$provedor["observacoes"]);
 				$this->b->setTplPath("template/boletos/");
 				$this->b->setImgPath("template/boletos/imagens");
 				
@@ -643,7 +670,7 @@ public function amortizar(){
 
 	$data = @$_REQUEST["reagendamento"];
 	$data_pagamento = @$_REQUEST["data_pagamento"];
-	$reagendamento = @$_REQUES["reagendamento"];
+	$reagendamento = @$_REQUEST["reagendamento"];
 	$reagendar = @$_REQUEST["reagendar"];
 	
 	
@@ -685,16 +712,6 @@ public function amortizar(){
 	$acrescimo = str_replace(",",".",@$_REQUEST["acrescimo"]);
 	
 	
-	
-	//$sSQL  = "SELECT status FROM cntb_conta WHERE id_cliente_produto = '".$_REQUEST["id_cliente_produto"]."' AND data = '".$_REQUEST["data"]."' ";
-	//$checa_status = $this->bd->obtemUnicoRegistro($sSQL);
-	
-	//$_status = $checa_status["status"];
-	
-	//if ($_status != "A"){
-	//}
-	
-	
 	$sSQL  = "UPDATE ";
 	$sSQL .= "	cbtb_faturas ";
 	$sSQL .= "SET ";
@@ -714,7 +731,7 @@ public function amortizar(){
 	$sSQL .= "	data = '".@$_REQUEST["data"]."' ";
 				
 				
-	echo "QUERY: $sSQL <br>\n";
+	//echo "QUERY: $sSQL <br>\n";
 	$this->bd->consulta($sSQL);
 	
 	return;
