@@ -18,8 +18,8 @@
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td align="center" valign="middle">
-<p>
+                <td align="center" valign="middle" background="template/default/images/demon.gif"> 
+                  <p>
                   <table class=table_main width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
                     <tr> 
                       <th class=th_main align="center"><h1>Log Radius </h1></th>
@@ -32,32 +32,41 @@
                             <td colspan="2"><br> <table class=table_main width="100%" _height="100%" border="0" align="center" cellpadding="0" cellspacing="0">
                                 <tr> 
                                   <td class=td_main width="100%" _height_="100%" align="center" valign="middle"> 
-                                    <form name=formulario method="get" action="/~virtsys/admin.php">
-                                      <br>
+                                    <form name=formulario method="get" action=""> 
+                                    <br>
                                       <table border=0  _bgcolor="#000000" cellspacing=1 cellpadding=1 width="90%">
                                         <tr> 
                                           <td align="center"> <table border=0 cellspacing=0>
-                                              <tr> 
-                                                <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Analisar 
-                                                    últimas</font></p></td>
-                                                <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
-                                                    <input type="text" name="limite" value="50" class="campos">
-                                                    entradas</font></p></td>
-                                              </tr>
-                                              <tr> 
-                                                <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Consultar 
-                                                    usuario</font></p></td>
-                                                <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
-                                                    <input type="text" name="username" value="" class="campos">
-                                                    </font></p></td>
-                                              </tr>
-                                              <tr> 
-                                                <td><p>&nbsp;</p></td>
-                                                <td><p> 
-                                                    <input name="botao_enviar" type="submit" class="campos" id="submit" value="atualizar &gt;&gt;">
-                                                  </p></td>
-                                              </tr>
-                                            </table>
+                                            <tr> 
+                                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Analisar 
+                                                  últimas</font></p></td>
+                                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                                  <input type="text" name="limite" value="50" class="campos">
+                                                  entradas</font></p></td>
+                                            </tr>
+                                            <tr> 
+                                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Consultar 
+                                                  usuario</font></p></td>
+                                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                                  <input type="text" name="username" value="" class="campos">
+                                                  </font></p></td>
+                                            </tr>
+                                            <tr>
+                                              <td><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Exibir</font></td>
+                                              <td><select name="select">
+                                                  <option value="discado">Discado</option>
+                                                  <option value="ppp">PPPoE</option>
+                                                  <option value="ambos">Ambos</option>
+                                                </select>
+                                                <input name="op" type="hidden" value="log" id="op"></td>
+                                            </tr>
+                                            <tr> 
+                                              <td><p>&nbsp;</p></td>
+                                              <td><p> 
+                                                  <input name="botao_enviar" type="submit" class="campos" id="submit" value="atualizar &gt;&gt;">
+                                                </p></td>
+                                            </tr>
+                                          </table>
                                             <hr size=1> </td>
                                         </tr>
                                       </table>

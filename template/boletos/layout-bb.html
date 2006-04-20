@@ -1,7 +1,27 @@
 <html>
 <head>
-<script language="JavaScript">ready = "yes";</script>
-<script language="JavaScript">var estado=false; </script>
+{literal}
+<script language="JavaScript">ready = "yes";</script> <script language="JavaScript">
+<!--
+var estado=false;
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_showHideLayers() { //v6.0
+  var i,p,v,obj,args=MM_showHideLayers.arguments;
+  for (i=0; i<(args.length-2); i+=3) if ((obj=MM_findObj(args[i]))!=null) { v=args[i+2];
+    if (obj.style) { obj=obj.style; v=(v=='show')?'visible':(v=='hide')?'hidden':v; }
+    obj.visibility=v; }
+}
+//-->
+</script> 
+{/literal}
 <META http-equiv="PICS-Label" content='(PICS-1.1 "http://www.rsac.org/ratingsv01.html" l gen true comment "RSACi North America Server" for "https://www2.bb.com.br" on "2000.06.15T13:48-0800" r (n 0 s 0 v 0 l 0))'>
 <style>
 {include file="bb.css"}
@@ -56,7 +76,7 @@ if (da && !pr && !mac) with (document) {
 </table><br>
 
 
-<DIV STYLE="POSITION: absolute; top: 145px; left: 5px; height: 636px; width: 670px; z-index: 1;"><img src="{$imagens}/formularioBoleto.gif" width="647" height="636" border="0" alt=""></DIV>
+<DIV STYLE="POSITION: absolute; top: 145px; left: 5px; height: 636px; width: 670px; z-index: 1;"><img src="{$imagens}/formularioBoletoDEMO.gif" width="647" height="636" border="0" alt=""></DIV>
 <DIV STYLE="POSITION: absolute; top: 161px; left: 7px; height: 22px;  width: 96px;  z-index: 2;"><img src="{$imagens}/imgbb.gif" width="150" height="22" border="0" alt=""></DIV>
 <DIV STYLE="POSITION: absolute; top: 444px; left: 7px; height: 22px;  width: 96px;  z-index: 2;"><img src="{$imagens}/imgbb.gif" width="150" height="22" border="0" alt=""></DIV>
 <DIV STYLE="POSITION: absolute; top: 127px; left: 7px;  z-index: 2;" CLASS="Titulo11">Corte na linha pontilhada</DIV>
@@ -136,13 +156,13 @@ if (da && !pr && !mac) with (document) {
 <DIV STYLE="POSITION: absolute; top: 247px; left: 248px; z-index: 2; width: 108px;  text-align: right;" CLASS="Campo"></DIV>
 <DIV STYLE="POSITION: absolute; top: 247px; left: 361px; z-index: 2; width: 108px;  text-align: right;" CLASS="Campo"></DIV>
 <DIV STYLE="POSITION: absolute; top: 247px; left: 480px; z-index: 2; width: 169px;  text-align: right;" CLASS="Campo">&nbsp;</DIV>
-<DIV STYLE="POSITION: absolute; top: 272px; left: 15px;  z-index: 2;" CLASS="Campo">João M. S.</DIV>
+<DIV STYLE="POSITION: absolute; top: 272px; left: 15px;  z-index: 2;" CLASS="Campo">{$sacado}</DIV>
 <DIV STYLE="POSITION: absolute; top: 312px; left: 15px;  z-index: 2; width: 498px; text-align: justify;" CLASS="Campo"><layer name="helpns" width=498px align="left">Caso apos o pagamento deste boleto nao tenha recebido por e-mail em no maximo 3 dias as instrucoes de confirmacao, entre em contato com o Xavier pelo fone 61-xxx-xxxx.</layer></DIV>
 
 
 
 <DIV STYLE="POSITION: absolute; top: 480px; left: 15px;  z-index: 2;" CLASS="Campo">Pagável em qualquer Banco até o vencimento</DIV>
-<DIV STYLE="POSITION: absolute; top: 480px; left: 480px; z-index: 2; width: 169px; text-align: right;" CLASS="Campo">{$dia_venc}</DIV>
+<DIV STYLE="POSITION: absolute; top: 480px; left: 480px; z-index: 2; width: 169px; text-align: right;" CLASS="Campo">{$vencimento}</DIV>
 <DIV STYLE="POSITION: absolute; top: 505px; left: 15px;  z-index: 2;" CLASS="Campo">{$cedente}</DIV>
 <DIV STYLE="POSITION: absolute; top: 505px; left: 480px; z-index: 2; width: 169px; text-align: right;" CLASS="Campo">18-3/111111-1</DIV>
 <DIV STYLE="POSITION: absolute; top: 530px; left: 15px;  z-index: 2; width: 110px;" CLASS="Campo">11/04/2006</DIV>
@@ -177,15 +197,13 @@ if (da && !pr && !mac) with (document) {
 <!--img src="/barras/start.gif"><IMG src="/barras/codbar00.gif"><IMG src="/barras/codbar19.gif"><IMG src="/barras/codbar11.gif"><IMG src="/barras/codbar70.gif"><IMG src="/barras/codbar30.gif"><IMG src="/barras/codbar00.gif"><IMG src="/barras/codbar00.gif"><IMG src="/barras/codbar02.gif"><IMG src="/barras/codbar00.gif"><IMG src="/barras/codbar08.gif"><IMG src="/barras/codbar00.gif"><IMG src="/barras/codbar63.gif"><IMG src="/barras/codbar00.gif"><IMG src="/barras/codbar00.gif"><IMG src="/barras/codbar00.gif"><IMG src="/barras/codbar00.gif"><IMG src="/barras/codbar00.gif"><IMG src="/barras/codbar02.gif"><IMG src="/barras/codbar21.gif"><IMG src="/barras/codbar23.gif"><IMG src="/barras/codbar45.gif"><IMG src="/barras/codbar21.gif"><img src="/barras/stop.gif"-->
 </td></tr>
 </table>
-</DIV>
-
-<DIV STYLE="POSITION: absolute; top: 858px; left: 12px;  height: 30px;  z-index: 2;" CLASS="Titulo11">
+</DIV><DIV STYLE="POSITION: absolute; top: 858px; left: 12px;  height: 30px;  z-index: 2;" CLASS="Titulo11" id="IMPRIME"> 
 <table width="640" cellpadding="0" cellspacing="0" border="0">
 <tr>
 	<td coldspan=3 valign="bottom" align="center">
 	<table width="5%" border="0" cellpadding="3">
-	<tr><td valign="top" width="1%"><a href="lojaFim.jsp" tabindex="4"><img border="0" alt="Confirma a transação." src="{$imagens}/bbBotaoRetorna.gif"></a></td>
-	<td valign="top" width="1%"><a href="#" onClick="return printPage();"><img src="{$imagens}/bbBotaoImprime.gif" border="0" alt=""></a></td>
+	<tr><td valign="top" width="1%"><!--<a href="lojaFim.jsp" tabindex="4"><img border="0" alt="Confirma a transação." src="{$imagens}/bbBotaoRetorna.gif"></a>--></td>
+	      <td valign="top" width="1%"><a href="#" onClick="return printPage();"><img alt="IMPRIMIR BOLETO" src="{$imagens}/print.gif" border="0" onclick="MM_showHideLayers('IMPRIME','','hide')"></a></td>
 </tr>
 </table>
 </td>

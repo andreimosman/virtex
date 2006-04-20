@@ -1,0 +1,129 @@
+<html>
+<head>
+<title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
+
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+{literal}
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+//-->
+</script>
+{/literal}
+</head>
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>{ include file='menu_principal.html' }</td>
+        </tr>
+        <tr>
+          <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td align="center" valign="middle"> <P align="center">&nbsp; </P>
+                  <table width="710" border="0" align="center" cellpadding="0" cellspacing="1">
+                    <tr> 
+                      <td align="center"><strong><font size="+2" face="Arial, Helvetica, sans-serif">Cobran&ccedil;a</font></strong></td>
+                    </tr>
+                    <tr> 
+                      <td align="CENTER" valign="MIDDLE">&nbsp;</td>
+                    </tr>
+                    <tr> 
+                      <td align="CENTER" valign="MIDDLE"><form name="form1" method="post" action="cobranca.php?op=lista_boletos"> 
+                        <table align="CENTER" width="700" border="0" cellspacing="2" cellpadding="0">
+                          <tr valign="MIDDLE"> 
+                            <td width="258"> <p>Emitir Faturas com vencimento 
+                                entre os dias</p></td>
+                            <td width="32"> <input name="dia_inicio" type="text" value="1" size="5" id="dia_inicio"></td>
+                            <td width="33" align="CENTER"> <p>e</p></td>
+                            <td width="48"> <input name="dia_final" type="text" value="30" size="5" id="dia_final"></td>
+                            <td width="117"> <p>do m&ecirc;s:</p></td>
+                            <td width="117"> <select name="mes" id="mes">
+                                <option value="01">Janeiro</option>
+                                <option value="02">Fevereiro</option>
+                                <option value="03">Mar&ccedil;o</option>
+                                <option value="04" selected>Abril</option>
+                                <option value="05">Maio</option>
+                                <option value="06">Junho</option>
+                                <option value="07">Julho</option>
+                                <option value="08">Agosto</option>
+                                <option value="09">Setembro</option>
+                                <option value="10">Outubro</option>
+                                <option value="11">Novembro</option>
+                                <option value="12">Dezembro</option>
+                              </select></td>
+                            <td width="117"> <p>do ano</p></td>
+                            <td width="117"> <select name="ano" id="ano">
+                                <option value="2006" selected>2006</option>
+                                <option value="2005">2005</option>
+                              </select></td>
+                            <td width="117"> <input type="submit" name="Submit" value="Gerar Boletos"> 
+                              <input name="acao" type="hidden" value="ok" id="acao3"></td>
+                          </tr>
+                        </table>
+                        </form></td>
+                    </tr>
+                    <tr> 
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>
+					  {if $faturas || $faturas != ""}
+					  <table align="CENTER" width="500" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td><table width="100%" border="0" cellspacing="1" cellpadding="0" bgcolor="#CCCCCC">
+                                <tr> 
+                                  <td width="200"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Nome</font></strong></td>
+                                  <td width="150" align="CENTER"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Vencimento</font></strong></td>
+                                  <td width="100" align="RIGHT"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Valor</font></strong></td>
+                                  <td>&nbsp;</td>
+                                </tr>
+                              </table></td>
+                          </tr>
+                          <tr>
+                            <td>
+							{foreach item=a from=$faturas}
+							  <table width="100%" border="0" cellspacing="1" cellpadding="0">
+                                <tr> 
+                                  <td width="200"><p>{$a.nome_razao}</p></td>
+                                  <td width="150" align="CENTER"><p>{$a.data_conv}</p></td>
+                                  <td width="100"><p>{$a.valor}</p></td>
+                                  <td align="CENTER"><a href="javascript:;"><img alt="IMPRIMIR BOLETO" src="template/default/images/boleto.gif" width="15" height="16"  onclick="MM_openBrWindow('cobranca.php?op=boleto&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$a.id_cliente}','boleto','scrollbars=yes,width=700,height=660')" border="0"></a></td>
+                                </tr>
+                                <tr bgcolor="#999999"> 
+                                  <td colspan="4" height="1"></td>
+                                </tr>
+                              </table>
+							  {/foreach}
+							  </td>
+                          </tr>
+                        </table>
+						<p align="center"><a href="#"><img src="template/default/images/pdf_impressao.gif" width="217" height="90" border="0"></a></p>
+                        <p>{/if} </p></td>
+                    </tr>
+                  </table></td>
+              </tr>
+            </table></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr>
+    <td height="20" align="center" bgcolor="#BCD3C4"><table width="400" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy;
+              Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+</body>
+
+
+</html>

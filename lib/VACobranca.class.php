@@ -547,16 +547,17 @@ class VACobranca extends VirtexAdmin {
 			$id_cliente = @$_REQUEST["id_cliente"];
 			
 			$sSQL  = "SELECT cl.nome_razao, cl.endereco, cl.id_cidade, cl.estado, cl.cep, cl.cpf_cnpj, cd.cidade as nome_cidade, cd.id_cidade  ";
-			$sSQL .= "FROM";
+			$sSQL .= "FROM ";
 			$sSQL .= "cltb_cliente cl, cftb_cidade cd ";
 			$sSQL .= "WHERE ";
 			$sSQL .= "cl.id_cliente = '$id_cliente' AND ";
 			$sSQL .= "cd.id_cidade = cl.id_cidade";
 			
 			$cliente = $this->bd->obtemUnicoRegistro($sSQL);
+			//echo "CLIENTE: $sSQL  <br>";
 			
 			
-			$sSQL  = "SELECT valor, id_cobranca,  FROM ";
+			$sSQL  = "SELECT valor, id_cobranca,to_char(data, 'DD/mm/YYYY') as data  FROM ";
 			$sSQL .= "cbtb_faturas ";
 			$sSQL .= "WHERE ";
 			$sSQL .= "id_cliente_produto = '$id_cliente_produto' AND ";
@@ -564,7 +565,7 @@ class VACobranca extends VirtexAdmin {
 			
 			//echo "fatura: $sSQL<br>";
 
-			$fatura = $this->bd->obtemRegistros($sSQL);
+			$fatura = $this->bd->obtemUnicoRegistro($sSQL);
 			
 			
 			// PEGANDO INFORMAÇÕES DAS PREFERENCIAS
@@ -577,8 +578,15 @@ class VACobranca extends VirtexAdmin {
 			$provedor = $this->bd->obtemUnicoRegistro($sSQL);
 			
 			$codigo = @$_REQUEST["codigo"];
-			$data_venc = "30/04/2006";
+			//$data_venc = "30/04/2006";
+			$data_venc = $fatura["data"];
 			//echo $codigo;
+			$valor = $fatura["valor"];
+			$id_cobranca = $fatura["id_cobranca"];
+			$nome_cliente = $cliente["nome_razao"];
+			$cpf_cliente = $cliente["cpf_cnpj"];
+			//echo "VALOR: $valor <BR>";
+			
 			$endereco = $cliente["endereco"]." - ". $cliente["nome_cidade"]." - ".$cliente["estado"]."<br> CEP: ".$cliente["cep"];
 			
 			
@@ -586,7 +594,7 @@ class VACobranca extends VirtexAdmin {
 			if( $codigo ) {
 				MBoleto::barCode($codigo);
 			} else {
-				$this->b = new MBoleto($provedor["cod_banco"],$provedor["carteira"],$provedor["agencia"],$$provedor["num_conta"],$provedor["convenio"],$data_venc,$fatura["valor"],$fatura["id_cobranca"],$cliente["nome_razao"],$cliente["cpf_cnpj"],$provedor["nome"],$provedor["cnpj"],$provedor["tx_juros"],$provedor["multa"],$endereco,$provedor["observacoes"]);
+				$this->b = new MBoleto($provedor["cod_banco"],$provedor["carteira"],$provedor["agencia"],$provedor["num_conta"],$provedor["convenio"],$data_venc,$valor,$id_cobranca,$nome_cliente,$cpf_cliente,$provedor["nome"],$provedor["cnpj"],$provedor["tx_juros"],$provedor["multa"],$endereco,$provedor["observacoes"]);
 				$this->b->setTplPath("template/boletos/");
 				$this->b->setImgPath("template/boletos/imagens");
 				
@@ -594,6 +602,239 @@ class VACobranca extends VirtexAdmin {
 			}
 		
 			//$this->arquivoTemplate = "";
+			
+			
+			
+		}else if($op == "gerar_boletos"){
+		
+			$acao = @$_REQUEST["acao"];
+		
+		
+			$this->arquivoTemplate = "cliente_cobranca_fechamento.html";
+			$dia_inicio = @$_REQUEST["dia_inicio"];
+			$dia_final  = @$_REQUEST["dia_final"];
+			$mes = @$_REQUEST["mes"];
+			$ano = @$_REQUEST["ano"];
+			$dti = date("Y-m-d", mktime(0,0,0, $mes, $dia_inicio, $ano));
+			$dtf = date("Y-m-d", mktime(0,0,0, $mes, $dia_final, $ano));
+			//echo "DTI: $dti<br>\n";
+			//echo "DTF: $dtf<br>\n";
+			
+			//phpinfo();
+			
+		
+		
+			if ($acao == "ok"){
+		
+				//$dt_inicio = @$_REQUEST["dt_inicio"];
+				//$dt_final = @$_REQUEST["dt_final"];
+
+				//@list($d,$m,$a) = explode("/",$dt_inicio);
+				//$dti = $a."-".$m."-".$d;
+				//$dia_inicio = $d;
+				//@list($d,$m,$a) = explode("/",$dt_final);
+				//$dtf = $a."-".$m."-".$d;
+				//$dia_final = $d;
+				
+
+				// PEGANDO INFORMAÇÕES DAS PREFERENCIAS
+				$sSQL  = "SELECT ";
+				$sSQL .= " tx_juros, multa, dia_venc, carencia, cod_banco, carteira, agencia, num_conta, convenio, cnpj, observacoes,nome ";
+				$sSQL .= "FROM ";
+				$sSQL .= " cftb_preferencias ";
+				$sSQL .= "WHERE id_provedor = '1'";
+
+				$provedor = $this->bd->obtemUnicoRegistro($sSQL);
+				
+				//echo "QUERY PROVEDOR: $sSQL <br>\n";
+
+				$sSQL  = "SELECT ";
+				$sSQL .= " * from cbtb_contrato where status = 'A' AND vencimento BETWEEN '$dia_inicio' AND '$dia_final'";
+
+				$contrato = $this->bd->obtemRegistros($sSQL);
+				//echo "QUERY CONTRATO: $sSQL <br>\n";
+				
+				//echo "C: " . count($contrato) . "<br>\n";
+				// PARA AQUI: DEBUG
+				//return;
+
+				for($i=0;$i<count($contrato);$i++){
+
+					//@list($ca, $cm, $cd) = explode("/",$contrato["data_contratacao"]); 
+
+					//if ( $cm < "12" ){
+					//	$cm = $cm+1;
+					//}else if ( $cm == "12" ){
+					//	$cm = "1";
+					//}
+					
+					$vencimento = $contrato[$i]["vencimento"];
+
+
+					//$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $cm, $cd, $ca));
+					$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $mes, $vencimento, $ano));
+
+					$sSQL  = "SELECT ";
+					$sSQL .= "nome FROM prtb_produto WHERE id_produro = '".$contrato[$i]["id_produto"]."'";
+
+					$produto = $this->bd->obtemUnicoRegistro($sSQL);
+					//echo "QUERY PRODUTO($i): $sSQL <br>\n";
+					
+					
+					// Verifica se existe fatura emitida para o contrato selecionado na data especificada
+					// em $fatura_dt_vencimento
+					
+					$sSQL = "SELECT * FROM cbtb_fatura WHERE id_cliente_produto = '" . $contrato[$i]["id_cliente_produto"]."' AND data = '".$fatura_dt_vencimento."' ";
+					$faturas = $this->bd->obtemRegistros($sSQL);
+					
+					// Se nao retornou registros cria a fatura
+					if( !count($faturas) ) {
+                                          $sSQL =  "INSERT INTO cbtb_faturas(";
+                                          $sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
+                                          $sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
+                                          $sSQL .= "	acrescimo, valor_pago ";
+                                          $sSQL .= ") VALUES (";
+                                          $sSQL .= " '".$contrato[$i]["id_cliente_produto"]."', '$fatura_dt_vencimento','".$produto["nome"]."', '".$contrato[$i]["valor"]."', '".$contrato[$i]["status"]."', null, ";
+                                          $sSQL .= "	NULL, '0', NULL, '0', ";
+                                          $sSQL .= "	'0', '0' ";
+                                          $sSQL .= ")";
+
+                                          $this->bd->consulta($sSQL);
+                                          echo "FATURA($i): $sSQL <br>\n";
+                                        }
+				}
+
+
+				$sSQL  = "SELECT valor, id_cobranca,to_char(data, 'DD/mm/YYYY') as data, id_cliente_produto  FROM ";
+				$sSQL .= "cbtb_faturas ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "data BETWEEN '$dti' AND '$dtf' ";
+				//$sSQL .= "data = '$data' ";
+
+				$faturas = $this->bd->obtemRegistros($sSQL);
+				echo "$sSQL <br>\n";
+
+
+				for($i=0;$i<count($faturas);$i++) {
+
+					$sSQL  = "SELECT cl.nome_razao, cl.endereco, cl.id_cidade, cl.estado, cl.cep, cl.cpf_cnpj, cd.cidade as nome_cidade, cd.id_cidade,  ";
+					$sSQL  = "	cb.id_cliente_produto, cb.id_cliente ";
+					$sSQL .= "FROM ";
+					$sSQL .= "cltb_cliente cl, cftb_cidade cd, cbtb_cliente_produto cb ";
+					$sSQL .= "WHERE ";
+					//$sSQL .= "cl.id_cliente = '$id_cliente' AND ";
+					$sSQL .= "cd.id_cidade = cl.id_cidade AND ";
+					$sSQL .= "cb.id_cliente_produto = '".$faturas[$i]["id_cliente_produto"]."' ";
+
+					$clientes = $this->bd->obtemUnicoRegistro($sSQL);
+
+
+					$codigo = @$_REQUEST["codigo"];
+					//$data_venc = "30/04/2006";
+					$data_venc = $faturas[$i]["data"];
+					//echo $codigo;
+					$valor = $faturas[$i]["valor"];
+					$id_cobranca = $faturas[$i]["id_cobranca"];
+					$nome_cliente = $clientes["nome_razao"];
+					$cpf_cliente = $clientes["cpf_cnpj"];
+					//echo "VALOR: $valor <BR>";
+
+					$endereco = $clientes["endereco"]." - ". $clientes["nome_cidade"]." - ".$clientes["estado"]."<br> CEP: ".$clientes["cep"];
+
+					$this->b = new MBoleto($provedor["cod_banco"],$provedor["carteira"],$provedor["agencia"],$provedor["num_conta"],$provedor["convenio"],$data_venc,$valor,$id_cobranca,$nome_cliente,$cpf_cliente,$provedor["nome"],$provedor["cnpj"],$provedor["tx_juros"],$provedor["multa"],$endereco,$provedor["observacoes"]);
+					$this->b->setTplPath("template/boletos/");
+					$this->b->setImgPath("template/boletos/imagens");
+
+					$htmlBoleto = $this->b->obtem("001"); // Gera boleto para o banco "001";
+					//echo "<table><tr><td>$htmlBoleto</td></tr></div>";
+					//echo "Gerar boleto: $id_cobranca / $data_venc / $nome_cliente <br>\n";
+
+
+
+
+
+
+				}
+
+
+				//MBoleto::barCode($codigo);
+			
+			
+			
+			}
+		
+		}else if ($op == "lista_boletos") {
+		
+			$dia_inicio = @$_REQUEST["dia_inicio"];
+			$dia_final  = @$_REQUEST["dia_final"];
+			$mes = @$_REQUEST["mes"];
+			$ano = @$_REQUEST["ano"];
+			$dti = date("Y-m-d", mktime(0,0,0, $mes, $dia_inicio, $ano));
+			$dtf = date("Y-m-d", mktime(0,0,0, $mes, $dia_final, $ano));
+
+		
+			$sSQL  = "SELECT ";
+			$sSQL .= " tx_juros, multa, dia_venc, carencia, cod_banco, carteira, agencia, num_conta, convenio, cnpj, observacoes,nome ";
+			$sSQL .= "FROM ";
+			$sSQL .= " cftb_preferencias ";
+			$sSQL .= "WHERE id_provedor = '1'";
+			
+			$provedor = $this->bd->obtemUnicoRegistro($sSQL);
+			
+			$sSQL  = "SELECT ";
+			$sSQL .= " * from cbtb_contrato where status = 'A' AND vencimento BETWEEN '$dia_inicio' AND '$dia_final'";
+
+			$contrato = $this->bd->obtemRegistros($sSQL);
+
+			for($i=0;$i<count($contrato);$i++){
+		
+				$vencimento = $contrato[$i]["vencimento"];
+		
+					
+				$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $mes, $vencimento, $ano));
+		
+				$sSQL  = "SELECT ";
+				$sSQL .= "nome FROM prtb_produto WHERE id_produro = '".$contrato[$i]["id_produto"]."'";
+		
+				$produto = $this->bd->obtemUnicoRegistro($sSQL);
+				//echo "QUERY PRODUTO($i): $sSQL <br>\n";
+							
+							
+				// Verifica se existe fatura emitida para o contrato selecionado na data especificada
+				// em $fatura_dt_vencimento
+							
+				$sSQL = "SELECT * FROM cbtb_fatura WHERE id_cliente_produto = '" . $contrato[$i]["id_cliente_produto"]."' AND data = '".$fatura_dt_vencimento."' ";
+				$faturas = $this->bd->obtemRegistros($sSQL);
+							
+				// Se nao retornou registros cria a fatura
+				if( !count($faturas) ) {
+		        	$sSQL =  "INSERT INTO cbtb_faturas(";
+		            $sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
+		            $sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
+		            $sSQL .= "	acrescimo, valor_pago ";
+		            $sSQL .= ") VALUES (";
+		            $sSQL .= " '".$contrato[$i]["id_cliente_produto"]."', '$fatura_dt_vencimento','".$produto["nome"]."', '".$contrato[$i]["valor"]."', '".$contrato[$i]["status"]."', null, ";
+		            $sSQL .= "	NULL, '0', NULL, '0', ";
+		            $sSQL .= "	'0', '0' ";
+		            $sSQL .= ")";
+		
+		            $this->bd->consulta($sSQL);
+		            //echo "FATURA($i): $sSQL <br>\n";
+		        }
+			}
+
+			$sSQL  = "SELECT cf.valor, cf.id_cobranca,to_char(cf.data, 'DD/mm/YYYY') as data_conv, cf.data, cf.id_cliente_produto, cp.id_cliente_produto, cp.id_cliente, cl.id_cliente, cl.nome_razao  FROM ";
+			$sSQL .= "cbtb_faturas cf, cltb_cliente cl, cbtb_cliente_produto cp ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "data BETWEEN '$dti' AND '$dtf' AND ";
+			$sSQL .= "cf.id_cliente_produto = cp.id_cliente_produto AND ";
+			$sSQL .= "cp.id_cliente = cl.id_cliente";
+					
+			$faturas = $this->bd->obtemRegistros($sSQL);
+			//echo "$sSQL <br>\n";
+
+			$this->tpl->atribui("faturas",$faturas);
+			$this->arquivoTemplate = "cliente_cobranca_fechamento.html";
 			
 		
 		}else if ($op == "amortizacao"){
@@ -662,7 +903,7 @@ class VACobranca extends VirtexAdmin {
 
 			}
 	}
-	
+
 }
 	
 public function amortizar(){

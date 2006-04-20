@@ -1,12 +1,4 @@
-{literal}
-<script language="JavaScript" type="text/JavaScript">
-<!--
-function MM_openBrWindow(theURL,winName,features) { //v2.0
-  window.open(theURL,winName,features);
-}
-//-->
-</script> 
-{/literal}
+{literal} {/literal} 
 <p>{include file='cliente_header.html'} </p>
 <table width="710" border="0" align="center" cellpadding="0" cellspacing="1">
   <tr> 
@@ -20,7 +12,7 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                 <td height="30"><strong><a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&rotina=resumo&tipo_lista=">Resumo</a></strong></td>
                 <td height="30"><strong><a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}">Novo 
                   Contrato</a></strong></td>
-                <td height="30"><strong><a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&rotina=resumo&tipo_lista=tudo">Hist&oacute;rico</a></strong></td>
+                <td height="30"><strong><a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&rotina=resumo&tipo_lista=tudo">Faturas</a></strong></td>
               </tr>
             </table></td>
         </tr>
@@ -77,8 +69,8 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                               <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}">{$a.reagendamento}</a></p></td>
                             <td width="68" align="center">
 <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}"><img src="template/default/images/{$a.extstatus}.gif" width="68" height="20" border="0"></a></p></td>
-                            <td width="20" align="center"><a href="javascript:;"><img alt="Ver Contrato" src="template/default/images/viewer.gif" width="15" height="15" onclick="MM_openBrWindow('clientes.php?op=imprime_contrato&id_cliente_produto={$a.id_cliente_produto}&id_cliente={$a.id_cliente}','contrato','scrollbars=yes,width=500,height=500')" border="0"></a></td>
-                            <td width="23" align="center"><img src="template/default/images/delete.gif" alt="Excluir Definitivamente o Contrato" width="15" height="15" border="0"></td>
+                            <td width="20" align="center">&nbsp;</td>
+                            <td width="23" align="center">&nbsp;</td>
                           </tr>
                           <tr bgcolor="#CCCCCC"> 
                             <td colspan="9" align="center" height="1"></td>

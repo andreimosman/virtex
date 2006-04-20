@@ -17,37 +17,35 @@
               </tr>
               <tr>
                 <td align="center" valign="middle"> <h1>Produtos Cadastrados</h1>
-                  <p><a href="cobranca.php?op=cadastro">Cadastrar novo</a> </p>
-                  <table width="600" border="0" cellspacing="2" cellpadding="0">
+                  <p>&nbsp;</p>
+                  <table width="500" border="0" cellspacing="2" cellpadding="0">
                     <tr align="center" valign="middle">
-                      <td height="50"> <p>Listar somente:</p></td>
+                      <td><a href="cobranca.php?op=cadastro"><img src="template/default/images/bt_cadastrar_novo.gif" width="77" height="73" border="0"></a></td>
+                      <td bgcolor="#666666" ><img src="template/default/images/menu/spacer.gif" width="1" height="1" border="0"></td>
                       <td height="50"><a href="cobranca.php?op=lista"><img src="template/default/images/bt_todos.gif" alt="Exibir Todos" width="77" height="73" border="0"></a></td>
                       <td height="50"><a href="cobranca.php?op=lista&filtro=BL"><img src="template/default/images/bt_bandalarga.gif" alt="Exibir somente Banda Larga" width="77" height="73" border="0"></a></td>
                       <td height="50"><a href="cobranca.php?op=lista&filtro=D"><img src="template/default/images/bt_discado.gif" alt="Exibir somente Discado" width="77" height="73" border="0"></a></td>
                       <td height="50"><a href="cobranca.php?op=lista&filtro=H"><img src="template/default/images/bt_hospedagem.gif" alt="Exibir somente Hospedagem" width="77" height="73" border="0"></a></td>
+
                     </tr>
                     <tr align="center" valign="middle">
-                      <td colspan="5"><form name="form1" method="post" action="cobranca.php">
-                          <table width="75%" border="0" cellspacing="2" cellpadding="0">
-                            <tr align="center" valign="middle">
-                              <td><p>mostrando s&oacute; os produtos:
-                                  <input name="op" type="hidden" id="op" value="{$op}">
-                                  <input name="filtro" type="hidden" id="filtro" value="{$filtro}">
-                                </p></td>
-                              <td align="left"> <p>
-                                  <label>
-                                  <input name="disp" type="radio" value="t" class="checkbox" {if $disp=="t" || !$disp}CHECKED{/if}>
-                                  Disponíveis para contratação</label>
-                                  <br>
-                                  <label>
-                                  <input type="radio" name="disp" value="f" class="checkbox" {if $disp=="f"}CHECKED{/if}>
-                                  Não disponíveis para contratação</label>
-                                  <br>
-                                </p></td>
-                              <td>
-                                <input name="imageField" type="image" src="template/default/images/bt_filtrar.gif" width="52" height="20" border="0" class="checkbox"></td>
-                            </tr>
-                          </table>
+                      <td colspan="8"><form name="form1" method="post" action="cobranca.php">
+                        <table width="100%" border="0" cellspacing="2" cellpadding="0">
+                          <tr align="center" valign="middle">
+                            <td><p>mostrando s&oacute; os produtos:
+                                <input name="op" type="hidden" id="op" value="{$op}">
+                                <input name="filtro" type="hidden" id="filtro" value="{$filtro}">
+                              </p></td>
+                            <td align="left"> <p> <label>
+                                <input name="disp" type="radio" value="t" class="checkbox" {if $disp=="t" || !$disp}CHECKED{/if}>
+                                Disponíveis para contratação</label> <br>
+                                <label>
+                                <input type="radio" name="disp" value="f" class="checkbox" {if $disp=="f"}CHECKED{/if}>
+                                Não disponíveis para contratação</label> <br>
+                              </p></td>
+                            <td> <input name="imageField" type="image" src="template/default/images/bt_filtrar.gif" width="52" height="20" border="0" class="checkbox"></td>
+                          </tr>
+                        </table>
                         </form></td>
                     </tr>
                   </table>
@@ -68,15 +66,15 @@
                       <td align="center" width=40><p><a href="cobranca.php?op=cadastro&id_produto={$v.id_produto}&prod={$v.tipo}"><img src="template/default/images/gif_alterar.gif" width="16" height="16" border="0"></a></p></td>
                       <td width="24" valign="middle"><img src="template/default/images/{$v.tipo|trim|lower}.gif" width="24" height="24">
                       </td>
-                      <td valign="middle"><p>{$v.nome}</p></td>
-                      <td valign="middle"> <p>{$v.descricao}</p></td>
+                      <td valign="middle"><p><a href="cobranca.php?op=cadastro&id_produto={$v.id_produto}&prod={$v.tipo}">{$v.nome}</a></p></td>
+                      <td valign="middle"> <p><a href="cobranca.php?op=cadastro&id_produto={$v.id_produto}&prod={$v.tipo}">{$v.descricao}</a></p></td>
                       <td width=60 align="right" valign="middle">
-<p>{$v.valor}</p></td>
+<p><a href="cobranca.php?op=cadastro&id_produto={$v.id_produto}&prod={$v.tipo}">{$v.valor}</a></p></td>
                       <td width=100 align="center" valign="middle">
 					  {if ($v.disponivel=="t")}
-					  <img src="template/default/images/gif_disp.gif" width="26" height="26" alt="Produto Disponível para contratação">
+					  <a href="cobranca.php?op=cadastro&id_produto={$v.id_produto}&prod={$v.tipo}"><img src="template/default/images/gif_disp.gif" width="26" height="26" alt="Produto Disponível para contratação" border=0></a>
 					  {else}
-					  <img src="template/default/images/gif_indisp.gif" width="26" height="26" alt="Produto NÃO Disponível para contratação">
+					  <a href="cobranca.php?op=cadastro&id_produto={$v.id_produto}&prod={$v.tipo}"><img src="template/default/images/gif_indisp.gif" width="26" height="26" alt="Produto NÃO Disponível para contratação" border=0></a>
 					  {/if}
 
 

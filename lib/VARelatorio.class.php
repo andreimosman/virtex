@@ -167,6 +167,7 @@ class VARelatorio extends VirtexAdmin {
 
 
 				$eSQL =  "SELECT ";
+				$eSQL .= "	cl.id_cliente, ";
 				$eSQL .= "	COUNT(ft.data) AS faturas, "; 
 				$eSQL .= "	SUM(ft.valor) as estimativa, ";
 				$eSQL .= "	SUM(ft.desconto) as descontos, ";
@@ -211,6 +212,7 @@ class VARelatorio extends VirtexAdmin {
 
 
 				$eSQL =  "SELECT ";
+				$eSQL .= "	cl.id_cliente, ";
 				$eSQL .= "	COUNT(ft.data) AS faturas, "; 
 				$eSQL .= "	SUM(ft.valor) as estimativa, ";
 				$eSQL .= "	SUM(ft.desconto) as descontos, ";
@@ -225,7 +227,7 @@ class VARelatorio extends VirtexAdmin {
 				$eSQL .= "	(((ft.data < CURRENT_DATE AND ft.status = 'A' AND ft.data BETWEEN $data_ini AND $data_fim ) OR ";
 				$eSQL .= "	(ft.reagendamento < CURRENT_DATE AND ft.status = 'R' AND ft.reagendamento BETWEEN '$data_ini' AND '$data_fim'))) ";
 				$eSQL .= "	OR ft.status = 'A'";
-				$eSQL .= "ORDER BY cl.id_cliente";
+				$eSQL .= "GROUP BY cl.id_cliente";
 				
 			} else if($tipo_relatorio == "AB-") { //Em aberto ixcluindo atrazadas
 				
@@ -260,14 +262,14 @@ class VARelatorio extends VirtexAdmin {
 				$eSQL .= "	(((ft.data < CURRENT_DATE AND ft.status = 'A' AND ft.data BETWEEN $data_ini AND $data_fim ) OR ";
 				$eSQL .= "	(ft.reagendamento < CURRENT_DATE AND ft.status = 'R' AND ft.reagendamento BETWEEN '$data_ini' AND '$data_fim'))) ";
 				$eSQL .= "	OR ft.status = 'A'";
-				$eSQL .= "ORDER BY cl.id_cliente";
+				$eSQL .= "GROUP BY cl.id_cliente";
 				
 			}
 
 
 			
-			echo "<br>$sSQL<br>";
-			echo "<br>$eSQL<br>";
+			//echo "<br>$sSQL<br>";
+			//echo "<br>$eSQL<br>";
 			
 			$rel_faturas = $this->bd->obtemRegistros($sSQL);
 			$rel_totais = $this->bd->obtemUnicoRegistro($eSQL);

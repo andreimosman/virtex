@@ -160,7 +160,8 @@ function CampoBranco(campo){
 									{ foreach key=id item=nome from=$ls_disponivel }
 									  <option value='{$id}'{if $id == $disponivel}SELECTED{/if}>{$nome}</option>
 									{ /foreach }
-                                       </SELECT></td>
+                                       
+                                    </SELECT></td>
                                 </tr>
                                 <tr> 
                                   <td><p>Numero de Contas</p></td>
@@ -169,30 +170,38 @@ function CampoBranco(campo){
                                   <td><input name="numero_contas" type="text" id="numero_contas" value="{$numero_contas}" size=4 maxlenght=4></td>
                                 </tr>
                                 <tr> 
-                                  <td><p>Promo&ccedil;&atilde;o:</p></td>
+                                  <td><p><strong>Promo&ccedil;&atilde;o:</strong></p></td>
                                 </tr>
                                 <tr> 
-                                  <td><p> 
-                                      <select name="select">
-                                        <option value="0">NENHUMA</option>
-                                        <option value="1">Isen&ccedil;&atilde;o 
-                                        de Taxa de Instala&ccedil;&atilde;o</option>
-                                        <option value="2">Desconto</option>
-                                      </select>
-                                    </p></td>
+                                  <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                      <tr> 
+                                        <td width="81%"><p>Isen&ccedil;&atilde;o 
+                                            de Instala&ccedil;&atilde;o</p></td>
+                                        <td width="19%"><input type="checkbox" name="checkbox" value="checkbox" class="checkbox"></td>
+                                      </tr>
+                                      <tr> 
+                                        <td><p>Desconto</p></td>
+                                        <td><input name="desconto" type="checkbox" value="1" id="desconto" class="checkbox"></td>
+                                      </tr>
+                                    </table></td>
                                 </tr>
                                 <tr> 
-                                  <td><p>Valor Desconto: 
+                                  <td><DIV ID="desconto">
+										  <table width="100%" border="0" cellspacing="2" cellpadding="0" dwcopytype="CopyTableCell">
+                                <tr> 
+                                  <td><p>de 
                                       <input name="textfield" type="text" size="5">
                                       reais </p></td>
                                 </tr>
                                 <tr> 
-                                  <td><p>Periodo Desconto: 
+                                  <td><p>no periodo de 
                                       <input name="textfield2" type="text" size="5">
                                       meses </p></td>
                                 </tr>
-                                <tr> 
-                                  <td>&nbsp;</td>
+                              </table>
+								  
+					
+								  </DIV></td>
                                 </tr>
                               </table></td>
                             <td align="center" valign="top"> <table width="100%" border="0" cellspacing="2" cellpadding="0">
@@ -210,6 +219,14 @@ function CampoBranco(campo){
                       <td> <table width="100%" border="0" cellpadding="0" cellspacing="2" id="tform_BL">
                           <tr> 
                             <td colspan="2"><hr size="1"></td>
+                          </tr>
+                          <tr>
+                            <td><p>Comodato: 
+                                <input name="comodato" type="checkbox" value="t" class="checkbox" checked>
+                                Valor: 
+                                <input name="valor_comodato" type="text" size="10">
+                              </p></td>
+                            <td>&nbsp;</td>
                           </tr>
                           <tr> 
                             <td width="50%"> <p>Download</p></td>

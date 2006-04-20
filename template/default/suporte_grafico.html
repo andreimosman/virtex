@@ -3,6 +3,15 @@
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
 
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+{literal}
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+//-->
+</script>
+{/literal}
 </head> 
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
@@ -20,61 +29,65 @@
               <tr>
                 <td align="center" valign="middle"><p><br>
                   </p>
-                  <h1>Análise de Tráfego Wireless </h1>
-                  <TABLE>
-                    <TR> 
-                      <TD bgcolor="#F4F4F4"><p>Sistema:</p></TD>
-                      <TD><p>10.10.10.71 (renovar) Marabá, Pará, Brasil</p></TD>
-                    </TR>
-                    <TR> 
-                      <TD bgcolor="#F4F4F4"><p>Interface: </p></TD>
-                      <TD><p>Wireless 802.11</p></TD>
-                    </TR>
-                    <TR> 
-                      <TD bgcolor="#F4F4F4"><p>Velocidade: </p></TD>
-                      <TD><p>Medida em Kbps</p></TD>
-                    </TR>
-                    <TR> 
-                      <TD bgcolor="#F4F4F4"><p>Banda alocada: </p></TD>
-                      <TD> <p>UP: 100K/DOWN: 100K </p></TD>
-                    </TR>
-                    <TR> 
-                      <TD bgcolor="#F4F4F4"><p>Status: </p></TD>
-                      <TD> <p>Ativo </p></TD>
-                    </TR>
-                  </TABLE>
-                  <BR> <HR>
-                  <h2>&Uacute;ltima atualiza&ccedil;&atilde;o das estat&iacute;sticas: 
-                    <B>Quarta, 1 de Fevereiro de 2006 &agrave;s 10:05</B><font size="2" face="Verdana, Arial, Helvetica, sans-serif"> 
-                    <!-- Begin `Daily' Graph (5 Minute -->
-                    </font> </h2>
-                  <HR>
-                  <h2>Gr&aacute;fico `Di&aacute;rio' (5 minutos - m&eacute;dia)</h2>
-                  <p><img src="template/default/images/grafico.gif" width="500" height="135"><BR>
-                  </p>
-                  <p></p>
-                  <table cellspacing="0" cellpadding="0">
-                    <tr> 
-                      <td align="right"><p>M&aacute;x &nbsp;in: </p></td>
-                      <td align="right"><p>52.5 kb/s (52.5%) </p></td>
-                      <td width="5"><p>&nbsp;</p></td>
-                      <td align="right"><p>M&eacute;dia &nbsp;in: </p></td>
-                      <td align="right"><p>12.6 kb/s (12.6%) </p></td>
-                      <td width="5"><p>&nbsp;</p></td>
-                      <td align="right"><p>Atual &nbsp;in: </p></td>
-                      <td align="right"><p>0.0 b/s (0.0%) </p></td>
-                    </tr>
-                    <tr> 
-                      <td align="right"><p>M&aacute;x &nbsp;out: </p></td>
-                      <td align="right"><p>50.2 kb/s (50.2%) </p></td>
-                      <td width="5"><p>&nbsp;</p></td>
-                      <td align="right"><p>M&eacute;dia &nbsp;out: </p></td>
-                      <td align="right"><p>12.0 kb/s (12.0%) </p></td>
-                      <td width="5"><p>&nbsp;</p></td>
-                      <td align="right"><p>Atual &nbsp;out: </p></td>
-                      <td align="right"><p>0.0 b/s (0.0%) </p></td>
+                  <h1>Graficos</h1>
+                  <table width="400" border="0" cellspacing="0" cellpadding="0" bgcolor="#666666">
+                    <tr>
+                      <td><table width="400" border="0" cellspacing="1" cellpadding="0">
+                          <tr>
+                            <td bgcolor="#CCCCCC"><form name="form1" method="post" action="">
+                              <table width="400" border="0" cellspacing="2" cellpadding="0">
+                                <tr> 
+                                  <td align="CENTER"><p><strong>Escolha o POP</strong></p></td>
+                                </tr>
+                                <tr> 
+                                  <td align="CENTER"><select name="pesquisa" id="pesquisa">
+								  		<option value=""></option>
+                                        {foreach item=a from=$pops}
+										<option value="{$a.id_pop}" {if $a.id_pop == $pesquisa}SELECTED{/if}>{$a.nome}</option>
+										{/foreach}
+                                    </select>
+                                    <input type="submit" name="Submit" value="OK"></td>
+                                </tr>
+                              </table>
+                              </form></td>
+                          </tr>
+                        </table></td>
                     </tr>
                   </table>
+                  <p>&nbsp;</p>
+                  <table width="530" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td>
+					  {if $cli || $cli != ""}
+					    <table width="550" border="0" cellspacing="1" cellpadding="0">
+                          <tr bgcolor="#f1f1f1"> 
+                            <td width="150"><p><strong>Usu&aacute;rio</strong></p></td>
+                            <td width="150"><p><strong>MAC</strong></p></td>
+                          </tr>
+                        </table></td>
+                    </tr>
+                    <tr>
+                      <td>
+					  
+					  {foreach item=a from=$cli}
+					    <table width="530" border="0" cellspacing="1" cellpadding="0">
+                          <tr> 
+                            <td colspan="2"><div align="CENTER"><img src="template/default/images/demonstracao_grafico.png" width="497" height="154"></div></td>
+                          </tr>
+                          <tr> 
+                            <td width="150"><a href="javascript:;" onclick="MM_openBrWindow('suporte.php?op=graf&rotina=mostra','graf','scrollbars=yes,width=550,height=500')"><font color="#000066">{$a.username}</font></a></td>
+                            <td width="150"><a href="javascript:;" onclick="MM_openBrWindow('suporte.php?op=graf&rotina=mostra','graf','scrollbars=yes,width=550,height=500')">{$a.mac}</a></td>
+                          </tr>
+                          <tr bgcolor="#CCCCCC"> 
+                            <td colspan="2" height="1"></td>
+                          </tr>
+                        </table>
+						{/foreach}
+						
+						</td>
+                    </tr>
+                  </table>
+				  {/if}
                   <p>&nbsp;</p>
     <p>&nbsp;</p></td>
               </tr>

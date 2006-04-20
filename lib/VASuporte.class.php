@@ -17,11 +17,50 @@ class VASuporte extends VirtexAdmin {
 	
 	public function processa($op=null) {	
 		if($op == "graf"){	
-			$this->arquivoTemplate = "cobranca_versaolight.html";
-			//$this->arquivoTemplate = "suporte_grafico.html";
+		
+			$pesquisa = @$_REQUEST["pesquisa"];
+			$rotina = @$_REQUEST["rotina"];
+		
+		
+			$sSQL  = "SELECT ";
+			$sSQL .= "id_pop, nome ";
+			$sSQL .= "FROM ";
+			$sSQL .= "cftb_pop";
+			
+			$pops = $this->bd->obtemRegistros($sSQL);
+			
+			
+			if ($pesquisa){
+			
+				$sSQL  = "SELECT ";
+				$sSQL .= "username, id_pop, mac ";
+				$sSQL .= "FROM ";
+				$sSQL .= "cntb_conta_bandalarga ";
+				$sSQL .= "WHERE id_pop = '".$_REQUEST["pesquisa"]."'";
+				
+				$cli = $this->bd->obtemRegistros($sSQL);
+				$this->tpl->atribui("cli",$cli);
+				//echo $sSQL;
+			
+			}
+			
+			
+			$this->tpl->atribui("pops",$pops);
+			$this->tpl->atribui("pesquisa",$pesquisa);
+			
+			if($rotina == "mostra"){
+			
+			$this->arquivoTemplate = "popup_grafico.html";
+			return;
+			
+			}
+		
+		
+			//$this->arquivoTemplate = "cobranca_versaolight.html";
+			$this->arquivoTemplate = "suporte_grafico.html";
 		} else if ($op == "log"){
-			$this->arquivoTemplate = "cobranca_versaolight.html";
-			//$this->arquivoTemplate = "suporte_logradius.html";
+			//$this->arquivoTemplate = "cobranca_versaolight.html";
+			$this->arquivoTemplate = "suporte_logradius.html";
 		} else if ($op == "monit"){
 			$this->arquivoTemplate = "cobranca_versaolight.html";
 			//$this->arquivoTemplate = "suporte_monitoramento.html";

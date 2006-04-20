@@ -207,7 +207,7 @@
 				break;
 			case 'BL':
 					$sSQL = "SELECT * FROM prtb_produto_bandalarga WHERE id_produto = '$id_produto'";
-					echo "query: $sSQL <br>";
+					//echo "query: $sSQL <br>";
 					
 					$info_produto = $this->bd->obtemUnicoRegistro($sSQL);
 			
@@ -253,6 +253,6 @@
 		return;
 	}
 	
-	echo ("Username - dede2.php: $username");
+	//echo ("Username - dede2.php: $username");
 
 ?>

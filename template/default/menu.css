@@ -163,6 +163,12 @@ td img {
 	left:0px;
 	top:20px;
 }
+#MMMenu0205175354_1_Item_2 {
+/* Unique ID for item 1 of menu MMMenu0205175354_1 so we can set its position */
+	left:0px;
+	top:40px;
+}
+
 
 #MMMenuContainer0205175354_1 img {
 /* needed for Mozilla/Camino/Netscape */
@@ -259,12 +265,12 @@ td img {
 #MMMenu0205175428_2_Item_3 {
 /* Unique ID for item 3 of menu MMMenu0205175428_2 so we can set its position */
 	left:0px;
-	top:60px;
+	top:40px;
 }
 #MMMenu0205175428_2_Item_4 {
 /* Unique ID for item 3 of menu MMMenu0205175428_2 so we can set its position */
 	left:0px;
-	top:80px;
+	top:60px;
 }
 #MMMenuContainer0205175428_2 img {
 /* needed for Mozilla/Camino/Netscape */
