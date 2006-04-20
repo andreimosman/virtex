@@ -18,6 +18,7 @@ function check(){
 
 
 function validaCPF() {
+	return confirmacao();
 	cpf = document.cadastro.cpf_cnpj.value;
 	erro = new String;
 
@@ -59,11 +60,14 @@ function validaCPF() {
 			alert(erro);
 			return false;
 		}
-	return true;
+
+//return confirmacao();
+
 }
 
 
 function validaCNPJ() {
+	return confirmacao();
 	CNPJ = document.dados.cpf_cnpj.value;
     erro = new String;
     if (CNPJ.length < 18) erro += "É necessario preencher corretamente o número do CNPJ! ";
@@ -110,10 +114,25 @@ function validaCNPJ() {
         	alert(erro);
             return false;
         } else {
+			return confirmacao();
         	alert("CNPJ valido!");
         }
-      	return true;
+
+//return confirmacao();
+
 	}
+
+function confirmacao(){
+
+		var agree = confirm("Tem certeza da alteração/cadastro deste cliente?");
+		if (agree){
+			return;
+		}else{
+			return false ;
+		}
+
+}
+
 
 //-->
 </script>

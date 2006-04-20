@@ -49,7 +49,7 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "   cftb_nas ";
 		$sSQL .= "WHERE ";
 		$sSQL .= "   id_nas = '". $this->bd->escape($id_nas) . "' ";
-		
+		//echo "OBTEM NAS: $sSQL <br>";
 		return( $this->bd->obtemUnicoRegistro($sSQL) );
 	}
 	
@@ -305,7 +305,7 @@ class VAClientes extends VirtexAdmin {
 
 					// Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
 					$this->tpl->atribui("mensagem",$msg_final); 
-					$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=listagem");
+					$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=pesquisa");
 					$this->tpl->atribui("target","_top");
 
 					$this->arquivoTemplate = "msgredirect.html";
@@ -1012,6 +1012,9 @@ class VAClientes extends VirtexAdmin {
 								
 								//$id_conta_banda_larga = $this->bd->proximoID("clsq_id_conta_bandalarga_seq");
 								
+								//$id_pop = $_REQUEST["id_pop"];
+								//echo "IDPOP: $id_pop <br>";
+								
 								// INSERE EM CNTB_CONTA_BANDALARGA
 								$sSQL  = "INSERT INTO ";
 								$sSQL .= "   cntb_conta_bandalarga( ";
@@ -1569,6 +1572,8 @@ class VAClientes extends VirtexAdmin {
 			$sSQL .= "ORDER BY ";
 			$sSQL .= "   nome";
 
+
+			//echo "POPs: $sSQL <br>";
 			$lista_pops = $this->bd->obtemRegistros($sSQL);
 			$this->tpl->atribui("lista_pops",$lista_pops);
 
@@ -1581,6 +1586,8 @@ class VAClientes extends VirtexAdmin {
 			$sSQL .= "   tipo_nas = 'I' OR tipo_nas = 'P' ";
 			$sSQL .= "ORDER BY ";
 			$sSQL .= "   tipo_nas,nome ";
+			
+			//echo "NASs: $sSQL <br>";
 			
 			$lista_nas = $this->bd->obtemRegistros($sSQL);
 			

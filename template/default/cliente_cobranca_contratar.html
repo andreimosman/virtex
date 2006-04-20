@@ -1,4 +1,5 @@
  {literal}
+ <!-- cliente_cobranca_contratar.html -->
  <script language="JavaScript" type="text/JavaScript">
 <!--
 function MM_reloadPage(init) {  //reloads the window if Nav4 resized
@@ -252,7 +253,7 @@ function init() {
 
 	alteraTipo();
 	alteraProduto();
-	
+
 		MM_showHideLayers('formaPag','','hide');
 		MM_showHideLayers('formaPagBanco','','hide');
 		MM_showHideLayers('formaPagCartao','','hide');
@@ -480,7 +481,7 @@ function processaDataContrato() {
       calculaDataCarne();
    }
 }
-function checaProRata(){
+/*function checaProRata(){
 	var frm = document.frmContratacao;
 	var qDias;
 	var dia;
@@ -502,7 +503,8 @@ function checaProRata(){
 	return;
 	}
 	return;
-}
+}*/
+
 function change(id, newClass) {
 
 identity=document.getElementById(id);
@@ -737,7 +739,7 @@ function MM_showHideLayers() { //v6.0
               <td bgcolor="#FFFFFF" align="right"><p>Pro-Rata</p></td>
               <td bgcolor="#FFFFFF" colspan="3"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                   <tr>
-                    <td width="8%"><input name="prorata" type="checkbox" value="true" id="prorata3"  onclick="javascript:checaProRata()" class="checkbox" checked></td>
+                    <td width="8%"><input name="prorata" type="checkbox" value="true" id="prorata3" class="checkbox" checked></td>
                     <td width="92%"></td>
                   </tr>
                 </table></td>

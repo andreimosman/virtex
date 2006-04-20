@@ -53,7 +53,7 @@
 		$username = @$_REQUEST["username"];
 		$senha = @$_REQUEST["senha"];
 		$conf_senha = @$_REQUEST["conf_senha"];
-		$id_nas = @$_REQUEST["id_pop"]; 
+		$id_pop = @$_REQUEST["id_pop"]; 
 		$id_nas = @$_REQUEST["id_nas"];
 		$selecao_ip = @$_REQUEST["selecao_ip"];
 		$mac = @$_REQUEST["mac"];
@@ -154,6 +154,7 @@
 		$this->tpl->atribui("senha", $senha);
 		$this->tpl->atribui("conf_senha", $conf_senha);
 		$this->tpl->atribui("id_nas", $id_nas );
+		$this->tpl->atribui("id_pop", $id_pop);
 		$this->tpl->atribui("selecao_ip", $selecao_ip );
 		$this->tpl->atribui("mac", $mac );
 		$this->tpl->atribui("p", $p );
@@ -213,7 +214,7 @@
 			
 					$bl_banda_upload_kbps = $info_produto["banda_upload_kbps"];
 					$bl_banda_download_kbps = $info_produto["banda_download_kbps"];
-					$bl_franquia_trafego_mensal_gb = $info_produto["franquia_trafego_mensal_mb"];
+					$bl_franquia_trafego_mensal_gb = $info_produto["franquia_trafego_mensal_gb"];
 					$bl_valor_trafego_adicional_gb = $info_produto["valor_trafego_adicional_gb"];
 					
 					$this->tpl->atribui("bl_banda_upload_kbps", $bl_banda_upload_kbps);
