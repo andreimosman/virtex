@@ -13,6 +13,37 @@ class VAClientes extends VirtexAdmin {
 	   return $erros;
 	}
 	
+	
+	private function obtemPR($id_cliente){
+	
+		$sSQL  = "SELECT ";
+		$sSQL .= "pr.tipo ";
+		$sSQL .= "FROM cbtb_cliente_produto cp, prtb_produto pr ";
+		$sSQL .= "WHERE cp.id_cliente = '$id_cliente' ";
+		$sSQL .= "AND cp.id_produto = pr.id_produto ";
+		$sSQL .= "GROUP BY pr.tipo";
+									
+		$prcliente = $this->bd->obtemRegistros($sSQL);
+		//echo "QUERY: $sSQL<br> ";
+									
+		$prod_contr = array();
+									
+		//echo count($prcliente);
+									
+		for($i = 0; $i < count($prcliente); $i++ ) {
+			$prod_contr[ trim(strtolower($prcliente[$i]["tipo"])) ] = true;
+									
+		}
+									
+				
+									
+		$this->tpl->atribui("prod_contr",$prod_contr);
+		return;
+	
+	
+	}
+	
+	
 	private function obtemCliente($id_cliente) {
 
 		$sSQL  = "SELECT ";
@@ -137,6 +168,10 @@ class VAClientes extends VirtexAdmin {
 			
 			
 			$reg = array();
+
+			$this->obtemPR($id_cliente);
+
+
 
 
 			if( $acao ) {
@@ -582,6 +617,8 @@ class VAClientes extends VirtexAdmin {
 			$this->arquivoTemplate = "cliente_cobrancas.html";
 			
 			$erros = array();
+			
+			
 
 			
 			if( !$rotina ){ 
@@ -623,7 +660,12 @@ class VAClientes extends VirtexAdmin {
 					$contas = $this->bd->obtemRegistros($sSQL);
 						   
 					$produtos[$i]["contas"] = $contas;
+					
 				}
+			
+			
+				$this->obtemPR($id_cliente);
+	
 			
 				//require_once( PATH_LIB . "/hugo2.php" );
 ///////////////////HUGO2
@@ -662,6 +704,11 @@ class VAClientes extends VirtexAdmin {
 
 		$lista_faturas = $this->bd->obtemRegistros($sSQL);
 		//echo "Lista: $sSQL <br>";
+		
+				$this->obtemPR($id_cliente);
+
+		
+		
 		
 		$sSQL = "SELECT nome_razao FROM cltb_cliente WHERE id_cliente = '$id_cliente'";
 		$cliente = $this->bd->obtemUnicoRegistro($sSQL);
@@ -750,6 +797,10 @@ class VAClientes extends VirtexAdmin {
 								
 				$enviando = false;
 				$exibeForm = true;
+				
+				$id_cliente = @$_REQUEST["id_cliente"];
+				
+				$this->obtemPR($id_cliente);
 												
 				
 				if($acao == "cad" ) {
@@ -1484,7 +1535,8 @@ class VAClientes extends VirtexAdmin {
 			
 			
 			
-			
+			$this->obtemPR($id_cliente);
+
 			
 			
 			
@@ -1508,6 +1560,11 @@ class VAClientes extends VirtexAdmin {
 			//$this->tpl->atribui($dominios);
 			
 			//$this->tpl->atribui("tipo",$tipo);
+			
+			
+			$id_cliente = @$_REQUEST["id_cliente"];
+			
+			
 			
 			
 			$sSQL  = "SELECT ";

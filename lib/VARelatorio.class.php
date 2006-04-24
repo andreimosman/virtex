@@ -494,7 +494,53 @@ class VARelatorio extends VirtexAdmin {
 		$this->arquivoTemplate = "relatorio_grafico.html";
 
 
-	}	
+	} else if ($op == "produto_cliente"){
+	
+		$sSQL  = "SELECT ";
+		$sSQL .= " p.id_produto,p.nome,p.tipo,p.valor,p.disponivel,num_contratos ";
+		$sSQL .= "FROM ";
+		$sSQL .= " prtb_produto p INNER JOIN ";
+		$sSQL .= "(SELECT p.id_produto,count(cp.id_produto) as num_contratos ";
+		$sSQL .= " FROM prtb_produto p LEFT OUTER JOIN cbtb_contrato cp USING(id_produto) ";
+		$sSQL .= "GROUP BY p.id_produto ";
+		$sSQL .= " ) c USING(id_produto) ";
+		$sSQL .= "ORDER BY num_contratos DESC";
+	
+		$relat = $this->bd->obtemRegistros($sSQL);
+		
+		$this->tpl->atribui("relat",$relat);
+		$this->arquivoTemplate = "relatorio_produtos_clientes.html";
+
+
+	
+	} else if ($op == "evolucao"){
+	
+	
+	
+		$sSQL  = "SELECT ";
+		$sSQL .= "p.id_produto,p.nome,p.tipo,p.valor,p.disponivel,mes,num_contratos ";
+		$sSQL .= "FROM ";
+		$sSQL .= "prtb_produto p INNER JOIN ";
+		$sSQL .= "(SELECT p.id_produto,count(cp.id_produto) as num_contratos, EXTRACT( 'month' from data_contratacao) as mes ";
+		$sSQL .= "FROM ";
+		$sSQL .= "prtb_produto p LEFT OUTER JOIN cbtb_contrato cp USING(id_produto) ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "data_contratacao > now() - INTERVAL '6 months' OR data_contratacao is null ";
+		$sSQL .= "GROUP BY ";
+		$sSQL .= "mes, p.id_produto ) c USING(id_produto) ";
+		
+		
+		$relat = $this->bd->obtemRegistros($sSQL);
+		
+		
+		
+		$this->tpl->atribui("relat",$relat);
+		$this->arquivoTemplate = "relatorio_produtos_evolucao.html";
+		
+
+	
+	
+	}
 	
 }
 

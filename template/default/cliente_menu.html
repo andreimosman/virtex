@@ -1,5 +1,5 @@
 
-<table width="500" border="0" cellspacing="2" cellpadding="2" align="center">
+<table  border="0" cellspacing="2" cellpadding="2" align="center">
   <tr> 
     <td> 
       <!-- FICHA CADASTRAL -->
@@ -7,32 +7,30 @@
       {else } <a href="clientes.php?op=cadastro&id_cliente={$id_cliente}"><img src="template/default/images/bt_ficha_cliente_inativo.gif" border=0 alt="Ficha do Cliente"></a> 
       {/if} </td>
     <!-- PRODUTOS -->
+    {if $prod_contr.d} 
     <td> {if ($op == "produto" || $op == "conta") && $tipo == "D"} <a href="{$smarty.server.PHP_SELF}?op=produto&tipo=D&id_cliente={$id_cliente}"><img src="template/default/images/bt_discado.gif" border=0 alt="Acesso Discado"></a> 
       {else } {if $id_cliente}<a href="{$smarty.server.PHP_SELF}?op=produto&tipo=D&id_cliente={$id_cliente}">{/if}<img src="template/default/images/bt_discado_inativo.gif" border=0 alt="Acesso Discado"></a> 
       {/if} </td>
+    {/if} {if $prod_contr.bl} 
     <td> {if ($op == "produto" || $op == "conta") && $tipo == "BL"} <a href="{$smarty.server.PHP_SELF}?op=produto&tipo=BL&id_cliente={$id_cliente}&msg="><img src="template/default/images/bt_bandalarga.gif" border=0 alt="Acesso Banda Larga"></a> 
       {else } {if $id_cliente}<a href="{$smarty.server.PHP_SELF}?op=produto&tipo=BL&id_cliente={$id_cliente}&msg=">{/if}<img src="template/default/images/bt_bandalarga_inativo.gif" border=0 alt="Acesso Banda Larga"></a> 
       {/if} </td>
-    <td> {if ($op == "produto" || $op == "conta") && $tipo == "H"} <a href="{$smarty.server.PHP_SELF}?op=produto&tipo=H&id_cliente={$id_cliente}"><img src="template/default/images/bt_hospedagem.gif" border=0 alt="Hospedagem"></a> 
-      {else } {if $id_cliente}<a href="{$smarty.server.PHP_SELF}?op=produto&tipo=H&id_cliente={$id_cliente}">{/if}<img src="template/default/images/bt_hospedagem_inativo.gif" border=0 alt="Cobranca"></a> 
+    {/if} {if $prod_contr.h} 
+    <td> {if ($op == "produto" || $op == "conta") && $tipo == "H"} <a href="{$smarty.server.PHP_SELF}?op=produto&tipo=H&id_cliente={$id_cliente}"><img src="template/default/images/bt_hospedagem.gif" border=0 alt="Hospedagem"></a>{else 
+      } {if $id_cliente}<a href="{$smarty.server.PHP_SELF}?op=produto&tipo=H&id_cliente={$id_cliente}">{/if}<img src="template/default/images/bt_hospedagem_inativo.gif" border=0 alt="Cobranca"></a> 
       {/if} </td>
+    {/if} 
     <!-- COBRANCA -->
     <td> {if $op == "cobranca"} <a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&rotina=resumo"><img src="template/default/images/bt_cobranca.gif" border=0 alt="Cobrança"></a> 
       {else } {if $id_cliente}<a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&rotina=resumo">{/if}<img src="template/default/images/bt_cobranca_inativo.gif" border=0 alt="Cobranca"></a> 
       {/if} </td>
     <!-- HELPDESK -->
   </tr>
-  {if $id_cliente} 
-  <tr align="center"> 
-    <td colspan="5" bgcolor="#779977"> <font face="arial" size=+1><b><font color="#FFFFFF">{$cliente.nome_razao}</font></b></font> 
-      <font color="#FFFFFF"> 
-      <!--table width="100%" cellpadding=2 cellspacing=1 bgcolor="#559955">
-				<tr bgcolor="#FFFFFF">
-					<td width="50%"><u><small>CLIENTE:</small></u>&nbsp;{$cliente.nome_razao}</td>
-					<td width="50%"><u><small>CPF/CNPJ:</small></u>&nbsp;{$cliente.cpf_cnpj}</td>
-				</tr>
-			</table-->
-      </font> </td>
+  {if $id_cliente} {/if} 
+</table>
+<br>
+<table align="CENTER" width="500" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td bgcolor="#779977"><div align="CENTER"><font face="arial" size=+1><b><font color="#FFFFFF">{$cliente.nome_razao}</font></b></font></div></td>
   </tr>
-  {/if} 
 </table>
