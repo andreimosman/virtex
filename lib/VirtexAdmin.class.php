@@ -9,6 +9,23 @@ class VirtexAdmin extends MWebApp {
 	protected $bd;
 	protected $spool;
 	protected $admLogin;
+	
+	protected $preferencias;
+	
+	public function obtemPreferencias() {
+		// Preferencias do provedor
+		$sSQL = "SELECT * FROM pftb_preferencia_provedor";
+		$preferencias["provedor"] = $this->bd->obtemUnicoRegistro($sSQL);
+		
+		// Preferencias de Cobranca
+		$sSQL = "SELECT * FROM pftb_preferencia_cobranca";
+		$preferencias["cobranca"] = $this->bd->obtemUnicoRegistro($sSQL);
+		
+		// Preferencias gerais
+		$sSQL = "SELECT * FROM pftb_preferencia_geral";
+		$preferencias["geral"] = $this->bd->obtemUnicoRegistro($sSQL);
+	
+	}
 
 	public function VirtexAdmin() {
 	   parent::MWebApp("etc/virtex.ini",'template/default');
@@ -35,7 +52,9 @@ class VirtexAdmin extends MWebApp {
 		   } else {
 		   		$this->admLogin = new AdminLogin($this->bd);
 		   }
-
+		   
+		   $this->obtemPreferencias();
+		   
 	   }
 	}
 
