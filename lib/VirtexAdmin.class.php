@@ -9,21 +9,26 @@ class VirtexAdmin extends MWebApp {
 	protected $bd;
 	protected $spool;
 	protected $admLogin;
-	
+
 	protected $preferencias;
 	
+	/**
+	 * Obtem as preferencias do modelo pftb
+	 */
 	public function obtemPreferencias() {
+		$this->preferencias = array();
+	
 		// Preferencias do provedor
 		$sSQL = "SELECT * FROM pftb_preferencia_provedor";
-		$preferencias["provedor"] = $this->bd->obtemUnicoRegistro($sSQL);
+		$this->preferencias["provedor"] = $this->bd->obtemUnicoRegistro($sSQL);
 		
 		// Preferencias de Cobranca
 		$sSQL = "SELECT * FROM pftb_preferencia_cobranca";
-		$preferencias["cobranca"] = $this->bd->obtemUnicoRegistro($sSQL);
+		$this->preferencias["cobranca"] = $this->bd->obtemUnicoRegistro($sSQL);
 		
 		// Preferencias gerais
 		$sSQL = "SELECT * FROM pftb_preferencia_geral";
-		$preferencias["geral"] = $this->bd->obtemUnicoRegistro($sSQL);
+		$this->preferencias["geral"] = $this->bd->obtemUnicoRegistro($sSQL);
 	
 	}
 
