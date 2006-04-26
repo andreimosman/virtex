@@ -21,6 +21,7 @@
                 <td align="center" name="frmConfirma" valign="middle" width="100%">
 					<form nome=formulario method="POST" action="{$smarty.server.PHP_SELF}">
 						<!-- Informações sobre cadastro do contrato -->
+								<input type="hidden" name="pri_venc" value="{$pri_venc}">
 								<input type="hidden" name="tipo" value="{$tipo}">
 								<input type="hidden" name="id_produto" value="{$id_produto}">
 								<input type="hidden" name="email_igual" value="{$email_igual}">
@@ -49,6 +50,10 @@
 								<input type="hidden" name="rotina" value="{$rotina}">
 								<input type="hidden" name="id_cliente_produto" value="{$id_cliente_produto}">
 								<input type="hidden" name="id_pop" value="{$id_pop}">
+								<input type="hidden" name="pri_venc" value="{$pri_venc}">
+								<input type="hidden" name="valor_prorata" value="{$valor_prorata}">
+								<input type="hidden" name="dias_prorata" value="{$dias_prorata}">
+
 
 
 								<input type="hidden" name="cc_vencimento" value="{$cc_vencimento}">
@@ -115,6 +120,10 @@
                                   <td><p>{$data_renovacao}</p></td>
                                 </tr>
                                 <tr>
+								 <tr>
+                                  <td width="139"> <p><strong>Data do 1º vencimento:</strong></p></td>
+                                  <td><p>{$pri_venc}</p></td>
+                                </tr>
                                   <td width="139"> <p><strong>Vigencia</strong></p></td>
                                   <td><p>{$vigencia}</p></td>
                                 </tr>
@@ -126,7 +135,16 @@
                                   <td width="139"> <p><strong>Forma de pagamento:</strong></p></td>
                                   <td><p>{$info_pagamento.nome_cobranca}</p></td>
                                 </tr>
-
+								{if $prorata == true}
+								<tr>
+                                  <td width="139"> <p><strong>Dias de Pro-Rata</strong></p></td>
+                                  <td><p>{$dias_prorata}</p></td>
+                                </tr>
+								<tr>
+                                  <td width="139"> <p><strong>Valor Pro-Rata</strong></p></td>
+                                  <td><p>{$valor_prorata}</p></td>
+                                </tr>
+								{/if}
                                 {if $tipo_cobranca == 2 }
 									<tr>
 									  <td width="139"> <p><strong>Data primeiro boleto</strong></p></td>
@@ -160,7 +178,7 @@
 									  <td width="139"> <p><strong>Operadora</strong></p></td>
 									  <td>
 									  	{if $cc_operadora == "AE"}
-									  		<p>Ameniran Express</p></td>
+									  		<p>American Express</p></td>
 									  	{/if}
 									  	{if $cc_operadora == "DN"}
 											<p>Dinners</p></td>
@@ -187,7 +205,7 @@
                               </table></td>
                           </tr>
                           <tr>
-                            <td bgcolor="#fafafa"><strong>- <font size="2">Produto Contratado</font></strong></td>
+                            <td bgcolor="#fafafa"><p><strong>- <font size="2">Produto Contratado</font></strong></p></td>
                           </tr>
                           <tr>
                             <td><table width="550" border="0" cellspacing="2" cellpadding="0">
@@ -245,7 +263,7 @@
                                 {/if} </table></td>
                           </tr>
                           <tr>
-                            <td bgcolor="#fafafa"><strong>- <font size="2">Valores</font></strong></td>
+                            <td bgcolor="#fafafa"><p><strong>- <font size="2">Valores</font></strong></p></td>
                           </tr>
                           <tr>
                             <td><table width="550" border="0" cellspacing="2" cellpadding="0">
@@ -322,7 +340,10 @@
 							<input type="hidden" name="id_cliente" value="{$id_cliente}">
 							<input type="hidden" name="rotina" value="{$rotina}">
 							<input type="hidden" name="id_cliente_produto" value="{$id_cliente_produto}">
-
+							<input type="hidden" name="pri_venc" value="{$pri_venc}">
+							<input type="hidden" name="valor_prorata" value="{$valor_prorata}">
+							<input type="hidden" name="dias_prorata" value="{$dias_prorata}">
+							
 						{if $tipo == "D"}
 							<input type="hidden" name="foneinfo" value="{$foneinfo}">
 							<input type="hidden" name="d_franquia_horas" value="{$d_franquia_horas}">

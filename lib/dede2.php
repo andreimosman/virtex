@@ -67,7 +67,7 @@
 		$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
 		$tipo_hospedagem = @$_REQUEST["tipo_hospedagem"];
 		$dominio_hospedagem = @$_REQUEST["dominio_hospedagem"];
-		
+		$pri_venc = @$_REQUEST["pri_venc"];		
 		
 		//Informações de banco e cartão de crédito
 		$cc_vencimento = @$_REQUEST["cc_vencimento"];
@@ -167,6 +167,7 @@
 		$this->tpl->atribui("valor_contrato", $valor_contrato);
 		$this->tpl->atribui("dominio_hospedagem", $dominio_hospedagem);
 		$this->tpl->atribui("tipo_hospedagem", $tipo_hospedagem);
+		$this->tpl->atribui("pri_venc",$pri_venc);
 		
 		
 		$this->tpl->atribui("cc_vencimento",$cc_vencimento); 
@@ -224,8 +225,50 @@
 				break;
 		}
 		
+		/*====> PRO-RATA - INICIO <=====*/
+							
+							
+		$prorata = @$_REQUEST["prorata"];
+		if($prorata == true){
+							
+							
+								
+			$pri_venc = @$_REQUEST["pri_venc"];
+							
+							
+			if ($pri_venc && $pri_venc != ""){
+				@list($d,$m,$a) = explode("/",$pri_venc);
+			} else {
+				$m = date("m");
+				$d = date("d");
+				$a = date("Y");
+			}
+								
+			$proxima = ($m+1)."/".$dia_vencimento."/".$a;
+			$primeiro = $m."/".$d."/".$a;
+							
+			//$proxima = $dia_vencimento ."/".($m+1)."/".$a;
+			//echo "PROXIMA: ".$proxima."<br>";
+			$diferenca = $this->days_diff($primeiro,$proxima);
+							
+			$valor_dia = $valor_contrato / 30;
+			$valor_prorata = $valor_dia * $diferenca;
+			//echo "DIFERENCA: ".$diferenca."<br>";
+			//echo "VALOR DIA: ".$valor_dia."<br>";
+			//echo "VALOR_PRORATA: ".$valor_prorata."<br>";
+			$valor_prorata = number_format($valor_prorata, 2, '.', '');
+							
+			$this->tpl->atribui("dias_prorata",$diferenca);
+			$this->tpl->atribui("valor_prorata",$valor_prorata);
+							
+		}
+							
+							
+		/*====> PRO-RATA - FINAL <=====*/
+
+		
 		$this->tpl->atribui("info_adicional", $info_produto);
-	
+
 		$this->arquivoTemplate="cliente_contrato_detalhe.html";
 		return;
 		

@@ -7,7 +7,9 @@
 
 function check(){
 	var pessoa = document.cadastro.tipo_pessoa.value;
-
+	
+	//alert('PESSOA: '+pessoa);
+	
 	if(pessoa == 'F'){
 		return validaCPF();
 	} else {
@@ -18,7 +20,7 @@ function check(){
 
 
 function validaCPF() {
-	return confirmacao();
+//alert('VALIDANDO CPF');
 	cpf = document.cadastro.cpf_cnpj.value;
 	erro = new String;
 
@@ -59,23 +61,25 @@ function validaCPF() {
 		if (erro.length > 0){
 			alert(erro);
 			return false;
+		}else{
+			return confirmacao();
 		}
-
+return;
 //return confirmacao();
 
 }
 
 
 function validaCNPJ() {
-	return confirmacao();
-	CNPJ = document.dados.cpf_cnpj.value;
+//alert('VALIDANDO CNPJ');
+	CNPJ = document.cadastro.cpf_cnpj.value;
     erro = new String;
     if (CNPJ.length < 18) erro += "É necessario preencher corretamente o número do CNPJ! ";
 
 	if ((CNPJ.charAt(2) != ".") || (CNPJ.charAt(6) != ".") || (CNPJ.charAt(10) != "/") || (CNPJ.charAt(15) != "-")){
     	if (erro.length == 0) erro += "É necessário preencher corretamente o número do CNPJ! ";
 	}
-
+//alert('TAMANHO: '+CNPJ.length);
 	//substituir os caracteres que não são números
     if(document.layers && parseInt(navigator.appVersion) == 4){
     	x = CNPJ.substring(0,2);
@@ -119,6 +123,8 @@ function validaCNPJ() {
         }
 
 //return confirmacao();
+//alert("saindo fora!");
+return;
 
 	}
 
@@ -367,8 +373,7 @@ function confirmacao(){
                                   </font></p></td>
                             </tr>
                             <tr>
-                              <td colspan="3"><textarea name="obs" cols="80" rows="8" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">{$obs}
-</textarea></td>
+                              <td colspan="3"><textarea name="obs" cols="80" rows="8" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">{$obs}</textarea></td>
                             </tr>
                           </table></td>
                       </tr>

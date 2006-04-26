@@ -570,7 +570,7 @@ class VACobranca extends VirtexAdmin {
 			
 			// PEGANDO INFORMAÇÕES DAS PREFERENCIAS
 			$sSQL  = "SELECT ";
-			$sSQL .= " tx_juros, multa, dia_venc, carencia, cod_banco, carteira, agencia, num_conta, convenio, cnpj, observacoes,nome ";
+			$sSQL .= " tx_juros, multa, dia_venc, carencia, cod_banco, carteira, agencia, num_conta, convenio, cnpj, observacoes,nome,endereco,localidade ";
 			$sSQL .= "FROM ";
 			$sSQL .= " cftb_preferencias ";
 			$sSQL .= "WHERE id_provedor = '1'";
@@ -594,11 +594,11 @@ class VACobranca extends VirtexAdmin {
 			if( $codigo ) {
 				MBoleto::barCode($codigo);
 			} else {
-				$this->b = new MBoleto($provedor["cod_banco"],$provedor["carteira"],$provedor["agencia"],$provedor["num_conta"],$provedor["convenio"],$data_venc,$valor,$id_cobranca,$nome_cliente,$cpf_cliente,$provedor["nome"],$provedor["cnpj"],$provedor["tx_juros"],$provedor["multa"],$endereco,$provedor["observacoes"]);
+				$this->b = new MBoleto($provedor["cod_banco"],$provedor["carteira"],$provedor["agencia"],$provedor["num_conta"],$provedor["convenio"],$data_venc,$valor,$id_cobranca,$nome_cliente,$cpf_cliente,$provedor["nome"],$provedor["cnpj"],$provedor["tx_juros"],$provedor["multa"],$endereco,$provedor["observacoes"],$provedor["endereco"],$provedor["localidade"]);
 				$this->b->setTplPath("template/boletos/");
 				$this->b->setImgPath("template/boletos/imagens");
 				
-				$this->b->exibe("001"); // Gera boleto para o banco "001";
+				$this->b->exibe("003"); // Gera boleto para o banco "001";
 			}
 		
 			//$this->arquivoTemplate = "";

@@ -1,4 +1,4 @@
- {literal}
+{literal}
  <!-- cliente_cobranca_contratar.html -->
  <script language="JavaScript" type="text/JavaScript">
 <!--
@@ -192,13 +192,14 @@ function alteraProduto() {
 
 	// Preenche os dados com base no produto.
 	preencheDadosProduto(id_produto_saved)
-	if(frm.valor_comodato > "0.00" && frm.id_produto.value != ""){
+	if(frm.valor_comodato > "0.00" && frm.id_produto.value != "" && frm.valor_comodato != "" ){
 		frm.comodato.checked=true;
 	}
 
 	if (frm.valor_comodato.value == "0.00" || frm.valor_comodato.value == ""){
 
 		frm.valor_comodato.value = "";
+		frm.comodato.checked=false;
 
 	}
 
@@ -377,7 +378,11 @@ function validaForm() {
 				msg.push("Você não especificou um username");
 			}
 		}}
-
+	if(frm.forma_pagamento.value == "PRE"){
+		if(frm.pri_venc.value == ""){
+			msg.push("Para Pré-Pago é necessário especificar a data da primeira fatura");
+		}
+	}
 		/* else {
 			// Validacoes gerais
 			if(frm.id_nas.value != "3" && frm.mac.value =="")
@@ -520,6 +525,10 @@ function MM_showHideLayers() { //v6.0
     obj.visibility=v; }
 }
 
+function priVenc(){
+frmContratacao.pri_venc.value = hoje();
+}
+
 </script> {/literal} <form name="frmContratacao" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return validaForm();">
 <!-- DADOS DO frmContratacao: INI -->
 <div id="formBL">
@@ -568,13 +577,13 @@ function MM_showHideLayers() { //v6.0
     <div id="formH">
       <table width="450" border="0" cellpadding="0" cellspacing="1" id="hosp">
         <tr>
-          <td align="center" valign="middle"><table border=0 width="450" bgcolor="#F1F1F1">
+          <td align="center" valign="middle"><table border=0 width="449" bgcolor="#F1F1F1">
               <tr>
                 <td colspan=2><p><strong>Dados da Hospedagem</strong></p></td>
               </tr>
               <tr>
                 <td bgcolor="#FFFFFF" align="right" width="70"> <p>Tipo: </p></td>
-                <td bgcolor="#FFFFFF"> <SELECT name='tipo_hospedagem' onChange='javascript:verificaTipoHosp();' onFocusOut='javascript:verificaTipoHosp();' onClick='javascript:verificaTipoHosp();'>
+                <td bgcolor="#FFFFFF" width="369"> <SELECT name='tipo_hospedagem' onChange='javascript:verificaTipoHosp();' onFocusOut='javascript:verificaTipoHosp();' onClick='javascript:verificaTipoHosp();'>
                     <OPTION VALUE='U' >www.PROVEDOR.com.br/usuario/username</OPTION>
                     <OPTION VALUE='D' >www.dominio.com.br/</OPTION>
                   </SELECT> </td>
@@ -676,21 +685,21 @@ function MM_showHideLayers() { //v6.0
 
         <td align="center" valign="middle">
           <table border=0 width="450" bgcolor="#F1F1F1">
-            <tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right" width="98"><p>Dt Contrato:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p>
+              <td bgcolor="#FFFFFF" colspan="3"><p> 
                   <input type="text" size=11 maxlength="10" name="data_contratacao" value="{$hoje}" onfocusout="javascript:processaDataContrato();"  onchange="javascript:processaDataContrato();">
                 </p></td>
             </tr>
-            <tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right" width="98"><p>Vigência:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p>
+              <td bgcolor="#FFFFFF" colspan="3"><p> 
                   <input type="text" size=2 maxlength="2" name="vigencia" value="12" onchange="javascript:processaVigencia();" onfocusout="javascrpt:processaVigencia();">
                   meses</p></td>
             </tr>
-            <tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right" width="98"><p>Status:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p>
+              <td bgcolor="#FFFFFF" colspan="3"><p> 
                   <select name='status' >
                     <option value='A'  selected >Ativo</option>
                     <option value='S' >Suspenso</option>
@@ -698,53 +707,59 @@ function MM_showHideLayers() { //v6.0
                   </select>
                 </p></td>
             </tr>
-            <tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right" width="98"><p>Dia Vencimento:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"> <p>
+              <td bgcolor="#FFFFFF" colspan="3"> <p> 
                   <input type="text" id="dia_vencimento" name="dia_vencimento" value="{$dia_venc}" size=2 maxlength=2 onfocusout="javascript:processaDataContrato();"  onchange="javascript:processaDataContrato();">
-                  Carência:
+                  Carência: 
                   <input type="text" id="carencia_pagamento" name="carencia_pagamento" value="{$carencia}" size=2 maxlength=2>
                   dias </p></td>
             </tr>
             <tr>
+              <td bgcolor="#FFFFFF" align="right"><p>Data 1&ordm; Vencimento</p></td>
+              <td bgcolor="#FFFFFF"><input name="pri_venc" type="text" size="," id="pri_venc"></td>
+              <td bgcolor="#FFFFFF"><input type="button" name="hoje" value="Hoje" onClick="javascript:priVenc();" &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;"></td>
+              <td bgcolor="#FFFFFF">&nbsp;</td>
+            </tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right" width="98"><p>Desconto</p></td>
-              <td bgcolor="#FFFFFF"><p>
+              <td bgcolor="#FFFFFF"><p> 
                   <input name="desconto_promo" type="text" value="0.00" size=7 maxlength="7" id="desconto_promo">
                   reais</p></td>
               <td bgcolor="#FFFFFF"><p>Periodo</p></td>
-              <td bgcolor="#FFFFFF"><p>
+              <td bgcolor="#FFFFFF"><p> 
                   <input type="text" id="periodo_desconto" name="periodo_desconto" value="" size=2 maxlength=2>
                   meses</p></td>
             </tr>
-            <tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right"><p>Taxa Inst.</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p>
+              <td bgcolor="#FFFFFF" colspan="3"><p> 
                   <input name="tx_instalacao" type="text" value="0.00" size=7 maxlength="7" id="tx_instalacao">
                   reais</p></td>
             </tr>
-            <tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right"><p>Comodato</p></td>
-              <td bgcolor="#FFFFFF" width="137"><p>
+              <td bgcolor="#FFFFFF" width="137"><p> 
                   <input name="comodato" type="checkbox" value="true" id="comodato" onClick="javascript:Comodato()" class="checkbox" {if $comodato == "t"}CHECKED{/if} checked>
                 </p></td>
               <td bgcolor="#FFFFFF" width="76"><p>Valor:</p></td>
-              <td bgcolor="#FFFFFF" width="121"><p>
+              <td bgcolor="#FFFFFF" width="121"><p> 
                   <input name="valor_comodato" type="text" value="0.00" size=7 maxlength="7" id="vl_comodato">
                   reais</p></td>
             </tr>
-            <tr>
+            <tr> 
               <td colspan=4><h2><font color="#000000">Cobrança</font></h2></td>
             </tr>
-            <tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right"><p>Pro-Rata</p></td>
               <td bgcolor="#FFFFFF" colspan="3"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                  <tr>
+                  <tr> 
                     <td width="8%"><input name="prorata" type="checkbox" value="true" id="prorata3" class="checkbox" checked></td>
                     <td width="92%"></td>
                   </tr>
                 </table></td>
             </tr>
-            <tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right" width="98"><p>Forma de Pagamento:</p></td>
               <td bgcolor="#FFFFFF"> <select name='tipo_cobranca' id="tipo_cobranca" onChange="javascript:checaFormaCobranca();">
 				  {foreach item=a from=$tipo_cobranca}
@@ -760,74 +775,71 @@ function MM_showHideLayers() { //v6.0
 				{/foreach}
                 </select></td>
             </tr>
-            <tr>
+            <tr> 
               <td bgcolor="#FFFFFF" align="right" height="1">&nbsp;</td>
-              <td bgcolor="#FFFFFF" colspan="3" height="1">
-				  <div id="formaPag" style="visible: hidden"  >
-						<table width="100%" border="0" cellspacing="3" cellpadding="0">
-						  <tr>
-							<td><p>de
-								<input type="text" name="ini_carne" value="" size=11 maxlength=10>
-								até
-								<input type="text" name="data_carne" value="" size=11 maxlength=10>
-							  </p></td>
-						  </tr>
-						  <tr>
-							<td><p><strong><font color="#CC0000">O sistema de carn&ecirc;
-								n&atilde;o suporta cobran&ccedil;as adicionais. Caso o
-								contrato seja firmado os valores excedentes existentes
-								ser&atilde;o desconsiderados, tanto no contrato quanto
-								na fatura aaa</font></strong></p></td>
-						  </tr>
-						</table>
-					   </div>
-
-					   <!-- Inicio DDS -->
-					   <div id="formaPagBanco" style="visibility: hidden;">
-						<table width="100%" border="0" cellspacing="3" cellpadding="0">
-						  <tr>
-							<td><p>Banco
-								<input type="text" name="db_banco" value="" size=7 maxlength=10>
-								Agência
-								<input type="text" name="db_agencia" value="" size=7 maxlength=10>
-								Conta
-								<input type="text" name="db_conta" value="" size=7 maxlength=10>
-
-							  </p></td>
-						  </tr>
-						  <tr>
-							<td><p><strong></strong></p></td>
-						  </tr>
-						</table>
-					   </div>
-
-					   <div id="formaPagCartao" style="visibility: hidden;">
-						<table width="100%" border="0" cellspacing="3" cellpadding="0">
-						  <tr>
-							<td><p>Vencimento
-								<input type="text" name="cc_vencimento" value="" size=6 maxlength=5>
-								Numero
-								<input type="text" name="cc_numero" value="" size=11 maxlength=25>
-								<br>Operadora
-								<select name="cc_operadora">
+              <td bgcolor="#FFFFFF" colspan="3" height="1"> <div id="formaPag" style="visible: hidden"  > 
+                <table width="100%" border="0" cellspacing="3" cellpadding="0">
+                  <tr> 
+                    <td><p>de 
+                        <input type="text" name="ini_carne" value="" size=11 maxlength=10>
+                        até 
+                        <input type="text" name="data_carne" value="" size=11 maxlength=10>
+                      </p></td>
+                  </tr>
+                  <tr> 
+                    <td><p><strong><font color="#CC0000">O sistema de carn&ecirc; 
+                        n&atilde;o suporta cobran&ccedil;as adicionais. Caso o 
+                        contrato seja firmado os valores excedentes existentes 
+                        ser&atilde;o desconsiderados, tanto no contrato quanto 
+                        na fatura aaa</font></strong></p></td>
+                  </tr>
+                </table>
+                </div>
+                <!-- Inicio DDS -->
+                <div id="formaPagBanco" style="visibility: hidden;"> 
+                <table width="100%" border="0" cellspacing="3" cellpadding="0">
+                  <tr> 
+                    <td><p>Banco 
+                        <input type="text" name="db_banco" value="" size=7 maxlength=10>
+                        Agência 
+                        <input type="text" name="db_agencia" value="" size=7 maxlength=10>
+                        Conta 
+                        <input type="text" name="db_conta" value="" size=7 maxlength=10>
+                      </p></td>
+                  </tr>
+                  <tr> 
+                    <td><p><strong></strong></p></td>
+                  </tr>
+                </table>
+                </div><div id="formaPagCartao" style="visibility: hidden;"> 
+                <table width="100%" border="0" cellspacing="3" cellpadding="0">
+                  <tr> 
+                    <td><p>Vencimento 
+                        <input type="text" name="cc_vencimento" value="" size=6 maxlength=5>
+                        Numero 
+                        <input type="text" name="cc_numero" value="" size=11 maxlength=25>
+                        <br>
+                        Operadora 
+                        <select name="cc_operadora">
 									{foreach key=id item=nome from=$cc_operadoras}
-										  <option value="{$id}"> {$nome}</option>
+										  
+                          <option value="{$id}"> {$nome}</option>
 									{/foreach}
-								</select>
-
-							  </p></td>
-						  </tr>
-						  <tr>
-							<td><p><strong></strong></p></td>
-						  </tr>
-						</table>
-					   </div>
-						<!-- Fim DDS -->
-				</td>
+								
+                        </select>
+                      </p></td>
+                  </tr>
+                  <tr> 
+                    <td><p><strong></strong></p></td>
+                  </tr>
+                </table>
+                </div>
+                <!-- Fim DDS -->
+              </td>
             </tr>
             {literal} <script language="JavaScript">
 calculaDataCarne();
-</script> {/literal}
+</script> {/literal} 
           </table>
           <br>
           <table width="450" border=0 bgcolor="#F1F1F1">
@@ -880,6 +892,7 @@ calculaDataCarne();
 <script language="JavaScript">
 
 init();
+checaFormaCobranca();
 
 </script>
 { /literal }

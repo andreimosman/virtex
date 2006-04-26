@@ -680,7 +680,7 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "f.id_cliente_produto, to_char(f.data, 'DD/mm/YYYY') as data_conv,f.data, f.valor, f.observacoes,f.descricao,to_char(f.reagendamento, 'DD/mm/YYYY') as reagendamento, f.pagto_parcial, ";
 		$sSQL .= "to_char(f.data_pagamento, 'DD/mm/YYYY') as data_pagamento, f.desconto, f.acrescimo, f.valor_pago, ";
 		$sSQL .= "c.id_cliente_produto, c.id_cliente, ";
-		$sSQL .= "CASE WHEN (f.data < now() AND f.status='A') OR (f.reagendamento < now() AND f.status='R') ";
+		$sSQL .= "CASE WHEN (f.data < CAST(now() as date) AND f.status='A') OR (f.reagendamento < CAST(now() as date) AND f.status='R') ";
 		$sSQL .= "THEN 'S' ELSE ";
 		$sSQL .= "CASE WHEN f.reagendamento is not null AND f.status != 'P' ";
 		$sSQL .= "THEN 'G' ELSE f.status ";
@@ -728,7 +728,7 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "f.id_cliente_produto, to_char(f.data, 'DD/mm/YYYY') as data_conv,f.data, f.valor, f.observacoes,f.descricao, to_char(f.reagendamento, 'DD/mm/YYYY') as reagendamento, f.pagto_parcial, ";
 		$sSQL .= "to_char(f.data_pagamento, 'DD/mm/YYYY') as data_pagamento, f.desconto, f.acrescimo, f.valor_pago, ";
 		$sSQL .= "c.id_cliente_produto, c.id_cliente, ";
-		$sSQL .= "CASE WHEN (f.data < now() AND f.status='A') OR (f.reagendamento < now() AND f.status='R') ";
+		$sSQL .= "CASE WHEN (f.data < CAST(now() as date) AND f.status='A') OR (f.reagendamento < CAST(now() as date) AND f.status='R') ";
 		$sSQL .= "THEN 'S' ELSE ";
 		$sSQL .= "CASE WHEN f.reagendamento is not null AND f.status != 'P' ";
 		$sSQL .= "THEN 'G' ELSE f.status ";
@@ -1751,7 +1751,7 @@ class VAClientes extends VirtexAdmin {
 
 					//echo "ID NAS:". $conta["id_nas"] ."<BR>";
 
-					$nas = $this->obtemNas($conta["id_nas"]);			
+					$nas = $this->obtemNas($conta["id_nas"]);
 					$conta["endereco_ip"] = $nas["tipo_nas"] == "I" ? $conta["rede"] : $conta["ipaddr"];
 
 
@@ -2030,8 +2030,15 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= "   id_pop = '".$this->bd->escape($id_pop)."', ";
 							$sSQL .= "   upload_kbps = '".$this->bd->escape($upload_kbps)."', ";
 							$sSQL .= "   download_kbps = '".$this->bd->escape($download_kbps)."', ";
+							
+							if ( !$mac || $mac == "" ){
+							$sSQL .= "   mac = NULL ";
+							} else {
+							
 							$sSQL .= "   mac = '".$this->bd->escape($mac)."' ";
-
+							
+							}
+							
 							if( $rede ) {
 								$sSQL .= ", ipaddr = null, ";
 								$sSQL .= "  rede = '".$rede."' ";
@@ -2043,7 +2050,7 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= "   AND tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
 							$sSQL .= "";
 
-							//echo "$sSQL;<br>\n";
+							echo "$sSQL;<br>\n";
 							$this->bd->consulta($sSQL);
 
 						break;
@@ -2789,7 +2796,20 @@ public function escreveData($data)  {
 	$mes_array = array("janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"); 
 	return $dia ." de ". $mes_array[(int)$mes-1] ." de ". $ano;
 
-}  
+}
+
+public function days_diff($date_ini, $date_end, $round = 1) { 
+    $date_ini = strtotime($date_ini); 
+    $date_end = strtotime($date_end); 
+
+    $date_diff = ($date_end - $date_ini) / 86400; 
+
+    if($round != 0) {
+        return floor($date_diff); 
+    } else {
+        return $date_diff; 
+    }
+} 
 
 
 	
