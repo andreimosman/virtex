@@ -762,16 +762,17 @@ frmContratacao.pri_venc.value = hoje();
             <tr> 
               <td bgcolor="#FFFFFF" align="right" width="98"><p>Forma de Pagamento:</p></td>
               <td bgcolor="#FFFFFF"> <select name='tipo_cobranca' id="tipo_cobranca" onChange="javascript:checaFormaCobranca();">
-				  {foreach item=a from=$tipo_cobranca}
+				  { foreach item=a from=$tipo_cobranca }
 
                   <option value='{$a.id_cobranca}' >{$a.nome_cobranca}</option>
-					{/foreach}
+					{ /foreach }
 
                 </select> </td>
               <td bgcolor="#FFFFFF"><p>Pagamento:</p></td>
-              <td bgcolor="#FFFFFF"><select name="forma_pagamento">
+              <td bgcolor="#FFFFFF">
+			  <select name="forma_pagamento">
                 {foreach key=id item=nome from=$forma_pagamento}
-				  <option value="{$id}" {if $id == $pagamento}SELECTED{/if}>{$nome}</option>
+				  <option value="{$id}" { if $id == $pagamento }SELECTED{ /if }>{$nome}</option>
 				{/foreach}
                 </select></td>
             </tr>

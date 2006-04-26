@@ -826,24 +826,41 @@ class VAConfiguracao extends VirtexAdmin {
 
 						$sSQL  = "SELECT ";
 						$sSQL .= "* FROM ";
-						$sSQL .= "cftb_preferencias ";
+						$sSQL .= "pftb_preferencia_geral ";
 						
 
 						$prefs = $this->bd->obtemUnicoRegistro($sSQL);
 						//echo "preferencia <br>";
 						
-						$sSQL  = "SELECT id_cobranca, nome_cobranca, disponivel FROM cftb_forma_pagamento ORDER BY id_cobranca asc";
-						$frm_pagamento = $this->bd->obtemRegistros($sSQL);
 						
 						if ($acao == "alt"){
 							//echo "alt";
 							if(!count($prefs)){
 						
 								$sSQL  = "INSERT INTO ";
-								$sSQL .= "  cftb_preferencias ";						
+								$sSQL .= "  pftb_preferencia_geral ";						
 								$sSQL .= "    (id_provedor) ";
 								$sSQL .= "VALUES ";
 								$sSQL .= "	('1')";
+								
+								$this->bd->consulta($sSQL);
+
+								
+								$sSQL  = "INSERT INTO ";
+								$sSQL .= "  pftb_preferencia_cobranca ";						
+								$sSQL .= "    (id_provedor) ";
+								$sSQL .= "VALUES ";
+								$sSQL .= "	('1')";
+
+								$this->bd->consulta($sSQL);
+
+								$sSQL  = "INSERT INTO ";
+								$sSQL .= "  pftb_preferencia_provedor ";						
+								$sSQL .= "    (id_provedor) ";
+								$sSQL .= "VALUES ";
+								$sSQL .= "	('1')";
+
+								$this->bd->consulta($sSQL);
 	
 								//echo "SQL INSERT: $sSQL <br>";
 	
@@ -893,11 +910,10 @@ class VAConfiguracao extends VirtexAdmin {
 							}
 						
 							$sSQL  = "UPDATE ";
-							$sSQL .= "  cftb_preferencias ";
+							$sSQL .= "  pftb_preferencia_geral ";
 							$sSQL .= "SET ";
 							$sSQL .= "  dominio_padrao = '".@$_REQUEST["dominio_padrao"]."', ";
 							$sSQL .= "  nome = '".@$_REQUEST["nome"]."', ";
-							$sSQL .= "  localidade = '".@$_REQUEST["localidade"]."', ";
 							$sSQL .= "  radius_server = '".@$_REQUEST["radius_server"]."', ";
 							$sSQL .= "  hosp_server = '".@$_REQUEST["hosp_server"]."', ";
 							$sSQL .= "  hosp_ns1 = '".@$_REQUEST["hosp_ns1"]."', ";
@@ -909,35 +925,11 @@ class VAConfiguracao extends VirtexAdmin {
 							$sSQL .= "  mail_gid = '".@$_REQUEST["mail_gid"]."', ";
 							$sSQL .= "  pop_host = '".@$_REQUEST["pop_host"]."', ";
 							$sSQL .= "  smtp_host = '".@$_REQUEST["smtp_host"]."', ";
-							$sSQL .= "  hosp_base = '".@$_REQUEST["hosp_base"]."', ";
-							$sSQL .= "  tx_juros = '".@$_REQUEST["tx_juros"]."', ";
-							$sSQL .= "  multa = '".@$_REQUEST["multa"]."', ";
-							$sSQL .= "  dia_venc = '".@$_REQUEST["dia_venc"]."', ";
-							$sSQL .= "  cod_banco = '".@$_REQUEST["cod_banco"]."', ";
-							$sSQL .= "  carteira = '".@$_REQUEST["carteira"]."', ";
-							$sSQL .= "  agencia = '".@$_REQUEST["agencia"]."', ";
-							$sSQL .= "  num_conta = '".@$_REQUEST["num_conta"]."', ";
-							$sSQL .= "  convenio = '".@$_REQUEST["convenio"]."' ";
+							$sSQL .= "  hosp_base = '".@$_REQUEST["hosp_base"]."' ";
 							
 							//echo "SQL UPDATE: $sSQL <br>";
 							$this->bd->consulta($sSQL);
 							
-							$sSQL = "UPDATE cftb_forma_pagamento SET disponivel = 'f'";
-							$this->bd->consulta($sSQL);
-							
-							while(list($id,$valor)=each($_REQUEST['disponivel'])){
-
-													
-								$uSQL  = "UPDATE ";
-								$uSQL .= "   cftb_forma_pagamento ";
-								$uSQL .= "SET ";
-								$uSQL .= "   disponivel = '$valor' ";
-								$uSQL .= "WHERE ";
-								$uSQL .= "   id_cobranca = '$id' ";
-																		
-								$this->bd->consulta($uSQL);
-								//echo $uSQL ."<br>";						
-							}
 							
 							$this->tpl->atribui("mensagem","PREFERENCIAS GRAVADAS COM SUCESSO! "); 
 							$this->tpl->atribui("url","home.php");
@@ -955,28 +947,126 @@ class VAConfiguracao extends VirtexAdmin {
 						$this->tpl->atribui("op",$op);
 						$this->tpl->atribui("acao",$acao);
 						$this->tpl->atribui("prefs",$prefs);
-						$this->tpl->atribui("frm_pagamento",$frm_pagamento);
+						//$this->tpl->atribui("frm_pagamento",$frm_pagamento);
 						$this->arquivoTemplate = "configuracao_preferencia.html";
 												
 							
 					
 					
-					}
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
+					}else if ($op == "preferencia_cobranca"){
+					
+						$acao = @$_REQUEST["acao"];
+					
+						$sSQL = "SELECT * FROM pftb_preferencia_cobranca ";
+						$prefs = $this->bd->obtemUnicoRegistro($sSQL);
+					
+					
+						$sSQL  = "SELECT id_cobranca, nome_cobranca, disponivel FROM cftb_forma_pagamento ORDER BY id_cobranca asc";
+						$frm_pagamento = $this->bd->obtemRegistros($sSQL);
 
+					
+						if ($acao == "alt"){
+						
+							$sSQL  = "UPDATE ";
+							$sSQL .= "	pftb_preferencia_cobranca ";
+							$sSQL .= "SET ";
+							$sSQL .= "  tx_juros = '".@$_REQUEST["tx_juros"]."', ";
+							$sSQL .= "  multa = '".@$_REQUEST["multa"]."', ";
+							$sSQL .= "  dia_venc = '".@$_REQUEST["dia_venc"]."', ";
+							$sSQL .= "  cod_banco = '".@$_REQUEST["cod_banco"]."', ";
+							$sSQL .= "  carteira = '".@$_REQUEST["carteira"]."', ";
+							$sSQL .= "  agencia = '".@$_REQUEST["agencia"]."', ";
+							$sSQL .= "  num_conta = '".@$_REQUEST["num_conta"]."', ";
+							$sSQL .= "  convenio = '".@$_REQUEST["convenio"]."', ";
+							$sSQL .= "	pagamento = '".@$_REQUEST["pagamento"]."', ";
+							$sSQL .= "	observacoes = '".@$_REQUEST["observacoes"]."' ";
+
+							$this->bd->consulta($sSQL);
+							//echo "update cobrança: $sSQL <br>";
+
+
+							$sSQL = "UPDATE cftb_forma_pagamento SET disponivel = 'f'";
+							//echo "zerando fp: $sSQL <br>";
+							
+							$this->bd->consulta($sSQL);
+
+							while(list($id,$valor)=each($_REQUEST['disponivel'])){
+
+
+								$uSQL  = "UPDATE ";
+								$uSQL .= "   cftb_forma_pagamento ";
+								$uSQL .= "SET ";
+								$uSQL .= "   disponivel = '$valor' ";
+								$uSQL .= "WHERE ";
+								$uSQL .= "   id_cobranca = '$id' ";
+
+								$this->bd->consulta($uSQL);
+								//echo $uSQL ."<br>";			
+								
+								
+								
+							}
+							
+							$this->tpl->atribui("mensagem","PREFERENCIAS GRAVADAS COM SUCESSO! "); 
+							$this->tpl->atribui("url","home.php");
+							$this->tpl->atribui("target","_top");
+																												
+							$this->arquivoTemplate = "msgredirect.html";
+															
+							return;
+
+						}
+						
+						$this->tpl->atribui("op",$op);
+						$this->tpl->atribui("acao",$acao);
+						$this->tpl->atribui("prefs",$prefs);
+						$this->tpl->atribui("frm_pagamento",$frm_pagamento);
+						$this->arquivoTemplate = "configuracao_preferencia_cobranca.html";
+
+					
+					
+					}else if ($op == "preferencia_provedor"){
+					
+					
+						$acao = @$_REQUEST["acao"];
+					
+						
+						$sSQL  = "SELECT * FROM pftb_preferencia_provedor ";
+						$prefs = $this->bd->obtemUnicoRegistro($sSQL);
+						
+							if ($acao == "alt"){
+								
+								$sSQL  = "UPDATE ";
+								$sSQL .= "pftb_preferencia_provedor ";
+								$sSQL .= "SET ";
+								$sSQL .= "	endereco = '".$_REQUEST["endereco"]."', ";
+								$sSQL .= "	localidade = '".$_REQUEST["localidade"]."', ";
+								$sSQL .= "	cep = '".$_REQUEST["cep"]."', ";
+								$sSQL .= "	cnpj = '".$_REQUEST["cnpj"]."' ";
+								
+								$this->bd->consulta($sSQL);
+								
+								$this->tpl->atribui("mensagem","PREFERENCIAS GRAVADAS COM SUCESSO! "); 
+								$this->tpl->atribui("url","home.php");
+								$this->tpl->atribui("target","_top");
+																					
+								$this->arquivoTemplate = "msgredirect.html";
+								
+								return;
+								
+								
+							}
+						
+						
+						
+						$this->tpl->atribui("op",$op);
+						$this->tpl->atribui("acao",$acao);
+						$this->tpl->atribui("prefs",$prefs);
+						//$this->tpl->atribui("frm_pagamento",$frm_pagamento);
+						$this->arquivoTemplate = "configuracao_preferencia_provedor.html";
 				
-				
-				
+					
+					}
 				
 		
 			}// fecha function processa()

@@ -570,10 +570,10 @@ class VACobranca extends VirtexAdmin {
 			
 			// PEGANDO INFORMAÇÕES DAS PREFERENCIAS
 			$sSQL  = "SELECT ";
-			$sSQL .= " tx_juros, multa, dia_venc, carencia, cod_banco, carteira, agencia, num_conta, convenio, cnpj, observacoes,nome,endereco,localidade ";
+			$sSQL .= " pc.tx_juros, pc.multa, pc.dia_venc, pc.carencia, pc.cod_banco, pc.carteira, pc.agencia, pc.num_conta, pc.convenio, pp.cnpj, pc.observacoes,pg.nome,pp.endereco,pp.localidade,pp.cep ";
 			$sSQL .= "FROM ";
-			$sSQL .= " cftb_preferencias ";
-			$sSQL .= "WHERE id_provedor = '1'";
+			$sSQL .= " pftb_preferencia_geral pg, pftb_preferencia_provedor pp, pftb_preferencia_cobranca pc ";
+			$sSQL .= "WHERE pc.id_provedor = '1'";
 			
 			$provedor = $this->bd->obtemUnicoRegistro($sSQL);
 			
@@ -639,10 +639,10 @@ class VACobranca extends VirtexAdmin {
 
 				// PEGANDO INFORMAÇÕES DAS PREFERENCIAS
 				$sSQL  = "SELECT ";
-				$sSQL .= " tx_juros, multa, dia_venc, carencia, cod_banco, carteira, agencia, num_conta, convenio, cnpj, observacoes,nome ";
+				$sSQL .= " pc.tx_juros, pc.multa, pc.dia_venc, pc.carencia, pc.cod_banco, pc.carteira, pc.agencia, pc.num_conta, pc.convenio, pp.cnpj, pc.observacoes,pg.nome ";
 				$sSQL .= "FROM ";
-				$sSQL .= " cftb_preferencias ";
-				$sSQL .= "WHERE id_provedor = '1'";
+				$sSQL .= " pftb_preferencia_geral pg, pftb_preferencia_cobranca pc, pftb_preferencia_provedor pp ";
+				$sSQL .= "WHERE pc.id_provedor = '1'";
 
 				$provedor = $this->bd->obtemUnicoRegistro($sSQL);
 				
@@ -774,10 +774,10 @@ class VACobranca extends VirtexAdmin {
 
 		
 			$sSQL  = "SELECT ";
-			$sSQL .= " tx_juros, multa, dia_venc, carencia, cod_banco, carteira, agencia, num_conta, convenio, cnpj, observacoes,nome ";
+			$sSQL .= " pc.tx_juros, pc.multa, pc.dia_venc, pc.carencia, pc.cod_banco, pc.carteira, pc.agencia, pc.num_conta, pc.convenio, pp.cnpj, pc.observacoes,pg.nome ";
 			$sSQL .= "FROM ";
-			$sSQL .= " cftb_preferencias ";
-			$sSQL .= "WHERE id_provedor = '1'";
+			$sSQL .= " pftb_preferencia_geral pg, pftb_preferencia_conbranca pc, pftb_preferencia_provedor pp ";
+			$sSQL .= "WHERE pc.id_provedor = '1'";
 			
 			$provedor = $this->bd->obtemUnicoRegistro($sSQL);
 			
@@ -902,6 +902,14 @@ class VACobranca extends VirtexAdmin {
 				$this->arquivoTemplate="msgredirect.html";
 
 			}
+	}else if ($op == "retornos"){
+	
+		global $_LS_FORMATOS_PAG;
+		$this->tpl->atribui("ls_formatos",$_LS_FORMATOS_PAG);
+
+	
+		$this->arquivoTemplate = "cobranca_retorno.html";
+	
 	}
 
 }

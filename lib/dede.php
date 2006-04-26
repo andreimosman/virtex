@@ -6,7 +6,15 @@
 					$id_produto = @$_REQUEST["id_produto"];
 					
 					//Informações sobre o provedor
-					$sSQL = "SELECT * FROM cftb_preferencias WHERE id_provedor = 1";
+					
+					$sSQL  = "SELECT ";
+					$sSQL .= " pc.tx_juros, pc.multa, pc.dia_venc, pc.carencia, pc.cod_banco, pc.carteira, pc.agencia, pc.num_conta, pc.convenio, pc.observacoes, pc.pagamento, ";
+					$sSQL .= " pg.dominio_padrao, pg.nome, pg.radius_server, pg.hosp_server, pg.hosp_ns1, pg.hosp_ns2, pg.hosp_uid, pg.hosp_gid, pg.mail_server, pg.mail_uid, pg.mail_gid, pg.pop_host, pg.smtp_host, pg.hosp_base, ";
+					$sSQL .= " pp.endereco, pp.localidade, pp.cep, pp.cnpj ";
+					$sSQL .= "FROM ";
+					$sSQL .= "pftb_preferencia_cobranca pc, pftb_preferencia_geral pg, pftb_preferencia_provedor pp ";
+					$sSQL .= "WHERE pc.id_provedor = '1' ";
+
 					$info_prov = $this->bd->obtemUnicoRegistro($sSQL);
 					
 					$cod_banco = $info_prov["cod_banco"];
@@ -14,6 +22,7 @@
 					$agencia = $info_prov["agencia"];
 					$num_conta = $info_prov["num_conta"];
 					$convenio = $info_prov["convenio"];
+					$pagamento = $info_prov["pagamento"];
 					
 					if (!$cod_banco) $cod_banco = 0;
 					if (!$carteira) $carteira = 0;

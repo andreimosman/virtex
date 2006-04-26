@@ -140,4 +140,13 @@ $_LS_OPERADORAS_CC = array(
 		"DN" => "Dinners"
 		);
 		
+$_LS_FORMATOS_PAG = array(
+		"PC" => "PagContas",
+		);
+		
+
+
+
+
+
 ?>

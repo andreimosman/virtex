@@ -815,7 +815,7 @@ class VAClientes extends VirtexAdmin {
 				if( $enviando ) {
 				
 					// Pega dominio padrão 
-					$sSQL  = "select dominio_padrao from cftb_preferencias";
+					$sSQL  = "select dominio_padrao from pftb_preferencia_geral";
 					$lista_dominop = $this->bd->obtemUnicoRegistro($sSQL);
 					$dominioPadrao = $lista_dominop["dominio_padrao"]; 
 
@@ -911,7 +911,17 @@ class VAClientes extends VirtexAdmin {
 						
 												
 						if ($email_igual == "1"){
-							$sSQL  = "SELECT * from cftb_preferencias where id_provedor = '1'";
+							//$sSQL  = "SELECT * from cftb_preferencias where id_provedor = '1'";
+							
+							$sSQL  = "SELECT ";
+							$sSQL .= " pc.tx_juros, pc.multa, pc.dia_venc, pc.carencia, pc.cod_banco, pc.carteira, pc.agencia, pc.num_conta, pc.convenio, pc.observacoes, pc.pagamento, ";
+							$sSQL .= " pg.dominio_padrao, pg.nome, pg.radius_server, pg.hosp_server, pg.hosp_ns1, pg.hosp_ns2, pg.hosp_uid, pg.hosp_gid, pg.mail_server, pg.mail_uid, pg.mail_gid, pg.pop_host, pg.smtp_host, pg.hosp_base, ";
+							$sSQL .= " pp.endereco, pp.localidade, pp.cep, pp.cnpj ";
+							$sSQL .= "FROM ";
+							$sSQL .= "pftb_preferencia_cobranca pc, pftb_preferencia_geral pg, pftb_preferencia_provedor pp ";
+							$sSQL .= "WHERE pc.id_provedor = '1' ";
+							
+							
 							$prefs = $this->bd->obtemUnicoRegistro($sSQL);
 
 							
@@ -987,7 +997,15 @@ class VAClientes extends VirtexAdmin {
 						
 						//PEGA CAMPOS COMUNS EM cftb_preferencias
 						
-						$sSQL  = "SELECT * from cftb_preferencias where id_provedor = '1'";
+						//$sSQL  = "SELECT * from cftb_preferencias where id_provedor = '1'";
+						$sSQL  = "SELECT ";
+						$sSQL .= " pc.tx_juros, pc.multa, pc.dia_venc, pc.carencia, pc.cod_banco, pc.carteira, pc.agencia, pc.num_conta, pc.convenio, pc.observacoes, pc.pagamento, ";
+						$sSQL .= " pg.dominio_padrao, pg.nome, pg.radius_server, pg.hosp_server, pg.hosp_ns1, pg.hosp_ns2, pg.hosp_uid, pg.hosp_gid, pg.mail_server, pg.mail_uid, pg.mail_gid, pg.pop_host, pg.smtp_host, pg.hosp_base, ";
+						$sSQL .= " pp.endereco, pp.localidade, pp.cep, pp.cnpj ";
+						$sSQL .= "FROM ";
+						$sSQL .= "pftb_preferencia_cobranca pc, pftb_preferencia_geral pg, pftb_preferencia_provedor pp ";
+						$sSQL .= "WHERE pc.id_provedor = '1' ";
+
 						$prefs = $this->bd->obtemUnicoRegistro($sSQL);
 						
 						
@@ -1109,7 +1127,17 @@ class VAClientes extends VirtexAdmin {
 								
 							case 'H':
 								// PRODUTO HOSPEDAGEM
-								$sSQL  = "SELECT * from cftb_preferencias where id_provedor = '1'";
+								//$sSQL  = "SELECT * from cftb_preferencias where id_provedor = '1'";							
+								
+								$sSQL  = "SELECT ";
+								$sSQL .= " pc.tx_juros, pc.multa, pc.dia_venc, pc.carencia, pc.cod_banco, pc.carteira, pc.agencia, pc.num_conta, pc.convenio, pc.observacoes, pc.pagamento, ";
+								$sSQL .= " pg.dominio_padrao, pg.nome, pg.radius_server, pg.hosp_server, pg.hosp_ns1, pg.hosp_ns2, pg.hosp_uid, pg.hosp_gid, pg.mail_server, pg.mail_uid, pg.mail_gid, pg.pop_host, pg.smtp_host, pg.hosp_base, ";
+								$sSQL .= " pp.endereco, pp.localidade, pp.cep, pp.cnpj ";
+								$sSQL .= "FROM ";
+								$sSQL .= "pftb_preferencia_cobranca pc, pftb_preferencia_geral pg, pftb_preferencia_provedor pp ";
+								$sSQL .= "WHERE pc.id_provedor = '1' ";
+
+								
 								$prefs = $this->bd->obtemUnicoRegistro($sSQL);
 								
 								
@@ -1125,6 +1153,7 @@ class VAClientes extends VirtexAdmin {
 								$shell = "/bin/false";
 								$dominio_hospedagem = @$_REQUEST["dominio_hospedagem"];
 								$server = $prefs["hosp_server"];
+								
 								
 								$sSQL  = "select * from cntb_conta where username = $username AND tipo_conta = $tipo_conta AND dominio = $dominio";
 								$prep = $this->bd->obtemRegistros($sSQL);
@@ -1795,9 +1824,12 @@ class VAClientes extends VirtexAdmin {
 					$conta = array_merge($conta,$conta_email);
 					
 					$sSQL  = "SELECT ";
-					$sSQL .= "	* ";
+					$sSQL .= " pc.tx_juros, pc.multa, pc.dia_venc, pc.carencia, pc.cod_banco, pc.carteira, pc.agencia, pc.num_conta, pc.convenio, pc.observacoes, pc.pagamento, ";
+					$sSQL .= " pg.dominio_padrao, pg.nome, pg.radius_server, pg.hosp_server, pg.hosp_ns1, pg.hosp_ns2, pg.hosp_uid, pg.hosp_gid, pg.mail_server, pg.mail_uid, pg.mail_gid, pg.pop_host, pg.smtp_host, pg.hosp_base, ";
+					$sSQL .= " pp.endereco, pp.localidade, pp.cep, pp.cnpj ";
 					$sSQL .= "FROM ";
-					$sSQL .= "	cftb_preferencias ";
+					$sSQL .= "pftb_preferencia_cobranca pc, pftb_preferencia_geral pg, pftb_preferencia_provedor pp ";
+					$sSQL .= "WHERE pc.id_provedor = '1' ";
 					
 					$server = $this->bd->obtemUnicoRegistro($sSQL);
 					
@@ -2485,9 +2517,9 @@ class VAClientes extends VirtexAdmin {
 		
 			$hoje = date("Y-m-d");
 		
-			$sSQL  = "SELECT nome, localidade, cnpj ";
+			$sSQL  = "SELECT nome, localidade, cnpj, cep ";
 			$sSQL .= "FROM ";
-			$sSQL .= "cftb_preferencias ";
+			$sSQL .= "pftb_preferencia_provedor ";
 			$sSQL .= "WHERE id_provedor = '1'";
 			
 			$provedor = $this->bd->obtemUnicoRegistro($sSQL);

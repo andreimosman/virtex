@@ -1,7 +1,7 @@
 <?
 
 	// Pega dominio padrão 
-	$sSQL  = "select dominio_padrao from cftb_preferencias";
+	$sSQL  = "select dominio_padrao from pftb_preferencia_geral ";
 	$lista_dominop = $this->bd->obtemUnicoRegistro($sSQL);
 	$dominioPadrao = $lista_dominop["dominio_padrao"]; 
 	
@@ -67,6 +67,7 @@
 		$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
 		$tipo_hospedagem = @$_REQUEST["tipo_hospedagem"];
 		$dominio_hospedagem = @$_REQUEST["dominio_hospedagem"];
+		$pagamento = @$_REQUEST["pagamento"];
 		$pri_venc = @$_REQUEST["pri_venc"];		
 		
 		//Informações de banco e cartão de crédito
@@ -168,6 +169,7 @@
 		$this->tpl->atribui("dominio_hospedagem", $dominio_hospedagem);
 		$this->tpl->atribui("tipo_hospedagem", $tipo_hospedagem);
 		$this->tpl->atribui("pri_venc",$pri_venc);
+		$this->tpl->atribui("pagamento",$pagamento);
 		
 		
 		$this->tpl->atribui("cc_vencimento",$cc_vencimento); 
