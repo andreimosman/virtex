@@ -541,7 +541,9 @@ class VACobranca extends VirtexAdmin {
 		
 		
 		} else if ($op == "boleto"){
-		
+			
+			/* BOLETO BANCO DO BRASIL 
+			
 			$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
 			$data = @$_REQUEST["data"];
 			$id_cliente = @$_REQUEST["id_cliente"];
@@ -602,6 +604,65 @@ class VACobranca extends VirtexAdmin {
 			}
 		
 			//$this->arquivoTemplate = "";
+			*/
+						
+			
+						/* PAGCONTAS */
+						
+						
+						require_once(PATH_LIB . "/MArrecadacao.class.php");			
+						$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
+						$data = @$_REQUEST["data"];
+						$id_cliente = @$_REQUEST["id_cliente"];
+						
+						$sSQL  = "SELECT cl.nome_razao, cl.endereco, cl.id_cidade, cl.estado, cl.cep, cl.cpf_cnpj, cd.cidade as nome_cidade, cd.id_cidade  ";
+						$sSQL .= "FROM ";
+						$sSQL .= "cltb_cliente cl, cftb_cidade cd ";
+						$sSQL .= "WHERE ";
+						$sSQL .= "cl.id_cliente = '$id_cliente' AND ";
+						$sSQL .= "cd.id_cidade = cl.id_cidade";
+						
+						$cliente = $this->bd->obtemUnicoRegistro($sSQL);
+						//echo "CLIENTE: $sSQL  <br>";
+						
+						
+						$sSQL  = "SELECT valor, id_cobranca,to_char(data, 'DD/mm/YYYY') as data  FROM ";
+						$sSQL .= "cbtb_faturas ";
+						$sSQL .= "WHERE ";
+						$sSQL .= "id_cliente_produto = '$id_cliente_produto' AND ";
+						$sSQL .= "data = '$data' ";
+						
+						//echo "fatura: $sSQL<br>";
+			
+						$fatura = $this->bd->obtemUnicoRegistro($sSQL);
+						
+						
+						// PEGANDO INFORMAÇÕES DAS PREFERENCIAS
+						$sSQL  = "SELECT ";
+						$sSQL .= " pc.tx_juros, pc.multa, pc.dia_venc, pc.carencia, pc.cod_banco, pc.carteira, pc.agencia, pc.num_conta, pc.convenio, pp.cnpj, pc.observacoes,pg.nome,pp.endereco,pp.localidade,pp.cep ";
+						$sSQL .= "FROM ";
+						$sSQL .= " pftb_preferencia_geral pg, pftb_preferencia_provedor pp, pftb_preferencia_cobranca pc ";
+						$sSQL .= "WHERE pc.id_provedor = '1'";
+						
+						$provedor = $this->bd->obtemUnicoRegistro($sSQL);
+						
+						//$codigo = @$_REQUEST["codigo"];
+						//$data_venc = "30/04/2006";
+						$data_venc = $fatura["data"];
+						//echo $codigo;
+						$valor = $fatura["valor"];
+						$id_cobranca = $fatura["id_cobranca"];
+						$nome_cliente = $cliente["nome_razao"];
+						$cpf_cliente = $cliente["cpf_cnpj"];
+
+						$codigo_barras = MArrecadacao::codigoBarrasPagContas($valor,$id_empresa,$nosso_numero,$vencimento);
+						$linha_digitavel = MArrecadacao::linhaDigitavel($codigo_barras);
+
+						$barra = MArrecadacao::barCode($codigo_barras);
+						
+						
+						
+						/* PAGCONTAS */
 			
 			
 			
@@ -688,20 +749,22 @@ class VACobranca extends VirtexAdmin {
 					$faturas = $this->bd->obtemRegistros($sSQL);
 					
 					// Se nao retornou registros cria a fatura
+					
 					if( !count($faturas) ) {
-                                          $sSQL =  "INSERT INTO cbtb_faturas(";
-                                          $sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
-                                          $sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
-                                          $sSQL .= "	acrescimo, valor_pago ";
-                                          $sSQL .= ") VALUES (";
-                                          $sSQL .= " '".$contrato[$i]["id_cliente_produto"]."', '$fatura_dt_vencimento','".$produto["nome"]."', '".$contrato[$i]["valor"]."', '".$contrato[$i]["status"]."', null, ";
-                                          $sSQL .= "	NULL, '0', NULL, '0', ";
-                                          $sSQL .= "	'0', '0' ";
-                                          $sSQL .= ")";
+                       
+                       $sSQL =  "INSERT INTO cbtb_faturas(";
+                       $sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
+                       $sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
+                       $sSQL .= "	acrescimo, valor_pago ";
+                       $sSQL .= ") VALUES (";
+                       $sSQL .= " '".$contrato[$i]["id_cliente_produto"]."', '$fatura_dt_vencimento','".$produto["nome"]."', '".$contrato[$i]["valor"]."', '".$contrato[$i]["status"]."', null, ";
+                       $sSQL .= "	NULL, '0', NULL, '0', ";
+                       $sSQL .= "	'0', '0' ";
+                       $sSQL .= ")";
 
-                                          $this->bd->consulta($sSQL);
-                                          echo "FATURA($i): $sSQL <br>\n";
-                                        }
+                       $this->bd->consulta($sSQL);
+                       echo "FATURA($i): $sSQL <br>\n";
+                    }
 				}
 
 

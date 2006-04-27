@@ -8,7 +8,6 @@
 
 define('PATH_LIB','./lib');
 define('PATH_ETC','./etc');
-define('PATH_FRW','../frameworks');
 
 
 
