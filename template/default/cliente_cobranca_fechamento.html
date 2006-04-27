@@ -95,7 +95,7 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                                   <td width="200"><p>{$a.nome_razao}</p></td>
                                   <td width="150" align="CENTER"><p>{$a.data_conv}</p></td>
                                   <td width="100"><p>{$a.valor}</p></td>
-                                  <td align="CENTER"><a href="javascript:;"><img alt="IMPRIMIR BOLETO" src="template/default/images/boleto.gif" width="15" height="16"  onclick="MM_openBrWindow('cobranca.php?op=boleto&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$a.id_cliente}','boleto','scrollbars=yes,width=700,height=660')" border="0"></a></td>
+                                  <td align="CENTER"><a href="javascript:;"><img alt="IMPRIMIR BOLETO" src="template/default/images/boleto.gif" width="15" height="16"  onclick="MM_openBrWindow('cobranca.php?op=boleto&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$a.id_cliente}','boleto','scrollbars=yes,width={$largura},height={$altura}')" border="0"></a></td>
                                 </tr>
                                 <tr bgcolor="#999999"> 
                                   <td colspan="4" height="1"></td>

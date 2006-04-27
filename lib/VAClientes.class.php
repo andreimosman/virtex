@@ -714,6 +714,7 @@ class VAClientes extends VirtexAdmin {
 		$cliente = $this->bd->obtemUnicoRegistro($sSQL);
 		
 		//$this->tpl->atribui("lista_contrato",$lista_contrato);
+		
 		$this->tpl->atribui("hoje",$hoje);
 		$this->tpl->atribui("cliente",$cliente);
 		$this->tpl->atribui("id_cliente", $id_cliente);
@@ -783,8 +784,11 @@ class VAClientes extends VirtexAdmin {
 				
 				
 				
-				
-				
+				$largura = "700";
+				$altura = "400";
+
+				$this->tpl->atribui("largura",$largura);
+				$this->tpl->atribui("altura",$altura);
 				
 				
 				$this->tpl->atribui("produtos",$produtos);
