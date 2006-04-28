@@ -248,6 +248,9 @@
 					
 					list($ca, $cm, $cd) = explode("-", $data_contratacao);
 					
+					$arqtmp = tempnam("/tmp","cn-");
+					$fd = fopen($arqtmp,"w");
+
 					
 					switch($forma_pagamento) {
 						case 'POS':
@@ -363,6 +366,12 @@
 												$this->bd->consulta($sSQL);
 													
 											}*/
+											
+											$this->carne($id_cliente_produto,$data,$id_cliente);
+																				
+											fputs($fd,$fatura);
+											
+
 
 										}else{
 										
@@ -393,6 +402,10 @@
 
 										//echo "$sSQL<br>";
 										$this->bd->consulta($sSQL);
+
+										$this->carne($id_cliente_produto,$data,$id_cliente);
+										fputs($fd,$fatura);
+
 										
 										/*
 										list($dt_final_a, $dt_final_m, $dt_final_d) = explode("-", $fatura_dt_vencimento);
@@ -400,6 +413,9 @@
 										$stamp_dt1 = mktime(0,0,0,$dt_final_m, $dt_final_d, $dt_final_a);
 										
 										//if("$dt_final_d/$dt_final_m/$dt_final_a" == "$data_carne") break; */
+										
+										
+										
 										
 									}																	
 								} else { //Caso a cobrança não seja do tipo carnê.
@@ -526,6 +542,13 @@
 
 										//echo "$sSQL<br>";
 										$this->bd->consulta($sSQL);
+										
+										$data = $fatura_dt_vencimento;
+										
+										$fatura = $this->carne($id_cliente_produto,$data,$id_cliente);
+										fputs($fd,$fatura);
+
+										
 									}
 								} else {
 								
@@ -571,6 +594,29 @@
 								}
 							break;						
 					}
+					
+								$hoje = date("Ymdhms");
+								$nome_arquivo = $hoje."-".$id_cliente;
+								$host = "dev.mosman.com.br";
+					
+					
+								$p = new MHTML2PDF();
+								$p->setDebug(1);
+								$arqPDF = $p->converte($arqtmp,$host,$defaultPath='/tmp');
+								
+								copy($arqPDF, "./faturas/".$nome_arquivo.".pdf");
+					
+								fclose($fd);
+								
+
+
+					
+					
+					
+					
+					
+					
+					
 					
 					//echo "<br>$username";
 										

@@ -1,6 +1,8 @@
 <?
 
 require_once( PATH_LIB . "/VirtexAdmin.class.php" );
+require_once("MArrecadacao.class.php");
+require_once("MUtils.class.php");
 
 class VAClientes extends VirtexAdmin {
 
@@ -2846,6 +2848,112 @@ public function days_diff($date_ini, $date_end, $round = 1) {
         return $date_diff; 
     }
 } 
+
+public function carne($id_cliente_produto,$data,$id_cliente){
+	
+	$sSQL  = "SELECT cl.nome_razao, cl.endereco, cl.id_cidade, cl.estado, cl.cep, cl.cpf_cnpj, cd.cidade as nome_cidade, cd.id_cidade  ";
+	$sSQL .= "FROM ";
+	$sSQL .= "cltb_cliente cl, cftb_cidade cd ";
+	$sSQL .= "WHERE ";
+	$sSQL .= "cl.id_cliente = '$id_cliente' AND ";
+	$sSQL .= "cd.id_cidade = cl.id_cidade";
+
+	$cliente = $this->bd->obtemUnicoRegistro($sSQL);
+	//echo "CLIENTE: $sSQL  <br>";
+
+
+	$sSQL  = "SELECT valor, id_cobranca,to_char(data, 'DD/mm/YYYY') as data  FROM ";
+	$sSQL .= "cbtb_faturas ";
+	$sSQL .= "WHERE ";
+	$sSQL .= "id_cliente_produto = '$id_cliente_produto' AND ";
+	$sSQL .= "data = '$data' ";
+
+	//echo "fatura: $sSQL<br>";
+
+	$fatura = $this->bd->obtemUnicoRegistro($sSQL);
+
+
+	// PEGANDO INFORMAÇÕES DAS PREFERENCIAS
+	$sSQL  = "SELECT ";
+	$sSQL .= " pc.tx_juros, pc.multa, pc.dia_venc, pc.carencia, pc.cod_banco, pc.carteira, pc.agencia, pc.num_conta, pc.convenio, pp.cnpj, pc.observacoes,pg.nome,pp.endereco,pp.localidade,pp.cep,pg.nome ";
+	$sSQL .= "FROM ";
+	$sSQL .= " pftb_preferencia_geral pg, pftb_preferencia_provedor pp, pftb_preferencia_cobranca pc ";
+	$sSQL .= "WHERE pc.id_provedor = '1'";
+
+	$provedor = $this->bd->obtemUnicoRegistro($sSQL);
+
+	$sSQL = "SELECT ct.id_produto, pd.nome from cbtb_contrato ct, prtb_produto pd WHERE ct.id_cliente_produto = '$id_cliente_produto' and ct.id_produto = pd.id_produto";
+	$produto = $this->bd->obtemUnicoRegistro($sSQL);
+	//echo "PRODUTO: $sSQL <br>";
+
+	//$codigo = @$_REQUEST["codigo"];
+	//$data_venc = "30/04/2006";
+	
+	$sSQL = "SELECT nextval('blsq_carne_nossonumero') as nosso_numero ";
+	$nn = $this->bd->obtemUnicoRegistro($sSQL);
+	
+	$nosso_numero = $nn['nosso_numero'];
+	$data_venc = $fatura["data"];
+	@list($dia,$mes,$ano) = explode("/",$fatura["data"]);
+	$vencimento = $ano.$mes.$dia;
+	//echo $codigo;
+	$valor = $fatura["valor"];
+	$id_cobranca = $fatura["id_cobranca"];
+	$nome_cliente = $cliente["nome_razao"];
+	$cpf_cliente = $cliente["cpf_cnpj"];
+	$id_empresa = $provedor["cnpj"];
+	//$nosso_numero = 1;
+	$nome_cedente = $provedor['nome'];
+	$cendereco = $provedor['endereco'];
+	$clocalidade = $provedor['localidade'];
+	$observacoes = $provedor['observacoes'];
+	$nome_produto = $produto["nome"];
+
+	$codigo_barras = MArrecadacao::codigoBarrasPagContas($valor,$id_empresa,$nosso_numero,$vencimento);
+	$linha_digitavel = MArrecadacao::linhaDigitavel($codigo_barras);
+	$hoje = date("d/m/Y");
+	
+		
+	//	$codigo = MArrecadacao::pagConta(...);
+		
+		
+		
+
+	//$barra = MArrecadacao::barCode($codigo_barras);
+	
+	$ph = new MUtils;
+	
+	$_path = MUtils::getPwd();
+	$images = $_path."/template/boletos/imagens";
+	$this->tpl->atribui("codigo_barras",$codigo_barras);
+	
+
+
+	$this->tpl->atribui("linha_digitavel",$linha_digitavel);
+	$this->tpl->atribui("valor",$valor);
+	$this->tpl->atribui("imagens",$images);
+	$this->tpl->atribui("vencimento", $data_venc);
+	$this->tpl->atribui("hoje",$hoje);
+	$this->tpl->atribui("nosso_numero",$nosso_numero);
+	$this->tpl->atribui("sacado",$nome_cliente);
+	$this->tpl->atribui("sendereco",$cliente['endereco']);
+	$this->tpl->atribui("scidade",$cliente['nome_cidade']);
+	$this->tpl->atribui("suf",$cliente['estado']);
+	$this->tpl->atribui("scep",$cliente['cep']);
+	$this->tpl->atribui("juros",$provedor['tx_juros']);
+	$this->tpl->atribui("multa",$provedor['multa']);
+	$this->tpl->atribui("nome_cedente",$provedor['nome']);
+	$this->tpl->atribui("cendereco",$cendereco);
+	$this->tpl->atribui("clocalidade",$clocalidade);
+	$this->tpl->atribui("observacoes",$observacoes);
+	$this->tpl->atribui("produto",$nome_produto);
+	$this->tpl->atribui("path",$_path);
+	
+	//return($carne_emitido);
+	$fatura = $this->tpl->obtemPagina("../boletos/layout-pc.html");
+	return($fatura);
+
+}
 
 
 	

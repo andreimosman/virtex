@@ -1,6 +1,5 @@
 <?
 require_once( PATH_LIB . "/VirtexAdmin.class.php" );
-require_once("MArrecadacao.class.php");
 class VACobranca extends VirtexAdmin {
 
 	public function VACobranca() {
@@ -673,12 +672,11 @@ class VACobranca extends VirtexAdmin {
 			
 			
 			}
-		}else if($op == "gerar_boletos"){
+		}else if($op == "gerar_carne"){
 				
 			$acao = @$_REQUEST["acao"];
 
-
-			$this->arquivoTemplate = "cliente_cobranca_fechamento.html";
+			//$this->arquivoTemplate = "cliente_cobranca_fechamento.html";
 			$dia_inicio = @$_REQUEST["dia_inicio"];
 			$dia_final  = @$_REQUEST["dia_final"];
 			$mes = @$_REQUEST["mes"];
@@ -691,10 +689,12 @@ class VACobranca extends VirtexAdmin {
 			$data = @$_REQUEST["data"];
 			$id_cliente = @$_REQUEST["id_cliente"];
 
-			$this->geraCarne($dia_inicio,$dia_final,$mes,$ano,$dti,$dtf);
+			return;
+
 
 	
 		}else if ($op == "lista_boletos") {
+			
 		
 			$dia_inicio = @$_REQUEST["dia_inicio"];
 			$dia_final  = @$_REQUEST["dia_final"];
@@ -763,7 +763,7 @@ class VACobranca extends VirtexAdmin {
 			$faturas = $this->bd->obtemRegistros($sSQL);
 			//echo "$sSQL <br>\n";
 
-			$largura = "700";
+			$largura = "720";
 			$altura = "400";
 
 			$this->tpl->atribui("faturas",$faturas);
@@ -924,6 +924,15 @@ public function amortizar(){
 
 
 }
+
+public function geraCarne($dia_inicio,$dia_final,$mes,$ano,$dti,$dtf){
+
+			
+
+
+				//MBoleto::barCode($codigo);
+
+}
 public function carne($id_cliente_produto,$data,$id_cliente){
 	
 	$sSQL  = "SELECT cl.nome_razao, cl.endereco, cl.id_cidade, cl.estado, cl.cep, cl.cpf_cnpj, cd.cidade as nome_cidade, cd.id_cidade  ";
@@ -995,7 +1004,11 @@ public function carne($id_cliente_produto,$data,$id_cliente){
 		
 
 	//$barra = MArrecadacao::barCode($codigo_barras);
-	$images = "template/boletos/imagens";
+	
+	$ph = new MUtils;
+	
+	$_path = MUtils::getPwd();
+	$images = $_path."/template/boletos/imagens";
 	$this->tpl->atribui("codigo_barras",$codigo_barras);
 
 	$this->tpl->atribui("linha_digitavel",$linha_digitavel);
@@ -1016,6 +1029,7 @@ public function carne($id_cliente_produto,$data,$id_cliente){
 	$this->tpl->atribui("clocalidade",$clocalidade);
 	$this->tpl->atribui("observacoes",$observacoes);
 	$this->tpl->atribui("produto",$nome_produto);
+	$this->tpl->atribui("path",$_path);
 	
 	//return($carne_emitido);
 	$fatura = $this->tpl->obtemPagina("../boletos/layout-pc.html");
@@ -1023,124 +1037,6 @@ public function carne($id_cliente_produto,$data,$id_cliente){
 
 }
 
-public function geraCarne(){
-
-			
-
-				// PEGANDO INFORMAÇÕES DAS PREFERENCIAS
-				$sSQL  = "SELECT ";
-				$sSQL .= " pc.tx_juros, pc.multa, pc.dia_venc, pc.carencia, pc.cod_banco, pc.carteira, pc.agencia, pc.num_conta, pc.convenio, pp.cnpj, pc.observacoes,pg.nome ";
-				$sSQL .= "FROM ";
-				$sSQL .= " pftb_preferencia_geral pg, pftb_preferencia_cobranca pc, pftb_preferencia_provedor pp ";
-				$sSQL .= "WHERE pc.id_provedor = '1'";
-
-				$provedor = $this->bd->obtemUnicoRegistro($sSQL);
-				
-				//echo "QUERY PROVEDOR: $sSQL <br>\n";
-
-				$sSQL  = "SELECT ";
-				$sSQL .= " * from cbtb_contrato where status = 'A' AND vencimento BETWEEN '$dia_inicio' AND '$dia_final'";
-
-				$contrato = $this->bd->obtemRegistros($sSQL);
-				//echo "QUERY CONTRATO: $sSQL <br>\n";
-				
-				//echo "C: " . count($contrato) . "<br>\n";
-				// PARA AQUI: DEBUG
-				//return;
-
-				for($i=0;$i<count($contrato);$i++){
-
-					//@list($ca, $cm, $cd) = explode("/",$contrato["data_contratacao"]);
-
-					//if ( $cm < "12" ){
-					//	$cm = $cm+1;
-					//}else if ( $cm == "12" ){
-					//	$cm = "1";
-					//}
-					
-					$vencimento = $contrato[$i]["vencimento"];
-
-
-					//$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $cm, $cd, $ca));
-					$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $mes, $vencimento, $ano));
-
-					$sSQL  = "SELECT ";
-					$sSQL .= "nome FROM prtb_produto WHERE id_produro = '".$contrato[$i]["id_produto"]."'";
-
-					$produto = $this->bd->obtemUnicoRegistro($sSQL);
-					//echo "QUERY PRODUTO($i): $sSQL <br>\n";
-					
-					
-					// Verifica se existe fatura emitida para o contrato selecionado na data especificada
-					// em $fatura_dt_vencimento
-					
-					$sSQL = "SELECT * FROM cbtb_fatura WHERE id_cliente_produto = '" . $contrato[$i]["id_cliente_produto"]."' AND data = '".$fatura_dt_vencimento."' ";
-					$faturas = $this->bd->obtemRegistros($sSQL);
-					
-					// Se nao retornou registros cria a fatura
-					
-					if( !count($faturas) ) {
-                       
-                       $sSQL =  "INSERT INTO cbtb_faturas(";
-                       $sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
-                       $sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
-                       $sSQL .= "	acrescimo, valor_pago ";
-                       $sSQL .= ") VALUES (";
-                       $sSQL .= " '".$contrato[$i]["id_cliente_produto"]."', '$fatura_dt_vencimento','".$produto["nome"]."', '".$contrato[$i]["valor"]."', '".$contrato[$i]["status"]."', null, ";
-                       $sSQL .= "	NULL, '0', NULL, '0', ";
-                       $sSQL .= "	'0', '0' ";
-                       $sSQL .= ")";
-
-                       $this->bd->consulta($sSQL);
-                       echo "FATURA($i): $sSQL <br>\n";
-                    }
-				}
-
-
-				$sSQL  = "SELECT ft.valor, ft.id_cobranca,to_char(ft.data, 'DD/mm/YYYY') as data, ft.id_cliente_produto, cp.id_cliente_produto, cp.id_cliente  FROM ";
-				$sSQL .= "cbtb_faturas ft, cbtb_cliente_produto cp ";
-				$sSQL .= "WHERE ";
-				$sSQL .= "data BETWEEN '$dti' AND '$dtf' AND ";
-				$sSQL .= "ft.id_cliente_produto = cp.id_cliente_produto ";
-				$sSQL .= "data = '$data' ";
-
-				$faturas = $this->bd->obtemRegistros($sSQL);
-				echo "$sSQL <br>\n";
-				
-				$arqtmp = tempnam("./tmp","cn-");
-				
-				$fd = fopen($arqtmp,"w");
-
-				
-				
-				
-				for($i=0;$i<count($faturas);$i++) {
-				
-					$id_cliente_produto = $faturas[$i]["id_cliente_produto"];
-					$data = $faturas[$i]["data"];
-					$id_cliente = $faturas[$i]["id_cliente"];
-
-					$this->carne($id_cliente_produto,$data,$id_cliente);
-
-					//$fd=fopen( $PATHS["tmp"]."/boleto.tmp", "w" );
-					//fwrite($fd, $pgTPL->pget("PF_CONF") );
-      				//
-      				
-      				fputs($fd,$fatura);
-      				
-      				if($i%3){
-      					fputs($fd,"<!--NewPage-->");
-					}
-
-
-				}
-				
-				fclose($fd);
-
-
-				//MBoleto::barCode($codigo);
-
-}
 	
 public function __destruct() {
       	parent::__destruct();

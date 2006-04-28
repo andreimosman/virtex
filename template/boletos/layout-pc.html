@@ -1,30 +1,43 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>boletos</title>
+<title>&nbsp;</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+{literal}
+ <style>
+body {
+   font-face: helvetica;
+}
+
+p {
+   font-face: helvetica; 
+}
+
+</style>
+{/literal}
+
+ <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table align="CENTER" width="648" border="0" cellspacing="0" cellpadding="0" height="352">
   <tr>
     <td valign="TOP"><table width="648" border="0" cellspacing="0" cellpadding="0">
         <tr>
-          <td width="188" align="CENTER" valign="TOP"> <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <td width="188" align="CENTER" valign="TOP"> <table width="188" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td align="RIGHT">
-                  <p><font size="1" face="Arial, Helvetica, sans-serif"><strong>{$nome_cedente}</strong></font></p></td>
+                  <p></p><strong>{$nome_cedente}</strong></p></td>
               </tr>
               <tr>
-                <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <td><table width="188" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                      <td width="31%"><img src="{$imagens}/pagcontas_logo.jpg" width="59" height="46"></td>
-                      <td width="1" align="LEFT" valign="TOP" bgcolor="#000000"><img src="{$imagens}/Untitled-2.gif" width="1" height="1"></td>
-                      <td width="69%" align="LEFT" valign="TOP"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <td width="59"><img src="{$imagens}/pagcontas_logo.jpg" width="59" height="46"></td>
+                      <td width="1px" align="LEFT" valign="TOP" bgcolor="#000000"><img src="{$imagens}/Untitled-2.gif" width="1" height="1"></td>
+                      <td width="69%" align="LEFT" valign="TOP"><table width="129" border="0" cellspacing="0" cellpadding="0">
                           <tr>
-                            <td><font size="1" face="Arial, Helvetica, sans-serif">Vencimento</font></td>
+                            <td><font size="1" face="palatino">Vencimento</font></td>
                           </tr>
                           <tr>
-                            <td height="37" align="CENTER" valign="MIDDLE"><font face="Arial, Helvetica, sans-serif" size="2"><strong>{$vencimento}</strong></font></td>
+                            <td height="37" align="CENTER" valign="MIDDLE"><font face="palatino" size="2"><strong>{$vencimento}</strong></font></td>
                           </tr>
                         </table></td>
                     </tr>
@@ -36,38 +49,40 @@
                       <td bgcolor="#000000" height="1"><img src="{$imagens}/Untitled-2.gif" width="1" height="1"></td>
                     </tr>
                     <tr>
-                      <td align="LEFT" valign="TOP"><font face="Arial, Helvetica, sans-serif" size="1">Valor</font></td>
+                      <td align="LEFT" valign="TOP"><font face="palatino" size="1">Valor</font></td>
                     </tr>
                     <tr>
-                      <td align="CENTER"><font size="1" face="Arial, Helvetica, sans-serif">R$
+                      <td align="CENTER"><font size="1" face="palatino">R$
                         {$valor}</font></td>
                     </tr>
                   </table></td>
               </tr>
               <tr>
-                <td height="25" valign="TOP"> <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <td height="25" valign="TOP"> <table width="188" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                      <td bgcolor="#000000"><img src="{$imagens}/Untitled-2.gif" width="1" height="1"></td>
+                      <td bgcolor="#000000" width=1px><img src="{$imagens}/Untitled-2.gif" width="1" height="1"></td>
                     </tr>
                     <tr>
-                      <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <td><table width="188" border="0" cellspacing="0" cellpadding="0">
                           <tr>
-                            <td width="50%"> <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <td width="93">
+                              <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
-                                  <td align="LEFT" valign="TOP"><font face="Arial, Helvetica, sans-serif" size="1">Emiss&atilde;o</font></td>
+                                  <td align="LEFT" valign="TOP"><font face="palatino" size="1">Emiss&atilde;o</font></td>
                                 </tr>
                                 <tr>
-                                  <td height="19" align="CENTER" valign="TOP"><font face="Arial, Helvetica, sans-serif" size="1">{$hoje}</font></td>
+                                  <td height="19" align="CENTER" valign="TOP"><font face="palatino" size="1">{$hoje}</font></td>
                                 </tr>
                               </table></td>
                             <td bgcolor="#000000" width="1"><img src="{$imagens}/Untitled-2.gif" width="1" height="1"></td>
-                            <td width="50%"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <td width="94">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
-                                  <td align="LEFT" valign="TOP"><font face="Arial, Helvetica, sans-serif" size="1">Referente
+                                  <td align="LEFT" valign="TOP"><font face="palatino" size="1">Referente
                                     a: </font></td>
                                 </tr>
                                 <tr>
-                                  <td height="19" align="CENTER" valign="TOP"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Mensalidade</font></td>
+                                  <td height="19" align="CENTER" valign="TOP"><font size="1" face="Verdana, Arial, palatino, sans-serif">mens.</font></td>
                                 </tr>
                               </table></td>
                           </tr>
@@ -81,11 +96,11 @@
                       <td bgcolor="#000000"><img src="{$imagens}/Untitled-2.gif" width="1" height="1"></td>
                     </tr>
                     <tr>
-                      <td align="LEFT" valign="TOP"><font size="1" face="Arial, Helvetica, sans-serif">Nosso
+                      <td align="LEFT" valign="TOP"><font size="1" face="palatino">Nosso
                         Numero</font></td>
                     </tr>
                     <tr>
-                      <td align="CENTER"><font size="2" face="Arial, Helvetica, sans-serif">{$nosso_numero}</font></td>
+                      <td align="CENTER"><font size="2" face="palatino">{$nosso_numero}</font></td>
                     </tr>
                   </table></td>
               </tr>
@@ -95,10 +110,10 @@
                       <td bgcolor="#000000"><img src="{$imagens}/Untitled-2.gif" width="1" height="1"></td>
                     </tr>
                     <tr>
-                      <td align="LEFT" valign="TOP"><font size="1" face="Arial, Helvetica, sans-serif">Produto</font></td>
+                      <td align="LEFT" valign="TOP"><font size="1" face="palatino">Produto</font></td>
                     </tr>
                     <tr>
-                      <td align="CENTER"><font size="2" face="Arial, Helvetica, sans-serif">{$produto}</font></td>
+                      <td align="CENTER"><font size="2" face="palatino">{$produto}</font></td>
                     </tr>
                   </table></td>
               </tr>
@@ -108,10 +123,10 @@
                       <td bgcolor="#000000"><img src="{$imagens}/Untitled-2.gif" width="1" height="1"></td>
                     </tr>
                     <tr>
-                      <td><font size="1" face="Arial, Helvetica, sans-serif">Sacado</font></td>
+                      <td><font size="1" face="palatino">Sacado</font></td>
                     </tr>
                     <tr>
-                      <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><strong>{$sacado}</strong></font></td>
+                      <td align="CENTER"><font size="1" face="palatino"><strong>{$sacado}</strong></font></td>
                     </tr>
                   </table></td>
               </tr>
@@ -121,7 +136,7 @@
                       <td bgcolor="#000000"><img src="{$imagens}/Untitled-2.gif" width="1" height="1"></td>
                     </tr>
                     <tr>
-                      <td align="RIGHT" valign="TOP"><font size="1" face="Arial, Helvetica, sans-serif"><strong>RECIBO
+                      <td align="RIGHT" valign="TOP"><font size="1" face="palatino"><strong>RECIBO
                         DO CLIENTE</strong></font></td>
                     </tr>
                     <tr>
@@ -145,12 +160,12 @@
                             <td width="266"><table width="93%" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
                                   <td valign="TOP">&nbsp;</td>
-                                  <td height="23" valign="TOP"><font face="Arial, Helvetica, sans-serif" size="2"><strong>RECIBO
+                                  <td height="23" valign="TOP"><font face="palatino" size="2"><strong>RECIBO
                                     DO POSTO</strong></font></td>
                                 </tr>
                                 <tr>
                                   <td valign="BOTTOM">&nbsp;</td>
-                                  <td height="23" valign="BOTTOM"><font face="Arial, Helvetica, sans-serif" size="1">Referente
+                                  <td height="23" valign="BOTTOM"><font face="palatino" size="1">Referente
                                     a:
                                     {$produto}</font></td>
                                 </tr>
@@ -158,11 +173,11 @@
                             <td width="144" align="RIGHT" valign="BASELINE"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
                                   <td valign="TOP">&nbsp;</td>
-                                  <td height="23" valign="TOP" align="RIGHT"><font face="Arial, Helvetica, sans-serif" size="1"><strong>{$nome_cedente}</strong> </font></td>
+                                  <td height="23" valign="TOP" align="RIGHT"><font face="palatino" size="1"><strong>{$nome_cedente}</strong> </font></td>
                                 </tr>
                                 <tr>
                                   <td valign="BOTTOM">&nbsp;</td>
-                                  <td height="23" valign="BOTTOM" align="RIGHT"><font size="1" face="Arial, Helvetica, sans-serif">Impress&atilde;o:{$hoje}</font></td>
+                                  <td height="23" valign="BOTTOM" align="RIGHT"><font size="1" face="palatino">Impress&atilde;o:{$hoje}</font></td>
                                 </tr>
                               </table></td>
                           </tr>
@@ -178,21 +193,21 @@
                                 <tr>
                                   <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
                                       <tr>
-                                        <td><font size="1" face="Arial, Helvetica, sans-serif">Local
+                                        <td><font size="1" face="palatino">Local
                                           de Pagamento</font></td>
                                       </tr>
                                       <tr>
-                                        <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">POSTOS
+                                        <td><font size="2" face="palatino">POSTOS
                                           PAG CONTAS</font></td>
                                       </tr>
                                     </table></td>
                                   <td width="1" bgcolor="#000000"><img src="{$imagens}/Untitled-2.gif" width="1" height="1"></td>
                                   <td width="143"><table width="100%" border="0" cellspacing="0" cellpadding="2">
                                       <tr>
-                                        <td><font size="1" face="Arial, Helvetica, sans-serif">Vencimento</font></td>
+                                        <td><font size="1" face="palatino">Vencimento</font></td>
                                       </tr>
                                       <tr>
-                                        <td align="CENTER" valign="MIDDLE"><font face="Arial, Helvetica, sans-serif" size="2"><strong>{$vencimento}</strong></font></td>
+                                        <td align="CENTER" valign="MIDDLE"><font face="palatino" size="2"><strong>{$vencimento}</strong></font></td>
                                       </tr>
                                     </table></td>
                                 </tr>
@@ -210,12 +225,12 @@
                                 <tr>
                                   <td align="CENTER" valign="TOP"> <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                       <tr>
-                                        <td><font size="1" face="Arial, Helvetica, sans-serif">I
+                                        <td><font size="1" face="palatino">I
                                           N S T R U &Ccedil; &Otilde; E S</font></td>
                                       </tr>
                                       <tr>
                                         <td height="105" valign="BOTTOM"> <p>&nbsp;</p>
-                                          <p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$observacoes}<br>
+                                          <p><font size="1" face="palatino">{$observacoes}<br>
                                             AP&Oacute;S O PRAZO DE PAGAMENTO COBRAR
                                             MULTA DE {$multa}%<br>
                                             MAIS JUROS DE {$juros} % AO DIA.</font></p></td>
@@ -226,11 +241,11 @@
                                       <tr>
                                         <td><table width="100%" border="0" cellspacing="0" cellpadding="2">
                                             <tr>
-                                              <td><font size="1" face="Arial, Helvetica, sans-serif">Nosso
+                                              <td><font size="1" face="palatino">Nosso
                                                 Numero</font></td>
                                             </tr>
                                             <tr>
-                                              <td align="CENTER"><font size="2" face="Arial, Helvetica, sans-serif">{$nosso_numero}</font></td>
+                                              <td align="CENTER"><font size="2" face="palatino">{$nosso_numero}</font></td>
                                             </tr>
                                           </table></td>
                                       </tr>
@@ -240,11 +255,11 @@
                                       <tr>
                                         <td><table width="100%" border="0" cellspacing="0" cellpadding="2">
                                             <tr>
-                                              <td><font size="1" face="Arial, Helvetica, sans-serif">(=)
+                                              <td><font size="1" face="palatino">(=)
                                                 Valor do Documento</font></td>
                                             </tr>
                                             <tr>
-                                              <td align="CENTER"><font size="2" face="Arial, Helvetica, sans-serif"><strong>R$
+                                              <td align="CENTER"><font size="2" face="palatino"><strong>R$
                                                 {$valor}</strong></font></td>
                                             </tr>
                                           </table></td>
@@ -255,7 +270,7 @@
                                       <tr>
                                         <td><table width="100%" border="0" cellspacing="0" cellpadding="2">
                                             <tr>
-                                              <td><font size="1" face="Arial, Helvetica, sans-serif">(-)
+                                              <td><font size="1" face="palatino">(-)
                                                 Desconto </font></td>
                                             </tr>
                                             <tr>
@@ -279,10 +294,10 @@
                                 <tr>
                                   <td align="LEFT" valign="TOP"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                                       <tr>
-                                        <td><font size="1" face="Arial, Helvetica, sans-serif">SACADO</font></td>
+                                        <td><font size="1" face="palatino">SACADO</font></td>
                                       </tr>
                                       <tr>
-                                        <td height="61"><font size="2" face="Arial, Helvetica, sans-serif">{$sacado}<br>
+                                        <td height="61"><font size="2" face="palatino">{$sacado}<br>
                                           {$sendereco} - {$scidade} {$suf}<br>{$scep}</font></td>
                                       </tr>
                                     </table></td>
@@ -291,7 +306,7 @@
                                       <tr>
                                         <td><table width="100%" border="0" cellspacing="0" cellpadding="2">
                                             <tr>
-                                              <td><font size="1" face="Arial, Helvetica, sans-serif">(+)
+                                              <td><font size="1" face="palatino">(+)
                                                 Mora/Multa/Juros </font></td>
                                             </tr>
                                             <tr>
@@ -305,7 +320,7 @@
                                       <tr>
                                         <td><table width="100%" border="0" cellspacing="0" cellpadding="2">
                                             <tr>
-                                              <td><font size="1" face="Arial, Helvetica, sans-serif">(=)
+                                              <td><font size="1" face="palatino">(=)
                                                 Valor Cobrado</font></td>
                                             </tr>
                                             <tr>
@@ -326,7 +341,7 @@
                           </tr>
                           <tr>
                             <td align="RIGHT">
-                              <p><font size="1" face="Arial, Helvetica, sans-serif">{$nome_cedente}
+                              <p><font size="1" face="palatino">{$nome_cedente}
                                 - {$cendereco} - {$clocalidade}</font></p></td>
                           </tr>
                           <tr>
@@ -336,13 +351,13 @@
                     </tr>
                     <tr>
                     <td>
-                    <font size="2" face="Arial, Helvetica, sans-serif">
+                    <font size="2" face="palatino">
                     {$linha_digitavel}
                     </font>
                     </td>
                     </tr>
                     <tr>
-                      <td><img src="{$smarty.server.PHP_SELF}?op=boleto&codigo={$codigo_barras}"></td>
+                      <td><img src="{$path}/barcode.php?codigo={$codigo_barras}"></td>
                     </tr>
                   </table></td>
               </tr>
