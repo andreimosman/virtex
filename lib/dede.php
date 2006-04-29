@@ -54,7 +54,7 @@
 					$desconto_promo = @$_REQUEST["desconto_promo"];
 					$periodo_desconto = @$_REQUEST["periodo_desconto"];
 					$valor_prorata = @$_REQUEST["valor_prorata"];
-					
+					$carencia = @$_REQUEST["carencia_pagamento"];
 					
 					
 					//Informações sobre banco e cartão de crédito
@@ -102,12 +102,12 @@
 					$sSQL .= "	id_cliente_produto, data_contratacao, vigencia, data_renovacao, valor_contrato, id_cobranca, status, ";
 					$sSQL .= "	tipo_produto, valor_produto, num_emails, quota_por_conta, tx_instalacao, comodato, valor_comodato, ";
 					$sSQL .= "	desconto_promo, periodo_desconto, id_produto, cod_banco, agencia, num_conta, carteira, ";
-					$sSQL .= "	convenio, cc_vencimento, cc_numero, cc_operadora, db_banco, db_agencia, db_conta";
+					$sSQL .= "	convenio, cc_vencimento, cc_numero, cc_operadora, db_banco, db_agencia, db_conta, carencia";
 					$sSQL .= ") VALUES ( ";
 					$sSQL .= "	$id_cliente_produto, '$data_contratacao', $vigencia, '$data_renovacao', $valor_contrato, $id_cobranca, '$status', ";
 					$sSQL .= "	'$tipo_produto', $valor_produto, $num_emails, $quota, $tx_instalacao, '$comodato', $valor_comodato, ";
 					$sSQL .= "	$desconto_promo, $periodo_desconto, $id_produto, $cod_banco, $agencia, $num_conta, $carteira, ";
-					$sSQL .= "	$convenio, '$cc_vencimento', '$cc_numero', '$cc_operadora', $db_banco, $db_agencia, $db_conta";
+					$sSQL .= "	$convenio, '$cc_vencimento', '$cc_numero', '$cc_operadora', $db_banco, $db_agencia, $db_conta, $carencia";
 					$sSQL .= ")";
 					
 					
