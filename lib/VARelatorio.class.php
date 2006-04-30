@@ -511,7 +511,20 @@ class VARelatorio extends VirtexAdmin {
 		$this->tpl->atribui("relat",$relat);
 		$this->arquivoTemplate = "relatorio_produtos_clientes.html";
 
-
+	
+	} else if ($op == "tproduto_cliente"){
+				
+		$sSQL  = "SELECT ";
+		$sSQL .= " COUNT(cp.tipo_produto) as num_contratos, ";
+		$sSQL .= " cp.tipo_produto as tipo ";
+		$sSQL .= "FROM cbtb_contrato as cp ";
+		$sSQL .= "GROUP BY cp.tipo_produto ";
+		$sSQL .= "ORDER BY cp.tipo_produto ";
+			
+		$relat = $this->bd->obtemRegistros($sSQL);
+			
+		$this->tpl->atribui("relat",$relat);
+		$this->arquivoTemplate = "relatorio_tipoprodutos_clientes.html";	
 	
 	} else if ($op == "evolucao"){
 	
