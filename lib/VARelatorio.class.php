@@ -523,7 +523,7 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "FROM ";
 			$sSQL .= "	(SELECT id_cliente_produto, valor_contrato FROM cbtb_contrato) cnt , ";
 			$sSQL .= "	(SELECT id_produto, nome AS nome_produto, tipo FROM prtb_produto) prd, ";
-			$sSQL .= "	(SELECT id_cliente, nome_razao FROM cltb_cliente) clt, ";
+			$sSQL .= "	(SELECT id_cliente, nome_razao, excluido FROM cltb_cliente) clt, ";
 			$sSQL .= "	cbtb_cliente_produto as clp ";
 			$sSQL .= "WHERE ";
 			$sSQL .= "	clt.id_cliente = clp.id_cliente AND ";
@@ -536,6 +536,8 @@ class VARelatorio extends VirtexAdmin {
 		}
 		
 		$relat = $this->bd->obtemRegistros($sSQL);
+		
+		//echo $sSQL;
 		
 		$this->tpl->atribui("acao", $acao);
 		$this->tpl->atribui("op", $op);
@@ -596,6 +598,7 @@ class VARelatorio extends VirtexAdmin {
 		if (!$acao) $acao = "geral";
 		
 		if ($acao == "geral") {		
+			
 			$sSQL  = "SELECT ";
 			$sSQL .= "   cnt.id_cidade,cnt.num_clientes, cid.cidade, cid.uf ";
 			$sSQL .= "FROM ";
@@ -608,6 +611,7 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "      id_cidade) cnt ";
 			$sSQL .= "WHERE ";
 			$sSQL .= "   cid.id_cidade = cnt.id_cidade ";
+			
 		} else if($acao == "sub_cid") {
 		
 			$id_cidade = @$_REQUEST["id_cidade"];
@@ -628,9 +632,68 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "		cftb_cidade ";
 			$sSQL .= "	ORDER BY uf) cid ";
 			$sSQL .= "WHERE ";
-			$sSQL .= "	cnt.id_cidade = cid.id_cidade AND cnt.id_cidade = $id_cidade ";
-			$sSQL .= "	clt.excluido = 'FALSE'";
+			$sSQL .= "	cnt.id_cidade = cid.id_cidade AND cnt.id_cidade = $id_cidade AND";
+			$sSQL .= "	cnt.excluido = 'FALSE' ";
 			$sSQL .= "ORDER BY cid.uf, cid.id_cidade, cnt.nome_razao";	
+			
+		}
+		
+		$relat = $this->bd->obtemRegistros($sSQL);	
+		//echo $sSQL;
+				
+		$this->tpl->atribui("acao", $acao);
+		$this->tpl->atribui("op", $op);
+		$this->tpl->atribui("relat",$relat);
+		$this->arquivoTemplate = "relatorio_cidades_clientes.html";	
+	
+	}  else if ($op == "adesao"){
+		
+		$acao = @$_REQUEST["acao"];
+		
+		if (!$acao) $acao = "geral";
+		
+		if ($acao == "geral") {	
+					
+			$sSQL  = "SELECT  ";
+			$sSQL .= "	p.id_produto,p.nome,p.tipo,p.disponivel,mes,ano,num_contratos ";
+			$sSQL .= "FROM ";
+			$sSQL .= "	prtb_produto p ";
+			$sSQL .= "INNER JOIN ";
+			$sSQL .= "	(SELECT ";
+			$sSQL .= "		p.id_produto,count(cp.id_produto) as num_contratos, ";
+			$sSQL .= "		EXTRACT( 'month' from data_contratacao) as mes, ";
+			$sSQL .= "		EXTRACT( 'year' from data_contratacao) as ano ";
+			$sSQL .= "	FROM  ";
+			$sSQL .= "		prtb_produto p LEFT OUTER JOIN cbtb_contrato cp USING(id_produto)  ";
+			$sSQL .= "	GROUP BY  ";
+			$sSQL .= "		ano, mes, p.id_produto ) c  ";
+			$sSQL .= "USING(id_produto) ";
+			$sSQL .= "ORDER BY ano, mes DESC ";
+			
+		} else if($acao == "sub_cid") {
+		
+			$id_cidade = @$_REQUEST["id_cidade"];
+		
+			$sSQL  = "SELECT ";
+			$sSQL .= "	cnt.id_cliente, ";
+			$sSQL .= "	cnt.nome_razao, ";
+			$sSQL .= "	cid.id_cidade, ";
+			$sSQL .= "	cid.cidade, ";
+			$sSQL .= "	cid.uf ";
+			$sSQL .= "FROM ";
+			$sSQL .= "	cltb_cliente as cnt, ";
+			$sSQL .= "	(SELECT ";
+			$sSQL .= "		id_cidade, ";
+			$sSQL .= "		cidade, ";
+			$sSQL .= "		uf ";
+			$sSQL .= "	FROM ";
+			$sSQL .= "		cftb_cidade ";
+			$sSQL .= "	ORDER BY uf) cid ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "	cnt.id_cidade = cid.id_cidade AND cnt.id_cidade = $id_cidade AND ";
+			$sSQL .= "	clt.excluido = 'FALSE' ";
+			$sSQL .= "ORDER BY cid.uf, cid.id_cidade, cnt.nome_razao";
+			
 			
 		}
 		
@@ -640,7 +703,7 @@ class VARelatorio extends VirtexAdmin {
 		$this->tpl->atribui("acao", $acao);
 		$this->tpl->atribui("op", $op);
 		$this->tpl->atribui("relat",$relat);
-		$this->arquivoTemplate = "relatorio_cidades_clientes.html";	
+		$this->arquivoTemplate = "relatorio_adesoes.html";	
 	
 	} else if ($op == "evolucao"){
 	
@@ -672,7 +735,17 @@ class VARelatorio extends VirtexAdmin {
 	}
 	
 }
-
+	
+	function obtem_mes($params, &$smarty) {
+		global $LS_MESES_ANO;
+		
+		if(empty($params['mes'])) $params['mes']=1;
+		
+		$numero_mes = $params['mes'];
+		
+		return $LS_MESES_ANO[$numero_mes];		
+	}
+	
 	public function __destruct() {
 			parent::__destruct();
 	}

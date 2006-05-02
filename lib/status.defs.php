@@ -145,7 +145,20 @@ $_LS_FORMATOS_PAG = array(
 		);
 		
 
-
+$_LS_MESES_ANO = array (
+		"1"	=> "Janeiro",
+		"2"	=> "Fevereiro",
+		"3"	=> "Março",
+		"4"	=> "Abril",
+		"5"	=> "Maio",
+		"6"	=> "Junho",
+		"7"	=> "Julhoo",
+		"8"	=> "Agosto",
+		"9"	=> "Setembro",
+		"10"	=> "Outubro",
+		"11"	=> "Novembro",
+		"12"	=> "Dezembro"
+		);
 
 
 
