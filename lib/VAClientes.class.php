@@ -330,7 +330,7 @@ class VAClientes extends VirtexAdmin {
 
 
 					}
-					
+					echo "$sSQL";
 					$this->bd->consulta($sSQL);  
 
 					//if( $this->bd->obtemErro() != MDATABASE_OK ) {
