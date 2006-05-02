@@ -543,16 +543,47 @@ class VARelatorio extends VirtexAdmin {
 
 	
 	} else if ($op == "tproduto_cliente"){
-				
-		$sSQL  = "SELECT ";
-		$sSQL .= " COUNT(cp.tipo_produto) as num_contratos, ";
-		$sSQL .= " cp.tipo_produto as tipo ";
-		$sSQL .= "FROM cbtb_contrato as cp ";
-		$sSQL .= "GROUP BY cp.tipo_produto ";
-		$sSQL .= "ORDER BY cp.tipo_produto ";
-			
+		
+		$acao = @$_REQUEST["acao"];
+		
+		if (!$acao) $acao = "geral";
+		
+		if ($acao == "geral") {
+
+			$sSQL  = "SELECT ";
+			$sSQL .= " COUNT(cp.tipo_produto) as num_contratos, ";
+			$sSQL .= " cp.tipo_produto as tipo ";
+			$sSQL .= "FROM cbtb_contrato as cp ";
+			$sSQL .= "GROUP BY cp.tipo_produto ";
+			$sSQL .= "ORDER BY cp.tipo_produto ";
+		
+		} else if ($acao == "sub_tprd") {
+		
+			$tipo = @$_REQUEST["tipo"];
+		
+			$sSQL  = "SELECT ";
+			$sSQL .= "	cl.id_cliente, cl.nome_razao, ";
+			$sSQL .= "	cp.tipo_produto as tipo,  ";
+			$sSQL .= "	pr.id_produto ";
+			$sSQL .= "FROM  ";
+			$sSQL .= "	cbtb_contrato as cp, ";
+			$sSQL .= "	cltb_cliente as cl, ";
+			$sSQL .= "	prtb_produto as pr, ";
+			$sSQL .= "	cbtb_cliente_produto as clp ";
+			$sSQL .= "WHERE  ";
+			$sSQL .= "	pr.tipo = '$tipo' AND ";
+			$sSQL .= "	clp.id_cliente = cl.id_cliente AND clp.id_produto = pr.id_produto AND ";
+			$sSQL .= "	cp.id_cliente_produto = clp.id_cliente_produto ";
+			$sSQL .= "ORDER BY cl.nome_razao, cl.id_cliente  ";
+		
+		}
+		
+		//echo($sSQL);
+		
 		$relat = $this->bd->obtemRegistros($sSQL);
-			
+		
+		$this->tpl->atribui("acao", $acao);
+		$this->tpl->atribui("op", $op);
 		$this->tpl->atribui("relat",$relat);
 		$this->arquivoTemplate = "relatorio_tipoprodutos_clientes.html";	
 	
@@ -602,8 +633,7 @@ class VARelatorio extends VirtexAdmin {
 		
 		$relat = $this->bd->obtemRegistros($sSQL);	
 		
-		//echo "$sSQL";	
-
+				
 		$this->tpl->atribui("acao", $acao);
 		$this->tpl->atribui("op", $op);
 		$this->tpl->atribui("relat",$relat);
