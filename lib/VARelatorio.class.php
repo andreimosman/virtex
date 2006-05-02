@@ -528,6 +528,7 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "WHERE ";
 			$sSQL .= "	clt.id_cliente = clp.id_cliente AND ";
 			$sSQL .= "	prd.id_produto = $id_produto AND ";
+			$sSQL .= "	clt.excluido = 'FALSE' AND ";
 			$sSQL .= "	prd.id_produto = clp.id_produto AND ";
 			$sSQL .= "	cnt.id_cliente_produto = clp.id_cliente_produto ";
 			$sSQL .= "ORDER BY prd.tipo, prd.id_produto, clt.nome_razao ";
@@ -573,6 +574,7 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "WHERE  ";
 			$sSQL .= "	pr.tipo = '$tipo' AND ";
 			$sSQL .= "	clp.id_cliente = cl.id_cliente AND clp.id_produto = pr.id_produto AND ";
+			$sSQL .= "	cl.excluido = 'FALSE' AND ";
 			$sSQL .= "	cp.id_cliente_produto = clp.id_cliente_produto ";
 			$sSQL .= "ORDER BY cl.nome_razao, cl.id_cliente  ";
 		
@@ -627,6 +629,7 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "	ORDER BY uf) cid ";
 			$sSQL .= "WHERE ";
 			$sSQL .= "	cnt.id_cidade = cid.id_cidade AND cnt.id_cidade = $id_cidade ";
+			$sSQL .= "	clt.excluido = 'FALSE'";
 			$sSQL .= "ORDER BY cid.uf, cid.id_cidade, cnt.nome_razao";	
 			
 		}
