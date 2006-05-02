@@ -144,6 +144,12 @@ $_LS_FORMATOS_PAG = array(
 		"PC" => "PagContas",
 		);
 		
+$_LS_TIPO_CONTRATO = array(
+		"BL" => "Banda Larga",
+		"D"  => "Discado",
+		"H"  => "Hospedagem"
+		)
+
 
 $_LS_MESES_ANO = array (
 		"1"	=> "Janeiro",
