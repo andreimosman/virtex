@@ -167,7 +167,6 @@ class VARelatorio extends VirtexAdmin {
 
 
 				$eSQL =  "SELECT ";
-				$eSQL .= "	cl.id_cliente, ";
 				$eSQL .= "	COUNT(ft.data) AS faturas, "; 
 				$eSQL .= "	SUM(ft.valor) as estimativa, ";
 				$eSQL .= "	SUM(ft.desconto) as descontos, ";
@@ -229,7 +228,7 @@ class VARelatorio extends VirtexAdmin {
 				$eSQL .= "	OR ft.status = 'A'";
 				$eSQL .= "GROUP BY cl.id_cliente";
 				
-			} else if($tipo_relatorio == "AB-") { //Em aberto ixcluindo atrazadas
+			} else if($tipo_relatorio == "AB-") { //Em aberto excluindo atrazadas
 				
 				$sSQL = "SELECT ";
 				$sSQL .= "	cl.id_cliente, cl.nome_razao, cp.id_cliente_produto, ";
@@ -495,19 +494,50 @@ class VARelatorio extends VirtexAdmin {
 
 
 	} else if ($op == "produto_cliente"){
-	
-		$sSQL  = "SELECT ";
-		$sSQL .= " p.id_produto,p.nome,p.tipo,p.valor,p.disponivel,num_contratos ";
-		$sSQL .= "FROM ";
-		$sSQL .= " prtb_produto p INNER JOIN ";
-		$sSQL .= "(SELECT p.id_produto,count(cp.id_produto) as num_contratos ";
-		$sSQL .= " FROM prtb_produto p LEFT OUTER JOIN cbtb_contrato cp USING(id_produto) ";
-		$sSQL .= "GROUP BY p.id_produto ";
-		$sSQL .= " ) c USING(id_produto) ";
-		$sSQL .= "ORDER BY num_contratos DESC";
-	
+		
+		$acao = @$_REQUEST["acao"];
+		
+		if (!$acao) $acao = "geral";		
+		
+		if ($acao == "geral"){
+		
+			$sSQL  = "SELECT ";
+			$sSQL .= " p.id_produto,p.nome,p.tipo,p.valor,p.disponivel,num_contratos ";
+			$sSQL .= "FROM ";
+			$sSQL .= " prtb_produto p INNER JOIN ";
+			$sSQL .= "(SELECT p.id_produto,count(cp.id_produto) as num_contratos ";
+			$sSQL .= " FROM prtb_produto p LEFT OUTER JOIN cbtb_contrato cp USING(id_produto) ";
+			$sSQL .= "GROUP BY p.id_produto ";
+			$sSQL .= " ) c USING(id_produto) ";
+			$sSQL .= "ORDER BY num_contratos DESC";			
+			
+			
+		}else if($acao == "sub_prd") {
+		
+			$id_produto = @$_REQUEST["id_produto"];
+			
+			$sSQL  = "SELECT ";
+			$sSQL .= "	clt.id_cliente, clt.nome_razao, ";
+			$sSQL .= "	prd.id_produto, prd.nome_produto, prd.tipo, ";
+			$sSQL .= "	cnt.id_cliente_produto, cnt.valor_contrato ";
+			$sSQL .= "FROM ";
+			$sSQL .= "	(SELECT id_cliente_produto, valor_contrato FROM cbtb_contrato) cnt , ";
+			$sSQL .= "	(SELECT id_produto, nome AS nome_produto, tipo FROM prtb_produto) prd, ";
+			$sSQL .= "	(SELECT id_cliente, nome_razao FROM cltb_cliente) clt, ";
+			$sSQL .= "	cbtb_cliente_produto as clp ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "	clt.id_cliente = clp.id_cliente AND ";
+			$sSQL .= "	prd.id_produto = $id_produto AND ";
+			$sSQL .= "	prd.id_produto = clp.id_produto AND ";
+			$sSQL .= "	cnt.id_cliente_produto = clp.id_cliente_produto ";
+			$sSQL .= "ORDER BY prd.tipo, prd.id_produto, clt.nome_razao ";
+
+		}
+		
 		$relat = $this->bd->obtemRegistros($sSQL);
 		
+		$this->tpl->atribui("acao", $acao);
+		$this->tpl->atribui("op", $op);
 		$this->tpl->atribui("relat",$relat);
 		$this->arquivoTemplate = "relatorio_produtos_clientes.html";
 
@@ -525,6 +555,59 @@ class VARelatorio extends VirtexAdmin {
 			
 		$this->tpl->atribui("relat",$relat);
 		$this->arquivoTemplate = "relatorio_tipoprodutos_clientes.html";	
+	
+	} else if ($op == "cidade_cliente"){
+		
+		$acao = @$_REQUEST["acao"];
+		
+		if (!$acao) $acao = "geral";
+		
+		if ($acao == "geral") {		
+			$sSQL  = "SELECT ";
+			$sSQL .= "   cnt.id_cidade,cnt.num_clientes, cid.cidade, cid.uf ";
+			$sSQL .= "FROM ";
+			$sSQL .= "   cftb_cidade cid, ";
+			$sSQL .= "   (SELECT ";
+			$sSQL .= "      id_cidade,count(*) as num_clientes ";
+			$sSQL .= "   FROM ";
+			$sSQL .= "      cltb_cliente ";
+			$sSQL .= "   GROUP BY ";
+			$sSQL .= "      id_cidade) cnt ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "   cid.id_cidade = cnt.id_cidade ";
+		} else if($acao == "sub_cid") {
+		
+			$id_cidade = @$_REQUEST["id_cidade"];
+		
+			$sSQL  = "SELECT ";
+			$sSQL .= "	cnt.id_cliente, ";
+			$sSQL .= "	cnt.nome_razao, ";
+			$sSQL .= "	cid.id_cidade, ";
+			$sSQL .= "	cid.cidade, ";
+			$sSQL .= "	cid.uf ";
+			$sSQL .= "FROM ";
+			$sSQL .= "	cltb_cliente as cnt, ";
+			$sSQL .= "	(SELECT ";
+			$sSQL .= "		id_cidade, ";
+			$sSQL .= "		cidade, ";
+			$sSQL .= "		uf ";
+			$sSQL .= "	FROM ";
+			$sSQL .= "		cftb_cidade ";
+			$sSQL .= "	ORDER BY uf) cid ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "	cnt.id_cidade = cid.id_cidade AND cnt.id_cidade = $id_cidade ";
+			$sSQL .= "ORDER BY cid.uf, cid.id_cidade, cnt.nome_razao";	
+			
+		}
+		
+		$relat = $this->bd->obtemRegistros($sSQL);	
+		
+		//echo "$sSQL";	
+
+		$this->tpl->atribui("acao", $acao);
+		$this->tpl->atribui("op", $op);
+		$this->tpl->atribui("relat",$relat);
+		$this->arquivoTemplate = "relatorio_cidades_clientes.html";	
 	
 	} else if ($op == "evolucao"){
 	

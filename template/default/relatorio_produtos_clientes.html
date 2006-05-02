@@ -20,80 +20,85 @@
               <tr>
                 <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio</h1><h2 align="center"><font size="2">Clientes
                   x Produtos</font></h2>
-                  <table width="600" border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                      <td><table width="600" border="0" cellspacing="0" cellpadding="0">
-                          <tr>
-                            <td bgcolor="#F1F1F1"><table width="600" border="0" cellspacing="2" cellpadding="0">
-                                <tr>
-                                  <td width="250" ><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Cliente</font></td>
-                                  <td width="150"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Produto</font></td>
-                                  <td width="50" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Tipo</font></td>
-                                  <td align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Valor
-                                    Contrato</font></td>
-                                </tr>
-                              </table></td>
-                          </tr>
-                          <tr>
-                            <td>
-							{foreach item=a from=$relat}
-							  <table width="600" border="0" cellspacing="2" cellpadding="0">
-                                <tr>
-                                  <td width="250"><p>{$a.nome_razao}</p></td>
-                                  <td width="150"><p>{$a.nome_produto}</p></td>
-                                  <td width="50" align="CENTER"><p><img src="template/default/images/{$a.tipo|lower|trim}.gif" width="24" height="24"></p></td>
-                                  <td align="RIGHT"><p>{$a.valor_contrato}</p></td>
-                                </tr>
-                                <tr bgcolor="#999999">
-                                  <td colspan="4" height="1"></td>
-                                </tr>
-                              </table>
-							  {/foreach}
-							  </td>
-                          </tr>
-                        </table></td>
-                    </tr>
-                  </table>
 
+					{if $acao == "geral"}
+						  <table width="600" border="0" cellspacing="0" cellpadding="0">
+							  <tr>
+								<td><table width="600" border="0" cellspacing="0" cellpadding="0">
+									<tr>
+									  <td bgcolor="#F1F1F1"><table width="600" border="0" cellspacing="2" cellpadding="0">
+										  <tr>
+											<td width="80" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Contratos</font></td>
+											<td width="170"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Produto</font></td>
+											<td width="100" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Tipo</font></td>
+											<td align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Valor
+											  Produto</font></td>
+										  </tr>
+										</table></td>
+									</tr>
+									<tr>
+									  <td>
+									  {foreach item=a from=$relat}
+									    <table width="600" border="0" cellspacing="2" cellpadding="0">
+										  <tr>
+											<td width="80" align="CENTER"><p>{$a.num_contratos}</p></td>
+											<td width="170"><p><a href="relatorio.php?op={$op}&acao=sub_prd&id_produto={$a.id_produto}"> {$a.nome}</p></td>
+											<td width="100" align="CENTER"><p><img src="template/default/images/{$a.tipo|lower|trim}.gif" width="24" height="24"></p></td>
+											<td align="RIGHT"><p>{$a.valor}</p></td>
+										  </tr>
+										  <tr bgcolor="#999999">
+											<td colspan="4" height="1"></td>
+										  </tr>
+										</table>
+									  {/foreach}
+									  </td>
+									</tr>
+								  </table></td>
+							  </tr>
+						  </table>
+					{/if}
 
-
-                  <br>
-                  <h2 align="center"><font size="2">Total</font></h2>
-
-                  <table width="600" border="0" cellspacing="0" cellpadding="0">
-					  <tr>
-						<td><table width="600" border="0" cellspacing="0" cellpadding="0">
+					{if $acao=="sub_prd"}
+						  <table width="600" border="0" cellspacing="0" cellpadding="0">
 							<tr>
-							  <td bgcolor="#F1F1F1"><table width="600" border="0" cellspacing="2" cellpadding="0">
+							  <td><table width="600" border="0" cellspacing="0" cellpadding="0">
 								  <tr>
-									<td width="80" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Contratos</font></td>
-									<td width="170"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Produto</font></td>
-									<td width="100" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Tipo</font></td>
-									<td align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Valor
-									  Produto</font></td>
+									<td bgcolor="#F1F1F1"><table width="600" border="0" cellspacing="2" cellpadding="0">
+										<tr>
+										  <td width="250" ><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Cliente</font></td>
+										  <td width="150"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Produto</font></td>
+										  <td width="50" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Tipo</font></td>
+										  <td align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Valor
+											Contrato</font></td>
+										</tr>
+									  </table></td>
+								  </tr>
+								  <tr>
+									<td>
+									{foreach item=a from=$relat}
+									  <table width="600" border="0" cellspacing="2" cellpadding="0">
+										<tr>
+										  <td width="250"><p><a href="clientes.php?op=cadastro&id_cliente={$a.id_cliente}">{$a.nome_razao}</a></p></td>
+										  <td width="150"><p>{$a.nome_produto}</p></td>
+										  <td width="50" align="CENTER"><p><img src="template/default/images/{$a.tipo|lower|trim}.gif" width="24" height="24"></p></td>
+										  <td align="RIGHT"><p>{$a.valor_contrato}</p></td>
+										</tr>
+										<tr bgcolor="#999999">
+										  <td colspan="4" height="1"></td>
+										</tr>
+									  </table>
+									  {/foreach}
+									  </td>
 								  </tr>
 								</table></td>
 							</tr>
-							<tr>
-							  <td>
-							{foreach item=a from=$total}
-							  <table width="600" border="0" cellspacing="2" cellpadding="0">
-								  <tr>
-									<td width="80" align="CENTER"><p>{$a.num_contratos}</p></td>
-									<td width="170"><p>{$a.nome}</p></td>
-									<td width="100" align="CENTER"><p><img src="template/default/images/{$a.tipo|lower|trim}.gif" width="24" height="24"></p></td>
-									<td align="RIGHT"><p>{$a.valor}</p></td>
-								  </tr>
-								  <tr bgcolor="#999999">
-									<td colspan="4" height="1"></td>
-								  </tr>
-								</table>
-							  {/foreach}
-							  </td>
-							</tr>
-						  </table></td>
-					  </tr>
-                  </table>
+						  </table>
+						  <p><a href="#" onClick="javascript:history.back()">Voltar</a></p>
+					{/if}
+
+                  <br>
+
+
 
 
                   <p align="center">&nbsp;</p>
