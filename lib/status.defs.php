@@ -165,6 +165,13 @@ $_LS_MESES_ANO = array (
 		"11" => "Novembro",
 		"12" => "Dezembro"
 		);
+		
+$_LS_TP_CONSULTA = array (
+		"U12M" =>	"Ultimo ano",
+		"U6M"  =>	"Ultimos 6 meses",
+		"U3M"  =>	"Ultimos 3 meses",
+		"UM"   =>	"Ultimo mês"
+		);
 
 
 
