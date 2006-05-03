@@ -653,49 +653,19 @@ class VARelatorio extends VirtexAdmin {
 		if (!$acao) $acao = "geral";
 		
 		if ($acao == "geral") {	
-					
-			$sSQL  = "SELECT  ";
-			$sSQL .= "	p.id_produto,p.nome,p.tipo,p.disponivel,mes,ano,num_contratos ";
-			$sSQL .= "FROM ";
-			$sSQL .= "	prtb_produto p ";
-			$sSQL .= "INNER JOIN ";
-			$sSQL .= "	(SELECT ";
-			$sSQL .= "		p.id_produto,count(cp.id_produto) as num_contratos, ";
-			$sSQL .= "		EXTRACT( 'month' from data_contratacao) as mes, ";
-			$sSQL .= "		EXTRACT( 'year' from data_contratacao) as ano ";
-			$sSQL .= "	FROM  ";
-			$sSQL .= "		prtb_produto p LEFT OUTER JOIN cbtb_contrato cp USING(id_produto)  ";
-			$sSQL .= "	GROUP BY  ";
-			$sSQL .= "		ano, mes, p.id_produto ) c  ";
-			$sSQL .= "USING(id_produto) ";
-			$sSQL .= "ORDER BY ano, mes DESC ";
-			
-		} else if($acao == "sub_cid") {
-		
-			$id_cidade = @$_REQUEST["id_cidade"];
-		
+						
 			$sSQL  = "SELECT ";
-			$sSQL .= "	cnt.id_cliente, ";
-			$sSQL .= "	cnt.nome_razao, ";
-			$sSQL .= "	cid.id_cidade, ";
-			$sSQL .= "	cid.cidade, ";
-			$sSQL .= "	cid.uf ";
+			$sSQL .= "	count(*) as num_contratos, ";
+			$sSQL .= "	EXTRACT( 'month' FROM data_contratacao) as mes, ";
+			$sSQL .= "	EXTRACT( 'year' FROM data_contratacao) as ano ";
 			$sSQL .= "FROM ";
-			$sSQL .= "	cltb_cliente as cnt, ";
-			$sSQL .= "	(SELECT ";
-			$sSQL .= "		id_cidade, ";
-			$sSQL .= "		cidade, ";
-			$sSQL .= "		uf ";
-			$sSQL .= "	FROM ";
-			$sSQL .= "		cftb_cidade ";
-			$sSQL .= "	ORDER BY uf) cid ";
-			$sSQL .= "WHERE ";
-			$sSQL .= "	cnt.id_cidade = cid.id_cidade AND cnt.id_cidade = $id_cidade AND ";
-			$sSQL .= "	clt.excluido = 'FALSE' ";
-			$sSQL .= "ORDER BY cid.uf, cid.id_cidade, cnt.nome_razao";
-			
-			
-		}
+			$sSQL .= "	cbtb_contrato ";
+			$sSQL .= "GROUP BY ano, mes ";
+			$sSQL .= "ORDER BY ano, mes DESC ";
+				
+		} 
+		
+		//echo "$sSQL";
 		
 		$relat = $this->bd->obtemRegistros($sSQL);	
 		
@@ -733,6 +703,7 @@ class VARelatorio extends VirtexAdmin {
 	
 	
 	}
+	require_once("hugo_relatorio.php");
 	
 }
 	
