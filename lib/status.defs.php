@@ -167,10 +167,11 @@ $_LS_MESES_ANO = array (
 		);
 		
 $_LS_TP_CONSULTA = array (
-		"U12M" =>	"Ultimo ano",
-		"U6M"  =>	"Ultimos 6 meses",
-		"U3M"  =>	"Ultimos 3 meses",
-		"UM"   =>	"Ultimo mês"
+		"UA" =>	"Ultimo Ano",
+		"US" =>	"Ultimo Simestre",
+		"UT" =>	"Ultimo Trimestre",
+		"UB" =>	"Ultimo Bimestre",
+		"UM" =>	"Ultimo Mês"
 		);
 
 
