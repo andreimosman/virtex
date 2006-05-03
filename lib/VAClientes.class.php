@@ -821,8 +821,9 @@ class VAClientes extends VirtexAdmin {
 				if( $enviando ) {
 				
 					// Pega dominio padrão 
-					$sSQL  = "select dominio_padrao from pftb_preferencia_geral";
-					$lista_dominop = $this->bd->obtemUnicoRegistro($sSQL);
+					
+					$lista_dominop = $this->prefs->obtem("geral");
+					
 					$dominioPadrao = $lista_dominop["dominio_padrao"]; 
 
 					// Valida os dados
@@ -917,19 +918,9 @@ class VAClientes extends VirtexAdmin {
 						
 												
 						if ($email_igual == "1"){
-							//$sSQL  = "SELECT * from cftb_preferencias where id_provedor = '1'";
 							
-							$sSQL  = "SELECT ";
-							$sSQL .= " pc.tx_juros, pc.multa, pc.dia_venc, pc.carencia, pc.cod_banco, pc.carteira, pc.agencia, pc.num_conta, pc.convenio, pc.observacoes, pc.pagamento, ";
-							$sSQL .= " pg.dominio_padrao, pg.nome, pg.radius_server, pg.hosp_server, pg.hosp_ns1, pg.hosp_ns2, pg.hosp_uid, pg.hosp_gid, pg.mail_server, pg.mail_uid, pg.mail_gid, pg.pop_host, pg.smtp_host, pg.hosp_base, ";
-							$sSQL .= " pp.endereco, pp.localidade, pp.cep, pp.cnpj ";
-							$sSQL .= "FROM ";
-							$sSQL .= "pftb_preferencia_cobranca pc, pftb_preferencia_geral pg, pftb_preferencia_provedor pp ";
-							$sSQL .= "WHERE pc.id_provedor = '1' ";
-							
-							
-							$prefs = $this->bd->obtemUnicoRegistro($sSQL);
-
+							//$prefs = $this->prefs->obtem("total");
+							$prefs = $this->prefs->obtem();
 							
 							if (count($prefs)){
 								$erros2 = "Já existe um usuario com este dominio neste tipo de conta cadastrado. Por favor cadastre um novo usuario";
@@ -1003,16 +994,9 @@ class VAClientes extends VirtexAdmin {
 						
 						//PEGA CAMPOS COMUNS EM cftb_preferencias
 						
-						//$sSQL  = "SELECT * from cftb_preferencias where id_provedor = '1'";
-						$sSQL  = "SELECT ";
-						$sSQL .= " pc.tx_juros, pc.multa, pc.dia_venc, pc.carencia, pc.cod_banco, pc.carteira, pc.agencia, pc.num_conta, pc.convenio, pc.observacoes, pc.pagamento, ";
-						$sSQL .= " pg.dominio_padrao, pg.nome, pg.radius_server, pg.hosp_server, pg.hosp_ns1, pg.hosp_ns2, pg.hosp_uid, pg.hosp_gid, pg.mail_server, pg.mail_uid, pg.mail_gid, pg.pop_host, pg.smtp_host, pg.hosp_base, ";
-						$sSQL .= " pp.endereco, pp.localidade, pp.cep, pp.cnpj ";
-						$sSQL .= "FROM ";
-						$sSQL .= "pftb_preferencia_cobranca pc, pftb_preferencia_geral pg, pftb_preferencia_provedor pp ";
-						$sSQL .= "WHERE pc.id_provedor = '1' ";
 
-						$prefs = $this->bd->obtemUnicoRegistro($sSQL);
+						//$prefs = $this->prefs->obtem("total");
+						$prefs = $this->prefs->obtem();
 						
 						
 						switch($tipo) {
@@ -1135,18 +1119,9 @@ class VAClientes extends VirtexAdmin {
 								// PRODUTO HOSPEDAGEM
 								//$sSQL  = "SELECT * from cftb_preferencias where id_provedor = '1'";							
 								
-								$sSQL  = "SELECT ";
-								$sSQL .= " pc.tx_juros, pc.multa, pc.dia_venc, pc.carencia, pc.cod_banco, pc.carteira, pc.agencia, pc.num_conta, pc.convenio, pc.observacoes, pc.pagamento, ";
-								$sSQL .= " pg.dominio_padrao, pg.nome, pg.radius_server, pg.hosp_server, pg.hosp_ns1, pg.hosp_ns2, pg.hosp_uid, pg.hosp_gid, pg.mail_server, pg.mail_uid, pg.mail_gid, pg.pop_host, pg.smtp_host, pg.hosp_base, ";
-								$sSQL .= " pp.endereco, pp.localidade, pp.cep, pp.cnpj ";
-								$sSQL .= "FROM ";
-								$sSQL .= "pftb_preferencia_cobranca pc, pftb_preferencia_geral pg, pftb_preferencia_provedor pp ";
-								$sSQL .= "WHERE pc.id_provedor = '1' ";
-
 								
-								$prefs = $this->bd->obtemUnicoRegistro($sSQL);
-								
-								
+								//$prefs = $this->prefs->obtem("total");								
+								$prefs = $this->prefs->obtem();
 						
 								$username = @$_REQUEST["username"];
 								$tipo_conta = @$_REQUEST["tipo"];
@@ -1829,15 +1804,10 @@ class VAClientes extends VirtexAdmin {
 					$conta_email = $this->bd->obtemUnicoRegistro($sSQL);
 					$conta = array_merge($conta,$conta_email);
 					
-					$sSQL  = "SELECT ";
-					$sSQL .= " pc.tx_juros, pc.multa, pc.dia_venc, pc.carencia, pc.cod_banco, pc.carteira, pc.agencia, pc.num_conta, pc.convenio, pc.observacoes, pc.pagamento, ";
-					$sSQL .= " pg.dominio_padrao, pg.nome, pg.radius_server, pg.hosp_server, pg.hosp_ns1, pg.hosp_ns2, pg.hosp_uid, pg.hosp_gid, pg.mail_server, pg.mail_uid, pg.mail_gid, pg.pop_host, pg.smtp_host, pg.hosp_base, ";
-					$sSQL .= " pp.endereco, pp.localidade, pp.cep, pp.cnpj ";
-					$sSQL .= "FROM ";
-					$sSQL .= "pftb_preferencia_cobranca pc, pftb_preferencia_geral pg, pftb_preferencia_provedor pp ";
-					$sSQL .= "WHERE pc.id_provedor = '1' ";
 					
-					$server = $this->bd->obtemUnicoRegistro($sSQL);
+					//$server = $this->prefs->obtem("total");
+					$server = $this->prefs->obtem();
+					
 					
 					$this->tpl->atribui("quota",$conta["quota"]);
 					$this->tpl->atribui("server",$server);
@@ -2521,16 +2491,16 @@ class VAClientes extends VirtexAdmin {
 			
 		}else if ($op == "imprime_contrato"){
 		
+			$tipo_produto = @$_REQUEST["tipo_produto"];
+		
 			$hoje = date("Y-m-d");
 		
-			$sSQL  = "SELECT nome, localidade, cnpj, cep ";
-			$sSQL .= "FROM ";
-			$sSQL .= "pftb_preferencia_provedor ";
-			$sSQL .= "WHERE id_provedor = '1'";
+			$provedor = $this->prefs->obtem("provedor");
+			$geral = $this->prefs->obtem("geral");
 			
-			$provedor = $this->bd->obtemUnicoRegistro($sSQL);
 			
-			$this->tpl->atribui("nome_provedor",$provedor["nome"]);
+			
+			$this->tpl->atribui("nome_provedor",$geral["nome"]);
 			$this->tpl->atribui("localidade",$provedor["localidade"]);
 			$this->tpl->atribui("cnpj_provedor",$provedor["cnpj"]);
 			
@@ -2570,8 +2540,26 @@ class VAClientes extends VirtexAdmin {
 			$this->tpl->atribui("valor_extenso",$valor_extenso);
 			$this->tpl->atribui("hoje_extenso",$hoje_extenso);
 			$this->tpl->atribui("cli",$cli);
+			$this->tpl->atribui("tipo_produto",$tipo_produto);
 			
-			$this->arquivoTemplate = "contrato1.html";
+			if ($tipo_produto == "BL"){
+				
+				$arquivo_contrato = "./contratos/contrato_padrao_BL.html";
+			
+			}else if ($tipo_produto == "D"){
+			
+				$arquivo_contrato = "./contratos/contrato_padrao_D.html";
+			
+			}else if ($tipo_produto == "H"){
+				
+				$arquivo_contrato = "./contratos/contrato_padrao_H.html";
+				
+			}
+			
+			
+			
+			$this->tpl->atribui("arquivo_contrato",$arquivo_contrato);
+			$this->arquivoTemplate = "cliente_contrato_modificacao.html";
 			
 		
 		}
@@ -2874,13 +2862,8 @@ public function carne($id_cliente_produto,$data,$id_cliente){
 
 
 	// PEGANDO INFORMAÇÕES DAS PREFERENCIAS
-	$sSQL  = "SELECT ";
-	$sSQL .= " pc.tx_juros, pc.multa, pc.dia_venc, pc.carencia, pc.cod_banco, pc.carteira, pc.agencia, pc.num_conta, pc.convenio, pp.cnpj, pc.observacoes,pg.nome,pp.endereco,pp.localidade,pp.cep,pg.nome ";
-	$sSQL .= "FROM ";
-	$sSQL .= " pftb_preferencia_geral pg, pftb_preferencia_provedor pp, pftb_preferencia_cobranca pc ";
-	$sSQL .= "WHERE pc.id_provedor = '1'";
-
-	$provedor = $this->bd->obtemUnicoRegistro($sSQL);
+	//$provedor = $this->prefs->obtem("total");
+	$provedor = $this->prefs->obtem();
 
 	$sSQL = "SELECT ct.id_produto, pd.nome from cbtb_contrato ct, prtb_produto pd WHERE ct.id_cliente_produto = '$id_cliente_produto' and ct.id_produto = pd.id_produto";
 	$produto = $this->bd->obtemUnicoRegistro($sSQL);

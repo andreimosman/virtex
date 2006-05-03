@@ -704,13 +704,8 @@ class VACobranca extends VirtexAdmin {
 			$dtf = date("Y-m-d", mktime(0,0,0, $mes, $dia_final, $ano));
 
 		
-			$sSQL  = "SELECT ";
-			$sSQL .= " pc.tx_juros, pc.multa, pc.dia_venc, pc.carencia, pc.cod_banco, pc.carteira, pc.agencia, pc.num_conta, pc.convenio, pp.cnpj, pc.observacoes,pg.nome ";
-			$sSQL .= "FROM ";
-			$sSQL .= " pftb_preferencia_geral pg, pftb_preferencia_conbranca pc, pftb_preferencia_provedor pp ";
-			$sSQL .= "WHERE pc.id_provedor = '1'";
-			
-			$provedor = $this->bd->obtemUnicoRegistro($sSQL);
+			//$provedor = $this->prefs->obtem("total");
+			$provedor = $this->prefs->obtem();
 			
 			$sSQL  = "SELECT ";
 			$sSQL .= " * from cbtb_contrato where status = 'A' AND vencimento BETWEEN '$dia_inicio' AND '$dia_final'";
@@ -958,13 +953,8 @@ public function carne($id_cliente_produto,$data,$id_cliente){
 
 
 	// PEGANDO INFORMAÇÕES DAS PREFERENCIAS
-	$sSQL  = "SELECT ";
-	$sSQL .= " pc.tx_juros, pc.multa, pc.dia_venc, pc.carencia, pc.cod_banco, pc.carteira, pc.agencia, pc.num_conta, pc.convenio, pp.cnpj, pc.observacoes,pg.nome,pp.endereco,pp.localidade,pp.cep,pg.nome ";
-	$sSQL .= "FROM ";
-	$sSQL .= " pftb_preferencia_geral pg, pftb_preferencia_provedor pp, pftb_preferencia_cobranca pc ";
-	$sSQL .= "WHERE pc.id_provedor = '1'";
-
-	$provedor = $this->bd->obtemUnicoRegistro($sSQL);
+	//$provedor = $this->prefs->obtem("total");
+	$provedor = $this->prefs->obtem();
 
 	$sSQL = "SELECT ct.id_produto, pd.nome from cbtb_contrato ct, prtb_produto pd WHERE ct.id_cliente_produto = '$id_cliente_produto' and ct.id_produto = pd.id_produto";
 	$produto = $this->bd->obtemUnicoRegistro($sSQL);

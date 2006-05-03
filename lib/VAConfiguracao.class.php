@@ -824,12 +824,8 @@ class VAConfiguracao extends VirtexAdmin {
 						
 						
 
-						$sSQL  = "SELECT ";
-						$sSQL .= "* FROM ";
-						$sSQL .= "pftb_preferencia_geral ";
+						$prefs = $this->prefs->obtem("geral");
 						
-
-						$prefs = $this->bd->obtemUnicoRegistro($sSQL);
 						//echo "preferencia <br>";
 						
 						
@@ -957,8 +953,7 @@ class VAConfiguracao extends VirtexAdmin {
 					
 						$acao = @$_REQUEST["acao"];
 					
-						$sSQL = "SELECT * FROM pftb_preferencia_cobranca ";
-						$prefs = $this->bd->obtemUnicoRegistro($sSQL);
+						$prefs = $this->prefs->obtem("cobranca");
 					
 					
 						$sSQL  = "SELECT id_cobranca, nome_cobranca, disponivel FROM cftb_forma_pagamento ORDER BY id_cobranca asc";
@@ -1030,9 +1025,7 @@ class VAConfiguracao extends VirtexAdmin {
 					
 						$acao = @$_REQUEST["acao"];
 					
-						
-						$sSQL  = "SELECT * FROM pftb_preferencia_provedor ";
-						$prefs = $this->bd->obtemUnicoRegistro($sSQL);
+						$prefs = $this->prefs->obtem("provedor");
 						
 							if ($acao == "alt"){
 								
@@ -1065,6 +1058,82 @@ class VAConfiguracao extends VirtexAdmin {
 						//$this->tpl->atribui("frm_pagamento",$frm_pagamento);
 						$this->arquivoTemplate = "configuracao_preferencia_provedor.html";
 				
+					
+					}else if ($op == "contratos"){
+					
+						$acao = @$_REQUEST["acao"];
+						$tipo_contrato = @$_REQUEST["tipo_contrato"];
+						$contrato = @$_REQUEST["contrato"];
+						$hoje = date("dmY-His");
+						
+						global $_LS_TIPO_CONTRATO;
+						$this->tpl->atribui("tipo_contrato",$_LS_TIPO_CONTRATO);
+						
+						
+						$nome_arq = "contrato_padrao_".$tipo_contrato.".html";
+						
+						$_file_ = @$_FILES['contrato'];
+
+						
+						
+						
+						
+						if ($acao == "ok"){
+							
+							$extensao = $_file_["type"];
+							//echo "HOJE: $hoje<br>";
+							//echo "extensao: $extensao<br>";
+
+							if ($extensao && $extensao != "text/html"){
+								$_erro = "EXTENSÃO DE ARQUIVO INVÁLIDA.<br>SÓ É PERMITIDO O ENVIO DE ARQUIVOS HTML";
+								$this->tpl->atribui("erro",$_erro);
+								$this->arquivoTemplate = "configuracao_upload_contrato.html";
+								return;
+
+							}else{
+
+								$arqtmp = $_file_["name"];
+								//$fd = fopen($arqtmp,"w");
+								
+								$diretorio = "/tmp";
+										
+								$nome_aceitavel = $nome_arq;
+								$diretorio_destino = "./contratos";
+								
+								$arquivo = $diretorio_destino."/".$nome_aceitavel;
+
+								$_name_ = $_file_['name'];
+								$_tmp_name_ = $_file_['tmp_name'];
+
+
+								if (file_exists($arquivo)) {
+									//copy($_tmp_name,$diretorio."/_".$nome_aceitavel);
+									rename($diretorio_destino."/".$nome_aceitavel, $diretorio_destino."/_".$nome_aceitavel);
+								}
+
+								copy($_tmp_name_,$diretorio_destino . "/" . $nome_aceitavel);
+
+								$mensagem = "Arquivo Enviado com Sucesso";
+								$this->tpl->atribui("mensagem",$mensagem);
+
+								
+
+
+							}
+							
+							
+							
+							
+							
+						
+						}
+						
+						
+						
+						
+						$this->arquivoTemplate = "configuracao_upload_contrato.html";
+
+						
 					
 					}
 				

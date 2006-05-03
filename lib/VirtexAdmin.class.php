@@ -3,6 +3,7 @@
 require_once("MWebApp.class.php");
 require_once("MDatabase.class.php");
 require_once("MBoleto.class.php");
+require_once("prefs.class.php");
 
 class VirtexAdmin extends MWebApp {
 
@@ -11,26 +12,8 @@ class VirtexAdmin extends MWebApp {
 	protected $admLogin;
 
 	protected $preferencias;
-	
-	/**
-	 * Obtem as preferencias do modelo pftb
-	 */
-	public function obtemPreferencias() {
-		$this->preferencias = array();
-	
-		// Preferencias do provedor
-		$sSQL = "SELECT * FROM pftb_preferencia_provedor";
-		$this->preferencias["provedor"] = $this->bd->obtemUnicoRegistro($sSQL);
-		
-		// Preferencias de Cobranca
-		$sSQL = "SELECT * FROM pftb_preferencia_cobranca";
-		$this->preferencias["cobranca"] = $this->bd->obtemUnicoRegistro($sSQL);
-		
-		// Preferencias gerais
-		$sSQL = "SELECT * FROM pftb_preferencia_geral";
-		$this->preferencias["geral"] = $this->bd->obtemUnicoRegistro($sSQL);
-	
-	}
+	protected $prefs;
+
 
 	public function VirtexAdmin() {
 	   parent::MWebApp("etc/virtex.ini",'template/default');
@@ -58,8 +41,9 @@ class VirtexAdmin extends MWebApp {
 		   		$this->admLogin = new AdminLogin($this->bd);
 		   }
 		   
-		   $this->obtemPreferencias();
-		   
+		   //$this->obtemPreferencias();
+		   $this->prefs = new Preferencias($this->bd);
+
 	   }
 	}
 

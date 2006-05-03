@@ -148,7 +148,7 @@ $_LS_TIPO_CONTRATO = array(
 		"BL" => "Banda Larga",
 		"D"  => "Discado",
 		"H"  => "Hospedagem"
-		)
+		);
 
 
 $_LS_MESES_ANO = array (
@@ -158,12 +158,12 @@ $_LS_MESES_ANO = array (
 		"4"	=> "Abril",
 		"5"	=> "Maio",
 		"6"	=> "Junho",
-		"7"	=> "Julhoo",
+		"7"	=> "Julho",
 		"8"	=> "Agosto",
 		"9"	=> "Setembro",
-		"10"	=> "Outubro",
-		"11"	=> "Novembro",
-		"12"	=> "Dezembro"
+		"10" => "Outubro",
+		"11" => "Novembro",
+		"12" => "Dezembro"
 		);
 
 

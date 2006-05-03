@@ -1,9 +1,11 @@
 <?
 
 	// Pega dominio padrão 
-	$sSQL  = "select dominio_padrao from pftb_preferencia_geral ";
-	$lista_dominop = $this->bd->obtemUnicoRegistro($sSQL);
-	$dominioPadrao = $lista_dominop["dominio_padrao"]; 
+	//$sSQL  = "select dominio_padrao from pftb_preferencia_geral ";
+	
+	$dominioPadrao = $this->prefs->obtem("geral","dominio_padrao");
+	//$lista_dominop = $this->bd->obtemUnicoRegistro($sSQL);
+	//$dominioPadrao = $lista_dominop["dominio_padrao"]; 
 	
 
 	// Valida os dados
