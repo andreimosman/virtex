@@ -173,6 +173,19 @@ $_LS_TP_CONSULTA = array (
 		"UB" =>	"Ultimo Bimestre"
 		);
 
+$_LS_CORES = array(
+		"#FF9900",
+		"#FFCC00",
+		"#333366",
+		"#0066CC",
+		"#00CCCC",
+		"#00CC00",
+		"#99FF33",
+		"#CC9900",
+		"#99CCFF",
+		"#FFFFFF",
+		"#CC0000"
+		);
 
 
 ?>
