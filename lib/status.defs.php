@@ -170,8 +170,7 @@ $_LS_TP_CONSULTA = array (
 		"UA" =>	"Ultimo Ano",
 		"US" =>	"Ultimo Simestre",
 		"UT" =>	"Ultimo Trimestre",
-		"UB" =>	"Ultimo Bimestre",
-		"UM" =>	"Ultimo Mês"
+		"UB" =>	"Ultimo Bimestre"
 		);
 
 
