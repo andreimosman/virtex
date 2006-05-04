@@ -2,6 +2,9 @@
 
 
 require_once( PATH_LIB . "/VirtexAdmin.class.php" );
+require_once( "jpgraph.php" );
+require_once( "jpgraph_line.php" );
+require_once( "jpgraph_bar.php" );
 
 class VARelatorio extends VirtexAdmin {
 
@@ -648,34 +651,196 @@ class VARelatorio extends VirtexAdmin {
 	
 	}  else if ($op == "adesao"){
 		
+		
 		$acao = @$_REQUEST["acao"];
+		$extra = @$_REQUEST["extra"];
+		$periodo = @$_REQUEST["periodo"];
 		
 		if (!$acao) $acao = "geral";
-		
-		if ($acao == "geral") {	
+		if (!$periodo) $periodo = "UA";
 						
-			$sSQL  = "SELECT ";
-			$sSQL .= "	count(*) as num_contratos, ";
-			$sSQL .= "	EXTRACT( 'month' FROM data_contratacao) as mes, ";
-			$sSQL .= "	EXTRACT( 'year' FROM data_contratacao) as ano ";
-			$sSQL .= "FROM ";
-			$sSQL .= "	cbtb_contrato ";
-			$sSQL .= "GROUP BY ano, mes ";
-			$sSQL .= "ORDER BY ano, mes DESC ";
 				
-		} 
+		if ($acao == "geral") {	
 		
-		//echo "$sSQL";
+			
+			switch($periodo) {
+				
+				case "UA":	//Ultimo ano
+					$sSQL  = "SELECT ";
+					$sSQL .= "	count(*) as num_contratos, ";
+					$sSQL .= "	EXTRACT( 'month' FROM data_contratacao) as mes, ";
+					$sSQL .= "	EXTRACT( 'year' FROM data_contratacao) as ano ";
+					$sSQL .= "FROM ";
+					$sSQL .= "	cbtb_contrato ";
+					$sSQL .= "WHERE ";
+					$sSQL .= "	data_contratacao > CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '12 month' ";
+					$sSQL .= "GROUP BY ano, mes ";
+					$sSQL .= "ORDER BY ano, mes ";
+				break;
+				
+				case "US":	//Ultimo Simestre
+					$sSQL  = "SELECT ";
+					$sSQL .= "	count(*) as num_contratos, ";
+					$sSQL .= "	EXTRACT( 'month' FROM data_contratacao) as mes, ";
+					$sSQL .= "	EXTRACT( 'year' FROM data_contratacao) as ano ";
+					$sSQL .= "FROM ";
+					$sSQL .= "	cbtb_contrato ";
+					$sSQL .= "WHERE ";
+					$sSQL .= "	data_contratacao > CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '6 month' ";
+					$sSQL .= "GROUP BY ano, mes ";
+					$sSQL .= "ORDER BY ano, mes ";
+				break;
+
+				case "UT":	//Ultimo Treimestre
+					$sSQL  = "SELECT ";
+					$sSQL .= "	count(*) as num_contratos, ";
+					$sSQL .= "	EXTRACT( 'month' FROM data_contratacao) as mes, ";
+					$sSQL .= "	EXTRACT( 'year' FROM data_contratacao) as ano ";
+					$sSQL .= "FROM ";
+					$sSQL .= "	cbtb_contrato ";
+					$sSQL .= "WHERE ";
+					$sSQL .= "	data_contratacao > CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '3 month' ";
+					$sSQL .= "GROUP BY ano, mes ";
+					$sSQL .= "ORDER BY ano, mes ";
+				break;
+
+				case "UB":	//Ultimo Bimestre
+					$sSQL  = "SELECT ";
+					$sSQL .= "	count(*) as num_contratos, ";
+					$sSQL .= "	EXTRACT( 'month' FROM data_contratacao) as mes, ";
+					$sSQL .= "	EXTRACT( 'year' FROM data_contratacao) as ano ";
+					$sSQL .= "FROM ";
+					$sSQL .= "	cbtb_contrato ";
+					$sSQL .= "WHERE ";
+					$sSQL .= "	data_contratacao > CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '2 month' ";
+					$sSQL .= "GROUP BY ano, mes ";
+					$sSQL .= "ORDER BY ano, mes ";
+				break;
+				
+				case "UM":	//Ultimo mês
+					$sSQL  = "SELECT ";
+					$sSQL .= "	count(*) as num_contratos, ";
+					$sSQL .= "	EXTRACT( 'month' FROM data_contratacao) as mes, ";
+					$sSQL .= "	EXTRACT( 'year' FROM data_contratacao) as ano ";
+					$sSQL .= "FROM ";
+					$sSQL .= "	cbtb_contrato ";
+					$sSQL .= "WHERE ";
+					$sSQL .= "	data_contratacao > CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '2 month' ";
+					$sSQL .= "GROUP BY ano, mes ";
+					$sSQL .= "ORDER BY ano, mes ";
+				break;				
+				
+					
+			}
+			
+			
+					
+		
+		} else if($acao = "sub_ade") {
+			
+			$mes = @$_REQUEST["mes"];
+			$ano = @$_REQUEST["ano"];
+									
+			$data_inicial = date("Y-m-d", mktime(0,0,0,$mes, 1, $ano));
+			$data_final = date("Y-m-d",mktime(0,0,0,$mes+1, 1, $ano));
+		
+			$sSQL  = "SELECT ";
+			$sSQL .= "	clt.id_cliente, clt.nome_razao, cnt.data_contratacao, prd.id_produto, prd.nome, prd.tipo,  ";
+			$sSQL .= "	EXTRACT('day' FROM cnt.data_contratacao) as dia, ";
+			$sSQL .= "	EXTRACT('month' FROM cnt.data_contratacao) as mes, ";
+			$sSQL .= "	EXTRACT('year' FROM cnt.data_contratacao) as ano ";
+			$sSQL .= "FROM ";
+			$sSQL .= "	prtb_produto prd, cbtb_contrato cnt, cbtb_cliente_produto cp, cltb_cliente clt ";
+			$sSQL .= "WHERE  ";
+			$sSQL .= "	cnt.data_contratacao >= '$data_inicial' AND cnt.data_contratacao < '$data_final' AND ";
+			$sSQL .= "	cp.id_cliente_produto = cnt.id_cliente_produto AND ";
+			$sSQL .= "	prd.id_produto = cp.id_produto AND clt.id_cliente = cp.id_cliente ";
+			$sSQL .= "ORDER BY cnt.data_contratacao, clt.nome_razao ASC ";
+		
+		}
+		
 		
 		$relat = $this->bd->obtemRegistros($sSQL);	
+	
+		/*
+		$this->tpl->atribui("data_ini", $data_ini);
+		$this->tpl->atribui("data_fim", $data_fim);*/
 		
-				
+		global $_LS_TP_CONSULTA;
+		$this->tpl->atribui("tpconsulta", $_LS_TP_CONSULTA);
+		$this->tpl->atribui("periodo", $periodo);
 		$this->tpl->atribui("acao", $acao);
 		$this->tpl->atribui("op", $op);
 		$this->tpl->atribui("relat",$relat);
-		$this->arquivoTemplate = "relatorio_adesoes.html";	
+		$this->arquivoTemplate = "relatorio_adesoes.html";
+			
+		
+		if ($extra == "grafico") {
+					
+
+			$resultado = $this->bd->obtemRegistros($sSQL);
+					
+			$pontos = array();
+			$legendas = array();
+
+			for($i=0;$i<count($resultado);$i++) {
+			   $legendas[] = $resultado[$i]["mes"] . "/" . $resultado[$i]["ano"];
+			   $pontos[] = $resultado[$i]["num_contratos"];			   
+			}
+					
+					
+			// GERA O Gráfico
+
+			//header("pragma: no-cache")
+			header("Content-type: Image/png");
+
+			//$pontos = array("9", "16", "20");
+			$grafico = new Graph(450,200,"png");
+
+
+			$grafico->SetScale("textlin"); 
+			//$grafico->SetShadow(); 
+			$grafico->title->Set('Relatório de Adesões');
+			$grafico->img->SetMargin(40,40,40,40);
+			
+			//Imagem de Fundo
+			$grafico->SetBackgroundImage("./template/default/images/gr_back1.jpg",BGIMG_FILLPLOT); //BGIMG_FILLFRAME);
+			$grafico->SetMarginColor("#f1f1f1");
+						
+			//Cria uma nova mostragem gráfica
+			$gBarras = new BarPlot($pontos); 
+
+			//$grafico->xaxis->SetMajTickPositions($positions,$titulos);
+
+			// ajuste de cores 
+			//$gBarras->SetFillColor("#ff0000");
+			$gBarras->SetFillGradient("#aa0000","#ff0000",GRAD_MIDVER);
+
+			
+			//$gBarras->SetShadow("darkblue"); 
+			//$grafico->xaxis->labels = $legendas;
+			//$gBarras->label->Set($legendas);
+			
+			// título das barras
+			$grafico->xaxis->SetTickLabels($legendas);
+
+			// adicionar mostrage de barras ao gráfico 
+			$grafico->Add($gBarras); 
+
+			// imprimir gráfico 
+			$grafico->Stroke();
+			
+			$this->arquivoTemplate = '';		
+			return;
+		
+		}
 	
-	} else if ($op == "evolucao"){
+	} else if($op == "cancelamento") {
+	
+		
+	
+		
+	}else if ($op == "evolucao"){
 	
 	
 	
