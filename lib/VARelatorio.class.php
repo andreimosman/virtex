@@ -5,6 +5,8 @@ require_once( PATH_LIB . "/VirtexAdmin.class.php" );
 require_once( "jpgraph.php" );
 require_once( "jpgraph_line.php" );
 require_once( "jpgraph_bar.php" );
+require_once( "jpgraph_pie.php");
+require_once( "jpgraph_pie3d.php");
 
 class VARelatorio extends VirtexAdmin {
 
@@ -499,6 +501,7 @@ class VARelatorio extends VirtexAdmin {
 	} else if ($op == "produto_cliente"){
 		
 		$acao = @$_REQUEST["acao"];
+		$extra = @$_REQUEST["extra"];
 		
 		if (!$acao) $acao = "geral";		
 		
@@ -540,6 +543,63 @@ class VARelatorio extends VirtexAdmin {
 		
 		$relat = $this->bd->obtemRegistros($sSQL);
 		
+		
+		if ($extra == "grafico") {
+		
+			$tp_grafico="3d";
+		
+			// cores:          (   1024,     768,      512,      384,      256,      192,      128,      96,       64,      32,      0- SEM CONTROLE)
+			$base_cores = array("#FF9900","#FFCC00","#333366","#0066CC","#00CCCC","#00CC00","#99FF33","#CC9900","#99CCFF",'#ffffff',"#CC0000");
+			$cores = array();
+
+			if( $extra == 'grafico' ) {
+				$valores = array();
+				$legendas = array();
+				for($i=0;$i<count($relat);$i++) {
+					if( $tp_grafico != "3d" || $relat[$i]["num_contratos"] > 0 ) {
+						$valores[]  = $relat[$i]["num_contratos"];
+						$legendas[] = $relat[$i]["nome"];
+						$cores[] = $base_cores[$i];
+					}
+				}
+				// Exibir o gráfico
+				$grafico = new PieGraph(450,250,"png");
+				//$grafico->SetShadow();
+				//$grafico->title->Set("Clientes por Banda");
+				$grafico->title->SetFont(FF_FONT1,FS_BOLD);
+
+				//$grafico->SetBackgroundImage("./template/default/images/gr_back1.jpg",BGIMG_FILLPLOT); //BGIMG_FILLFRAME);
+				//$grafico->SetMarginColor("#f1f1f1");
+
+
+				if( $tp_grafico == "3d" ) {
+					$pizza = new PiePlot3D($valores);
+				} else {
+					$pizza = new PiePlot($valores);
+				}
+
+				//$pizza->SetSize($size);
+				$pizza->SetCenter(0.35);
+				$pizza->SetLegends($legendas);
+				$pizza->SetSliceColors($cores);
+				$grafico->Add($pizza);
+
+				$grafico->Stroke();
+
+				$this->arquivoTemplate = "";
+
+				//$pizza = new PiePlot($valores);
+
+				return;
+
+			}
+
+		}		
+		
+		
+
+		
+		
 		//echo $sSQL;
 		
 		$this->tpl->atribui("acao", $acao);
@@ -551,7 +611,7 @@ class VARelatorio extends VirtexAdmin {
 	} else if ($op == "tproduto_cliente"){
 		
 		$acao = @$_REQUEST["acao"];
-		
+		$extra = @$_REQUEST["extra"];
 		if (!$acao) $acao = "geral";
 		
 		if ($acao == "geral") {
@@ -588,6 +648,60 @@ class VARelatorio extends VirtexAdmin {
 		//echo($sSQL);
 		
 		$relat = $this->bd->obtemRegistros($sSQL);
+		
+
+		if ($extra == "grafico") {
+		
+			$tp_grafico="3d";
+		
+			// cores:          (   1024,     768,      512,      384,      256,      192,      128,      96,       64,      32,      0- SEM CONTROLE)
+			$base_cores = array("#FF9900","#FFCC00","#333366","#0066CC","#00CCCC","#00CC00","#99FF33","#CC9900","#99CCFF",'#ffffff',"#CC0000");
+			$cores = array();
+
+			if( $extra == 'grafico' ) {
+				$valores = array();
+				$legendas = array();
+				for($i=0;$i<count($relat);$i++) {
+					if( $tp_grafico != "3d" || $relat[$i]["num_contratos"] > 0 ) {
+						$valores[]  = $relat[$i]["num_contratos"];
+						$legendas[] = $relat[$i]["tipo"];
+						$cores[] = $base_cores[$i];
+					}
+				}
+				// Exibir o gráfico
+				$grafico = new PieGraph(450,250,"png");
+				//$grafico->SetShadow();
+				//$grafico->title->Set("Clientes por Banda");
+				$grafico->title->SetFont(FF_FONT1,FS_BOLD);
+
+				//$grafico->SetBackgroundImage("./template/default/images/gr_back1.jpg",BGIMG_FILLPLOT); //BGIMG_FILLFRAME);
+				//$grafico->SetMarginColor("#f1f1f1");
+
+
+				if( $tp_grafico == "3d" ) {
+					$pizza = new PiePlot3D($valores);
+				} else {
+					$pizza = new PiePlot($valores);
+				}
+
+				//$pizza->SetSize($size);
+				$pizza->SetCenter(0.35);
+				$pizza->SetLegends($legendas);
+				$pizza->SetSliceColors($cores);
+				$grafico->Add($pizza);
+
+				$grafico->Stroke();
+
+				$this->arquivoTemplate = "";
+
+				//$pizza = new PiePlot($valores);
+
+				return;
+
+			}
+
+		}
+		
 		
 		$this->tpl->atribui("acao", $acao);
 		$this->tpl->atribui("op", $op);

@@ -23,14 +23,16 @@
 
                   {if $acao == "geral" }
 
-                  <table width="400" border="0" cellspacing="0" cellpadding="0">
+					<p>{if $relat}<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico">{/if}</p>
+
+                  <table width="450" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                      <td><table width="400" border="0" cellspacing="0" cellpadding="0">
+                      <td><table width="450" border="0" cellspacing="0" cellpadding="0">
                           <tr>
                             <td bgcolor="#F1F1F1"><table width="400" border="0" cellspacing="2" cellpadding="0">
                                 <tr>
-                                  <td width="80" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Contratos</font></td>
-                                  <td width="320" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Tipo do Produto</font></td>
+                                  <td width="50%" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Contratos</font></td>
+                                  <td align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Tipo do Produto</font></td>
 
                                 </tr>
                               </table></td>
@@ -38,11 +40,11 @@
                           <tr>
                             <td>
 							{foreach item=a from=$relat}
-							  <table width="400" border="0" cellspacing="2" cellpadding="0">
+							  <table width="450" border="0" cellspacing="2" cellpadding="0">
                                 <tr>
-                                  <td width="137" align="CENTER"><p>{$a.num_contratos}</p></td>
-                                  <td width="94" align="CENTER"><p><img src="template/default/images/{$a.tipo|lower|trim}.gif" width="24" height="24"></p></td>
-                                  <td width="161" valign="MIDDLE" align="LEFT"><p>{if $a.tipo=="D "}<a href="relatorio.php?op={$op}&acao=sub_tprd&tipo=D">Discado</a>{/if}{if $a.tipo=="BL"}<a href="relatorio.php?op={$op}&acao=sub_tprd&tipo=BL">Banda Larga</a>{/if}{if $a.tipo=="H "}<a href="relatorio.php?op={$op}&acao=sub_tprd&tipo=H">Hospedagem</a>{/if}</p></td>
+                                  <td width="50%" align="CENTER"><p>{$a.num_contratos}</p></td>
+                                  <td align="15%" aligh="RIGHT"><p><img src="template/default/images/{$a.tipo|lower|trim}.gif" width="24" height="24"></p></td>
+                                  <td width="35%" valign="MIDDLE" align="LEFT"><p>{if $a.tipo=="D "}<a href="relatorio.php?op={$op}&acao=sub_tprd&tipo=D">Discado</a>{/if}{if $a.tipo=="BL"}<a href="relatorio.php?op={$op}&acao=sub_tprd&tipo=BL">Banda Larga</a>{/if}{if $a.tipo=="H "}<a href="relatorio.php?op={$op}&acao=sub_tprd&tipo=H">Hospedagem</a>{/if}</p></td>
                                 </tr>
                                 <tr bgcolor="#999999">
                                   <td colspan="4" height="1"></td>
