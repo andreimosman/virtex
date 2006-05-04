@@ -715,20 +715,7 @@ class VARelatorio extends VirtexAdmin {
 					$sSQL .= "	data_contratacao > CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '2 month' ";
 					$sSQL .= "GROUP BY ano, mes ";
 					$sSQL .= "ORDER BY ano, mes ";
-				break;
-				
-				case "UM":	//Ultimo mês
-					$sSQL  = "SELECT ";
-					$sSQL .= "	count(*) as num_contratos, ";
-					$sSQL .= "	EXTRACT( 'month' FROM data_contratacao) as mes, ";
-					$sSQL .= "	EXTRACT( 'year' FROM data_contratacao) as ano ";
-					$sSQL .= "FROM ";
-					$sSQL .= "	cbtb_contrato ";
-					$sSQL .= "WHERE ";
-					$sSQL .= "	data_contratacao > CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '2 month' ";
-					$sSQL .= "GROUP BY ano, mes ";
-					$sSQL .= "ORDER BY ano, mes ";
-				break;				
+				break;	
 				
 					
 			}
@@ -791,7 +778,7 @@ class VARelatorio extends VirtexAdmin {
 					
 			// GERA O Gráfico
 
-			//header("pragma: no-cache")
+			header("pragma: no-cache");
 			header("Content-type: Image/png");
 
 			//$pontos = array("9", "16", "20");
@@ -805,7 +792,7 @@ class VARelatorio extends VirtexAdmin {
 			
 			//Imagem de Fundo
 			$grafico->SetBackgroundImage("./template/default/images/gr_back1.jpg",BGIMG_FILLPLOT); //BGIMG_FILLFRAME);
-			$grafico->SetMarginColor("#f1f1f1");
+			$grafico->SetMarginColor("white");
 						
 			//Cria uma nova mostragem gráfica
 			$gBarras = new BarPlot($pontos); 
@@ -887,7 +874,7 @@ class VARelatorio extends VirtexAdmin {
 					$sSQL .= "FROM ";
 					$sSQL .= "	cbtb_contrato ";
 					$sSQL .= "WHERE ";
-					$sSQL .= "	AND status = 'C' ";
+					$sSQL .= "	status = 'C' AND";
 					$sSQL .= "	data_status > CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '3 month' ";
 					$sSQL .= "GROUP BY ano, mes ";
 					$sSQL .= "ORDER BY ano, mes ";
@@ -903,20 +890,6 @@ class VARelatorio extends VirtexAdmin {
 					$sSQL .= "WHERE ";
 					$sSQL .= "	data_status > CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '2 month' ";
 					$sSQL .= "	AND status = 'C' ";
-					$sSQL .= "GROUP BY ano, mes ";
-					$sSQL .= "ORDER BY ano, mes ";
-				break;
-				
-				case "UM":	//Ultimo mês
-					$sSQL  = "SELECT ";
-					$sSQL .= "	count(*) as num_contratos, ";
-					$sSQL .= "	EXTRACT( 'month' FROM data_status) as mes, ";
-					$sSQL .= "	EXTRACT( 'year' FROM data_status) as ano ";
-					$sSQL .= "FROM ";
-					$sSQL .= "	cbtb_contrato ";
-					$sSQL .= "	AND status = 'C' ";
-					$sSQL .= "WHERE ";
-					$sSQL .= "	data_status > CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '1 month' ";
 					$sSQL .= "GROUP BY ano, mes ";
 					$sSQL .= "ORDER BY ano, mes ";
 				break;				
@@ -982,7 +955,7 @@ class VARelatorio extends VirtexAdmin {
 					
 			// GERA O Gráfico
 
-			//header("pragma: no-cache")
+			header("pragma: no-cache");
 			header("Content-type: Image/png");
 
 			//$pontos = array("9", "16", "20");
@@ -996,7 +969,7 @@ class VARelatorio extends VirtexAdmin {
 			
 			//Imagem de Fundo
 			$grafico->SetBackgroundImage("./template/default/images/gr_back1.jpg",BGIMG_FILLPLOT); //BGIMG_FILLFRAME);
-			$grafico->SetMarginColor("#f1f1f1");
+			$grafico->SetMarginColor("white");
 						
 			//Cria uma nova mostragem gráfica
 			$gBarras = new BarPlot($pontos); 
@@ -1028,6 +1001,226 @@ class VARelatorio extends VirtexAdmin {
 
 	
 		
+	} else if($op == "inadimplencia"){
+	
+		$acao = @$_REQUEST["acao"];
+		$extra = @$_REQUEST["extra"];
+		$periodo = @$_REQUEST["periodo"];
+		
+		if (!$acao) $acao = "geral";
+		if (!$periodo) $periodo = "UA";	
+	
+		if ($acao == "geral") {
+			
+			switch($periodo) {
+			
+				case "UA":
+
+					$sSQL  = "SELECT ";
+					$sSQL .= "	count(*) as num_contratos, ";
+					$sSQL .= "	EXTRACT(year from f.data) as ano, ";
+					$sSQL .= "	EXTRACT(month from f.data) as mes ";
+					$sSQL .= "FROM ";
+					$sSQL .= "	cbtb_faturas f INNER JOIN cbtb_contrato ctt USING(id_cliente_produto)  ";
+					$sSQL .= "WHERE ";
+					$sSQL .= "	CASE WHEN ";
+					$sSQL .= "		f.reagendamento IS NOT NULL ";
+					$sSQL .= "	THEN ";
+					$sSQL .= "		f.reagendamento >= CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '12 month' AND ";
+					$sSQL .= "		f.reagendamento < CAST( EXTRACT(year from now()) || '-' ||EXTRACT(month from now()) ||'-01' as date) ";
+					$sSQL .= "	ELSE ";
+					$sSQL .= "		f.data >= CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '12 month' AND ";
+					$sSQL .= "		f.data < CAST( EXTRACT(year from now()) || '-' ||EXTRACT(month from now()) ||'-01' as date) ";
+					$sSQL .= "	END AND ";
+					$sSQL .= "	(f.status != 'P' AND f.status != 'E' AND f.status != 'C') AND ctt.status = 'A' ";
+					$sSQL .= "GROUP BY ano, mes ";
+					$sSQL .= "ORDER BY ano, mes ";
+				break;
+				
+				case "US":
+
+					$sSQL  = "SELECT ";
+					$sSQL .= "	count(*) as num_contratos, ";
+					$sSQL .= "	EXTRACT(year from f.data) as ano, ";
+					$sSQL .= "	EXTRACT(month from f.data) as mes ";
+					$sSQL .= "FROM ";
+					$sSQL .= "	cbtb_faturas f INNER JOIN cbtb_contrato ctt USING(id_cliente_produto)  ";
+					$sSQL .= "WHERE ";
+					$sSQL .= "	CASE WHEN ";
+					$sSQL .= "		f.reagendamento IS NOT NULL ";
+					$sSQL .= "	THEN ";
+					$sSQL .= "		f.reagendamento >= CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '6 month' AND ";
+					$sSQL .= "		f.reagendamento < CAST( EXTRACT(year from now()) || '-' ||EXTRACT(month from now()) ||'-01' as date) ";
+					$sSQL .= "	ELSE ";
+					$sSQL .= "		f.data >= CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '6 month' AND ";
+					$sSQL .= "		f.data < CAST( EXTRACT(year from now()) || '-' ||EXTRACT(month from now()) ||'-01' as date) ";
+					$sSQL .= "	END AND ";
+					$sSQL .= "	(f.status != 'P' AND f.status != 'E' AND f.status != 'C') AND ctt.status = 'A' ";
+					$sSQL .= "GROUP BY ano, mes ";
+					$sSQL .= "ORDER BY ano, mes ";
+				break;
+
+				case "UT":
+
+					$sSQL  = "SELECT ";
+					$sSQL .= "	count(*) as num_contratos, ";
+					$sSQL .= "	EXTRACT(year from f.data) as ano, ";
+					$sSQL .= "	EXTRACT(month from f.data) as mes ";
+					$sSQL .= "FROM ";
+					$sSQL .= "	cbtb_faturas f INNER JOIN cbtb_contrato ctt USING(id_cliente_produto)  ";
+					$sSQL .= "WHERE ";
+					$sSQL .= "	CASE WHEN ";
+					$sSQL .= "		f.reagendamento IS NOT NULL ";
+					$sSQL .= "	THEN ";
+					$sSQL .= "		f.reagendamento >= CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '3 month' AND ";
+					$sSQL .= "		f.reagendamento < CAST( EXTRACT(year from now()) || '-' ||EXTRACT(month from now()) ||'-01' as date) ";
+					$sSQL .= "	ELSE ";
+					$sSQL .= "		f.data >= CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '3 month' AND ";
+					$sSQL .= "		f.data < CAST( EXTRACT(year from now()) || '-' ||EXTRACT(month from now()) ||'-01' as date) ";
+					$sSQL .= "	END AND ";
+					$sSQL .= "	(f.status != 'P' AND f.status != 'E' AND f.status != 'C') AND ctt.status = 'A' ";
+					$sSQL .= "GROUP BY ano, mes ";
+					$sSQL .= "ORDER BY ano, mes ";
+				break;
+
+				case "UB":
+
+					$sSQL  = "SELECT ";
+					$sSQL .= "	count(*) as num_contratos, ";
+					$sSQL .= "	EXTRACT(year from f.data) as ano, ";
+					$sSQL .= "	EXTRACT(month from f.data) as mes ";
+					$sSQL .= "FROM ";
+					$sSQL .= "	cbtb_faturas f INNER JOIN cbtb_contrato ctt USING(id_cliente_produto)  ";
+					$sSQL .= "WHERE ";
+					$sSQL .= "	CASE WHEN ";
+					$sSQL .= "		f.reagendamento IS NOT NULL ";
+					$sSQL .= "	THEN ";
+					$sSQL .= "		f.reagendamento >= CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '2 month' AND ";
+					$sSQL .= "		f.reagendamento < CAST( EXTRACT(year from now()) || '-' ||EXTRACT(month from now()) ||'-01' as date) ";
+					$sSQL .= "	ELSE ";
+					$sSQL .= "		f.data >= CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '2 month' AND ";
+					$sSQL .= "		f.data < CAST( EXTRACT(year from now()) || '-' ||EXTRACT(month from now()) ||'-01' as date) ";
+					$sSQL .= "	END AND ";
+					$sSQL .= "	(f.status != 'P' AND f.status != 'E' AND f.status != 'C') AND ctt.status = 'A' ";
+					$sSQL .= "GROUP BY ano, mes ";
+					$sSQL .= "ORDER BY ano, mes ";
+				break;				
+																				
+				
+			}
+		
+		}else if($acao == "sub_ina") {
+		
+			$ano = @$_REQUEST["ano"];
+			$mes = @$_REQUEST["mes"];
+			
+			
+			$sSQL  = "SELECT ";
+			$sSQL .= "	cl.id_cliente, cl.nome_razao, pr.id_produto, pr.nome, pr.tipo, ";
+			$sSQL .= "	EXTRACT(year from f.data) as ano,  ";
+			$sSQL .= "	EXTRACT(month from f.data) as mes, ";
+			$sSQL .= "	EXTRACT(day from f.data) as dia ";
+			$sSQL .= "FROM ";
+			$sSQL .= "	cbtb_faturas f, ";
+			$sSQL .= "	cbtb_contrato ctt,  ";
+			$sSQL .= "	cbtb_cliente_produto cp,  ";
+			$sSQL .= "	cltb_cliente cl, ";
+			$sSQL .= "	prtb_produto pr ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "	f.id_cliente_produto = ctt.id_cliente_produto AND ";
+			$sSQL .= "	ctt.id_cliente_produto = cp.id_cliente_produto AND ";
+			$sSQL .= "	cp.id_cliente = cl.id_cliente AND pr.id_produto = cp.id_produto AND ";
+			$sSQL .= "	CASE WHEN  ";
+			$sSQL .= "		f.reagendamento IS NOT NULL  ";
+			$sSQL .= "	THEN ";
+			$sSQL .= "		f.reagendamento >= CAST(( '$ano' ||  '-$mes' ||'-01') as date) AND ";
+			$sSQL .= "		f.reagendamento < CAST(( '$ano' ||  '-$mes' ||'-01') as date) + INTERVAL '1 month' ";
+			$sSQL .= "	ELSE ";
+			$sSQL .= "		f.data >= CAST(( '$ano' || '-$mes' ||'-01') as date) AND ";
+			$sSQL .= "		f.data < CAST(( '$ano' || '-$mes' ||'-01') as date) + INTERVAL '1 month' ";
+			$sSQL .= "	END AND ";
+			$sSQL .= "	(f.status != 'P' AND f.status != 'E' AND f.status != 'C') AND ctt.status = 'A' ";
+			$sSQL .= "ORDER BY ano, mes, dia, nome_razao ";	
+		
+		}
+		
+		//echo $sSQL;
+		$relat = $this->bd->obtemRegistros($sSQL);
+		
+		
+		if ($extra == "grafico") {
+
+			$relat = $this->bd->obtemRegistros($sSQL);
+
+			$pontos = array();
+			$legendas = array();
+
+			for($i=0;$i<count($relat);$i++) {
+			   $legendas[] = $relat[$i]["mes"] . "/" . $relat[$i]["ano"];
+			   $pontos[] = $relat[$i]["num_contratos"];			   
+			}
+
+
+			// GERA O Gráfico
+
+			header("pragma: no-cache");
+			header("Content-type: Image/png");
+
+			//$pontos = array("9", "16", "20");
+			$grafico = new Graph(450,200,"png");
+
+
+			$grafico->SetScale("textlin"); 
+			//$grafico->SetShadow(); 
+			$grafico->title->Set('Relatório de Inadimplência');
+			$grafico->img->SetMargin(40,40,40,40);
+
+			//Imagem de Fundo
+			$grafico->SetBackgroundImage("./template/default/images/gr_back1.jpg",BGIMG_FILLPLOT); //BGIMG_FILLFRAME);
+			$grafico->SetMarginColor("white");
+
+			//Cria uma nova mostragem gráfica
+			$gBarras = new BarPlot($pontos); 
+
+			//$grafico->xaxis->SetMajTickPositions($positions,$titulos);
+
+			// ajuste de cores 
+			//$gBarras->SetFillColor("#ff0000");
+			$gBarras->SetFillGradient("#aa0000","#ff0000",GRAD_MIDVER);
+
+
+			//$gBarras->SetShadow("darkblue"); 
+			//$grafico->xaxis->labels = $legendas;
+			//$gBarras->label->Set($legendas);
+
+			// título das barras
+			$grafico->xaxis->SetTickLabels($legendas);
+
+			// adicionar mostrage de barras ao gráfico 
+			$grafico->Add($gBarras); 
+
+			// imprimir gráfico 
+			$grafico->Stroke();
+
+			$this->arquivoTemplate = '';		
+			return;
+
+		}
+		
+		
+		
+		
+		global $_LS_TP_CONSULTA;
+		$this->tpl->atribui("tpconsulta", $_LS_TP_CONSULTA);
+		$this->tpl->atribui("periodo", $periodo);
+		$this->tpl->atribui("relat",$relat);
+		$this->tpl->atribui("acao" ,$acao);
+		$this->tpl->atribui("op", $op).
+		$this->arquivoTemplate = 'relatorio_inadimplente.html';
+
+	
+	} else if($op == "bloqueios"){
+	
 	} else if ($op == "evolucao"){
 	
 	

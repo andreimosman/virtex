@@ -18,7 +18,7 @@
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio</h1><h2 align="center"><font size="2">Adesões</font></h2>
+                <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio</h1><h2 align="center"><font size="2">Inadimplência</font></h2>
 
                 	{if $acao == "geral"}
 
@@ -53,7 +53,7 @@
 								  <td bgcolor="#F1F1F1"><table width="450" border="0" cellspacing="2" cellpadding="0">
 									  <tr>
 										<td width="225" align="CENTER"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Per&iacute;odo</font></td>
-										<td align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Adesões</font></td>
+										<td align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Inadimplentes</font></td>
 									  </tr>
 									</table></td>
 								</tr>
@@ -63,8 +63,8 @@
 								{foreach item=a from=$relat}
 								  <table width="450" border="0" cellspacing="2" cellpadding="0">
 									  <tr>
-										<td width="225" align="CENTER"><p><a href="relatorio.php?op={$op}&acao=sub_ade&ano={$a.ano}&mes={$a.mes}">{$a.mes}/{$a.ano}</a></p></td>
-										<td align="CENTER"><p><a href="relatorio.php?op={$op}&acao=sub_ade&ano={$a.ano}&mes={$a.mes}">{$a.num_contratos}</a></p></td>
+										<td width="225" align="CENTER"><p><a href="relatorio.php?op={$op}&acao=sub_ina&ano={$a.ano}&mes={$a.mes}">{$a.mes}/{$a.ano}</a></p></td>
+										<td align="CENTER"><p><a href="relatorio.php?op={$op}&acao=sub_ina&ano={$a.ano}&mes={$a.mes}">{$a.num_contratos}</a></p></td>
 
 									  </tr>
 									  <tr bgcolor="#999999">
@@ -83,7 +83,7 @@
 
 
 
-					{if $acao == "sub_ade"}
+					{if $acao == "sub_ina"}
 					  <table width="500" border="0" cellspacing="0" cellpadding="0">
 						  <tr>
 							<td><table width="500" border="0" cellspacing="0" cellpadding="0">
