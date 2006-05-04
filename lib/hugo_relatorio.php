@@ -151,10 +151,9 @@ if ($op == "lista"){
 		
 		$extra = @$_REQUEST['extra'];
 		
-		$tp_grafico = "3d";
+		$tp_grafico = "2d";
+		global $_LS_CORES;
 		
-		// cores:          (   1024,     768,      512,      384,      256,      192,      128,      96,       64,      32,      0- SEM CONTROLE)
-		$base_cores = array("#FF9900","#FFCC00","#333366","#0066CC","#00CCCC","#00CC00","#99FF33","#CC9900","#99CCFF",'#ffffff',"#CC0000");
 		$cores = array();
 		
 		if( $extra == 'grafico' ) {
@@ -164,9 +163,10 @@ if ($op == "lista"){
 				if( $tp_grafico != "3d" || $bandas[$i]["num_contas"] > 0 ) {
 					$valores[]  = $bandas[$i]["num_contas"];
 					$legendas[] = $bandas[$i]["banda"] ? $bandas[$i]["banda"] : "SEM CONTROLE";
-					$cores[] = $base_cores[$i];
+					$cores[] = $_LS_CORES[$i];
 				}
 			}
+			
 			// Exibir o gráfico
 			$grafico = new PieGraph(450,250,"png");
 			//$grafico->SetShadow();

@@ -2544,22 +2544,22 @@ class VAClientes extends VirtexAdmin {
 			
 			if ($tipo_produto == "BL"){
 				
-				$arquivo_contrato = "./contratos/contrato_padrao_BL.html";
+				$arquivo_contrato = "../../contratos/contrato_padrao_BL.html";
 			
 			}else if ($tipo_produto == "D"){
 			
-				$arquivo_contrato = "./contratos/contrato_padrao_D.html";
+				$arquivo_contrato = "../../contratos/contrato_padrao_D.html";
 			
 			}else if ($tipo_produto == "H"){
 				
-				$arquivo_contrato = "./contratos/contrato_padrao_H.html";
+				$arquivo_contrato = "../../contratos/contrato_padrao_H.html";
 				
 			}
 			
 			
-			
-			$this->tpl->atribui("arquivo_contrato",$arquivo_contrato);
-			$this->arquivoTemplate = "cliente_contrato_modificacao.html";
+			$this->arquivoTemplate = $arquivo_contrato;
+			//$this->tpl->atribui("arquivo_contrato",$arquivo_contrato);
+			//$this->arquivoTemplate = "cliente_contrato_modificacao.html";
 			
 		
 		}
@@ -2862,8 +2862,8 @@ public function carne($id_cliente_produto,$data,$id_cliente){
 
 
 	// PEGANDO INFORMAÇÕES DAS PREFERENCIAS
-	//$provedor = $this->prefs->obtem("total");
-	$provedor = $this->prefs->obtem();
+	$provedor = $this->prefs->obtem("total");
+	//$provedor = $this->prefs->obtem();
 
 	$sSQL = "SELECT ct.id_produto, pd.nome from cbtb_contrato ct, prtb_produto pd WHERE ct.id_cliente_produto = '$id_cliente_produto' and ct.id_produto = pd.id_produto";
 	$produto = $this->bd->obtemUnicoRegistro($sSQL);

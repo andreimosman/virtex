@@ -84,7 +84,7 @@ class Preferencias {
  
 
       if( $prop ) {
-         return($this->prefs[$classe]["prop"]);
+         return($this->prefs[$classe][$prop]);
 
       } else {
          return($this->prefs[$classe]);

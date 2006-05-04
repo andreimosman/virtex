@@ -1,0 +1,126 @@
+<!-- relatorio_config_cliente.html-->
+<html>
+<head>
+<title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
+
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+</head>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>{ include file='menu_principal.html' }</td>
+        </tr>
+        <tr>
+          <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td align="center" valign="middle"><h1>{if !$contas} Relat&oacute;rio 
+                  de Clientes por Banda</h1>
+				  <img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico"><br>
+
+				  <table width="450" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td><table width="450" border="0" cellspacing="0" cellpadding="0">
+                          <tr bgcolor="#f1f1f1" align="CENTER"> 
+                            <td width="225">
+<p><strong>Faixa de Banda</strong></p></td>
+                            <td width="225">
+<p><strong>Quant. de Clientes</strong></p></td>
+                          </tr>
+                        </table></td>
+                    </tr>
+                    <tr>
+                      <td>
+					  {foreach item=v from=$bandas}
+					    <table width="450" border="0" cellspacing="0" cellpadding="0">
+                          <tr bgcolor="#FFFFFF" align="CENTER"> 
+                            <td width="225" height="20">
+{if $v.banda != 0}<p><a href="relatorio.php?op=lista_banda&banda={$v.banda}">{$v.banda} kbps</a></p>{/if}{if $v.banda == 0}<p><a href="relatorio.php?op=lista_banda&banda={$v.banda}">Sem Controle</a></p>{/if}</td>
+                            <td width="225" height="20">
+<p><a href="relatorio.php?op=lista_banda&banda={$v.banda}">{$v.num_contas}</a></p></td>
+                          </tr>
+                          <tr bgcolor="#FFFFFF" align="CENTER"> 
+                            <td colspan="2" bgcolor="#999999"><img src="template/default/images/menu/spacer.gif" width="200" height="1"></td>
+                          </tr>
+                        </table>
+						{/foreach}
+						</td>
+                    </tr>
+                  </table>
+				  <h1>{/if}{if $contas && !$msg}
+                  Relat&oacute;rio de Clientes com {$banda} kbps</h1>
+<table width="500" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td><table width="500" border="0" cellspacing="0" cellpadding="0">
+                          <tr bgcolor="#f1f1f1" align="CENTER"> 
+                            <td width="200" align="LEFT"> 
+                              <p><strong>Nome</strong></p></td>
+                            <td width="100" align="LEFT">
+<p><strong>Username </strong></p></td>
+                            <td width="100" align="RIGHT"> 
+                              <p><strong>Banda Up</strong></p></td>
+                            <td width="100" align="RIGHT">
+<p><strong>Banda Down</strong></p></td>
+                          </tr>
+                        </table></td>
+                    </tr>
+                    <tr> 
+                      <td> {foreach item=v from=$contas} 
+                        <table width="500" border="0" cellspacing="0" cellpadding="0">
+                          <tr bgcolor="#FFFFFF" align="CENTER">
+                            <td width="200" align="LEFT"><a href="clientes.php?op=cadastro&id_cliente={$v.id_cliente}">{$v.nome}</a></td>
+                            <td width="100" height="20" align="LEFT"> 
+                              <p><a href="clientes.php?op=cadastro&id_cliente={$v.id_cliente}">{$v.username}</a></p></td>
+                            <td width="100" height="20" align="RIGHT"> 
+                              <p><a href="clientes.php?op=cadastro&id_cliente={$v.id_cliente}" {if $v.upload_kbps != $banda}style='color: red'{/if}>{$v.upload_kbps} 
+                                kbps</a>{if $v.upload_kbps != $banda}</font>{/if} </p></td>
+                            <td width="100" height="20" align="RIGHT"> 
+                              <p><a href="clientes.php?op=cadastro&id_cliente={$v.id_cliente}" {if $v.download_kbps != $banda}style='color: red'{/if}>{$v.download_kbps} 
+                                kbps</a> </p></td>
+                          </tr>
+                          <tr bgcolor="#FFFFFF" align="CENTER"> 
+                            <td colspan="4" bgcolor="#999999"><img src="template/default/images/menu/spacer.gif" width="200" height="1"></td>
+                          </tr>
+                        </table>
+                        {/foreach}</td>
+                    </tr>
+                  </table>
+				  <p><a href="relatorio.php?op=lista_banda">voltar</a>{/if}</p>
+				  {if $contas && $msg}
+<table width="450" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td bgcolor="#666666"><table width="450" border="0" cellspacing="1" cellpadding="0">
+                          <tr>
+                            <td bgcolor="#f1f1f1" height="40" align="CENTER" valign="MIDDLE"><p><b><font color="#000000" size="2">{$msg}</font></b></p></td>
+                          </tr>
+                        </table></td>
+                    </tr>
+                  </table>
+                  <br>
+                  <p><a href="relatorio.php?op=lista_banda">voltar</a> 
+                  {/if} </p>
+                  <p>&nbsp;</p>
+                  <p>&nbsp;</p>
+                  <p>&nbsp;
+                  </p>
+                  <p>&nbsp;</p></td>
+              </tr>
+            </table></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr>
+    <td height="20" align="center" bgcolor="#BCD3C4"><table width="400" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy;
+              Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+</body>
+</html>

@@ -36,7 +36,7 @@
                     {foreach item=v from=$carga}
 
                     <tr bgcolor="{$v.bgcolor}">
-                      <td align="left"><p>{$v.nome}</p></td>
+                      <td align="left"><p><a href="{$smarty.server.PHP_SELF}?op=lista&tipo={$tipo}&id={if $tipo == 'POP'}{$v.id_pop}{/if}{if $tipo == 'AP'}{$v.id_pop}{/if}{if $tipo == 'NAS'}{$v.id_nas}{/if}">{$v.nome}</a></p></td>
                       <td align="center"><p>{$v.clientes_associados}</p></td>
                       <td align="center"><p>{$v.carga_up}</p></td>
                       <td align="center"><p>{$v.carga_down}</p></td>

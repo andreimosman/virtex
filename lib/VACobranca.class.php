@@ -840,6 +840,52 @@ class VACobranca extends VirtexAdmin {
 	
 		$this->arquivoTemplate = "cobranca_retorno.html";
 	
+	}else if ($op == "contratos"){
+	
+		$acao = @$_REQUEST["acao"];
+		$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
+		$id_cliente = @$_REQUEST["id_cliente"];
+		$tipo_produto = @$_REQUEST["tipo_produto"];
+		
+		$this->tpl->atribui("id_cliente_produto",$id_cliente_produto);
+		$this->tpl->atribui("id_cliente",$id_cliente);
+		$this->tpl->atribui("tipo_produto",$tipo_produto);
+
+		
+		if ($acao == "cancelar"){
+			
+			$sSQL  = "SELECT ";
+			$sSQL .= "* FROM cntb_contrato where id_cliente_produto = '$id_cliente_produto' AND id_cliente = '$id_cliente' AND tipo_produto = '$tipo_produto' ";
+			
+			$contrato = $this->bd->obtemUnicoRegistro($sSQL);
+			
+			$this->tpl->atribui("contrato",$contrato);
+			
+			$sSQL  = "SELECT * FROM cbtb_fatura where id_cliente_produto = '$id_cliente_produto' ";
+			
+			$faturas = $this->bd->obtemRegistros($sSQL);
+			
+			$this->tpl->atribui("faturas",$faturas);
+			
+			$this->tpl->atribui("acao",$acao);
+			
+			$this->arquivoTemplate = "cobranca_contrato_cancel.html";
+			return;
+			
+			
+		}else if ($acao == "alterar"){
+		
+		}else if ($acao == "excluir"){
+		
+		}
+	
+		
+		$this->arquivoTemplate = "cliente_contrato_modificacao.html";
+	
+	
+	
+	
+	
 	}
 
 }
