@@ -167,10 +167,10 @@ $_LS_MESES_ANO = array (
 		);
 		
 $_LS_TP_CONSULTA = array (
-		"UA" =>	"Ultimo Ano",
-		"US" =>	"Ultimo Simestre",
-		"UT" =>	"Ultimo Trimestre",
-		"UB" =>	"Ultimo Bimestre"
+		"12" =>	"Ultimos 12 meses",
+		"6" =>	"Ultimos 6 meses",
+		"3" =>	"Ultimos 3 meses",
+		"2" =>	"Ultimos 2 meses"
 		);
 
 $_LS_CORES = array(
