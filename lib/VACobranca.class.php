@@ -536,7 +536,9 @@ class VACobranca extends VirtexAdmin {
 		
 		}else if ($op == "bloqueados"){
 		
-		$this->arquivoTemplate = "cobranca_versaolight.html";
+		
+		require_once("dede_bloqueios.php");
+		//$this->arquivoTemplate = "cobranca_versaolight.html";
 		
 		
 		} else if ($op == "boleto"){
@@ -846,6 +848,9 @@ class VACobranca extends VirtexAdmin {
 		$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
 		$id_cliente = @$_REQUEST["id_cliente"];
 		$tipo_produto = @$_REQUEST["tipo_produto"];
+		$rotina = @$_REQUEST["rotina"];
+		$dominio = @$_REQUEST["dominio"];
+		$tipo_conta = @$_REQUEST["tipo_conta"];
 		
 		$this->tpl->atribui("id_cliente_produto",$id_cliente_produto);
 		$this->tpl->atribui("id_cliente",$id_cliente);
@@ -875,7 +880,69 @@ class VACobranca extends VirtexAdmin {
 			
 		}else if ($acao == "alterar"){
 		
+
+
+		
 		}else if ($acao == "excluir"){
+		
+		
+			if (!$rotina){
+			
+				$sSQL  = "SELECT ";
+				$sSQL .= "ct.id_cliente_produto, to_char(ct.data_contratacao, 'DD/mm/YYYY') as data_contratacao, ct.vigencia, ct.data_renovacao, ct.valor_contrato, ct.id_cobranca, ct.status, ct.tipo_produto, ";
+				$sSQL .= "ct.valor_produto,";
+				$sSQL .= "cn.id_cliente_produto, cn.id_cliente, cn.dominio, cn.tipo_conta ";
+				$sSQL .= "cl.id_cliente, cl.nome_razao ";
+				$sSQL .= "FROM ";
+				$sSQL .= "cbtb_contrato ct, cntb_conta cn, cltb_cliente cl ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "ct.id_cliente_produto = '$id_cliente_produto' AND ";
+				$sSQL .= "ct.id_cliente_produto = cn.id_cliente_produto AND ";
+				$sSQL .= "cn.id_cliente = '$id_cliente' AND ";
+				$sSQL .= "cn.id_cliente = cl.id_cliente AND ";
+				$sSQL .= "ct.tipo_produto = '$tipo_produto' ";
+
+				//echo "QUERY: $sSQL <br>";
+
+				$contrato = $this->bd->obtemUnicoRegistro($sSQL);
+
+				$this->tpl->atribui("contrato",$contrato);
+
+				$sSQL  = "SELECT to_char(data, 'DD/mm/YYYY') as data, valor, status FROM cbtb_faturas where id_cliente_produto = '$id_cliente_produto' ";
+				//echo "fatura: $sSQL <br>";
+				$faturas = $this->bd->obtemRegistros($sSQL);
+
+				$this->tpl->atribui("fatura",$faturas);
+				$this->tpl->atribui("acao",$acao);
+
+				$this->arquivoTemplate = "cliente_contrato_excluir.html";
+				return;
+				
+			}else if ( $rotina == "excluir" ){
+			
+				$sSQL  = "DELETE FROM cbtb_contrato WHERE id_cliente_produto = '$id_cliente_produto' AND tipo_produto = '$tipo_produto' ";
+				$this->bd->consulta($sSQL);
+				echo "DELETA CONTRATO: $sSQL <br>";
+				
+				$sSQL  = "DELETE FROM cbtb_faturas WHERE id_cliente_produto = '$id_cliente_produto'";
+				$this->bd->consulta($sSQL);
+				
+				$sSQL = "DELETE FROM cntb_conta WHERE id_cliente = '$id_cliente' AND dominio = '$dominio' AND id_cliente = '$id_cliente' ";
+				
+				$msg_final = "CONTRATOS EXCLUIDOS COM SUCESSO!<BR>FATURAS EXCLUIDAS COM SUCESSO!";
+				$this->tpl->atribui("mensagem",$msg_final); 
+				$this->tpl->atribui("url", "clientes.php?op=cobranca&id_cliente=".$id_cliente."&rotina=resumo");
+				$this->tpl->atribui("target","_top");
+				$this->arquivoTemplate="msgredirect.html";
+
+				return;
+			
+			
+			}
+		}else if ($acao == "migrar"){
+		
+			
+		
 		
 		}
 	
