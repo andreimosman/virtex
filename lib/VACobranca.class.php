@@ -851,10 +851,30 @@ class VACobranca extends VirtexAdmin {
 		$rotina = @$_REQUEST["rotina"];
 		$dominio = @$_REQUEST["dominio"];
 		$tipo_conta = @$_REQUEST["tipo_conta"];
+		$username = @$_REQUEST["username"];
 		
 		$this->tpl->atribui("id_cliente_produto",$id_cliente_produto);
 		$this->tpl->atribui("id_cliente",$id_cliente);
 		$this->tpl->atribui("tipo_produto",$tipo_produto);
+		
+		$sSQL  = "SELECT ";
+		//$sSQL .= "   id_produto,nome,descricao,tipo,valor ";
+		$sSQL .= " * ";
+		$sSQL .= "FROM ";
+		$sSQL .= "   prtb_produto ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "   disponivel is true ";
+		$sSQL .= "";
+		
+		$cond_discado    = "   AND tipo='D' ";
+		$cond_bandalarga = "   AND tipo='BL' ";
+		$cond_hospedagem = "   AND tipo='H' ";
+		
+		$ordem = "ORDER BY nome ";
+		
+		$lista_discado    = $this->bd->obtemRegistros("$sSQL $cond_discado $ordem");
+		$lista_bandalarga = $this->bd->obtemRegistros("$sSQL $cond_bandalarga $ordem");
+		$lista_hospedagem = $this->bd->obtemRegistros("$sSQL $cond_hospedagem $ordem");
 
 		
 		if ($acao == "cancelar"){
@@ -891,7 +911,7 @@ class VACobranca extends VirtexAdmin {
 				$sSQL  = "SELECT ";
 				$sSQL .= "ct.id_cliente_produto, to_char(ct.data_contratacao, 'DD/mm/YYYY') as data_contratacao, ct.vigencia, ct.data_renovacao, ct.valor_contrato, ct.id_cobranca, ct.status, ct.tipo_produto, ";
 				$sSQL .= "ct.valor_produto,";
-				$sSQL .= "cn.id_cliente_produto, cn.id_cliente, cn.dominio, cn.tipo_conta ";
+				$sSQL .= "cn.id_cliente_produto, cn.id_cliente, cn.dominio, cn.tipo_conta, cn.username, ";
 				$sSQL .= "cl.id_cliente, cl.nome_razao ";
 				$sSQL .= "FROM ";
 				$sSQL .= "cbtb_contrato ct, cntb_conta cn, cltb_cliente cl ";
@@ -919,28 +939,214 @@ class VACobranca extends VirtexAdmin {
 				return;
 				
 			}else if ( $rotina == "excluir" ){
+				
+				if ($tipo_produto == "BL"){
+					
+					/* SPOOL */
+					
+					$sSQL  = "SELECT ";
+					$sSQL .= "	bl.username, bl.tipo_conta, bl.dominio, bl.tipo_bandalarga, bl.ipaddr, bl.rede, bl.id_nas, ";
+					$sSQL .= "	cn.username, cn.dominio, cn.tipo_conta, cn.id_conta ";
+					$sSQL .= "FROM cntb_conta_bandalarga bl, cntb_conta cn ";
+					$sSQL .= "WHERE ";
+					$sSQL .= "bl.username = '$username' AND bl.tipo_conta = '$tipo_conta' AND bl.dominio = '$dominio' AND ";
+					$sSQL .= "bl.username = cn.username AND bl.tipo_conta = cn.tipo_conta AND bl.dominio = cn.dominio ";
+					$bl = $this->bd->obtemUnicoRegistro($sSQL);
+					//echo "SPOOL BL: $sSQL <br>";
+					
+					$sSQL  = "SELECT ip FROM cftb_nas WHERE id_nas = '".$bl["id_nas"]."' ";
+					$nas = $this->bd->obtemUnicoRegistro($sSQL);
+					//echo "SPOOL NAS: $sSQL <br>";
+					
+					
+					
+					if ($bl["tipo_bandalarga"] == "P"){
+						
+						//ECHO "PPPOE<BR>";
+						$this->spool->bandalargaExcluiRedePPPoE($nas["ip"],$bl["id_conta"],$bl["ipaddr"]);
+					
+					}else {
+						
+						//echo "IP <BR>";
+						$this->spool->bandalargaExcluiRede($nas["ip"],$bl["id_conta"],$bl["rede"]);
+					
+					}
+					
+				/* FINAL SPOOL */
+
+				}
 			
+				$sSQL  = "DELETE FROM cbtb_faturas WHERE id_cliente_produto = '$id_cliente_produto'";
+				$this->bd->consulta($sSQL);
+
+				
 				$sSQL  = "DELETE FROM cbtb_contrato WHERE id_cliente_produto = '$id_cliente_produto' AND tipo_produto = '$tipo_produto' ";
 				$this->bd->consulta($sSQL);
 				echo "DELETA CONTRATO: $sSQL <br>";
 				
-				$sSQL  = "DELETE FROM cbtb_faturas WHERE id_cliente_produto = '$id_cliente_produto'";
+				
+				$sSQL  = "DELETE FROM ";
+					switch($tipo_conta){
+						case 'BL':
+						$sSQL .= "cntb_conta_bandalarga ";
+						break;
+						case 'D':
+						$sSQL .= "cntb_conta_discado ";
+						break;
+						case 'H':
+						$sSQL .= "cntb_conta_hospedagem ";
+						break;
+					}
+				$sSQL .= "WHERE ";
+				$sSQL .= "dominio = '$dominio' AND ";
+				$sSQL .= "username = '$username' AND ";
+				$sSQL .= "tipo_conta = '$tipo_conta' ";
+				$this->bd->consulta($sSQL);
+				echo "DELETA CONTA ESPECIFICA: $sSQL <br>";
+				
+				$sSQL = "DELETE FROM cntb_conta WHERE username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta' ";
+				$this->bd->consulta($sSQL);
+				echo "DELETA CONTAS: $sSQL <br>";
+				
+				$sSQL = "DELETE FROM cbtb_cliente_produto WHERE id_cliente_produto = '$id_cliente_produto' ";
 				$this->bd->consulta($sSQL);
 				
-				$sSQL = "DELETE FROM cntb_conta WHERE id_cliente = '$id_cliente' AND dominio = '$dominio' AND id_cliente = '$id_cliente' ";
-				
 				$msg_final = "CONTRATOS EXCLUIDOS COM SUCESSO!<BR>FATURAS EXCLUIDAS COM SUCESSO!";
-				$this->tpl->atribui("mensagem",$msg_final); 
+				$this->tpl->atribui("mensagem",$msg_final);
 				$this->tpl->atribui("url", "clientes.php?op=cobranca&id_cliente=".$id_cliente."&rotina=resumo");
 				$this->tpl->atribui("target","_top");
 				$this->arquivoTemplate="msgredirect.html";
-
 				return;
+			
+				
 			
 			
 			}
 		}else if ($acao == "migrar"){
 		
+			$rotina = @$_REQUEST["rotina"];
+	
+			$sSQL  = "SELECT ";
+			$sSQL .= "ct.id_cliente_produto, to_char(ct.data_contratacao, 'DD/mm/YYYY') as data_contratacao, ct.vigencia, ct.data_renovacao, ct.valor_contrato, ct.id_cobranca, ct.status, ct.tipo_produto,ct.id_produto, ";
+			$sSQL .= "ct.vigencia, ct.carencia, ct.vencimento, ";
+			$sSQL .= "ct.valor_produto,";
+			$sSQL .= "cn.id_cliente_produto, cn.id_cliente, cn.dominio, cn.tipo_conta, cn.username, ";
+			$sSQL .= "cl.id_cliente, cl.nome_razao ";
+			$sSQL .= "FROM ";
+			$sSQL .= "cbtb_contrato ct, cntb_conta cn, cltb_cliente cl ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "ct.id_cliente_produto = '$id_cliente_produto' AND ";
+			$sSQL .= "ct.id_cliente_produto = cn.id_cliente_produto AND ";
+			$sSQL .= "cn.id_cliente = '$id_cliente' AND ";
+			$sSQL .= "cn.id_cliente = cl.id_cliente AND ";
+			$sSQL .= "ct.tipo_produto = '$tipo_produto' ";
+
+			echo "QUERY: $sSQL <br>";
+
+			$contrato = $this->bd->obtemUnicoRegistro($sSQL);
+
+			$sSQL = "SELECT * FROM prtb_produto WHERE tipo = '$tipo_produto' AND disponivel = 't' ";
+			$produto = $this->bd->obtemRegistros($sSQL);
+			echo "PRODUTO: $sSQL <br>";
+
+
+			$sSQL  = "SELECT * FROM cftb_forma_pagamento WHERE disponivel = TRUE ";
+			$tipo_cobranca = $this->bd->obtemRegistros($sSQL);
+
+			$sSQL  = "SELECT ";
+				switch ($tipo_produto){
+					case 'BL':
+						$sSQL .= "bl.username, bl.tipo_conta, bl.dominio, bl.id_pop, bl.tipo_bandalarga, bl.ipaddr, bl.rede, bl.upload_kbps, bl.download_kbps, bl.status, bl.mac, bl.id_nas, ";
+						$sSQL .= "pop.id_pop, pop.nome, pop.info, pop.tipo, pop.id_pop_ap, nas.id_nas, nas.nome, nas.ip, nas.secret, nas.tipo_nas ";
+						$sSQL .= "FROM cntb_conta_bandalarga bl, cftb_pop pop, cftb_nas nas ";
+						$sSQL .= "WHERE ";
+						$sSQL .= "username = '".$contrato["username"]."' AND ";
+						$sSQL .= "tipo_conta = '".$contrato["tipo_conta"]."' AND ";
+						$sSQL .= "dominio = '".$contrato["dominio"]."' AND ";
+						$sSQL .= "bl.id_nas = nas.id_nas AND ";
+						$sSQL .= "bl.id_pop = pop.id_pop ";
+					break;
+					case 'D':
+						$sSQL .= "username, tipo_conta, dominio, foneinfo ";
+						$sSQL .= "FROM cntb_conta_discado ";
+						$sSQL .= "WHERE ";
+						$sSQL .= "username = '".$contrato["username"]."' AND ";
+						$sSQL .= "tipo_conta = '".$contrato["tipo_conta"]."' AND ";
+						$sSQL .= "dominio = '".$contrato["dominio"]."' ";
+					break;
+					case 'H':
+						$sSQL .= "username, tipo_conta, dominio, tipo_hospedagem, uid, gid ";
+						$sSQL .= "FROM cntb_conta_hospedagem ";
+						$sSQL .= "WHERE ";
+						$sSQL .= "username = '".$contrato["username"]."' AND ";
+						$sSQL .= "tipo_conta = '".$contrato["tipo_conta"]."' AND ";
+						$sSQL .= "dominio = '".$contrato["dominio"]."' ";
+					break;
+				}
+				
+			$produto_carac = $this->bd->obtemUnicoRegistro($sSQL);
+
+			//echo "CARACT. PRODUTOS: $sSQL <br>";
+
+			$sSQL  = "SELECT * FROM cftb_pop ";
+			$lista_pop = $this->bd->obtemRegistros($sSQL);
+
+			$sSQL  = "SELECT * FROM cftb_nas ";
+			$lista_nas = $this->bd->obtemRegistros($sSQL);
+
+
+
+
+			global $_LS_FORMA_PAGAMENTO;
+
+			$this->tpl->atribui("forma_pagamento",$_LS_FORMA_PAGAMENTO);
+			$this->tpl->atribui("lista_pop",$lista_pop);
+			$this->tpl->atribui("lista_nas",$lista_nas);
+			$this->tpl->atribui("produto_carac",$produto_carac);
+			$this->tpl->atribui("tipo_cobranca",$tipo_cobranca);
+			$this->tpl->atribui("contrato",$contrato);
+			$this->tpl->atribui("produto",$produto);
+			$this->tpl->atribui("lista_discado",$lista_discado);
+			$this->tpl->atribui("lista_hospedagem",$lista_hospedagem);
+			$this->tpl->atribui("lista_bandalarga",$lista_bandalarga);
+
+		
+			if (!$rotina){
+				
+				$this->arquivoTemplate = "cliente_contrato_migracao.html";
+				return;
+				
+			}else if ($rotina == "modificar"){
+				//request das variaveis novas atribuidas
+				$id_produto = @$_REQUEST["id_produto"];
+				$tipo = @$_REQUEST["tipo"];
+				
+				
+				//final do request
+				
+				if ($id_produto != $contrato["id_produto"]){
+				
+					
+				}else{
+					echo "NADA DIFERENTE";
+				}
+				
+				global $_LS_FORMA_PAGAMENTO;
+				
+				$this->tpl->atribui("forma_pagamento",$_LS_FORMA_PAGAMENTO);
+				$this->tpl->atribui("lista_pop",$lista_pop);
+				$this->tpl->atribui("lista_nas",$lista_nas);
+				$this->tpl->atribui("produto_carac",$produto_carac);
+				$this->tpl->atribui("tipo_cobranca",$tipo_cobranca);
+				$this->tpl->atribui("contrato",$contrato);
+				$this->tpl->atribui("produto",$produto);
+				$this->tpl->atribui("lista_discado",$lista_discado);
+				$this->tpl->atribui("lista_hospedagem",$lista_hospedagem);
+				$this->tpl->atribui("lista_bandalarga",$lista_bandalarga);
+
+				$this->arquivoTemplate = "cliente_contrato_migracao_confirmacao.html";
+				return;
+			}
 			
 		
 		

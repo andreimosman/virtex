@@ -80,7 +80,7 @@ class Spool {
 		$sSQL .= ") VALUES ( ";
 		$sSQL .= "now(), '".$destino."', 'BL', 'x', '". $id_conta ."', '".$parametros."', 'A' ";
 		$sSQL .= ") ";
-		//echo "SPOOL EXCLUIR: " . $sSQL . ";<br>\n";
+		echo "SPOOL EXCLUIR: " . $sSQL . ";<br>\n";
 
 		$this->bd->consulta($sSQL);
 		
@@ -88,6 +88,25 @@ class Spool {
 	
 	
 	
+	}
+		function bandalargaExcluiRedePPPoE($destino,$id_conta,$rede){
+		
+			$parametros = "$rede";
+		
+			$sSQL  = "INSERT INTO ";
+			$sSQL .= "sptb_spool ( ";
+			$sSQL .= "	registro,destino,tipo,op,id_conta,parametros,status ";
+			$sSQL .= ") VALUES ( ";
+			$sSQL .= "now(), '".$destino."', 'BL', 'k', '". $id_conta ."', '".$parametros."', 'A' ";
+			$sSQL .= ") ";
+			echo "SPOOL EXCLUIR: " . $sSQL . ";<br>\n";
+	
+			$this->bd->consulta($sSQL);
+			
+			return;
+		
+		
+		
 	}
 	
 	
