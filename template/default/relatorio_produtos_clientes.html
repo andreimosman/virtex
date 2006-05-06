@@ -18,8 +18,14 @@
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio</h1><h2 align="center"><font size="2">Clientes
-                  x Produtos</font></h2>
+                <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio</h1><h2 align="center"><font size="2">
+                {if !$nome}
+                	Clientes x Produtos
+                {else}
+                	Clientes {$nome}
+                {/if}
+
+                </font></h2>
 
 					{if $acao == "geral"}
 						<p>{if $relat}<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico">{/if}</p>
@@ -29,11 +35,8 @@
 									<tr>
 									  <td bgcolor="#F1F1F1"><table width="450" border="0" cellspacing="2" cellpadding="0">
 										  <tr>
-											<td width="80" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Contratos</font></td>
-											<td width="170"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Produto</font></td>
-											<td width="100" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Tipo</font></td>
-											<td align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Valor
-											  Produto</font></td>
+											<td align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Produto</font></td>
+											<td width="100" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Contratos</font></td>
 										  </tr>
 										</table></td>
 									</tr>
@@ -42,10 +45,9 @@
 									  {foreach item=a from=$relat}
 									    <table width="450" border="0" cellspacing="2" cellpadding="0">
 										  <tr>
-											<td width="80" align="CENTER"><p>{$a.num_contratos}</p></td>
-											<td width="170"><p><a href="relatorio.php?op={$op}&acao=sub_prd&id_produto={$a.id_produto}"> {$a.nome}</p></td>
-											<td width="100" align="CENTER"><p><img src="template/default/images/{$a.tipo|lower|trim}.gif" width="24" height="24"></p></td>
-											<td align="RIGHT"><p>{$a.valor}</p></td>
+											<td width="35" align="CENTER"><p><img src="template/default/images/{$a.tipo|lower|trim}.gif" width="24" height="24"></p></td>
+											<td ><p><a href="relatorio.php?op={$op}&acao=sub_prd&id_produto={$a.id_produto}&nome={$a.nome}"> {$a.nome}</p></td>
+											<td width="100" align="RIGHT"><p>{$a.num_contratos}</p></td>
 										  </tr>
 										  <tr bgcolor="#999999">
 											<td colspan="4" height="1"></td>
@@ -60,29 +62,25 @@
 					{/if}
 
 					{if $acao=="sub_prd"}
-						  <table width="600" border="0" cellspacing="0" cellpadding="0">
+						  <table width="450" border="0" cellspacing="0" cellpadding="0">
 							<tr>
-							  <td><table width="600" border="0" cellspacing="0" cellpadding="0">
+							  <td><table width="450" border="0" cellspacing="0" cellpadding="0">
 								  <tr>
-									<td bgcolor="#F1F1F1"><table width="600" border="0" cellspacing="2" cellpadding="0">
+									<td bgcolor="#F1F1F1"><table width="450" border="0" cellspacing="2" cellpadding="0">
 										<tr>
-										  <td width="250" ><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Cliente</font></td>
-										  <td width="150"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Produto</font></td>
-										  <td width="50" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Tipo</font></td>
-										  <td align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Valor
-											Contrato</font></td>
+										  <td width="300" align="LEFT ><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Cliente</font></td>
+										  <td align="LEFT ><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Username</font></td>
 										</tr>
 									  </table></td>
 								  </tr>
 								  <tr>
 									<td>
 									{foreach item=a from=$relat}
-									  <table width="600" border="0" cellspacing="2" cellpadding="0">
+									  <table width="450" border="0" cellspacing="2" cellpadding="0">
 										<tr>
-										  <td width="250"><p><a href="clientes.php?op=cadastro&id_cliente={$a.id_cliente}">{$a.nome_razao}</a></p></td>
-										  <td width="150"><p>{$a.nome_produto}</p></td>
-										  <td width="50" align="CENTER"><p><img src="template/default/images/{$a.tipo|lower|trim}.gif" width="24" height="24"></p></td>
-										  <td align="RIGHT"><p>{$a.valor_contrato}</p></td>
+										  <td width="300" align="LEFT"><p><a href="clientes.php?op=cadastro&id_cliente={$a.id_cliente}">{$a.nome_razao}</a></p></td>
+										  <td align="LEFT"><p>{$a.nome_produto}</p></td>
+
 										</tr>
 										<tr bgcolor="#999999">
 										  <td colspan="4" height="1"></td>
