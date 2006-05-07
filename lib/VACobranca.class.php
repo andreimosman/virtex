@@ -1025,6 +1025,13 @@ class VACobranca extends VirtexAdmin {
 		}else if ($acao == "migrar"){
 		
 			$rotina = @$_REQUEST["rotina"];
+			$tipo = @$_REQUEST["tipo"];
+			$p = @$_REQUEST["p"];
+			
+			if (!$tipo_produto && $tipo){
+				$tipo_produto = $tipo;
+			}
+			
 	
 			$sSQL  = "SELECT ";
 			$sSQL .= "ct.id_cliente_produto, to_char(ct.data_contratacao, 'DD/mm/YYYY') as data_contratacao, ct.vigencia, ct.data_renovacao, ct.valor_contrato, ct.id_cobranca, ct.status, ct.tipo_produto,ct.id_produto, ";
@@ -1041,13 +1048,13 @@ class VACobranca extends VirtexAdmin {
 			$sSQL .= "cn.id_cliente = cl.id_cliente AND ";
 			$sSQL .= "ct.tipo_produto = '$tipo_produto' ";
 
-			echo "QUERY: $sSQL <br>";
+			//echo "QUERY: $sSQL <br>";
 
 			$contrato = $this->bd->obtemUnicoRegistro($sSQL);
 
 			$sSQL = "SELECT * FROM prtb_produto WHERE tipo = '$tipo_produto' AND disponivel = 't' ";
 			$produto = $this->bd->obtemRegistros($sSQL);
-			echo "PRODUTO: $sSQL <br>";
+			//echo "PRODUTO: $sSQL <br>";
 
 
 			$sSQL  = "SELECT * FROM cftb_forma_pagamento WHERE disponivel = TRUE ";
@@ -1094,8 +1101,9 @@ class VACobranca extends VirtexAdmin {
 			$sSQL  = "SELECT * FROM cftb_nas ";
 			$lista_nas = $this->bd->obtemRegistros($sSQL);
 
-
-
+			$sSQL  = "SELECT * FROM prtb_produto WHERE id_produto = '".$contrato["id_produto"]."'";
+			$produto_geral = $this->bd->obtemUnicoRegistro($sSQL);
+			//ECHO "PRODUTO: $sSQL <br>";
 
 			global $_LS_FORMA_PAGAMENTO;
 
@@ -1109,7 +1117,7 @@ class VACobranca extends VirtexAdmin {
 			$this->tpl->atribui("lista_discado",$lista_discado);
 			$this->tpl->atribui("lista_hospedagem",$lista_hospedagem);
 			$this->tpl->atribui("lista_bandalarga",$lista_bandalarga);
-
+			$this->tpl->atribui("produto_geral",$produto_geral);
 		
 			if (!$rotina){
 				
@@ -1126,26 +1134,405 @@ class VACobranca extends VirtexAdmin {
 				
 				if ($id_produto != $contrato["id_produto"]){
 				
+					$tipo = @$_REQUEST["tipo"];
+					$id_produto = @$_REQUEST["id_produto"];
+					$email_igual = @$_REQUEST["email_igual"];
+					$data_contratacao = @$_REQUEST["data_contratacao"];
+					$vigencia = @$_REQUEST["vigencia"];
+					$status = @$_REQUEST["status"];
+					$dia_vencimento = @$_REQUEST["dia_vencimento"];
+					$carencia_pagamento = @$_REQUEST["carencia_pagamento"];
+					$desconto_promo = @$_REQUEST["desconto_promo"];
+					$periodo_desconto = @$_REQUEST["periodo_desconto"];
+					$tx_instalacao = @$_REQUEST["tx_instalacao"];
+					$comodato = @$_REQUEST["comodato"];
+					$valor_comodato = @$_REQUEST["valor_comodato"]; 
+					$prorata = @$_REQUEST["prorata"];
+					$tipo_cobranca = @$_REQUEST["tipo_cobranca"];
+					$forma_pagamento = @$_REQUEST["forma_pagamento"];
+					$ini_carne = @$_REQUEST["ini_carne"];
+					$data_carne = @$_REQUEST["data_carne"];
+					$username = @$_REQUEST["username"];
+					$senha = @$_REQUEST["senha"];
+					$conf_senha = @$_REQUEST["conf_senha"];
+					$id_pop = @$_REQUEST["id_pop"]; 
+					$id_nas = @$_REQUEST["id_nas"];
+					$selecao_ip = @$_REQUEST["selecao_ip"];
+					$mac = @$_REQUEST["mac"];
+					//$p = @$_REQUEST["p"];
+					$op = @$_REQUEST["op"];
+					$id_cliente = @$_REQUEST["id_cliente"];
+					$rotina = @$_REQUEST["rotina"];
+					$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
+					$acao = @$_REQUEST["acao"];
+					$foneinfo = @$_REQUEST["foneinfo"];
+					$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
+					$tipo_hospedagem = @$_REQUEST["tipo_hospedagem"];
+					$dominio_hospedagem = @$_REQUEST["dominio_hospedagem"];
+					$pagamento = @$_REQUEST["pagamento"];
+					$pri_venc = @$_REQUEST["pri_venc"];		
 					
+					
+					$sSQL = "SELECT * FROM prtb_produto WHERE id_produto = '$id_produto'";
+					$info_produto = $this->bd->obtemUnicoRegistro($sSQL);
+
+					$sSQL = "SELECT nome_cobranca FROM cftb_forma_pagamento WHERE id_cobranca = '$tipo_cobranca'";
+					$info_pagamento = $this->bd->obtemUnicoRegistro($sSQL);
+
+
+					//$Calcula o valor do contato
+					$valor_contrato = $info_produto["valor"];
+					$valor_contrato += $valor_comodato;
+
+					if ($periodo_desconto >= $vigencia)
+						$valor_contrato -= $desconto_promo;
+
+
+
+					//Informações referente ao cliente e ao produto
+					//$this->tpl->atribui("info_cliente", $info_cliente);
+					$this->tpl->atribui("info_produto", $info_produto);
+					$this->tpl->atribui("info_pagamento", $info_pagamento);
+
+					//Formatação de valores monetárris
+					$valor_comodato = number_format($valor_comodato, 2, '.', '');
+					$desconto_promo = number_format($desconto_promo, 2, '.', '');
+					$tx_instalacao = number_format($tx_instalacao, 2, '.', '');
+					$valor_contrato = number_format($valor_contrato, 2, '.', '');
+
+
+				
+					$tipo = @$_REQUEST["tipo"];
+					$id_produto = @$_REQUEST["id_produto"];
+					$email_igual = @$_REQUEST["email_igual"];
+					$data_contratacao = @$_REQUEST["data_contratacao"];
+					$vigencia = @$_REQUEST["vigencia"];
+					$status = @$_REQUEST["status"];
+					$dia_vencimento = @$_REQUEST["dia_vencimento"];
+					$carencia_pagamento = @$_REQUEST["carencia_pagamento"];
+					$desconto_promo = @$_REQUEST["desconto_promo"];
+					$periodo_desconto = @$_REQUEST["periodo_desconto"];
+					$tx_instalacao = @$_REQUEST["tx_instalacao"];
+					$comodato = @$_REQUEST["comodato"];
+					$valor_comodato = @$_REQUEST["valor_comodato"]; 
+					$prorata = @$_REQUEST["prorata"];
+					$tipo_cobranca = @$_REQUEST["tipo_cobranca"];
+					$forma_pagamento = @$_REQUEST["forma_pagamento"];
+					$ini_carne = @$_REQUEST["ini_carne"];
+					$data_carne = @$_REQUEST["data_carne"];
+					$username = @$_REQUEST["username"];
+					$senha = @$_REQUEST["senha"];
+					$conf_senha = @$_REQUEST["conf_senha"];
+					$id_pop = @$_REQUEST["id_pop"]; 
+					$id_nas = @$_REQUEST["id_nas"];
+					$selecao_ip = @$_REQUEST["selecao_ip"];
+					$mac = @$_REQUEST["mac"];
+					//$p = @$_REQUEST["p"];
+					$op = @$_REQUEST["op"];
+					$id_cliente = @$_REQUEST["id_cliente"];
+					$rotina = @$_REQUEST["rotina"];
+					$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
+					$acao = @$_REQUEST["acao"];
+					$foneinfo = @$_REQUEST["foneinfo"];
+					$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
+					$tipo_hospedagem = @$_REQUEST["tipo_hospedagem"];
+					$dominio_hospedagem = @$_REQUEST["dominio_hospedagem"];
+					$pagamento = @$_REQUEST["pagamento"];
+					$pri_venc = @$_REQUEST["pri_venc"];		
+
+					//Informações de banco e cartão de crédito
+					$cc_vencimento = @$_REQUEST["cc_vencimento"];
+					$cc_numero = @$_REQUEST["cc_numero"];
+					$cc_operadora = @$_REQUEST["cc_operadora"];
+					$db_banco = @$_REQUEST["db_banco"];
+					$db_agencia = @$_REQUEST["db_agencia"];
+					$db_conta = @$_REQUEST["db_conta"];
+				
+				
+					
+				
+					global $_LS_FORMA_PAGAMENTO;
+					
+					$this->tpl->atribui("tipo", $tipo );
+					$this->tpl->atribui("id_produto_new", $id_produto);
+					$this->tpl->atribui("email_igual_new", $email_igual);
+					$this->tpl->atribui("data_contratacao_new", $data_contratacao);
+					//$this->tpl->atribui("data_renovacao_new", $data_renovacao);
+					$this->tpl->atribui("vigencia_new", $vigencia );
+					$this->tpl->atribui("status_new", $status );
+					$this->tpl->atribui("dia_vencimento_new", $dia_vencimento);
+					$this->tpl->atribui("carencia_pagamento_new", $carencia_pagamento);
+					$this->tpl->atribui("desconto_promo_new", $desconto_promo );
+					$this->tpl->atribui("periodo_desconto_new", $periodo_desconto);
+					$this->tpl->atribui("tx_instalacao_new", $tx_instalacao);
+					$this->tpl->atribui("comodato_new", $comodato);
+					$this->tpl->atribui("valor_comodato_new", $valor_comodato);
+					$this->tpl->atribui("prorata_new", $prorata);
+					$this->tpl->atribui("tipo_cobranca_new", $tipo_cobranca);
+					$this->tpl->atribui("forma_pagamento_new", $forma_pagamento );
+					$this->tpl->atribui("ini_carne_new", $ini_carne );
+					$this->tpl->atribui("data_carne_new", $data_carne );
+					$this->tpl->atribui("username_new", $username );
+					$this->tpl->atribui("senha_new", $senha);
+					$this->tpl->atribui("conf_senha_new", $conf_senha);
+					$this->tpl->atribui("id_nas_new", $id_nas );
+					$this->tpl->atribui("id_pop_new", $id_pop);
+					$this->tpl->atribui("selecao_ip_new", $selecao_ip );
+					$this->tpl->atribui("mac_new", $mac );
+					//$this->tpl->atribui("p_old", $p );
+					//$this->tpl->atribui("op", $op );
+					$this->tpl->atribui("id_cliente", $id_cliente );
+					//$this->tpl->atribui("rotina", $rotina );
+					$this->tpl->atribui("id_cliente_produto", $id_cliente_produto );
+					//$this->tpl->atribui("acao", $acao );
+					$this->tpl->atribui("id_cliente_produto_new", $id_cliente_produto);
+					$this->tpl->atribui("valor_contrato_new", $valor_contrato);
+					$this->tpl->atribui("dominio_hospedagem_new", $dominio_hospedagem);
+					$this->tpl->atribui("tipo_hospedagem_new", $tipo_hospedagem);
+					$this->tpl->atribui("pri_venc_new",$pri_venc);
+					$this->tpl->atribui("pagamento_new",$pagamento);
+
+
+					$this->tpl->atribui("cc_vencimento_new",$cc_vencimento); 
+					$this->tpl->atribui("cc_numero_new",$cc_numero);
+					$this->tpl->atribui("cc_operadora_new",$cc_operadora);
+					$this->tpl->atribui("db_banco_new",$db_banco);
+					$this->tpl->atribui("db_agencia_new",$db_agencia);
+					$this->tpl->atribui("db_conta_new",$db_conta);
+
+					
+					$this->tpl->atribui("forma_pagamento",$_LS_FORMA_PAGAMENTO);
+					$this->tpl->atribui("lista_pop",$lista_pop);
+					$this->tpl->atribui("lista_nas",$lista_nas);
+					$this->tpl->atribui("produto_carac",$produto_carac);
+					$this->tpl->atribui("tipo_cobranca",$tipo_cobranca);
+					$this->tpl->atribui("contrato",$contrato);
+					$this->tpl->atribui("produto",$produto);
+					$this->tpl->atribui("produto_geral",$produto_geral);
+					
+					
+					switch($tipo) {
+						case 'D':
+								$sSQL = "SELECT * FROM prtb_produto_discado WHERE id_produto = '$id_produto'";
+								$info_produto = $this->bd->obtemUnicoRegistro($sSQL);
+
+								$d_franquia_horas = $info_produto["franquia_horas"];
+								$d_permitir_duplicidade = $info_produto["permitir_duplicidade"];
+								$d_valor_hora_adicional = $info_produto["valor_hora_adicional"];
+
+								$this->tpl->atribui("foneinfo", $foneinfo );
+								$this->tpl->atribui("d_franquia_horas", $d_franquia_horas);
+								$this->tpl->atribui("d_permitir_duplicidade", $d_permitir_duplicidade);
+								$this->tpl->atribui("d_valor_hora_adicional", $d_valor_hora_adicional);
+
+							break;
+						case 'H':
+								$sSQL = "SELECT * FROM prtb_produto_hospedagem WHERE id_produto = '$id_produto'";
+								$info_produto = $this->bd->obtemUnicoRegistro($sSQL);
+
+								$h_dominio = $info_produto["dominio"];
+								$h_franquia_em_mb = $info_produto["franquia_em_mb"];
+								$h_valor_mb_adicional = $info_produto["valor_mb_adicional"];
+
+								$this->tpl->atribui("h_dominio", $h_dominio);
+								$this->tpl->atribui("h_franquia_em_mb", $h_franquia_em_mb);
+								$this->tpl->atribui("h_valor_mb_adicional", $h_valor_mb_adicional);
+
+							break;
+						case 'BL':
+								$sSQL = "SELECT * FROM prtb_produto_bandalarga WHERE id_produto = '$id_produto'";
+								//echo "query: $sSQL <br>";
+
+								$info_produto = $this->bd->obtemUnicoRegistro($sSQL);
+
+								$bl_banda_upload_kbps = $info_produto["banda_upload_kbps"];
+								$bl_banda_download_kbps = $info_produto["banda_download_kbps"];
+								$bl_franquia_trafego_mensal_gb = $info_produto["franquia_trafego_mensal_gb"];
+								$bl_valor_trafego_adicional_gb = $info_produto["valor_trafego_adicional_gb"];
+
+								$this->tpl->atribui("bl_banda_upload_kbps", $bl_banda_upload_kbps);
+								$this->tpl->atribui("bl_banda_download_kbps", $bl_banda_download_kbps);
+								$this->tpl->atribui("bl_franquia_trafego_mensal_gb", $bl_franquia_trafego_mensal_gb);
+								$this->tpl->atribui("bl_valor_trafego_adicional_gb", $bl_valor_trafego_adicional_gb);
+						break;
+				}
+
+					
+					
+					$sSQL  = "SELECT to_char(data, 'DD/mm/YYYY') as data, valor, status FROM cbtb_faturas WHERE id_cliente_produto = '$id_cliente_produto' AND status = 'A'";
+					$faturas_antigas = $this->bd->obtemRegistros($sSQL);
+					
+					$this->tpl->atribui("ft_ant",$faturas_antigas);
+					
+						if (!$p || $p != "ok"){
+							//ECHO "BOSTA";
+							$this->arquivoTemplate = "cliente_contrato_migracao_confirmacao.html";
+							return;
+							
+						}else if ($p == "ok"){
+							$id_cliente_produto_old = @$_REQUEST["id_cliente_produto_old"];
+							
+							/* CRIANDO NOVO CONTRATO */
+							
+							$info_prov = $this->prefs->obtem();
+
+							$cod_banco = $info_prov["cobranca"]["cod_banco"];
+							$carteira = $info_prov["cobranca"]["carteira"];
+							$agencia = $info_prov["cobranca"]["agencia"];
+							$num_conta = $info_prov["cobranca"]["num_conta"];
+							$convenio = $info_prov["cobranca"]["convenio"];
+							$pagamento = $info_prov["cobranca"]["pagamento"];
+
+							if (!$cod_banco) $cod_banco = 0;
+							if (!$carteira) $carteira = 0;
+							if (!$agencia) $agencia = 0;
+							if (!$num_conta) $num_conta = 0;
+							if (!$convenio) $convenio = 0;
+
+							//Informações sobre o produto
+							$sSQL = "SELECT * from prtb_produto where id_produto = $id_produto";
+							$info_produto = $this->bd->obtemUnicoRegistro($sSQL);
+
+							$data_contratacao = @$_REQUEST["data_contratacao"];
+							$vigencia = @$_REQUEST["vigencia"];
+
+							list($d, $m, $a) = explode("/", $data_contratacao);
+							$data_renovacao = date("Y-m-d", mktime(0, 0, 0, $m+$vigencia, $d, $a));										
+							$data_contratacao = "$a-$m-$d";
+
+
+							$id_cobranca = @$_REQUEST['tipo_cobranca'];
+							$status = @$_REQUEST["status"];
+							$tipo_produto = @$_REQUEST["tipo_produto"];
+							$valor_produto = $info_produto["valor"];
+							$num_emails = $info_produto["num_emails"];
+							$quota = $info_produto["quota_por_conta"];
+							$tx_instalacao = @$_REQUEST["tx_instalacao"];
+							$comodato = @$_REQUEST["comodato"];
+							$valor_comodato = @$_REQUEST["valor_comodato"];
+							$desconto_promo = @$_REQUEST["desconto_promo"];
+							$periodo_desconto = @$_REQUEST["periodo_desconto"];
+							$valor_prorata = @$_REQUEST["valor_prorata"];
+							$carencia = @$_REQUEST["carencia_pagamento"];
+
+
+							//Informações sobre banco e cartão de crédito
+							$cc_vencimento = @$_REQUEST["cc_vencimento"];
+							$cc_numero = @$_REQUEST["cc_numero"];
+							$cc_operadora = @$_REQUEST["cc_operadora"];
+
+							$db_banco = @$_REQUEST["db_banco"];
+							$db_agencia = @$_REQUEST["db_agencia"];
+							$db_conta = @$_REQUEST["db_conta"];
+
+
+
+							//Corrige possíveis falhas de entrada em alguns campos
+							if (!$comodato) {
+								$comodato = 'f';
+								$valor_comodato = 0;
+							} else if(!$valor_comodato) {
+								$valor_comodato = 0;
+							}
+
+
+							if (!$desconto_promo) $desconto_promo = 0;
+							if (!$periodo_desconto) $periodo_desconto = 0;
+							if (!$tx_instalacao) $tx_instalacao = 0;
+
+
+							//Substitui todos as "," por "."
+							$desconto_promo = str_replace(",",".",$desconto_promo);
+							$$valor_comodato = str_replace(",",".",$valor_comodato);
+							$tx_instalacao = str_replace(",",".",$tx_instalacao);
+
+
+							//Calcula o valor do contrato
+							//$valor_contrato = ($valor_produto *  $vigencia) - ($desconto_promo * $periodo_desconto);
+							//$valor_contrato += $valor_comodato + $tx_instalacao;
+
+							$valor_contrato = number_format($valor_produto + $valor_comodato, 2, '.', '');					
+							$valor_cont_temp = $valor_contrato;
+							//Diminui o desconto no valor real do contrato caso este tenha mesmo período que a vigência do contrato
+							if ($periodo_desconto >= $vigencia) $valor_contrato -= $desconto_promo;
+
+
+							$sSQL =  "INSERT INTO cbtb_contrato ( ";
+							$sSQL .= "	id_cliente_produto, data_contratacao, vigencia, data_renovacao, valor_contrato, id_cobranca, status, ";
+							$sSQL .= "	tipo_produto, valor_produto, num_emails, quota_por_conta, tx_instalacao, comodato, valor_comodato, ";
+							$sSQL .= "	desconto_promo, periodo_desconto, id_produto, cod_banco, agencia, num_conta, carteira, ";
+							$sSQL .= "	convenio, cc_vencimento, cc_numero, cc_operadora, db_banco, db_agencia, db_conta, carencia";
+							$sSQL .= ") VALUES ( ";
+							$sSQL .= "	'$id_cliente_produto', '$data_contratacao', '$vigencia', '$data_renovacao', '$valor_contrato', '$id_cobranca', '$status', ";
+							$sSQL .= "	'$tipo_produto', '$valor_produto', '$num_emails', '$quota', '$tx_instalacao', '$comodato', '$valor_comodato', ";
+							$sSQL .= "	'$desconto_promo', '$periodo_desconto', '$id_produto', '$cod_banco', '$agencia', '$num_conta', '$carteira', ";
+							$sSQL .= "	'$convenio', '$cc_vencimento', '$cc_numero', '$cc_operadora', '$db_banco', '$db_agencia', '$db_conta', '$carencia'";
+							$sSQL .= ")";
+							
+							echo "contrato novo: $sSQL <br>";
+							$this->bd->consulta($sSQL);
+							
+							/* FINAL CRIAÇÃO CONTRATO */
+							
+							$sSQL  = "SELECT id_cliente_produto from cbtb_contrato order by id_cliente_produto limit (1) ";
+							$novo_contrato = $this->bd->obtemUnicoRegistro($sSQL);
+							
+							/* SETA CONTRATO ANTIGO COM STATUS = M (modificado) */
+							
+							$sSQL = "UPDATE cbtb_contrato SET status = 'M' WHERE id_cliente_produto = '$id_cliente_produto_old'";
+							$this->bd->consulta($sSQL);
+							
+							/* FIM UPDATE CONTRATO */
+							
+							/* UPDATE DE CONTAS */
+							
+							$sSQL = "UPDATE cntb_contas SET id_cliente_produto = '".$novo_contrato["id_cliente_produto"]."' WHERE username = '$username' AND tipo_conta = '$tipo_conta' AND dominio = '$dominio' ";
+							$this->bd->consulta($sSQL);
+							
+							if ($tipo_produto == "BL"){
+							
+								$sSQL = "UPDATE cntb_conta_bandalarga SET id_cliente_produto = '".$novo_contrato["id_cliente_produto"]."' WHERE username = '$username' AND tipo_conta = '$tipo_conta' AND dominio = '$dominio' ";
+								$this->bd->consulta($sSQL);
+							
+							}else if ($tipo_produto == "D"){
+								
+								$sSQL = "UPDATE cntb_conta_discado SET id_cliente_produto = '".$novo_contrato["id_cliente_produto"]."' WHERE username = '$username' AND tipo_conta = '$tipo_conta' AND dominio = '$dominio' ";
+								$this->bd->consulta($sSQL);
+					
+							
+							}else if ($tipo_produto == "H"){
+							
+								$sSQL = "UPDATE cntb_conta_bandalarga SET id_cliente_produto = '".$novo_contrato["id_cliente_produto"]."' WHERE username = '$username' AND tipo_conta = '$tipo_conta' AND dominio = '$dominio' ";
+								$this->bd->consulta($sSQL);
+							
+							}
+							
+							/* FINAL DE UPDATE DE CONTAS */
+							
+							
+							
+							
+							
+							
+							
+							$msg_final = "CONTRATO MIGRADO COM SUCESSO!";
+							$this->tpl->atribui("mensagem",$msg_final);
+							$this->tpl->atribui("url", "clientes.php?op=cobranca&id_cliente=".$id_cliente."&rotina=resumo");
+							$this->tpl->atribui("target","_top");
+							$this->arquivoTemplate="msgredirect.html";
+							return;
+
+							
+						}
+					
+						
 				}else{
 					echo "NADA DIFERENTE";
+					$this->arquivoTemplate = "cliente_contrato_migracao_confirmacao.html";
+					return;
+
 				}
 				
-				global $_LS_FORMA_PAGAMENTO;
-				
-				$this->tpl->atribui("forma_pagamento",$_LS_FORMA_PAGAMENTO);
-				$this->tpl->atribui("lista_pop",$lista_pop);
-				$this->tpl->atribui("lista_nas",$lista_nas);
-				$this->tpl->atribui("produto_carac",$produto_carac);
-				$this->tpl->atribui("tipo_cobranca",$tipo_cobranca);
-				$this->tpl->atribui("contrato",$contrato);
-				$this->tpl->atribui("produto",$produto);
-				$this->tpl->atribui("lista_discado",$lista_discado);
-				$this->tpl->atribui("lista_hospedagem",$lista_hospedagem);
-				$this->tpl->atribui("lista_bandalarga",$lista_bandalarga);
-
-				$this->arquivoTemplate = "cliente_contrato_migracao_confirmacao.html";
-				return;
 			}
 			
 		
@@ -1161,8 +1548,8 @@ class VACobranca extends VirtexAdmin {
 	
 	}
 
-}
-	
+
+}	
 public function amortizar(){
 
 
