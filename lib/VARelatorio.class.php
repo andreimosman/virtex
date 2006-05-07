@@ -1430,7 +1430,7 @@ class VARelatorio extends VirtexAdmin {
 				$mes_corrente = $relat[$i]['mes'];
 				$datay[] = $relat[$i]['bloqueados'];
 				$datay2[] = $relat[$i]['desbloqueados'];	
-				$legendas = substr($_LS_MESES_ANO[$mes_corrente],1,3) . "/" . $relat[$i]['ano'];
+				$legendas[] = substr($_LS_MESES_ANO[$mes_corrente],0,3) . "/" . $relat[$i]['ano'];
 			}
 			
 			// GERA O Gráfico
