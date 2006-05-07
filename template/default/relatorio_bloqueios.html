@@ -121,7 +121,7 @@
 								  <table width="700" border="0" cellspacing="2" cellpadding="0">
 									  <tr>
 										<td width="100" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p>{$a.dia}-{$a.mes}-{$a.ano}</p></font></td>
-										<td width="200" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.ano}-{$a.mes}-{$a.dia}&id_cliente={$a.id_cliente}">{$a.nome_razao}</a></p></font></td>
+										<td width="200" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.nome_razao}</a></p></font></td>
 										<td width="75" align="LEFT"><p>{if $a.tipo == "B"}Bloqueio{else}{if $a.tipo == "D"}Desbloqueio{/if}{/if}</p></font></td>
 										<td width="100" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p>{$a.username}</p></font></td>
 										<td width="150" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p>{$a.nome}</p></font></td>
@@ -166,7 +166,7 @@
 								  <table width="600" border="0" cellspacing="2" cellpadding="0">
 									  <tr>
 										<td width="100" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p>{$a.dia}-{$a.mes}-{$a.ano}</p></font></td>
-										<td width="200" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p><a href="clientes.php?op=cadastro&id_cliente={$a.id_cliente}">{$a.nome_razao}</a></p></font></td>
+										<td width="200" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.nome_razao}</a></p></font></td>
 										<td width="75" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p>{$a.username}</p></font></td>
 										<td width="150" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p>{$a.nome}</p></font></td>
 										<td width="75" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p>{$a.admin}</p></font></td>
