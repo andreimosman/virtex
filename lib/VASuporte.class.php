@@ -163,6 +163,79 @@ class VASuporte extends VirtexAdmin {
 		}else if ($op == "help_desk"){
 			$this->arquivoTemplate = "cobranca_versaolight.html";
 		
+		}else if ($op == "ping") {
+		
+			$this->arquivoTemplate = "suporte_ping.html";
+			
+			$ping_limite = 20;
+			$ping_max_pkg = 1400;
+			
+			
+			$erros = array();
+			
+			
+			$tamanho = @$_REQUEST["tamanho"];
+			$ip = @$_REQUEST["ip"];
+			$pacotes = @$_REQUEST["pacotes"];
+			$acao = @$_REQUEST["acao"];
+			$extra = @$_REQUEST["extra"];
+			$op = @$_REQUEST["op"];
+			
+			
+			if(!$tamanho || $tamanho < 1) $tamanho = 32;
+			if(!$pacotes || $pacotes < 1) $pacotes = 4;
+
+
+			if($acao == "ping") {
+						
+				if($pacotes > $ping_limite) $erros[] = "O limite máximo de pacotes enviados por esta operação é de $ping_limite pacotes";
+				if($tamanho > $ping_max_pkg) $erros[] = "O tamanho máximo dos pacotes desta operação é de $ping_max_pkg bytes";
+				if(!$ip || trim($ip) == "") $erros[] = "Não foi especificado um IP para esta operação";
+				
+				$this->tpl->atribui("erros", $erros);
+			}
+			
+			
+			$this->tpl->atribui("tamanho", $tamanho);
+			$this->tpl->atribui("pacotes", $pacotes);
+			$this->tpl->atribui("ip", $ip);
+			$this->tpl->atribui("op", $op);
+			$this->tpl->atribui("acao", $acao);
+			//$this->tpl->atribui("ping_list", $ping_list);
+			
+			
+			if ($extra == "ping") {
+				header("pragma: no-cache");
+				header("connection: keep-state");
+				echo "<font face='courier' size=-2>\n";
+				if (!count($erros)) {			
+					//$pinglist = `ping $ip -c $pacotes -s $tamanho`;
+					$fd = popen("/bin/ping  -n -c " . escapeshellarg($pacotes) . " -s " . escapeshellarg($tamanho) . " " . escapeshellarg($ip),"r");
+					
+					while(!feof($fd)) {
+						for($x=1;$x<250;$x++) {
+							echo "<!-- BUFFER -->\n";
+							flush();
+						}
+
+						$linha = fgets($fd);
+						echo nl2br($linha);
+						
+						flush();
+						
+						//usleep(1);
+					}
+					
+					fclose($fd);
+					
+					
+				} else {
+					for($i=0; $i<count($erros); $i++) echo "$erros[$i]<br>";
+				}
+				echo "</font>";
+				$this->arquivoTemplate = "";
+			}
+				
 		}
 	}
 
