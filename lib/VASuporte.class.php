@@ -59,8 +59,59 @@ class VASuporte extends VirtexAdmin {
 			//$this->arquivoTemplate = "cobranca_versaolight.html";
 			$this->arquivoTemplate = "suporte_grafico.html";
 		} else if ($op == "log"){
+		
 			//$this->arquivoTemplate = "cobranca_versaolight.html";
-			$this->arquivoTemplate = "suporte_logradius.html";
+			$this->arquivoTemplate = "suporte_radiuslog.html";
+			
+			$limite = @$_REQUEST["limite"];
+			$username = @$_REQUEST["username"];
+			$op = @$_REQUEST["op"];
+			
+			if(!$limite) $limite = 50;
+			
+
+			$sSQL  = "SELECT ";
+			$sSQL .= "username as usuario, ";
+			$sSQL .= "to_char(login,'DD/MM/YYYY HH24:MI:SS') as inicio, ";
+			$sSQL .= "to_char(logout,'DD/MM/YYYY HH24:MI:SS') as fim, "; 
+			$sSQL .= "tempo, caller_id as origem, session_id, ";
+			$sSQL .= "terminate_cause as mensagem, bytes_in, bytes_out ";
+			$sSQL .= "FROM ";
+			$sSQL .= "	rdtb_accounting ";
+			if($username) {
+				$sSQL .= "WHERE ";
+				$sSQL .= "	username LIKE '$username' ";
+			}
+			$sSQL .= "LIMIT $limite ";
+			
+			
+			$relat = $this->bd->obtemRegistros($sSQL);
+			
+			for ($i=0; $i<count($relat); $i++) {
+				
+				@list($tipo, $lixo) = explode(":",$relat[$i]["session_id"]);
+				/*
+				if ($tipo == "E") $relat[$i]["tipo_ng"] = "#E08E8E";
+				else if ($tipo == "A") $relat[$i]["tipo_ng"] = "#E0BB8E";
+				else if ($tipo == "I") $relat[$i]["tipo_ng"] = "#8E94E0";
+				else $relat[$i]["tipo_ng"] = "#8EE098";
+				*/
+				
+				if ($tipo == "E") $relat[$i]["tipo_ng"] = "#F2C6C6";
+				else if ($tipo == "A") $relat[$i]["tipo_ng"] = "#F2DEC6";
+				else if ($tipo == "I") $relat[$i]["tipo_ng"] = "#D8E8F3";
+				else $relat[$i]["tipo_ng"] = "#D1F2C6";
+				
+			}
+			
+						
+			$this->tpl->atribui("op",$op);
+			$this->tpl->atribui("relat", $relat);
+			$this->tpl->atribui("username", $username);
+			$this->tpl->atribui("limite", $limite);
+			
+			//echo $sSQL;
+			
 		} else if ($op == "monit"){
 			$this->arquivoTemplate = "cobranca_versaolight.html";
 			//$this->arquivoTemplate = "suporte_monitoramento.html";
@@ -234,8 +285,46 @@ class VASuporte extends VirtexAdmin {
 				}
 				echo "</font>";
 				$this->arquivoTemplate = "";
-			}
+			} 
 				
+		}else if($op == "backup") {
+			
+						
+			$this->arquivoTemplate="suporte_backup.html";
+			
+			$opcoes = @$_REQUEST["opcoes"];
+			$acao = @$_REQUEST["acao"];
+			$op = @$_REQUEST["op"];
+			
+			if ($acao == "backup") {
+			
+				//Diretórios para a criação do backup
+				$bkp_dir = "/tmp/vitexbkp/";
+				$bkp_dir_bd = $bkp_dir . "bd/";
+				$bkp_dir_so = $bkp_dir . "so/";
+				$bkp_dir_vtx = $bkp_dir . "vtx/";
+				$bkp_dir_utl = $bkp_dir . "utl/";
+
+				//
+				$arquivos_bkp = "";
+				
+				//Verifica se já existe um diretório de bkp previamente criado
+				if(is_dir($bkp_dir)) {
+					$info = `rmdir -rf $bkp_dir`;
+				}
+				
+				//Configuração dos arquivos a serem usados no backup
+				$arquivos_bkp_so = array(
+										"/etc/rc.conf",
+										"/etc/rc.firewall"
+									);
+
+				$arquivos_bkp_vtx = array(
+									);									
+				$arquivos_bkp_utl = array(
+									);
+				
+			}
 		}
 	}
 
