@@ -1,0 +1,281 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+   <title></title>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style>
+   	{ font-family: Verdana; font-size=10px }
+   	Table { font-family: Verdana; font-size=10px; color: #444444 }
+	:Link { text-decoration: none;  color: #444444 }
+	:Visited { text-decoration: none ;color: #444444 }
+	:hover { color: 1B67A5; text-decoration: underline}
+</style>
+<script language="JavaScript" src="util.js"></script>
+
+
+
+
+<script language="JavaScript">
+
+function calculaDataCarne() {
+   if( formulario.dia_vencimento.value.length == 0 ) {
+      formulario.ini_carne.value = formulario.data_contratacao.value;
+   } else {
+      var d = new String(formulario.data_contratacao.value);
+   
+      // split;
+      var tmp = d.split("/");
+      dia = tmp[0];
+      mes = parseInt(tmp[1]);
+      ano = parseInt(tmp[2]);
+      
+      formulario.ini_carne.value = criaData( formulario.dia_vencimento.value, mes, ano );
+   }
+   
+   formulario.ini_carne.value = incrementaMes( formulario.ini_carne.value, 1 );
+   formulario.data_carne.value = incrementaMes( formulario.ini_carne.value, parseInt(formulario.vigencia.value) - 1);
+}
+
+function processaVigencia() {
+   if( !parseInt(formulario.vigencia.value) ) {
+      window.alert("A vigência não é válida.");
+      formulario.vigencia.focus();
+   } else {
+      calculaDataCarne();
+   }
+}
+
+function processaDataContrato() {
+   if( !dataValida(formulario.data_contratacao.value) ) {
+      window.alert("Data do contrato não é válida");
+      formulario.data_contratacao.focus();
+   } else {
+      // Calcula data final do carnê.
+      calculaDataCarne();
+   }
+}
+
+
+
+
+</script>
+
+</head>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<center><font face="arial" color=""><b></b></font>
+<table class=table_main width="100%" height="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td class=td_main width="100%" height="100%" align="center" valign="middle">
+	<form name=formulario method="post" action="/~virtsys/admin.php">
+	<input type="hidden" name="oper" value="">
+	<input type="hidden" name="sessao" value="clientes">
+	<input type="hidden" name="subsess" value="cobranca">
+	<input type="hidden" name="p" value="contrato">
+	<input type="hidden" name="op" value="cad">
+	<input type="hidden" name="id_cliente" value="1927">
+	<input type="hidden" name="id_cliente_produto" value="">
+	<input type="hidden" name="tipo" value="BL">
+	<table border=0 cellspacing="0" cellpadding=1 width="390">
+	   <tr><td><font face="arial" size=2 color="#FF0000"><b></b></font></td></tr>
+	</table>
+	<table border=0  _bgcolor="#000000" cellspacing=1 cellpadding=1>
+		<tr>
+			<td align="center">
+				<table border=0 width="390" bgcolor="#A0A0A0">
+					<tr>
+						<td colspan=2><font color="#FFFFFF" size="+1">Contrato</font></td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70">Produto:</td>
+						<td bgcolor="#FFFFFF"><SELECT name='id_produto' >
+<OPTION VALUE=''></OPTION>
+<OPTION VALUE='14' >IP VALIDO (R$ 30.00)</OPTION>
+<OPTION VALUE='4' >Radio 064 kbps (R$ 64.00)</OPTION>
+<OPTION VALUE='5' >Radio 128 kbps (R$ 128.00)</OPTION>
+<OPTION VALUE='6' >Radio 256 kbps (R$ 256.00)</OPTION>
+<OPTION VALUE='8' >Radio Cortesia (R$ 0.00)</OPTION>
+<OPTION VALUE='18' >SRN Radio 128Kbps (R$ 128.00)</OPTION>
+<OPTION VALUE='17' >SRN Radio 64kbps (R$ 64.00)</OPTION>
+</SELECT>
+</td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70">Dt Contrato:</td>
+						<td bgcolor="#FFFFFF"><input type="text" size=10 maxlength="10" name="data_contratacao" value="08/04/2006" onFocusOut="javascript:processaDataContrato();"  onChange="javascript:processaDataContrato();"></td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70">Vigência:</td>
+						<td bgcolor="#FFFFFF"><input type="text" size=2 maxlength="2" name="vigencia" value="12" onChange="javascript:processaVigencia();" onFocusOut="javascrpt:processaVigencia();"> meses</td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70">Dominio:</td>
+						<td bgcolor="#FFFFFF"><SELECT name='dominio' >
+<OPTION VALUE='' ></OPTION>
+<OPTION VALUE='canalpicos.com.br' >canalpicos.com.br</OPTION>
+<OPTION VALUE='firme.com.br'  SELECTED >firme.com.br</OPTION>
+<OPTION VALUE='virtex.com.br' >virtex.com.br</OPTION>
+</SELECT>
+ (para cadastro de e-mails)</td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70">Status:</td>
+						<td bgcolor="#FFFFFF"><SELECT name='status' >
+<OPTION VALUE='A'  SELECTED >Ativo</OPTION>
+<OPTION VALUE='S' >Suspenso</OPTION>
+<OPTION VALUE='C' >Cancelado</OPTION>
+</SELECT>
+</td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70">Dia Vencimento:</td>
+						<td bgcolor="#FFFFFF">
+						   <input type="text" id="dia_vencimento" name="dia_vencimento" value="" size=2 maxlength=2 onFocusOut="javascript:processaDataContrato();"  onChange="javascript:processaDataContrato();">
+						   Carência: 
+						   <input type="text" id="carencia_pagamento" name="carencia_pagamento" value="" size=2 maxlength=2> dias
+						</td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70">Desconto</td>
+						<td bgcolor="#FFFFFF"><input type="text" size=7 maxlength="7" name="desconto" value="0,00"> reais</td>
+					</tr>
+					<tr>
+						<td colspan=2><font color="#FFFFFF" size="-1">Cobrança</font></td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70">Opção:</td>
+						<td bgcolor="#FFFFFF"><SELECT name='gerar_carne' >
+<OPTION VALUE='G' >Gerar Carnê</OPTION>
+<OPTION VALUE='J' >Carnê já foi gerado</OPTION>
+</SELECT>
+<br> de <input type="text" name="ini_carne" value="" size=10 maxlength=10> até <input type="text" name="data_carne" value="" size=10 maxlength=10></td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70">Adesão:</td>
+						<td bgcolor="#FFFFFF"><SELECT name='gerar_adesao' >
+<OPTION VALUE='1' >Sim</OPTION>
+<OPTION VALUE='0' >Não</OPTION>
+</SELECT>
+</td>
+					</tr>
+
+<script language="JavaScript">
+calculaDataCarne();
+</script>
+				</table>
+				<script language="JavaScript">
+<!--//
+
+function verificaEndereco() {
+   if( formulario.endereco_ip.value == "A" ) {
+      formulario.endereco.disabled=true;
+   } else {
+      formulario.endereco.disabled=false;
+   }
+}
+
+//-->
+</script>
+				<hr size=1>
+				<table border=0 width="390" bgcolor="#A0A0A0">
+					<tr>
+						<td colspan=4><font color="#FFFFFF" size="+1">Dados da Conta</font></td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top">Username:</td>
+						<td bgcolor="#FFFFFF" colspan=3><input type="text" maxlength="30" name="username" value=""></td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top">Senha:</td>
+						<td bgcolor="#FFFFFF" colspan=3>
+						   <input type="password" maxlength="32" name="senha">
+						</td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top">Confirme:</td>
+						<td bgcolor="#FFFFFF" colspan=3>
+						   <input type="password" maxlength="32" name="conf_senha">
+						</td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top">POP:</td>
+						<td bgcolor="#FFFFFF"><SELECT name='id_pop' >
+<OPTION VALUE='5' >AP - Associacao</OPTION>
+<OPTION VALUE='4' >AP - BOMBA</OPTION>
+<OPTION VALUE='30' >AP - CANOPY</OPTION>
+<OPTION VALUE='33' >AP - COHAB</OPTION>
+<OPTION VALUE='1' >AP - DVD</OPTION>
+<OPTION VALUE='3' >AP - Junco</OPTION>
+<OPTION VALUE='28' >AP - KLN</OPTION>
+<OPTION VALUE='37' >AP - PICOS HOTEL</OPTION>
+<OPTION VALUE='2' >AP - Wireless Network</OPTION>
+<OPTION VALUE='34' >AP TCV</OPTION>
+<OPTION VALUE='24' >CABO</OPTION>
+<OPTION VALUE='31' >IP - POPS</OPTION>
+<OPTION VALUE='7' >POP  - Liborio Novo</OPTION>
+<OPTION VALUE='26' >POP - ANTARES</OPTION>
+<OPTION VALUE='18' >POP - Alberto</OPTION>
+<OPTION VALUE='12' >POP - Bosco</OPTION>
+<OPTION VALUE='6' >POP - DECON</OPTION>
+<OPTION VALUE='21' >POP - Diocese</OPTION>
+<OPTION VALUE='14' >POP - Educandario</OPTION>
+<OPTION VALUE='8' >POP - Esc.Luis</OPTION>
+<OPTION VALUE='15' >POP - Firme</OPTION>
+<OPTION VALUE='17' >POP - Galeria Dep.Sa Urtiga</OPTION>
+<OPTION VALUE='23' >POP - Galeria Tininha de Sa</OPTION>
+<OPTION VALUE='19' >POP - Geraldinho</OPTION>
+<OPTION VALUE='16' >POP - Jocile</OPTION>
+<OPTION VALUE='25' >POP - Josio</OPTION>
+<OPTION VALUE='10' >POP - LanHouse</OPTION>
+<OPTION VALUE='11' >POP - Pamplona</OPTION>
+<OPTION VALUE='36' >POP - Picos Hotel</OPTION>
+<OPTION VALUE='32' >POP - Rego Neto</OPTION>
+<OPTION VALUE='9' >POP - Salustiano</OPTION>
+<OPTION VALUE='29' >POP - TVSAT</OPTION>
+<OPTION VALUE='22' >POP - Vidal</OPTION>
+<OPTION VALUE='27' >POP - Viturino</OPTION>
+<OPTION VALUE='13' >POP - Viviane</OPTION>
+<OPTION VALUE='20' >POP - Ze Maia</OPTION>
+<OPTION VALUE='35' >Sao Raimundo Nonato</OPTION>
+</SELECT>
+</td>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top">NAS:</td>
+						<td bgcolor="#FFFFFF"><SELECT name='id_nas' >
+<OPTION VALUE='3' >IP: SRNonato</OPTION>
+<OPTION VALUE='1' >IP: srv-ip</OPTION>
+<OPTION VALUE='2' >PPPoE: srv-pppoe</OPTION>
+</SELECT>
+</td>
+					</tr>
+					<tr>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top">Seleção de Rede/IP:</td>
+						<td bgcolor="#FFFFFF"><SELECT name='endereco_ip' onChange='javascript:verificaEndereco()'>
+<OPTION VALUE='A' >Automática</OPTION>
+<OPTION VALUE='M' >Manual</OPTION>
+</SELECT>
+<br><input type="text" name="endereco" value=""></td>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top">MAC:</td>
+						<td bgcolor="#FFFFFF" valign="top"><input type="text" name="mac" value="" maxlength="17" size=17></td>
+					</tr>
+				</table>
+<script language="JavaScript">
+<!--//
+
+formulario.dominio.disabled = true;
+
+verificaEndereco();
+
+
+
+//-->
+</script>
+
+				<hr size=1>
+				<input name="botao_enviar" type="submit" class=input2 id="submit" value="Cadastrar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
+			</td>
+		</tr>
+	</table>
+	</form></td>
+  </tr>
+</table>
+</body>
+</html>
