@@ -982,7 +982,7 @@ class VACobranca extends VirtexAdmin {
 				
 				$sSQL  = "DELETE FROM cbtb_contrato WHERE id_cliente_produto = '$id_cliente_produto' AND tipo_produto = '$tipo_produto' ";
 				$this->bd->consulta($sSQL);
-				echo "DELETA CONTRATO: $sSQL <br>";
+				//echo "DELETA CONTRATO: $sSQL <br>";
 				
 				
 				$sSQL  = "DELETE FROM ";
@@ -1002,11 +1002,11 @@ class VACobranca extends VirtexAdmin {
 				$sSQL .= "username = '$username' AND ";
 				$sSQL .= "tipo_conta = '$tipo_conta' ";
 				$this->bd->consulta($sSQL);
-				echo "DELETA CONTA ESPECIFICA: $sSQL <br>";
+				//echo "DELETA CONTA ESPECIFICA: $sSQL <br>";
 				
 				$sSQL = "DELETE FROM cntb_conta WHERE username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta' ";
 				$this->bd->consulta($sSQL);
-				echo "DELETA CONTAS: $sSQL <br>";
+				//echo "DELETA CONTAS: $sSQL <br>";
 				
 				$sSQL = "DELETE FROM cbtb_cliente_produto WHERE id_cliente_produto = '$id_cliente_produto' ";
 				$this->bd->consulta($sSQL);
@@ -1027,35 +1027,63 @@ class VACobranca extends VirtexAdmin {
 			$rotina = @$_REQUEST["rotina"];
 			$tipo = @$_REQUEST["tipo"];
 			$p = @$_REQUEST["p"];
+			$id_cliente_produto_old = @$_REQUEST["id_cliente_produto_old"];
 			
 			if (!$tipo_produto && $tipo){
 				$tipo_produto = $tipo;
 			}
 			
-	
-			$sSQL  = "SELECT ";
-			$sSQL .= "ct.id_cliente_produto, to_char(ct.data_contratacao, 'DD/mm/YYYY') as data_contratacao, ct.vigencia, ct.data_renovacao, ct.valor_contrato, ct.id_cobranca, ct.status, ct.tipo_produto,ct.id_produto, ";
-			$sSQL .= "ct.vigencia, ct.carencia, ct.vencimento, ";
-			$sSQL .= "ct.valor_produto,";
-			$sSQL .= "cn.id_cliente_produto, cn.id_cliente, cn.dominio, cn.tipo_conta, cn.username, ";
-			$sSQL .= "cl.id_cliente, cl.nome_razao ";
-			$sSQL .= "FROM ";
-			$sSQL .= "cbtb_contrato ct, cntb_conta cn, cltb_cliente cl ";
-			$sSQL .= "WHERE ";
-			$sSQL .= "ct.id_cliente_produto = '$id_cliente_produto' AND ";
-			$sSQL .= "ct.id_cliente_produto = cn.id_cliente_produto AND ";
-			$sSQL .= "cn.id_cliente = '$id_cliente' AND ";
-			$sSQL .= "cn.id_cliente = cl.id_cliente AND ";
-			$sSQL .= "ct.tipo_produto = '$tipo_produto' ";
+			if (!$p || $p != "ok"){
+				$sSQL  = "SELECT ";
+				$sSQL .= "ct.id_cliente_produto, to_char(ct.data_contratacao, 'DD/mm/YYYY') as data_contratacao, ct.vigencia, ct.data_renovacao, ct.valor_contrato, ct.id_cobranca, ct.status, ct.tipo_produto,ct.id_produto, ";
+				$sSQL .= "ct.vigencia, ct.carencia, ct.vencimento, ";
+				$sSQL .= "ct.valor_produto,";
+				$sSQL .= "cn.id_cliente_produto, cn.id_cliente, cn.dominio, cn.tipo_conta, cn.username, ";
+				$sSQL .= "cl.id_cliente, cl.nome_razao ";
+				$sSQL .= "FROM ";
+				$sSQL .= "cbtb_contrato ct, cntb_conta cn, cltb_cliente cl ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "ct.id_cliente_produto = '$id_cliente_produto' AND ";
+				$sSQL .= "ct.id_cliente_produto = cn.id_cliente_produto AND ";
+				$sSQL .= "cn.id_cliente = '$id_cliente' AND ";
+				$sSQL .= "cn.id_cliente = cl.id_cliente AND ";
+				$sSQL .= "ct.tipo_produto = '$tipo_produto' ";
 
-			//echo "QUERY: $sSQL <br>";
+				echo "QUERY: $sSQL <br>";
 
-			$contrato = $this->bd->obtemUnicoRegistro($sSQL);
+				$contrato = $this->bd->obtemUnicoRegistro($sSQL);
 
-			$sSQL = "SELECT * FROM prtb_produto WHERE tipo = '$tipo_produto' AND disponivel = 't' ";
-			$produto = $this->bd->obtemRegistros($sSQL);
-			//echo "PRODUTO: $sSQL <br>";
+				$sSQL = "SELECT * FROM prtb_produto WHERE tipo = '$tipo_produto' AND disponivel = 't' ";
+				$produto = $this->bd->obtemRegistros($sSQL);
+				//echo "PRODUTO: $sSQL <br>";
+			}else{
 
+				$sSQL  = "SELECT ";
+				$sSQL .= "ct.id_cliente_produto, to_char(ct.data_contratacao, 'DD/mm/YYYY') as data_contratacao, ct.vigencia, ct.data_renovacao, ct.valor_contrato, ct.id_cobranca, ct.status, ct.tipo_produto,ct.id_produto, ";
+				$sSQL .= "ct.vigencia, ct.carencia, ct.vencimento, ";
+				$sSQL .= "ct.valor_produto,";
+				$sSQL .= "cn.id_cliente_produto, cn.id_cliente, cn.dominio, cn.tipo_conta, cn.username, ";
+				$sSQL .= "cl.id_cliente, cl.nome_razao ";
+				$sSQL .= "FROM ";
+				$sSQL .= "cbtb_contrato ct, cntb_conta cn, cltb_cliente cl ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "ct.id_cliente_produto = '$id_cliente_produto_old' AND ";
+				$sSQL .= "ct.id_cliente_produto = cn.id_cliente_produto AND ";
+				$sSQL .= "cn.id_cliente = '$id_cliente' AND ";
+				$sSQL .= "cn.id_cliente = cl.id_cliente AND ";
+				$sSQL .= "ct.tipo_produto = '$tipo_produto' ";
+
+				echo "QUERY: $sSQL <br>";
+
+				$contrato = $this->bd->obtemUnicoRegistro($sSQL);
+
+				$sSQL = "SELECT * FROM prtb_produto WHERE tipo = '$tipo_produto' AND disponivel = 't' ";
+				$produto = $this->bd->obtemRegistros($sSQL);
+				//echo "PRODUTO: $sSQL <br>";
+
+			
+			
+			}
 
 			$sSQL  = "SELECT * FROM cftb_forma_pagamento WHERE disponivel = TRUE ";
 			$tipo_cobranca = $this->bd->obtemRegistros($sSQL);
@@ -1093,7 +1121,7 @@ class VACobranca extends VirtexAdmin {
 				
 			$produto_carac = $this->bd->obtemUnicoRegistro($sSQL);
 
-			//echo "CARACT. PRODUTOS: $sSQL <br>";
+			echo "CARACT. PRODUTOS: $sSQL <br>";
 
 			$sSQL  = "SELECT * FROM cftb_pop ";
 			$lista_pop = $this->bd->obtemRegistros($sSQL);
@@ -1104,6 +1132,11 @@ class VACobranca extends VirtexAdmin {
 			$sSQL  = "SELECT * FROM prtb_produto WHERE id_produto = '".$contrato["id_produto"]."'";
 			$produto_geral = $this->bd->obtemUnicoRegistro($sSQL);
 			//ECHO "PRODUTO: $sSQL <br>";
+			
+			$provedor = $this->prefs->obtem("geral");
+			$dominio = $provedor["dominio_padrao"];
+
+			echo "dominio: $dominio <br>";
 
 			global $_LS_FORMA_PAGAMENTO;
 
@@ -1155,18 +1188,29 @@ class VACobranca extends VirtexAdmin {
 					$username = @$_REQUEST["username"];
 					$senha = @$_REQUEST["senha"];
 					$conf_senha = @$_REQUEST["conf_senha"];
-					$id_pop = @$_REQUEST["id_pop"]; 
-					$id_nas = @$_REQUEST["id_nas"];
+					//$id_pop = @$_REQUEST["id_pop"]; 
+					$id_pop = $produto_carac["id_pop"];
+					$id_nas = $produto_carac["id_nas"];
+					//$id_nas = @$_REQUEST["id_nas"];
 					$selecao_ip = @$_REQUEST["selecao_ip"];
-					$mac = @$_REQUEST["mac"];
+					//$mac = @$_REQUEST["mac"];
+					$mac = $produto_carac["mac"];
 					//$p = @$_REQUEST["p"];
 					$op = @$_REQUEST["op"];
 					$id_cliente = @$_REQUEST["id_cliente"];
 					$rotina = @$_REQUEST["rotina"];
+					
+					//$sSQL = "SELECT nextval('cbsq_id_cliente_produto') as id_cliente_produto_new";
+					//$q = $this->bd->obtemUnicoRegistro($sSQL);
+					$provedor = $this->prefs->obtem("geral");
+					
+					$dominio = $provedor["dominio_padrao"];
+					
+					
+					$id_cliente_produto_new = $this->bd->proximoID("cbsq_id_cliente_produto");
 					$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
 					$acao = @$_REQUEST["acao"];
 					$foneinfo = @$_REQUEST["foneinfo"];
-					$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
 					$tipo_hospedagem = @$_REQUEST["tipo_hospedagem"];
 					$dominio_hospedagem = @$_REQUEST["dominio_hospedagem"];
 					$pagamento = @$_REQUEST["pagamento"];
@@ -1199,46 +1243,6 @@ class VACobranca extends VirtexAdmin {
 					$desconto_promo = number_format($desconto_promo, 2, '.', '');
 					$tx_instalacao = number_format($tx_instalacao, 2, '.', '');
 					$valor_contrato = number_format($valor_contrato, 2, '.', '');
-
-
-				
-					$tipo = @$_REQUEST["tipo"];
-					$id_produto = @$_REQUEST["id_produto"];
-					$email_igual = @$_REQUEST["email_igual"];
-					$data_contratacao = @$_REQUEST["data_contratacao"];
-					$vigencia = @$_REQUEST["vigencia"];
-					$status = @$_REQUEST["status"];
-					$dia_vencimento = @$_REQUEST["dia_vencimento"];
-					$carencia_pagamento = @$_REQUEST["carencia_pagamento"];
-					$desconto_promo = @$_REQUEST["desconto_promo"];
-					$periodo_desconto = @$_REQUEST["periodo_desconto"];
-					$tx_instalacao = @$_REQUEST["tx_instalacao"];
-					$comodato = @$_REQUEST["comodato"];
-					$valor_comodato = @$_REQUEST["valor_comodato"]; 
-					$prorata = @$_REQUEST["prorata"];
-					$tipo_cobranca = @$_REQUEST["tipo_cobranca"];
-					$forma_pagamento = @$_REQUEST["forma_pagamento"];
-					$ini_carne = @$_REQUEST["ini_carne"];
-					$data_carne = @$_REQUEST["data_carne"];
-					$username = @$_REQUEST["username"];
-					$senha = @$_REQUEST["senha"];
-					$conf_senha = @$_REQUEST["conf_senha"];
-					$id_pop = @$_REQUEST["id_pop"]; 
-					$id_nas = @$_REQUEST["id_nas"];
-					$selecao_ip = @$_REQUEST["selecao_ip"];
-					$mac = @$_REQUEST["mac"];
-					//$p = @$_REQUEST["p"];
-					$op = @$_REQUEST["op"];
-					$id_cliente = @$_REQUEST["id_cliente"];
-					$rotina = @$_REQUEST["rotina"];
-					$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
-					$acao = @$_REQUEST["acao"];
-					$foneinfo = @$_REQUEST["foneinfo"];
-					$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
-					$tipo_hospedagem = @$_REQUEST["tipo_hospedagem"];
-					$dominio_hospedagem = @$_REQUEST["dominio_hospedagem"];
-					$pagamento = @$_REQUEST["pagamento"];
-					$pri_venc = @$_REQUEST["pri_venc"];		
 
 					//Informações de banco e cartão de crédito
 					$cc_vencimento = @$_REQUEST["cc_vencimento"];
@@ -1285,13 +1289,13 @@ class VACobranca extends VirtexAdmin {
 					//$this->tpl->atribui("rotina", $rotina );
 					$this->tpl->atribui("id_cliente_produto", $id_cliente_produto );
 					//$this->tpl->atribui("acao", $acao );
-					$this->tpl->atribui("id_cliente_produto_new", $id_cliente_produto);
+					$this->tpl->atribui("id_cliente_produto_new", $id_cliente_produto_new);
 					$this->tpl->atribui("valor_contrato_new", $valor_contrato);
 					$this->tpl->atribui("dominio_hospedagem_new", $dominio_hospedagem);
 					$this->tpl->atribui("tipo_hospedagem_new", $tipo_hospedagem);
 					$this->tpl->atribui("pri_venc_new",$pri_venc);
 					$this->tpl->atribui("pagamento_new",$pagamento);
-
+					$this->tpl->atribui("dominio", $dominio);
 
 					$this->tpl->atribui("cc_vencimento_new",$cc_vencimento); 
 					$this->tpl->atribui("cc_numero_new",$cc_numero);
@@ -1456,6 +1460,19 @@ class VACobranca extends VirtexAdmin {
 							//Diminui o desconto no valor real do contrato caso este tenha mesmo período que a vigência do contrato
 							if ($periodo_desconto >= $vigencia) $valor_contrato -= $desconto_promo;
 
+							if (!$cc_vencimento || $cc_vencimento == "") $cc_vencimento = "0";
+							if (!$cc_numero || $cc_numero == "") $cc_numero = "0";
+							if (!$cc_operadora || $cc_operadora == "") $cc_operadora = "0";
+							if (!$db_banco || $db_banco == "") $db_banco = "0";
+							if (!$db_agencia || $db_agencia == "") $db_agencia = "0";
+							if (!$db_conta || $db_conta == "") $db_conta = "0";
+
+							$sSQL = "INSERT INTO cbtb_cliente_produto (id_cliente_produto, id_cliente, id_produto, dominio, excluido) VALUES ('$id_cliente_produto_new', '$id_cliente', '$id_produto', '$dominio', FALSE) ";
+							$this->bd->consulta($sSQL);
+							
+							echo "Cliente Produto: $sSQL <br>";
+							
+							
 
 							$sSQL =  "INSERT INTO cbtb_contrato ( ";
 							$sSQL .= "	id_cliente_produto, data_contratacao, vigencia, data_renovacao, valor_contrato, id_cobranca, status, ";
@@ -1463,7 +1480,7 @@ class VACobranca extends VirtexAdmin {
 							$sSQL .= "	desconto_promo, periodo_desconto, id_produto, cod_banco, agencia, num_conta, carteira, ";
 							$sSQL .= "	convenio, cc_vencimento, cc_numero, cc_operadora, db_banco, db_agencia, db_conta, carencia";
 							$sSQL .= ") VALUES ( ";
-							$sSQL .= "	'$id_cliente_produto', '$data_contratacao', '$vigencia', '$data_renovacao', '$valor_contrato', '$id_cobranca', '$status', ";
+							$sSQL .= "	'$id_cliente_produto_new', '$data_contratacao', '$vigencia', '$data_renovacao', '$valor_contrato', '$id_cobranca', '$status', ";
 							$sSQL .= "	'$tipo_produto', '$valor_produto', '$num_emails', '$quota', '$tx_instalacao', '$comodato', '$valor_comodato', ";
 							$sSQL .= "	'$desconto_promo', '$periodo_desconto', '$id_produto', '$cod_banco', '$agencia', '$num_conta', '$carteira', ";
 							$sSQL .= "	'$convenio', '$cc_vencimento', '$cc_numero', '$cc_operadora', '$db_banco', '$db_agencia', '$db_conta', '$carencia'";
@@ -1484,31 +1501,475 @@ class VACobranca extends VirtexAdmin {
 							
 							/* FIM UPDATE CONTRATO */
 							
+							
 							/* UPDATE DE CONTAS */
 							
-							$sSQL = "UPDATE cntb_contas SET id_cliente_produto = '".$novo_contrato["id_cliente_produto"]."' WHERE username = '$username' AND tipo_conta = '$tipo_conta' AND dominio = '$dominio' ";
+							$sSQL = "UPDATE cntb_conta SET id_cliente_produto = '".$novo_contrato["id_cliente_produto"]."' WHERE username = '$username' AND tipo_conta = '$tipo_produto' AND dominio = '$dominio' ";
 							$this->bd->consulta($sSQL);
 							
-							if ($tipo_produto == "BL"){
+							echo "UPDATE CONTAS: $sSQL <br>";
 							
-								$sSQL = "UPDATE cntb_conta_bandalarga SET id_cliente_produto = '".$novo_contrato["id_cliente_produto"]."' WHERE username = '$username' AND tipo_conta = '$tipo_conta' AND dominio = '$dominio' ";
+							/*if ($tipo_produto == "BL"){
+							
+								$sSQL = "UPDATE cntb_conta_bandalarga SET id_cliente_produto = '".$novo_contrato["id_cliente_produto"]."' WHERE username = '$username' AND tipo_conta = '$tipo_produto' AND dominio = '$dominio' ";
 								$this->bd->consulta($sSQL);
 							
 							}else if ($tipo_produto == "D"){
 								
-								$sSQL = "UPDATE cntb_conta_discado SET id_cliente_produto = '".$novo_contrato["id_cliente_produto"]."' WHERE username = '$username' AND tipo_conta = '$tipo_conta' AND dominio = '$dominio' ";
+								$sSQL = "UPDATE cntb_conta_discado SET id_cliente_produto = '".$novo_contrato["id_cliente_produto"]."' WHERE username = '$username' AND tipo_conta = '$tipo_produto' AND dominio = '$dominio' ";
 								$this->bd->consulta($sSQL);
 					
 							
 							}else if ($tipo_produto == "H"){
 							
-								$sSQL = "UPDATE cntb_conta_bandalarga SET id_cliente_produto = '".$novo_contrato["id_cliente_produto"]."' WHERE username = '$username' AND tipo_conta = '$tipo_conta' AND dominio = '$dominio' ";
+								$sSQL = "UPDATE cntb_conta_hospedagem SET id_cliente_produto = '".$novo_contrato["id_cliente_produto"]."' WHERE username = '$username' AND tipo_conta = '$tipo_produto' AND dominio = '$dominio' ";
 								$this->bd->consulta($sSQL);
 							
 							}
+							echo "UPDATE CONTAS_tipo: $sSQL <br>";*/
 							
 							/* FINAL DE UPDATE DE CONTAS */
 							
+							/* ESTORNANDO FATURAS */
+							
+								$sSQL = "UPDATE cbtb_faturas SET status = 'E' WHERE id_cliente_produto = '$id_cliente_produto_old' AND status = 'A' ";
+								$this->bd->consulta($sSQL);
+								
+								echo "ESTORNOS: $sSQL <br>";
+							
+							/* FINAL DO ESTORNO DE FATURAS */
+							
+							/* CADASTRANDO NOVAS FATURAS PARA O CONTRATO NOVO */
+							
+							$pro_rata = @$_REQUEST["prorata"];
+
+							$dia_vencimento = @$_REQUEST["dia_vencimento"];
+							$pri_venc = @$_REQUEST["pri_venc"];
+
+							$qt_desconto = $periodo_desconto;
+
+							$fatura_status = "A";
+							$fatura_v_pago = 0;
+							$fatura_dt_vencimento="";
+							$fatura_obs="";
+
+							$fatura_desc = $info_produto["nome"];
+
+							$fatura_pg_acrescimo = 0;
+							$fatura_pg_parcial=0;
+							$fatura_vl_pago=0;
+							$fatura_desconto=0;
+
+							$pos = 0; //Jogar para o próximo mês
+
+							$forma_pagamento = @$_REQUEST["forma_pagamento"];
+
+							/*====> PRO-RATA - INICIO <=====
+
+
+							$prorata = @$_REQUEST["prorata"];
+							if($prorata == true){
+
+
+
+							$pri_venc = @$_REQUEST["pri_venc"];
+
+
+								if ($pri_venc && $privenc != ""){
+									@list($d,$m,$a) = explode("/",$pri_venc);
+								} else {
+									$m = date(m);
+									$d = date(d);
+									$a = date(Y);
+								}
+
+							$proxima = ($m+1)."/".$dia_vencimento."/".$a;
+							$primeiro = $m."/".$d."/".$a;
+
+							//$proxima = $dia_vencimento ."/".($m+1)."/".$a;
+							//echo "PROXIMA: ".$proxima."<br>";
+							$diferenca = $this->days_diff($primeiro,$proxima);
+
+							$valor_dia = $valor_contrato / 30;
+							$valor_prorata = $valor_dia * $diferenca;
+							//echo "DIFERENCA: ".$diferenca."<br>";
+							//echo "VALOR DIA: ".$valor_dia."<br>";
+							//echo "VALOR_PRORATA: ".$valor_prorata."<br>";
+
+							$this->tpl->atribui("dias_prorata",$diferenca);
+							$this->tpl->atribui("valor_prorata",$valor_prorata);
+
+							}
+
+
+							====> PRO-RATA - FINAL <=====*/
+
+
+
+							list($ca, $cm, $cd) = explode("-", $data_contratacao);
+
+							$arqtmp = tempnam("/tmp","cn-");
+							$fd = fopen($arqtmp,"w");
+
+
+							switch($forma_pagamento) {
+								case 'POS':
+
+										if($id_cobranca == 2) { //Tipo de pagamento for carnê
+
+											$ini_carne = @$_REQUEST["ini_carne"];
+											$data_carne = @$_REQUEST["data_carne"];
+											$prorata = @$_REQUEST["prorata"];
+											$valor_prorata = @$_REQUEST["valor_prorata"];
+											$pri_venc = @$_REQUEST["pri_venc"];
+
+											//echo "PRORATA: $prorata <br>";
+											//echo "VALOR: $valor_prorata <br>";
+
+
+
+
+
+											list($ini_d, $ini_m, $ini_a) = explode("/", $ini_carne);
+											list($dat_d, $dat_m, $dat_a) = explode("/", $data_carne);
+
+											$stamp_inicial = mktime(0,0,0, $ini_m, $ini_d, $ini_a);
+											$stamp_final = mktime(0,0,0, $dat_m, $dat_d, $dat_a);
+
+											$diferenca_meses = (($stamp_final - $stamp_inicial) / 86400) / 30;
+
+											if($tx_instalacao > 0) {
+
+												$fatura_valor = $tx_instalacao;
+												$hoje = date("Y-m-d");
+
+												if (!$pri_venc){
+													$fatura_dt_vencimento = $hoje;
+												}else{
+													$fatura_dt_vencimento = $pri_venc;
+												}
+
+												//Calcula a data dos próximos pagamentos de fatura.
+
+												//echo "VALOR_FATURA: $fatura_valor <br>";
+
+
+												$sSQL =  "INSERT INTO cbtb_faturas(";
+												$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
+												$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
+												$sSQL .= "	acrescimo, valor_pago ";
+												$sSQL .= ") VALUES (";
+												$sSQL .= "	$id_cliente_produto, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
+												$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
+												$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
+												$sSQL .= ")";
+
+												echo "Fatura:  $sSQL<br>\n";
+												$this->bd->consulta($sSQL);
+
+											}
+
+											for($i=0; $i<=floor($diferenca_meses); $i++) {
+
+												//Aplica descontos, caso haja algum período de desconto declarado
+												if($qt_desconto > 0) {
+
+													$fatura_desconto = $desconto_promo;
+													$qt_desconto--;
+
+												} else {
+
+													$fatura_desconto = 0;
+
+												}
+												//Adiciona taxa de instalação na fatura, caso haja.
+												if ($i==0) { //Cria primeira fatura pós-paga
+
+														if ($prorata == true){ // pega se existe prorata e soma no valor da primeira fatura
+
+															$fatura_valor = $valor_prorata;
+															//echo "valor com prorata: $fatura_valor <br>";
+														}
+
+														if($pri_venc != ""){
+															list($ini_d, $ini_m, $ini_a) = explode("/", $pri_venc);
+															$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $ini_m, $ini_d, $ini_a));
+														}else{
+															$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $ini_m, $ini_d, $ini_a));
+														}
+
+
+													//Adiciona-se ao valor da fatura o valor do pro-rata																														
+
+													//Se houver taxa de instalação no pós pago, então a primeira fatura do carnê será referente à taxa de instalação
+
+													/*if($tx_instalacao > 0) {
+
+														$fatura_valor += $tx_instalacao;
+
+														//Calcula a data dos próximos pagamentos de fatura.
+
+														//echo "VALOR_FATURA: $fatura_valor <br>";
+
+
+														$sSQL =  "INSERT INTO cbtb_faturas(";
+														$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
+														$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
+														$sSQL .= "	acrescimo, valor_pago ";
+														$sSQL .= ") VALUES (";
+														$sSQL .= "	$id_cliente_produto, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
+														$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
+														$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
+														$sSQL .= ")";
+
+														//echo "Fatura:  $sSQL<br>\n";
+														$this->bd->consulta($sSQL);
+
+													}*/
+
+													$this->carne($id_cliente_produto,$data,$id_cliente);
+
+													fputs($fd,$fatura);
+
+
+
+												}else{
+
+
+													$fatura_valor = $valor_cont_temp;
+
+												}
+
+												//Calcula o desconto sobre a fatura.
+												$fatura_valor -= $fatura_desconto;
+
+												//Calcula a data dos próximos pagamentos de fatura.
+													$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $ini_m+$i, $ini_d, $ini_a));
+
+
+												//echo "VALOR FATURA: $fatura_valor <br>";
+												//echo "DT VENC: $fatura_dt_vencimento <br>";
+
+												$sSQL =  "INSERT INTO cbtb_faturas(";
+												$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
+												$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
+												$sSQL .= "	acrescimo, valor_pago ";
+												$sSQL .= ") VALUES (";
+												$sSQL .= "	$id_cliente_produto, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
+												$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
+												$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
+												$sSQL .= ")";
+
+												//echo "$sSQL<br>";
+												$this->bd->consulta($sSQL);
+
+												$this->carne($id_cliente_produto,$data,$id_cliente);
+												fputs($fd,$fatura);
+
+
+												/*
+												list($dt_final_a, $dt_final_m, $dt_final_d) = explode("-", $fatura_dt_vencimento);
+
+												$stamp_dt1 = mktime(0,0,0,$dt_final_m, $dt_final_d, $dt_final_a);
+
+												//if("$dt_final_d/$dt_final_m/$dt_final_a" == "$data_carne") break; */
+
+
+
+
+											}																	
+										} else { //Caso a cobrança não seja do tipo carnê.
+
+
+											$fatura_valor = $valor_cont_temp;
+
+											//Aplica descontos, caso haja algum período de desconto declarado
+											if($qt_desconto > 0) {
+												$fatura_desconto = $desconto_promo;
+												$qt_desconto--;
+											} else
+												$fatura_desconto = 0;
+
+											//Adiciona taxa de instalação na fatura, caso haja.
+											if($tx_instalacao != 0) {
+												$fatura_valor = $tx_instalacao;
+
+												//Calcula a data dos próximos pagamentos de fatura.
+
+
+												$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $cm, $cd, $ca));
+
+												$sSQL =  "INSERT INTO cbtb_faturas(";
+												$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
+												$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
+												$sSQL .= "	acrescimo, valor_pago ";
+												$sSQL .= ") VALUES (";
+												$sSQL .= "	'$id_cliente_produto', '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
+												$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
+												$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
+												$sSQL .= ")";
+
+												//echo "$sSQL<br>";
+												$this->bd->consulta($sSQL);
+											}								
+
+										}									
+
+									break;
+
+								case 'PRE':
+										if($id_cobranca == 2) {	//Tipo pagamento for Carnê.
+											/*
+											$ini_carne = @$_REQUEST["ini_carne"];
+											$data_carne = @$_REQUEST["data_carne"];
+
+											list($ini_d, $ini_m, $ini_a) = explode("/", $ini_carne);
+											list($dat_d, $dat_m, $dat_a) = explode("/", $data_carne);
+
+											for ($i=0; $i < $vigencia; $i++) */
+
+											$ini_carne = @$_REQUEST["ini_carne"];
+											$data_carne = @$_REQUEST["data_carne"];
+											$prorata = @$_REQUEST["prorata"];
+											$valor_prorata = @$_REQUEST["valor_prorata"];
+
+
+											list($ini_d, $ini_m, $ini_a) = explode("/", $ini_carne);
+											list($dat_d, $dat_m, $dat_a) = explode("/", $data_carne);
+
+											$stamp_inicial = mktime(0,0,0, $ini_m, $ini_d, $ini_a);
+											$stamp_final = mktime(0,0,0, $dat_m, $dat_d, $dat_a);
+
+											$diferenca_meses = (($stamp_final - $stamp_inicial) / 86400) / 30;
+
+
+											for($i=0; $i<=floor($diferenca_meses); $i++) {									
+
+												$fatura_valor = $valor_cont_temp;
+
+												//Aplica descontos, caso haja algum período de desconto declarado
+												if($qt_desconto > 0) {
+													$fatura_desconto = $desconto_promo;
+													$qt_desconto--; 
+												} else
+													$fatura_desconto = 0;
+
+
+												//Adiciona taxa de instalação na fatura, caso haja.
+												if ($i==0) { //Cria primeira fatura pré-paga
+
+													//Adiciona-se ao valor da fatura o valor do pro-rata																														
+													if ($prorata == true){
+														$fatura_valor += $valor_prorata;
+														$fatura_valor -= $valor_cont_temp;
+													}
+
+													if ($pri_venc) {
+														list($d, $m, $a) = explode("/",$pri_venc);
+														$fatura_dt_vencimento = $a."-".$m."-".$d;
+														//echo "DT: $fatura_dt_vencimento <br>";
+													}
+													//TODO: Procurar função de adição do pro-rata
+													if($tx_instalacao > 0) $fatura_valor += $tx_instalacao;
+
+												}else{
+
+													$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $cm+$i, $dia_vencimento, $ca));
+
+												}
+
+
+
+												//Calcula a data dos próximos pagamentos de fatura.
+
+												//$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $cm+$i, $dia_vencimento, $ca));
+
+
+
+												//Calcula o desconto sobre a fatura.
+												$fatura_valor -= $fatura_desconto;
+
+
+												$sSQL =  "INSERT INTO cbtb_faturas(";
+												$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
+												$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
+												$sSQL .= "	acrescimo, valor_pago ";
+												$sSQL .= ") VALUES (";
+												$sSQL .= "	$id_cliente_produto, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
+												$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
+												$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
+												$sSQL .= ")";
+
+												echo "FATURA #2: $sSQL<br>";
+												$this->bd->consulta($sSQL);
+
+												$data = $fatura_dt_vencimento;
+
+												$fatura = $this->carne($id_cliente_produto,$data,$id_cliente);
+												fputs($fd,$fatura);
+
+
+											}
+										} else {
+
+
+											$fatura_valor = $valor_cont_temp;
+
+											//Aplica descontos, caso haja algum período de desconto declarado
+											if($qt_desconto > 0) {
+												$fatura_desconto = $desconto_promo;
+												$qt_desconto--; 
+											} else
+												$fatura_desconto = 0;
+
+
+											if($tx_instalacao != 0) $fatura_valor += $tx_instalacao;
+
+											//Calcula a data dos próximos pagamentos de fatura.
+											if($pri_venc != ""){
+											list($cd, $cm, $ca) = explode("/", $pri_venc);
+												$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $cm, $cd, $ca));
+											}else{
+												$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $cm, $cd, $ca));
+											}
+
+											//$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $cm, $dia_vencimento, $ca));
+
+											//Calcula o desconto sobre a fatura.
+											$fatura_valor -= $fatura_desconto;
+
+
+											$sSQL =  "INSERT INTO cbtb_faturas(";
+											$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
+											$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
+											$sSQL .= "	acrescimo, valor_pago ";
+											$sSQL .= ") VALUES (";
+											$sSQL .= "	$id_cliente_produto, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
+											$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
+											$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
+											$sSQL .= ")";
+
+											//echo "$sSQL<br>";
+											$this->bd->consulta($sSQL);
+										}
+									break;						
+							}
+
+										$hoje = date("Ymdhms");
+										$nome_arquivo = $hoje."-".$id_cliente;
+										$host = "dev.mosman.com.br";
+
+
+										$p = new MHTML2PDF();
+										$p->setDebug(1);
+										$arqPDF = $p->converte($arqtmp,$host,$defaultPath='/tmp');
+
+										copy($arqPDF, "./faturas/".$nome_arquivo.".pdf");
+
+										fclose($fd);
+							
+							
+							/* FINAL DO CONTRATO DE FATURAS */
 							
 							
 							
@@ -1653,9 +2114,9 @@ public function carne($id_cliente_produto,$data,$id_cliente){
 	$sSQL .= "id_cliente_produto = '$id_cliente_produto' AND ";
 	$sSQL .= "data = '$data' ";
 
-	//echo "fatura: $sSQL<br>";
 
 	$fatura = $this->bd->obtemUnicoRegistro($sSQL);
+	echo "fatura: $sSQL<br>";
 
 
 	// PEGANDO INFORMAÇÕES DAS PREFERENCIAS
