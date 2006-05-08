@@ -3,7 +3,7 @@
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
 
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
-</head> 
+</head>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
@@ -18,36 +18,36 @@
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td align="center" valign="middle" background="template/default/images/demon.gif"> 
+                <td align="center" valign="middle" background="template/default/images/demon.gif">
                   <p>
                   <table class=table_main width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
-                    <tr> 
+                    <tr>
                       <th class=th_main align="center"><h1>Log Radius </h1></th>
                     </tr>
                   </table>
                   <table class=table_main width="90%" border="0" align="center" cellpadding="0" cellspacing="0" >
-                    <tr> 
+                    <tr>
                       <td class=td_main > <table width="97%" border="0" align="center" cellpadding="0" cellspacing="1" class=main>
-                          <tr> 
+                          <tr>
                             <td colspan="2"><br> <table class=table_main width="100%" _height="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-                                <tr> 
-                                  <td class=td_main width="100%" _height_="100%" align="center" valign="middle"> 
-                                    <form name=formulario method="get" action=""> 
+                                <tr>
+                                  <td class=td_main width="100%" _height_="100%" align="center" valign="middle">
+                                    <form name=formulario method="get" action="">
                                     <br>
                                       <table border=0  _bgcolor="#000000" cellspacing=1 cellpadding=1 width="90%">
-                                        <tr> 
+                                        <tr>
                                           <td align="center"> <table border=0 cellspacing=0>
-                                            <tr> 
-                                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Analisar 
+                                            <tr>
+                                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Analisar
                                                   últimas</font></p></td>
-                                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                                   <input type="text" name="limite" value="50" class="campos">
                                                   entradas</font></p></td>
                                             </tr>
-                                            <tr> 
-                                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Consultar 
+                                            <tr>
+                                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Consultar
                                                   usuario</font></p></td>
-                                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                              <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                                   <input type="text" name="username" value="" class="campos">
                                                   </font></p></td>
                                             </tr>
@@ -60,9 +60,9 @@
                                                 </select>
                                                 <input name="op" type="hidden" value="log" id="op"></td>
                                             </tr>
-                                            <tr> 
+                                            <tr>
                                               <td><p>&nbsp;</p></td>
-                                              <td><p> 
+                                              <td><p>
                                                   <input name="botao_enviar" type="submit" class="campos" id="submit" value="atualizar &gt;&gt;">
                                                 </p></td>
                                             </tr>
@@ -73,8 +73,59 @@
                                     </form></td>
                                 </tr>
                               </table>
+
+
+
+
+							  <table width="750" border="0" cellspacing="0" cellpadding="0">
+								  <tr>
+									<td>
+											<table width="750" border="0" cellspacing="0" cellpadding="0">
+												<tr>
+												  	<td bgcolor="#F1F1F1"><table width="750" border="0" cellspacing="2" cellpadding="0">
+											    <tr>
+													<td width="100" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Usu&aacute;rio</font></td>
+													<td width="100" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Origem</font></td>
+													<td width="100" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Mensagem</font></td>
+													<td width="100" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Inicio</font></td>
+													<td width="100" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Fim</font></td>
+													<td width="100" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Tempo</font></td>
+													<td width="100" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Bytes</font></td>
+											 	</tr>
+											</table></td>
+										</tr>
+										<tr>
+										  <td>
+
+										{foreach item=a from=$relat}
+										  <table width="750" border="0" cellspacing="2" cellpadding="0">
+											  <tr>
+
+												<td width="100" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">{$relat.usuario}</font></td>
+												<td width="100" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">{$relat.origem}</font></td>
+												<td width="100" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">{$relat.mensagem}</font></td>
+												<td width="100" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">{$relat.inicio}</font></td>
+												<td width="100" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">{$relat.fim}</font></td>
+												<td width="100" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">{$relat.tempo}</font></td>
+												<td width="100" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">{$relat.bytes}</font></td>
+
+											  </tr>
+											  <tr bgcolor="#999999">
+												<td colspan="5" height="1"></td>
+											  </tr>
+										  </table>
+										 {/foreach}
+
+										  </td>
+										</tr>
+									  </table></td>
+								  </tr>
+							  </table>
+
+
+                              <!--
                               <table border=0 width="800" cellspacing=0 cellpadding=0 align="center">
-                                <tr bgcolor="#FAFAFA"> 
+                                <tr bgcolor="#FAFAFA">
                                   <td width=100 align="center"><h2><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><b>..usuario..</b></font></h2></td>
                                   <td width=2><h2><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></h2></td>
                                   <td width=100 align="center"><h2><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><b>..origem..</b></font></h2></td>
@@ -89,1221 +140,1221 @@
                                   <td width=2><h2><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></h2></td>
                                   <td width=90 align="center"><h2><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><b>..bytes..</b></font></h2></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       zerafael </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934571949 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right" bgcolor="#BCD3C4"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:20:31 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#ffcecf"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#ffcecf">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       geraldo </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934571949 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Usuario 
+                                  <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Usuario
                                       inexistente</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:20:18 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:20:18 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:00:00 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       sentel </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934623985 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:19:45 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       j.morais </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934571949 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:19:25 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#ffcecf"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#ffcecf">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       geraldo </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934571949 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Usuario 
+                                  <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Usuario
                                       inexistente</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:19:22 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:19:22 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:00:00 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       sas </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934481256 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:18:29 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#ffcecf"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#ffcecf">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       geraldo </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934571949 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Usuario 
+                                  <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Usuario
                                       inexistente</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:18:22 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:18:22 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:00:00 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       apischelpicos </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934228015 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:18:18 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#ffcecf"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#ffcecf">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       geraldo </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934571949 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Usuario 
+                                  <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Usuario
                                       inexistente</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:18:04 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:18:04 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:00:00 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       dd </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:02:2d:66:93:08 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:17:56 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       SINDICATO </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934980058 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:17:50 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       nutritivomel </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934821073 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:17:46 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       Almir </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934623985 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">199</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:16:37 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:21:16 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:04:38 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       53878/302168 </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       luzilete </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934821197 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:16:32 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#ffcecf"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#ffcecf">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       geraldo </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934571949 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Usuario 
+                                  <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Usuario
                                       inexistente</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:16:31 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:16:31 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:00:00 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       zerafael </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934571949 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">189</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:16:11 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:18:45 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:02:34 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       58910/330029 </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       conabuapicos </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934224340 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:16:05 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#ffcecf"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#ffcecf">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       geraldo </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934571949 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Usuario 
+                                  <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Usuario
                                       inexistente</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:16:04 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:16:04 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:00:00 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       bilunga </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:40:f4:9f:ce:bb </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:15:59 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       prefeiturajaicos </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934571949 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">192</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:15:58 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:19:29 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:03:30 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       116984/519176 </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#ffcecf"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#ffcecf">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       geraldo </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center" bgcolor="#ffcecf"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center" bgcolor="#ffcecf"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934571949 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Usuario 
+                                  <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Usuario
                                       inexistente</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:15:48 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:15:48 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:00:00 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       smscaninde </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934891025 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:15:16 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       tony </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:0e:8b:ff:b3:b5 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:15:10 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#ffcecf"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#ffcecf">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       tony </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:0e:8b:ff:b3:b5 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Senha 
+                                  <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Senha
                                       nao confere</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:14:56 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:14:56 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:00:00 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       pmv.valenca </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934652720 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:14:54 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#ffcecf"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#ffcecf">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       tony </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:0e:8b:ff:b3:b5 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Senha 
+                                  <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Senha
                                       nao confere</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:14:44 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:14:44 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:00:00 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       umsinhuma-pi </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934771634 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">163</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:13:48 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:15:48 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:02:00 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       22548/246588 </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#ffcecf"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#ffcecf">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       tony </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:0e:8b:ff:b3:b5 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="right" bgcolor="#FFCECF"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Senha 
+                                  <td align="right" bgcolor="#FFCECF"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Senha
                                       nao confere</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:13:45 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:13:45 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:00:00 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       setassimoespi </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934561205 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:13:25 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       mbinformatica </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934331234 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:13:23 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       pmsaladm </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934491390 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">187</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:12:44 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:18:32 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:05:48 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       98122/612271 </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       smasc </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934541212 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:12:19 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       sas </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934481256 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">179</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:11:41 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:17:55 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:06:13 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       149129/697800 </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#ffcecf"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#ffcecf">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       solon.uro </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934571949 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Senha 
+                                  <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Senha
                                       nao confere</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:11:18 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:11:18 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:00:00 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       sintracsradio </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:0c:41:b6:bd:54 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:10:32 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       joaolelis </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934871604 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:10:28 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       novasantarita </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934821197 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:09:38 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       nmotospaulistana </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934871604 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:09:36 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       rayoslaser </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934531730 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:09:17 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       saojoaodrs </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934832226 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">151</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:09:12 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:14:26 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:05:14 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       45330/458879 </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       raimundoleite </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934561205 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:09:08 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       consulplan </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934651994 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">142</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:08:56 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:12:04 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:03:08 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       23700/217288 </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       mariaferreira </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934771634 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:08:44 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       pmg </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934260061 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:08:35 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       joseadasneto </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934651994 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:08:29 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       jeanesbarros </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934501373 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">115</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:08:12 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:08:31 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:00:18 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       2711/28684 </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       saojoaodrs </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934832226 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">113</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:08:08 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:08:13 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:00:05 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       690/175 </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       sinte-pi </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934832226 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:08:04 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       sersom </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934651994 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:07:59 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font>
                                     </p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       / </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><img src="img/nada.gif" width=1 height=1 border=0></font></p></td>
                                 </tr>
-                                <tr bgcolor="#BCD3C4"> 
-                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <tr bgcolor="#BCD3C4">
+                                  <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       soaresfilho </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       8934652749 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
                                   <td align="right"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">143</font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:07:53 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       01/02/2006 10:12:21 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       00:04:27 </font></p></td>
                                   <td width=2><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">|</font></p></td>
-                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                  <td align="center"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
                                       689076/1116452 </font></p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=13 bgcolor="000000"><img src="img/nada.gif" width=1 height=1 border=0></td>
                                 </tr>
-                              </table></td>
+                              </table> --> </td>
                           </tr>
                         </table></td>
                     </tr>
@@ -1319,7 +1370,7 @@
   <tr>
     <td height="20" align="center" bgcolor="#BCD3C4"><table width="400" border="0" cellspacing="0" cellpadding="0">
         <tr>
-          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy; 
+          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy;
               Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
         </tr>
       </table></td>
