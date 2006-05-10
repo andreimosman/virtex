@@ -1004,7 +1004,7 @@ class VAClientes extends VirtexAdmin {
 								
 								$username = @$_REQUEST["username"];
 								$tipo_conta = @$_REQUEST["tipo"];
-								$dominio = $prefs["dominio_padrao"];
+								$dominio = $prefs["geral"]["dominio_padrao"];
 								$foneinfo = @$_REQUEST["foneinfo"];
 								
 								$sSQL  = "INSERT INTO ";
@@ -1234,7 +1234,7 @@ class VAClientes extends VirtexAdmin {
 						$this->tpl->atribui("nas",@$nas["nome"]);
 						$this->tpl->atribui("mac",@$_MAC);
 						$this->tpl->atribui("ip",@$ip_disp);
-						$this->tpl->atribui("dominio",$prefs["dominio_padrao"]);
+						$this->tpl->atribui("dominio",$prefs["geral"]["dominio_padrao"]);
 						$this->tpl->atribui("dominio_hospedagem",@$dominio_hospedagem);
 						
 						
@@ -2491,73 +2491,46 @@ class VAClientes extends VirtexAdmin {
 			
 		}else if ($op == "imprime_contrato"){
 		
-			$tipo_produto = @$_REQUEST["tipo_produto"];
-		
-			$hoje = date("Y-m-d");
-		
-			$provedor = $this->prefs->obtem("provedor");
-			$geral = $this->prefs->obtem("geral");
+			$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
+			$id_cliente = @$_REQUEST["id_cliente"];
 			
+			$sSQL = "SELECT * FROM cbtb_contrato WHERE id_cliente_produto = '$id_cliente_produto'";
+			$contr = $this->bd->obtemUnicoRegistro($sSQL);
 			
+			$data_contratacao = $contr["data_contratacao"];
 			
-			$this->tpl->atribui("nome_provedor",$geral["nome"]);
-			$this->tpl->atribui("localidade",$provedor["localidade"]);
-			$this->tpl->atribui("cnpj_provedor",$provedor["cnpj"]);
+			//$arqPDF = $this->contratoPDF($id_cliente_produto,$data_contratacao);
 			
-			$sSQL  = "SELECT ";
-			$sSQL .= "	ct.id_cliente_produto, ct.data_contratacao, ct.vigencia, ct.data_renovacao, ct.valor_contrato, ct.id_cobranca, ct.status, ";
-			$sSQL .= "	ct.tipo_produto, ct.valor_produto, ct.num_emails, ct.quota_por_conta, ct.comodato, ct.valor_comodato, ct.desconto_promo, ";
-			$sSQL .= "	ct.periodo_desconto, ct.bl_banda_download_kbps, ct.id_produto, ";
-			$sSQL .= "	pr.id_produto,pr.nome ";
-			$sSQL .= "FROM ";
-			$sSQL .= "	cbtb_contrato ct, prtb_produto pr ";
-			$sSQL .= "WHERE ";
-			$sSQL .= "ct.id_cliente_produto = '".$_REQUEST["id_cliente_produto"]."' ";
-			$sSQL .= "AND ct.id_produto = pr.id_produto ";
-		
-			$contrato = $this->bd->obtemUnicoRegistro($sSQL);
+			$sSQL = "SELECT path_contratos FROM pftb_preferencia_cobranca WHERE id_provedor = '1'";
+			$_path = $this->bd->obtemUnicoRegistro($sSQL);
+			$path = $_path["path_contratos"];
+			$host = "dev.mosman.com.br";
 			
-			//echo "SQL: $sSQL <br>";
+			//echo "path_contratos: $sSQL <br>";
+			//echo "path: $path <br>";
+			$base_nome = "contrato-".$id_cliente_produto."-".$data_contratacao;
+			$nome_arq = $path."/".$base_nome.".html";
+			$arq_mostra = $path."/".$base_nome;
 			
-			$this->tpl->atribui("data_contratacao", $contrato["data_contratacao"]);
-			$this->tpl->atribui("vigencia", $contrato["vigencia"]);
-			$this->tpl->atribui("valor_contrato", $contrato["valor_contrato"]);
-			$this->tpl->atribui("tipo_produto", $contrato["tipo_produto"]);
-			$this->tpl->atribui("valor_produto", $contrato["valor_produto"]);
-			$this->tpl->atribui("banda_kbps", $contrato["bl_banda_download_kbps"]);
-			$this->tpl->atribui("id_produto", $contrato["id_produto"]);
-			$this->tpl->atribui("nome_produto", $contrato["nome"]);
+			//echo "nome arquivo: $nome_arq <br>";	
 			
-			$sSQL  = "SELECT * FROM cltb_cliente WHERE id_cliente = '".$_REQUEST["id_cliente"]."' ";
+			$p = new MHTML2PDF();
+			$p->setDebug(0);
+			$arqPDF = $p->converteHTML($nome_arq,$host,$path);
+			copy($arqPDF,$base_nome.".pdf");
 
-			$cli = $this->bd->obtemUnicoRegistro($sSQL);
+			header('Pragma: public');
+			header('Expires: 0');
+			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+			header('Content-Type: application/pdf');
+			header('Content-Disposition: attachment; filename="'.$arq_mostra.'.pdf"');
+			readfile($arqPDF);
+			//echo $arqPDF;
+			//echo "BOSTA";
+			
+			//$this->arquivoTemplate = "home.html";
 			
 			
-			$valor_extenso = $this->extenso($contrato["valor_contrato"]);
-			$hoje_extenso = $this->escreveData($hoje);
-			$data_extenso = $this->escreveData($contrato["data_contratacao"]);
-			$this->tpl->atribui("data_extenso",$data_extenso);
-			$this->tpl->atribui("valor_extenso",$valor_extenso);
-			$this->tpl->atribui("hoje_extenso",$hoje_extenso);
-			$this->tpl->atribui("cli",$cli);
-			$this->tpl->atribui("tipo_produto",$tipo_produto);
-			
-			if ($tipo_produto == "BL"){
-				
-				$arquivo_contrato = "../../contratos/contrato_padrao_BL.html";
-			
-			}else if ($tipo_produto == "D"){
-			
-				$arquivo_contrato = "../../contratos/contrato_padrao_D.html";
-			
-			}else if ($tipo_produto == "H"){
-				
-				$arquivo_contrato = "../../contratos/contrato_padrao_H.html";
-				
-			}
-			
-			
-			$this->arquivoTemplate = $arquivo_contrato;
 			//$this->tpl->atribui("arquivo_contrato",$arquivo_contrato);
 			//$this->arquivoTemplate = "cliente_contrato_modificacao.html";
 			
@@ -2935,6 +2908,142 @@ public function carne($id_cliente_produto,$data,$id_cliente){
 	//return($carne_emitido);
 	$fatura = $this->tpl->obtemPagina("../boletos/layout-pc.html");
 	return($fatura);
+
+}
+
+public function contratoHTML($id_cliente,$id_cliente_produto,$tipo_produto){
+	
+	//$tipo_produto = @$_REQUEST["tipo_produto"];
+	$rotina = @$_REQUEST["rotina"];
+
+	$hoje = date("Y-m-d");
+
+	$provedor = $this->prefs->obtem("provedor");
+	$geral = $this->prefs->obtem("geral");
+	$id_cliente = @$_REQUEST["id_cliente"];
+	$cobranca = $this->prefs->obtem("cobranca");
+
+
+
+	$this->tpl->atribui("nome_provedor",$geral["nome"]);
+	$this->tpl->atribui("localidade",$provedor["localidade"]);
+	$this->tpl->atribui("cnpj_provedor",$provedor["cnpj"]);
+
+	$sSQL  = "SELECT ";
+	$sSQL .= "	ct.id_cliente_produto, ct.data_contratacao, ct.vigencia, ct.data_renovacao, ct.valor_contrato, ct.id_cobranca, ct.status, ";
+	$sSQL .= "	ct.tipo_produto, ct.valor_produto, ct.num_emails, ct.quota_por_conta, ct.comodato, ct.valor_comodato, ct.desconto_promo, ";
+	$sSQL .= "	ct.periodo_desconto, ct.bl_banda_download_kbps, ct.id_produto, ";
+	$sSQL .= "	pr.id_produto,pr.nome ";
+	$sSQL .= "FROM ";
+	$sSQL .= "	cbtb_contrato ct, prtb_produto pr ";
+	$sSQL .= "WHERE ";
+	$sSQL .= "ct.id_cliente_produto = '$id_cliente_produto' ";
+	$sSQL .= "AND ct.id_produto = pr.id_produto ";
+
+	$contrato = $this->bd->obtemUnicoRegistro($sSQL);
+
+	//echo "SQL: $sSQL <br>";
+
+	$this->tpl->atribui("data_contratacao", $contrato["data_contratacao"]);
+	$this->tpl->atribui("vigencia", $contrato["vigencia"]);
+	$this->tpl->atribui("valor_contrato", $contrato["valor_contrato"]);
+	$this->tpl->atribui("tipo_produto", $contrato["tipo_produto"]);
+	$this->tpl->atribui("valor_produto", $contrato["valor_produto"]);
+	$this->tpl->atribui("banda_kbps", $contrato["bl_banda_download_kbps"]);
+	$this->tpl->atribui("id_produto", $contrato["id_produto"]);
+	$this->tpl->atribui("nome_produto", $contrato["nome"]);
+
+	$sSQL  = "SELECT * FROM cltb_cliente WHERE id_cliente = '$id_cliente' ";
+
+	$cli = $this->bd->obtemUnicoRegistro($sSQL);
+
+
+	$valor_extenso = $this->extenso($contrato["valor_contrato"]);
+	$hoje_extenso = $this->escreveData($hoje);
+	$data_extenso = $this->escreveData($contrato["data_contratacao"]);
+	$this->tpl->atribui("data_extenso",$data_extenso);
+	$this->tpl->atribui("valor_extenso",$valor_extenso);
+	$this->tpl->atribui("hoje_extenso",$hoje_extenso);
+	$this->tpl->atribui("cli",$cli);
+	$this->tpl->atribui("tipo_produto",$tipo_produto);
+
+	if ($tipo_produto == "BL"){
+
+		$arquivo_contrato = "../../contratos/contrato_padrao_BL.html";
+
+	}else if ($tipo_produto == "D"){
+
+		$arquivo_contrato = "../../contratos/contrato_padrao_D.html";
+
+	}else if ($tipo_produto == "H"){
+
+		$arquivo_contrato = "../../contratos/contrato_padrao_H.html";
+
+	}
+
+
+		$this->arquivoTemplate = $arquivo_contrato;
+
+		//$this->contratoHTML($nome_provedor,$localidade,cnpj_provedor,$data_contratacao,$vigencia,$valor_contrato,$tipo_produto,$valor_produto,$banda_kbps,$id_produto,$nome_produto,$valor_extenso,$hoje_extenso,$data_extenso,$arquivo_contrato);
+
+	$hoje = date("Y-m-d");
+	
+	//$ph = new MUtils;
+	
+	//$_path = MUtils::getPwd();
+	//$path = $_path."/contratos/clientes";
+	$sSQL = "SELECT path_contratos FROM pftb_preferencia_cobranca WHERE id_provedor = '1'";
+	$_path = $this->bd->obtemUnicoRegistro($sSQL);
+	$path = $_path["path_contratos"];
+	
+	$nome_arq = $path."contrato-".$id_cliente_produto."-".$contrato["data_contratacao"].".html";
+	$fd = fopen($nome_arq,"w");
+	
+	//echo "path: $_path - $path<br>";
+
+	//$arq = explode("/",$arquivo_contrato);
+	//$arq = $arq[count($arq)-1];
+	$arq = $arquivo_contrato;
+
+	$image_path = $_path."/template/default/images";
+	//echo "<BR>IMAGE PATH".$image_path ."<br>";
+
+	$this->tpl->atribui("path",$image_path);
+	$arquivo = $path."/".$arq;
+	$arqtmp = $this->tpl->obtemPagina($arq);
+
+	fwrite($fd,$arqtmp);
+	
+	fclose($fd);
+	
+	return;
+	
+	
+	
+
+}
+
+public function contratoPDF($id_cliente_produto,$data_contratacao){
+
+	$sSQL = "SELECT path_contratos FROM pftb_preferencia_cobranca WHERE id_provedor = '1'";
+	$_path = $this->bd->obtemUnicoRegistro($sSQL);
+	$path = $_path["path_contratos"];
+	$host = "dev.mosman.com.br";
+	
+	echo "path_contratos: $sSQL <br>";
+	echo "path: $path <br>";
+		
+	$nome_arq = "contrato-".$id_cliente_produto."-".$data_contratacao.".html";
+	echo "nome arquivo: $nome_arq <br>";	
+
+	$p = new MHTML2PDF();
+	$p->setDebug(1);
+	$arqPDF = $p->converteHTML($nome_arq,$host,$defaultPath=$path);
+	
+	return($arqPDF);
+
+
+
 
 }
 

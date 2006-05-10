@@ -31,31 +31,32 @@
                           <tr>
                             <td colspan="2"><p align="center"> <a href="configuracao.php?op=nas"><img src="template/default/images/bt_nas.gif" width="77" height="73" border="0"></a></p>
                               <div align="center">
-                                <table border=0 width="632" cellspacing=0 cellpadding=0>
-                                  <tr bgcolor="#FAFAFA">
-                                    <td width=188 align="left"><h2><b>..nome..</b></h2></td>
-                                    <td width=306 align="left"><h2><b>..IP..</b></h2></td>
-                                    <td width=69 align="center"><h2><b>..tipo..</b></h2></td>
-                                    <td width=69 align="center" colspan="2"><h2>..opera&ccedil;&otilde;es..</h2></td>
-
-                                  </tr>
-                                  <tr>
-                                    <td colspan=5 bgcolor="000000"><img src="template/default/menu/spacer.gif" width=1 height=1 border=0></td>
-                                  </tr>
-                                  {foreach item=a from=$lista_nas}
-                                  <tr bgcolor="#FFFFFF">
-                                    <td align="left"><p>{$a.nome}</p></td>
-                                    <td align="left"><p>{$a.ip}</p></td>
-                                    <td align="center"><p>{$a.tipo_nas}</p></td>
-									<td align="center"><p>{if $a.tipo_nas != "R"}<a href="configuracao.php?op=nas_rede&id_nas={$a.id_nas}&tipo_nas={$a.tipo_nas}"><img src="template/default/images/gif_rede.gif" border="0" alt="Redes do NAS: {$a.nome}" ></a>{/if}</p></td>
-                                    <td align="center"><p><a href="configuracao.php?op=nas&id_nas={$a.id_nas}"><img src="template/default/images/gif_alterar.gif" border="0" alt="Alterar NAS: {$a.nome}"></a></p></td>
-                                  </tr>
-								  <tr>
-								  <td colspan="5"><hr size="1">
-</td>
-								  </tr>
-                                  {/foreach}
-                                </table>
+                                
+                              <table border=0 width="632" cellspacing=0 cellpadding=0>
+                                <tr bgcolor="#FAFAFA">
+                                  <td width=20 align="CENTER"><h2>ID</h2></td>
+                                  <td width=188 align="left"><h2><b>..nome..</b></h2></td>
+                                  <td width=306 align="left"><h2><b>..IP..</b></h2></td>
+                                  <td width=69 align="center"><h2><b>..tipo..</b></h2></td>
+                                  <td width=69 align="center" colspan="2"><h2>..opera&ccedil;&otilde;es..</h2></td>
+                                </tr>
+                                <tr> 
+                                  <td colspan=6 bgcolor="000000" align="CENTER"><img src="template/default/menu/spacer.gif" width=1 height=1 border=0></td>
+                                </tr>
+                                {foreach item=a from=$lista_nas} 
+                                <tr bgcolor="#FFFFFF">
+                                  <td align="CENTER" width="20"><p>{$a.id_nas}</p></td>
+                                  <td align="left"><p>{$a.nome}</p></td>
+                                  <td align="left"><p>{$a.ip}</p></td>
+                                  <td align="center"><p>{$a.tipo_nas}</p></td>
+                                  <td align="center"><p>{if $a.tipo_nas != "R"}<a href="configuracao.php?op=nas_rede&id_nas={$a.id_nas}&tipo_nas={$a.tipo_nas}"><img src="template/default/images/gif_rede.gif" border="0" alt="Redes do NAS: {$a.nome}" ></a>{/if}</p></td>
+                                  <td align="center"><p><a href="configuracao.php?op=nas&id_nas={$a.id_nas}"><img src="template/default/images/gif_alterar.gif" border="0" alt="Alterar NAS: {$a.nome}"></a></p></td>
+                                </tr>
+                                <tr> 
+                                  <td colspan="6"><hr size="1"> </td>
+                                </tr>
+                                {/foreach} 
+                              </table>
                               </div></td>
                           </tr>
                         </table>

@@ -173,6 +173,9 @@
 					
 					//echo "<br>$sSQL<br>";
 					$this->bd->consulta($sSQL);
+					
+					$this->contratoHTML($id_cliente,$id_cliente_produto,$tipo_produto);
+					
 
 					/*<<=====FIM DA PARTE DE CONTRATAÇÃO=====>>*/
 
@@ -601,11 +604,11 @@
 								$host = "dev.mosman.com.br";
 					
 					
-								$p = new MHTML2PDF();
-								$p->setDebug(1);
-								$arqPDF = $p->converte($arqtmp,$host,$defaultPath='/tmp');
+								//$p = new MHTML2PDF();
+								//$p->setDebug(1);
+								//$arqPDF = $p->converte($arqtmp,$host,$defaultPath='/tmp');
 								
-								copy($arqPDF, "./faturas/".$nome_arquivo.".pdf");
+								//copy($arqPDF, "./faturas/".$nome_arquivo.".pdf");
 					
 								fclose($fd);
 								
