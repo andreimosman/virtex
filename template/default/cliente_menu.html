@@ -21,8 +21,8 @@
       {/if} </td>
     {/if} 
     <!-- COBRANCA -->
-    <td> {if $op == "cobranca"} <a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&rotina=resumo"><img src="template/default/images/bt_cobranca.gif" border=0 alt="Cobrança"></a> 
-      {else } {if $id_cliente}<a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&rotina=resumo">{/if}<img src="template/default/images/bt_cobranca_inativo.gif" border=0 alt="Cobranca"></a> 
+    <td> {if $op == "cobranca"} <a href="clientes.php?op=cobranca&id_cliente={$id_cliente}&rotina=resumo"><img src="template/default/images/bt_cobranca.gif" border=0 alt="Cobrança"></a> 
+      {else } {if $id_cliente}<a href="clientes.php?op=cobranca&id_cliente={$id_cliente}&rotina=resumo">{/if}<img src="template/default/images/bt_cobranca_inativo.gif" border=0 alt="Cobranca"></a> 
       {/if} </td>
     <!-- HELPDESK -->
   </tr>
