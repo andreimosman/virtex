@@ -2491,40 +2491,63 @@ class VAClientes extends VirtexAdmin {
 			
 		}else if ($op == "imprime_contrato"){
 		
+			$rotina = @$_REQUEST["rotina"];
 			$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
 			$id_cliente = @$_REQUEST["id_cliente"];
-			
+
 			$sSQL = "SELECT * FROM cbtb_contrato WHERE id_cliente_produto = '$id_cliente_produto'";
 			$contr = $this->bd->obtemUnicoRegistro($sSQL);
-			
+
 			$data_contratacao = $contr["data_contratacao"];
-			
+
 			//$arqPDF = $this->contratoPDF($id_cliente_produto,$data_contratacao);
-			
+
 			$sSQL = "SELECT path_contratos FROM pftb_preferencia_cobranca WHERE id_provedor = '1'";
 			$_path = $this->bd->obtemUnicoRegistro($sSQL);
 			$path = $_path["path_contratos"];
 			$host = "dev.mosman.com.br";
-			
+
 			//echo "path_contratos: $sSQL <br>";
 			//echo "path: $path <br>";
-			$base_nome = "contrato-".$id_cliente_produto."-".$data_contratacao;
-			$nome_arq = $path."/".$base_nome.".html";
-			$arq_mostra = $path."/".$base_nome;
-			
-			//echo "nome arquivo: $nome_arq <br>";	
-			
-			$p = new MHTML2PDF();
-			$p->setDebug(0);
-			$arqPDF = $p->converteHTML($nome_arq,$host,$path);
-			copy($arqPDF,$base_nome.".pdf");
+			//contrato-418-2006-05-10.html
 
-			header('Pragma: public');
-			header('Expires: 0');
-			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-			header('Content-Type: application/pdf');
-			header('Content-Disposition: attachment; filename="'.$arq_mostra.'.pdf"');
-			readfile($arqPDF);
+			$base_nome = "contrato-".$id_cliente_produto."-".$data_contratacao;
+			$nome_arq = $path.$base_nome.".html";
+			$arq_mostra = $path."/".$base_nome.".pdf";
+			$arq = $base_nome.".html";
+			
+			
+			
+			if ($rotina == "pdf"){
+
+				//echo "nome arquivo: $nome_arq <br>";	
+
+				$p = new MHTML2PDF();
+				$p->setDebug(0);
+				$arqPDF = $p->converte($nome_arq,$host,$path);
+				copy($arqPDF,$path.$base_nome.".pdf");
+				//copy($arqPDF,"/home/hugo".$base_nome.".pdf");
+
+				if (!$arqPDF){
+
+					echo "papocou esta bosta";
+					echo "path_contratos: $sSQL <br>";
+					echo "path: $path <br>";
+
+				}else{
+
+
+				header('Pragma: public');
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+				header('Content-Type: application/pdf');
+				header('Content-Disposition: attachment; filename="'.$base_nome.'.pdf"');
+				readfile($arqPDF);
+
+				}
+				
+			}else{
+			
 			//echo $arqPDF;
 			//echo "BOSTA";
 			
@@ -2532,9 +2555,13 @@ class VAClientes extends VirtexAdmin {
 			
 			
 			//$this->tpl->atribui("arquivo_contrato",$arquivo_contrato);
-			//$this->arquivoTemplate = "cliente_contrato_modificacao.html";
-			
+			$this->arquivoTemplate = $nome_arq;
+			}
 		
+		}else if ($op == "teste"){
+		
+			$this->testePDF();
+			
 		}
 	}
 	
@@ -2988,10 +3015,11 @@ public function contratoHTML($id_cliente,$id_cliente_produto,$tipo_produto){
 
 	$hoje = date("Y-m-d");
 	
-	//$ph = new MUtils;
+	$ph = new MUtils;
 	
-	//$_path = MUtils::getPwd();
-	//$path = $_path."/contratos/clientes";
+	$_image_path = MUtils::getPwd();
+	$host = "http://dev.mosman.com.br";
+	$image_path = $host.$_image_path."/template/default/images";
 	$sSQL = "SELECT path_contratos FROM pftb_preferencia_cobranca WHERE id_provedor = '1'";
 	$_path = $this->bd->obtemUnicoRegistro($sSQL);
 	$path = $_path["path_contratos"];
@@ -3005,7 +3033,7 @@ public function contratoHTML($id_cliente,$id_cliente_produto,$tipo_produto){
 	//$arq = $arq[count($arq)-1];
 	$arq = $arquivo_contrato;
 
-	$image_path = $_path."/template/default/images";
+	//$image_path = $path."/template/default/images";
 	//echo "<BR>IMAGE PATH".$image_path ."<br>";
 
 	$this->tpl->atribui("path",$image_path);
@@ -3043,6 +3071,33 @@ public function contratoPDF($id_cliente_produto,$data_contratacao){
 	return($arqPDF);
 
 
+
+
+}
+public function testePDF(){
+
+				$nome_arq = "/template/default/boletos/teste_carne.html";
+				$base_nome = "teste_carne";
+				$host = "dev.mosman.com.br";
+				$path = "/tmp";
+				
+				echo $nome_arq."<br>";
+				echo $base_nome."<br>";
+				echo $host."<br>";
+				echo $path."<br>";
+				
+
+				$p = new MHTML2PDF();
+				$p->setDebug(1);
+				$arqPDF = $p->converte($nome_arq,$host,"/tmp");
+				copy($arqPDF,$path.$base_nome.".pdf");
+				
+				header('Pragma: public');
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+				header('Content-Type: application/pdf');
+				header('Content-Disposition: attachment; filename="'.$base_nome.'.pdf"');
+				readfile($arqPDF);
 
 
 }

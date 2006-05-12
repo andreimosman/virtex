@@ -599,19 +599,27 @@
 							break;						
 					}
 					
-								$hoje = date("Ymdhms");
-								$nome_arquivo = $hoje."-".$id_cliente;
+								$hoje = date("Y-m-d");
+								$nome_arquivo = "carne-".$hoje."-".$id_cliente_produto;
 								$host = "dev.mosman.com.br";
 					
 					
-								//$p = new MHTML2PDF();
-								//$p->setDebug(1);
-								//$arqPDF = $p->converte($arqtmp,$host,$defaultPath='/tmp');
+								$p = new MHTML2PDF();
+								$p->setDebug(1);
+								$arqPDF = $p->converte($arqtmp,$host,'/tmp');
 								
-								//copy($arqPDF, "./faturas/".$nome_arquivo.".pdf");
+								copy($arqPDF, "./faturas/".$nome_arquivo.".pdf");
 					
 								fclose($fd);
 								
+								//$arquivo = $nome_arquivo.".pdf";
+								
+								//header('Pragma: public');
+								//header('Expires: 0');
+								//header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+								//header('Content-Type: application/pdf');
+								//header('Content-Disposition: attachment; filename="'.$arquivo.'.pdf"');
+								//readfile($arqPDF);
 
 
 					

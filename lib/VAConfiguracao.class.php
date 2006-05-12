@@ -974,7 +974,8 @@ class VAConfiguracao extends VirtexAdmin {
 							$sSQL .= "  num_conta = '".@$_REQUEST["num_conta"]."', ";
 							$sSQL .= "  convenio = '".@$_REQUEST["convenio"]."', ";
 							$sSQL .= "	pagamento = '".@$_REQUEST["pagamento"]."', ";
-							$sSQL .= "	observacoes = '".@$_REQUEST["observacoes"]."' ";
+							$sSQL .= "	observacoes = '".@$_REQUEST["observacoes"]."', ";
+							$sSQL .= "  path_contratos = '".@$_REQUEST["path_contratos"]."' ";
 
 							$this->bd->consulta($sSQL);
 							//echo "update cobrança: $sSQL <br>";
@@ -1135,7 +1136,102 @@ class VAConfiguracao extends VirtexAdmin {
 
 						
 					
-					}
+					}else if ($op == "registro"){
+					
+						$acao = @$_REQUEST["acao"];
+					
+						
+					
+						$prefs = $this->prefs->obtem("geral");
+					
+						$this->arquivoTemplate = "registro.html";
+						//$_LICENSE_EMPRESA = $prefs["nome"];
+						$_LICENSE_EMPRESA = "";
+						$_LICENSE_EXPIRES = "28/02/2007";
+						   
+					   //$local_id = $_MBM_LOCAL_ID;
+
+						if ( $_LICENSE_EMPRESA != ""){
+
+							$registrado = "sim";
+
+						}else {
+							$registrado = "nao";
+						}
+
+						
+						$this->tpl->atribui("registrado",$registrado);
+						$this->tpl->atribui("empresa",$_LICENSE_EMPRESA);
+						$this->tpl->atribui("expires",$_LICENSE_EXPIRES);
+
+					   //echo "registrado: $registrado<br>";
+
+					   //$SELF = $PHP_SELF;
+
+
+
+
+						if ($acao == "upload"){
+
+
+
+							$diretorio = "./etc";
+
+							$nome_aceitavel = "VIRTEX.zl";
+							$_file_ = $_FILES["arquivo_registro"];
+
+							$arquivo = $diretorio."/".$nome_aceitavel;
+
+							$_name_ = $_file_['name'];
+							$_tmp_name_ = $_file_['tmp_name'];
+
+							if ($_name_ != $nome_aceitavel){
+
+								$mensagem = "Tentativa de envio de arquivo incorreto.<br>NOME CERTO: $nome_aceitavel<br>NOME ENVIADO: $_name_<br>";
+								//$tplVars .= ",mensagem";
+								$this->tpl->atribui("mensagem",$mensagem);
+
+								$this->tpl->atribui("url","configuracao.php?op=registro");
+								$this->tpl->atribui("target","_top");
+
+								$this->arquivoTemplate = "msgredirect.html";
+								return;
+
+
+							}
+
+
+							//echo $diretorio ."<br>";
+							//echo $_name_ ."<br>";
+							//echo $arquivo ."<br>";
+
+							if (file_exists($arquivo)) {
+								//copy($_tmp_name,$diretorio."/_".$nome_aceitavel);
+								rename($diretorio."/VIRTEX.zl", $diretorio."/_VIRTEX.zl");
+							}
+
+							copy($_tmp_name_,$diretorio . "/" . $nome_aceitavel);
+
+
+							$mensagem = "Arquivo de registro aplicado com sucesso!";
+
+							$this->tpl->atribui("mensagem",$mensagem);
+
+							$this->tpl->atribui("url","configuracao.php?op=registro");
+							$this->tpl->atribui("target","_top");
+
+							$this->arquivoTemplate = "msgredirect.html";
+
+
+
+						}
+
+
+
+
+
+					
+					}// $ops
 				
 		
 			}// fecha function processa()

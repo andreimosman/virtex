@@ -55,7 +55,7 @@ class Preferencias {
          }else if ( $classe == "cobranca" ){
         	// Preferencias de Cobranca
 			$sSQL = "SELECT ";
-			$sSQL .= "tx_juros, multa, dia_venc, carencia, cod_banco, carteira, agencia, num_conta, convenio, observacoes, pagamento ";
+			$sSQL .= "tx_juros, multa, dia_venc, carencia, cod_banco, carteira, agencia, num_conta, convenio, observacoes, pagamento, path_contratos ";
 			$sSQL .= "FROM pftb_preferencia_cobranca ";
 			
          }else if ($classe == "total" ){
