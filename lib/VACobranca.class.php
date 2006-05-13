@@ -1764,6 +1764,9 @@ class VACobranca extends VirtexAdmin {
 			
 			$sSQL  = "SELECT ";
 			$sSQL .= "	SUM(cb.valor_pago) as faturamento,  ";
+			$sSQL .= "	SUM(cb.valor) as valor,  ";
+			$sSQL .= "	SUM(cb.acrescimo) as acrescimo,  ";
+			$sSQL .= "	SUM(cb.desconto) as desconto,  ";
 			$sSQL .= "	EXTRACT(month from cb.data_pagamento) as mes,  ";
 			$sSQL .= "	EXTRACT(year from cb.data_pagamento) as ano  ";
 			$sSQL .= "FROM  ";
@@ -1792,7 +1795,7 @@ class VACobranca extends VirtexAdmin {
 			$eSQL .= "		CAST( '$data_ini' as date) ";
 			$eSQL .= "		AND CAST( '$data_fim' as date ) ";
 
-			//echo "$eSQL";
+			//echo "$sSQL";
 
 			$relat = $this->bd->obtemRegistros($sSQL);
 			$fat = $this->bd->obtemUnicoRegistro($eSQL);
@@ -1810,7 +1813,9 @@ class VACobranca extends VirtexAdmin {
 				list($da, $dm, $dd) = explode("-", $data_teste);
 				$indice = "$da$dm";
 				
-				$tmp_relat["$indice"] = array("faturamento" => 0, "mes" => "$dm", "ano" => "$da");
+				$tmp_relat["$indice"] = array("faturamento" => "0.00", "valor" => "0.00", "acrescimo" => "0.00", "desconto" => "0.00", "mes" => "$dm", "ano" => "$da");
+				
+				//$tmp_relat["$indice"] = array("faturamento" => 0, "mes" => "$dm", "ano" => "$da");
 				
 				//echo "$i - $data_teste = [$indice]<br>";
 						
@@ -1849,7 +1854,10 @@ class VACobranca extends VirtexAdmin {
 			$mes_periodo = $this->obtem_mes($dm) . " de " . $da;
 						
 			$sSQL  = "SELECT ";
-			$sSQL .= "	SUM(cb.valor_pago) as faturamento, ";
+			$sSQL .= "	SUM(cb.valor_pago) as faturamento,  ";
+			$sSQL .= "	SUM(cb.valor) as valor,  ";
+			$sSQL .= "	SUM(cb.acrescimo) as acrescimo,  ";
+			$sSQL .= "	SUM(cb.desconto) as desconto,  ";
 			$sSQL .= "	EXTRACT(day from cb.data_pagamento) as dia, ";
 			$sSQL .= "	EXTRACT(month from cb.data_pagamento) as mes, ";
 			$sSQL .= "	EXTRACT(year from cb.data_pagamento) as ano ";
@@ -1901,7 +1909,9 @@ class VACobranca extends VirtexAdmin {
 				list($da, $dm, $dd) = explode("-", $data_teste);
 				$indice = "$da$dm$dd";
 
-				$tmp_relat["$indice"] = array("faturamento" => 0, "dia" => "$dd", "mes" => "$dm", "ano" => "$da");
+				$tmp_relat["$indice"] = array("faturamento" => "0.00", "valor" => "0.00", "acrescimo" => "0.00", "desconto" => "0.00", "dia" => "$dd", "mes" => "$dm", "ano" => "$da");
+
+				//$tmp_relat["$indice"] = array("faturamento" => 0, "dia" => "$dd", "mes" => "$dm", "ano" => "$da");
 
 				//echo "$i - $data_teste = [$indice]<br>";
 
@@ -2050,7 +2060,7 @@ class VACobranca extends VirtexAdmin {
 
 			//$pontos = array("9", "16", "20");
 			
-			if ($acao=="sub_mes") $larg_grafico = 550; else $larg_grafico = 450;
+			if ($acao=="sub_mes") $larg_grafico = 550; else $larg_grafico = 500;
 			
 			$grafico = new Graph($larg_grafico,250,"png");
 
