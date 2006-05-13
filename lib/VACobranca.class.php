@@ -1952,6 +1952,7 @@ class VACobranca extends VirtexAdmin {
 								
 			$sSQL  = "SELECT ";
 			$sSQL .= "   cp.id_cliente_produto, ";
+			$sSQL .= "   cl.id_cliente, ";
 			$sSQL .= "   cl.nome_razao, ";
 			$sSQL .= "   cn.username, ";
 			$sSQL .= "   f.valor,  ";

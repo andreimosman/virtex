@@ -230,13 +230,13 @@
 								{foreach item=a from=$relat}
 								  <table width="700" border="0" cellspacing="2" cellpadding="0">
 									  <tr>
-										<td  align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">{$a.nome_razao}</font></td>
-										<td width="100" align="LEFt"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">{$a.nome}</font></td>
-										<td width="80" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">{$a.username}</font></td>
-										<td width="100" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">{$a.valor}</font></td>
-										<td width="70" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">{$a.acrescimo}</font></td>
-										<td width="70" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">{$a.desconto}</font></td>
-										<td width="80" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">{$a.valor_pago}</font></td>
+										<td  align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.nome_razao}</a></font></td>
+										<td width="100" align="LEFt"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.nome}</a></font></td>
+										<td width="80" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.username}</a></font></td>
+										<td width="100" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.valor}</a></font></td>
+										<td width="70" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.acrescimo}</a></font></td>
+										<td width="70" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.desconto}</a></font></td>
+										<td width="80" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.valor_pago}</a></font></td>
 									  </tr>
 									  <tr bgcolor="#999999">
 										<td colspan="7" height="1"></td>
