@@ -1,5 +1,11 @@
 <?
+
 require_once( PATH_LIB . "/VirtexAdmin.class.php" );
+
+require_once( "jpgraph.php" );
+require_once( "jpgraph_line.php" );
+require_once( "jpgraph_bar.php" );
+
 class VACobranca extends VirtexAdmin {
 
 	public function VACobranca() {
@@ -14,7 +20,14 @@ class VACobranca extends VirtexAdmin {
 	   return $erros;
 	}
 
-	
+	public function obtem_mes($numero_mes) {	
+			if ($numero_mes < 10 && strlen($numero_mes) > 1)
+				$numero_mes = substr($numero_mes,1,1);
+				
+			global $_LS_MESES_ANO;
+			return $_LS_MESES_ANO[$numero_mes];		
+	}
+		
 	public function processa($op=null) {
 
 		if ($op == "cadastro"){
@@ -1694,7 +1707,7 @@ class VACobranca extends VirtexAdmin {
 
 			
 			
-			}
+			} 
 	
 	
 		}// migrar
@@ -1704,9 +1717,390 @@ class VACobranca extends VirtexAdmin {
 						$this->arquivoTemplate = "cliente_contrato_modificacao.html";
 
 	
+	} else if ($op == "faturamento"){
+
+	
+		global $_LS_MESES_ANO;
+								
+		$hoje = date("Y-m-d");
+		list($ano, $mes, $dia) = explode("-", $hoje);
+		
+		//TODO: Inver ter alista de periodos
+		
+		//Cria um array referente aos ultimos 
+		$ls_ultimos_meses = array();
+		
+		for ($i=0; $i<12; $i++) {
+			list($ca, $cm) = explode("-", date("Y-m", mktime(0, 0, 0, $mes - $i, 1, $ano)));
+			
+			//$cperiodo = array( "ano" => $ca, "mes" => $cm);
+			$ls_ultimos_meses[] = array( "valor" => $ca."-". $cm, "texto" => $_LS_MESES_ANO[(int)$cm] . "/" . $ca ); 
+		}
+		
+		
+		$acao = @$_REQUEST["acao"];
+		$op = @$_REQUEST["op"];
+		$periodo = @$_REQUEST["periodo"];
+		$extra = @$_REQUEST["extra"];
+		
+		$mes_periodo=null;
+		$relat = null;
+		$fat = null;
+		
+		
+		if(!$periodo) $periodo = "total";
+		if(!$acao || $periodo == "total") $acao = "geral";
+		
+		
+		
+		if($acao == "geral") {
+			
+			$meses_periodo = 12;
+			
+			$data_fim = $hoje;
+			
+			list($da, $dm, $dd) = explode("-", $data_fim);
+			$data_ini = date("Y-m-d", mktime(0,0,0,$dm-$meses_periodo,1,$da));
+			
+			$sSQL  = "SELECT ";
+			$sSQL .= "	SUM(cb.valor_pago) as faturamento,  ";
+			$sSQL .= "	EXTRACT(month from cb.data_pagamento) as mes,  ";
+			$sSQL .= "	EXTRACT(year from cb.data_pagamento) as ano  ";
+			$sSQL .= "FROM  ";
+			$sSQL .= "	cbtb_faturas cb ";
+			$sSQL .= "WHERE  ";
+			$sSQL .= "	status = 'P'  ";
+			$sSQL .= "	AND data_pagamento BETWEEN  ";
+			$sSQL .= "		CAST( '$data_ini' as date) ";
+			$sSQL .= "		AND CAST( '$data_fim' as date ) ";
+			$sSQL .= "GROUP BY  ";
+			$sSQL .= "	ano, mes ";
+			$sSQL .= "ORDER BY  ";
+			$sSQL .= "	ano, mes ";
+
+			
+			$eSQL  = "SELECT ";
+			$eSQL .= "	SUM(cb.valor_pago) as faturamento,  ";
+			$eSQL .= "	SUM(cb.valor) as valor,  ";
+			$eSQL .= "	SUM(cb.desconto) as desconto,  ";
+			$eSQL .= "	SUM(cb.acrescimo) as acrescimo  ";
+			$eSQL .= "FROM  ";
+			$eSQL .= "	cbtb_faturas cb ";
+			$eSQL .= "WHERE  ";
+			$eSQL .= "	status = 'P'  ";
+			$eSQL .= "	AND data_pagamento BETWEEN  ";
+			$eSQL .= "		CAST( '$data_ini' as date) ";
+			$eSQL .= "		AND CAST( '$data_fim' as date ) ";
+
+			//echo "$eSQL";
+
+			$relat = $this->bd->obtemRegistros($sSQL);
+			$fat = $this->bd->obtemUnicoRegistro($eSQL);
+			
+			$tmp_relat = array();
+			
+			//echo "<br>\n";
+			
+			for ($i=0; $i<$meses_periodo; $i++) {
+			
+				list($da, $dm, $dd) = explode("-", $data_ini);
+												
+				$data_teste = date("Y-m-d", mktime(0, 0, 0, $dm+$i, 1, $da));
+				
+				list($da, $dm, $dd) = explode("-", $data_teste);
+				$indice = "$da$dm";
+				
+				$tmp_relat["$indice"] = array("faturamento" => 0, "mes" => "$dm", "ano" => "$da");
+				
+				//echo "$i - $data_teste = [$indice]<br>";
+						
+			}
+			
+			//echo "<br>";
+			
+			for ($i=0; $i<count($relat); $i++) {
+				
+				$indice  =  $relat[$i]["ano"];
+				$indice .= ($relat[$i]["mes"]<10) ? "0" : "";
+				$indice .=  $relat[$i]["mes"];
+				
+				$relat[$i]["mes"] = ($relat[$i]["mes"]<10?"0":"") . $relat[$i]["mes"] ;
+				
+				
+				//echo "[$indice]<br>";
+				
+				$tmp_relat["$indice"] = $relat[$i];
+								
+			}
+			
+			$relat = $tmp_relat;
+			
+						
+		} else if( $acao == "sub_mes" ) {
+		
+			$meses_periodo = 1;
+			
+			$data_ini = $periodo . "-01";
+			
+			list($da, $dm, $dd) = explode("-", $data_ini);
+			
+			$data_fim = date("Y-m-d", mktime(0,0,0,$dm+1, $dd-1, $da));			
+			
+			$mes_periodo = $this->obtem_mes($dm) . " de " . $da;
+						
+			$sSQL  = "SELECT ";
+			$sSQL .= "	SUM(cb.valor_pago) as faturamento, ";
+			$sSQL .= "	EXTRACT(day from cb.data_pagamento) as dia, ";
+			$sSQL .= "	EXTRACT(month from cb.data_pagamento) as mes, ";
+			$sSQL .= "	EXTRACT(year from cb.data_pagamento) as ano ";
+			$sSQL .= "FROM ";
+			$sSQL .= "	cbtb_faturas cb ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "	status = 'P' ";
+			$sSQL .= "	AND data_pagamento BETWEEN ";
+			$sSQL .= "	CAST( '$data_ini' as date ) ";
+			$sSQL .= "	AND CAST( '$data_fim' as date ) ";
+			$sSQL .= "GROUP BY ";
+	 		$sSQL .= "ano, mes, dia ";
+	 		
+	 		
+			$eSQL  = "SELECT ";
+			$eSQL .= "	SUM(cb.valor_pago) as faturamento,  ";
+			$eSQL .= "	SUM(cb.valor) as valor,  ";
+			$eSQL .= "	SUM(cb.desconto) as desconto,  ";
+			$eSQL .= "	SUM(cb.acrescimo) as acrescimo  ";
+			$eSQL .= "FROM  ";
+			$eSQL .= "	cbtb_faturas cb ";
+			$eSQL .= "WHERE  ";
+			$eSQL .= "	status = 'P'  ";
+			$eSQL .= "	AND data_pagamento BETWEEN  ";
+			$eSQL .= "		CAST( '$data_ini' as date) ";
+			$eSQL .= "		AND CAST( '$data_fim' as date ) ";
+		
+			
+			//echo $sSQL;
+			
+			//pega o ultimo dia do ano
+			
+			list($lixo, $lixo, $ultimo_dia_mes) = explode("-", $data_fim);
+			
+			$relat = $this->bd->obtemRegistros($sSQL);
+			$fat = $this->bd->obtemUnicoRegistro($eSQL);
+
+			$tmp_relat = array();
+
+			//echo "<br>\n";
+			
+
+			for ($i=0; $i<$ultimo_dia_mes; $i++) {
+
+				list($da, $dm, $dd) = explode("-", $data_ini);
+
+				$data_teste = date("Y-m-d", mktime(0, 0, 0, $dm, $dd+$i, $da));
+
+				list($da, $dm, $dd) = explode("-", $data_teste);
+				$indice = "$da$dm$dd";
+
+				$tmp_relat["$indice"] = array("faturamento" => 0, "dia" => "$dd", "mes" => "$dm", "ano" => "$da");
+
+				//echo "$i - $data_teste = [$indice]<br>";
+
+			}
+
+			//echo "<br>";
+
+			for ($i=0; $i<count($relat); $i++) {
+
+				$indice  =  $relat[$i]["ano"];
+				
+				$indmes  = ($relat[$i]["mes"]<10) ? "0" : "";
+				$indmes .=  $relat[$i]["mes"];
+				
+				$inddia  = ($relat[$i]["dia"]<10) ? "0" : "";
+				$inddia .=  $relat[$i]["dia"];
+				
+				$indice .= $indmes . $inddia;
+				
+				$relat[$i]["mes"] = $indmes;
+				$relat[$i]["dia"] = $inddia;
+
+				//$relat[$i]["mes"] = ($relat[$i]["mes"]<10?"0":"") . $relat[$i]["mes"] ;
+
+				//echo "[$indice]<br>";
+
+				$tmp_relat["$indice"] = $relat[$i];
+
+			}
+						
+			$relat = $tmp_relat;			
+			
+		} else if($acao == "sub_dia") {
+		
+			list($da, $dm, $dd) = explode("-", $periodo);
+			
+			$mes_periodo = $dd . " de " . $this->obtem_mes($dm) . " de " . $da;
+								
+			$sSQL  = "SELECT ";
+			$sSQL .= "   cp.id_cliente_produto, ";
+			$sSQL .= "   cl.nome_razao, ";
+			$sSQL .= "   cn.username, ";
+			$sSQL .= "   f.valor,  ";
+			$sSQL .= "   f.valor_pago,  ";
+			$sSQL .= "   f.acrescimo,  ";
+			$sSQL .= "   f.desconto,  ";
+			$sSQL .= "   p.nome  ";
+			$sSQL .= "FROM  ";
+			$sSQL .= "   cltb_cliente cl INNER JOIN cbtb_cliente_produto cp USING(id_cliente) ";
+			$sSQL .= "   LEFT OUTER JOIN cntb_conta cn ON (cn.id_cliente_produto = cp.id_cliente_produto AND conta_mestre is true),	 ";
+			$sSQL .= "   prtb_produto p,  ";
+			$sSQL .= "   cbtb_faturas f  ";
+			$sSQL .= "WHERE  ";
+			$sSQL .= "   f.id_cliente_produto = cp.id_cliente_produto ";
+			$sSQL .= "   AND p.id_produto = cp.id_produto ";
+			$sSQL .= "   AND (cn.username is null OR (cn.tipo_conta = p.tipo AND cn.conta_mestre is true)) ";
+			$sSQL .= "   AND f.status = 'P' ";
+			$sSQL .= "   AND f.data_pagamento = '$periodo' ";
+			
+			$eSQL  = "SELECT ";
+			$eSQL .= "	SUM(cb.valor_pago) as faturamento,  ";
+			$eSQL .= "	SUM(cb.valor) as valor,  ";
+			$eSQL .= "	SUM(cb.desconto) as desconto,  ";
+			$eSQL .= "	SUM(cb.acrescimo) as acrescimo  ";
+			$eSQL .= "FROM  ";
+			$eSQL .= "	cbtb_faturas cb ";
+			$eSQL .= "WHERE  ";
+			$eSQL .= "	status = 'P'  ";
+			$eSQL .= "	AND data_pagamento = '$periodo' ";
+			
+			$relat = $this->bd->obtemRegistros($sSQL);
+			$fat = $this->bd->obtemUnicoRegistro($eSQL);
+			
+			//echo($eSQL);
+		
+		}
+		
+		
+		if($acao == "geral") krsort($relat);
+		
+		$this->tpl->atribui("relat", $relat);
+		$this->tpl->atribui("mes_periodo", $mes_periodo);
+		$this->tpl->atribui("fat", $fat);
+		$this->tpl->atribui("periodo", $periodo);
+		$this->tpl->atribui("acao", $acao);
+		$this->tpl->atribui("op", $op);
+		
+		ksort($relat);
+				
+		$meses_ano = array();
+		while( list($m,$s) = each($_LS_MESES_ANO) ) {
+			//echo "idx: " . ($m<10?"0":"").$m;
+			$meses_ano[ ($m<10?"0":"") . $m ] = $s;
+		}
+		
+		$this->tpl->atribui("meses_ano", $meses_ano);
+		$this->tpl->atribui("ls_ultimos_meses", $ls_ultimos_meses);	
+		$this->arquivoTemplate = "relatorio_faturamento.html";
+
+			
+							
+		
+			
+		//Exibição do gráfico alucinaaaaaaaaaaaaaáááádooooo!!!!			
+		//Manda ver negão q eu sei q tu é bão 
+
+		if ($extra == "grafico") {
+
+			$dados = array();
+			$legendas = array();
+			
+			while( list($i,$v) = each($relat) ) {
+			
+			   $dados[] = $v["faturamento"];
+			   
+			   if($acao == "geral") {
+				   $mes_corrente = substr($this->obtem_mes($relat[$i]["mes"]),0,3);
+				   $leg = $mes_corrente . "/" . $relat[$i]["ano"];  
+				   $legendas[] = $leg;
+			   }
+			
+
+			
+			}
+			
+			
+
+
+			//$relat = $tmp_relat;
+
+			//$pontos = array();
+			//$legendas = array();
+
+
+			//for($i=0;$i<count($relat)-10;$i++) {
+			//   //$mes_corrente = $this->obtem_mes($relat[$i]["mes"]);
+			//   //$legendas[] =  $mes_corrente . "/" . $relat[$i]["ano"];
+			//   $pontos[] = $relat[$i]["faturamento"];			   
+			//}
+
+
+			// GERA O Gráfico
+
+			header("pragma: no-cache");
+			header("Content-type: Image/png");
+
+			//$pontos = array("9", "16", "20");
+			
+			if ($acao=="sub_mes") $larg_grafico = 550; else $larg_grafico = 450;
+			
+			$grafico = new Graph($larg_grafico,250,"png");
+
+
+			$grafico->SetScale("textlin"); 
+			//$grafico->SetShadow(); 
+			//$grafico->title->Set('Relatório de Adesões');
+			$grafico->img->SetMargin(40,40,40,80);
+
+			//Imagem de Fundo
+			$grafico->SetBackgroundImage("./template/default/images/gr_back1.jpg",BGIMG_FILLPLOT); //BGIMG_FILLFRAME);
+			$grafico->SetMarginColor("white");
+
+			//Cria uma nova mostragem gráfica
+			$gBarras = new BarPlot($dados); 
+
+			//$grafico->xaxis->SetMajTickPositions($positions,$titulos);
+
+			// ajuste de cores 
+			//$gBarras->SetFillColor("#ff0000");
+			$gBarras->SetFillGradient("#aa0000","red",GRAD_VER);;
+			$gBarras->SetColor("#aa0000");
+
+
+			//$gBarras->SetShadow("darkblue"); 
+			//$grafico->xaxis->labels = $legendas;
+			//$gBarras->label->Set($legendas);
+
+			// título das barras
+			$grafico->xaxis->SetTickLabels($legendas);
+			if ($acao == "geral")
+				$grafico->xaxis->SetLabelAngle(90);
+
+			// adicionar mostrage de barras ao gráfico 
+			$grafico->Add($gBarras); 
+
+			// imprimir gráfico 
+			$grafico->Stroke();
+
+			$this->arquivoTemplate = '';		
+			return;
+
+		}	
+		
+	
+	} 
 	
 	
-	} // op = contratos
+	
+	// op = contratos
 
 } // function processa
 	

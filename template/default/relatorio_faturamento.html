@@ -1,0 +1,380 @@
+<html>
+<head>
+<title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
+
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+</head>
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>{ include file='menu_principal.html' }</td>
+        </tr>
+        <tr>
+          <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio</h1>
+                <h2 align="center"><font size="2">
+                {if $acao=="geral"}Faturamento nos últimos 12 meses{/if}
+                {if $acao=="sub_mes"}Faturamento no período de {$mes_periodo}{/if}
+                {if $acao=="sub_dia"}Faturamento no dia {$mes_periodo}{/if}
+                </font></h2>
+
+
+
+                	<form action="{$smarty.server.PHP_SELF}" method="GET">
+                		<input type="HIDDEN" name="acao" value="sub_mes">
+                		<input type="HIDDEN" name="op" value="{$op}">
+
+                		<table width="200" border="0" cellspacing="0" cellpadding="0">
+
+						  <tr height="60">
+						  	<td align="center"><p><strong>Per&iacute;odo</strong></a></td>
+						  	<td>
+								<select name="periodo">
+									<option value="total" SELECTED></option>
+									{foreach item=a from=$ls_ultimos_meses}
+										<option value='{$a.valor}' {if $a.valor == $periodo}SELECTED{/if}>{$a.texto}</option>
+									{/foreach}
+								</select>
+							</td>
+
+						  	<td><p><input type="submit" value="OK"></p></td>
+						  </tr>
+						<table>
+                	</form>
+
+
+					<p>{if $relat && $acao!="sub_dia"}<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico">{/if}</p>
+
+
+					{if $acao == "geral"}
+
+					  <table width="450" border="0" cellspacing="0" cellpadding="0">
+						  <tr>
+							<td><table width="450" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+								  <td bgcolor="#F1F1F1"><table width="450" border="0" cellspacing="2" cellpadding="0">
+									  <tr>
+										<td width="225" align="LEFT"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Per&iacute;odo</font></td>
+										<td align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Faturamento</font></td>
+									  </tr>
+									</table></td>
+								</tr>
+								<tr>
+								  <td>
+
+								{foreach item=a from=$relat}
+								  <table width="450" border="0" cellspacing="2" cellpadding="0">
+									  <tr>
+										<td width="225" align="LEFT"><p><a href="cobranca.php?op={$op}&acao=sub_mes&periodo={$a.ano}-{$a.mes}">{$meses_ano[$a.mes]}/{$a.ano}</a></p></td>
+										<td align="RIGHT"><p><a href="cobranca.php?op={$op}&acao=sub_mes&periodo={$a.ano}-{$a.mes}">{$a.faturamento}</a></p></td>
+
+									  </tr>
+									  <tr bgcolor="#999999">
+										<td colspan="5" height="1"></td>
+									  </tr>
+									</table>
+								 {/foreach}
+
+								  </td>
+								 </tr>
+
+								<tr height="20"><td></td></tr>
+
+								  <tr>
+								 <td>
+								    <table width="450" border="0" cellspacing="0" cellpadding="2">
+									  <tr bgcolor="#F1F1F1">
+										<td align="LEFT"><p>Totalização</p></td>
+										<td align="RIGHT"><p>Valores</p></td>
+									  </tr>
+
+									  <tr>
+										<td align="LEFT"><p>Valor Estimado</p></td>
+										<td align="RIGHT"><p>{if !$fat.valor}0{else}{$fat.valor}{/if}</p></td>
+									  </tr>
+
+									  <tr bgcolor="#999999">
+									  	<td colspan="5" height="1"></td>
+									  </tr>
+
+									  <tr>
+										<td align="LEFT"><p>Acrescimos</p></td>
+										<td align="RIGHT"><p>{if !$fat.acrescimo}0{else}{$fat.acrescimo}{/if}</p></td>
+									  </tr>
+
+									  <tr bgcolor="#999999">
+									  	<td colspan="5" height="1"></td>
+									  </tr>
+
+									  <tr>
+										<td align="LEFT"><p>Descontos</p></td>
+										<td align="RIGHT"><p>{if !$fat.desconto}0{else}{$fat.desconto}{/if}</p></td>
+									  </tr>
+
+									  <tr bgcolor="#999999">
+									  	<td colspan="5" height="1"></td>
+									  </tr>
+
+									  <tr>
+										<td align="LEFT"><p>Valor Estimado</p></td>
+										<td align="RIGHT"><p>{if !$fat.faturamento}0{else}{$fat.faturamento}{/if}</p></td>
+									  </tr>
+
+									  <tr bgcolor="#999999">
+										<td colspan="5" height="1"></td>
+									  </tr>
+								   </table>
+
+
+								  </td>
+								</tr>
+							  </table></td>
+						  </tr>
+                  	  </table>
+
+					{/if}
+
+
+
+					{if $acao == "sub_mes"}
+					  <table width="550" border="0" cellspacing="0" cellpadding="0">
+						  <tr>
+							<td><table width="550" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+								  <td bgcolor="#F1F1F1"><table width="550" border="0" cellspacing="2" cellpadding="0">
+									  <tr>
+									  	<td width="80" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Data</font></td>
+										<td align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Período</font></td>
+									  </tr>
+									</table></td>
+								</tr>
+								<tr>
+								  <td>
+
+								{foreach item=a from=$relat}
+								  <table width="550" border="0" cellspacing="2" cellpadding="0">
+									  <tr>
+										<td width="80" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p><a href="cobranca.php?op={$op}&acao=sub_dia&periodo={$a.ano}-{$a.mes}-{$a.dia}">{$a.dia}-{$a.mes}-{$a.ano}</a></p></font></td>
+										<td align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><a href="cobranca.php?op={$op}&acao=sub_dia&periodo={$a.ano}-{$a.mes}-{$a.dia}">{$a.faturamento}</a></font></td>
+
+									  </tr>
+									  <tr bgcolor="#999999">
+									  	<td colspan="5" height="1"></td>
+									  </tr>
+								  </table>
+								 {/foreach}
+
+								  </td>
+								</tr>
+
+								<tr height="20"><td></td></tr>
+
+								<tr>
+								  <td>
+
+
+								    <table width="550" border="0" cellspacing="0" cellpadding="2">
+									  <tr bgcolor="#F1F1F1">
+										<td align="LEFT"><p>Totalização</p></td>
+										<td align="RIGHT"><p>Valores</p></td>
+									  </tr>
+
+									  <tr>
+										<td align="LEFT"><p>Valor Estimado</p></td>
+										<td align="RIGHT"><p>{if !$fat.valor}0{else}{$fat.valor}{/if}</p></td>
+									  </tr>
+
+									  <tr bgcolor="#999999">
+									  	<td colspan="5" height="1"></td>
+									  </tr>
+
+									  <tr>
+										<td align="LEFT"><p>Acrescimos</p></td>
+										<td align="RIGHT"><p>{if !$fat.acrescimo}0{else}{$fat.acrescimo}{/if}</p></td>
+									  </tr>
+
+									  <tr bgcolor="#999999">
+									  	<td colspan="5" height="1"></td>
+									  </tr>
+
+									  <tr>
+										<td align="LEFT"><p>Descontos</p></td>
+										<td align="RIGHT"><p>{if !$fat.desconto}0{else}{$fat.desconto}{/if}</p></td>
+									  </tr>
+
+									  <tr bgcolor="#999999">
+									  	<td colspan="5" height="1"></td>
+									  </tr>
+
+									  <tr>
+										<td align="LEFT"><p>Valor Estimado</p></td>
+										<td align="RIGHT"><p>{if !$fat.faturamento}0{else}{$fat.faturamento}{/if}</p></td>
+									  </tr>
+
+									  <tr bgcolor="#999999">
+										<td colspan="5" height="1"></td>
+									  </tr>
+								   </table>
+
+								  </td>
+								</tr>
+							  </table></td>
+						  </tr>
+                  	  </table>
+                  	  <p><a href="#" onClick="javascript:history.back()">Voltar</a></p>
+					{/if}
+
+
+					{if $acao == "sub_dia"}
+					  <table width="700" border="0" cellspacing="0" cellpadding="0">
+						  <tr>
+							<td><table width="700" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+								  <td bgcolor="#F1F1F1"><table width="700" border="0" cellspacing="2" cellpadding="0">
+									  <tr>
+										<td  align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Cliente</font></td>
+										<td width="100" align="LEFt"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Produto</font></td>
+										<td width="80" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Username</font></td>
+										<td width="80" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Valor</font></td>
+										<td width="80" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Acrescimo</font></td>
+										<td width="80" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Desconto</font></td>
+										<td width="80" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Valor Pago</font></td>
+									  </tr>
+									</table></td>
+								</tr>
+								<tr>
+								  <td>
+
+								{foreach item=a from=$relat}
+								  <table width="700" border="0" cellspacing="2" cellpadding="0">
+									  <tr>
+										<td  align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">{$a.nome_razao}</font></td>
+										<td width="100" align="LEFt"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">{$a.nome}</font></td>
+										<td width="80" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">{$a.username}</font></td>
+										<td width="80" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">{$a.valor}</font></td>
+										<td width="80" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">{$a.acrescimo}</font></td>
+										<td width="80" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">{$a.desconto}</font></td>
+										<td width="80" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">{$a.valor_pago}</font></td>
+									  </tr>
+									  <tr bgcolor="#999999">
+										<td colspan="7" height="1"></td>
+									  </tr>
+								  </table>
+								 {/foreach}
+
+								  </td>
+								</tr>
+
+								<tr height="20"><td></td></tr>
+
+								<tr>
+								  <td>
+
+								<!--
+								  <table width="700" border="0" cellspacing="0" cellpadding="2">
+									  <tr bgcolor="#F1F1F1">
+										<td colspan="5" align="LEFT"><p>Totalização</p></td>
+									  </tr>
+
+									  <tr>
+										<td align="CENTER"><p>Valor Estimado</p></td>
+										<td align="CENTER"><p>Acrescimos</p></td>
+										<td align="CENTER"><p>Descontos</p></td>
+										<td align="CENTER"><p>Valor Recebido</p></td>
+									  </tr>
+
+									  <tr>
+									  	<td align="CENTER"><p>{if !$fat.faturamento}0{else}{$fat.valor}{/if}</p></td>
+									  	<td align="CENTER"><p>{if !$fat.faturamento}0{else}{$fat.acrescimo}{/if}</p></td>
+									  	<td align="CENTER"><p>{if !$fat.faturamento}0{else}{$fat.desconto}{/if}</p></td>
+									  	<td align="CENTER"><p>{if !$fat.faturamento}0{else}{$fat.faturamento}{/if}</p></td>
+									  </tr>
+									  <tr bgcolor="#999999">
+										<td colspan="5" height="1"></td>
+									  </tr>
+								   </table> -->
+
+
+								    <table width="700" border="0" cellspacing="0" cellpadding="2">
+									  <tr bgcolor="#F1F1F1">
+										<td align="LEFT"><p>Totalização</p></td>
+										<td align="RIGHT"><p>Valores</p></td>
+									  </tr>
+
+									  <tr>
+										<td align="LEFT"><p>Valor Estimado</p></td>
+										<td align="RIGHT"><p>{if !$fat.valor}0{else}{$fat.valor}{/if}</p></td>
+									  </tr>
+
+									  <tr bgcolor="#999999">
+									  	<td colspan="5" height="1"></td>
+									  </tr>
+
+									  <tr>
+										<td align="LEFT"><p>Acrescimos</p></td>
+										<td align="RIGHT"><p>{if !$fat.acrescimo}0{else}{$fat.acrescimo}{/if}</p></td>
+									  </tr>
+
+									  <tr bgcolor="#999999">
+									  	<td colspan="5" height="1"></td>
+									  </tr>
+
+									  <tr>
+										<td align="LEFT"><p>Descontos</p></td>
+										<td align="RIGHT"><p>{if !$fat.desconto}0{else}{$fat.desconto}{/if}</p></td>
+									  </tr>
+
+									  <tr bgcolor="#999999">
+									  	<td colspan="5" height="1"></td>
+									  </tr>
+
+									  <tr>
+										<td align="LEFT"><p>Valor Estimado</p></td>
+										<td align="RIGHT"><p>{if !$fat.faturamento}0{else}{$fat.faturamento}{/if}</p></td>
+									  </tr>
+
+									  <tr bgcolor="#999999">
+										<td colspan="5" height="1"></td>
+									  </tr>
+								   </table>
+
+
+								  </td>
+								</tr>
+
+
+							  </table></td>
+						  </tr>
+					  </table>
+					  <p><a href="#" onClick="javascript:history.back()">Voltar</a></p>
+					{/if}
+
+
+                  <p align="center">&nbsp;</p>
+                  <P align="center">&nbsp;</P>
+				</td>
+              </tr>
+            </table></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr>
+    <td height="20" align="center" bgcolor="#BCD3C4"><table width="400" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy;
+              Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+</body>
+
+
+</html>
