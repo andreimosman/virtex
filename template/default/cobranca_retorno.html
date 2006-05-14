@@ -25,20 +25,24 @@
                     <tr>
                       <td><table width="400" border="0" cellspacing="1" cellpadding="0" height="150">
                           <tr>
-                            <td bgcolor="#EEEEEE"><form name="form1" method="post" action="" enctype="multipart/form-data"> 
+                            <td bgcolor="#EEEEEE"><form enctype="multipart/form-data" name="form1" method="post" action="{$smarty.server.PHP_SELF}">
+                            {if $erro}<center><font face="arial" color="red" size="-1"><b>Erro: {$erro}</b></font></center><br>{/if}
+                            <input type="hidden" name="MAX_FILE_SIZE" value="30000">
+                            <input type="hidden" name="op" value="{$op}" />
+                            <input type="hidden" name="sop" value="{$sop}" />
                               <table align="CENTER" width="250" border="0" cellspacing="1" cellpadding="0">
-                                <tr> 
+                                <tr>
                                   <td width="317"><p>Arquivo</p></td>
                                 </tr>
-                                <tr> 
-                                  <td><p> 
-                                      <input name="retorno" type="file" size="40" id="retorno">
+                                <tr>
+                                  <td><p>
+                                      <input name="arquivo" type="file" size="40" id="arquivo">
                                     </p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td><p>Formato</p></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td><select name="formato">
 								  {foreach key=id item=nome from=$ls_formatos}
 								      <option value="{$id}" >{$nome}</option>
@@ -48,8 +52,8 @@
                                 <tr>
                                   <td>&nbsp;</td>
                                 </tr>
-                                <tr> 
-                                  <td><input type="submit" name="Submit" value="Enviar Retorno"></td>
+                                <tr>
+                                  <td><input type="submit" name="submit" value="Enviar Retorno"></td>
                                 </tr>
                               </table>
                               </form></td>
