@@ -1,0 +1,121 @@
+<html>
+<head>
+<title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
+
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+</head>
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>{ include file='menu_principal.html' }</td>
+        </tr>
+        <tr>
+          <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td align="center" valign="middle">
+				<P align="center">&nbsp; </P>
+                  <h1>Retorno: {$arquivo} </h1>
+                      <form enctype="multipart/form-data" name="form1" method="post" action="{$smarty.server.PHP_SELF}">
+					  {if $erro}<center><font face="arial" color="red" size="-1"><b>Erro: {$erro}</b></font></center><br>{/if}
+					  <input type="hidden" name="op" value="{$op}" />
+					  <input type="hidden" name="sop" value="{$sop}" />
+
+                  <table width="450" border="0" cellspacing="0" cellpadding="0" bgcolor="#666666">
+                    <tr>
+                      <td>
+
+                      <table width="450" border="0" cellspacing="1" cellpadding="0" _height="150">
+                          <tr>
+                            <td bgcolor="#EEEEEE">
+                              <table align="CENTER" width="450" border="0" cellspacing="1" cellpadding="0">
+                                <tr>
+                                   <td align="right" width=20>
+                                      <p><b> &nbsp;</b></p>
+                                   </td>
+                                   <td align="right" width=40>
+                                      <p><b># &nbsp;</b></p>
+                                   </td>
+                                   <td align="center" width=130>
+                                      <p><b>Data Pagamento</b></p>
+                                   </td>
+                                   <td align="center" width=130>
+                                      <p><b>Data Crédito</b></p>
+                                   </td>
+                                   <td align="right" width=130>
+                                      <p><b>Valor Recebido &nbsp;</b></p>
+                                   </td>
+                                 </tr>
+                              {foreach item=r from=$registros}
+                                <tr>
+                                   <td bgcolor="#ffffff" align="right">
+                                      <p><input type="checkbox" name="nsr[]" value="{$r.nsr}" checked style="border: 0px"></p>
+                                   </td>
+                                   <td bgcolor="#ffffff" align="right">
+                                      <p>{$r.nsr} &nbsp;</p>
+                                   </td>
+                                   <td bgcolor="#ffffff" align="center">
+                                      <p>{$r.data_pagamento}</p>
+                                   </td>
+                                   <td bgcolor="#ffffff" align="center">
+                                      <p>{$r.data_credito}</p>
+                                   </td>
+                                   <td bgcolor="#ffffff" align="right">
+                                      <p>{$r.valor_recebido} &nbsp;</p>
+                                   </td>
+                                </tr>
+                              {/foreach}
+                                <!--tr>
+                                  <td width="317"><p>Arquivo</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p>
+                                      <input name="arquivo" type="file" size="40" id="arquivo">
+                                    </p></td>
+                                </tr>
+                                <tr>
+                                  <td><p>Formato</p></td>
+                                </tr>
+                                <tr>
+                                  <td><select name="formato">
+								  {foreach key=id item=nome from=$ls_formatos}
+								      <option value="{$id}" >{$nome}</option>
+								  {/foreach}
+                                    </select></td>
+                                </tr>
+                                <tr>
+                                  <td>&nbsp;</td>
+                                </tr-->
+                                <tr>
+                                  <td align="center" colspan=5><input type="submit" name="submit" value="Processar"></td>
+                                </tr>
+                              </table>
+                              </td>
+                          </tr>
+                        </table></td>
+                    </tr>
+                  </table></form><br><br>
+                  </td>
+              </tr>
+            </table></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr>
+    <td height="20" align="center" bgcolor="#BCD3C4"><table width="400" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy;
+              Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+</body>
+
+
+</html>
