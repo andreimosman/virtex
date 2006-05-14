@@ -11,6 +11,7 @@ td img {
 	margin:0px;
 	width:621px;
 	height:26px;
+	vertical-align: bottom;
 	text-align:left;
 }
 
@@ -20,6 +21,7 @@ td img {
 	left:63px;
 	top:20px;
 	visibility:hidden;
+	vertical-align: bottom;
 	z-index:300;
 }
 
@@ -29,6 +31,7 @@ td img {
 	left:0px;
 	top:0px;
 	visibility:hidden;
+	vertical-align: bottom;
 	background-color:transparent;
 	width:159px;
 	height:80px;
@@ -40,6 +43,7 @@ td img {
 	border-left:0px solid #ffffff;
 	border-bottom:0px solid #555555;
 	border-right:0px solid #555555;
+	vertical-align: bottom;
 	width:159px;
 	height:20px;
 	voice-family: "\"}\"";
@@ -54,6 +58,7 @@ td img {
 	border-left:0px solid #ffffff;
 	border-bottom:0px solid #555555;
 	border-right:0px solid #555555;
+	vertical-align: bottom;
 	width:159px;
 	height:20px;
 	voice-family: "\"}\"";
@@ -66,24 +71,36 @@ td img {
 /* Unique ID for item 0 of menu MMMenu0205174323_0 so we can set its position */
 	left:0px;
 	top:0px;
+	_left:-2;
+	_top:0;
+	vertical-align: bottom;
 }
 
 #MMMenu0205174323_0_Item_1 {
 /* Unique ID for item 1 of menu MMMenu0205174323_0 so we can set its position */
 	left:0px;
 	top:20px;
+	_left:-2;
+	_top:18;
+	vertical-align: bottom;
 }
 
 #MMMenu0205174323_0_Item_2 {
 /* Unique ID for item 2 of menu MMMenu0205174323_0 so we can set its position */
 	left:0px;
 	top:40px;
+	_left:-2;
+	_top:36;
+	vertical-align: bottom;
 }
 
 #MMMenu0205174323_0_Item_3 {
 /* Unique ID for item 3 of menu MMMenu0205174323_0 so we can set its position */
 	left:0px;
 	top:60px;
+	_left:-2;
+	_top:54;
+	vertical-align: bottom;
 }
 
 #MMMenu0205174323_0_1 {
@@ -95,6 +112,7 @@ td img {
 	background-color:transparent;
 	width:159px;
 	height:100px;
+	vertical-align: bottom;
 }
 
 .MMMIFVStyleMMMenu0205174323_0_1 {
@@ -107,6 +125,7 @@ td img {
 	height:20px;
 	voice-family: "\"}\"";
 	voice-family:inherit;
+	vertical-align: bottom;
 	width:153px;
 	height:14px;
 }
@@ -121,6 +140,7 @@ td img {
 	height:20px;
 	voice-family: "\"}\"";
 	voice-family:inherit;
+	vertical-align: bottom;
 	width:153px;
 	height:14px;
 }
@@ -129,36 +149,52 @@ td img {
 /* Unique ID for item 0 of menu MMMenu0205174323_0_1 so we can set its position */
 	left:0px;
 	top:0px;
+	_left:-2;
+	_top:0;
+	vertical-align: bottom;
 }
 
 #MMMenu0205174323_0_1_Item_1 {
 /* Unique ID for item 1 of menu MMMenu0205174323_0_1 so we can set its position */
 	left:0px;
 	top:20px;
+	_left:-2;
+	_top:18;
+	vertical-align: bottom;
 }
 
 #MMMenu0205174323_0_1_Item_2 {
 /* Unique ID for item 2 of menu MMMenu0205174323_0_1 so we can set its position */
 	left:0px;
 	top:40px;
+	_left:-2;
+	_top:36;
+	vertical-align: bottom;
 }
 
 #MMMenu0205174323_0_1_Item_3 {
 /* Unique ID for item 3 of menu MMMenu0205174323_0_1 so we can set its position */
 	left:0px;
 	top:60px;
+	_left:-2;
+	_top:54;
+	vertical-align: bottom;
 }
 
 #MMMenu0205174323_0_1_Item_4 {
 /* Unique ID for item 4 of menu MMMenu0205174323_0_1 so we can set its position */
 	left:0px;
 	top:80px;
+	_left:-2;
+	_top:72;
+	vertical-align: bottom;
 }
 
 .MMMenuItemSpanMMMenu0205174323_0 {
 /* The span class definition so we can make sure that arrows and menu text in menu MMMenu0205174323_0 look correct */
 	float:left;
 	width:144px;
+	vertical-align: bottom;
 }
 
 .MMArrowStyleMMMenu0205174323_0 {
@@ -166,11 +202,13 @@ td img {
 	position:absolute;
 	left:145px;
 	top:6px;
+	vertical-align: bottom;
 }
 
 #MMMenuContainer0205174323_0 img {
 /* needed for Mozilla/Camino/Netscape */
 	border:0px;
+	vertical-align: bottom;
 }
 
 #MMMenuContainer0205174323_0 a {
@@ -187,12 +225,14 @@ td img {
 	font-style:normal;
 	display:block;
 	position:absolute;
+	vertical-align: bottom;
 }
 
 #MMMenuContainer0205174323_0 a:hover {
 /* Controls the mouse over effects for menu MMMenuContainer0205174323_0 */
 	color:#ffffff;
 	background-color:#557d63;
+	vertical-align: bottom;
 }
 #MMMenuContainer0205175354_1 {
 /* This ID is related to the master menu div for menu MMMenuContainer0205175354_1 and contains the important positioning information for the menu as a whole */
@@ -200,6 +240,7 @@ td img {
 	left:124px;
 	top:20px;
 	visibility:hidden;
+	vertical-align: bottom;
 	z-index:300;
 }
 
@@ -209,6 +250,7 @@ td img {
 	left:0px;
 	top:0px;
 	visibility:hidden;
+	vertical-align: bottom;
 	background-color:transparent;
 	width:154px;
 	height:100px;
@@ -220,6 +262,7 @@ td img {
 	border-left:0px solid #ffffff;
 	border-bottom:0px solid #555555;
 	border-right:0px solid #555555;
+	vertical-align: bottom;
 	width:154px;
 	height:20px;
 	voice-family: "\"}\"";
@@ -234,6 +277,7 @@ td img {
 	border-left:0px solid #ffffff;
 	border-bottom:0px solid #555555;
 	border-right:0px solid #555555;
+	vertical-align: bottom;
 	width:154px;
 	height:20px;
 	voice-family: "\"}\"";
@@ -246,30 +290,45 @@ td img {
 /* Unique ID for item 0 of menu MMMenu0205175354_1 so we can set its position */
 	left:0px;
 	top:0px;
+	_left:-2;
+	_top:0;
+	vertical-align: bottom;
 }
 
 #MMMenu0205175354_1_Item_1 {
 /* Unique ID for item 1 of menu MMMenu0205175354_1 so we can set its position */
 	left:0px;
 	top:20px;
+	_left:-2;
+	_top:18;
+	vertical-align: bottom;
 }
 
 #MMMenu0205175354_1_Item_2 {
 /* Unique ID for item 2 of menu MMMenu0205175354_1 so we can set its position */
 	left:0px;
 	top:40px;
+	_left:-2;
+	_top:36;
+	vertical-align: bottom;
 }
 
 #MMMenu0205175354_1_Item_3 {
 /* Unique ID for item 3 of menu MMMenu0205175354_1 so we can set its position */
 	left:0px;
 	top:60px;
+	_left:-2;
+	_top:54;
+	vertical-align: bottom;
 }
 
 #MMMenu0205175354_1_Item_4 {
 /* Unique ID for item 4 of menu MMMenu0205175354_1 so we can set its position */
 	left:0px;
 	top:80px;
+	_left:-2;
+	_top:72;
+	vertical-align: bottom;
 }
 
 #MMMenu0205175354_1_1 {
@@ -281,6 +340,7 @@ td img {
 	background-color:transparent;
 	width:154px;
 	height:140px;
+	vertical-align: bottom;
 }
 
 .MMMIFVStyleMMMenu0205175354_1_1 {
@@ -289,6 +349,7 @@ td img {
 	border-left:0px solid #ffffff;
 	border-bottom:0px solid #555555;
 	border-right:0px solid #555555;
+	vertical-align: bottom;
 	width:154px;
 	height:20px;
 	voice-family: "\"}\"";
@@ -315,42 +376,56 @@ td img {
 /* Unique ID for item 0 of menu MMMenu0205175354_1_1 so we can set its position */
 	left:0px;
 	top:0px;
+	_left:-2;
+	_top:0;
 }
 
 #MMMenu0205175354_1_1_Item_1 {
 /* Unique ID for item 1 of menu MMMenu0205175354_1_1 so we can set its position */
 	left:0px;
 	top:20px;
+	_left:-2;
+	_top:18;
 }
 
 #MMMenu0205175354_1_1_Item_2 {
 /* Unique ID for item 2 of menu MMMenu0205175354_1_1 so we can set its position */
 	left:0px;
 	top:40px;
+	_left:-2;
+	_top:36;
 }
 
 #MMMenu0205175354_1_1_Item_3 {
 /* Unique ID for item 3 of menu MMMenu0205175354_1_1 so we can set its position */
 	left:0px;
 	top:60px;
+	_left:-2;
+	_top:54;
 }
 
 #MMMenu0205175354_1_1_Item_4 {
 /* Unique ID for item 4 of menu MMMenu0205175354_1_1 so we can set its position */
 	left:0px;
 	top:80px;
+	_left:-2;
+	_top:72;
 }
 
 #MMMenu0205175354_1_1_Item_5 {
 /* Unique ID for item 5 of menu MMMenu0205175354_1_1 so we can set its position */
 	left:0px;
 	top:100px;
+	_left:-2;
+	_top:90;
 }
 
 #MMMenu0205175354_1_1_Item_6 {
 /* Unique ID for item 6 of menu MMMenu0205175354_1_1 so we can set its position */
 	left:0px;
 	top:120px;
+	_left:-2;
+	_top:108;
 }
 
 .MMMenuItemSpanMMMenu0205175354_1 {
@@ -911,18 +986,21 @@ td img {
 /* Unique ID for item 0 of menu MMMenu0205175615_4 so we can set its position */
 	left:0px;
 	top:0px;
+	
 }
 
 #MMMenu0205175615_4_Item_1 {
 /* Unique ID for item 1 of menu MMMenu0205175615_4 so we can set its position */
 	left:0px;
 	top:20px;
+	_top:18px;
 }
 
 #MMMenu0205175615_4_Item_2 {
 /* Unique ID for item 2 of menu MMMenu0205175615_4 so we can set its position */
 	left:0px;
 	top:40px;
+	_top:36px;
 }
 
 #MMMenuContainer0205175615_4 img {

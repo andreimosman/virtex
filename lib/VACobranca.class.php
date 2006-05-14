@@ -1643,7 +1643,7 @@ class VACobranca extends VirtexAdmin {
 							// - $id_cliente_produto : é o id_cliente_produto do contrato/conta cadastrado anteriormente.
 							// - $id_cliente_produto_novo : é a variavel que puxa o nextval para o novo id_cliente_produto.
 							// - $id_cliente_produto_new : é o resultado de currval do id_cliente_produto NOVO
-							// - $icnp : currval
+							// - $icpn : currval
 							
 							
 							
@@ -1687,6 +1687,18 @@ class VACobranca extends VirtexAdmin {
 								
 							
 							/* FINAL DO ESTORNO DE FATURAS */
+							
+							/* ESTORNO DO CARNE */
+							
+							$sSQL = "SELECT id_carne FROM cbtb_faturas WHERE id_cliente_produto = '$id_cliente_produto' AND status = 'E' ";
+							$carne = $this->bd->obtemUnicoRegistro($sSQL);
+							
+							$id_carne = $carne["id_carne"];
+							
+							
+							$sSQL = "UPDATE cbtb_carne SET status = 'E' WHERE id_carne ='$id_carne' ";
+							
+							/* FINAL DO ESTORNO DO CARNE */
 							
 							require_once("hugo_faturas.php");
 						

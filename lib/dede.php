@@ -181,7 +181,18 @@
 
 
 					/*<<=====INICIO DA PARTE DE CADASTRO DE FATURAS=====>>*/
+					$_id_carne = $this->bd->proximoID('cbsq_id_carne');
+					$q = 0;
 
+					$sSQL  = "INSERT INTO cbtb_carne ";
+					$sSQL .= "(id_carne, data_geracao,id_cliente_produto,valor,status,vigencia) ";
+					$sSQL .= "VALUES ";
+					$sSQL .= "('$_id_carne','$data_contratacao','$id_cliente_produto','$valor_contrato','A','$vigencia') ";
+
+					$this->bd->consulta($sSQL);
+					//echo "CARNE: $sSQL <br>";
+
+					$id_carne = $_id_carne;
 										
 					//Cadastro de faturas do contrato.
 					
@@ -254,7 +265,15 @@
 					
 					$arqtmp = tempnam("/tmp","cn-");
 					$fd = fopen($arqtmp,"w");
-
+					
+					$estilo  = "<style>@media print {";
+					$estilo .= "hr {";
+					$estilo .= "page-break-after: always;";
+					$estilo .= "height: 0px;";
+					$estilo .= "color: #FFFFFF;}}</style>";
+					$estilo .= "body{ font:helvetica; size:11px; }";
+		
+					fputs($fd,$estilo);
 					
 					switch($forma_pagamento) {
 						case 'POS':
@@ -296,16 +315,17 @@
 										//Calcula a data dos próximos pagamentos de fatura.
 										
 										//echo "VALOR_FATURA: $fatura_valor <br>";
-																					
-									
+
+
+										
 										$sSQL =  "INSERT INTO cbtb_faturas(";
 										$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
 										$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
-										$sSQL .= "	acrescimo, valor_pago ";
+										$sSQL .= "	acrescimo, valor_pago, id_carne ";
 										$sSQL .= ") VALUES (";
 										$sSQL .= "	$id_cliente_produto, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
 										$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
-										$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
+										$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago, $id_carne ";
 										$sSQL .= ")";
 																					
 										//echo "Fatura:  $sSQL<br>\n";
@@ -326,6 +346,7 @@
 											$fatura_desconto = 0;
 										
 										}
+
 										//Adiciona taxa de instalação na fatura, caso haja.
 										if ($i==0) { //Cria primeira fatura pós-paga
 
@@ -371,10 +392,16 @@
 													
 											}*/
 											
-											$this->carne($id_cliente_produto,$data,$id_cliente);
-																				
-											fputs($fd,$fatura);
+											$this->carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento);
 											
+											
+											
+											
+											fputs($fd,$fatura);
+											if( ($i+1) % 3 == 0 ) {
+												$new_page = "<hr>";
+												fputs($fd,$new_page);
+											}
 
 
 										}else{
@@ -394,23 +421,34 @@
 										//echo "VALOR FATURA: $fatura_valor <br>";
 										//echo "DT VENC: $fatura_dt_vencimento <br>";
 										
+										
 										$sSQL =  "INSERT INTO cbtb_faturas(";
 										$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
 										$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
-										$sSQL .= "	acrescimo, valor_pago ";
+										$sSQL .= "	acrescimo, valor_pago, id_carne ";
 										$sSQL .= ") VALUES (";
 										$sSQL .= "	$id_cliente_produto, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
 										$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
-										$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
+										$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago, $id_carne ";
 										$sSQL .= ")";
 
-										//echo "$sSQL<br>";
+										//echo "FATURA: $sSQL<br>";
 										$this->bd->consulta($sSQL);
 
-										$this->carne($id_cliente_produto,$data,$id_cliente);
+										
+										$this->carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento);
+										/*if($i == 0){
+											$head = "<html><head></head><body>";
+											fputs($fd,$new_page);
+										}*/
+										if( $i>0 && $i % 3 == 0 ) {
+											$new_page = "<hr>";
+											fputs($fd,$new_page);
+										}
+										
+										
 										fputs($fd,$fatura);
 
-										
 										/*
 										list($dt_final_a, $dt_final_m, $dt_final_d) = explode("-", $fatura_dt_vencimento);
 										
@@ -440,20 +478,19 @@
 										
 										//Calcula a data dos próximos pagamentos de fatura.
 										
-										
 										$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $cm, $cd, $ca));
 										
 										$sSQL =  "INSERT INTO cbtb_faturas(";
 										$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
 										$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
-										$sSQL .= "	acrescimo, valor_pago ";
+										$sSQL .= "	acrescimo, valor_pago, id_carne ";
 										$sSQL .= ") VALUES (";
 										$sSQL .= "	$id_cliente_produto, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
 										$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
-										$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
+										$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago, $id_carne ";
 										$sSQL .= ")";
 
-										//echo "$sSQL<br>";
+										//echo "FATURA: $sSQL<br>";
 										$this->bd->consulta($sSQL);
 									}								
 									
@@ -485,7 +522,9 @@
 									$stamp_final = mktime(0,0,0, $dat_m, $dat_d, $dat_a);
 																		
 									$diferenca_meses = (($stamp_final - $stamp_inicial) / 86400) / 30;
-																		
+									
+									$estilo = $this->tpl->obtemPagina("../boletos/pc-estilo.html");
+									fputs($fd,$estilo,strlen($estilo));
 																		
 									for($i=0; $i<=floor($diferenca_meses); $i++) {									
 
@@ -532,26 +571,36 @@
 
 										//Calcula o desconto sobre a fatura.
 										$fatura_valor -= $fatura_desconto;
-
+										
 
 										$sSQL =  "INSERT INTO cbtb_faturas(";
 										$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
 										$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
-										$sSQL .= "	acrescimo, valor_pago ";
+										$sSQL .= "	acrescimo, valor_pago, id_carne ";
 										$sSQL .= ") VALUES (";
 										$sSQL .= "	$id_cliente_produto, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
 										$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
-										$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
+										$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago, $id_carne ";
 										$sSQL .= ")";
 
-										//echo "$sSQL<br>";
+										//echo "FATURA: $sSQL<br>";
 										$this->bd->consulta($sSQL);
 										
 										$data = $fatura_dt_vencimento;
 										
-										$fatura = $this->carne($id_cliente_produto,$data,$id_cliente);
+										$fatura = $this->carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento);
+										/*if($i == 0){
+											$head = "<html><head></head><body>";
+											fputs($fd,$head);
+										}*/
+										
+										if( $i>0 && $i % 3 == 0 ) {
+											$new_page = "<hr>";
+											fputs($fd,$new_page);
+										}
+										
+										
 										fputs($fd,$fatura);
-
 										
 									}
 								} else {
@@ -582,18 +631,17 @@
 									//Calcula o desconto sobre a fatura.
 									$fatura_valor -= $fatura_desconto;
 
-
 									$sSQL =  "INSERT INTO cbtb_faturas(";
 									$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
 									$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
-									$sSQL .= "	acrescimo, valor_pago ";
+									$sSQL .= "	acrescimo, valor_pago, id_carne ";
 									$sSQL .= ") VALUES (";
 									$sSQL .= "	$id_cliente_produto, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
 									$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
-									$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
+									$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago, $id_carne ";
 									$sSQL .= ")";
 
-									//echo "$sSQL<br>";
+									//echo "FATURA: $sSQL<br>";
 									$this->bd->consulta($sSQL);
 								}
 							break;						
@@ -602,13 +650,14 @@
 								$hoje = date("Y-m-d");
 								$nome_arquivo = "carne-".$hoje."-".$id_cliente_produto;
 								$host = "dev.mosman.com.br";
+								//$footer = "</html</body>";
+								//fputs($fd,$footer);
 					
-					
-								$p = new MHTML2PDF();
-								$p->setDebug(1);
-								$arqPDF = $p->converte($arqtmp,$host,'/tmp');
+								//$p = new MHTML2PDF();
+								//$p->setDebug(1);
+								//$arqPDF = $p->converte($arqtmp,$host,'/tmp');
 								
-								copy($arqPDF, "./faturas/".$nome_arquivo.".pdf");
+								copy($arqtmp, "/mosman/virtex/dados/carnes/".$nome_arquivo.".html");
 					
 								fclose($fd);
 								
@@ -621,16 +670,7 @@
 								//header('Content-Disposition: attachment; filename="'.$arquivo.'.pdf"');
 								//readfile($arqPDF);
 
-
-					
-					
-					
-					
-					
-					
-					
-					
-					//echo "<br>$username";
+								//echo "<br>$username";
 										
 
 					/*<<=====INICIO DA PARTE DE CADASTRO DE FATURAS=====>>*/

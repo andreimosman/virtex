@@ -1479,6 +1479,39 @@ class VAClientes extends VirtexAdmin {
 			return;
 			
 			
+			}else if ($rotina == "carne"){
+			
+				$id_cliente = @$_REQUEST["id_cliente"];
+				$id_carne = @$_REQUEST["id_carne"];
+				$p = @$_REQUEST["p"];
+				
+				$sSQL = "SELECT id_carne,id_cliente_produto,valor,status,vigencia,to_char(data_geracao,'DD/mm/YYYY') as data_geracao  FROM cbtb_carne where id_cliente = '$id_cliente'";
+						
+				$carnes = $this->bd->obtemRegistros($sSQL);
+				
+				
+				if ($p == "faturas"){
+					
+					
+					$sSQL = "select id_carne, to_char(data,'DD/mm/YYYY') as data, descricao, valor, status from cbtb_faturas where id_carne = '$id_carne'";
+					$faturas = $this->bd->obtemRegistros($sSQL);
+					
+					$this->tpl->atribui("faturas",$faturas);
+					$this->tpl->atribui("id_cliente",$id_cliente);
+					
+					$this->arquivoTemplate = "cobranca_carnes_faturas.html";
+					return;
+					
+				}else if ($p == "segunda_via"){
+					
+	
+				
+				}
+				$this->tpl->atribui("carnes",$carnes);				
+				$this->arquivoTemplate = "cobranca_carnes.html";
+
+			
+			
 			}
 			
 			
@@ -2837,7 +2870,7 @@ public function days_diff($date_ini, $date_end, $round = 1) {
     }
 } 
 
-public function carne($id_cliente_produto,$data,$id_cliente){
+public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento){
 	
 	$sSQL  = "SELECT cl.nome_razao, cl.endereco, cl.id_cidade, cl.estado, cl.cep, cl.cpf_cnpj, cd.cidade as nome_cidade, cd.id_cidade  ";
 	$sSQL .= "FROM ";
@@ -2859,6 +2892,22 @@ public function carne($id_cliente_produto,$data,$id_cliente){
 	//echo "fatura: $sSQL<br>";
 
 	$fatura = $this->bd->obtemUnicoRegistro($sSQL);
+	
+	list ($dia,$mes,$ano) = explode("/",$fatura["data"]);
+	
+	$mes_array = array("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
+	
+	if ($forma_pagamento == "PRE"){
+	
+		$referente = $mes_array[(int)$mes-1]."/".$ano;
+	
+	}else if ($forma_pagamento == "POS"){
+	
+		$mes_ref = mktime(0, 0, 0, $mes-1);
+		$referente = $mes_array[(int)$mes_ref-1]."/".$ano;
+	
+	}
+	
 
 
 	// PEGANDO INFORMAÇÕES DAS PREFERENCIAS
@@ -2896,6 +2945,8 @@ public function carne($id_cliente_produto,$data,$id_cliente){
 	$linha_digitavel = MArrecadacao::linhaDigitavel($codigo_barras);
 	$hoje = date("d/m/Y");
 	
+	$target = "/mosman/virtex/dados/carnes/codigos";
+	MArrecadacao::barCode($codigo_barras,"$target/$codigo_barras.png");
 		
 	//	$codigo = MArrecadacao::pagConta(...);
 		
@@ -2931,6 +2982,7 @@ public function carne($id_cliente_produto,$data,$id_cliente){
 	$this->tpl->atribui("observacoes",$observacoes);
 	$this->tpl->atribui("produto",$nome_produto);
 	$this->tpl->atribui("path",$_path);
+	$this->tpl->atribui("referente",$referente);
 	
 	//return($carne_emitido);
 	$fatura = $this->tpl->obtemPagina("../boletos/layout-pc.html");
