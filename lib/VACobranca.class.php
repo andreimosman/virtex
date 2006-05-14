@@ -6,6 +6,8 @@ require_once( "jpgraph.php" );
 require_once( "jpgraph_line.php" );
 require_once( "jpgraph_bar.php" );
 
+require_once('MRetornoPagContas.class.php');
+
 class VACobranca extends VirtexAdmin {
 
 	public function VACobranca() {
@@ -849,11 +851,106 @@ class VACobranca extends VirtexAdmin {
 			}
 	}else if ($op == "retornos"){
 	
+
 		global $_LS_FORMATOS_PAG;
+
 		$this->tpl->atribui("ls_formatos",$_LS_FORMATOS_PAG);
+		$this->tpl->atribui("op",@$_REQUEST["op"]);
+
+		$sop = @$_REQUEST['sop'];
+
+
+		if( !$sop ) $sop = "upload";
+			$this->arquivoTemplate = "cobranca_retorno.html";
+
+
+		if( @$_REQUEST["submit"] ) {
+		   $sErro = "";
+
+		   // Verifica se foi feito upload do arquivo.
+		   //echo "F: " . $_FILES['retorno']['tmp_name'] . "<br>\n";
+
+		   $arquivo = $_FILES['arquivo'];
+		   //phpinfo();
+
+		   if( !$arquivo['tmp_name'] ) {
+			   $sErro = "Você não enviou o arquivo para processamento";
+		   } else {
+			   // Verifica se o arquivo bate com o tipo especificado
+			   $formato = @$_REQUEST["formato"];
+
+			   if( $formato == "PC" ) {
+
+				   ////////////////
+				   // Pag Contas //
+				   ////////////////
+				   $r = new MRetornoPagContas($arquivo['tmp_name']);
+				   $registros  = $r->obtemRegistros();
+
+				   if( !count($registros) || !$r->checkSum() ) {
+					   $sErro = "Arquivo inválido ou adulterado.";
+				   } else {
+
+					   // Varre o arquivo
+					   $sop = "processa";
+
+					   for($i=0;$i<count($registros);$i++) {
+						  $registros[$i]["nsr"] 			= (int)$registros[$i]["nsr"];
+						  $registros[$i]["data_pagamento"] 	= $r->formataData($registros[$i]["data_pagamento"]);
+						  $registros[$i]["data_credito"] 	= $r->formataData($registros[$i]["data_credito"]);
+						  $registros[$i]["valor_recebido"] 	= $r->formataValor($registros[$i]["valor_recebido"]);
+						  $registros[$i]["codigo_barras"]	= $r->formataValor($registros[$i]["codigo_barras"]);
+						  $registros[$i]["valor_tarifa"]	= $r->formataValor($registros[$i]["valor_tarifa"]);
+						  //$registros[$i]["id_ag_cc_dig"]	= ($registros[$i]["is_ag_cc_dig"]);
+						  
+						 /* $sSQL  = "SELECT ";
+						  $sSQL .= "	" . $registros[$i]["data_pagamento"] . ", ";
+						  $sSQL .= "	" . $registros[$i]["codigo_barras"] . ", ";
+						  $sSQL .= "	" . $registros[$i]["codigo_barras"] . ", ";
+						  $sSQL .= "	" . $registros[$i]["codigo_barras"] . ", ";*/
+						  
+						  
+						  
+						  
+						  
+						  
+						  
+						  
+						  
+						  
+						  
+						  echo $registros[$i]["nsr"] . " - " . $registros[$i]["data_pagamento"] . " - " . $registros[$i]["data_credito"] . " - " . $registros[$i]["valor_recebido"] . " - " . $registros[$i]["valor_tarifa"] . " - ".$registros[$i]["codigo_barras"] . "<br>";
+						  
+					   }
+					   
+					   
+
+
+					   $this->tpl->atribui("registros",$registros);
+					   $this->tpl->atribui("arquivo",$arquivo["name"]);
+					   $this->arquivoTemplate = "cobranca_retorno_registros.html";
+
+				   }
+
+			   } else {
+					   $sErro = "Formato desconhecido";
+		   	   }
+		   }
+	   }
+
+
+
+	   //echo $sErro . "<br>\n";
+	   $this->tpl->atribui("sop",@$_REQUEST["sop"]);
+	   //$this->tpl->atribui("erro",$sErro);
 
 	
-		$this->arquivoTemplate = "cobranca_retorno.html";
+	
+	   /*global $_LS_FORMATOS_PAG;
+	   $this->tpl->atribui("ls_formatos",$_LS_FORMATOS_PAG);
+
+	
+	   $this->arquivoTemplate = "cobranca_retorno.html";*/
 	
 	}else if ($op == "contratos"){
 	
