@@ -1,20 +1,19 @@
-<table align="CENTER" width="700" border="0" cellspacing="0" cellpadding="0" height="253">
+
+<table width="650" height="253" border="0" align="CENTER" cellpadding="0" cellspacing="0" id="geral1">
   <tr>
-    <td valign="TOP"><table width="700" border="0" cellspacing="0" cellpadding="0">
+    <td valign="TOP"><table width="650" border="0" cellspacing="0" cellpadding="0">
         <tr>
-          <td width="150" align="CENTER" valign="TOP"> <table width="150" border="0" cellspacing="0" cellpadding="0">
+          <td width="154" align="left" valign="TOP"> 
+		  <!-- TABELA ESQUERDA -->
+		  <table width="149" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td align="RIGHT"><br><b class="geral">{$nome_cedente}</b></td>
               </tr>
               <tr>
-				<td width="1px"  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-              </tr>
-              <tr>
-                <td><table width="150" border="0" cellspacing="0" cellpadding="0">
+                <td><table width="149" border="0" cellpadding="0" cellspacing="0" id="logo_esquerdo">
                     <tr>
                       <td width="59"><img  src="imagens/pagcontas_logo.jpg" width="59" height="46"></td>
-                      <td width="1px" align="LEFT" valign="TOP"  class="separador"></td>
-                      <td width="91" align="LEFT" valign="TOP"><table width="91" border="0" cellspacing="0" cellpadding="0">
+                      <td width="91" align="LEFT" valign="TOP" id="venc1"><table width="90" border="0" cellspacing="0" cellpadding="0">
                           <tr>
                             <td class="geral">Vencimento</td>
                           </tr>
@@ -28,209 +27,135 @@
               </tr>
               <tr>
                 <td align="LEFT" valign="TOP">
-                	<table width="150" border="0" cellspacing="0" cellpadding="0">
+				<!-- tabela valores esquerdo -->
+                	<table width="149" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                      <td  height="1" colspan=3 class="separador"></td>
-                    </tr>
-                    <tr>
-                      <td  colspan=3 align="LEFT" valign="TOP" class="geral">&nbsp;Valor</td>
+                      <td  colspan=3 align="LEFT" valign="TOP" id="top" class="geral">&nbsp;Valor</td>
                     </tr>
                     <tr>
                       <td  colspan=3 align="CENTER" class="titulo">R$ {$valor}</td>
                     </tr>
                     <tr>
-                      <td  width="1px" colspan=3 class="separador"></td>
+                      <td align="LEFT" valign="TOP" class="geral" id="left1">&nbsp;Emissão</td>
+                      <td align="LEFT" valign="TOP" class="geral" id="top">&nbsp;Referente a: </td>
                     </tr>
                     <tr>
-                      <td align="LEFT" valign="TOP" class="geral">&nbsp;Emissão</td>
-                      <td width="1px"   class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-                      <td align="LEFT" valign="TOP" class="geral">&nbsp;Referente a: </td>
-                    </tr>
-                    <tr>
-	                    <td align="CENTER" valign="TOP" class="titulo">{$hoje}</td>
-	                    <td width="1px"  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
+	                    <td align="CENTER" valign="TOP" class="titulo" id="left2">{$hoje}</td>
                       <td align="CENTER" valign="TOP" class="titulo">{$referente}</td>
                     </tr>
 										<tr>
-											<td colspan=3  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-										</tr>
-										<tr>
-											<td colspan=3 align="LEFT" valign="TOP" class="geral">&nbsp;Nosso Numero</td>
+											<td colspan=3 align="LEFT" valign="TOP" class="geral" id="top">&nbsp;Nosso Numero</td>
 										</tr>
 										<tr>
 											<td colspan=3 align="CENTER"><b class="titulo">{$nosso_numero}</b></td>
 										</tr>
                     <tr>
-                      <td colspan=3  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-                    </tr>
-                    <tr>
-                      <td colspan=3 align="LEFT" valign="TOP" class="geral">&nbsp;Produto</td>
+                      <td colspan=3 align="LEFT" valign="TOP" class="geral" id="top">&nbsp;Produto</td>
                     </tr>
                     <tr>
                       <td colspan=3 align="CENTER"><b class="titulo">{$produto}</b></td>
                     </tr>
                     <tr>
-                      <td colspan=3  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-                    </tr>
-                    <tr>
-                      <td colspan=3 class="geral">&nbsp;Sacado</td>
+                      <td colspan=3 class="geral" id="top">&nbsp;Sacado</td>
                     </tr>
                     <tr>
                       <td colspan=3 align="CENTER"><b class="geral">{$sacado}</b></td>
                     </tr>
                     <tr>
-                      <td colspan=3  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-                    </tr>
-                    <tr>
-                      <td colspan=3 align="RIGHT" valign="TOP"><b class="titulo">RECIBO DO CLIENTE</b></td>
+                      <td colspan=3 align="RIGHT" valign="TOP" id="top"><b class="titulo">RECIBO DO CLIENTE</b></td>
                     </tr>
                     <tr>
                       <td>&nbsp;</td>
                     </tr>
-                  </table></td>
+                  </table>
+				  <!-- final tabela valores esquerdo -->
+			    </td>
               </tr>
             </table>
+			<!-- FINAL TABELA ESQUERDA -->
           </td>
-          <td width="5" background="imagens/pontilhado.gif" class="pontilhado"><img  src="imagens/pontilhado.gif" width="5" height="3"></td>
-          <td width="600" align="CENTER" valign="TOP">
+          <td width="600" align="CENTER" valign="TOP" id="geral2">
           <br>
-						<table width="100%" cellspacing=0 cellpadding=0>
-							<tr>
-								<td colspan=3 width="100%">
-										<table width="100%" border="0" cellspacing="0" cellpadding="0">
-											<tr>
-												<td width="59"><img  src="imagens/pagcontas_logo.jpg" width="59" height="46"></td>
-												<td width="1px"  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-												<td valign="TOP">&nbsp;&nbsp;<b class="titulo">RECIBO DO POSTO</b>
-												<br>
-                        &nbsp;&nbsp;<span class="geral">Referente à: {$referente}</span></td>
-												<td valign="TOP" align="RIGHT"><b class="titulo">{$nome_cedente}</b>
-												<br>
-                        &nbsp;&nbsp;<span class="geral">Impressão: {$hoje}</span></td>
-											</tr>
-										</table>
-								</td>
-							</tr>
-							<tr>
-								<td height=1 colspan=3  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-							</tr>
-							<tr>
-								<td width="75%" valign="top">
-							  <span class="geral">Local de Pagamento</span><br>							  </td>
-								<td width="1px"  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-								
-                <td width="25%" valign="top"> &nbsp;<span class="geral">Vencimento</span></td>
-							</tr>
-							<tr>
-								<td>
-									<b class="titulo">POSTOS PAG CONTAS</b>								</td>
-								<td width="1px"  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-								<td align="right"><b class="titulo">{$vencimento}&nbsp;&nbsp;</b></td>
-							</tr>
-							<tr>
-								<td height=1 colspan=3  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-							</tr>
-							<tr>
-								
-                <td ROWSPAN=8 valign="TOP" class="geral"> &nbsp;I N S T R U Ç Õ E S</td>
-								<td width="1px"  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-								
-                <td width="25%" valign="top"> &nbsp;<span class="geral">Nosso
-                    Número</span></td>
-							</tr>
-							<tr>
-								<td width="1px"  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-								<td width="25%" valign="top" align="right">
-									<b class="geral">{$nosso_numero}&nbsp;&nbsp;</b></td>
-							</tr>
-							<tr>
-								<td height=1 COLSPAN=2  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-							</tr>
-
-
-							<tr>
-								<td width="1px"  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-								
-                <td width="25%" valign="top" class="geral"> &nbsp;(=)Valor do Documento</td>
-							</tr>
-							<tr>
-								<td width="1px"  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-								<td width="25%" valign="top" align="right">
-									<b class="titulo">&nbsp;R$ {$valor}&nbsp;&nbsp;</b></td>
-							</tr>
-							<tr>
-								<td height=1 COLSPAN=2  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-							</tr>
-
-
-							<tr>
-								<td width="1px"  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-								
-                <td width="25%" valign="top" class="geral"> &nbsp;(-)Desconto</td>
-							</tr>
-							<tr>
-								<td width="1px"  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-								<td width="25%" valign="top" align="right">
-									<b>&nbsp;&nbsp;</b></td>
-							</tr>
-							<tr>
-								<td height=1 colspan=3  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-							</tr>
-
-
-
-
-							<tr>
-								
-                <td ROWSPAN=5 valign="TOP"> <span class="geral">SACADO</span><br>
-									<span class="geral">{$sacado}<br>
-                  {$sendereco} - {$scidade} {$suf} - {$scep}</span></td>
-								<td width="1px"  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-								
-                <td width="25%" valign="top" class="geral"> &nbsp;(+)Mora/Multa/Juros </td>
-							</tr>
-							<tr>
-								<td width="1px"  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-								<td width="25%" valign="top" align="right">
-									&nbsp;&nbsp;</td>
-							</tr>
-							<tr>
-								<td height=1 COLSPAN=2  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-							</tr>
-
-							<tr>
-								<td width="1px"  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-								
-                <td width="25%" valign="top" class="geral"> &nbsp;(=)Valor Cobrado</td>
-							</tr>
-							<tr>
-								<td width="1px"  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-								<td width="25%" valign="top" align="right">&nbsp;
-								</td>
-							</tr>
-							<tr>
-								<td height=1 colspan=3  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-							</tr>
-							<tr>
-								<td colspan=3 align="right" class="menor">
-									{$nome_cedente} - {$cendereco} - {$clocalidade}								</td>
-							</tr>
-							<tr>
-								<td height=1 colspan=3  class="separador"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-							</tr>
-							<tr>
-								<td colspan=3 aling="right">
-									<b class="titulo">&nbsp;&nbsp;{$linha_digitavel}</b><br>
-									&nbsp;&nbsp;<img  src="codigos/{$codigo_barras}.png">
-							  </td>
-							</tr>
-						</table>
-		  </td>
-		</tr>
+		<!-- TABELA DIREITA -->
+          <table width="98%" cellspacing="0" cellpadding="0">
+            <tr>
+              <td colspan="3" width="100%"><!-- tabela titulo -->
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td width="59"><img  src="imagens/pagcontas_logo.jpg" alt="." width="59" height="46" /></td>
+                      <td valign="top" id="titulo_dir">&nbsp;&nbsp;<b class="titulo1">RECIBO
+                          DO POSTO</b> <br />
+                        &nbsp;&nbsp;<span class="geral">Referente &agrave;: {$referente}</span></td>
+                      <td valign="top" align="right"><b class="titulo1">{$nome_cedente}</b> <br />
+                        &nbsp;&nbsp;<span class="geral">Impress&atilde;o: {$hoje}</span></td>
+                    </tr>
+                  </table>
+                <!-- final tabela titulo -->
+              </td>
+            </tr>
+            <tr>
+              <td width="75%" valign="top" id="left1"><span class="geral">Local de Pagamento</span><br />
+              </td>
+              <td width="25%" valign="top" id="top">&nbsp;<span class="geral">Vencimento</span></td>
+            </tr>
+            <tr>
+              <td id="dir"><b class="titulo1">POSTOS PAG CONTAS</b> </td>
+              <td align="right"><b class="titulo1">{$vencimento}&nbsp;&nbsp;</b></td>
+            </tr>
+            <tr>
+              <td rowspan="8" valign="top" class="geral" id="left1">&nbsp;I N S T R U &Ccedil; &Otilde; E
+                S</td>
+              <td width="25%" valign="top" id="top">&nbsp;<span class="geral">Nosso N&uacute;mero</span></td>
+            </tr>
+            <tr>
+              <td width="25%" valign="top" align="right"><b class="geral">{$nosso_numero}&nbsp;&nbsp;</b></td>
+            </tr>
+            <tr>
+              <td width="25%" valign="top" class="geral" id="top">&nbsp;(=)Valor do Documento</td>
+            </tr>
+            <tr>
+              <td width="25%" valign="top" align="right"><b class="titulo1">&nbsp;R$
+                  {$valor}&nbsp;&nbsp;</b></td>
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+              <td width="25%" valign="top" class="geral" id="top">&nbsp;(-)Desconto</td>
+            </tr>
+            <tr>
+              <td width="25%" valign="top" align="right"><b>&nbsp;&nbsp;</b></td>
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+              <td rowspan="5" valign="top" id="left1"><span class="geral">SACADO</span><br />
+                  <span class="geral">{$sacado}<br />
+                {$sendereco} - {$scidade} {$suf} - {$scep}</span></td>
+              <td width="25%" valign="top" class="geral" id="top">&nbsp;(+)Mora/Multa/Juros </td>
+            </tr>
+            <tr>
+              <td width="25%" valign="top" align="right">&nbsp;&nbsp;</td>
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+              <td width="25%" valign="top" class="geral" id="top">&nbsp;(=)Valor Cobrado</td>
+            </tr>
+            <tr>
+              <td width="25%" valign="top" align="right">&nbsp;</td>
+            </tr>
+            <tr>
+              <td colspan="3" align="right" class="menor1" id="top"> {$nome_cedente} -
+                {$cendereco} - {$clocalidade} </td>
+            </tr>
+            <tr>
+              <td colspan="3" id="top" aling="right"><b class="titulo1">&nbsp;&nbsp;{$linha_digitavel}</b><br />
+                &nbsp;&nbsp;<img  src="codigos/{$codigo_barras}.png" alt="." /> </td>
+            </tr>
+          </table>
+		  				<!-- FINAL - TABELA DIREITO-->          </td>
+        </tr>
 			</table>
 	</td>
   </tr>
-	<tr>
-		<td background="imagens/pontilhado_h.gif" height="5" class="pontilhadoh"><img  src="imagens/Untitled-2.gif" width="1" height="1"></td>
-	</tr>
 </table>
