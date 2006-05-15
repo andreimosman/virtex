@@ -1,0 +1,105 @@
+<!-- cliente_cobranca_resumo.html --> {literal} {/literal} 
+<p>{include file='cliente_header.html'} </p>
+<table width="450" border="0" align="center" cellpadding="0" cellspacing="1">
+  <tr> 
+    <td align="center"><strong><font size="+2" face="Arial, Helvetica, sans-serif">Cobran&ccedil;a</font></strong></td>
+  </tr>
+</table>
+<br>
+<table align="CENTER" width="400" border="0" cellspacing="1" cellpadding="0">
+  <tr> 
+    <td align="CENTER" height="30" bgcolor="#f1f1f1"><font face="Arial, Helvetica, sans-serif" size="-1"><strong>Contrato<br>
+      </strong>O Contrato listado abaixo ser&aacute; excluido definitivamente<br>
+      </font></td>
+  </tr>
+  <tr>
+    <td align="CENTER">
+<table align="RIGHT" border="0" cellspacing="1" cellpadding="0">
+        <tr> 
+          <td width="116"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Nome:</font></strong></td>
+          <td width="429"><p>{$contrato.nome_razao} - {$contrato.id_cliente_produto}</p></td>
+        </tr>
+        <tr> 
+          <td><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Data 
+            Contrato:</font></strong></td>
+          <td><p>{$contrato.data_contratacao}</p></td>
+        </tr>
+        <tr> 
+          <td><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Vig&ecirc;ncia:</font></strong></td>
+          <td><p>{$contrato.vigencia} meses</p></td>
+        </tr>
+        <tr> 
+          <td><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Valor:</font></strong></td>
+          <td><p>R$ {$contrato.valor_contrato}</p></td>
+        </tr>
+        <tr> 
+          <td><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Status:</font></strong></td>
+          <td><p>{$contrato.status}</p></td>
+        </tr>
+        <tr> 
+          <td><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Tipo 
+            de Produto:</font></strong></td>
+          <td><p>{if $contrato.tipo_produto == "BL"}Banda Larga{elseif $contrato.tipo_produto 
+              == "D"}Discado{elseif $contrato.tipo_produto == "H"}Hospedagem{/if}</p></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+<br>
+<table align="CENTER" width="400" border="0" cellspacing="1" cellpadding="0">
+  <tr> 
+    <td align="CENTER" height="30" bgcolor="#f1f1f1"><font face="Arial, Helvetica, sans-serif" size="-1"><strong>Faturas<br>
+      </strong>As faturas abaixo ser&atilde;o excluidas definitivamente do sistema<br>
+      </font></td>
+  </tr>
+  <tr> 
+    <td align="CENTER"><table border="0" cellspacing="1" cellpadding="0" width="300">
+        <tr> 
+          <td><table width="300" border="0" cellspacing="1" cellpadding="0">
+              <tr> 
+                <td width="100" align="CENTER"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Venc.</font></strong></td>
+                <td width="100" align="RIGHT"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Valor</font></strong></td>
+                <td width="100" align="CENTER"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Status</font></strong></td>
+              </tr>
+            </table></td>
+        </tr>
+        <tr> 
+          <td>
+		  {foreach item=v from=$fatura}
+		  <table width="300" border="0" cellspacing="1" cellpadding="0">
+              <tr> 
+                <td width="100" align="CENTER">
+<p>{$v.data}</p></td>
+                <td width="100" align="RIGHT">
+<p>R$ {$v.valor}</p></td>
+                <td width="100" align="CENTER">
+<p>{if $v.status == "P" || $v.status == "R"}<font color=red>{/if}{$v.status}{if 
+                    $v.status == "P" || $v.status == "R"}</font>{/if}</p></td>
+              </tr>
+            </table>
+			{/foreach}
+			</td>
+        </tr>
+      </table> </td>
+  </tr>
+</table>
+<form name="form1" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="confirm('Você tem certeza que quer EXCLUIR DEFINITIVAMENTE o contrato listade,\n bem como as faturas ligadas a ele?')">
+<table align="CENTER" width="300" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="CENTER"><input name="id_cliente_produto" type="hidden" value="{$contrato.id_cliente_produto}" id="id_cliente_produto">
+      <input name="tipo_produto" type="hidden" value="{$contrato.tipo_produto}" id="tipo_produto">
+      <input name="rotina" type="hidden" value="excluir" id="rotina">
+      <input name="acao" type="hidden" value="excluir" id="acao">
+      <input name="op" type="hidden" value="contratos" id="op"> 
+	  <input name="dominio" type="hidden" value="{$contrato.dominio}" id="dominio"> 
+      <input name="tipo_conta" type="hidden" value="{$contrato.tipo_conta}" id="tipo_conta"> 
+	  <input name="id_cliente" type="hidden" value="{$contrato.id_cliente}" id="id_cliente">
+      <input name="username" type="hidden" value="{$contrato.username}" id="username"> 
+      <input type="submit" name="Submit" value="Confirma Exclusão" ></td>
+  </tr>
+</table>
+</form>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>{include file='cliente_footer.html'} </p>

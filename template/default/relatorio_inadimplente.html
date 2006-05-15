@@ -1,3 +1,4 @@
+<!-- relatorio_inadimplente.html-->
 <html>
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
@@ -18,8 +19,9 @@
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio</h1><h2 align="center"><font size="2">
-                {if $mes}Inadimplentes de {$meses_ano[$mes]} de {$ano}{else}Inadimplência{/if}</font></h2>
+                <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio</h1>
+                <h2 align="center"><font size="2">
+                {if $mes}Atrasados de {$meses_ano[$mes]} de {$ano}{else}Atrazos{/if}</font></h2>
 
                 	{if $acao == "geral"}
 
@@ -54,7 +56,7 @@
 								  <td bgcolor="#F1F1F1"><table width="450" border="0" cellspacing="2" cellpadding="0">
 									  <tr>
 										<td width="225" align="LEFT"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Per&iacute;odo</font></td>
-										<td align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Inadimplentes</font></td>
+										<td align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Atrasados</font></td>
 									  </tr>
 									</table></td>
 								</tr>
