@@ -707,6 +707,7 @@ class VAClientes extends VirtexAdmin {
 		$lista_faturas = $this->bd->obtemRegistros($sSQL);
 		//echo "Lista: $sSQL <br>";
 		
+		
 				$this->obtemPR($id_cliente);
 
 		
@@ -835,7 +836,7 @@ class VAClientes extends VirtexAdmin {
 					$sSQL .= "   cntb_conta ";
 					$sSQL .= "WHERE ";
 					$sSQL .= "   username = '".$this->bd->escape(trim(@$_REQUEST["username"]))."' ";
-					$sSQL .= "   and tipo_conta = '". $this->bd->escape(trim(@$_REQUEST["tipo"])) ."' ";					
+					$sSQL .= "   and tipo_conta = '". $this->bd->escape(trim(@$_REQUEST["tipo"])) ."' ";
 					$sSQL .= "   and dominio = '".$dominioPadrao."' ";
 					$sSQL .= "ORDER BY ";
 					$sSQL .= "   username ";
@@ -843,7 +844,7 @@ class VAClientes extends VirtexAdmin {
 					$lista_user = $this->bd->obtemUnicoRegistro($sSQL);
 
 					if(count($lista_user) && $lista_user["username"]){
-						// ver como processar 
+						// ver como processar
 						$erros[] = "Já existe outra conta cadastrada com esse username";
 					}
 					
@@ -1488,6 +1489,7 @@ class VAClientes extends VirtexAdmin {
 				$sSQL = "SELECT id_carne,id_cliente_produto,valor,status,vigencia,to_char(data_geracao,'DD/mm/YYYY') as data_geracao  FROM cbtb_carne where id_cliente = '$id_cliente'";
 						
 				$carnes = $this->bd->obtemRegistros($sSQL);
+				$this->obtemPR($id_cliente);
 				
 				
 				if ($p == "faturas"){
@@ -1653,6 +1655,9 @@ class VAClientes extends VirtexAdmin {
 			$username = @$_REQUEST["username"];
 			$dominio  = @$_REQUEST["dominio"];
 			$tipo_conta = @$_REQUEST["tipo_conta"];
+			
+			$this->obtemPR($id_cliente);
+			
 			
 			$this->tpl->atribui("id_cliente",$id_cliente);
 			$this->tpl->atribui("username",$username);
@@ -2256,7 +2261,7 @@ class VAClientes extends VirtexAdmin {
 			$pg = @$_REQUEST["pg"];
 			
 			if( $pg == "ficha" ) {
-				$this->tpl->atribui("str_status",$_LS_ST_CONTA[ $conta["status"] ]);
+				$this->tpl->atribui("str_status",$_LS_ST_CONTA[$conta["status"]]);
 				
 				switch($tipo_conta) {
 				
@@ -2527,6 +2532,7 @@ class VAClientes extends VirtexAdmin {
 			$rotina = @$_REQUEST["rotina"];
 			$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
 			$id_cliente = @$_REQUEST["id_cliente"];
+			$this->obtemPR($id_cliente);
 
 			$sSQL = "SELECT * FROM cbtb_contrato WHERE id_cliente_produto = '$id_cliente_produto'";
 			$contr = $this->bd->obtemUnicoRegistro($sSQL);

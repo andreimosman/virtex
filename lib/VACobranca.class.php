@@ -805,9 +805,14 @@ class VACobranca extends VirtexAdmin {
 			
 			$sSQL = "SELECT nome_razao FROM cltb_cliente WHERE id_cliente = '$id_cliente'";
 			$cliente = $this->bd->obtemUnicoRegistro($sSQL);
+			
+			$sSQL = "SELECT status, id_cliente, id_cliente_produto FROM cntb_conta where id_cliente = '$id_cliente' AND id_cliente_produto = '$id_cliente_produto' AND status = 'S' ";
+			//echo $sSQL;
+			$suspenso = $this->bd->obtemRegistros($sSQL);
 				
 			//echo "sql: $sSQL<br> Nome:".$cliente["nome_razao"]."<br> ";
-				
+			
+			$this->tpl->atribui("suspenso",$suspenso);
 			$this->tpl->atribui("cliente",$cliente);
 
 		
@@ -838,13 +843,55 @@ class VACobranca extends VirtexAdmin {
 				
 				$this->amortizar();
 				
+				/*$sSQL  = "SELECT ";
+				$sSQL .= "f.id_cliente_produto, to_char(f.data, 'DD/mm/YYYY') as data_conv,f.data, f.valor, f.observacoes,f.descricao, to_char(f.reagendamento, 'DD/mm/YYYY') as reagendamento, f.pagto_parcial, ";
+				$sSQL .= "to_char(f.data_pagamento, 'DD/mm/YYYY') as data_pagamento, f.desconto, f.acrescimo, f.valor_pago, ";
+				$sSQL .= "c.id_cliente_produto, c.id_cliente, ";
+				$sSQL .= "CASE WHEN (f.data < CAST(now() as date) AND f.status='A') OR (f.reagendamento < CAST(now() as date) AND f.status='R') ";
+				$sSQL .= "THEN 'S' ELSE ";
+				$sSQL .= "CASE WHEN f.reagendamento is not null AND f.status != 'P' ";
+				$sSQL .= "THEN 'G' ELSE f.status ";
+				$sSQL .= "END ";
+				$sSQL .= "END as extstatus ";
+				$sSQL .= "FROM ";
+				$sSQL .= "cbtb_faturas f, cbtb_cliente_produto c ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "id_cliente = '$id_cliente' ";
+				$sSQL .= "AND ";
+				$sSQL .= "f.id_cliente_produto = c.id_cliente_produto ";
+				$sSQL .= "AND (f.status = 'A' OR f.status = 'R') ";
+				$sSQL .= "AND f.data < now() + interval '10 day' ";
+				$sSQL .= "ORDER BY f.data ASC ";
+
+				$lista_faturas = $this->bd->obtemRegistros($sSQL);
+				//echo "Lista: $sSQL <br>";
+
+				$sSQL = "SELECT nome_razao FROM cltb_cliente WHERE id_cliente = '$id_cliente'";
+				$cliente = $this->bd->obtemUnicoRegistro($sSQL);*/
+
+				$sSQL = "SELECT * FROM cbtb_faturas WHERE id_cliente_produto = '$id_cliente_produto' AND reagendamento is null AND status = 'A' AND data <= now() + interval '10 day' ";
+				$suspenso = $this->bd->obtemRegistros($sSQL);
+				//echo $sSQL ."<BR>";
 				
-				$msg_final = "Amortização/Pagamento efetuado com sucesso!";
+				if (!$suspenso){
 				
+					$sSQL = "UPDATE cntb_conta SET status = 'A' WHERE id_cliente_produto = '$id_cliente_produto' AND status = 'S' ";
+					//echo $sSQL ."<BR>";
+					$this->bd->consulta($sSQL);
+					
+					$msg_final = "Amortização/Pagamento efetuado com sucesso!";
+				
+				}else{
+				
+					$msg_final = "Amortização/Pagamento efetuado com sucesso!<br>Existem outras faturas em atrazo que impossibilitam o desbloqueio automático.";
+				
+				}
+				//$this->tpl->atribui("cliente",$cliente);
+				//$this->tpl->atribui("lista_faturas",$lista_faturas);
+				//$this->tpl->atribui("susp",$suspenso);
 				$this->tpl->atribui("mensagem",$msg_final); 
 				$this->tpl->atribui("url", "clientes.php?op=cobranca&id_cliente=".$id_cliente."&rotina=resumo");
 				$this->tpl->atribui("target","_top");
-				
 				
 				$this->arquivoTemplate="msgredirect.html";
 
@@ -966,6 +1013,7 @@ class VACobranca extends VirtexAdmin {
 		$this->tpl->atribui("id_cliente_produto",$id_cliente_produto);
 		$this->tpl->atribui("id_cliente",$id_cliente);
 		$this->tpl->atribui("tipo_produto",$tipo_produto);
+		$this->obtemPR($id_cliente);
 		
 		$sSQL  = "SELECT ";
 		//$sSQL .= "   id_produto,nome,descricao,tipo,valor ";
@@ -2224,91 +2272,104 @@ class VACobranca extends VirtexAdmin {
 
 } // function processa
 	
-public function amortizar(){
+	public function amortizar(){
 
 
-	$data = @$_REQUEST["reagendamento"];
-	$data_pagamento = @$_REQUEST["data_pagamento"];
-	$reagendamento = @$_REQUEST["reagendamento"];
-	$reagendar = @$_REQUEST["reagendar"];
-	
-	
-	//Se existir uma data de reagendamento então faz 
-	//o tratamento dessa data de reagendamento
-	if($reagendamento) {
-		list($d, $m, $a) = explode("/", $reagendamento);
-		$reagendamento = "$a-$m-$d";
+		$data = @$_REQUEST["reagendamento"];
+		$data_pagamento = @$_REQUEST["data_pagamento"];
+		$reagendamento = @$_REQUEST["reagendamento"];
+		$reagendar = @$_REQUEST["reagendar"];
+		$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
+
+
+		//Se existir uma data de reagendamento então faz 
+		//o tratamento dessa data de reagendamento
+		if($reagendamento) {
+			list($d, $m, $a) = explode("/", $reagendamento);
+			$reagendamento = "$a-$m-$d";
+		}
+
+		//Se existir uma data de vencimento então faz 
+		//o tratamento dessa data de vencimento
+		if ($data) {
+			if (strstr($data, "/")){ 
+				$A = explode ("/", $data); 
+				$data = $A[2] . "-". $A[1] . "-" . $A[0]; 
+			} else { 
+				$A = explode ("-", $data); 
+				$data = $A[2] . "/". $A[1] . "/" . $A[0];     
+			} 
+
+		}
+
+
+		//Se existir uma data de pagamento então faz 
+		//o tratamento dessa data de pagamento
+		if ($data_pagamento) {
+
+			if (strstr($data_pagamento, "/")){ 
+				$A = explode ("/", $data_pagamento); 
+				$data_pagamento = $A[2] . "-". $A[1] . "-" . $A[0]; 
+			} else { 
+				$A = explode ("-", $data_pagamento); 
+				$data_pagamento = $A[2] . "/". $A[1] . "/" . $A[0];     
+			} 
+		}
+
+		$amortizar = str_replace(",",".",@$_REQUEST["amortizar"]);
+		$desconto = str_replace(",",".",@$_REQUEST["desconto"]);
+		$acrescimo = str_replace(",",".",@$_REQUEST["acrescimo"]);
+
+
+		$sSQL  = "UPDATE ";
+		$sSQL .= "	cbtb_faturas ";
+		$sSQL .= "SET ";
+		$sSQL .= "	status = '".@$_REQUEST["status"]."', ";
+		$sSQL .= "	observacoes = '".@$_REQUEST["observacoes"]."', ";
+
+		if ($reagendar && $reagendamento)
+			$sSQL .= "	reagendamento = '$reagendamento', ";
+
+		$sSQL .= "	pagto_parcial = pagto_parcial + '".$amortizar."', ";
+		$sSQL .= "	data_pagamento = '".$data_pagamento."', ";
+		$sSQL .= "	desconto = '".$desconto."', ";
+		$sSQL .= "	acrescimo = '".$acrescimo."', ";
+		$sSQL .= "	valor_pago = '".$amortizar."' ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "	id_cliente_produto = '".@$_REQUEST["id_cliente_produto"]."' AND ";
+		$sSQL .= "	data = '".@$_REQUEST["data"]."' ";
+
+
+		//echo "QUERY: $sSQL <br>\n";
+		$this->bd->consulta($sSQL);
+
+		if ($reagendar && $reagendamento){
+
+			$adm = $this->admLogin->obtemAdmin();
+
+			$sSQL = "INSERT INTO lgtb_reagendamento (data, id_cliente_produto, admin, data_para_reagendamento) VALUES ('".@$_REQUEST["data"]."','$id_cliente_produto','$adm','$reagendamento') ";
+			$this->bd->consulta($sSQL);
+
+			//echo "LOG REAGENDAMENTO: $sSQL <br>";
+		}
+
+
+		return($id_cliente_produto);
+
+
+
 	}
 
-	//Se existir uma data de vencimento então faz 
-	//o tratamento dessa data de vencimento
-	if ($data) {
-		if (strstr($data, "/")){ 
-			$A = explode ("/", $data); 
-			$data = $A[2] . "-". $A[1] . "-" . $A[0]; 
-		} else { 
-			$A = explode ("-", $data); 
-			$data = $A[2] . "/". $A[1] . "/" . $A[0];     
-		} 
+	public function geraCarne($dia_inicio,$dia_final,$mes,$ano,$dti,$dtf){
+
+
+
+
+					//MBoleto::barCode($codigo);
 
 	}
-	
-	
-	//Se existir uma data de pagamento então faz 
-	//o tratamento dessa data de pagamento
-	if ($data_pagamento) {
 
-		if (strstr($data_pagamento, "/")){ 
-			$A = explode ("/", $data_pagamento); 
-			$data_pagamento = $A[2] . "-". $A[1] . "-" . $A[0]; 
-		} else { 
-			$A = explode ("-", $data_pagamento); 
-			$data_pagamento = $A[2] . "/". $A[1] . "/" . $A[0];     
-		} 
-	}
-	
-	$amortizar = str_replace(",",".",@$_REQUEST["amortizar"]);
-	$desconto = str_replace(",",".",@$_REQUEST["desconto"]);
-	$acrescimo = str_replace(",",".",@$_REQUEST["acrescimo"]);
-	
-	
-	$sSQL  = "UPDATE ";
-	$sSQL .= "	cbtb_faturas ";
-	$sSQL .= "SET ";
-	$sSQL .= "	status = '".@$_REQUEST["status"]."', ";
-	$sSQL .= "	observacoes = '".@$_REQUEST["observacoes"]."', ";
-	
-	if ($reagendar && $reagendamento)
-		$sSQL .= "	reagendamento = '$reagendamento', ";
-	
-	$sSQL .= "	pagto_parcial = pagto_parcial + '".$amortizar."', ";
-	$sSQL .= "	data_pagamento = '".$data_pagamento."', ";
-	$sSQL .= "	desconto = '".$desconto."', ";
-	$sSQL .= "	acrescimo = '".$acrescimo."', ";
-	$sSQL .= "	valor_pago = '".$amortizar."' ";
-	$sSQL .= "WHERE ";
-	$sSQL .= "	id_cliente_produto = '".@$_REQUEST["id_cliente_produto"]."' AND ";
-	$sSQL .= "	data = '".@$_REQUEST["data"]."' ";
-				
-				
-	//echo "QUERY: $sSQL <br>\n";
-	$this->bd->consulta($sSQL);
-	
-	return;
-
-
-
-}
-
-public function geraCarne($dia_inicio,$dia_final,$mes,$ano,$dti,$dtf){
-
-			
-
-
-				//MBoleto::barCode($codigo);
-
-}
-public function carne($id_cliente_produto,$data,$id_cliente){
+	public function carne($id_cliente_produto,$data,$id_cliente){
 	
 	$sSQL  = "SELECT cl.nome_razao, cl.endereco, cl.id_cidade, cl.estado, cl.cep, cl.cpf_cnpj, cd.cidade as nome_cidade, cd.id_cidade  ";
 	$sSQL .= "FROM ";
@@ -2406,11 +2467,42 @@ public function carne($id_cliente_produto,$data,$id_cliente){
 	$fatura = $this->tpl->obtemPagina("../boletos/layout-pc.html");
 	return($fatura);
 
-}
+	}
+	private function obtemPR($id_cliente){
+	
+		$sSQL  = "SELECT ";
+		$sSQL .= "pr.tipo ";
+		$sSQL .= "FROM cbtb_cliente_produto cp, prtb_produto pr ";
+		$sSQL .= "WHERE cp.id_cliente = '$id_cliente' ";
+		$sSQL .= "AND cp.id_produto = pr.id_produto ";
+		$sSQL .= "GROUP BY pr.tipo";
+									
+		$prcliente = $this->bd->obtemRegistros($sSQL);
+		//echo "QUERY: $sSQL<br> ";
+									
+		$prod_contr = array();
+									
+		//echo count($prcliente);
+									
+		for($i = 0; $i < count($prcliente); $i++ ) {
+			$prod_contr[ trim(strtolower($prcliente[$i]["tipo"])) ] = true;
+									
+		}
+									
+				
+									
+		$this->tpl->atribui("prod_contr",$prod_contr);
+		return;
+	
+	
+	}
+
 
 	
-public function __destruct() {
-      	parent::__destruct();
-}
+	public function __destruct() {
+			parent::__destruct();
+	}
+
+
 }
 ?>

@@ -119,7 +119,8 @@ $_LS_PRIVILEGIO = array(
 
 $_LS_ST_CONTA = array(
         "A" => "Ativo",
-        "B" => "Bloqueado"
+        "B" => "Bloqueado",
+		"S" => "Suspenso"
         ); 
         
 $_LS_FORMA_PAGAMENTO = array(
@@ -131,7 +132,8 @@ $_LS_STATUS_FATURA = array(
 		"P" => "Paga",
 		"R" => "Paga Parcial",
 		"E" => "Estornadas",
-		"C" => "Canceladas"
+		"C" => "Canceladas",
+		"G" => "Reagendada"
 		);
 $_LS_OPERADORAS_CC = array(
 		"MC" => "MasterCard",

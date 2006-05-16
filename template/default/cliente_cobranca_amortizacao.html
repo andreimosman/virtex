@@ -39,6 +39,11 @@ function validaForm() {
 }
 
 //Fim Dedé
+  // if(formulario.reagendar.value == 1 && formulario.amortizar.value == "0,00" ){
+   //		formulario.status.value = "G";
+   //}
+
+  //formulario.status_fatura.value = formulario.status.value;
 
 
 function pagamentoHoje() {
@@ -53,6 +58,12 @@ function pagamentoVencimento() {
 
 function verificaReagendamento() {
    formulario.reagendamento.disabled = !formulario.reagendar.checked;
+   
+      //if(formulario.reagendar.value == "1" && formulario.amortizar.value == "0,00" ){
+   		//formulario.status.value = "G";
+   //}
+
+   //formulario.status_fatura.value = formulario.status.value;
 }
 
 function calculaValores() {
@@ -86,8 +97,7 @@ function calculaValores() {
    } else {
       formulario.status.value = "P";
    }
-
-   formulario.status_fatura.value = formulario.status.value;
+   reagendamento();
 
    debug = 0;
    if( debug ) {
@@ -147,8 +157,14 @@ function change(id, newClass) {
 	identity=document.getElementById(id);
 	identity.className=newClass;
 }
-
-
+function reagendamento(){
+	var status;
+	if( formulario.reagendamento.value ){
+		formulario.status.value = "G";
+	}
+	
+	formulario.status_fatura.value = formulario.status.value;
+}
 
 
 
@@ -327,16 +343,31 @@ function change(id, newClass) {
                             <td bgcolor="#FFFFFF" align="right" width="120"> <p>
                                 <input type="checkbox" name="reagendar" value="1"  class="checkbox" onClick="javascript:verificaReagendamento();" onChange="javascript:verificaReagendamento();" {$reagendamento_checked}>
                                 re-agendar cobrança para dia: </p></td>
-                            <td bgcolor="#FFFFFF"><input name="reagendamento" type="text" value="{$reagendamento}" size=10 maxlength=10 id="reagendamento"></td>
+                            <td bgcolor="#FFFFFF"><input name="reagendamento" type="text" value="{$amort.reagendamento}" maxlength=10 id="reagendamento" onChange="javascript:reagendamento();"></td>
                           </tr>
                           <tr>
                             <td bgcolor="#FFFFFF" align="right" width="120" valign="top"><p>Observações:</p></td>
                             <td bgcolor="#FFFFFF"><textarea name="observacoes" rows=5 cols=29>{$amort.observacoes}</textarea></td>
                           </tr>
                         </table>
-				<hr size=1>
-				<input name="botao_enviar" type="submit" class=input2 id="submit" value="Amortizar >>" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
-			</td>
+				        <hr size=1>
+						{if $suspenso}
+						<table width="90%" border="0" cellspacing="0" cellpadding="0" bgcolor="#000000">
+                          <tr>
+                            <td><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                                <tr>
+                                  <td bgcolor="#f1f1f1" height="40"><div align="CENTER"><font size="2" face="Arial, Helvetica, sans-serif"><strong>Cliente 
+                                    suspenso por pend&ecirc;ncias financeiras 
+                                    - <br>
+                                    {$suspenso.status} </strong></font></div></td>
+                                </tr>
+                              </table></td>
+                          </tr>
+                        </table>
+						{/if}
+                        <p>
+                          <input name="botao_enviar" type="submit" class=input2 id="submit" value="Amortizar >>" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
+                        </p></td>
 		</tr>
 	</table>
 	</form>
