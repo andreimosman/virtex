@@ -132,8 +132,7 @@ $_LS_STATUS_FATURA = array(
 		"P" => "Paga",
 		"R" => "Paga Parcial",
 		"E" => "Estornadas",
-		"C" => "Canceladas",
-		"G" => "Reagendada"
+		"C" => "Canceladas"
 		);
 $_LS_OPERADORAS_CC = array(
 		"MC" => "MasterCard",

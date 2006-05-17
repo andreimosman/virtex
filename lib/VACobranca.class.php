@@ -2264,7 +2264,32 @@ class VACobranca extends VirtexAdmin {
 		}	
 		
 	
-	} 
+	}else if ($op == "relatorio_reagendamento"){
+		
+		$sSQL  = "SELECT ";
+		$sSQL .= "re.id_cliente_produto, re.data as data_vencimento, to_char(re.data_reagendamento, 'DD/mm/YYYY') as data_reagendamento, re.admin, to_char(re.data_para_reagendamento, 'DD/mm/YYYY') as reagendado_para, re.id_reagendamento, ";
+		$sSQL .= "fa.id_cliente_produto, fa.data as data, fa.valor, fa.status, fa.id_carne, to_char(fa.reagendamento, 'DD/mm/YYYY') as reagendamento, fa.id_cobranca, ";
+		$sSQL .= "ca.id_cliente_produto, ca.id_cliente, ";
+		$sSQL .= "ad.admin, ad.id_admin ";
+		$sSQL .= "FROM ";
+		$sSQL .= "lgtb_reagendamento re, cbtb_faturas fa, cntb_conta ca, adtb_admin ad ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "re.id_cliente_produto = fa.id_cliente_produto AND "; 
+		$sSQL .= "re.data = fa.data AND ";
+		$sSQL .= "fa.id_cliente_produto = ca.id_cliente_produto AND ";
+		$sSQL .= "ad.admin = re.admin ";
+		
+		//echo "REAGENDAMENTO: $sSQL <br>";
+		
+		$reagendamentos = $this->bd->obtemRegistros($sSQL);
+		
+		$this->tpl->atribui("reagendamentos",$reagendamentos);
+		
+		$this->arquivoTemplate = "relatorio_reagendamento.html";
+	
+	
+	
+	}
 	
 	
 	

@@ -1,8 +1,22 @@
+<!-- configuracao_upload_contrato.html -->
 <html>
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
 
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+{literal}
+<script type="text/JavaScript">
+<!--
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+//-->
+</script>
+{/literal}
+</head>
+</html>
+<html>
+<head>
 </head>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
@@ -65,6 +79,18 @@
                         </table></td>
                     </tr>
                   </table>
+                  <p>&nbsp;</p>
+                  <font face="Arial" color="#000000" size="+1">Modelos
+                  de Contrato J&aacute; Existentes</font>
+                  
+                  <table width="300" border="0" cellspacing="2" cellpadding="0">
+                    {foreach key=id item=nome from=$arquivos}
+					<tr>
+                      <td align="center"><p><strong>-</strong></p></td>
+                      <td height="30" align="left"><a href="javascript:;" onClick="MM_openBrWindow('contratos/{$nome}','contrato','scrollbars=yes,width=500,height=600')"><strong>{$nome}</strong></a></td>
+					</tr>
+					{/foreach}
+                  </table>
                   <p>&nbsp;</p></td>
               </tr>
             </table></td>
@@ -84,3 +110,4 @@
 
 
 </html>
+

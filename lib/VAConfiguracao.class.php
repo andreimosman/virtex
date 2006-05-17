@@ -1074,6 +1074,33 @@ class VAConfiguracao extends VirtexAdmin {
 						$nome_arq = "contrato_padrao_".$tipo_contrato.".html";
 						
 						$_file_ = @$_FILES['contrato'];
+						
+						
+						$arquivos = array();
+						// variável que define o diretório das imagens 
+						$dir = "./contratos"; 
+						
+						// esse seria o "handler" do diretório 
+						$dh = opendir($dir); 
+						//$arquivos = readdir($dh);
+						$path = "../template/default/images";
+						
+						
+						
+						// loop que busca todos os arquivos até que não encontre mais nada 
+						while (false !== ($filename = readdir($dh))) { 
+							// verificando se o arquivo é .html 
+							if (substr($filename,-5) == ".html" && substr($filename,0,1)!= "_") { 
+							
+								// mostra o nome do arquivo e um link para ele - pode ser mudado para mostrar diretamente a imagem :) 
+								$arquivos[] = "$filename"; 
+								//$arquivos = array_push($arquivos, $filename);
+								//echo $filename."<br>";
+							} 
+						} 
+						
+						$this->tpl->atribui("arquivos",$arquivos);
+						$this->tpl->atribui("path",$path);
 
 						
 						
