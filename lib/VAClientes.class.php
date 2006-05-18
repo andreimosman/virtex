@@ -1203,7 +1203,9 @@ class VAClientes extends VirtexAdmin {
 
 
 								$this->tpl->atribui("tipo",$tipo);
-								$destino = $nas['ip'];	
+								
+								//$destino = $nas['ip'];	
+								$destino = $nas['id_nas'];
 
 								
 								$username = @$_REQUEST["username"];
@@ -2037,13 +2039,13 @@ class VAClientes extends VirtexAdmin {
 							// SPOOL
 							if( $excluir ) {
 								//echo "excluir";
-								$this->spool->bandalargaExcluiRede($nas_atual["ip"],$conta["id_conta"],$conta["rede"]);
+								$this->spool->bandalargaExcluiRede($nas_atual["id_nas"],$conta["id_conta"],$conta["rede"]);
 							}
 
 							if( $incluir ) {
 								//echo "incluir<br>";
 								$id_conta = $conta["id_conta"];
-								$this->spool->bandalargaAdicionaRede($nas_novo["ip"],$id_conta,$rede,$mac,$upload_kbps,$download_kbps,$username);
+								$this->spool->bandalargaAdicionaRede($nas_novo["id_nas"],$id_conta,$rede,$mac,$upload_kbps,$download_kbps,$username);
 							}
 
 							// Faz o update nos dados em cntb_conta e cntb_conta_bandalarga
@@ -2676,7 +2678,7 @@ public function excluiContrato($id_cliente_produto,$permanente,$obs=""){
 				
 				if( $nas["tipo_nas"] == "I" ) {
 					// Nas do tipo IP, enviar instrução de excluir p/ spool.
-					$this->spool->bandalargaExcluiRede($nas["ip"],$contas[$i]["id_conta"],$info["rede"]);
+					$this->spool->bandalargaExcluiRede($nas["id_nas"],$contas[$i]["id_conta"],$info["rede"]);
 				}
 				
 				/*
@@ -2930,6 +2932,8 @@ public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento){
 	$sSQL = "SELECT nextval('blsq_carne_nossonumero') as nosso_numero ";
 	$nn = $this->bd->obtemUnicoRegistro($sSQL);
 	
+	
+	
 	$nosso_numero = $nn['nosso_numero'];
 	$data_venc = $fatura["data"];
 	@list($dia,$mes,$ano) = explode("/",$fatura["data"]);
@@ -2951,12 +2955,24 @@ public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento){
 	$linha_digitavel = MArrecadacao::linhaDigitavel($codigo_barras);
 	$hoje = date("d/m/Y");
 	
+	$sSQL  = "UPDATE ";
+	$sSQL .= "cbtb_faturas SET ";
+	$sSQL .= "nosso_numero = '$nosso_numero', ";
+	$sSQL .= "linha_digitavel = '$linha_digitavel', ";
+	$sSQL .= "cod_barra = '$codigo_barras' ";
+	$sSQL .= "WHERE ";
+	$sSQL .= "id_cliente_produto = '$id_cliente_produto' AND ";
+	$sSQL .= "data = '$data' ";
+	
+	$this->bd->consulta($sSQL);
+	//echo "FATURA: $sSQL <br>";
+	
 	$target = "/mosman/virtex/dados/carnes/codigos";
 	MArrecadacao::barCode($codigo_barras,"$target/$codigo_barras.png");
 		
 	//	$codigo = MArrecadacao::pagConta(...);
 		
-		
+	copy ("/mosman/virtex/dados/carnes/codigos/".$codigo_barras.".png","/home/hugo/public_html/virtex/codigos/".$codigo_barras.".png");
 		
 
 	//$barra = MArrecadacao::barCode($codigo_barras);

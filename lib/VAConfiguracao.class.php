@@ -1256,6 +1256,100 @@ class VAConfiguracao extends VirtexAdmin {
 
 
 
+					}else if ($op == "externo"){
+					
+						$acao = @$_REQUEST["acao"];
+						$id_nas = @$_REQUEST["id_nas"];
+						$tipo_nas = @$_REQUEST["tipo_nas"];
+						
+						
+						$sSQL  = "SELECT ";
+						$sSQL .= "id_nas, ip_redirec ";
+						$sSQL .= "FROM ";
+						$sSQL .= "enderecos_externos ";
+						$sSQL .= "ORDER BY ip_redirec ";
+						
+						$externos = $this->bd->obtemRegistros($sSQL);
+						
+						$sSQL  = "SELECT ";
+						$sSQL .= "id_nas, nome, ip, tipo_nas ";
+						$sSQL .= "FROM ";
+						$sSQL .= "cftb_nas ";
+						$sSQL .= "WHERE ";
+						$sSQL .= "id_nas = '$id_nas' ";
+						
+						$nas = $this->bd->obtemUnicoRegistro($sSQL);
+						
+						$this->tpl->atribui("nas",$nas);
+						$this->tpl->atribui("externos",$externos);
+						$this->tpl->atribui("id_nas",$id_nas);
+						$this->tpl->atribui("tipo_nas",$tipo_nas);
+
+						
+						if ($acao == "novo"){
+							$rede = @$_REQUEST["rede"];
+							
+							if ($rede){
+							
+								$network = strpos($rede, "/");
+							
+								if ($network == false){
+								//cadastra só um IP
+									
+									$sSQL  = "INSERT INTO ";
+									$sSQL .= "enderecos_externos ";
+									$sSQL .= "(id_nas, ip_redirec) ";
+									$sSQL .= "VALUES ";
+									$sSQL .= "('$id_nas','$rede') ";
+									$this->bd->consulta($sSQL);
+									
+									$mensagem = "IP Externo cadastrado com sucesso!";
+
+									$this->tpl->atribui("mensagem",$mensagem);
+
+									$this->tpl->atribui("url","configuracao.php?op=externo&id_nas={$id_nas}&tipo_nas={$tipo_nas}");
+									$this->tpl->atribui("target","_top");
+
+									$this->arquivoTemplate = "msgredirect.html";
+									RETURN;
+								
+								}else{
+								//cadastra uma rede de IPs
+								$this->cadastraExternos($id_nas,$rede);
+								
+								$mensagem = "Rede de IPs Externos cadastrada com sucesso!";
+
+								$this->tpl->atribui("mensagem",$mensagem);
+
+								$this->tpl->atribui("url","configuracao.php?op=externo&id_nas={$id_nas}&tipo_nas={$tipo_nas}");
+								$this->tpl->atribui("target","_top");
+
+								$this->arquivoTemplate = "msgredirect.html";
+								RETURN;
+
+								
+								
+								
+								}
+								
+							
+							}
+						
+						
+						
+							$titulo = "Cadastrar";
+							$this->tpl->atribui("titulo",$titulo);
+							$this->arquivoTemplate = "configuracao_redes_externo_novo.html";
+							return;
+						
+						}
+						
+						
+						
+						
+						
+						
+						$this->arquivoTemplate = "configuracao_rede_externa.html";
 
 					
 					}// $ops
@@ -1345,6 +1439,33 @@ class VAConfiguracao extends VirtexAdmin {
 		
 		return($ipaddr);
 		
+    }
+    
+    private function cadastraExterno($id_nas,$rede){
+    //cadastra 1 ip externo
+    
+    	$sSQL  = "INSERT INTO ";
+    	$sSQL .= "enderecos_externos ";
+    	$sSQL .= "(id_nas, ip_redirec) ";
+    	$sSQL .= "VALUES ";
+    	$sSQL .= "('$id_nas','$rede')";
+    	
+    	$this->bd->consulta($sSQL);
+    	
+    	return;
+    
+    
+    }
+    
+    private function cadastraExternos($id_nas,$rede){
+    	$_rede = new RedeIp($rede);
+    	$ips = $_rede->listaIPs();
+    	
+    	for($x=0;$x<count($ips);$x++){
+    		$this->cadastraExterno($id_nas,$ips[$x]);
+    	
+    	}
+    
     }
 
 	// Cadastra todos os ips de uma rede no sistema.

@@ -639,7 +639,10 @@ class VACobranca extends VirtexAdmin {
 				$this->carne($id_cliente_produto,$data,$id_cliente);
 				
 				//echo $carne;
-				$template = $this->tpl->obtemPagina("../boletos/layout-pc.html");
+
+//				copy("/mosman/virtex/dados/carnes/codigos/".$codigo_barras.".png","codigos/".$codigo_barras.".png");
+				$template = $this->tpl->obtemPagina("../boletos/pc-estilo.html");
+				$template .= $this->tpl->obtemPagina("../boletos/layout-pc.html");
 				echo $template;
 				//$this->arquivoTemplate = "../boletos/layout-pc.html";
 
@@ -1270,12 +1273,12 @@ class VACobranca extends VirtexAdmin {
 					if ($bl["tipo_bandalarga"] == "P"){
 						
 						//ECHO "PPPOE<BR>";
-						$this->spool->bandalargaExcluiRedePPPoE($nas["ip"],$bl["id_conta"],$bl["ipaddr"]);
+						$this->spool->bandalargaExcluiRedePPPoE($nas["id_nas"],$bl["id_conta"],$bl["ipaddr"]);
 					
 					}else {
 						
 						//echo "IP <BR>";
-						$this->spool->bandalargaExcluiRede($nas["ip"],$bl["id_conta"],$bl["rede"]);
+						$this->spool->bandalargaExcluiRede($nas["id_nas"],$bl["id_conta"],$bl["rede"]);
 					
 					}
 					
@@ -2289,6 +2292,121 @@ class VACobranca extends VirtexAdmin {
 	
 	
 	
+	}else if ($op == "boleto_pc"){
+	
+	$id_cliente = @$_REQUEST["id_cliente"];
+	$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
+	$data = @$_REQUEST["data"];
+	
+	
+		
+	$sSQL  = "SELECT cl.nome_razao, cl.endereco, cl.id_cidade, cl.estado, cl.cep, cl.cpf_cnpj, cd.cidade as nome_cidade, cd.id_cidade  ";
+	$sSQL .= "FROM ";
+	$sSQL .= "cltb_cliente cl, cftb_cidade cd ";
+	$sSQL .= "WHERE ";
+	$sSQL .= "cl.id_cliente = '$id_cliente' AND ";
+	$sSQL .= "cd.id_cidade = cl.id_cidade";
+
+	$cliente = $this->bd->obtemUnicoRegistro($sSQL);
+	//echo "CLIENTE: $sSQL  <br>";
+
+
+	$sSQL  = "SELECT valor, id_cobranca,to_char(data, 'DD/mm/YYYY') as data, cod_barra, descricao, status, observacoes, cod_barra, id_carne, nosso_numero, linha_digitavel FROM ";
+	$sSQL .= "cbtb_faturas ";
+	$sSQL .= "WHERE ";
+	$sSQL .= "id_cliente_produto = '$id_cliente_produto' AND ";
+	$sSQL .= "data = '$data' ";
+
+
+	$fatura = $this->bd->obtemUnicoRegistro($sSQL);
+	//echo "fatura: $sSQL<br>";
+
+
+	// PEGANDO INFORMAÇÕES DAS PREFERENCIAS
+	//$provedor = $this->prefs->obtem("total");
+	$provedor = $this->prefs->obtem("total");
+
+	$sSQL = "SELECT ct.id_produto, pd.nome from cbtb_contrato ct, prtb_produto pd WHERE ct.id_cliente_produto = '$id_cliente_produto' and ct.id_produto = pd.id_produto";
+	$produto = $this->bd->obtemUnicoRegistro($sSQL);
+		
+	
+	
+	//$nosso_numero = $nn['nosso_numero'];
+	$data_venc = $fatura["data"];
+	
+	@list($dia,$mes,$ano) = explode("/",$fatura["data"]);
+	$vencimento = $ano.$mes.$dia;
+	
+	$valor = $fatura["valor"];
+	$id_cobranca = $fatura["id_cobranca"];
+	$nome_cliente = $cliente["nome_razao"];
+	$cpf_cliente = $cliente["cpf_cnpj"];
+	$id_empresa = $provedor["cnpj"];
+	//$nosso_numero = 1;
+	$nome_cedente = $provedor['nome'];
+	$cendereco = $provedor['endereco'];
+	$clocalidade = $provedor['localidade'];
+	$observacoes = $provedor['observacoes'];
+	$nome_produto = $produto["nome"];
+	
+	
+	
+	
+	$ph = new MUtils;
+	
+	$_path = MUtils::getPwd();
+	
+	$images = $_path."/template/boletos/imagens";
+
+	$sSQL = "SELECT nextval('blsq_carne_nossonumero') as nosso_numero ";
+	$nn = $this->bd->obtemUnicoRegistro($sSQL);
+
+	//$nosso_numero = $nn['nosso_numero'];
+	$nosso_numero = $fatura["nosso_numero"];
+	$codigo_barras = $fatura["cod_barra"];
+	$linha_digitavel = $fatura["linha_digitavel"];
+	
+	
+	
+	//$codigo_barras = MArrecadacao::codigoBarrasPagContas($valor,$id_empresa,$nosso_numero,$vencimento);
+	
+	//$codigo_barras = $fatura["cod_barra"];
+	//$linha_digitavel = MArrecadacao::linhaDigitavel($codigo_barras);
+	$hoje = date("d/m/Y");
+
+	$this->tpl->atribui("codigo_barras",$codigo_barras);
+
+//	copy("/mosman/virtex/dados/carnes/codigos/".$codigo_barras.".png","codigos/".$codigo_barras.".png");
+
+	$this->tpl->atribui("linha_digitavel",$linha_digitavel);
+	$this->tpl->atribui("valor",$valor);
+	$this->tpl->atribui("imagens",$images);
+	$this->tpl->atribui("vencimento", $data_venc);
+	$this->tpl->atribui("hoje",$hoje);
+	$this->tpl->atribui("nosso_numero",$nosso_numero);
+	$this->tpl->atribui("sacado",$nome_cliente);
+	$this->tpl->atribui("sendereco",$cliente['endereco']);
+	$this->tpl->atribui("scidade",$cliente['nome_cidade']);
+	$this->tpl->atribui("suf",$cliente['estado']);
+	$this->tpl->atribui("scep",$cliente['cep']);
+	$this->tpl->atribui("juros",$provedor['tx_juros']);
+	$this->tpl->atribui("multa",$provedor['multa']);
+	$this->tpl->atribui("nome_cedente",$provedor['nome']);
+	$this->tpl->atribui("cendereco",$cendereco);
+	$this->tpl->atribui("clocalidade",$clocalidade);
+	$this->tpl->atribui("observacoes",$observacoes);
+	$this->tpl->atribui("produto",$nome_produto);
+	$this->tpl->atribui("path",$_path);
+
+	
+	
+	$template  = $this->tpl->obtemPagina("../boletos/pc-estilo.html");
+	$template .= $this->tpl->obtemPagina("../boletos/layout-pc.html");
+	
+	
+	echo ($template);
+	
+	
 	}
 	
 	
@@ -2461,12 +2579,15 @@ class VACobranca extends VirtexAdmin {
 
 	//$barra = MArrecadacao::barCode($codigo_barras);
 	
+	
 	$ph = new MUtils;
 	
 	$_path = MUtils::getPwd();
 	
 	$images = $_path."/template/boletos/imagens";
 	$this->tpl->atribui("codigo_barras",$codigo_barras);
+	
+//	copy("/mosman/virtex/dados/carnes/codigos/".$codigo_barras.".png","codigos/".$codigo_barras.".png");
 
 	$this->tpl->atribui("linha_digitavel",$linha_digitavel);
 	$this->tpl->atribui("valor",$valor);
@@ -2487,6 +2608,7 @@ class VACobranca extends VirtexAdmin {
 	$this->tpl->atribui("observacoes",$observacoes);
 	$this->tpl->atribui("produto",$nome_produto);
 	$this->tpl->atribui("path",$_path);
+	$this->tpl->atribui("barra",$barra);
 	
 	//return($carne_emitido);
 	$fatura = $this->tpl->obtemPagina("../boletos/layout-pc.html");
