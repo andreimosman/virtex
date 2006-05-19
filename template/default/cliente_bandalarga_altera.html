@@ -1,3 +1,4 @@
+<!-- cliente_bandalarga_altera.html -->
 <html>
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
@@ -148,12 +149,11 @@
                                             <input type="text" name="mac" value="00:0d:87:0c:32:0e" maxlength="17" size=15>
                                           </p></td>
                                       </tr>
-                                      <tr>
+                                      <tr> 
                                         <td bgcolor="#FFFFFF" align="right" valign="top"><p>Redirecionar: 
                                           </p></td>
-                                        <td bgcolor="#FFFFFF" valign="top"><input name="redirecionar" type="checkbox" value="true" id="redirecionar"></td>
-                                        <td bgcolor="#FFFFFF" align="right" valign="top">&nbsp;</td>
-                                        <td bgcolor="#FFFFFF" valign="top">&nbsp;</td>
+                                        <td bgcolor="#FFFFFF" valign="top" colspan="3"><input name="redirecionar" type="checkbox" value="true" id="redirecionar" {if $ip_externo}checked{/if}>
+                                          IP: {$ip_externo}</td>
                                       </tr>
                                       <tr bordercolor="#f1f1f1" bgcolor="#f1f1f1"> 
                                         <td colspan=4> <h2><font color="#000000">Banda</font></h2></td>

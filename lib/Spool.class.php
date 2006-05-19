@@ -217,9 +217,47 @@ class Spool {
 		return;	
 		
 	
-	}	
+	}
+	
+	function adicionaIpExterno($id_nas,$ip_externo,$ipaddr,$id_conta){
+	
+		$paramentros = $ip_externo.",".$ipaddr;
+		
+		$sSQL  = "INSERT INTO ";
+		$sSQL .= " sptb_spool ( ";
+		$sSQL .= "	registro, destino, tipo, op, id_conta, parametros, status ";
+		$sSQL .= " ) VALUES ( ";
+		$sSQL .= "     now(), '$id_nas', 'D', 'a', '$id_conta', '$paramentros', 'A' ";
+		$sSQL .= " )";
+	
+		$this->bd->consulta($sSQL);
+		
+		echo "SPOOL: $sSQL <br>";
+		
+		return;
 	
 	
+	}
+	
+	function excluiIpExterno($id_nas,$ip_externo,$id_conta){
+
+		$paramentros = $ip_externo;
+		
+		$sSQL  = "INSERT INTO ";
+		$sSQL .= " sptb_spool ( ";
+		$sSQL .= "	registro, destino, tipo, op, id_conta, parametros, status ";
+		$sSQL .= " ) VALUES ( ";
+		$sSQL .= "     now(), '$id_nas', 'D', 'x', '$id_conta', '$paramentros', 'A' ";
+		$sSQL .= " )";
+	
+		$this->bd->consulta($sSQL);
+		
+		return;
+	
+		
+	
+	
+	}
 	
 
 }

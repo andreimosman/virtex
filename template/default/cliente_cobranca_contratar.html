@@ -576,8 +576,8 @@ frmContratacao.pri_venc.value = hoje();
     <td bgcolor="#FFFFFF" align="right" valign="MIDDLE">
 <p>Redirecionar:</p></td>
     <td bgcolor="#FFFFFF" colspan="3" valign="MIDDLE">
-<input name="redirecionar" type="checkbox" value="true" id="redirecionar" class="checkbox">
-    </td>
+<input name="redirecionar" type="checkbox" value="true" id="redirecionar" class="checkbox" {if $ip_externo}checked{/if}>
+      IP: {$ip_externo}</td>
   </tr>
 </table>
     </div>

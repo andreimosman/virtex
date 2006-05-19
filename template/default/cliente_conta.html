@@ -1,11 +1,24 @@
-
+<!-- cliente_conta.html -->
 {include file='cliente_header.html'}
 {if $tipo_conta == "BL"}
 <script language="javascript">
+var ip_externo = "{$ip_externo}";
+
 {literal}
 
 
-
+function redir(){
+	var frm = document.frmConta;
+	if (ip_externo != "" && frm.redirecionar.checked == false){
+		frm.redirect.value = "exclui";
+	}else if (ip_externo == "" && frm.redirecionar.checked == true){
+		frm.redirect.value = "adiciona";
+	}else{
+		frm.redirect.value = "";
+	}
+	
+	return;
+}
 
 function alteraNas() {
 	var frm = document.frmConta;
@@ -172,18 +185,22 @@ function check(){
               <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p> 
                   <input type="checkbox" name="altera_rede" value="1" class="checkbox" {if $altera_rede}CHECKED{/if} onClick="javascript:alteraNovaSelecao();" onChange="javascript:alteraNovaSelecao();">
                   Nova Seleção de Rede/IP:</p></td>
-              <td bgcolor="#FFFFFF"><SELECT name='selecao_ip' onChange='javascript:alteraSelecaoIP();'>
-                  <OPTION VALUE='A' >Automática</OPTION>
-                  <OPTION VALUE='M' >Manual</OPTION>
-                </SELECT> <br> <input type="text" name="endereco_ip" id="endereco_ip" value="{$endereco_ip}"></td>
+              <td bgcolor="#FFFFFF"><select name='selecao_ip' onchange='javascript:alteraSelecaoIP();'>
+                  <option value='A' >Automática</option>
+                  <option value='M' >Manual</option>
+                </select> <br> <input type="text" name="endereco_ip" id="endereco_ip" value="{$endereco_ip}"></td>
               <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>MAC:</p></td>
               <td bgcolor="#FFFFFF" valign="top"><input type="text" name="mac" value="{$mac}" maxlength="17" size=17></td>
               {literal} <script>
 									//verificaTipoRede();
 									</script> {/literal} </tr>
-            <tr> 
-              <td bgcolor="#FFFFFF" align="right" valign="top"><p>Redirecionar:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><input name="redirecionar" type="checkbox" value="true" id="redirecionar" class="checkbox"></td>
+            <tr valign="MIDDLE"> 
+              <td bgcolor="#FFFFFF" align="right"> 
+                <p>Redirecionar:</p></td>
+              <td bgcolor="#FFFFFF" colspan="3"> 
+                <p>
+                  <input name="redirecionar" type="checkbox" value="true" id="redirecionar" class="checkbox" {if $ip_externo}checked{/if}>
+                  {if $ip_externo}IP: {$ip_externo}{/if}</p></td>
             </tr>
           </table>
 
@@ -205,7 +222,7 @@ function check(){
 
 
                                 <input type="hidden" name="acao" value="cad">
-                                </td>
+          <input name="ip_externo" type="hidden" value="{$ip_externo}" id="ip_externo"> </td>
                             </tr>
 							<tr>
 

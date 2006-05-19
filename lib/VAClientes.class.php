@@ -1078,6 +1078,29 @@ class VAClientes extends VirtexAdmin {
 									$ip_externo = $this->obtemIPExterno($_REQUEST["id_nas"]);
 									//echo $ip_externo["ip_externo"];
 									
+									if($nas["tipo_nas"] == "P"){
+										
+										$ipaddr = $ip_disp;
+									
+									}else if ($nas["tipo_nas"] == "I"){
+									
+										$ipaddr = $rede_disp;
+									
+									}
+									
+									$username = @$_REQUEST["username"];
+									$tipo_conta = @$_REQUEST["tipo"];
+									$dominio = $prefs["geral"]["dominio_padrao"];
+
+									
+									$sSQL = "SELECT id_conta FROM cntb_conta WHERE username = '$username' AND tipo_conta = 'BL' AND dominio = '$dominio' ";
+									$_id_conta = $this->bd->obtemUnicoRegistro($sSQL);
+									$id_conta = $_id_conta["id_conta"];
+									$_ip_externo = $ip_externo["ip_externo"];
+									
+									$this->spool->adicionaIpExterno($_REQUEST["id_nas"],$_ip_externo,$ipaddr,$id_conta);
+									
+									
 								}else{
 									$ip_externo = "null";
 								
@@ -1154,7 +1177,7 @@ class VAClientes extends VirtexAdmin {
 								$sSQL .= "     )";						
 								
 								
-								////echo "INSERT NA BL: $sSQL <br>";
+								echo "INSERT NA BL: $sSQL <br>";
 								$this->bd->consulta($sSQL);  
 								//if( $this->bd->obtemErro() ) {
 								//	//echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
@@ -1280,7 +1303,7 @@ class VAClientes extends VirtexAdmin {
 						$externo = $this->bd->obtemUnicoRegistro($sSQL);
 						
 						
-						////echo "EXTERNO: $sSQL <br>";
+						echo "EXTERNO: $sSQL <br>";
 						$this->tpl->atribui("ip_externo",$externo["ip_externo"]);
 						
 						}
@@ -1827,7 +1850,7 @@ class VAClientes extends VirtexAdmin {
 					break;
 				case 'BL':
 					$sSQL  = "SELECT ";
-					$sSQL .= "   cbl.id_pop, cbl.tipo_bandalarga, cbl.ipaddr, cbl.rede, cbl.id_nas, cbl.mac, cbl.upload_kbps, cbl.download_kbps "; // alterei
+					$sSQL .= "   cbl.id_pop, cbl.tipo_bandalarga, cbl.ipaddr, cbl.rede, cbl.id_nas, cbl.mac, cbl.upload_kbps, cbl.download_kbps, cbl.ip_externo "; // alterei
 					$sSQL .= "";
 					$sSQL .= "FROM ";
 					$sSQL .= "   cntb_conta_bandalarga cbl ";
@@ -1869,6 +1892,8 @@ class VAClientes extends VirtexAdmin {
 					if( !$endereco_ip ) $endereco_ip = $conta["endereco_ip"];
 
 					$selecao_ip = @$_REQUEST["selecao_ip"];
+
+					
 
 
 					// ATRIBUI AS VARIAVEIS DE TEMPLATE COM BASE EM REQUEST.
@@ -2125,37 +2150,77 @@ class VAClientes extends VirtexAdmin {
 
 							$this->bd->consulta($sSQL);
 
-							$sSQL  = "UPDATE ";
-							$sSQL .= "   cntb_conta_bandalarga ";
-							$sSQL .= "SET ";
+							$uSQL  = "UPDATE ";
+							$uSQL .= "   cntb_conta_bandalarga ";
+							$uSQL .= "SET ";
 
 
-							$sSQL .= "   id_nas = '".$this->bd->escape($id_nas)."', ";
-							$sSQL .= "   id_pop = '".$this->bd->escape($id_pop)."', ";
-							$sSQL .= "   upload_kbps = '".$this->bd->escape($upload_kbps)."', ";
-							$sSQL .= "   download_kbps = '".$this->bd->escape($download_kbps)."', ";
+							$uSQL .= "   id_nas = '".$this->bd->escape($id_nas)."', ";
+							$uSQL .= "   id_pop = '".$this->bd->escape($id_pop)."', ";
+							$uSQL .= "   upload_kbps = '".$this->bd->escape($upload_kbps)."', ";
+							$uSQL .= "   download_kbps = '".$this->bd->escape($download_kbps)."', ";
 							
 							if ( !$mac || $mac == "" ){
-							$sSQL .= "   mac = NULL ";
+							$uSQL .= "   mac = NULL ";
 							} else {
 							
-							$sSQL .= "   mac = '".$this->bd->escape($mac)."' ";
+							$uSQL .= "   mac = '".$this->bd->escape($mac)."' ";
 							
 							}
 							
 							if( $rede ) {
-								$sSQL .= ", ipaddr = null, ";
-								$sSQL .= "  rede = '".$rede."' ";
+								
+								$uSQL .= ", ipaddr = null, ";
+								$uSQL .= "  rede = '".$rede."' ";
+								
 							}
 
-							$sSQL .= "WHERE ";
-							$sSQL .= "   username = '".$this->bd->escape($username)."' ";
-							$sSQL .= "   AND dominio = '".$this->bd->escape($dominio)."' ";
-							$sSQL .= "   AND tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
-							$sSQL .= "";
+							$redirecionar = @_REQUEST["redirecionar"];
+							$ip_externo = @$_REQUEST["ip_externo"];
 
-							////echo "$sSQL;<br>\n";
-							$this->bd->consulta($sSQL);
+
+							if ( $ip_externo != "" && $redirecionar == null ){
+							
+								$uSQL .= "  , ip_externo = null ";
+							
+							}else if ( $ip_externo == "" && $redirecionar == "true" ){
+								
+								$ip_externo = $this->obtemIPExterno($this->bd->escape($id_nas));
+								$ip_externo = $ip_externo["ip_externo"];
+								
+								$uSQL .= " ,ip_externo = '$ip_externo' ";
+								
+							}
+							
+							
+							
+
+
+
+							$uSQL .= "WHERE ";
+							$uSQL .= "   username = '".$this->bd->escape($username)."' ";
+							$uSQL .= "   AND dominio = '".$this->bd->escape($dominio)."' ";
+							$uSQL .= "   AND tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
+							$uSQL .= "";
+
+							////echo "$uSQL;<br>\n";
+							$this->bd->consulta($uSQL);
+							
+							// SPOOL MEGAFOCKER
+							$sSQL = "SELECT ip_externo, id_nas, ipaddr, rede, tipo_conta FROM cntb_conta_bandalarga WHERE username = '".$this->bd->escape($username)."' AND dominio = '".$this->bd->escape($dominio)."' AND tipo_conta = '".$this->bd->escape($tipo_conta)."'"
+							$cntb = $this->bd->obtemUnicoRegistro($sSQL);
+							
+							$id_nas_antigo = @$_REQUEST["id_nas"];
+							
+							
+							
+							if ( $id_nas_antigo != $cntb["id_nas"] ){
+							
+							$this->spool->excluiIpExterno($id_nas_antigo,$ip_externo,$id_conta);
+							//$this->spool->adicionaIpExterno();
+							
+							}
+
 
 						break;
 						
@@ -2232,6 +2297,10 @@ class VAClientes extends VirtexAdmin {
 						
 							break;
 					}
+
+					
+
+
 
 					// Exibe mensagem (joga pra msgredirect)
 					$this->tpl->atribui("mensagem","Conta Alterada com sucesso!");
@@ -2665,6 +2734,7 @@ class VAClientes extends VirtexAdmin {
 public function __destruct() {
       	parent::__destruct();
 }
+
 	
 public function contrataProduto(){
 
