@@ -70,7 +70,8 @@
 		$tipo_hospedagem = @$_REQUEST["tipo_hospedagem"];
 		$dominio_hospedagem = @$_REQUEST["dominio_hospedagem"];
 		$pagamento = @$_REQUEST["pagamento"];
-		$pri_venc = @$_REQUEST["pri_venc"];		
+		$pri_venc = @$_REQUEST["pri_venc"];	
+		$redirecionar = @$_REQUEST["redirecionar"];
 		
 		//Informações de banco e cartão de crédito
 		$cc_vencimento = @$_REQUEST["cc_vencimento"];
@@ -172,6 +173,7 @@
 		$this->tpl->atribui("tipo_hospedagem", $tipo_hospedagem);
 		$this->tpl->atribui("pri_venc",$pri_venc);
 		$this->tpl->atribui("pagamento",$pagamento);
+		$this->tpl->atribui("redirecionar",$redirecionar);
 		
 		
 		$this->tpl->atribui("cc_vencimento",$cc_vencimento); 

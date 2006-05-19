@@ -146,43 +146,46 @@ function check(){
                               <td align="center" valign="middle" id="tdados">&nbsp;
 
 								<table width="450" border=0 bgcolor="#F1F1F1" id="disc">
-								  <tr>
-									<td colspan=2><p><strong>Dados da Conexão</strong></p></td>
-								  </tr>
-								  <tr>
-									<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>POP:</p></td>
-									<td bgcolor="#FFFFFF">
-									  <SELECT name='id_pop' >
+            <tr> 
+              <td colspan=2><p><strong>Dados da Conexão</strong></p></td>
+            </tr>
+            <tr> 
+              <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>POP:</p></td>
+              <td bgcolor="#FFFFFF"> <SELECT name='id_pop' >
 										{foreach item=v from=$lista_pops}
-										  <OPTION value="{$v.id_pop}" {if $v.id_pop == $id_pop}SELECTED{/if}>{$v.nome}</OPTION>
+										  
+                  <OPTION value="{$v.id_pop}" {if $v.id_pop == $id_pop}SELECTED{/if}>{$v.nome}</OPTION>
 										{/foreach}
-									  </SELECT>
-									</td>
-									<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>NAS:</p></td>
-									<td bgcolor="#FFFFFF">
-									  <SELECT name='id_nas' onChange="javascript:alteraNas();">
+									  
+                </SELECT> </td>
+              <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>NAS:</p></td>
+              <td bgcolor="#FFFFFF"> <SELECT name='id_nas' onChange="javascript:alteraNas();">
 										{foreach item=v from=$lista_nas}
-										  <OPTION value="{$v.id_nas}" {if $v.id_nas == $id_nas}SELECTED{/if}>{$v.tp}: {$v.nome}</OPTION>
+										  
+                  <OPTION value="{$v.id_nas}" {if $v.id_nas == $id_nas}SELECTED{/if}>{$v.tp}: 
+                  {$v.nome}</OPTION>
 										{/foreach}
-									  </SELECT> </td>
-								  </tr>
-								  <tr>
-									<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p><input type="checkbox" name="altera_rede" value="1" class="checkbox" {if $altera_rede}CHECKED{/if} onClick="javascript:alteraNovaSelecao();" onChange="javascript:alteraNovaSelecao();">Nova Seleção
-										de Rede/IP:</p></td>
-									<td bgcolor="#FFFFFF"><SELECT name='selecao_ip' onChange='javascript:alteraSelecaoIP();'>
-										<OPTION VALUE='A' >Automática</OPTION>
-										<OPTION VALUE='M' >Manual</OPTION>
-									  </SELECT> <br> <input type="text" name="endereco_ip" id="endereco_ip" value="{$endereco_ip}"></td>
-									<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>MAC:</p></td>
-									<td bgcolor="#FFFFFF" valign="top"><input type="text" name="mac" value="{$mac}" maxlength="17" size=17></td>
-									{literal}
-									<script>
+									  
+                </SELECT> </td>
+            </tr>
+            <tr> 
+              <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p> 
+                  <input type="checkbox" name="altera_rede" value="1" class="checkbox" {if $altera_rede}CHECKED{/if} onClick="javascript:alteraNovaSelecao();" onChange="javascript:alteraNovaSelecao();">
+                  Nova Seleção de Rede/IP:</p></td>
+              <td bgcolor="#FFFFFF"><SELECT name='selecao_ip' onChange='javascript:alteraSelecaoIP();'>
+                  <OPTION VALUE='A' >Automática</OPTION>
+                  <OPTION VALUE='M' >Manual</OPTION>
+                </SELECT> <br> <input type="text" name="endereco_ip" id="endereco_ip" value="{$endereco_ip}"></td>
+              <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>MAC:</p></td>
+              <td bgcolor="#FFFFFF" valign="top"><input type="text" name="mac" value="{$mac}" maxlength="17" size=17></td>
+              {literal} <script>
 									//verificaTipoRede();
-									</script>
-									{/literal}
-
-								  </tr>
-								</table>
+									</script> {/literal} </tr>
+            <tr> 
+              <td bgcolor="#FFFFFF" align="right" valign="top"><p>Redirecionar:</p></td>
+              <td bgcolor="#FFFFFF" colspan="3"><input name="redirecionar" type="checkbox" value="true" id="redirecionar" class="checkbox"></td>
+            </tr>
+          </table>
 
                               </td>
                             </tr>

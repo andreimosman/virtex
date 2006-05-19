@@ -436,64 +436,7 @@ class VAConfiguracao extends VirtexAdmin {
 			
 //////////////////////////////HUGO
 		}else if ($op == "nas_rede"){
-			//LISTA REDES CADASTRADAS EM DETERMINADO NAS
-			
-			$id_nas = @$_REQUEST["id_nas"];
-			
-			$erro = "";
-			
-			if( !$id_nas ) {
-			   $erro = "Tentativa de acesso inválido";
-			}
-			
-			if( !$erro ) {
-				// Informações do NAS
-				$sSQL  = "SELECT ";
-				$sSQL .= "   id_nas, nome, ip, secret, tipo_nas ";
-				$sSQL .= "FROM ";
-				$sSQL .= "   cftb_nas ";
-				$sSQL .= "WHERE ";
-				$sSQL .= "   id_nas = '".$this->bd->escape($id_nas)."' ";
-				
-				$nas = $this->bd->obtemUnicoRegistro($sSQL);
-				
-				$this->tpl->atribui("nas",$nas);
-				
-				// $sSQL .= "";
-			
-			
-				// Lista das redes deste NAS
-				//$sSQL  = "SELECT ";
-				//$sSQL .= "   r.rede,r.tipo_rede,r.id_rede, nr.id_rede ";
-				//$sSQL .= "FROM ";
-				//$sSQL .= "   cftb_nas_rede nr, cftb_rede r ";
-				//$sSQL .= "WHERE ";
-				//$sSQL .= "   r.id_rede = nr.id_rede ";
-				//$sSQL .= "   AND nr.id_nas = '" . $this->bd->escape($id_nas) . "' ";
-				//$sSQL .= "   id_nas = '" . $this->bd->escape($id_nas) . "' ";
-				
-				$sSQL  = "SELECT ";
-				$sSQL .= "   r.rede, r.tipo_rede, r.id_rede ";
-				$sSQL .= "FROM ";
-				$sSQL .= "   cftb_rede r, cftb_nas_rede nr ";
-				$sSQL .= "WHERE ";
-				$sSQL .= "   r.rede = nr.rede ";
-				$sSQL .= "   AND nr.id_nas = $id_nas ";
-				$sSQL .= "ORDER BY ";
-				$sSQL .= "   r.rede ";
-				$sSQL .= "";
-				
-				
-				
-				// TODO: aplicar filtros e paginação...
-				$redes = $this->bd->obtemRegistros($sSQL);
-				
-				$this->tpl->atribui("redes",$redes);
-				
-				$this->arquivoTemplate = "configuracao_nas_rede.html";
 
-				
-			}
 			
 			
 		
@@ -592,7 +535,9 @@ class VAConfiguracao extends VirtexAdmin {
 						
 					}
 											
-											
+				
+				
+				
 				
 						
 						
@@ -612,7 +557,67 @@ class VAConfiguracao extends VirtexAdmin {
 				}
 										
 			}					
-						
+					
+			//LISTA REDES CADASTRADAS EM DETERMINADO NAS
+
+			$id_nas = @$_REQUEST["id_nas"];
+
+			$erro = "";
+
+			if( !$id_nas ) {
+			   $erro = "Tentativa de acesso inválido";
+			}
+
+			if( !$erro ) {
+				// Informações do NAS
+				$sSQL  = "SELECT ";
+				$sSQL .= "   id_nas, nome, ip, secret, tipo_nas ";
+				$sSQL .= "FROM ";
+				$sSQL .= "   cftb_nas ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "   id_nas = '".$this->bd->escape($id_nas)."' ";
+
+				$nas = $this->bd->obtemUnicoRegistro($sSQL);
+
+				$this->tpl->atribui("nas",$nas);
+
+				// $sSQL .= "";
+
+
+				// Lista das redes deste NAS
+				//$sSQL  = "SELECT ";
+				//$sSQL .= "   r.rede,r.tipo_rede,r.id_rede, nr.id_rede ";
+				//$sSQL .= "FROM ";
+				//$sSQL .= "   cftb_nas_rede nr, cftb_rede r ";
+				//$sSQL .= "WHERE ";
+				//$sSQL .= "   r.id_rede = nr.id_rede ";
+				//$sSQL .= "   AND nr.id_nas = '" . $this->bd->escape($id_nas) . "' ";
+				//$sSQL .= "   id_nas = '" . $this->bd->escape($id_nas) . "' ";
+
+				$sSQL  = "SELECT ";
+				$sSQL .= "   r.rede, r.tipo_rede, r.id_rede ";
+				$sSQL .= "FROM ";
+				$sSQL .= "   cftb_rede r, cftb_nas_rede nr ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "   r.rede = nr.rede ";
+				$sSQL .= "   AND nr.id_nas = $id_nas ";
+				$sSQL .= "ORDER BY ";
+				$sSQL .= "   r.rede ";
+				$sSQL .= "";
+
+
+
+				// TODO: aplicar filtros e paginação...
+				$redes = $this->bd->obtemRegistros($sSQL);
+
+				$this->tpl->atribui("redes",$redes);
+
+				$this->arquivoTemplate = "configuracao_nas_rede.html";
+					
+									
+			}
+					
+					
 						
 			// Atribui a variável de erro no template.
 			$this->tpl->atribui("erros",$erros);
@@ -1264,10 +1269,11 @@ class VAConfiguracao extends VirtexAdmin {
 						
 						
 						$sSQL  = "SELECT ";
-						$sSQL .= "id_nas, ip_redirec ";
+						$sSQL .= "id_nas, ip_externo ";
 						$sSQL .= "FROM ";
-						$sSQL .= "enderecos_externos ";
-						$sSQL .= "ORDER BY ip_redirec ";
+						$sSQL .= "cftb_ip_externo ";
+						$sSQL .= "WHERE id_nas = '$id_nas' ";
+						$sSQL .= "ORDER BY ip_externo ";
 						
 						$externos = $this->bd->obtemRegistros($sSQL);
 						
@@ -1297,8 +1303,8 @@ class VAConfiguracao extends VirtexAdmin {
 								//cadastra só um IP
 									
 									$sSQL  = "INSERT INTO ";
-									$sSQL .= "enderecos_externos ";
-									$sSQL .= "(id_nas, ip_redirec) ";
+									$sSQL .= "cftb_ip_externo ";
+									$sSQL .= "(id_nas, ip_externo) ";
 									$sSQL .= "VALUES ";
 									$sSQL .= "('$id_nas','$rede') ";
 									$this->bd->consulta($sSQL);
@@ -1307,7 +1313,7 @@ class VAConfiguracao extends VirtexAdmin {
 
 									$this->tpl->atribui("mensagem",$mensagem);
 
-									$this->tpl->atribui("url","configuracao.php?op=externo&id_nas={$id_nas}&tipo_nas={$tipo_nas}");
+									$this->tpl->atribui("url","configuracao.php?op=externo&id_nas={$id_nas}&tipo_nas={$tipo_nas}&acao=novo");
 									$this->tpl->atribui("target","_top");
 
 									$this->arquivoTemplate = "msgredirect.html";
@@ -1321,11 +1327,11 @@ class VAConfiguracao extends VirtexAdmin {
 
 								$this->tpl->atribui("mensagem",$mensagem);
 
-								$this->tpl->atribui("url","configuracao.php?op=externo&id_nas={$id_nas}&tipo_nas={$tipo_nas}");
+								$this->tpl->atribui("url","configuracao.php?op=externo&id_nas={$id_nas}&tipo_nas={$tipo_nas}&acao=novo");
 								$this->tpl->atribui("target","_top");
 
 								$this->arquivoTemplate = "msgredirect.html";
-								RETURN;
+								return;
 
 								
 								
@@ -1445,8 +1451,8 @@ class VAConfiguracao extends VirtexAdmin {
     //cadastra 1 ip externo
     
     	$sSQL  = "INSERT INTO ";
-    	$sSQL .= "enderecos_externos ";
-    	$sSQL .= "(id_nas, ip_redirec) ";
+    	$sSQL .= "cftb_ip_externo ";
+    	$sSQL .= "(id_nas, ip_externo) ";
     	$sSQL .= "VALUES ";
     	$sSQL .= "('$id_nas','$rede')";
     	
