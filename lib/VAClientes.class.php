@@ -1177,7 +1177,7 @@ class VAClientes extends VirtexAdmin {
 								$sSQL .= "     )";						
 								
 								
-								echo "INSERT NA BL: $sSQL <br>";
+								//echo "INSERT NA BL: $sSQL <br>";
 								$this->bd->consulta($sSQL);  
 								//if( $this->bd->obtemErro() ) {
 								//	//echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
@@ -1303,7 +1303,7 @@ class VAClientes extends VirtexAdmin {
 						$externo = $this->bd->obtemUnicoRegistro($sSQL);
 						
 						
-						echo "EXTERNO: $sSQL <br>";
+						//echo "EXTERNO: $sSQL <br>";
 						$this->tpl->atribui("ip_externo",$externo["ip_externo"]);
 						
 						}
@@ -2175,7 +2175,7 @@ class VAClientes extends VirtexAdmin {
 								
 							}
 
-							$redirecionar = @_REQUEST["redirecionar"];
+							$redirecionar = @$_REQUEST["redirecionar"];
 							$ip_externo = @$_REQUEST["ip_externo"];
 
 
@@ -2192,11 +2192,6 @@ class VAClientes extends VirtexAdmin {
 								
 							}
 							
-							
-							
-
-
-
 							$uSQL .= "WHERE ";
 							$uSQL .= "   username = '".$this->bd->escape($username)."' ";
 							$uSQL .= "   AND dominio = '".$this->bd->escape($dominio)."' ";
@@ -2207,7 +2202,7 @@ class VAClientes extends VirtexAdmin {
 							$this->bd->consulta($uSQL);
 							
 							// SPOOL MEGAFOCKER
-							$sSQL = "SELECT ip_externo, id_nas, ipaddr, rede, tipo_conta FROM cntb_conta_bandalarga WHERE username = '".$this->bd->escape($username)."' AND dominio = '".$this->bd->escape($dominio)."' AND tipo_conta = '".$this->bd->escape($tipo_conta)."'"
+							$sSQL = "SELECT ip_externo, id_nas, ipaddr, rede, tipo_conta FROM cntb_conta_bandalarga WHERE username = '".$this->bd->escape($username)."' AND dominio = '".$this->bd->escape($dominio)."' AND tipo_conta = '".$this->bd->escape($tipo_conta)."'";
 							$cntb = $this->bd->obtemUnicoRegistro($sSQL);
 							
 							$id_nas_antigo = @$_REQUEST["id_nas"];
@@ -2394,6 +2389,7 @@ class VAClientes extends VirtexAdmin {
 				
 					case 'D':
 						// Consulta específica de discado
+						
 						break;
 
 					case 'BL':
@@ -2423,20 +2419,22 @@ class VAClientes extends VirtexAdmin {
 						
 					case 'E':
 						// Consulta específica do e-mail
+						
 						break;
 
 					case 'H':
 						// Consulta especifica da hospedagem
 						
-						
-						
-						
 						break;
 				}
 				
+				
 				$this->arquivoTemplate = "cliente_ficha.html";
+				
 			} else {
+			
 				$this->arquivoTemplate = "cliente_conta.html";
+				
 			}
 
 		
@@ -2730,6 +2728,7 @@ class VAClientes extends VirtexAdmin {
 			
 		}
 	}
+	
 	
 public function __destruct() {
       	parent::__destruct();

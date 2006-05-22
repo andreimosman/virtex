@@ -643,7 +643,7 @@ class VACobranca extends VirtexAdmin {
 //				copy("/mosman/virtex/dados/carnes/codigos/".$codigo_barras.".png","codigos/".$codigo_barras.".png");
 				$template = $this->tpl->obtemPagina("../boletos/pc-estilo.html");
 				$template .= $this->tpl->obtemPagina("../boletos/layout-pc.html");
-				echo $template;
+				//echo $template;
 				//$this->arquivoTemplate = "../boletos/layout-pc.html";
 
 				/* PAGCONTAS */ 
@@ -1065,7 +1065,7 @@ class VACobranca extends VirtexAdmin {
 			
 			
 			$contrato = $this->bd->obtemUnicoRegistro($sSQL);
-			echo "CONTRATO: $sSQL <br>";
+			//echo "CONTRATO: $sSQL <br>";
 			
 			
 			$this->tpl->atribui("contrato",$contrato);
@@ -1073,7 +1073,7 @@ class VACobranca extends VirtexAdmin {
 			$sSQL  = "SELECT * FROM cbtb_faturas where id_cliente_produto = '$id_cliente_produto' ";
 			
 			$faturas = $this->bd->obtemRegistros($sSQL);
-			echo "FATURA: $sSQL <br>";
+			//echo "FATURA: $sSQL <br>";
 			
 			$sSQL  = "SELECT ";
 				switch ($tipo_produto){
@@ -1107,7 +1107,7 @@ class VACobranca extends VirtexAdmin {
 				}
 
 			$produto_carac = $this->bd->obtemUnicoRegistro($sSQL);		
-			echo "PRODUTO CARACT: $sSQL <br>";
+			//echo "PRODUTO CARACT: $sSQL <br>";
 			
 			$sSQL  = "SELECT cp.id_cliente_produto, cp.id_cliente, cp.id_produto, pr.id_produto, pr.nome as nome_produto ";
 			$sSQL .= "FROM cbtb_cliente_produto cp, prtb_produto pr ";
@@ -1117,7 +1117,7 @@ class VACobranca extends VirtexAdmin {
 			$sSQL .= "cp.id_produto = pr.id_produto ";
 			
 			$produto = $this->bd->obtemUnicoRegistro($sSQL);
-			echo "PRODUTO: $sSQL <br>";
+			//echo "PRODUTO: $sSQL <br>";
 			
 			$this->tpl->atribui("produto",$produto);
 			$this->tpl->atribui("produto_carac",$produto_carac);
