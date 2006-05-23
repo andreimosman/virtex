@@ -25,81 +25,85 @@
 					  {if $erro}<center><font face="arial" color="red" size="-1"><b>Erro: {$erro}</b></font></center><br>{/if}
 					  <input type="hidden" name="op" value="{$op}" />
 					  <input type="hidden" name="sop" value="{$sop}" />
-
-                  <table width="450" border="0" cellspacing="0" cellpadding="0" bgcolor="#666666">
+                  <table width="550" border="0" cellspacing="0" cellpadding="0" bgcolor="#666666">
                     <tr>
-                      <td>
-
-                      <table width="450" border="0" cellspacing="1" cellpadding="0" _height="150">
+                      <td><table width="550" border="0" cellspacing="1" cellpadding="0">
                           <tr>
-                            <td bgcolor="#EEEEEE">
-                              <table align="CENTER" width="450" border="0" cellspacing="1" cellpadding="0">
+                            <td bgcolor="#CCCCCC"><table width="550" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
-                                   <td align="right" width=20>
-                                      <p><b> &nbsp;</b></p>
-                                   </td>
-                                   <td align="right" width=40>
-                                      <p><b># &nbsp;</b></p>
-                                   </td>
-                                   <td align="center" width=130>
-                                      <p><b>Data Pagamento</b></p>
-                                   </td>
-                                   <td align="center" width=130>
-                                      <p><b>Data Crédito</b></p>
-                                   </td>
-                                   <td align="right" width=130>
-                                      <p><b>Valor Recebido &nbsp;</b></p>
-                                   </td>
-                                 </tr>
-                              {foreach item=r from=$registros}
-                                <tr>
-                                   <td bgcolor="#ffffff" align="right">
-                                      <p><input type="checkbox" name="nsr[]" value="{$r.nsr}" checked style="border: 0px"></p>
-                                   </td>
-                                   <td bgcolor="#ffffff" align="right">
-                                      <p>{$r.nsr} &nbsp;</p>
-                                   </td>
-                                   <td bgcolor="#ffffff" align="center">
-                                      <p>{$r.data_pagamento}</p>
-                                   </td>
-                                   <td bgcolor="#ffffff" align="center">
-                                      <p>{$r.data_credito}</p>
-                                   </td>
-                                   <td bgcolor="#ffffff" align="right">
-                                      <p>{$r.valor_recebido} &nbsp;</p>
-                                   </td>
+                                  <td>
+								  {foreach item=r from=$registros} 
+								    <table width="550" border="0" cellspacing="2" cellpadding="0">
+                                      <tr bgcolor="#f1f1f1"> 
+                                        <td width="52"><p>&nbsp;</p></td>
+                                        <td width="82"><p><strong>#</strong></p></td>
+                                        <td width="128"><p><strong>Data Pagamento</strong></p></td>
+                                        <td width="150"><p><strong>Data Cr&eacute;dito</strong></p></td>
+                                        <td width="126"><p><strong>Valor Recebido</strong></p></td>
+                                      </tr>
+                                      <tr  {if !$r.nome_razao} bgcolor=#D17676 {else}bgcolor="#FFFFFF"{/if}> 
+                                        <td>
+<input type="checkbox" name="nsr[]" value="{$r.nsr}" style="border: 0px" {if $r.nome_razao == "" OR !$r.nome_razao}DISABLED{else}CHECKED{/if}>
+                                        </td>
+                                        {if !$r.nome_razao OR $r.nome_razao == ""}<font color=red>{/if}
+										<td><p>{$r.nsr}</p></td>
+                                        <td><p>{$r.data_pagamento}</p></td>
+                                        <td><p>{$r.data_credito}</p></td>
+                                        <td><p>{$r.valor_recebido}</p></td>
+										{if !$r.nome_razao}</font>{/if}
+                                      </tr>
+                                      <tr bgcolor="#FFFFFF">
+                                        <td colspan="5" bgcolor="#CCCCCC"><table width="550" border="0" cellspacing="2" cellpadding="0">
+                                            <tr bgcolor="#f1f1f1"> 
+                                              <td width="307"><p><strong>Codigo 
+                                                  Barras</strong></p></td>
+                                              {if $r.nome_razao}<td width="233"><p><strong>Nome</strong></p></td>{/if}
+                                            </tr>
+                                            <tr bgcolor="#FFFFFF"> 
+                                              <td> <p>{$r.codigo_barras}</p></td>
+                                              {if $r.nome_razao}<td> <p>{$r.nome_razao}</p></td>{/if}
+                                            </tr>
+                                          </table></td>
+                                      </tr>
+                                      <tr bgcolor="#FFFFFF"> 
+                                        <td colspan="5" bgcolor="#CCCCCC">
+										{if $r.nome_razao}
+										<table width="550" border="0" cellspacing="2" cellpadding="0">
+                                            <tr bgcolor="#F1F1F1"> 
+                                              <td>
+<p><strong>Valor da Fatura</strong></p></td>
+                                              <td>
+<p><strong>Vencimento</strong></p></td>
+                                              <td width="50"> 
+                                                <p><strong>Status</strong></p></td>
+                                            </tr>
+                                            <tr bgcolor="#FFFFFF"> 
+                                              <td><p>{$r.valor}</p></td>
+                                              <td><p>{$r.vencimento}</p></td>
+                                              <td width="50">
+<p>{$r.status}</p></td>
+                                            </tr>
+                                          </table> {/if}</td>
+                                      </tr>
+                                      <tr bgcolor="#FFFFFF"> 
+                                        <td colspan="5">&nbsp;</td>
+                                      </tr>
+                                    </table>
+									{/foreach}
+									</td>
                                 </tr>
-                              {/foreach}
-                                <!--tr>
-                                  <td width="317"><p>Arquivo</p></td>
-                                </tr>
                                 <tr>
-                                  <td><p>
-                                      <input name="arquivo" type="file" size="40" id="arquivo">
-                                    </p></td>
+                                  <td align="CENTER">
+<input type="submit" name="submit2" value="Processar">
+                                  </td>
                                 </tr>
-                                <tr>
-                                  <td><p>Formato</p></td>
-                                </tr>
-                                <tr>
-                                  <td><select name="formato">
-								  {foreach key=id item=nome from=$ls_formatos}
-								      <option value="{$id}" >{$nome}</option>
-								  {/foreach}
-                                    </select></td>
-                                </tr>
-                                <tr>
-                                  <td>&nbsp;</td>
-                                </tr-->
-                                <tr>
-                                  <td align="center" colspan=5><input type="submit" name="submit" value="Processar"></td>
-                                </tr>
-                              </table>
-                              </td>
+                              </table></td>
                           </tr>
                         </table></td>
                     </tr>
-                  </table></form><br><br>
+                  </table>
+                  <p>&nbsp;</p>
+                  </form><br><br>
                   </td>
               </tr>
             </table></td>

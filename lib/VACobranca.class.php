@@ -941,6 +941,16 @@ class VACobranca extends VirtexAdmin {
 					   $sErro = "Arquivo inválido ou adulterado.";
 				   } else {
 
+
+						$nome = $arquivo["name"];
+						$tamanho = $arquivo["size"];
+						
+
+						$sSQL = "INSERT INTO lgtb_retorno (nome_arquivo,tamanho,data) VALUES ('$nome','$tamanho',now())";
+						$this->bd->consulta($sSQL);
+						
+						//echo "RETORNO: $sSQL <br>";
+
 					   // Varre o arquivo
 					   $sop = "processa";
 
@@ -949,33 +959,114 @@ class VACobranca extends VirtexAdmin {
 						  $registros[$i]["data_pagamento"] 	= $r->formataData($registros[$i]["data_pagamento"]);
 						  $registros[$i]["data_credito"] 	= $r->formataData($registros[$i]["data_credito"]);
 						  $registros[$i]["valor_recebido"] 	= $r->formataValor($registros[$i]["valor_recebido"]);
-						  $registros[$i]["codigo_barras"]	= $r->formataValor($registros[$i]["codigo_barras"]);
+						  //$registros[$i]["codigo_barras"]	= $r->formataValor($registros[$i]["codigo_barras"]);
+						  $registros[$i]["codigo_barras"]	= $registros[$i]["codigo_barras"];
 						  $registros[$i]["valor_tarifa"]	= $r->formataValor($registros[$i]["valor_tarifa"]);
 						  //$registros[$i]["id_ag_cc_dig"]	= ($registros[$i]["is_ag_cc_dig"]);
 						  
-						 /* $sSQL  = "SELECT ";
+						  /* $sSQL  = "SELECT ";
 						  $sSQL .= "	" . $registros[$i]["data_pagamento"] . ", ";
 						  $sSQL .= "	" . $registros[$i]["codigo_barras"] . ", ";
 						  $sSQL .= "	" . $registros[$i]["codigo_barras"] . ", ";
 						  $sSQL .= "	" . $registros[$i]["codigo_barras"] . ", ";*/
 						  
 						  
+						  $sSQL  = "SELECT ";
+						  $sSQL .= " f.id_cliente_produto, f.descricao, f.cod_barra, f.valor, f.status, to_char(f.data, 'DD/mm/YYYY') as vencimento, ";
+						  $sSQL .= " cn.id_cliente_produto, cn.id_cliente, ";
+						  $sSQL .= " cl.id_cliente, cl.nome_razao ";
+						  $sSQL .= "FROM ";
+						  $sSQL .= " cbtb_faturas f, cntb_conta cn, cltb_cliente cl ";
+						  $sSQL .= "WHERE ";
+						  $sSQL .= " f.cod_barra = '".$registros[$i]["codigo_barras"]."' AND ";
+						  $sSQL .= " f.id_cliente_produto = cn.id_cliente_produto AND ";
+						  $sSQL .= " cn.id_cliente = cl.id_cliente ";
+						  $_faturas = $this->bd->obtemUnicoRegistro($sSQL);
+						  
+						  
+						  
+						  $registros[$i] = array_merge($registros[$i],$_faturas);  
+						  //echo "FATURAS: $sSQL <br>";
+						  
+						  $dt_pgto = list($dia,$mes,$ano) = explode("/",$registros[$i]["data_pagamento"]);
+						  $dt_pgto = $ano."-".$mes."-".$dia;
+						  
+						  $dt_crdt = list($dia,$mes,$ano) = explode("/",$registros[$i]["data_credito"]);
+						  $dt_crdt = $ano."-".$mes."-".$dia;
+						  
+						  $vlr = str_replace(",",".",$registros[$i]["valor_recebido"]);
+						  $vlr_tarifa = str_replace(",",".",$registros[$i]["valor_tarifa"]);
+						  
+						  
+						  $sSQL  = "INSERT INTO lgtb_retorno_faturas ";
+						  $sSQL .= "(nsr,data_pagamento,data_credito,valor_recebido,codigo_barras,valor_tarifa,status,id_arquivo) ";
+						  $sSQL .= "VALUES ( ";
+						  $sSQL .= " '".$registros[$i]["nsr"]."',";
+						  $sSQL .= " '$dt_pgto',";
+						  $sSQL .= " '$dt_crdt',";
+						  $sSQL .= " '$vlr',";
+						  $sSQL .= " '".$registros[$i]["codigo_barras"]."',";
+						  $sSQL .= " '$vlr_tarifa',";
+						  $sSQL .= " null,";
+						  $sSQL .= " currval('lgtb_retorno_id_arquivo_seq')";
+						  $sSQL .= ")";
+						  $this->bd->consulta($sSQL);
+						  
+						  //echo "FATURAS: $sSQL <br>";
 						  
 						  
 						  
 						  
 						  
+						  //echo $registros[$i]["nsr"] . " - " . $registros[$i]["data_pagamento"] . " - " . $registros[$i]["data_credito"] . " - " . $registros[$i]["valor_recebido"] . " - " . $registros[$i]["valor_tarifa"] . " - ".$registros[$i]["codigo_barras"] . "<br>";
 						  
-						  
-						  
-						  
-						  echo $registros[$i]["nsr"] . " - " . $registros[$i]["data_pagamento"] . " - " . $registros[$i]["data_credito"] . " - " . $registros[$i]["valor_recebido"] . " - " . $registros[$i]["valor_tarifa"] . " - ".$registros[$i]["codigo_barras"] . "<br>";
-						  
-					   }
+						}
 					   
 					   
+					   
+					   $sSQL  = "UPDATE lgtb_retorno SET qtde_registros = '$i' WHERE id_arquivo = currval('lgtb_retorno_id_arquivo_seq')";
+					   $this->bd->consulta($sSQL);
+					
+					
+						if ($acao == ""){
+							while(!count($_REQUEST['pago'])){
+							
+								$valor_recebido = $_REQUEST["valor_recebido"];
+								$data_pagamento = $_REQUEST["data_pagamento"];
+								$codigo_barras = $_REQUEST["codigo_barras"];
+								
 
 
+								$sSQL  = "SELECT ";
+								$sSQL .= " f.id_cliente_produto, f.descricao, f.cod_barra, f.valor, f.status, to_char(f.data, 'DD/mm/YYYY') as vencimento, ";
+								$sSQL .= " cn.id_cliente_produto, cn.id_cliente, ";
+								$sSQL .= " cl.id_cliente, cl.nome_razao ";
+								$sSQL .= "FROM ";
+								$sSQL .= " cbtb_faturas f, cntb_conta cn, cltb_cliente cl ";
+								$sSQL .= "WHERE ";
+								$sSQL .= " f.cod_barra = '".$registros["codigo_barras"]."' AND ";
+								$sSQL .= " f.id_cliente_produto = cn.id_cliente_produto AND ";
+								$sSQL .= " cn.id_cliente = cl.id_cliente ";
+								$_faturas = $this->bd->obtemUnicoRegistro($sSQL);
+
+								
+								
+	/*							if ($valor_recebido > $_faturas["valor"]){
+								
+									$acrescimo = $valor_recebido - $_fatura["valor"];
+									$valor_
+								}MEGATECH
+							
+							
+								$sSQL .= "UPDATE cbtb_faturas SET ";
+								$sSQL .= "valor_pago = '".@$_REQUEST["valor_pago"]."', ";
+								$sSQL .= "valor_pago = '".@$_REQUEST["valor_pago"]."', ";
+						*/
+						
+						}
+					
+					
+					   
 					   $this->tpl->atribui("registros",$registros);
 					   $this->tpl->atribui("arquivo",$arquivo["name"]);
 					   $this->arquivoTemplate = "cobranca_retorno_registros.html";
