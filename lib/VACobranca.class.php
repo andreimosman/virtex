@@ -1063,10 +1063,10 @@ class VACobranca extends VirtexAdmin {
 								$sSQL .= "valor_pago = '".@$_REQUEST["valor_pago"]."', ";
 						*/
 						
-						}
+							}
 					
 					
-					   
+					   }
 					   $this->tpl->atribui("registros",$registros);
 					   $this->tpl->atribui("arquivo",$arquivo["name"]);
 					   $this->arquivoTemplate = "cobranca_retorno_registros.html";
