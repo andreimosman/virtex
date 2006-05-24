@@ -6,9 +6,6 @@
 
 ini_set('include_path',ini_get('include_path').':/mosman/virtex/cfrontend/framework:/usr/local/share/pear:/usr/local/share/smarty');
 
-//ini_get("include_path");
-echo "ID: " . $__include_dir . "<br>\n";
-
 /**
  * Definições
  */
