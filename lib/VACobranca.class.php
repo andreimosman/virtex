@@ -901,7 +901,7 @@ class VACobranca extends VirtexAdmin {
 			}
 	}else if ($op == "retornos"){
 	
-
+		$acao = @$_REQUEST["acao"];
 		global $_LS_FORMATOS_PAG;
 
 		$this->tpl->atribui("ls_formatos",$_LS_FORMATOS_PAG);
@@ -936,6 +936,7 @@ class VACobranca extends VirtexAdmin {
 				   ////////////////
 				   $r = new MRetornoPagContas($arquivo['tmp_name']);
 				   $registros  = $r->obtemRegistros();
+				   
 
 				   if( !count($registros) || !$r->checkSum() ) {
 					   $sErro = "Arquivo inválido ou adulterado.";
@@ -1027,46 +1028,9 @@ class VACobranca extends VirtexAdmin {
 					   $sSQL  = "UPDATE lgtb_retorno SET qtde_registros = '$i' WHERE id_arquivo = currval('lgtb_retorno_id_arquivo_seq')";
 					   $this->bd->consulta($sSQL);
 					
-					
-						if ($acao == ""){
-							while(!count($_REQUEST['pago'])){
-							
-								$valor_recebido = $_REQUEST["valor_recebido"];
-								$data_pagamento = $_REQUEST["data_pagamento"];
-								$codigo_barras = $_REQUEST["codigo_barras"];
-								
-
-
-								$sSQL  = "SELECT ";
-								$sSQL .= " f.id_cliente_produto, f.descricao, f.cod_barra, f.valor, f.status, to_char(f.data, 'DD/mm/YYYY') as vencimento, ";
-								$sSQL .= " cn.id_cliente_produto, cn.id_cliente, ";
-								$sSQL .= " cl.id_cliente, cl.nome_razao ";
-								$sSQL .= "FROM ";
-								$sSQL .= " cbtb_faturas f, cntb_conta cn, cltb_cliente cl ";
-								$sSQL .= "WHERE ";
-								$sSQL .= " f.cod_barra = '".$registros["codigo_barras"]."' AND ";
-								$sSQL .= " f.id_cliente_produto = cn.id_cliente_produto AND ";
-								$sSQL .= " cn.id_cliente = cl.id_cliente ";
-								$_faturas = $this->bd->obtemUnicoRegistro($sSQL);
-
-								
-								
-	/*							if ($valor_recebido > $_faturas["valor"]){
-								
-									$acrescimo = $valor_recebido - $_fatura["valor"];
-									$valor_
-								}MEGATECH
-							
-							
-								$sSQL .= "UPDATE cbtb_faturas SET ";
-								$sSQL .= "valor_pago = '".@$_REQUEST["valor_pago"]."', ";
-								$sSQL .= "valor_pago = '".@$_REQUEST["valor_pago"]."', ";
-						*/
+						echo "BOSTA";
 						
-							}
-					
-					
-					   }
+							
 					   $this->tpl->atribui("registros",$registros);
 					   $this->tpl->atribui("arquivo",$arquivo["name"]);
 					   $this->arquivoTemplate = "cobranca_retorno_registros.html";
@@ -1078,6 +1042,83 @@ class VACobranca extends VirtexAdmin {
 		   	   }
 		   }
 	   }
+	   
+	   if ($acao == "amortiza"){
+			
+			for($i=0;$i<count($_REQUEST["nsr"]);$i++){
+
+
+
+				if ($_REQUEST["nsr"][$i] == "true"){
+				
+					$valor_recebido = str_replace(",",".",$_REQUEST["valor_recebido"][$i]);
+					$data_pagamento = $_REQUEST["data_pagamento"][$i];
+					$codigo_barras = $_REQUEST["codigo_barras"][$i];
+					$dt = list($dia,$mes,$ano) = explode("/",$data_pagamento);
+					$data_pagamento = $ano."-".$mes."-".$dia;
+					
+					echo " I: $i <br>";
+
+
+					$sSQL  = "SELECT ";
+					$sSQL .= " f.id_cliente_produto, f.descricao, f.cod_barra, f.valor, f.status, to_char(f.data, 'DD/mm/YYYY') as vencimento, ";
+					$sSQL .= " cn.id_cliente_produto, cn.id_cliente, ";
+					$sSQL .= " cl.id_cliente, cl.nome_razao ";
+					$sSQL .= "FROM ";
+					$sSQL .= " cbtb_faturas f, cntb_conta cn, cltb_cliente cl ";
+					$sSQL .= "WHERE ";
+					$sSQL .= " f.cod_barra = '$codigo_barras' AND ";
+					$sSQL .= " f.id_cliente_produto = cn.id_cliente_produto AND ";
+					$sSQL .= " cn.id_cliente = cl.id_cliente ";
+					$_faturas = $this->bd->obtemUnicoRegistro($sSQL);
+
+					echo "FATURAS: $sSQL <br>";
+
+					if ($valor_recebido > $_faturas["valor"]){
+
+						$acrescimo = $valor_recebido - $_faturas["valor"];
+						$valor_pago = $valor_recebido;
+						$desconto = "0.00";
+
+					}else if ($valor_recebido < $_faturas["valor"]){
+
+						$desconto = $_faturas["valor"] - $valor_recebido;
+						$valor_pago = $valor_recebido;
+						$acrescimo = "0.00";
+
+					}else if (valor_recebido == $faturas["valor"]){
+
+						$valor_pago = $valor_recebido;
+						$desconto = "0.00";
+						$acrescimo = "0.00";
+
+					}
+
+					echo "VALOR RECEBIDO: $valor_recebido <br>";
+					echo "VALOR FATURA: ".$_faturas["valor"]."<br>";
+
+
+
+					$sSQL  = "UPDATE cbtb_faturas SET ";
+					$sSQL .= "valor_pago = '$valor_pago', ";
+					$sSQL .= "data_pagamento = '$data_pagamento', ";
+					$sSQL .= "desconto = '$desconto', ";
+					$sSQL .= "acrescimo = '$acrescimo', ";
+					$sSQL .= "status = 'P' ";
+					$sSQL .= "WHERE cod_barra = '$codigo_barras' ";
+
+					$this->bd->consulta($sSQL);
+					echo "AMORT: $sSQL <br>";
+
+				}
+
+			}
+
+
+		$this->arquivoTemplate = "cobranca_retorno_ok.html";
+		return;
+
+	}
 
 
 
