@@ -947,8 +947,8 @@ class VAClientes extends VirtexAdmin {
 												
 						if ($email_igual == "1"){
 							
-							//$prefs = $this->prefs->obtem("total");
-							$prefs = $this->prefs->obtem();
+							$prefs = $this->prefs->obtem("total");
+							//$prefs = $this->prefs->obtem();
 							
 							if (count($prefs)){
 								$erros2 = "Já existe um usuario com este dominio neste tipo de conta cadastrado. Por favor cadastre um novo usuario";
@@ -1191,8 +1191,8 @@ class VAClientes extends VirtexAdmin {
 								//$sSQL  = "SELECT * from cftb_preferencias where id_provedor = '1'";							
 								
 								
-								//$prefs = $this->prefs->obtem("total");								
-								$prefs = $this->prefs->obtem();
+								$prefs = $this->prefs->obtem("total");								
+								//$prefs = $this->prefs->obtem();
 						
 								$username = @$_REQUEST["username"];
 								$tipo_conta = @$_REQUEST["tipo"];
@@ -1299,7 +1299,7 @@ class VAClientes extends VirtexAdmin {
 							
 						if ($tipo == "BL"){
 						
-						$sSQL = "SELECT ip_externo FROM cntb_conta_bandalarga WHERE username = '".@$_REQUEST["username"]."' AND tipo_conta = 'BL' and dominio = '".$prefs["geral"]["dominio_padrao"]."' ";
+						$sSQL = "SELECT ip_externo FROM cntb_conta_bandalarga WHERE username = '".@$_REQUEST["username"]."' AND tipo_conta = 'BL' and dominio = '".$prefs["dominio_padrao"]."' ";
 						$externo = $this->bd->obtemUnicoRegistro($sSQL);
 						
 						
@@ -1316,7 +1316,7 @@ class VAClientes extends VirtexAdmin {
 						$this->tpl->atribui("nas",@$nas["nome"]);
 						$this->tpl->atribui("mac",@$_MAC);
 						$this->tpl->atribui("ip",@$ip_disp);
-						$this->tpl->atribui("dominio",$prefs["geral"]["dominio_padrao"]);
+						$this->tpl->atribui("dominio",$prefs["dominio_padrao"]);
 						$this->tpl->atribui("dominio_hospedagem",@$dominio_hospedagem);
 						
 						
@@ -1805,7 +1805,7 @@ class VAClientes extends VirtexAdmin {
 			/** PEGA O PRODUTO CONTRATADO */
 			
 			$sSQL  = "SELECT ";
-			$sSQL .= "   p.id_produto, p.nome, p.tipo ";
+			$sSQL .= "   p.id_produto, p.nome, p.tipo, p.numero_contas ";
 			$sSQL .= "";
 			$sSQL .= "FROM ";
 			$sSQL .= "   cbtb_cliente_produto cp INNER JOIN prtb_produto p USING (id_produto) ";
@@ -1815,6 +1815,8 @@ class VAClientes extends VirtexAdmin {
 			
 			$produto = $this->bd->obtemUnicoRegistro($sSQL);
 			
+			$numero_contas = $produto["numero_contas"];
+			$this->tpl->atribui("numero_contas",$numero_contas);
 			$tipo = $produto["tipo"]; // DO CONTRATO
 			$this->tpl->atribui("tipo",$tipo);
 			
@@ -2516,7 +2518,7 @@ class VAClientes extends VirtexAdmin {
 					$sSQL  = "SELECT ";
 					$sSQL .= "	cp.id_cliente_produto, cp.id_cliente, cp.id_produto, cp.dominio, ";
 					$sSQL .= "	p.id_produto, p.nome, p.descricao, p.tipo, p.valor, p.disponivel, p.num_emails, p.quota_por_conta, ";
-					$sSQL .= "	p.vl_email_adicional, p.permitir_outros_dominios, p.email_anexado ";
+					$sSQL .= "	p.vl_email_adicional, p.permitir_outros_dominios, p.email_anexado, p.numero_contas ";
 					$sSQL .= "FROM cbtb_cliente_produto cp INNER JOIN prtb_produto p ";
 					$sSQL .= "USING( id_produto ) ";
 					$sSQL .= "WHERE cp.id_cliente='$id_cliente' ";

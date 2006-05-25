@@ -724,8 +724,8 @@ class VACobranca extends VirtexAdmin {
 			$dtf = date("Y-m-d", mktime(0,0,0, $mes, $dia_final, $ano));
 
 		
-			//$provedor = $this->prefs->obtem("total");
-			$provedor = $this->prefs->obtem();
+			$provedor = $this->prefs->obtem("total");
+			//$provedor = $this->prefs->obtem();
 			
 			$sSQL  = "SELECT ";
 			$sSQL .= " * from cbtb_contrato where status = 'A' AND vencimento BETWEEN '$dia_inicio' AND '$dia_final'";
@@ -942,20 +942,34 @@ class VACobranca extends VirtexAdmin {
 					   $sErro = "Arquivo inválido ou adulterado.";
 				   } else {
 
-
 						$nome = $arquivo["name"];
 						$tamanho = $arquivo["size"];
-						
 
-						$sSQL = "INSERT INTO lgtb_retorno (nome_arquivo,tamanho,data) VALUES ('$nome','$tamanho',now())";
-						$this->bd->consulta($sSQL);
+
+						$sSQL = "SELECT nome_arquivo,to_char(data,'DD/MM/YYYY HH24:MM:SS') as data FROM lgtb_retorno WHERE nome_arquivo = '$nome' order by data desc limit 1";
+						$checa_arquivo = $this->bd->obtemUnicoRegistro($sSQL);
+						//echo $sSQL;
 						
-						//echo "RETORNO: $sSQL <br>";
+						if (!$checa_arquivo || $checa_arquivo == ""){
+
+
+							$sSQL = "INSERT INTO lgtb_retorno (nome_arquivo,tamanho,data) VALUES ('$nome','$tamanho',now())";
+							$this->bd->consulta($sSQL);
+						
+							//echo "RETORNO: $sSQL <br>";
+
+						}else{
+
+							$sErro = "Arquivo já processado em ".$checa_arquivo["data"];
+
+
+						}
 
 					   // Varre o arquivo
 					   $sop = "processa";
-
+						$qtde = 0;
 					   for($i=0;$i<count($registros);$i++) {
+
 						  $registros[$i]["nsr"] 			= (int)$registros[$i]["nsr"];
 						  $registros[$i]["data_pagamento"] 	= $r->formataData($registros[$i]["data_pagamento"]);
 						  $registros[$i]["data_credito"] 	= $r->formataData($registros[$i]["data_credito"]);
@@ -965,13 +979,8 @@ class VACobranca extends VirtexAdmin {
 						  $registros[$i]["valor_tarifa"]	= $r->formataValor($registros[$i]["valor_tarifa"]);
 						  //$registros[$i]["id_ag_cc_dig"]	= ($registros[$i]["is_ag_cc_dig"]);
 						  
-						  /* $sSQL  = "SELECT ";
-						  $sSQL .= "	" . $registros[$i]["data_pagamento"] . ", ";
-						  $sSQL .= "	" . $registros[$i]["codigo_barras"] . ", ";
-						  $sSQL .= "	" . $registros[$i]["codigo_barras"] . ", ";
-						  $sSQL .= "	" . $registros[$i]["codigo_barras"] . ", ";*/
-						  
-						  
+
+						  						  
 						  $sSQL  = "SELECT ";
 						  $sSQL .= " f.id_cliente_produto, f.descricao, f.cod_barra, f.valor, f.status, to_char(f.data, 'DD/mm/YYYY') as vencimento, ";
 						  $sSQL .= " cn.id_cliente_produto, cn.id_cliente, ";
@@ -986,8 +995,16 @@ class VACobranca extends VirtexAdmin {
 						  
 						  
 						  
-						  $registros[$i] = array_merge($registros[$i],$_faturas);  
+						  if ($_faturas && $_faturas["nome_razao"] != ""){
+						  	//echo $_faturas["nome_razao"]."<br>";
+						  	$qtde = $qtde + 1;
+						  
+						  }
+						  //$qtde_validos = count($_faturas);
+						  
+						  $registros[$i] = array_merge($registros[$i],$_faturas);
 						  //echo "FATURAS: $sSQL <br>";
+						  
 						  
 						  $dt_pgto = list($dia,$mes,$ano) = explode("/",$registros[$i]["data_pagamento"]);
 						  $dt_pgto = $ano."-".$mes."-".$dia;
@@ -998,7 +1015,7 @@ class VACobranca extends VirtexAdmin {
 						  $vlr = str_replace(",",".",$registros[$i]["valor_recebido"]);
 						  $vlr_tarifa = str_replace(",",".",$registros[$i]["valor_tarifa"]);
 						  
-						  
+						  						  
 						  $sSQL  = "INSERT INTO lgtb_retorno_faturas ";
 						  $sSQL .= "(nsr,data_pagamento,data_credito,valor_recebido,codigo_barras,valor_tarifa,status,id_arquivo) ";
 						  $sSQL .= "VALUES ( ";
@@ -1008,12 +1025,12 @@ class VACobranca extends VirtexAdmin {
 						  $sSQL .= " '$vlr',";
 						  $sSQL .= " '".$registros[$i]["codigo_barras"]."',";
 						  $sSQL .= " '$vlr_tarifa',";
-						  $sSQL .= " null,";
+						  $sSQL .= " 'P',";
 						  $sSQL .= " currval('lgtb_retorno_id_arquivo_seq')";
 						  $sSQL .= ")";
 						  $this->bd->consulta($sSQL);
 						  
-						  //echo "FATURAS: $sSQL <br>";
+						  echo "FATURAS: $sSQL <br>";
 						  
 						  
 						  
@@ -1023,14 +1040,27 @@ class VACobranca extends VirtexAdmin {
 						  
 						}
 					   
+					   $qtde_validos = $qtde;
+					   $qtde_sem = $i - $qtde_validos;
+					   
+					   //echo "QTDE VALIDOS: $qtde_validos<br>";
+					   //echo "QTDE INVALIDOS: $qtde_sem<br>";
+					   
+					   if ($i == $qtde){
+					   	$status = "S";
+					   }else{
+					   	$status = "P";
+					   }
 					   
 					   
-					   $sSQL  = "UPDATE lgtb_retorno SET qtde_registros = '$i' WHERE id_arquivo = currval('lgtb_retorno_id_arquivo_seq')";
+					   $sSQL  = "UPDATE lgtb_retorno SET qtde_registros = '$i', NRA='$i', NRSC='$qtde_sem', NRPE='$qtde_validos', status = '$status' WHERE id_arquivo = currval('lgtb_retorno_id_arquivo_seq')";
 					   $this->bd->consulta($sSQL);
+					   
+					   //echo $sSQL ."<br>";
 					
-						echo "BOSTA";
 						
-							
+						
+						$this->tpl->atribui("erro",$sErro);
 					   $this->tpl->atribui("registros",$registros);
 					   $this->tpl->atribui("arquivo",$arquivo["name"]);
 					   $this->arquivoTemplate = "cobranca_retorno_registros.html";
@@ -1044,12 +1074,13 @@ class VACobranca extends VirtexAdmin {
 	   }
 	   
 	   if ($acao == "amortiza"){
+	   
+	   	$total = @$_REQUEST["total"];
 			
-			for($i=0;$i<count($_REQUEST["nsr"]);$i++){
+			while(list($i,$lixo)=each($_REQUEST["nsr"])){
 
 
-
-				if ($_REQUEST["nsr"][$i] == "true"){
+					
 				
 					$valor_recebido = str_replace(",",".",$_REQUEST["valor_recebido"][$i]);
 					$data_pagamento = $_REQUEST["data_pagamento"][$i];
@@ -1057,7 +1088,7 @@ class VACobranca extends VirtexAdmin {
 					$dt = list($dia,$mes,$ano) = explode("/",$data_pagamento);
 					$data_pagamento = $ano."-".$mes."-".$dia;
 					
-					echo " I: $i <br>";
+					//echo " I: $i <br>";
 
 
 					$sSQL  = "SELECT ";
@@ -1072,7 +1103,7 @@ class VACobranca extends VirtexAdmin {
 					$sSQL .= " cn.id_cliente = cl.id_cliente ";
 					$_faturas = $this->bd->obtemUnicoRegistro($sSQL);
 
-					echo "FATURAS: $sSQL <br>";
+					//echo "FATURAS: $sSQL <br>";
 
 					if ($valor_recebido > $_faturas["valor"]){
 
@@ -1086,7 +1117,7 @@ class VACobranca extends VirtexAdmin {
 						$valor_pago = $valor_recebido;
 						$acrescimo = "0.00";
 
-					}else if (valor_recebido == $faturas["valor"]){
+					}else if ($valor_recebido == $_faturas["valor"]){
 
 						$valor_pago = $valor_recebido;
 						$desconto = "0.00";
@@ -1094,8 +1125,8 @@ class VACobranca extends VirtexAdmin {
 
 					}
 
-					echo "VALOR RECEBIDO: $valor_recebido <br>";
-					echo "VALOR FATURA: ".$_faturas["valor"]."<br>";
+					//echo "VALOR RECEBIDO: $valor_recebido <br>";
+					//echo "VALOR FATURA: ".$_faturas["valor"]."<br>";
 
 
 
@@ -1108,14 +1139,18 @@ class VACobranca extends VirtexAdmin {
 					$sSQL .= "WHERE cod_barra = '$codigo_barras' ";
 
 					$this->bd->consulta($sSQL);
-					echo "AMORT: $sSQL <br>";
+					//echo "AMORT: $sSQL <br>";
 
-				}
 
 			}
+			
+		$msg_final = "Retornos registrados com sucesso.";
+		$this->tpl->atribui("mensagem",$msg_final); 
+		$this->tpl->atribui("url", "cobranca.php?op=retornos");
+		$this->tpl->atribui("target","_top");
 
+		$this->arquivoTemplate="msgredirect.html";
 
-		$this->arquivoTemplate = "cobranca_retorno_ok.html";
 		return;
 
 	}

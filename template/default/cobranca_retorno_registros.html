@@ -20,20 +20,23 @@
               <tr>
                 <td align="center" valign="middle">
 				<P align="center">&nbsp; </P>
-                  <h1>Retorno: {$arquivo} </h1>
-                      <form enctype="multipart/form-data" name="form1" method="post" action="{$smarty.server.PHP_SELF}">
-					  {if $erro}<center><font face="arial" color="red" size="-1"><b>Erro: {$erro}</b></font></center><br>{/if}
-					  <input type="hidden" name="op" value="{$op}" />
-					  <input type="hidden" name="sop" value="{$sop}" />
-                  <table width="550" border="0" cellspacing="0" cellpadding="0" bgcolor="#666666">
+                  <h1>Retorno: {$arquivo}<br>
+                  <strong></strong></h1><form enctype="multipart/form-data" name="form1" method="post" action="{$smarty.server.PHP_SELF}"> 
+                  {if $erro}<center><font face="arial" color="red" size="-1"><b>Erro: 
+                  {$erro}<br>
+                  </b></font><br>
+                  {/if} 
+                  <input type="hidden" name="op" value="{$op}" />
+                  <input type="hidden" name="sop" value="{$sop}" />
+                  </center>
+<table width="550" border="0" cellspacing="0" cellpadding="0" bgcolor="#666666">
                     <tr>
                       <td><table width="550" border="0" cellspacing="1" cellpadding="0">
                           <tr>
                             <td bgcolor="#CCCCCC"><table width="550" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
-                                  <td>
-								  {foreach item=r from=$registros} 
-								    <table width="550" border="0" cellspacing="2" cellpadding="0">
+                                  <td> {foreach item=r from=$registros name=regs} 
+                                    <table width="550" border="0" cellspacing="2" cellpadding="0">
                                       <tr bgcolor="#f1f1f1"> 
                                         <td width="52"><p>&nbsp;</p></td>
                                         <td width="82"><p><strong>#</strong></p></td>
@@ -43,20 +46,24 @@
                                       </tr>
                                       <tr  {if !$r.nome_razao} bgcolor=#D17676 {else}bgcolor="#FFFFFF"{/if}> 
                                         <td>
-<input type="checkbox" name="nsr[]" value="{$r.nsr}" style="border: 0px" {if $r.nome_razao == "" OR !$r.nome_razao}DISABLED{else}CHECKED{/if}>
+<input type="checkbox" name="nsr[{$r.nsr}]" value="true" style="border: 0px" {if $r.nome_razao == "" OR !$r.nome_razao}DISABLED{else}CHECKED{/if}>
                                         </td>
-                                        {if !$r.nome_razao OR $r.nome_razao == ""}<font color=red>{/if}
+                                        
 										<td><p>{$r.nsr}</p></td>
                                         <td><p>{$r.data_pagamento}</p></td>
                                         <td><p>{$r.data_credito}</p></td>
                                         <td><p>{$r.valor_recebido}</p></td>
-										{if !$r.nome_razao}</font>{/if}
+										
                                       </tr>
                                       <tr bgcolor="#FFFFFF">
                                         <td colspan="5" bgcolor="#CCCCCC"><table width="550" border="0" cellspacing="2" cellpadding="0">
                                             <tr bgcolor="#f1f1f1"> 
                                               <td width="307"><p><strong>Codigo 
-                                                  Barras</strong></p></td>
+                                                  Barras 
+                                                  <input name="codigo_barras[{$r.nsr}]" type="hidden" value="{$r.codigo_barras}" id="codigo_barras[{$r.nsr}]">
+                                                  <input name="valor_recebido[{$r.nsr}]" type="hidden" value="{$r.valor_recebido}" id="valor_recebido[{$r.nsr}]">
+                                                  <input name="data_pagamento[{$r.nsr}]" type="hidden" value="{$r.data_pagamento}" id="data_pagamento[{$r.nsr}]">
+                                                  </strong></p></td>
                                               {if $r.nome_razao}<td width="233"><p><strong>Nome</strong></p></td>{/if}
                                             </tr>
                                             <tr bgcolor="#FFFFFF"> 
@@ -95,7 +102,8 @@
                                 <tr>
                                   <td align="CENTER">
 <input type="submit" name="submit2" value="Processar">
-                                  </td>
+                                    <input name="acao" type="hidden" value="amortiza" id="acao">
+                                    <input name="total" type="hidden" value="{$smarty.foreach.regs.total}" id="total"> </td>
                                 </tr>
                               </table></td>
                           </tr>
