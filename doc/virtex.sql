@@ -8,11 +8,6 @@ Author
 Version		
 Database		PostgreSQL 7.3 (beta) 
 */
-//
-
-
-
-
 
 
 Create table  cftb_uf
@@ -569,48 +564,6 @@ Create table  lgtb_retorno_faturas
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Alter table cftb_cidade add  foreign key (uf) references cftb_uf (uf)  on update restrict  on delete restrict ;
 Alter table cltb_cliente add  foreign key (id_cidade) references cftb_cidade (id_cidade)  on update restrict  on delete restrict ;
 Alter table cbtb_cliente_produto add  foreign key (id_cliente) references cltb_cliente (id_cliente)  on update restrict  on delete restrict ;
@@ -658,10 +611,12 @@ CREATE SEQUENCE clsq_id_conta;
 CREATE SEQUENCE prsq_id_produto;
 CREATE SEQUENCE sptb_spool_id_spool;
 CREATE SEQUENCE lgsq_id_exclusao;
+CREATE SEQUENCE lgsq_id_processo;
 CREATE SEQUENCE lgtb_backup_id_backup;
 CREATE SEQUENCE rdtb_accounting_session_id;
 CREATE SEQUENCE rdtb_log_id_log;
 CREATE SEQUENCE rdsq_id_accounting;
 CREATE SEQUENCE cbsq_id_carne;
+CREATE SEQUENCE blsq_carne_nossonumero;
 
 
