@@ -18,6 +18,8 @@
               </tr>
               <tr>
                 <td align="center" valign="middle"><h1>Carga por {$tipo}</h1>
+                {if !$carga}<p><b>Não existem equipamentos cadastrados</b></p>{/if}
+                {if $carga}
                   <table width="450" border=0 align="center" cellpadding=0 cellspacing=0>
                     <tr bgcolor="#F0F0F0">
                       <td width=240 align="center"><h2>{$tipo}</h2></td>
@@ -44,75 +46,8 @@
 
                     {/foreach}
 
-
-
-                    <!--tr bgcolor="#FFFFFF">
-                      <td align="left"><p>AP - Associacao</p></td>
-                      <td align="center"><p>158</p></td>
-                      <td align="center"><p>25280</p></td>
-                      <td align="center"><p>27072</p></td>
-                    </tr>
-                    <tr bgcolor="#F1F1F1">
-                      <td align="left"><p>AP - BOMBA</p></td>
-                      <td align="center"><p>103</p></td>
-                      <td align="center"><p>18688</p></td>
-                      <td align="center"><p>19520</p></td>
-                    </tr>
-                    <tr bgcolor="#FFFFFF">
-                      <td align="left"><p>AP - CANOPY</p></td>
-                      <td align="center"><p>0</p></td>
-                      <td align="center"><p>-</p></td>
-                      <td align="center"><p>-</p></td>
-                    </tr>
-                    <tr bgcolor="#F1F1F1">
-                      <td align="left"><p>AP - COHAB</p></td>
-                      <td align="center"><p>19</p></td>
-                      <td align="center"><p>4096</p></td>
-                      <td align="center"><p>4352</p></td>
-                    </tr>
-                    <tr bgcolor="#FFFFFF">
-                      <td align="left"><p>AP - DVD</p></td>
-                      <td align="center"><p>156</p></td>
-                      <td align="center"><p>22912</p></td>
-                      <td align="center"><p>24256</p></td>
-                    </tr>
-                    <tr bgcolor="#F1F1F1">
-                      <td align="left"><p>AP - Junco</p></td>
-                      <td align="center"><p>118</p></td>
-                      <td align="center"><p>21888</p></td>
-                      <td align="center"><p>24704</p></td>
-                    </tr>
-                    <tr bgcolor="#FFFFFF">
-                      <td align="left"><p>AP - KLN</p></td>
-                      <td align="center"><p>47</p></td>
-                      <td align="center"><p>7808</p></td>
-                      <td align="center"><p>8064</p></td>
-                    </tr>
-                    <tr bgcolor="#F1F1F1">
-                      <td align="left"><p>AP - Wireless Network</p></td>
-                      <td align="center"><p>84</p></td>
-                      <td align="center"><p>13184</p></td>
-                      <td align="center"><p>14080</p></td>
-                    </tr>
-                    <tr bgcolor="#FFFFFF">
-                      <td align="left"><p>AP TCV</p></td>
-                      <td align="center"><p>18</p></td>
-                      <td align="center"><p>2880</p></td>
-                      <td align="center"><p>3328</p></td>
-                    </tr>
-                    <tr bgcolor="#F1F1F1">
-                      <td align="left"><p>POP - Picos Hotel</p></td>
-                      <td align="center"><p>3</p></td>
-                      <td align="center"><p>384</p></td>
-                      <td align="center"><p>384</p></td>
-                    </tr>
-                    <tr bgcolor="#FFFFFF">
-                      <td align="left"><p>Sao Raimundo Nonato</p></td>
-                      <td align="center"><p>39</p></td>
-                      <td align="center"><p>3872</p></td>
-                      <td align="center"><p>3872</p></td>
-                    </tr-->
                   </table>
+                  {/if}
                   <p>&nbsp;</p>
                   <p>&nbsp;
                   </p>
