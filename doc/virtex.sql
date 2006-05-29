@@ -1,6 +1,6 @@
 /*
 Created		22/2/2006
-Modified		19/5/2006
+Modified		26/5/2006
 Project		
 Model		
 Company		
@@ -8,7 +8,7 @@ Author
 Version		
 Database		PostgreSQL 7.3 (beta) 
 */
-
+//
 
 
 
@@ -537,6 +537,37 @@ Create table  cftb_ip_externo
  primary key (ip_externo)
 );
 
+Create table  lgtb_retorno
+(
+	id_arquivo Serial NOT NULL,
+	nome_arquivo Varchar(50) NULL ,
+	tamanho Smallint NULL ,
+	data Timestamp NULL ,
+	qtde_registros Smallint NULL ,
+	status Char(1) NULL ,
+	NRA Char(2) NULL ,
+	NRPR Char(2) NULL ,
+	NRSC Char(2) NULL ,
+	NRPE Char(2) NULL ,
+	admin Varchar(20) NULL ,
+ primary key (id_arquivo)
+);
+
+Create table  lgtb_retorno_faturas
+(
+	nsr Smallint NULL ,
+	data_pagamento Date NULL ,
+	data_credito Date NULL ,
+	valor_recebido Numeric(7,2) NULL ,
+	codigo_barras Varchar(50) NULL ,
+	valor_tarifa Smallint NULL ,
+	status Char(2) NULL ,
+	id_arquivo integer NOT NULL,
+	motivo Varchar(100) NULL 
+);
+
+
+
 
 
 
@@ -611,6 +642,7 @@ Alter table cftb_ip_externo add  foreign key (id_nas) references cftb_nas (id_na
 Alter table lgtb_reagendamento add  foreign key (id_cliente_produto,data) references cbtb_faturas (id_cliente_produto,data)  on update restrict  on delete restrict ;
 Alter table cbtb_faturas add  foreign key (id_carne) references cbtb_carne (id_carne)  on update restrict  on delete restrict ;
 Alter table cntb_conta_bandalarga add  foreign key (ip_externo) references cftb_ip_externo (ip_externo)  on update restrict  on delete restrict ;
+Alter table lgtb_retorno_faturas add  foreign key (id_arquivo) references lgtb_retorno (id_arquivo)  on update restrict  on delete restrict ;
 
 
 CREATE SEQUENCE adsq_id_admin;
