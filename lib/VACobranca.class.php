@@ -903,6 +903,7 @@ class VACobranca extends VirtexAdmin {
 	
 		$acao = @$_REQUEST["acao"];
 		global $_LS_FORMATOS_PAG;
+		$admin = $this->admLogin->obtemAdmin();
 
 		$this->tpl->atribui("ls_formatos",$_LS_FORMATOS_PAG);
 		$this->tpl->atribui("op",@$_REQUEST["op"]);
@@ -911,6 +912,11 @@ class VACobranca extends VirtexAdmin {
 
 
 		if( !$sop ) $sop = "upload";
+		
+			$sSQL  = "SELECT id_arquivo, nome_arquivo, to_char(data,'DD/MM/YYYY') as data, status, nra, nrpe, nrsc FROM lgtb_retorno ORDER BY data DESC limit 10";
+			$ret = $this->bd->obtemRegistros($sSQL);
+			
+			$this->tpl->atribui("ret",$ret);
 			$this->arquivoTemplate = "cobranca_retorno.html";
 
 
@@ -953,7 +959,7 @@ class VACobranca extends VirtexAdmin {
 						if (!$checa_arquivo || $checa_arquivo == ""){
 
 
-							$sSQL = "INSERT INTO lgtb_retorno (nome_arquivo,tamanho,data) VALUES ('$nome','$tamanho',now())";
+							$sSQL = "INSERT INTO lgtb_retorno (nome_arquivo,tamanho,data,admin) VALUES ('$nome','$tamanho',now(),'$admin')";
 							$this->bd->consulta($sSQL);
 						
 							//echo "RETORNO: $sSQL <br>";
@@ -961,12 +967,14 @@ class VACobranca extends VirtexAdmin {
 						}else{
 
 							$sErro = "Arquivo já processado em ".$checa_arquivo["data"];
+							$mostra = "nao";
+							$this->tpl->atribui("mostra",$mostra);
 
 
 						}
 
 					   // Varre o arquivo
-					   $sop = "processa";
+					    $sop = "processa";
 						$qtde = 0;
 					   for($i=0;$i<count($registros);$i++) {
 
@@ -982,7 +990,7 @@ class VACobranca extends VirtexAdmin {
 
 						  						  
 						  $sSQL  = "SELECT ";
-						  $sSQL .= " f.id_cliente_produto, f.descricao, f.cod_barra, f.valor, f.status, to_char(f.data, 'DD/mm/YYYY') as vencimento, ";
+						  $sSQL .= " f.id_cliente_produto, f.descricao, f.cod_barra, f.valor, f.status, to_char(f.data, 'DD/mm/YYYY') as vencimento,to_char(f.data_pagamento,'DD/mm/YYYY') as data_pgto, ";
 						  $sSQL .= " cn.id_cliente_produto, cn.id_cliente, ";
 						  $sSQL .= " cl.id_cliente, cl.nome_razao ";
 						  $sSQL .= "FROM ";
@@ -993,12 +1001,17 @@ class VACobranca extends VirtexAdmin {
 						  $sSQL .= " cn.id_cliente = cl.id_cliente ";
 						  $_faturas = $this->bd->obtemUnicoRegistro($sSQL);
 						  
-						  
+						  //echo "SELEÇÃO: $sSQL <br>";
 						  
 						  if ($_faturas && $_faturas["nome_razao"] != ""){
 						  	//echo $_faturas["nome_razao"]."<br>";
 						  	$qtde = $qtde + 1;
+						  	$_status = "P";
+						  	$motivo = "";
 						  
+						  }else{
+						  	$_status = "S";
+						  	$motivo = "Sem correspondente em Faturas";
 						  }
 						  //$qtde_validos = count($_faturas);
 						  
@@ -1017,20 +1030,21 @@ class VACobranca extends VirtexAdmin {
 						  
 						  						  
 						  $sSQL  = "INSERT INTO lgtb_retorno_faturas ";
-						  $sSQL .= "(nsr,data_pagamento,data_credito,valor_recebido,codigo_barras,valor_tarifa,status,id_arquivo) ";
+						  $sSQL .= "(nsr,data_pagamento,data_credito,valor_recebido,codigo_barras,valor_tarifa,status,id_arquivo,motivo) ";
 						  $sSQL .= "VALUES ( ";
 						  $sSQL .= " '".$registros[$i]["nsr"]."',";
 						  $sSQL .= " '$dt_pgto',";
 						  $sSQL .= " '$dt_crdt',";
 						  $sSQL .= " '$vlr',";
-						  $sSQL .= " '".$registros[$i]["codigo_barras"]."',";
+						  $sSQL .= " '".$registros[$i]["codigo_barras"]."', ";
 						  $sSQL .= " '$vlr_tarifa',";
-						  $sSQL .= " 'P',";
-						  $sSQL .= " currval('lgtb_retorno_id_arquivo_seq')";
+						  $sSQL .= " '$_status', ";
+						  $sSQL .= " currval('lgtb_retorno_id_arquivo_seq'), ";
+						  $sSQL .= " '$motivo' ";
 						  $sSQL .= ")";
 						  $this->bd->consulta($sSQL);
 						  
-						  echo "FATURAS: $sSQL <br>";
+						  //echo "FATURAS: $sSQL <br>";
 						  
 						  
 						  
@@ -1061,9 +1075,9 @@ class VACobranca extends VirtexAdmin {
 						
 						
 						$this->tpl->atribui("erro",$sErro);
-					   $this->tpl->atribui("registros",$registros);
-					   $this->tpl->atribui("arquivo",$arquivo["name"]);
-					   $this->arquivoTemplate = "cobranca_retorno_registros.html";
+						$this->tpl->atribui("registros",$registros);
+						$this->tpl->atribui("arquivo",$arquivo["name"]);
+						$this->arquivoTemplate = "cobranca_retorno_registros.html";
 
 				   }
 
@@ -1092,7 +1106,7 @@ class VACobranca extends VirtexAdmin {
 
 
 					$sSQL  = "SELECT ";
-					$sSQL .= " f.id_cliente_produto, f.descricao, f.cod_barra, f.valor, f.status, to_char(f.data, 'DD/mm/YYYY') as vencimento, ";
+					$sSQL .= " f.id_cliente_produto, f.descricao, f.cod_barra, f.valor, f.status, to_char(f.data, 'DD/mm/YYYY') as vencimento,f.status,to_char(f.data_pagamento,'DD/mm/YYYY') as data_pgto, ";
 					$sSQL .= " cn.id_cliente_produto, cn.id_cliente, ";
 					$sSQL .= " cl.id_cliente, cl.nome_razao ";
 					$sSQL .= "FROM ";
@@ -1128,7 +1142,9 @@ class VACobranca extends VirtexAdmin {
 					//echo "VALOR RECEBIDO: $valor_recebido <br>";
 					//echo "VALOR FATURA: ".$_faturas["valor"]."<br>";
 
-
+					$sSQL  = "UPDATE lgtb_retorno_faturas SET status = 'A' WHERE codigo_barras = '$codigo_barras'";
+					$this->bd->consulta($sSQL);
+					
 
 					$sSQL  = "UPDATE cbtb_faturas SET ";
 					$sSQL .= "valor_pago = '$valor_pago', ";
@@ -1140,7 +1156,19 @@ class VACobranca extends VirtexAdmin {
 
 					$this->bd->consulta($sSQL);
 					//echo "AMORT: $sSQL <br>";
-
+					
+					$sSQL  = "UPDATE lgtb_retorno_faturas SET ";
+					$sSQL .= "status = 'A', ";
+					$sSQL .= "motivo = 'Atualizado com sucesso' ";
+					$sSQL .= "WHERE codigo_barras = '$codigo_barras' ";
+					$this->bd->consulta($sSQL);
+					
+					$sSQL  = "UPDATE lgtb_retorno_faturas SET ";
+					$sSQL .= "status = 'D', ";
+					$sSQL .= "motivo = 'Desmarcado pelo operador' ";
+					$sSQL .= "WHERE status = 'P' ";
+					$this->bd->consulta($sSQL);					
+					
 
 			}
 			
@@ -1153,7 +1181,26 @@ class VACobranca extends VirtexAdmin {
 
 		return;
 
-	}
+		}else if ($acao == "detalhe"){
+	
+			$id_arquivo = @$_REQUEST["id_arquivo"];
+		
+			$sSQL  = "SELECT ";
+			$sSQL .= "id_arquivo, nsr, to_char(data_pagamento,'DD/MM/YYYY') as data_pagamento, to_char(data_credito,'DD/MM/YYYY') as data_credito, to_char(valor_recebido, '999D99') as valor, status, motivo, codigo_barras ";
+			$sSQL .= "FROM ";
+			$sSQL .= "lgtb_retorno_faturas ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "id_arquivo = '$id_arquivo' ";
+			$sSQL .= "ORDER BY nsr ASC";
+		
+			$detalhe = $this->bd->obtemRegistros($sSQL);
+		
+			$this->tpl->atribui("detalhe",$detalhe);
+			
+			$this->arquivoTemplate = "cobranca_retorno_detalhe.html";
+			return;
+
+		}
 
 
 

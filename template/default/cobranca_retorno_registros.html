@@ -1,3 +1,6 @@
+
+
+
 <html>
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
@@ -29,14 +32,20 @@
                   <input type="hidden" name="op" value="{$op}" />
                   <input type="hidden" name="sop" value="{$sop}" />
                   </center>
-<table width="550" border="0" cellspacing="0" cellpadding="0" bgcolor="#666666">
+                  <table width="550" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
                     <tr>
                       <td><table width="550" border="0" cellspacing="1" cellpadding="0">
                           <tr>
-                            <td bgcolor="#CCCCCC"><table width="550" border="0" cellspacing="0" cellpadding="0">
+                            <td bgcolor="#FFFFFF">
+<table width="550" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
                                   <td> {foreach item=r from=$registros name=regs} 
-                                    <table width="550" border="0" cellspacing="2" cellpadding="0">
+                                    <table width="550" border="0" cellspacing="0" cellpadding="0" bgcolor="#000000">
+                                      <tr>
+                                        <td><table width="550" border="0" cellspacing="1" cellpadding="0">
+                                            <tr>
+                                              <td bgcolor="#FFFFFF">
+											  								                                      <table width="550" border="0" cellspacing="2" cellpadding="0">
                                       <tr bgcolor="#f1f1f1"> 
                                         <td width="52"><p>&nbsp;</p></td>
                                         <td width="82"><p><strong>#</strong></p></td>
@@ -46,9 +55,8 @@
                                       </tr>
                                       <tr  {if !$r.nome_razao} bgcolor=#D17676 {else}bgcolor="#FFFFFF"{/if}> 
                                         <td>
-<input type="checkbox" name="nsr[{$r.nsr}]" value="true" style="border: 0px" {if $r.nome_razao == "" OR !$r.nome_razao}DISABLED{else}CHECKED{/if}>
+<input type="checkbox" name="nsr[{$r.nsr}]" value="true" style="border: 0px" {if $r.nome_razao == "" OR !$r.nome_razao OR $r.status == "P"}DISABLED{else}CHECKED{/if}>
                                         </td>
-                                        
 										<td><p>{$r.nsr}</p></td>
                                         <td><p>{$r.data_pagamento}</p></td>
                                         <td><p>{$r.data_credito}</p></td>
@@ -73,9 +81,10 @@
                                           </table></td>
                                       </tr>
                                       <tr bgcolor="#FFFFFF"> 
-                                        <td colspan="5" bgcolor="#CCCCCC">
-										{if $r.nome_razao}
-										<table width="550" border="0" cellspacing="2" cellpadding="0">
+                                        <td colspan="5" bgcolor="#CCCCCC"> {if 
+                                          $r.nome_razao} 
+                                          <table width="550" border="0" cellspacing="2" cellpadding="0">
+										  {if $r.status == "P"}<tr bgcolor="#FFFFFF"><td colspan=3><p><font color="red"><B>Fatura já paga em {$r.data_pgto}</B></font></p></td></tr>{/if}
                                             <tr bgcolor="#F1F1F1"> 
                                               <td>
 <p><strong>Valor da Fatura</strong></p></td>
@@ -96,12 +105,20 @@
                                         <td colspan="5">&nbsp;</td>
                                       </tr>
                                     </table>
-									{/foreach}
-									</td>
+											  
+											  
+											  
+											  
+											  </td>
+                                            </tr>
+                                          </table></td>
+                                      </tr>
+                                    </table><BR>
+                                    {/foreach} </td>
                                 </tr>
                                 <tr>
                                   <td align="CENTER">
-<input type="submit" name="submit2" value="Processar">
+{if !$erro}<input type="submit" name="submit2" value="Processar">{/if}
                                     <input name="acao" type="hidden" value="amortiza" id="acao">
                                     <input name="total" type="hidden" value="{$smarty.foreach.regs.total}" id="total"> </td>
                                 </tr>

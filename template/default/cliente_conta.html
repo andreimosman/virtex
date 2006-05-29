@@ -108,7 +108,10 @@ function check(){
 									{/foreach}
                               	{/if}
 								
-								{if $numero_contas > "1"}<p align="center">Cadastrar Nova Conta</p>{/if}
+								{if $numero_contas > "1"}
+          <p align="center"><a href="cobranca.php?op=conta&id_cliente={$id_cliente}&username={$username}&tipo_conta={$tipo_conta}&dominio={$dominio}&sop=nova_conta">Cadastrar 
+            Nova Conta</a></p>
+          {/if}
                               </td>
                             </tr>
                             <tr>

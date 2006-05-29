@@ -1736,8 +1736,24 @@ class VAClientes extends VirtexAdmin {
 			$username = @$_REQUEST["username"];
 			$dominio  = @$_REQUEST["dominio"];
 			$tipo_conta = @$_REQUEST["tipo_conta"];
+			$sop = @$_REQUEST["sop"];
 			
 			$this->obtemPR($id_cliente);
+			
+			
+			if ($sop == "nova_conta"){
+			
+				$this->tpl->atribui("id_cliente",$id_cliente);
+				$this->tpl->atribui("username",$username);
+				$this->tpl->atribui("dominio",$dominio);
+				$this->tpl->atribui("tipo_conta",$tipo_conta);
+				
+				$this->arquivoTemplate = "cliente_nova_conta.html";
+			
+			
+			}
+			
+			
 			
 			
 			$this->tpl->atribui("id_cliente",$id_cliente);
