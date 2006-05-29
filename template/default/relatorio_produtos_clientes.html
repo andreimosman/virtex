@@ -28,7 +28,9 @@
                 </font></h2>
 
 					{if $acao == "geral"}
-						<p>{if $relat}<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico">{/if}</p>
+					{if !count($relat)}Não existem dados cadastrados
+					{else}
+						<p><img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico">{/if}</p>
 						  <table width="450" border="0" cellspacing="0" cellpadding="0">
 							  <tr>
 								<td><table width="450" border="0" cellspacing="0" cellpadding="0">

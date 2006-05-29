@@ -36,9 +36,11 @@
                 </font></h2>
 
                   {if $acao == "geral" }
+                  {if !$relat}<p><b>Não existem dados cadastrados</b></p>{/if}
 
 					<p>{if $relat}<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico">{/if}</p>
 
+					{if $relat}
                   <table width="450" border="0" cellspacing="0" cellpadding="0">
                     <tr>
                       <td><table width="450" border="0" cellspacing="0" cellpadding="0">
@@ -70,6 +72,7 @@
                         </table></td>
                     </tr>
                   </table>
+
 
                   {/if}
 
@@ -106,6 +109,7 @@
 
                   <p><a href="#" onCLick="javascript:history.back()">Voltar</a></p>
 
+                  {/if}
                   {/if}
 
                   <p align="center">&nbsp;</p>
