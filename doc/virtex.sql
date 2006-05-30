@@ -1,6 +1,6 @@
 /*
 Created		22/2/2006
-Modified		29/5/2006
+Modified		30/5/2006
 Project		
 Model		
 Company		
@@ -9,7 +9,7 @@ Version
 Database		PostgreSQL 7.3 (beta) 
 */
 
-
+//
 
 
 
@@ -181,6 +181,7 @@ Create table  cbtb_contrato
 	vencimento Smallint NULL ,
 	carencia Smallint NULL ,
 	data_alt_status Date NULL ,
+	id_produto Smallint NULL ,
  primary key (id_cliente_produto)
 );
 
@@ -275,7 +276,7 @@ Create table  cntb_conta_bandalarga
 	status Char(1) NULL ,
 	mac Macaddr NULL ,
 	id_nas Smallint NOT NULL,
-	ip_externo Inet NOT NULL,
+	ip_externo Inet NULL ,
  primary key (username,tipo_conta,dominio)
 );
 
@@ -424,7 +425,7 @@ Create table  pftb_preferencia_cobranca
 	dia_venc Smallint NULL ,
 	carencia Smallint NULL ,
 	cod_banco Smallint NULL ,
-	carteira Smallint NULL ,
+	carteira Varchar(10) NULL ,
 	agencia Smallint NULL ,
 	num_conta Smallint NULL ,
 	convenio Smallint NULL ,
@@ -510,7 +511,7 @@ Create table  rdtb_log
 Create table  cbtb_carne
 (
 	id_carne Smallint NOT NULL,
-	data_geracao Smallint NULL ,
+	data_geracao Date NULL ,
 	status Varchar(2) NULL  Default 'A',
 	id_cliente_produto Smallint NULL ,
 	valor Numeric(30,2) NULL ,
