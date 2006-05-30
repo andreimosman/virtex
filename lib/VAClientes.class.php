@@ -1299,13 +1299,15 @@ class VAClientes extends VirtexAdmin {
 							
 						if ($tipo == "BL"){
 						
+						$prefs = $this->prefs->obtem("total");
 						$sSQL = "SELECT ip_externo FROM cntb_conta_bandalarga WHERE username = '".@$_REQUEST["username"]."' AND tipo_conta = 'BL' and dominio = '".$prefs["dominio_padrao"]."' ";
 						$externo = $this->bd->obtemUnicoRegistro($sSQL);
 						
 						
 						//echo "EXTERNO: $sSQL <br>";
-						$this->tpl->atribui("ip_externo",$externo["ip_externo"]);
-						
+							if(count($externo)){
+								$this->tpl->atribui("ip_externo",$externo["ip_externo"]);
+							}
 						}
 
 						
@@ -1571,7 +1573,7 @@ class VAClientes extends VirtexAdmin {
 						
 				$carnes = $this->bd->obtemRegistros($sSQL);
 				$this->obtemPR($id_cliente);
-				
+				echo "CARNES: $sSQL <br>";
 				
 				if ($p == "faturas"){
 					
@@ -2684,9 +2686,9 @@ class VAClientes extends VirtexAdmin {
 
 			//$arqPDF = $this->contratoPDF($id_cliente_produto,$data_contratacao);
 
-			$sSQL = "SELECT path_contratos FROM pftb_preferencia_cobranca WHERE id_provedor = '1'";
+			$sSQL = "SELECT path_contrato FROM pftb_preferencia_cobranca WHERE id_provedor = '1'";
 			$_path = $this->bd->obtemUnicoRegistro($sSQL);
-			$path = $_path["path_contratos"];
+			$path = $_path["path_contrato"];
 			$host = "dev.mosman.com.br";
 
 			////echo "path_contratos: $sSQL <br>";
@@ -3186,7 +3188,7 @@ public function contratoHTML($id_cliente,$id_cliente_produto,$tipo_produto){
 
 	$contrato = $this->bd->obtemUnicoRegistro($sSQL);
 
-	////echo "SQL: $sSQL <br>";
+	echo "SQL: $sSQL <br>";
 
 	$this->tpl->atribui("data_contratacao", $contrato["data_contratacao"]);
 	$this->tpl->atribui("vigencia", $contrato["vigencia"]);
@@ -3237,9 +3239,12 @@ public function contratoHTML($id_cliente,$id_cliente_produto,$tipo_produto){
 	$_image_path = MUtils::getPwd();
 	$host = "http://dev.mosman.com.br";
 	$image_path = $host.$_image_path."/template/default/images";
-	$sSQL = "SELECT path_contratos FROM pftb_preferencia_cobranca WHERE id_provedor = '1'";
-	$_path = $this->bd->obtemUnicoRegistro($sSQL);
-	$path = $_path["path_contratos"];
+	$sSQL = "SELECT path_contrato FROM pftb_preferencia_cobranca WHERE id_provedor = '1'";
+	
+	$provedor = $this->prefs->obtem("total");
+	$path = $provedor["path_contrato"];
+	//$_path = $this->bd->obtemUnicoRegistro($sSQL);
+	//$path = $_path["path_contratos"];
 	
 	$nome_arq = $path."contrato-".$id_cliente_produto."-".$contrato["data_contratacao"].".html";
 	$fd = fopen($nome_arq,"w");

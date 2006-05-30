@@ -980,7 +980,7 @@ class VAConfiguracao extends VirtexAdmin {
 							$sSQL .= "  convenio = '".@$_REQUEST["convenio"]."', ";
 							$sSQL .= "	pagamento = '".@$_REQUEST["pagamento"]."', ";
 							$sSQL .= "	observacoes = '".@$_REQUEST["observacoes"]."', ";
-							$sSQL .= "  path_contratos = '".@$_REQUEST["path_contratos"]."' ";
+							$sSQL .= "  path_contrato = '".@$_REQUEST["path_contrato"]."' ";
 
 							$this->bd->consulta($sSQL);
 							//echo "update cobrança: $sSQL <br>";

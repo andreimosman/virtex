@@ -185,9 +185,9 @@
 					$q = 0;
 
 					$sSQL  = "INSERT INTO cbtb_carne ";
-					$sSQL .= "(id_carne, data_geracao,id_cliente_produto,valor,status,vigencia) ";
+					$sSQL .= "(id_carne, data_geracao,id_cliente_produto,valor,status,vigencia,id_cliente) ";
 					$sSQL .= "VALUES ";
-					$sSQL .= "('$_id_carne','$data_contratacao','$id_cliente_produto','$valor_contrato','A','$vigencia') ";
+					$sSQL .= "('$_id_carne','$data_contratacao','$id_cliente_produto','$valor_contrato','A','$vigencia','$id_cliente') ";
 
 					$this->bd->consulta($sSQL);
 					//echo "CARNE: $sSQL <br>";

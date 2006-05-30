@@ -53,11 +53,10 @@
 
 						  	<td><p><input type="submit" value="OK"></p></td>
 						  </tr>
-						<table>
-                	</form>
-
-
-						<p>{if $relat}<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico">{/if}</p>
+						<table> </form> <p>{if !$relat }N&atilde;o existem Bloqueios 
+                    ou Desbloqueios no periodo{/if}<br>
+                    {if $relat}<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico">{/if}<br>
+                    {if $relat} </p>
 					  <table width="450" border="0" cellspacing="0" cellpadding="0">
 						  <tr>
 							<td><table width="450" border="0" cellspacing="0" cellpadding="0">
@@ -184,11 +183,7 @@
 						  </tr>
 						  </table>
                   	  <p><a href="#" onClick="javascript:history.back()">Voltar</a></p>
-					{/if}
-
-
-
-
+					{/if} {/if} 
                   <p align="center">&nbsp;</p>
                   <P align="center">&nbsp;</P>
 				</td>

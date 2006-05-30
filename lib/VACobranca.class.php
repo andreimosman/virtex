@@ -2590,7 +2590,7 @@ class VACobranca extends VirtexAdmin {
 
 	$this->tpl->atribui("codigo_barras",$codigo_barras);
 
-//	copy("/mosman/virtex/dados/carnes/codigos/".$codigo_barras.".png","codigos/".$codigo_barras.".png");
+	copy("/mosman/virtex/dados/carnes/codigos/".$codigo_barras.".png","codigos/".$codigo_barras.".png");
 
 	$this->tpl->atribui("linha_digitavel",$linha_digitavel);
 	$this->tpl->atribui("valor",$valor);

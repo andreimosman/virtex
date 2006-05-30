@@ -105,11 +105,8 @@ function check(){
                               	{if count($erros)}
 									{foreach item=erro from=$erros}
 										<p align="center"><font color="#FF0000" face=arial size=-1><b>{$erro}</b></font></p>
-									{/foreach}
-                              	{/if}
-								
-								{if $numero_contas > "1"}
-          <p align="center"><a href="cobranca.php?op=conta&id_cliente={$id_cliente}&username={$username}&tipo_conta={$tipo_conta}&dominio={$dominio}&sop=nova_conta">Cadastrar 
+									{/foreach} {/if} {if $numero_contas > "1" AND $total_contas_cliente < $numero_contas}
+<p align="center"><a href="clientes.php?op=conta&id_cliente={$id_cliente}&username={$username}&tipo_conta={$tipo_conta}&dominio={$dominio}&sop=nova_conta">Cadastrar 
             Nova Conta</a></p>
           {/if}
                               </td>

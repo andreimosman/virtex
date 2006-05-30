@@ -11,15 +11,15 @@
 					$tipo_cobranca = $this->bd->obtemRegistros($sSQL);
 					
 					
-					$sSQL  = "SELECT ";
-					$sSQL .= " dominio_padrao, nome, localidade, tx_juros, multa, dia_venc, carencia, ";
-					$sSQL .= " cod_banco, carteira, agencia, num_conta, convenio, observacoes, cnpj, pagamento ";
-					$sSQL .= "FROM ";
-					$sSQL .= " cftb_preferencias ";
-					$sSQL .= "WHERE ";
-					$sSQL .= " id_provedor = '1'";
+					//$sSQL  = "SELECT ";
+					//$sSQL .= " dominio_padrao, nome, localidade, tx_juros, multa, dia_venc, carencia, ";
+					//$sSQL .= " cod_banco, carteira, agencia, num_conta, convenio, observacoes, cnpj, pagamento ";
+					//$sSQL .= "FROM ";
+					//$sSQL .= " cftb_preferencias ";
+					//$sSQL .= "WHERE ";
+					//$sSQL .= " id_provedor = '1'";
 					
-					$preferencias = $this->bd->obtemUnicoRegistro($sSQL);
+					$preferencias = $this->prefs->obtem("total");
 
 
 					$sSQL  = "SELECT ";

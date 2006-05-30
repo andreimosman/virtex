@@ -112,19 +112,18 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                       <td> {foreach item=a from=$lista_contrato} 
                         <table width="100%" border="0" cellspacing="1" cellpadding="0">
                           <tr> 
-                            <td width="23%" align="center" height="15"> <p><a href="clientes.php?op=imprime_contrato&id_cliente_produto={$a.id_cliente_produto}&id_cliente={$a.id_cliente}">{$a.data_contratacao}</a></p></td>
-                            <td width="75" align="center" height="15"> <p><a href="clientes.php?op=imprime_contrato&id_cliente_produto={$a.id_cliente_produto}&id_cliente={$a.id_cliente}">{$a.vigencia}</a></p></td>
-                            <td width="28%" align="LEFT" height="15"> <p><a href="clientes.php?op=imprime_contrato&id_cliente_produto={$a.id_cliente_produto}&id_cliente={$a.id_cliente}">{$a.nome}</a></p></td>
-                            <td width="7%" align="center" height="15"> <p><a href="clientes.php?op=imprime_contrato&id_cliente_produto={$a.id_cliente_produto}&id_cliente={$a.id_cliente}">{$a.tipo_produto}</a></p></td>
-                            <td width="75" align="RIGHT" height="15"> <p><a href="clientes.php?op=imprime_contrato&id_cliente_produto={$a.id_cliente_produto}&id_cliente={$a.id_cliente}">{$a.valor_contrato}</a></p></td>
+                            <td width="23%" align="center" height="15"> <p><a href="javascript:;" onclick="MM_openBrWindow('clientes.php?op=imprime_contrato&id_cliente_produto={$a.id_cliente_produto}&id_cliente={$a.id_cliente}','contrato','scrollbars=yes,width=500,height=600')">{$a.data_contratacao}</a></p></td>
+                            <td width="75" align="center" height="15"> <p><a href="javascript:;" onclick="MM_openBrWindow('clientes.php?op=imprime_contrato&id_cliente_produto={$a.id_cliente_produto}&id_cliente={$a.id_cliente}','contrato','scrollbars=yes,width=500,height=600')">{$a.vigencia}</a></p></td>
+                            <td width="28%" align="LEFT" height="15"> <p><a href="javascript:;" onclick="MM_openBrWindow('clientes.php?op=imprime_contrato&id_cliente_produto={$a.id_cliente_produto}&id_cliente={$a.id_cliente}','contrato','scrollbars=yes,width=500,height=600')">{$a.nome}</a></p></td>
+                            <td width="7%" align="center" height="15"> <p><a href="javascript:;" onclick="MM_openBrWindow('clientes.php?op=imprime_contrato&id_cliente_produto={$a.id_cliente_produto}&id_cliente={$a.id_cliente}','contrato','scrollbars=yes,width=500,height=600')">{$a.tipo_produto}</a></p></td>
+                            <td width="75" align="RIGHT" height="15"> <p><a href="javascript:;" onclick="MM_openBrWindow('clientes.php?op=imprime_contrato&id_cliente_produto={$a.id_cliente_produto}&id_cliente={$a.id_cliente}','contrato','scrollbars=yes,width=500,height=600')">{$a.valor_contrato}</a></p></td>
                             <td width="75" align="center" height="15"> <p>{if 
-                                $a.status|trim != "M"}<a href="clientes.php?op=imprime_contrato&amp;id_cliente_produto={$a.id_cliente_produto}&amp;id_cliente={$a.id_cliente}" >{/if}{$a.status}{if 
+                                $a.status|trim != "M"}<a href="javascript:;" onclick="MM_openBrWindow('clientes.php?op=imprime_contrato&id_cliente_produto={$a.id_cliente_produto}&id_cliente={$a.id_cliente}','contrato','scrollbars=yes,width=500,height=600')">{/if}{$a.status}{if 
                                 $a.status|trim != "M"}</a>{/if}</p></td>
-                            <td width="30" align="center"><a href="cobranca.php?op=contratos&id_cliente_produto={$a.id_cliente_produto}&id_cliente={$a.id_cliente}&tipo_produto={$a.tipo_produto}"><img src="template/default/images/gif_alterar.gif" width="16" height="16" border="0"></a></td>
-                            <td width="30" align="center"><a href="clientes.php?op=imprime_contrato&id_cliente_produto={$a.id_cliente_produto}&id_cliente={$a.id_cliente}&rotina=pdf"><img src="template/default/pdf.gif" width="16" height="16" border="0"></a></td>
+                            <td align="center"><a href="cobranca.php?op=contratos&id_cliente_produto={$a.id_cliente_produto}&id_cliente={$a.id_cliente}&tipo_produto={$a.tipo_produto}"><img src="template/default/images/gif_alterar.gif" width="16" height="16" border="0"></a></td>
                           </tr>
                           <tr bgcolor="#CCCCCC"> 
-                            <td colspan="8" align="center" height="1"></td>
+                            <td colspan="7" align="center" height="1"></td>
                           </tr>
                         </table>
                         {/foreach}</td>
