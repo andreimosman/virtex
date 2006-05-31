@@ -806,9 +806,9 @@ class VARelatorio extends VirtexAdmin {
 		
 			$tp_grafico="3d";
 						
-			global $_LS_CORES;
-			$base_cores = $_LS_CORES;
-			$cores = array();
+			//global $_LS_CORES;
+			//$base_cores = $_LS_CORES;
+			//$cores = array();
 
 			if( $extra == 'grafico' ) {
 				$valores = array();
@@ -817,7 +817,7 @@ class VARelatorio extends VirtexAdmin {
 					if( $tp_grafico != "3d" || $relat[$i]["num_clientes"] > 0 ) {
 						$valores[]  = $relat[$i]["num_clientes"];
 						$legendas[] = $relat[$i]["cidade"];
-						$cores[] = $base_cores[$i];	
+						//$cores[] = $base_cores[$i];	
 					}
 				}
 				// Exibir o gráfico
@@ -839,7 +839,7 @@ class VARelatorio extends VirtexAdmin {
 				//$pizza->SetSize($size);
 				$pizza->SetCenter(0.35);
 				$pizza->SetLegends($legendas);
-				$pizza->SetSliceColors($cores);
+				//$pizza->SetSliceColors($cores);
 				$grafico->Add($pizza);
 
 				$grafico->Stroke();
