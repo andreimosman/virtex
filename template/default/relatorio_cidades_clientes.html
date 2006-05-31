@@ -28,27 +28,28 @@
 						  <td><table width="450" border="0" cellspacing="0" cellpadding="0">
 							  <tr>
 								<td bgcolor="#F1F1F1"><table width="450" border="0" cellspacing="2" cellpadding="0">
-									<tr>
-									  <td width="75" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Contratos</font></td>
-									  <td width="300"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Cidade</font></td>
-									  <td align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Estado
-									   </font></td>
-									</tr>
-								  </table></td>
+                                <tr> 
+                                  <td width="300"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Cidade</font></td>
+                                  <td align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Estado 
+                                    </font></td>
+                                  <td align="CENTER" width="75"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Clientes</font></td>
+                                </tr>
+                              </table></td>
 							  </tr>
 							  <tr>
 								<td>
 								{foreach item=a from=$relat}
-								  <table width="450" border="0" cellspacing="2" cellpadding="0">
-									<tr>
-									  <td width="75" align="CENTER"><p>{$a.num_clientes}</p></td>
-									  <td width="300"><p><a href="relatorio.php?op={$op}&acao=sub_cid&id_cidade={$a.id_cidade}">{$a.cidade}</a></p></td>
-									  <td align="CENTER"><p>{$a.uf}</p></td>
-									</tr>
-									<tr bgcolor="#999999">
-									  <td colspan="4" height="1"></td>
-									</tr>
-								  </table>
+								  
+                              <table width="450" border="0" cellspacing="2" cellpadding="0">
+                                <tr> 
+                                  <td width="300"><p><a href="relatorio.php?op={$op}&acao=sub_cid&id_cidade={$a.id_cidade}">{$a.cidade}</a></p></td>
+                                  <td align="CENTER"><p>{$a.uf}</p></td>
+                                  <td align="CENTER" width="75"><p>{$a.num_clientes}</p></td>
+                                </tr>
+                                <tr bgcolor="#999999"> 
+                                  <td colspan="4" height="1"></td>
+                                </tr>
+                              </table>
 								  {/foreach}
 								  </td>
 							  </tr>
