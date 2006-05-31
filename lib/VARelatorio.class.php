@@ -805,33 +805,48 @@ class VARelatorio extends VirtexAdmin {
 		if ($extra == "grafico") {
 		
 			$tp_grafico="2d";
-
+						
 			global $_LS_CORES;
 			$base_cores = $_LS_CORES;
 			$cores = array();
+
 
 			if( $extra == 'grafico' ) {
 				$valores = array();
 				$legendas = array();
 				$outros = 0;
 				$agrupar_cidades_com_menos_de = 20;
+				
 				for($i=0;$i<count($relat);$i++) {
+					//if( $tp_grafico != "3d" || $relat[$i]["num_clientes"] > 0 ) {
+					//	$valores[]  = $relat[$i]["num_clientes"];
+					//	$legendas[] = $relat[$i]["cidade"];
+					//	$cores[] = $base_cores[$i];	
+					//}
+					
 					if( $tp_grafico != "3d" || $relat[$i]["num_clientes"] > 0 ) {
 						if( $relat[$i]["num_clientes"] > $agrupar_cidades_com_menos_de ) {
 							$valores[]  = $relat[$i]["num_clientes"];
 							$legendas[] = $relat[$i]["cidade"];
-							$cores[] = $base_cores[$i];
+							$cores = $base_cores[$i];
 							//echo "COR: " . $base_cores[$i] . "<br>\n";
 						} else {
 							$outros++;
 						}
+
 					}
+					
+					
+					
+					
 				}
+				
 				if( $outros > 0 ) {
-					$valores[] = $outros;
-					$legendas[] = "*OUTRAS LOCALIDADES";
-					$cores[] = $base_cores[$i];
+								$valores[] = $outros;
+								$legendas[] = "*OUTRAS LOCALIDADES";
+								$cores[] = $base_cores[$i];
 				}
+
 				$incremento = 0;
 				if( count($valores) > 10 ) {
 					// Se tiver mais informacoes tem que expandir o grafico verticalmente;
@@ -878,7 +893,6 @@ class VARelatorio extends VirtexAdmin {
 
 				$this->arquivoTemplate = "";
 
-				//$pizza = new PiePlot($valores);
 
 				return;
 
