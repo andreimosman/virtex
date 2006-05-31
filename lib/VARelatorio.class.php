@@ -804,24 +804,41 @@ class VARelatorio extends VirtexAdmin {
 						
 		if ($extra == "grafico") {
 		
-			$tp_grafico="3d";
-						
-			//global $_LS_CORES;
-			//$base_cores = $_LS_CORES;
-			//$cores = array();
+			$tp_grafico="2d";
+
+			global $_LS_CORES;
+			$base_cores = $_LS_CORES;
+			$cores = array();
 
 			if( $extra == 'grafico' ) {
 				$valores = array();
 				$legendas = array();
+				$outros = 0;
+				$agrupar_cidades_com_menos_de = 20;
 				for($i=0;$i<count($relat);$i++) {
 					if( $tp_grafico != "3d" || $relat[$i]["num_clientes"] > 0 ) {
-						$valores[]  = $relat[$i]["num_clientes"];
-						$legendas[] = $relat[$i]["cidade"];
-						//$cores[] = $base_cores[$i];	
+						if( $relat[$i]["num_clientes"] > $agrupar_cidades_com_menos_de ) {
+							$valores[]  = $relat[$i]["num_clientes"];
+							$legendas[] = $relat[$i]["cidade"];
+							$cores[] = $base_cores[$i];
+							//echo "COR: " . $base_cores[$i] . "<br>\n";
+						} else {
+							$outros++;
+						}
 					}
 				}
+				if( $outros > 0 ) {
+					$valores[] = $outros;
+					$legendas[] = "*OUTRAS LOCALIDADES";
+					$cores[] = $base_cores[$i];
+				}
+				$incremento = 0;
+				if( count($valores) > 10 ) {
+					// Se tiver mais informacoes tem que expandir o grafico verticalmente;
+					$incremento = (count($valores) - 10) * 20;
+				}
 				// Exibir o gráfico
-				$grafico = new PieGraph(450,250,"png");
+				$grafico = new PieGraph(480,270 + $incremento,"png");
 				//$grafico->SetShadow();
 				//$grafico->title->Set("Clientes por Banda");
 				$grafico->title->SetFont(FF_FONT1,FS_BOLD);
@@ -829,18 +846,33 @@ class VARelatorio extends VirtexAdmin {
 				//$grafico->SetBackgroundImage("./template/default/images/gr_back1.jpg",BGIMG_FILLPLOT); //BGIMG_FILLFRAME);
 				//$grafico->SetMarginColor("#f1f1f1");
 
+				//Imagem de Fundo
+				//$grafico->SetBackgroundImage("./template/default/images/gr_back1.jpg",BGIMG_FILLPLOT); //BGIMG_FILLFRAME);
+				//$grafico->SetMarginColor("white");
+						
+
+
 
 				if( $tp_grafico == "3d" ) {
-					$pizza = new PiePlot3D($valores);
+					$gr = new PiePlot3D($valores);
+					//$gr = new BarPlot3D($valores);
 				} else {
-					$pizza = new PiePlot($valores);
+					$gr = new PiePlot($valores);
+					//$gr = new BarPlot($valores);
 				}
 
-				//$pizza->SetSize($size);
-				$pizza->SetCenter(0.35);
-				$pizza->SetLegends($legendas);
-				//$pizza->SetSliceColors($cores);
-				$grafico->Add($pizza);
+				//$gr->SetFillGradient("#aa0000","red",GRAD_VER);;
+				//$gr->SetColor("#aa0000");
+
+				//$size = 0.4;
+				$size=0.3;
+				$gr->SetSize($size);
+				$gr->SetCenter(0.35);
+				$gr->SetLegends($legendas);
+				//$gr->SetSliceColors($cores);
+				//$grafico->xaxis->SetTickLabels($legendas);
+
+				$grafico->Add($gr);
 
 				$grafico->Stroke();
 
