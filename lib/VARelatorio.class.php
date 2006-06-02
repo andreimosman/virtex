@@ -634,7 +634,7 @@ class VARelatorio extends VirtexAdmin {
 		
 			$tipo = @$_REQUEST["tipo"];
 			$this->tpl->atribui("tipo",$tipo);
-		
+			
 			$sSQL  = "SELECT ";
 			$sSQL .= "	cl.id_cliente, cl.nome_razao, p.nome as produto, ";
 			$sSQL .= "	p.tipo, cp.id_cliente_produto, ";
@@ -703,7 +703,7 @@ class VARelatorio extends VirtexAdmin {
 				for($i=0;$i<count($relat);$i++) {
 					if( $tp_grafico != "3d" || $relat[$i]["num_contratos"] > 0 ) {
 						$valores[]  = $relat[$i]["num_contratos"];
-						$legendas[] = ($relat[$i]["tipo"] == 'BL')? "Banda Larga" : ($relat[$i]["tipo"] == 'H ')? "Hospedagem" : "Discado" ;
+						$legendas[] = (trim($relat[$i]["tipo"]) == 'BL')? "Banda Larga" : (trim($relat[$i]["tipo"]) == 'H')? "Hospedagem" : "Discado" ;
 						$cores[] = $base_cores[$i];	
 					}
 				}
@@ -815,7 +815,10 @@ class VARelatorio extends VirtexAdmin {
 				$valores = array();
 				$legendas = array();
 				$outros = 0;
-				$agrupar_cidades_com_menos_de = 20;
+				$prefs = $this->prefs->obtem("geral");
+				$agrupar = $prefs["agrupar"];
+				
+				//$agrupar_cidades_com_menos_de = 20;
 				
 				for($i=0;$i<count($relat);$i++) {
 					//if( $tp_grafico != "3d" || $relat[$i]["num_clientes"] > 0 ) {
@@ -825,10 +828,10 @@ class VARelatorio extends VirtexAdmin {
 					//}
 					
 					if( $tp_grafico != "3d" || $relat[$i]["num_clientes"] > 0 ) {
-						if( $relat[$i]["num_clientes"] > $agrupar_cidades_com_menos_de ) {
+						if( $relat[$i]["num_clientes"] > $agrupar ) {
 							$valores[]  = $relat[$i]["num_clientes"];
 							$legendas[] = $relat[$i]["cidade"];
-							$cores = $base_cores[$i];
+							//$cores = $base_cores[$i];
 							//echo "COR: " . $base_cores[$i] . "<br>\n";
 						} else {
 							$outros++;

@@ -151,7 +151,7 @@ if ($op == "lista"){
 		
 		$extra = @$_REQUEST['extra'];
 		
-		$tp_grafico = "2d";
+		$tp_grafico = "3d";
 		global $_LS_CORES;
 		
 		$cores = array();

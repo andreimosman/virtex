@@ -926,7 +926,8 @@ class VAConfiguracao extends VirtexAdmin {
 							$sSQL .= "  mail_gid = '".@$_REQUEST["mail_gid"]."', ";
 							$sSQL .= "  pop_host = '".@$_REQUEST["pop_host"]."', ";
 							$sSQL .= "  smtp_host = '".@$_REQUEST["smtp_host"]."', ";
-							$sSQL .= "  hosp_base = '".@$_REQUEST["hosp_base"]."' ";
+							$sSQL .= "  hosp_base = '".@$_REQUEST["hosp_base"]."', ";
+							$sSQL .= "  agrupar = '".@$_REQUEST["agrupar"]."' ";
 							
 							//echo "SQL UPDATE: $sSQL <br>";
 							$this->bd->consulta($sSQL);

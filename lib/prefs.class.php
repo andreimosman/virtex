@@ -49,7 +49,7 @@ class Preferencias {
          }else if ( $classe == "geral" ){
          	// Preferencias gerais
 		 	$sSQL  = "SELECT "; 
-		 	$sSQL .= "dominio_padrao, nome, radius_server, hosp_server, hosp_ns1, hosp_ns2, hosp_uid, hosp_gid, mail_server, mail_uid, mail_gid, pop_host, smtp_host, hosp_base ";
+		 	$sSQL .= "dominio_padrao, nome, radius_server, hosp_server, hosp_ns1, hosp_ns2, hosp_uid, hosp_gid, mail_server, mail_uid, mail_gid, pop_host, smtp_host, hosp_base, agrupar ";
 		 	$sSQL .= "FROM pftb_preferencia_geral";
 
          }else if ( $classe == "cobranca" ){
@@ -70,7 +70,7 @@ class Preferencias {
 			      
          }
          
-         //echo "PREFS: $sSQL <br>";
+         echo "PREFS: $sSQL <br>";
 		//
 		
         $this->prefs[$classe] = $this->bd->obtemUnicoRegistro($sSQL);

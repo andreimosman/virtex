@@ -1,0 +1,536 @@
+<!-- cliente_conta.html -->
+{include file='cliente_header.html'}
+{if $tipo_conta == "BL"}
+<script language="javascript">
+/*var ip_externo = "{$ip_externo}";
+
+{literal}
+
+
+function redir(){
+	var frm = document.frmConta;
+	if (ip_externo != "" && frm.redirecionar.checked == false){
+		frm.redirect.value = "exclui";
+	}else if (ip_externo == "" && frm.redirecionar.checked == true){
+		frm.redirect.value = "adiciona";
+	}else{
+		frm.redirect.value = "";
+	}
+	
+	return;
+}
+
+function alteraNas() {
+	var frm = document.frmConta;
+
+	if( frm.id_nas.value != frm.nas_orig.value && !frm.altera_rede.checked ) {
+		if( window.confirm("A alteração do NAS exige que o ip seja alterado, deseja continuar ?") ) {
+			frm.altera_rede.checked = true;
+			alteraNovaSelecao();
+		} else {
+			frm.id_nas.value = frm.nas_orig.value;
+		}
+	}
+}
+
+function alteraSelecaoIP() {
+   var frm = document.frmConta;
+	if( frm.selecao_ip.disabled || frm.selecao_ip.value == "A" ) {
+		frm.endereco_ip.disabled = true;
+   	} else {
+   		frm.endereco_ip.disabled = false;
+   	}
+}
+
+
+
+
+function alteraNovaSelecao() {
+	var frm = document.frmConta;
+	frm.selecao_ip.disabled = !frm.altera_rede.checked;
+	alteraSelecaoIP();
+}
+
+
+
+function init() {
+
+	alteraNas();
+	alteraSelecaoIP();
+	alteraNovaSelecao();
+
+
+}
+
+function check(){
+			csenha=document.frmConta.senha.value;
+			cconfsenha=document.frmConta.conf_senha.value;
+
+			msg="";
+			erro=0;
+
+
+			if (csenha != cconfsenha) {
+				msg = msg + "Os campos Senha e Confirmação devem conter o mesmo conteúdo.\n";
+				erro = 1;
+			}
+			if (erro == 1){
+				alert(msg);
+				return false;
+			}
+
+	return true;
+
+}
+*/
+
+{/literal}
+</script>
+{/if}
+
+<form name="frmConta" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="javascript:return check(this);">
+
+				{if $tipo_conta == "BL"}
+                 <table width="100" border="0" cellspacing="0" cellpadding="0" align="center">
+                    <tr>
+                      <td>
+                      <table align="center">
+					              <tr>
+					                <td align="center" valign="middle"><strong><font face="arial" size="4" color="black">Banda Larga</font></strong></td>
+					              </tr>
+          				</table>
+                          
+    <table align="CENTER" width="500" border="0" cellspacing="2" cellpadding="2">
+      <tr>
+                              <td>
+                              	{if count($erros)}
+									{foreach item=erro from=$erros}
+										<p align="center"><font color="#FF0000" face=arial size=-1><b>{$erro}</b></font></p>
+									{/foreach} {/if} </td>
+                            </tr>
+                            <tr>
+                              <td align="center" valign="middle">
+                              </td>
+                            </tr>
+
+                            <tr>
+                              <td align="center" valign="middle">
+
+									<table width="450" border=0 bgcolor="#F1F1F1">
+              <tr>
+                <td colspan=2><h2><font color="#000000">Dados do Usuário</font></h2></td>
+              </tr>
+              <tr>
+                <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+<p>Username:</p></td>
+                <td bgcolor="#FFFFFF" colspan=2><input type="text" maxlength="30" name="username"></td>
+              </tr>
+              <tr>
+                <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+<p>Senha:</p></td>
+                <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="senha" id="senha" >
+                </td>
+              </tr>
+              <tr>
+                <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+<p>Confirme:</p></td>
+                <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="conf_senha" id="conf_senha" >
+                </td>
+              </tr>
+              <tr>
+                <td width="50" align="right" valign="top" bgcolor="#FFFFFF">
+<p>Status:</p></td>
+                <td bgcolor="#FFFFFF" colspan=2>
+
+					<SELECT name='status'>
+					{foreach key=id item=nome from=$lista_status}
+					<OPTION VALUE='{$id}'  {if $id == $status}SELECTED{/if} >{$nome}</OPTION>
+					{/foreach}
+					</SELECT>
+				</td>
+              </tr>
+            </table>
+
+								</td>
+                            </tr>
+
+                            <tr>
+                              <td align="center" valign="middle" id="tdados">&nbsp;
+
+								<table width="450" border=0 bgcolor="#F1F1F1" id="disc">
+            <tr> 
+              <td colspan=2><p><strong>Dados da Conexão</strong></p></td>
+            </tr>
+            <tr> 
+              <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>POP:</p></td>
+              <td bgcolor="#FFFFFF"> <SELECT name='id_pop' >
+										{foreach item=v from=$lista_pops}
+										  
+                  <OPTION value="{$v.id_pop}" {if $v.id_pop == $id_pop}SELECTED{/if}>{$v.nome}</OPTION>
+										{/foreach}
+									  
+                </SELECT> </td>
+              <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>NAS:</p></td>
+              <td bgcolor="#FFFFFF"> <SELECT name='id_nas' >
+										{foreach item=v from=$lista_nas}
+										  
+                  <OPTION value="{$v.id_nas}" {if $v.id_nas == $id_nas}SELECTED{/if}>{$v.tp}: 
+                  {$v.nome}</OPTION>
+										{/foreach}
+									  
+                </SELECT> </td>
+            </tr>
+            <tr> 
+              <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p> 
+                  <input type="checkbox" name="altera_rede" value="1" class="checkbox" {if $altera_rede}CHECKED{/if} onClick="javascript:alteraNovaSelecao();" onChange="javascript:alteraNovaSelecao();">
+                  Nova Seleção de Rede/IP:</p></td>
+              <td bgcolor="#FFFFFF"><select name='selecao_ip' onchange='javascript:alteraSelecaoIP();'>
+                  <option value='A' >Automática</option>
+                  <option value='M' >Manual</option>
+                </select> <br> 
+                <input type="text" name="endereco_ip" id="endereco_ip"></td>
+              <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>MAC:</p></td>
+              <td bgcolor="#FFFFFF" valign="top"><input type="text" name="mac" maxlength="17" size=17></td>
+              {literal} <script>
+									//verificaTipoRede();
+									</script> {/literal} </tr>
+            <tr valign="MIDDLE"> 
+              <td bgcolor="#FFFFFF" align="right"> 
+                <p>Redirecionar:</p></td>
+              <td bgcolor="#FFFFFF" colspan="3"> 
+                <p> 
+                  <input name="redirecionar" type="checkbox" value="true" id="redirecionar" class="checkbox" {if $ip_externo}checked{/if}>
+                  {if $ip_externo}IP: {$ip_externo}{/if}</p></td>
+            </tr>
+          </table>
+
+                              </td>
+                            </tr>
+
+
+
+                            <tr>
+                              <td align="center" valign="middle">
+                                <input type="hidden" name="op" value="conta">
+                                <input type="hidden" name="id_cliente" value="{$id_cliente}">
+          <input type="hidden" name="dominio" value="{$dominio}">
+                                <input type="hidden" name="tipo_conta" value="{$tipo_conta}">
+
+                                <input type="hidden" name="nas_orig" value="{$nas_orig}">
+
+
+                                <input type="hidden" name="acao" value="cad">
+          <input name="ip_externo" type="hidden" value="{$ip_externo}" id="ip_externo">
+          <input name="sop" type="hidden" value="nova_conta" id="sop">
+          <input name="_dominio" type="hidden" value="{$dominio}" id="_dominio">
+          <input name="_username" type="hidden" value="{$username}" id="_username">
+          <input name="_tipo_conta" type="hidden" value="{$tipo_conta}" id="_tipo_conta"></td>
+                            </tr>
+							<tr>
+
+          <td height="10" bcolor="#F1F1F1"><div align="center"><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Banda</font></strong></div></td>
+							</tr>
+							<tr>
+          <td align="center" valign="top">
+            <table width="300" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td width="46%"> <p>Banda Upload kbps</p> </td>
+                <td width="54%"> <p>Banda Download kbps </p></td>
+              </tr>
+              <tr>
+                <td> <SELECT name='upload_kbps' >
+                	{foreach key=id item=nome from=$lista_upload}
+                    <OPTION VALUE='{$id}' {if $id == $upload_kbps}SELECTED{/if} >{$nome}</OPTION>
+                    {/foreach}
+                  </SELECT> </td>
+                <td> <SELECT name='download_kbps' >
+					{foreach key=id item=nome from=$lista_download}
+                    <OPTION VALUE='{$id}' {if $id == $download_kbps}SELECTED{/if} >{$nome}</OPTION>
+                    {/foreach}
+                  </SELECT> </td>
+              </tr>
+            </table>
+
+
+
+								</td>
+
+							</tr>
+
+                            <tr>
+                              <td align="center" valign="middle"><input name="botao_enviar2" type="submit" class=input2 id="botao_enviar23" value="Alterar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;"></td>
+                            </tr>
+                          </table>
+
+
+
+
+                          {/if}
+
+                          {if $tipo_conta|trim == "E"}
+
+                          {literal}
+                          <script>
+                          function check(){
+						  			csenha=document.frmConta.senha.value;
+						  			cconfsenha=document.frmConta.conf_senha.value;
+
+						  			msg="";
+						  			erro=0;
+
+
+						  			if (csenha != cconfsenha || csenha == "" || cconfsenha == "") {
+						  				msg = msg + "Os campos Senha e Confirmação devem conter o mesmo conteúdo.\n";
+						  				erro = 1;
+						  			}
+						  			if (erro == 1){
+						  				alert(msg);
+						  				return false;
+						  			}
+
+						  	return true;
+
+						  }
+
+                          </script>
+                          {/literal}
+                               <input type="hidden" name="op" value="conta">
+						       <input type="hidden" name="id_cliente" value="{$id_cliente}">
+						  	   <input type="hidden" name="username" value="{$username}">
+						       <input type="hidden" name="dominio" value="{$dominio}">
+						       <input type="hidden" name="tipo_conta" value="{$tipo_conta}">
+						       <input type="hidden" name="acao" value="cad">
+    <input name="sop2" type="hidden" value="nova_conta" id="sop2"> 
+    <table align="center">
+								<tr>
+									<td align="center" valign="middle"><strong><font face="arial" size="4" color="black">E-Mail</font></strong></td>
+								</tr>
+							  </table>
+
+                          <table width="450" border=0 bgcolor="#F1F1F1" align="center">
+						                <tr>
+						                  <td colspan=2><h2><font color="#000000">Dados da Conta</font></h2></td>
+						                </tr>
+						                <tr>
+						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+						  					<p>Username:</p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p><input type="text" maxlength="30" name="username" disabled="true" value="{$username}">@{$dominio}</p></td>
+						                </tr>
+						                <tr>
+						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+						  					<p>Senha:</p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="senha" id="senha" >
+						                  </td>
+						                </tr>
+						                <tr>
+						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+						  					<p>Confirme:</p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="conf_senha" id="conf_senha" >
+						                  </td>
+						                </tr>
+						                <tr>
+						                  <td width="50" align="right" valign="top" bgcolor="#FFFFFF">
+						  					<p>Quota:</p></td>
+
+						                <td bgcolor="#FFFFFF" colspan=2> <input name="quota" type="text" id="quota" value="{$quota}"></td>
+						                </tr>
+						                <tr>
+						                <td colspan=2 align="center"><input type="submit" name="Submit" value="Alterar >>"></td>
+						                </tr>
+            			  </table>
+            			  <br>
+                          {/if}
+                          {if $tipo_conta|trim == "H"}
+
+                          {literal}
+                          <script>
+                          function check(){
+						  			csenha=document.frmConta.senha.value;
+						  			cconfsenha=document.frmConta.conf_senha.value;
+
+						  			msg="";
+						  			erro=0;
+
+
+						  			if (csenha != cconfsenha || csenha == "" || cconfsenha == "") {
+						  				msg = msg + "Os campos Senha e Confirmação devem conter o mesmo conteúdo.\n";
+						  				erro = 1;
+						  			}
+						  			if (erro == 1){
+						  				alert(msg);
+						  				return false;
+						  			}
+
+						  	return true;
+
+						  }
+
+                          </script>
+                          {/literal}
+
+                               <input type="hidden" name="op" value="conta">
+						       <input type="hidden" name="id_cliente" value="{$id_cliente}">
+						  	   <input type="hidden" name="username" value="{$username}">
+						       <input type="hidden" name="dominio" value="{$dominio}">
+						       <input type="hidden" name="tipo_conta" value="{$tipo_conta}">
+						       <input type="hidden" name="acao" value="cad">
+						       <input type="hidden" name="tipo_hospedagem" value="{$tipo_hospedagem}">
+						       <input type="hidden" name="dominio_hospedagem" value="{$dominio_hospedagem}">
+    <input name="sop3" type="hidden" value="nova_conta" id="sop3"> 
+    <table align="center">
+								<tr>
+									<td align="center" valign="middle"><strong><font face="arial" size="4" color="black">Hospedagem</font></strong></td>
+								</tr>
+							  </table>
+
+                          <table width="450" border=0 bgcolor="#F1F1F1" align="center">
+						                <tr>
+						                  <td colspan=2><h2><font color="#000000">Dados da Conta</font></h2></td>
+						                </tr>
+						                <tr>
+						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+						  					<p>Username:</p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p><input type="text" maxlength="30" name="user" disabled="true" value="{$username}"></p></td>
+						                </tr>
+						                <tr>
+						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+						  					<p>Senha:</p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="senha" id="senha" >
+						                  </td>
+						                </tr>
+						                <tr>
+						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+						  					<p>Confirme:</p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="conf_senha" id="conf_senha" >
+						                  </td>
+						                </tr>
+						                <tr>
+						                  <td width="50" align="right" valign="top" bgcolor="#FFFFFF">
+						  					<p>Dominio:</p></td>
+
+						                <td bgcolor="#FFFFFF" colspan=2> <p>{if $tipo_hospedagem == "D"}www.{$dominio_hospedagem}{/if}{if $tipo_hospedagem != "D"}www.{$dominio}/{$username}{/if}</p></td>
+						                </tr>
+						                	<tr>
+												<td width="50" align="right" valign="top" bgcolor="#FFFFFF">
+												<p>FTP:</p></td>
+												<td bgcolor="#FFFFFF" colspan=2><p> {if $tipo_hospedagem == "D"}ftp.{$dominio_hospedagem}{/if}{if $tipo_hospedagem != "D"}ftp.{$dominio}{/if}</p></td>
+						                	</tr>
+						                <tr>
+						                <td colspan=2 align="center"><input type="submit" name="Submit" value="Alterar >>"></td>
+						                </tr>
+            			  </table>
+            			  <br>
+                          {/if}
+
+                          {if $tipo_conta|trim == "D"}
+
+                          {literal}
+                          <script>
+                          function check(){
+						  			csenha=document.frmConta.senha.value;
+						  			cconfsenha=document.frmConta.conf_senha.value;
+
+						  			msg="";
+						  			erro=0;
+
+
+						  			if (csenha != cconfsenha || csenha == "" || cconfsenha == "") {
+						  				msg = msg + "Os campos Senha e Confirmação devem conter o mesmo conteúdo.\n";
+						  				erro = 1;
+						  			}
+						  			if (erro == 1){
+						  				alert(msg);
+						  				return false;
+						  			}
+
+						  	return true;
+
+						  }
+
+                          </script>
+                          {/literal}
+
+                               <input type="hidden" name="op" value="conta">
+						       <input type="hidden" name="id_cliente" value="{$id_cliente}">
+						  	   <input type="hidden" name="username" value="{$username}">
+						       <input type="hidden" name="dominio" value="{$dominio}">
+						       <input type="hidden" name="tipo_conta" value="{$tipo_conta}">
+						       <input type="hidden" name="acao" value="cad">
+    <input name="sop4" type="hidden" value="nova_conta" id="sop4"> 
+    <table align="center">
+								<tr>
+									<td align="center" valign="middle"><strong><font face="arial" size="4" color="black">Discado</font></strong></td>
+								</tr>
+							  </table>
+
+                          <table width="450" border=0 bgcolor="#F1F1F1" align="center">
+						                <tr>
+						                  <td colspan=2><h2><font color="#000000">Dados da Conta</font></h2></td>
+						                </tr>
+						                <tr>
+						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+						  					<p>Username:</p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p><input type="text" maxlength="30" name="user" disabled="true" value="{$username}"></p></td>
+						                </tr>
+						                <tr>
+						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+						  					<p>Senha:</p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="senha" id="senha" >
+						                  </td>
+						                </tr>
+						                <tr>
+						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+						  					<p>Confirme:</p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="conf_senha" id="conf_senha" >
+						                  </td>
+						                </tr>
+						                <tr>
+						                  <td width="50" align="right" valign="top" bgcolor="#FFFFFF">
+						  					<p>Status:</p></td>
+
+						                <td bgcolor="#FFFFFF" colspan=2>
+						                	<SELECT name='status'>
+											{foreach key=id item=nome from=$lista_status}
+											<OPTION VALUE='{$id}'  {if $id == $status}SELECTED{/if} >{$nome}</OPTION>
+											{/foreach}
+											</SELECT>
+
+						                </td>
+						                </tr>
+						                	<tr>
+												<td width="50" align="right" valign="top" bgcolor="#FFFFFF">
+												<p>Telefone:</p></td>
+												<td bgcolor="#FFFFFF" colspan=2><input type="text" name="foneinfo" value="{$foneinfo}"></td>
+						                	</tr>
+						                <tr>
+						                
+        <td colspan=2 align="center" height="27">
+<input type="submit" name="Submit" value="Alterar >>"></td>
+						                </tr>
+            			  </table>
+            			  
+    <p><br>
+      {/if}</p>
+    <p>&nbsp; </p></form>
+
+
+<br>
+						<p align="center"><a href="{$smarty.server.PHP_SELF}?op=produto&tipo={$tipo}&id_cliente={$id_cliente}">voltar</a></p>
+
+
+{if $tipo_conta == "BL"}
+
+{ literal }
+<script language="JavaScript">
+
+//init();
+
+
+
+</script>
+{ /literal }
+{/if}
+
+
+{include file='cliente_footer.html'}
+
