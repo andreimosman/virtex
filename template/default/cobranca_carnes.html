@@ -4,6 +4,15 @@
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
 
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" type="text/JavaScript">
+{literal}
+<!--
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+//-->
+{/literal}
+</script>
 </head>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
@@ -14,10 +23,10 @@
                 <td align="center" valign="middle">
                   <h1>Cobranca </h1>
                   <table width="400" border="0" cellspacing="0" cellpadding="0" bgcolor="#666666">
-                    <tr> 
+                    <tr>
                       <td><table width="400" border="0" cellspacing="1" cellpadding="0">
-                          <tr align="CENTER" valign="MIDDLE" bgcolor="#CCCCCC"> 
-                            <td height="30"><strong><a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}">Novo 
+                          <tr align="CENTER" valign="MIDDLE" bgcolor="#CCCCCC">
+                            <td height="30"><strong><a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}">Novo
                               Contrato</a></strong></td>
                             <td height="30"><strong><a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&rotina=resumo&tipo_lista=">Resumo</a></strong></td>
                             <td height="30"><strong><a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&rotina=resumo&tipo_lista=tudo">Faturas</a></strong></td>
@@ -30,14 +39,14 @@
                   <table width="500" border="0" cellspacing="0" cellpadding="0">
                     <tr>
                       <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                          <tr> 
+                          <tr>
                             <td bgcolor="#F1F1F1"><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                                <tr bgcolor="#CDCDCD"> 
+                                <tr bgcolor="#CDCDCD">
                                   <td colspan="6" align="center" height="20"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Carn&ecirc;s</font></strong></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td width="100" align="center"> <p><strong>ID</strong></p></td>
-                                  <td align="center" width="150"> <p><strong>Data 
+                                  <td align="center" width="150"> <p><strong>Data
                                       Geracao</strong></p></td>
                                   <td width="49" align="RIGHT"> <p><strong>Qtde.</strong></p></td>
                                   <td width="50" align="RIGHT"><p><strong>Valor</strong></p></td>
@@ -46,20 +55,21 @@
                                 </tr>
                               </table></td>
                           </tr>
-                          <tr> 
+                          <tr>
                             <td>{foreach item=a from=$carnes}
                               <table width="100%" border="0" cellspacing="2" cellpadding="3">
-                                <tr> 
-                                  <td width="100" align="center"><p>{$a.id_carne}-{$a.id_cliente_produto}</p></td>
-                                  <td width="150" align="CENTER"><p>{$a.data_geracao}</p></td>
-                                  <td width="49" align="RIGHT"> <p>{$a.vigencia}</p></td>
-                                  <td width="50" align="RIGHT"><p>{$a.valor}</p></td>
+                                <tr>
+                                  <td width="100" align="center"><p><a href="{$smarty.server.PHP_SELF}?op=cobranca&rotina=carne&p=faturas&&id_cliente={$id_cliente}&id_carne={$a.id_carne}">{$a.id_carne}-{$a.id_cliente_produto}</a></p></td>
+                                  <td width="150" align="CENTER"><p><a href="{$smarty.server.PHP_SELF}?op=cobranca&rotina=carne&p=faturas&&id_cliente={$id_cliente}&id_carne={$a.id_carne}">{$a.data_geracao}</a></p></td>
+                                  <td width="49" align="RIGHT"> <p><a href="{$smarty.server.PHP_SELF}?op=cobranca&rotina=carne&p=faturas&&id_cliente={$id_cliente}&id_carne={$a.id_carne}">{$a.vigencia}</a></p></td>
+                                  <td width="50" align="RIGHT"><p><a href="{$smarty.server.PHP_SELF}?op=cobranca&rotina=carne&p=faturas&&id_cliente={$id_cliente}&id_carne={$a.id_carne}">{$a.valor}</a></p></td>
                                   <td width="68" align="center"><p><a href="{$smarty.server.PHP_SELF}?op=cobranca&rotina=carne&p=faturas&&id_cliente={$id_cliente}&id_carne={$a.id_carne}">{$a.status}</a></p></td>
-								  <td width ="30"></td>
+
+                    <td width ="30"><a href="javascript:;"><img src="template/default/images/boleto.gif" width="15" height="16" onclick="MM_openBrWindow('clientes.php?op=segunda_via&id_cliente={$id_cliente}&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_carne={$a.id_carne}','carne','scrollbars=yes,width=700,height=600')" border="0"></a></td>
                                  <!-- <td width="15" align="center"><img src="template/default/images/viewer.gif" alt="Ver Contrato" width="15" height="15"></td>
                                   <td width="15" align="center"><a href="javascript:;"><img alt="IMPRIMIR BOLETO" src="template/default/images/boleto.gif" width="15" height="16"  onclick="MM_openBrWindow('cobranca.php?op=boleto&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}','boleto','scrollbars=yes,width={$largura},height={$altura}')" border="0"></a></td>-->
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan="6" align="center" height="1" bgcolor="#CCCCCC"></td>
                                 </tr>
                               </table>

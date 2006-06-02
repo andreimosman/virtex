@@ -42,9 +42,10 @@
 						  	<td><p><input type="submit" value="OK"></p></td>
 						  </tr>
 						<table> </form> 
-                  <p>{if !$relat}N&atilde;o Existe Cancelamentos no periodo{/if}<br>
+                  {if !$relat || $relat == "255"}<p><strong>Não 
+                    Existe Cancelamentos no periodo</strong></p>{/if}<br>
                     {if $relat && $relat != "" && $relat != "255"}{$relat}<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico"><br>
-                  </p>
+                  
 					    <table width="450" border="0" cellspacing="0" cellpadding="0">
 						  <tr>
 							<td><table width="450" border="0" cellspacing="0" cellpadding="0">

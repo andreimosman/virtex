@@ -19,14 +19,10 @@
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio</h1>
-                <h2 align="center"><font size="2">
-                {if $mes}Atrasados de {$meses_ano[$mes]} de {$ano}{else}Atrazos{/if}</font></h2>
-
-                	{if $acao == "geral"}
-
-                	<form action="{$smarty.server.PHP_SELF}" method="GET">
-                		<input type="HIDDEN" name="acao" value="{$acao}">
+                <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio</h1><h2 align="center"><font size="2"> 
+                  {if $mes}Atrasados de {$meses_ano[$mes]} de {$ano}{else}Atrasos{/if}</font></h2>{if 
+                  $acao == "geral"} <form action="{$smarty.server.PHP_SELF}" method="GET"> 
+                  <input type="HIDDEN" name="acao" value="{$acao}">
                 		<input type="HIDDEN" name="op" value="{$op}">
 
                 		<table width="200" border="0" cellspacing="0" cellpadding="0">
@@ -47,8 +43,9 @@
 						<table>
                 	</form>
 
-
-						<p>{if $relat}<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico">{/if}</p>
+							{if !$relat} <p align="center"><b>Não existem clientes nesta condição</b></p> 
+						<p>{else}
+						<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico"></p>
 					  <table width="450" border="0" cellspacing="0" cellpadding="0">
 						  <tr>
 							<td><table width="450" border="0" cellspacing="0" cellpadding="0">
@@ -131,7 +128,7 @@
 
 
 
-                  <p align="center">&nbsp;</p>
+                {/if}
                   <P align="center">&nbsp;</P>
 				</td>
               </tr>

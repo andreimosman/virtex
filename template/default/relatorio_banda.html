@@ -18,7 +18,7 @@
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td align="center" valign="middle"><h1>{if !$contas} Relat&oacute;rio
+                <td align="center" valign="middle">{if (!$contas OR $contas == "" OR $contas == "255") AND (!$bandas OR $bandas == "" OR $bandas == "255") }<h1>Relatorio de Clientes por Banda</h1><br><p><b>Não existem clientes cadastrados</b></p>{else}{if !$contas AND $bandas}<h1> Relat&oacute;rio
                   de Clientes por Banda</h1>
                   {if !$bandas || $bandas==255}<p><b>Nao existem dados cadastrados</b></p>{/if}
                   {if $bandas && $bandas!=255}
@@ -53,7 +53,7 @@
 						</td>
                     </tr>
                   </table>
-				  <h1>{/if}{if $contas && !$msg}
+				  {/if}{if $contas && !$msg}<h1>
                   Relat&oacute;rio de Clientes com {$banda} kbps</h1>
 				<table width="500" border="0" cellspacing="0" cellpadding="0">
                     <tr>
@@ -104,7 +104,7 @@
                   </table>
                   <br>
                   <p><a href="relatorio.php?op=lista_banda">voltar</a>
-                  {/if} </p>
+                  {/if}{/if} </p>
                   <p>&nbsp;</p>
                   <p>&nbsp;</p>
                   <p>&nbsp;

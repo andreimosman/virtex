@@ -18,9 +18,10 @@
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio</h1><h2 align="center"><font size="2">
-
-                {if $tipo == ""}
+                <td align="center" valign="middle">
+				<h1>Relatório</h1>
+				<p><b><font size="2">
+				{if $tipo == ""}
                 	Clientes x Tipo de Produto
                 {/if}
                 {if $tipo == "D"}
@@ -32,54 +33,46 @@
                 {if $tipo == "BL"}
 					Clientes Banda Larga
                 {/if}
+				</font></b></p>
+				{if $acao == "geral"}
+				{if $relat}<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico">{/if}
+						  {if $relat}
+						  <table width="450" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+							  <td><table width="450" border="0" cellspacing="0" cellpadding="0">
+								  <tr>
+									<td bgcolor="#F1F1F1"><table width="450" border="0" cellspacing="2" cellpadding="0">
+										<tr>
+										  <td align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Tipo de Produto</font></td>
+										  <td align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Contratos</font></td>
+										</tr>
+									  </table></td>
+								  </tr>
+								  <tr>
+									<td>
+									{foreach item=a from=$relat}
+									  <table width="450" border="0" cellspacing="2" cellpadding="0">
+										<tr>
+		
+										  <td aligh="LEFT"><p><img src="template/default/images/{$a.tipo|lower|trim}.gif" width="24" height="24"></p></td>
+										  <td width="43%" align="LEFT"><p>{if $a.tipo=="D "}<a href="relatorio.php?op={$op}&acao=sub_tprd&tipo=D">Discado</a>{/if}{if $a.tipo=="BL"}<a href="relatorio.php?op={$op}&acao=sub_tprd&tipo=BL">Banda Larga</a>{/if}{if $a.tipo=="H "}<a href="relatorio.php?op={$op}&acao=sub_tprd&tipo=H">Hospedagem</a>{/if}</p></td>
+										  <td width="50%" align="RIGHT"><p>{$a.num_contratos}</p></td>
+										</tr>
+										<tr bgcolor="#999999">
+										  <td colspan="4" height="1"></td>
+										</tr>
+									  </table>
+									  {/foreach}
+									  </td>
+								  </tr>
+								</table></td>
+							</tr>
+						  </table>
+						 {/if}
+				
+				                  
 
-                </font></h2>
-
-                  {if $acao == "geral" }
-                  {if !$relat}<p><b>Não existem dados cadastrados</b></p>{/if}
-
-					<p>{if $relat}<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico">{/if}</p>
-
-					{if $relat}
-                  <table width="450" border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                      <td><table width="450" border="0" cellspacing="0" cellpadding="0">
-                          <tr>
-                            <td bgcolor="#F1F1F1"><table width="450" border="0" cellspacing="2" cellpadding="0">
-                                <tr>
-                                  <td align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Tipo de Produto</font></td>
-                                  <td align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Contratos</font></td>
-                                </tr>
-                              </table></td>
-                          </tr>
-                          <tr>
-                            <td>
-							{foreach item=a from=$relat}
-							  <table width="450" border="0" cellspacing="2" cellpadding="0">
-                                <tr>
-
-                                  <td aligh="LEFT"><p><img src="template/default/images/{$a.tipo|lower|trim}.gif" width="24" height="24"></p></td>
-                                  <td width="43%" align="LEFT"><p>{if $a.tipo=="D "}<a href="relatorio.php?op={$op}&acao=sub_tprd&tipo=D">Discado</a>{/if}{if $a.tipo=="BL"}<a href="relatorio.php?op={$op}&acao=sub_tprd&tipo=BL">Banda Larga</a>{/if}{if $a.tipo=="H "}<a href="relatorio.php?op={$op}&acao=sub_tprd&tipo=H">Hospedagem</a>{/if}</p></td>
-                                  <td width="50%" align="RIGHT"><p>{$a.num_contratos}</p></td>
-                                </tr>
-                                <tr bgcolor="#999999">
-                                  <td colspan="4" height="1"></td>
-                                </tr>
-                              </table>
-							  {/foreach}
-							  </td>
-                          </tr>
-                        </table></td>
-                    </tr>
-                  </table>
-
-
-                  {/if}
-
-
-                  {if $acao == "sub_tprd" }
-
-
+				  {else }
                   <table width="450" border="0" cellspacing="0" cellpadding="0">
 
 						  <tr bgcolor="#F1F1F1">
@@ -101,19 +94,27 @@
 								  </tr>
 							  <!--/table-->
 							{/foreach}
-							  </td>
-							</tr>
-						  </table></td>
+
+						  </table>
+						  </td>
 					  </tr>
                   </table>
 
                   <p><a href="#" onCLick="javascript:history.back()">Voltar</a></p>
 
                   {/if}
-                  {/if}
+				
+				
+				
+				
+				
+				
+				
 
-                  <p align="center">&nbsp;</p>
-                  <P align="center">&nbsp;</P>
+				
+				
+				
+				
 				</td>
               </tr>
             </table></td>

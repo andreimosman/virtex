@@ -70,7 +70,7 @@ class Preferencias {
 			      
          }
          
-         echo "PREFS: $sSQL <br>";
+        // echo "PREFS: $sSQL <br>";
 		//
 		
         $this->prefs[$classe] = $this->bd->obtemUnicoRegistro($sSQL);

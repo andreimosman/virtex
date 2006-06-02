@@ -9714,3 +9714,4 @@ INSERT INTO cftb_cidade VALUES (9711, 'TO', 'TUPIRATINS', 'f');
 INSERT INTO cftb_cidade VALUES (9712, 'TO', 'VENUS', 'f');
 INSERT INTO cftb_cidade VALUES (9713, 'TO', 'WANDERLANDIA', 'f');
 INSERT INTO cftb_cidade VALUES (9714, 'TO', 'XAMBIOA', 'f');
+INSERT INTO cftb_cidade VALUES (9715, 'PI', 'AROEIRAS DO ITAIM', 'f');

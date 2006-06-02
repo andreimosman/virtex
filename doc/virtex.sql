@@ -1,6 +1,6 @@
 /*
 Created		22/2/2006
-Modified		30/5/2006
+Modified		1/6/2006
 Project		
 Model		
 Company		
@@ -9,7 +9,7 @@ Version
 Database		PostgreSQL 7.3 (beta) 
 */
 
-//
+
 
 
 
@@ -57,15 +57,15 @@ Create table  cltb_cliente
 	cpf_cnpj Char(25) NULL ,
 	email Varchar(255) NULL ,
 	endereco Varchar(50) NULL ,
-	complemento Varchar(20) NULL ,
+	complemento Varchar(50) NULL ,
 	id_cidade Smallint NULL ,
-	cidade Varchar(20) NULL ,
+	cidade Varchar(35) NULL ,
 	estado Char(2) NULL ,
 	CEP Char(10) NULL ,
-	bairro Varchar(15) NULL ,
-	fone_comercial Varchar(15) NULL ,
-	fone_residencial Varchar(15) NULL ,
-	fone_celular Varchar(15) NULL ,
+	bairro Varchar(30) NULL ,
+	fone_comercial Varchar(30) NULL ,
+	fone_residencial Varchar(30) NULL ,
+	fone_celular Varchar(30) NULL ,
 	contato Varchar(20) NULL ,
 	Banco Varchar(20) NULL ,
 	conta_corrente Varchar(10) NULL ,
@@ -452,6 +452,7 @@ Create table  pftb_preferencia_geral
 	pop_host Varchar(255) NULL ,
 	smtp_host Varchar(255) NULL ,
 	hosp_base Varchar(255) NULL ,
+	agrupar Smallint NULL ,
  primary key (id_provedor)
 );
 
@@ -567,6 +568,12 @@ Create table  lgtb_retorno_faturas
 	motivo Varchar(100) NULL 
 );
 
+Create table  cftb_banda
+(
+	banda Smallint NULL 
+);
+
+
 
 
 
@@ -624,14 +631,14 @@ Alter table cbtb_contrato add  foreign key (id_cliente_produto) references cbtb_
 Alter table cntb_conta add  foreign key (id_cliente_produto) references cbtb_cliente_produto (id_cliente_produto)  on update restrict  on delete restrict ;
 Alter table lgtb_bloqueio_automatizado add  foreign key (id_cliente_produto) references cbtb_cliente_produto (id_cliente_produto)  on update restrict  on delete restrict ;
 Alter table cbtb_faturas add  foreign key (id_cliente_produto) references cbtb_contrato (id_cliente_produto)  on update restrict  on delete restrict ;
-Alter table cntb_conta add  foreign key (dominio) references dominio (dominio)  on update restrict  on delete restrict ;
+Alter table cntb_conta add  foreign key (dominio) references dominio (dominio)  on update cascade  on delete restrict ;
 Alter table cbtb_contrato add  foreign key (id_cobranca) references cftb_forma_pagamento (id_cobranca)  on update restrict  on delete restrict ;
 Alter table adtb_usuario_privilegio add  foreign key (id_admin) references adtb_admin (id_admin)  on update restrict  on delete restrict ;
 Alter table adtb_usuario_privilegio add  foreign key (id_priv) references adtb_privilegio (id_priv)  on update restrict  on delete restrict ;
-Alter table cntb_conta_email add  foreign key (username,dominio,tipo_conta) references cntb_conta (username,dominio,tipo_conta)  on update restrict  on delete restrict ;
-Alter table cntb_conta_discado add  foreign key (username,dominio,tipo_conta) references cntb_conta (username,dominio,tipo_conta)  on update restrict  on delete restrict ;
-Alter table cntb_conta_hospedagem add  foreign key (username,dominio,tipo_conta) references cntb_conta (username,dominio,tipo_conta)  on update restrict  on delete restrict ;
-Alter table cntb_conta_bandalarga add  foreign key (username,dominio,tipo_conta) references cntb_conta (username,dominio,tipo_conta)  on update restrict  on delete restrict ;
+Alter table cntb_conta_email add  foreign key (username,dominio,tipo_conta) references cntb_conta (username,dominio,tipo_conta)  on update cascade  on delete restrict ;
+Alter table cntb_conta_discado add  foreign key (username,dominio,tipo_conta) references cntb_conta (username,dominio,tipo_conta)  on update cascade  on delete restrict ;
+Alter table cntb_conta_hospedagem add  foreign key (username,dominio,tipo_conta) references cntb_conta (username,dominio,tipo_conta)  on update cascade  on delete restrict ;
+Alter table cntb_conta_bandalarga add  foreign key (username,dominio,tipo_conta) references cntb_conta (username,dominio,tipo_conta)  on update cascade  on delete restrict ;
 Alter table cntb_conta_bandalarga add  foreign key (id_pop) references cftb_pop (id_pop)  on update restrict  on delete restrict ;
 Alter table cftb_pop add  foreign key (id_pop_ap) references cftb_pop (id_pop)  on update restrict  on delete restrict ;
 Alter table cntb_conta_bandalarga add  foreign key (ipaddr) references cftb_ip (ipaddr)  on update restrict  on delete restrict ;
@@ -664,5 +671,10 @@ CREATE SEQUENCE rdtb_accounting_session_id;
 CREATE SEQUENCE rdtb_log_id_log;
 CREATE SEQUENCE rdsq_id_accounting;
 CREATE SEQUENCE cbsq_id_carne;
+INSERT INTO cftb_forma_pagamento (id_cobranca,nome_cobranca,disponivel) VALUES ('1','Boleto Bancário',false);
+INSERT INTO cftb_forma_pagamento (id_cobranca,nome_cobranca,disponivel) VALUES ('2','Carnê',false);
+INSERT INTO cftb_forma_pagamento (id_cobranca,nome_cobranca,disponivel) VALUES ('3','Fatura Avulsa',false);
+INSERT INTO cftb_forma_pagamento (id_cobranca,nome_cobranca,disponivel) VALUES ('4','Cartão de Crédito',false);
+INSERT INTO cftb_forma_pagamento (id_cobranca,nome_cobranca,disponivel) VALUES ('5','Depósito Bancário',false);
 
 

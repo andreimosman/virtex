@@ -652,8 +652,8 @@
 								//$p->setDebug(1);
 								//$arqPDF = $p->converte($arqtmp,$host,'/tmp');
 								
-								copy($arqtmp, "/mosman/virtex/dados/carnes/".$nome_arquivo.".html");
-					
+								//copy($arqtmp, "/mosman/virtex/dados/carnes/".$nome_arquivo.".html");
+								//copy($arqtmp, "carnes/".$nome_arquivo.".html");					
 								fclose($fd);
 								
 								//$arquivo = $nome_arquivo.".pdf";

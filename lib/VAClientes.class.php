@@ -1348,10 +1348,20 @@ class VAClientes extends VirtexAdmin {
 						$this->tpl->atribui("nas",@$nas["nome"]);
 						$this->tpl->atribui("mac",@$_MAC);
 						$this->tpl->atribui("ip",@$ip_disp);
-						$this->tpl->atribui("dominio",$prefs["dominio_padrao"]);
+						$this->tpl->atribui("dominio",@$prefs["dominio_padrao"]);
 						$this->tpl->atribui("dominio_hospedagem",@$dominio_hospedagem);
 						
 						
+						/*echo "id_cliente: $id_cliente <br>";
+						echo "id_cliente_produto: $id_cliente_produto <br>";
+						echo "id_carne: $id_carne <br>";
+						echo "data: $data <br>";*/
+						
+						$this->tpl->atribui("id_cliente",$id_cliente);
+						$this->tpl->atribui("id_clçiente_produto",$id_cliente_produto);
+						$this->tpl->atribui("id_carne",$id_carne);
+						$this->tpl->atribui("data",$data);
+						$this->tpl->atribui("primeira",true);
 						
 						
 						
@@ -1599,27 +1609,34 @@ class VAClientes extends VirtexAdmin {
 				$id_carne = @$_REQUEST["id_carne"];
 				$p = @$_REQUEST["p"];
 				
-				$sSQL = "SELECT id_carne,id_cliente_produto,valor,status,vigencia,to_char(data_geracao,'DD/mm/YYYY') as data_geracao  FROM cbtb_carne where id_cliente = '$id_cliente'";
+				$sSQL = "SELECT id_carne,id_cliente_produto,valor,status,vigencia,to_char(data_geracao,'DD/mm/YYYY') as data_geracao, data_geracao as dtg  FROM cbtb_carne where id_cliente = '$id_cliente'";
 						
 				$carnes = $this->bd->obtemRegistros($sSQL);
 				$this->obtemPR($id_cliente);
-				echo "CARNES: $sSQL <br>";
+				//echo "CARNES: $sSQL <br>";
+				$id_cliente_produto = $carnes[0]["id_cliente_produto"];
 				
 				if ($p == "faturas"){
 					
 					
-					$sSQL = "select id_carne, to_char(data,'DD/mm/YYYY') as data, descricao, valor, status from cbtb_faturas where id_carne = '$id_carne'";
+					$sSQL = "select id_carne,id_cliente_produto, to_char(data,'DD/mm/YYYY') as data, descricao, valor, status from cbtb_faturas where id_carne = '$id_carne'";
 					$faturas = $this->bd->obtemRegistros($sSQL);
 					
 					$this->tpl->atribui("faturas",$faturas);
 					$this->tpl->atribui("id_cliente",$id_cliente);
+					$this->tpl->atribui("id_cliente_produto",$id_cliente_produto);
 					
 					$this->arquivoTemplate = "cobranca_carnes_faturas.html";
 					return;
 					
-				}else if ($p == "segunda_via"){
+				} else if ($p == "segunda_via"){
+				
+				
+				
+				
+				
 					
-	
+				
 				
 				}
 				$this->tpl->atribui("carnes",$carnes);				
@@ -3078,8 +3095,65 @@ class VAClientes extends VirtexAdmin {
 		
 		
 		
+		}else if ($op == "segunda_via"){
 		
+		  $id_carne = @$_REQUEST["id_carne"];
+		  $faturas = array();
+
+			$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
+			$id_cliente = @$_REQUEST["id_cliente"];
+			$data = @$_REQUEST["data"];
 			
+			$forma_pagamento = "PRE";
+		  
+		  if( !$id_carne ) {
+				// Se não tiver o id_carne é pq é pra exibir uma única fatura.
+				
+		  	
+		  	$fatura_html = $this->carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,true);   
+		  	
+		  	$faturas[] = array( "fatura_html" => $fatura_html, "pagebrake" => false );
+		     
+		     
+		  } else {
+					// Exibe TODAS as faturas em ABERTO		  	
+
+
+				$sSQL  = "SELECT ";
+				$sSQL .= "   id_cliente_produto, data, id_carne ";
+				$sSQL .= "FROM ";		
+				$sSQL .= "   cbtb_faturas ";
+				$sSQL .= "WHERE ";
+	//			$sSQL .= "id_cliente_produto = '".$REQUEST["id_cliente_produto"]."' AND ";
+				$sSQL .= "id_carne = '".$_REQUEST["id_carne"]."' AND ";
+				$sSQL .= "status = 'A' ";
+				
+				$fat = $this->bd->obtemRegistros($sSQL);
+
+				for($i=0;$i<count($fat);$i++) {
+						// Se nãoi passar o último parametro como true o sistema fica gerando o "Nosso Numero"
+					 $fatura_html = $this->carne($fat[$i]["id_cliente_produto"],$fat[$i]["data"],$id_cliente,$forma_pagamento,true);
+					 
+					 $pagebrake=false;
+
+					 // blablabla do pagebrake
+					 if( $i>0 && ($i+1) != count($fat) && ($i+1) % 3 == 0 ) {
+						$pagebrake = true;
+					 }
+
+					 $faturas[] = array( "fatura_html" => $fatura_html,
+															 "pagebreak" => $pagebrake );
+
+				}// for
+				
+			}
+
+			$this->tpl->atribui("faturas",$faturas);
+			$this->arquivoTemplate = "carne_segunda_via.html";
+		
+				
+		
+		
 		} else if ($op =="altera_contrato"){
 		
 				$sSQL  = "SELECT ";
@@ -3625,7 +3699,7 @@ public function days_diff($date_ini, $date_end, $round = 1) {
     }
 } 
 
-public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento){
+public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$segunda_via=false){
 	
 	$sSQL  = "SELECT cl.nome_razao, cl.endereco, cl.id_cidade, cl.estado, cl.cep, cl.cpf_cnpj, cd.cidade as nome_cidade, cd.id_cidade  ";
 	$sSQL .= "FROM ";
@@ -3635,18 +3709,25 @@ public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento){
 	$sSQL .= "cd.id_cidade = cl.id_cidade";
 
 	$cliente = $this->bd->obtemUnicoRegistro($sSQL);
-	////echo "CLIENTE: $sSQL  <br>";
+	//echo "CLIENTE: $sSQL  <br>";
+	
+	if( strstr($data,"/") && $segunda_via) {
+	   list($d,$m,$y) = explode("/",$data);
+	   $data = "$y-$m-$d";
+	}
 
 
-	$sSQL  = "SELECT valor, id_cobranca,to_char(data, 'DD/mm/YYYY') as data  FROM ";
+	$sSQL  = "SELECT valor, id_cobranca,to_char(data, 'DD/mm/YYYY') as data, nosso_numero, linha_digitavel, cod_barra  FROM ";
 	$sSQL .= "cbtb_faturas ";
 	$sSQL .= "WHERE ";
 	$sSQL .= "id_cliente_produto = '$id_cliente_produto' AND ";
 	$sSQL .= "data = '$data' ";
 
-	////echo "fatura: $sSQL<br>";
+	//echo "fatura: $sSQL<br>";
 
 	$fatura = $this->bd->obtemUnicoRegistro($sSQL);
+	
+	//echo "SHIT: " . $fatura["data"] . "<br>\n";
 	
 	list ($dia,$mes,$ano) = explode("/",$fatura["data"]);
 	
@@ -3676,12 +3757,19 @@ public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento){
 	//$codigo = @$_REQUEST["codigo"];
 	//$data_venc = "30/04/2006";
 	
-	$sSQL = "SELECT nextval('blsq_carne_nossonumero') as nosso_numero ";
-	$nn = $this->bd->obtemUnicoRegistro($sSQL);
+	if (!$segunda_via){
 	
+		$sSQL = "SELECT nextval('blsq_carne_nossonumero') as nosso_numero ";
+		$nn = $this->bd->obtemUnicoRegistro($sSQL);
+
+		$nosso_numero = $nn['nosso_numero'];
+		
+	}else {
 	
-	
-	$nosso_numero = $nn['nosso_numero'];
+		$nosso_numero = $fatura["nosso_numero"];
+		
+	}
+
 	$data_venc = $fatura["data"];
 	@list($dia,$mes,$ano) = explode("/",$fatura["data"]);
 	$vencimento = $ano.$mes.$dia;
@@ -3698,28 +3786,40 @@ public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento){
 	$observacoes = $provedor['observacoes'];
 	$nome_produto = $produto["nome"];
 
-	$codigo_barras = MArrecadacao::codigoBarrasPagContas($valor,$id_empresa,$nosso_numero,$vencimento);
-	$linha_digitavel = MArrecadacao::linhaDigitavel($codigo_barras);
-	$hoje = date("d/m/Y");
+  if( $segunda_via ) {
+
+     $hoje = $fatura["data"];
+     $codigo_barras = $fatura["cod_barra"];
+     $linha_digitavel = $fatura["linha_digitavel"];
+     
+  } else {
+  
+   	$codigo_barras = MArrecadacao::codigoBarrasPagContas($valor,$id_empresa,$nosso_numero,$vencimento);
+   	$hoje = date("d/m/Y");
+   	$linha_digitavel = MArrecadacao::linhaDigitavel($codigo_barras);
 	
-	$sSQL  = "UPDATE ";
-	$sSQL .= "cbtb_faturas SET ";
-	$sSQL .= "nosso_numero = '$nosso_numero', ";
-	$sSQL .= "linha_digitavel = '$linha_digitavel', ";
-	$sSQL .= "cod_barra = '$codigo_barras' ";
-	$sSQL .= "WHERE ";
-	$sSQL .= "id_cliente_produto = '$id_cliente_produto' AND ";
-	$sSQL .= "data = '$data' ";
+   	$sSQL  = "UPDATE ";
+		$sSQL .= "cbtb_faturas SET ";
+		$sSQL .= "nosso_numero = '$nosso_numero', ";
+		$sSQL .= "linha_digitavel = '$linha_digitavel', ";
+		$sSQL .= "cod_barra = '$codigo_barras' ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "id_cliente_produto = '$id_cliente_produto' AND ";
+		$sSQL .= "data = '$data' ";
 	
-	$this->bd->consulta($sSQL);
-	////echo "FATURA: $sSQL <br>";
+		$this->bd->consulta($sSQL);
+	}
+	
+   	
+	//echo "FATURA: $sSQL <br>";
 	
 	$target = "/mosman/virtex/dados/carnes/codigos";
+	//$target = "carnes/codigos";
 	MArrecadacao::barCode($codigo_barras,"$target/$codigo_barras.png");
 		
 	//	$codigo = MArrecadacao::pagConta(...);
 		
-	copy ("/mosman/virtex/dados/carnes/codigos/".$codigo_barras.".png","/home/hugo/public_html/virtex/codigos/".$codigo_barras.".png");
+	//copy ("/mosman/virtex/dados/carnes/codigos/".$codigo_barras.".png","/home/hugo/public_html/virtex/codigos/".$codigo_barras.".png");
 		
 
 	//$barra = MArrecadacao::barCode($codigo_barras);
@@ -3727,10 +3827,11 @@ public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento){
 	$ph = new MUtils;
 	
 	$_path = MUtils::getPwd();
-	$images = $_path."/template/boletos/imagens";
-	$this->tpl->atribui("codigo_barras",$codigo_barras);
 	
-
+	
+	$images = $_path."/template/boletos/imagens";	
+	
+	$this->tpl->atribui("codigo_barras",$codigo_barras);
 
 	$this->tpl->atribui("linha_digitavel",$linha_digitavel);
 	$this->tpl->atribui("valor",$valor);
@@ -3752,11 +3853,27 @@ public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento){
 	$this->tpl->atribui("produto",$nome_produto);
 	$this->tpl->atribui("path",$_path);
 	$this->tpl->atribui("referente",$referente);
+	//$this->tpl->atribui("barra",$barra);
 	
 	//return($carne_emitido);
-	$fatura = $this->tpl->obtemPagina("../boletos/layout-pc.html");
-	return($fatura);
-
+	
+	if ( $segunda_via == true ){
+	
+	
+		$this->tpl->atribui("imprimir",true);
+		$estilo = $this->tpl->obtemPagina("../boletos/pc-estilo.html");
+		$fatura = $this->tpl->obtemPagina("../boletos/layout-pc.html");
+		
+		return($estilo.$fatura);
+	
+	}else{
+	
+		$fatura = $this->tpl->obtemPagina("../boletos/layout-pc.html");
+		return($fatura);
+	
+	}
+	
+	
 }
 
 public function contratoHTML($id_cliente,$id_cliente_produto,$tipo_produto){
@@ -3790,7 +3907,7 @@ public function contratoHTML($id_cliente,$id_cliente_produto,$tipo_produto){
 
 	$contrato = $this->bd->obtemUnicoRegistro($sSQL);
 
-	echo "SQL: $sSQL <br>";
+	//echo "SQL: $sSQL <br>";
 
 	$this->tpl->atribui("data_contratacao", $contrato["data_contratacao"]);
 	$this->tpl->atribui("vigencia", $contrato["vigencia"]);

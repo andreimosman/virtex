@@ -28,7 +28,7 @@
                 </font></h2>
 
 					{if $acao == "geral"}
-					{if !count($relat)}Não existem dados cadastrados
+					{if !count($relat)}<p><b>Não existem dados cadastrados</b></p>
 					{else}
 						<p><img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico">{/if}</p>
 						  <table width="450" border="0" cellspacing="0" cellpadding="0">

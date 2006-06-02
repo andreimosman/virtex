@@ -2806,9 +2806,11 @@ class VACobranca extends VirtexAdmin {
 	
 	$_path = MUtils::getPwd();
 	
-	$images = $_path."/template/boletos/imagens";
-	$this->tpl->atribui("codigo_barras",$codigo_barras);
 	
+	//$code_bar = "carnes/".$codigo_barras.".png";
+	$images = $_path."/template/boletos/imagens";
+	//$this->tpl->atribui("codigo_barras",$codigo_barras);
+	$this->tpl->atribui("codigo_barras",$codigo_barras);
 //	copy("/mosman/virtex/dados/carnes/codigos/".$codigo_barras.".png","codigos/".$codigo_barras.".png");
 
 	$this->tpl->atribui("linha_digitavel",$linha_digitavel);
@@ -2830,10 +2832,10 @@ class VACobranca extends VirtexAdmin {
 	$this->tpl->atribui("observacoes",$observacoes);
 	$this->tpl->atribui("produto",$nome_produto);
 	$this->tpl->atribui("path",$_path);
-	$this->tpl->atribui("barra",$barra);
+	//$this->tpl->atribui("barra",$barra);
 	
 	//return($carne_emitido);
-	$fatura = $this->tpl->obtemPagina("../boletos/layout-pc.html");
+	$fatura = $this->tpl->obtemPagina("template/boletos/layout-pc.html");
 	return($fatura);
 
 	}
