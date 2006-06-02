@@ -1364,7 +1364,7 @@ class VAClientes extends VirtexAdmin {
 						$this->tpl->atribui("primeira",true);
 						
 						
-						
+						$this->obtemPR($id_cliente);
 						
 						
 						
