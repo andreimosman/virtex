@@ -416,8 +416,15 @@ if (da && !pr && !mac) with (document) {
    <hr>
    {/if}
 {/foreach}
-<div id="imprimir" align="center">
-<a href="javascript:;" onClick="return printPage();"><img alt="IMPRIMIR BOLETO" src="{$imagens}/print.gif" border="0"></a>
+<div id="imprimir" align="center" width="100%">
+<table align="center" width="665"><tr><td><a href="javascript:;" onClick="return printPage();"><img alt="IMPRIMIR CARNÊS" src="{$imagens}/print.gif" border="0"></a></td>
+    <td> <div align="LEFT"><font face="Arial, Helvetica, sans-serif" size="2" color="#000000"><b>Instrução para Impressão</b><li>Imprima 
+      em impressora jato de tinta (ink jet) ou laser em qualidade normal ou alta.<br>
+      <li>Não use modo econômico.<br>
+      <li>Utilize folha A4 (210 x 297mm) e margens mínimas à esquerda e à direita 
+      do formulário.</font><br>
+      </div></td>
+  </tr></table>
 </div>
 <script language="JavaScript">
 {literal}
