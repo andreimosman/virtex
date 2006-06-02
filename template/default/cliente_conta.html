@@ -16,7 +16,7 @@ function redir(){
 	}else{
 		frm.redirect.value = "";
 	}
-	
+
 	return;
 }
 
@@ -106,8 +106,8 @@ function check(){
 									{foreach item=erro from=$erros}
 										<p align="center"><font color="#FF0000" face=arial size=-1><b>{$erro}</b></font></p>
 									{/foreach} {/if} {if $numero_contas > "1" AND $total_contas_cliente < $numero_contas}
-<p align="center"><a href="clientes.php?op=conta&id_cliente={$id_cliente}&username={$username}&tipo_conta={$tipo_conta}&dominio={$dominio}&sop=nova_conta">Cadastrar 
-            Nova Conta</a></p>
+<!--p align="center"><a href="clientes.php?op=conta&id_cliente={$id_cliente}&username={$username}&tipo_conta={$tipo_conta}&dominio={$dominio}&sop=nova_conta">Cadastrar
+            Nova Conta</a></p-->
           {/if}
                               </td>
                             </tr>
@@ -161,30 +161,30 @@ function check(){
                               <td align="center" valign="middle" id="tdados">&nbsp;
 
 								<table width="450" border=0 bgcolor="#F1F1F1" id="disc">
-            <tr> 
+            <tr>
               <td colspan=2><p><strong>Dados da Conexão</strong></p></td>
             </tr>
-            <tr> 
+            <tr>
               <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>POP:</p></td>
               <td bgcolor="#FFFFFF"> <SELECT name='id_pop' >
 										{foreach item=v from=$lista_pops}
-										  
+
                   <OPTION value="{$v.id_pop}" {if $v.id_pop == $id_pop}SELECTED{/if}>{$v.nome}</OPTION>
 										{/foreach}
-									  
+
                 </SELECT> </td>
               <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>NAS:</p></td>
               <td bgcolor="#FFFFFF"> <SELECT name='id_nas' onChange="javascript:alteraNas();">
 										{foreach item=v from=$lista_nas}
-										  
-                  <OPTION value="{$v.id_nas}" {if $v.id_nas == $id_nas}SELECTED{/if}>{$v.tp}: 
+
+                  <OPTION value="{$v.id_nas}" {if $v.id_nas == $id_nas}SELECTED{/if}>{$v.tp}:
                   {$v.nome}</OPTION>
 										{/foreach}
-									  
+
                 </SELECT> </td>
             </tr>
-            <tr> 
-              <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p> 
+            <tr>
+              <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>
                   <input type="checkbox" name="altera_rede" value="1" class="checkbox" {if $altera_rede}CHECKED{/if} onClick="javascript:alteraNovaSelecao();" onChange="javascript:alteraNovaSelecao();">
                   Nova Seleção de Rede/IP:</p></td>
               <td bgcolor="#FFFFFF"><select name='selecao_ip' onchange='javascript:alteraSelecaoIP();'>
@@ -196,10 +196,10 @@ function check(){
               {literal} <script>
 									//verificaTipoRede();
 									</script> {/literal} </tr>
-            <tr valign="MIDDLE"> 
-              <td bgcolor="#FFFFFF" align="right"> 
+            <tr valign="MIDDLE">
+              <td bgcolor="#FFFFFF" align="right">
                 <p>Redirecionar:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"> 
+              <td bgcolor="#FFFFFF" colspan="3">
                 <p>
                   <input name="redirecionar" type="checkbox" value="true" id="redirecionar" class="checkbox" {if $ip_externo}checked{/if}>
                   {if $ip_externo}IP: {$ip_externo}{/if}</p></td>
@@ -502,12 +502,12 @@ function check(){
 												<td bgcolor="#FFFFFF" colspan=2><input type="text" name="foneinfo" value="{$foneinfo}"></td>
 						                	</tr>
 						                <tr>
-						                
+
         <td colspan=2 align="center" height="27">
 <input type="submit" name="Submit" value="Alterar >>"></td>
 						                </tr>
             			  </table>
-            			  
+
     <p><br>
       {/if}</p>
     <p>&nbsp; </p></form>

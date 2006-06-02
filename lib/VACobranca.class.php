@@ -793,6 +793,9 @@ class VACobranca extends VirtexAdmin {
 			$data = @$_REQUEST["data"];
 			$acao = @$_REQUEST["acao"];
 			$id_cliente = @$_REQUEST["id_cliente"];
+
+			$this->obtemPR($id_cliente);
+
 						
 			$sSQL  = "SELECT ";
 			$sSQL .= "* ";
@@ -802,6 +805,7 @@ class VACobranca extends VirtexAdmin {
 			$sSQL .= "id_cliente_produto = '$id_cliente_produto' AND ";
 			$sSQL .= "data = '$data'";
 			
+
 			//ECHO "AMORT: $sSQL<br>";
 			
 			$amort = $this->bd->obtemUnicoRegistro($sSQL);
@@ -1230,7 +1234,11 @@ class VACobranca extends VirtexAdmin {
 		$this->tpl->atribui("id_cliente_produto",$id_cliente_produto);
 		$this->tpl->atribui("id_cliente",$id_cliente);
 		$this->tpl->atribui("tipo_produto",$tipo_produto);
+		
+		
 		$this->obtemPR($id_cliente);
+		
+		
 		
 		$sSQL  = "SELECT ";
 		//$sSQL .= "   id_produto,nome,descricao,tipo,valor ";
@@ -2681,7 +2689,7 @@ class VACobranca extends VirtexAdmin {
 		$sSQL  = "UPDATE ";
 		$sSQL .= "	cbtb_faturas ";
 		$sSQL .= "SET ";
-		$sSQL .= "	status = '".@$_REQUEST["status"]."', ";
+		$sSQL .= "	status = '".@$_REQUEST["status_fatura"]."', ";
 		$sSQL .= "	observacoes = '".@$_REQUEST["observacoes"]."', ";
 
 		if ($reagendar && $reagendamento)

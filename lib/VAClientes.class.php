@@ -15,6 +15,37 @@ class VAClientes extends VirtexAdmin {
 	   return $erros;
 	}
 	
+	/**
+	 * Obtem Informações do produto contratado
+	 */
+	private function obtemInfoProdutoContratado($id_cliente_produto) {
+		$sSQL  = "SELECT ";
+		$sSQL .= "   cp.id_cliente, cp.id_produto, ";
+		$sSQL .= "   p.nome, p.descricao, p.tipo, p.valor, p.disponivel, p.num_emails, ";
+		$sSQL .= "   p.quota_por_conta, p.vl_email_adicional, p.permitir_outros_dominios, ";
+		$sSQL .= "   p.email_anexado, p.numero_contas, p.comodato, p.valor_comodato, ";
+		$sSQL .= "   p.desconto_promo, p.periodo_desconto, p.tx_instalacao, ";
+		$sSQL .= "   ph.dominio, ph.franquia_em_mb, ph.valor_mb_adicional, ";
+		$sSQL .= "   pd.franquia_horas, pd.permitir_duplicidade, pd.valor_hora_adicional, ";
+		$sSQL .= "   pbl.banda_upload_kbps, pbl.banda_download_kbps, ";
+		$sSQL .= "   pbl.franquia_trafego_mensal_gb, pbl.valor_trafego_adicional_gb, ";
+		$sSQL .= "   pbl.roteado ";
+		$sSQL .= "FROM ";
+		$sSQL .= "   cbtb_cliente_produto cp INNER JOIN prtb_produto p USING(id_produto) FULL OUTER JOIN ";
+		$sSQL .= "   prtb_produto_discado pd USING(id_produto) FULL OUTER JOIN ";
+		$sSQL .= "   prtb_produto_hospedagem ph USING(id_produto) FULL OUTER JOIN ";
+		$sSQL .= "   prtb_produto_bandalarga pbl USING(id_produto) ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "   cp.id_cliente is not null ";
+		$sSQL .= "   AND cp.id_cliente_produto = '".$this->bd->escape($id_cliente_produto)."' ";
+		
+		//echo $sSQL . "<br>\n";
+		
+		return($this->bd->obtemUnicoRegistro($sSQL));
+		
+		
+	}
+	
 	
 	private function obtemPR($id_cliente){
 	
@@ -41,7 +72,6 @@ class VAClientes extends VirtexAdmin {
 									
 		$this->tpl->atribui("prod_contr",$prod_contr);
 		return;
-	
 	
 	}
 	
@@ -1779,14 +1809,48 @@ class VAClientes extends VirtexAdmin {
 			}
 
 			$this->tpl->atribui("lista_nas",$lista_nas);
-			
-			
-			if ($sop == "nova_conta"){
 
+			$prefs = $this->prefs->obtem("geral");
+			$dominio = @$_REQUEST["dominio"];
+			if(!$dominio) $dominio = $prefs["dominio_padrao"];
+
+
+
+			if ($sop == "nova_conta"){
+			
+				$this->tpl->atribui("id_cliente_produto",@$_REQUEST["id_cliente_produto"]);
+				// Obtem os dados do produto contratado
+				$dados_pcontratado = $this->obtemInfoProdutoContratado(@$_REQUEST["id_cliente_produto"]);
+				
+				
+				while(list($vr,$vl)=each($dados_pcontratado)) {
+					// DEBUG
+					//echo "$vr = $vl <br>\n";
+					
+					// Atribui os valores ao template
+					if($vr) {
+						$this->tpl->atribui($vr,$vl);	
+					}
+				}
+				$tipo_conta = @$_REQUEST["tipo_conta"];
+				$upload_kbps = @$_REQUEST["upload_kbps"];
+				$download_kbps = @$_REQUEST["download_kbps"];
+				
+				if($tipo_conta == "BL") {
+					if(!$upload_kbps) $upload_kbps = $dados_pcontratado["banda_upload_kbps"];
+					if(!$download_kbps) $download_kbps = $dados_pcontratado["banda_download_kbps"];
+
+					$this->tpl->atribui("upload_kbps",$upload_kbps);
+					$this->tpl->atribui("download_kbps",$download_kbps);
+
+				}
+				
+				
 				$this->tpl->atribui("id_cliente",$id_cliente);
 				$this->tpl->atribui("username",$username);
 				$this->tpl->atribui("dominio",$dominio);
-				$this->tpl->atribui("tipo_conta",@$_REQUEST["tipo_conta"]);
+				$this->tpl->atribui("tipo_conta",$tipo_conta);
+				$this->tpl->atribui("sop",$sop);
 				
 				global $_LS_BANDA;
 				$this->tpl->atribui("lista_upload",$_LS_BANDA);
@@ -1804,7 +1868,7 @@ class VAClientes extends VirtexAdmin {
 				//echo "DOMINIO: $dominio_padrao <br>";
 				$this->arquivoTemplate = "cliente_nova_conta.html";
 				
-				
+				$acao = @$_REQUEST["acao"];
 				if ($acao == "cad"){
 				
 					$_username = @$_REQUEST["_username"];
@@ -2095,14 +2159,14 @@ class VAClientes extends VirtexAdmin {
 								$sSQL .= ") ";
 								$sSQL .= "   VALUES (";
 								$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["username"])  . "', ";
-								$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["tipo"])). "', ";
+								$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["tipo_conta"])). "', ";
 								$sSQL .= "     '" . $dominioPadrao . "', ";
 								$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["id_pop"])) . "', ";
 								$sSQL .= "     '" . $nas["tipo_nas"] . "', ";
 								$sSQL .= "     " . $ip_disp . ", ";
 								$sSQL .= "     " . $rede_disp . ", ";
-								$sSQL .= "     '" . $bandaUp_dow["banda_upload_kbps"] . "', ";
-								$sSQL .= "     '" . $bandaUp_dow["banda_download_kbps"] . "', ";
+								$sSQL .= "     '" . @$_REQUEST["upload_kbps"] . "', ";
+								$sSQL .= "     '" . @$_REQUEST["download_kbps"] . "', ";
 								$sSQL .= "     'A', ";
 								$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["id_nas"])) . "', ";
 								$sSQL .= "     ". $_MAC .", ";
@@ -2163,120 +2227,125 @@ class VAClientes extends VirtexAdmin {
 								break;
 
 						}						
-						
-			if ($tipo && $tipo == "BL"){
+						$tipo = $tipo_conta;
+						if ($tipo && $tipo == "BL"){
 
-			////echo $tipo;
-				// Envia instrucao pra spool
-				if ($nas && $nas["tipo_nas"] == "I"){
+						////echo $tipo;
+							// Envia instrucao pra spool
+							if ($nas && $nas["tipo_nas"] == "I"){
 
-					$id_nas = $_REQUEST["id_nas"];
-					$banda_upload_kbps = $bandaUp_dow["banda_upload_kbps"];
-					$banda_download_kbps = $bandaUp_dow["banda_download_kbps"];
-					$rede = $rede_disponivel["rede"];
-					$mac = $_REQUEST["mac"];
+								$id_nas = $_REQUEST["id_nas"];
+								$banda_upload_kbps = @$_REQUEST["banda_upload_kbps"];
+								$banda_download_kbps = @$_REQUEST["banda_download_kbps"];
+								$rede = $rede_disponivel["rede"];
+								$mac = $_REQUEST["mac"];
 
-					$sSQL  = "SELECT ";
-					$sSQL .= "   id_nas, nome, ip, tipo_nas ";
-					$sSQL .= "FROM ";
-					$sSQL .= "   cftb_nas ";
-					$sSQL .= "WHERE ";
-					$sSQL .= "   id_nas = '$id_nas'";
-					////echo "SQL : " . $sSQL . "<br>\n";
+								$sSQL  = "SELECT ";
+								$sSQL .= "   id_nas, nome, ip, tipo_nas ";
+								$sSQL .= "FROM ";
+								$sSQL .= "   cftb_nas ";
+								$sSQL .= "WHERE ";
+								$sSQL .= "   id_nas = '$id_nas'";
+								////echo "SQL : " . $sSQL . "<br>\n";
 
-					$nas = $this->bd->obtemUnicoRegistro($sSQL);
-					$this->tpl->atribui("n",$nas);
-					$this->tpl->atribui("tipo_nas",$nas["tipo_nas"]);
+								$nas = $this->bd->obtemUnicoRegistro($sSQL);
+								$this->tpl->atribui("n",$nas);
+								$this->tpl->atribui("tipo_nas",$nas["tipo_nas"]);
 
-					$r =new RedeIP($rede);
-					$ip_gateway = $r->minHost();
-					$ip_cliente	= $r->maxHost(); // TODO: ObtemProximoIP();
-					$mascara    = $r->mascara();
+								$r =new RedeIP($rede);
+								$ip_gateway = $r->minHost();
+								$ip_cliente	= $r->maxHost(); // TODO: ObtemProximoIP();
+								$mascara    = $r->mascara();
 
-					$this->tpl->atribui("ip_gateway",$ip_gateway);
-					$this->tpl->atribui("mascara",$mascara);
-					$this->tpl->atribui("ip_cliente",$ip_cliente);
-
-
-					$this->tpl->atribui("tipo",$tipo);
-
-					$destino = $nas['id_nas'];
+								$this->tpl->atribui("ip_gateway",$ip_gateway);
+								$this->tpl->atribui("mascara",$mascara);
+								$this->tpl->atribui("ip_cliente",$ip_cliente);
 
 
-					$username = @$_REQUEST["username"];
-					$this->spool->bandalargaAdicionaRede($destino,$id_conta,$rede,$mac,$banda_upload_kbps,$banda_download_kbps,$username);
+								$this->tpl->atribui("tipo",$tipo);
+
+								$destino = $nas['id_nas'];
+
+
+								$username = @$_REQUEST["username"];
+								$this->spool->bandalargaAdicionaRede($destino,$id_conta,$rede,$mac,$banda_upload_kbps,$banda_download_kbps,$username);
 
 
 
-				}
+							}
 
-				// LISTA DE POPS
-				$sSQL  = "SELECT ";
-				$sSQL .= "   id_pop, nome ";
-				$sSQL .= "FROM ";
-				$sSQL .= "   cftb_pop ";
-				$sSQL .= "WHERE ";
-				$sSQL .= "   id_pop = '". $this->bd->escape(trim(@$_REQUEST["id_pop"])) ."'";
+							// LISTA DE POPS
+							$sSQL  = "SELECT ";
+							$sSQL .= "   id_pop, nome ";
+							$sSQL .= "FROM ";
+							$sSQL .= "   cftb_pop ";
+							$sSQL .= "WHERE ";
+							$sSQL .= "   id_pop = '". $this->bd->escape(trim(@$_REQUEST["id_pop"])) ."'";
 
-				$lista_pops = $this->bd->obtemUnicoRegistro($sSQL);
-				
-				$sSQL = "SELECT ip_externo FROM cntb_conta_bandalarga WHERE username = '".@$_REQUEST["username"]."' AND tipo_conta = 'BL' and dominio = '".$prefs["dominio_padrao"]."' ";
-				$externo = $this->bd->obtemUnicoRegistro($sSQL);
-
-
-				//echo "EXTERNO: $sSQL <br>";
-				$this->tpl->atribui("ip_externo",$externo["ip_externo"]);
+							$lista_pops = $this->bd->obtemUnicoRegistro($sSQL);
+							$prefs = $this->prefs->obtem("geral");				
+							$sSQL = "SELECT ip_externo FROM cntb_conta_bandalarga WHERE username = '".@$_REQUEST["username"]."' AND tipo_conta = 'BL' and dominio = '".$prefs["dominio_padrao"]."' ";
+							$externo = $this->bd->obtemUnicoRegistro($sSQL);
 
 
-			}
+							//echo "EXTERNO: $sSQL <br>";
+							$this->tpl->atribui("ip_externo",$externo["ip_externo"]);
+
+
+						}
 			
-			// Joga a mensagem de produto contratado com sucesso.
-			$this->tpl->atribui("username",@$_REQUEST["username"]);
-			$this->tpl->atribui("pop",@$lista_pops["nome"]);
-			$this->tpl->atribui("nas",@$nas["nome"]);
-			$this->tpl->atribui("mac",@$_MAC);
-			$this->tpl->atribui("ip",@$ip_disp);
-			$this->tpl->atribui("dominio",$dominio_padrao);
-			$this->tpl->atribui("dominio_hospedagem",@$dominio_hospedagem);
+						// Joga a mensagem de conta adicionada com sucesso.
+						$this->tpl->atribui("username",@$_REQUEST["username"]);
+						$this->tpl->atribui("pop",@$lista_pops["nome"]);
+						$this->tpl->atribui("nas",@$nas["nome"]);
+						$this->tpl->atribui("mac",@$_MAC);
+						$this->tpl->atribui("ip",@$ip_disp);
+						$this->tpl->atribui("dominio",$dominio_padrao);
+						$this->tpl->atribui("dominio_hospedagem",@$dominio_hospedagem);
 
-			$this->arquivoTemplate="cliente_cobranca_intro.html";
+						//$this->arquivoTemplate="cliente_cobranca_intro.html";
 
-			return;
+						//$url = $_SERVER["PHP_SELF"] . "?op=conta&pg=ficha&id_cliente=" . $id_cliente . "&username=" . @$_REQUEST["username"] . "&dominio=" . @$_REQUEST["dominio"] . "&tipo_conta=" . $tipo_conta;
+						$url = $_SERVER["PHP_SELF"] . "?op=produto&pg=&tipo=" . $tipo_conta . "&id_cliente=" . $id_cliente;
+						$msg_final = "Conta cadastrada com sucesso.";
+						$this->tpl->atribui("mensagem",$msg_final);
+						$this->tpl->atribui("url",$url);
+						$this->tpl->atribui("target","_top");
 
-			$exibeForm = false;
+						$this->arquivoTemplate="msgredirect.html";
+						return;
+
+						$exibeForm = false;
+
+
+					} else {
+						$tipo = @$_REQUEST["tipo_conta"];
 						
+						switch($tipo){
+							case "BL":
+								$msg_final = "Existe outro usuário de Banda Larga cadastrado com esses dados!";
+							break;
+							case "E":
+								$msg_final = "Existe outra conta de E-Mail cadastrada com esses dados!";
+							break;
+							case "H":
+								$msg_final = "Existe outra conta de Hospedagem cadastrada com esses dados!";
+							break;
+							case "D":
+								$msg_final = "Existe outro usuario de Discado cadastrado com esses dados!";
+							break;
+						}
 
-			} else {
+						$this->tpl->atribui("mensagem",$msg_final);
+						$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=produto&id_cliente=$id_cliente");
+						$this->tpl->atribui("target","_top");
 
-				switch($tipo){
-					case "BL":
-						$msg_final = "Existe outro usuário de Banda Larga cadastrado com esses dados!";
-					break;
-					case "E":
-						$msg_final = "Existe outra conta de E-Mail cadastrada com esses dados!";
-					break;
-					case "H":
-						$msg_final = "Existe outra conta de Hospedagem cadastrada com esses dados!";
-					break;
-					case "D":
-						$msg_final = "Existe outro usuario de Discado cadastrado com esses dados!";
-					break;
-				}
-
-				$this->tpl->atribui("mensagem",$msg_final);
-				$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=cobranca&id_cliente=$id_cliente");
-				$this->tpl->atribui("target","_top");
-
-				$this->arquivoTemplate="msgredirect.html";
-				return;
+						$this->arquivoTemplate="msgredirect.html";
+						return;
 
 
+					}
 
-
-		}
-
-				
-				
 				}// acao = cad
 				
 				
