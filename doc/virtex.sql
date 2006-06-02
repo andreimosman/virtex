@@ -1,6 +1,6 @@
 /*
 Created		22/2/2006
-Modified		1/6/2006
+Modified		2/6/2006
 Project		
 Model		
 Company		
@@ -145,7 +145,7 @@ Create table  cbtb_contrato
 	data_contratacao Date NULL ,
 	vigencia Smallint NULL ,
 	data_renovacao Date NULL ,
-	valor_contrato Numeric(30,6) NULL ,
+	valor_contrato Numeric(7,2) NULL ,
 	id_cobranca Smallint NOT NULL,
 	status Char(2) NULL ,
 	tipo_produto Char(2) NULL ,
@@ -402,6 +402,8 @@ Create table  cbtb_faturas
 	cod_barra Varchar(50) NULL  UNIQUE ,
 	anterior Boolean NULL  Default false,
 	id_carne Smallint NOT NULL,
+	nosso_numero Varchar(100) NULL ,
+	linha_digitavel Varchar(150) NULL ,
  primary key (id_cliente_produto,data)
 );
 
@@ -671,6 +673,7 @@ CREATE SEQUENCE rdtb_accounting_session_id;
 CREATE SEQUENCE rdtb_log_id_log;
 CREATE SEQUENCE rdsq_id_accounting;
 CREATE SEQUENCE cbsq_id_carne;
+CREATE SEQUENCE blsq_carne_nossonumero;
 INSERT INTO cftb_forma_pagamento (id_cobranca,nome_cobranca,disponivel) VALUES ('1','Boleto Bancário',false);
 INSERT INTO cftb_forma_pagamento (id_cobranca,nome_cobranca,disponivel) VALUES ('2','Carnê',false);
 INSERT INTO cftb_forma_pagamento (id_cobranca,nome_cobranca,disponivel) VALUES ('3','Fatura Avulsa',false);
