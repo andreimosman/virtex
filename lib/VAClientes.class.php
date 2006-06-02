@@ -1786,7 +1786,7 @@ class VAClientes extends VirtexAdmin {
 				$this->tpl->atribui("id_cliente",$id_cliente);
 				$this->tpl->atribui("username",$username);
 				$this->tpl->atribui("dominio",$dominio);
-				$this->tpl->atribui("tipo_conta",$tipo_conta);
+				$this->tpl->atribui("tipo_conta",@$_REQUEST["tipo_conta"]);
 				
 				global $_LS_BANDA;
 				$this->tpl->atribui("lista_upload",$_LS_BANDA);
@@ -1801,7 +1801,8 @@ class VAClientes extends VirtexAdmin {
 				
 				$prefs = $this->prefs->obtem("total");								
 				$dominio_padrao = $prefs["dominio_padrao"];
-				echo "DOMINIO: $dominio_padrao <br>";
+				//echo "DOMINIO: $dominio_padrao <br>";
+				$this->arquivoTemplate = "cliente_nova_conta.html";
 				
 				
 				if ($acao == "cad"){
@@ -1816,16 +1817,21 @@ class VAClientes extends VirtexAdmin {
 					$this->obtemPR($id_cliente);
 
 					
-					$sSQL  = "SELECT cp.id_produto FROM cbtb_cliente_produto cp, cntb_conta cn WHERE ";
-					$sSQL .= "cn.username = '$_username' AND ";
-					$sSQL .= "cn.tipo_conta = '$tipo_conta' AND ";
-					$sSQL .= "cn.dominio = '$dominio' AND ";
-					$sSQL .= "cn.id_cliente = '$id_cliente' AND ";
-					$sSQL .= "cn.id_cliente_produto = cp.id_cliente_produto";
-					$_produto = $this->bd->obtemUnicoRegistro($sSQL);
+					//$sSQL  = "SELECT cp.id_produto FROM cbtb_cliente_produto cp, cntb_conta cn WHERE ";
+					//$sSQL .= "cn.username = '$_username' AND ";
+					//$sSQL .= "cn.tipo_conta = '$tipo_conta' AND ";
+					//$sSQL .= "cn.dominio = '$dominio' AND ";
+					//$sSQL .= "cn.id_cliente = '$id_cliente' AND ";
+					//$sSQL .= "cn.id_cliente_produto = cp.id_cliente_produto";
+					//$_produto = $this->bd->obtemUnicoRegistro($sSQL);
 					
-					$id_produto = $_produto["id_produto"];
-					echo $id_produto ."<br>";
+					//$id_produto = $_produto["id_produto"];
+					$sSQL = "SELECT id_produto from cbtb_cliente_produto WHERE id_cliente_produto = '".@$_REQUEST["id_cliente_produto"]."' AND id_cliente = '".@$_REQUEST["id_cliente"]."' ";
+					$_prod = $this->bd->obtemUnicoRegistro($sSQL);
+					
+					$id_produto = $_prod["id_produto"];
+					
+					//echo $id_produto ."<br>";
 					
 					$lista_dominiop = $this->prefs->obtem("geral");
 
@@ -1854,7 +1860,7 @@ class VAClientes extends VirtexAdmin {
 
 					if (!count($erros)){
 					
-						$id_cliente_produto = $this->bd->proximoID("cbsq_id_cliente_produto");
+						//$id_cliente_produto = $this->bd->proximoID("cbsq_id_cliente_produto");
 
 						// Insere no banco de dados
 
@@ -1872,10 +1878,8 @@ class VAClientes extends VirtexAdmin {
 						// VERIFICA TIPO DO CONTRATO
 						// BLABLABLA
 
-						$this->bd->consulta($sSQL);  
-						
-						
-						
+						//$this->bd->consulta($sSQL);  
+
 						$senhaCr = $this->criptSenha($this->bd->escape(trim(@$_REQUEST["senha"])));
 
 						$id_conta = $this->bd->proximoID("cnsq_id_conta");
@@ -1887,7 +1891,7 @@ class VAClientes extends VirtexAdmin {
 						$sSQL .= "			'".$id_conta."', ";
 						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["username"]) . "', ";
 						$sSQL .= "     '" . $dominioPadrao . "', ";
-						$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["tipo"])) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["tipo_conta"])) . "', ";
 						$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["senha"])) . "', "; 						
 						$sSQL .= "     '" .  $this->bd->escape(trim(@$_REQUEST["id_cliente"])) . "', "; 						
 						$sSQL .= "     '" .	$id_cliente_produto . "', ";
@@ -1959,7 +1963,7 @@ class VAClientes extends VirtexAdmin {
 						$prefs = $this->prefs->obtem();
 						
 						
-						switch($tipo) {
+						switch($tipo_conta) {
 							case 'D':
 
 								$username = @$_REQUEST["username"];
