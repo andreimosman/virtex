@@ -26,7 +26,7 @@
     <td width="200" align="center" bgcolor="#F1F1F1">
 &nbsp;
 			{if $p.numero_contas > count($p.contas)}
-				[<a href="{$smarty.server.PHP_SELF}?op=conta&sop=nova_conta&id_cliente={$p.id_cliente}&id_cliente_produto={$p.id_cliente_produto}">cadastrar conta adicional</a>]
+				[<a href="{$smarty.server.PHP_SELF}?op=conta&sop=nova_conta&tipo_conta={$p.tipo}&id_cliente={$p.id_cliente}&id_cliente_produto={$p.id_cliente_produto}">cadastrar conta adicional</a>]
 			{/if}
     </td>
   </tr>
