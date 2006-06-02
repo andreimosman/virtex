@@ -1698,7 +1698,7 @@ class VAClientes extends VirtexAdmin {
 			$sSQL  = "SELECT ";
 			$sSQL .= "	cp.id_cliente_produto, cp.id_cliente, cp.id_produto, cp.dominio, ";
 			$sSQL .= "	p.id_produto, p.nome, p.descricao, p.tipo, p.valor, p.disponivel, p.num_emails, p.quota_por_conta, ";
-			$sSQL .= "	p.vl_email_adicional, p.permitir_outros_dominios, p.email_anexado ";
+			$sSQL .= "	p.vl_email_adicional, p.permitir_outros_dominios, p.email_anexado, p.numero_contas ";
 			$sSQL .= "FROM cbtb_cliente_produto cp INNER JOIN prtb_produto p ";
 			$sSQL .= "USING( id_produto ) ";
 			$sSQL .= "WHERE cp.id_cliente='$id_cliente' AND p.tipo = '$tipo' ";
@@ -1735,6 +1735,7 @@ class VAClientes extends VirtexAdmin {
 			$erros = array();
 		
 			$id_cliente = @$_REQUEST["id_cliente"];
+			$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
 			$username = @$_REQUEST["username"];
 			$dominio  = @$_REQUEST["dominio"];
 			$tipo_conta = @$_REQUEST["tipo_conta"];
@@ -1857,14 +1858,19 @@ class VAClientes extends VirtexAdmin {
 
 						// Insere no banco de dados
 
-						$sSQL  = "INSERT INTO ";
-						$sSQL .= "   cbtb_cliente_produto( ";
-						$sSQL .= "      id_cliente_produto,id_cliente, id_produto ) ";
-						$sSQL .= "   VALUES (";
-						$sSQL .= "     '$id_cliente_produto', ";
-						$sSQL .= "     '" .@$_REQUEST["id_cliente"] . "', ";
-						$sSQL .= "     '" . $_produto["id_produto"] . "' ";
-						$sSQL .= "     )";						
+						//$sSQL  = "INSERT INTO ";
+						//$sSQL .= "   cbtb_cliente_produto( ";
+						//$sSQL .= "      id_cliente_produto,id_cliente, id_produto ) ";
+						//$sSQL .= "   VALUES (";
+						//$sSQL .= "     '$id_cliente_produto', ";
+						//$sSQL .= "     '" .@$_REQUEST["id_cliente"] . "', ";
+						//$sSQL .= "     '" . $_produto["id_produto"] . "' ";
+						//$sSQL .= "     )";						
+						
+						
+						// INSERT INTO cntb_conta blablabla 
+						// VERIFICA TIPO DO CONTRATO
+						// BLABLABLA
 
 						$this->bd->consulta($sSQL);  
 						

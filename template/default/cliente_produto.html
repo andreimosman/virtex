@@ -21,10 +21,13 @@
 </td>
 </tr>
   <tr>
-    <td width="400" bgcolor="#F1F1F1">
+    <td width="300" bgcolor="#F1F1F1">
       <font face="arial" size="2">#{$p.id_cliente_produto} - <b>{$p.nome}</b></font></td>
-    <td width="100" align="center" bgcolor="#F1F1F1">
-
+    <td width="200" align="center" bgcolor="#F1F1F1">
+&nbsp;
+			{if $p.numero_contas > count($p.contas)}
+				[<a href="{$smarty.server.PHP_SELF}?op=conta&sop=nova_conta&id_cliente={$p.id_cliente}&id_cliente_produto={$p.id_cliente_produto}">cadastrar conta adicional</a>]
+			{/if}
     </td>
   </tr>
   <tr>
