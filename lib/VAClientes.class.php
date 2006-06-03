@@ -3700,6 +3700,10 @@ public function days_diff($date_ini, $date_end, $round = 1) {
 } 
 
 public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$segunda_via=false){
+
+
+	//echo "DATA ENVIADA: $data <BR>\n";
+
 	
 	$sSQL  = "SELECT cl.nome_razao, cl.endereco, cl.id_cidade, cl.estado, cl.cep, cl.cpf_cnpj, cd.cidade as nome_cidade, cd.id_cidade  ";
 	$sSQL .= "FROM ";
@@ -3723,13 +3727,16 @@ public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$se
 	$sSQL .= "id_cliente_produto = '$id_cliente_produto' AND ";
 	$sSQL .= "data = '$data' ";
 
-	//echo "fatura: $sSQL<br>";
-
 	$fatura = $this->bd->obtemUnicoRegistro($sSQL);
 	
+	//echo "fatura: $sSQL<br>";
+	
+	//$data_cadastrada = $fatura["data"];
+	//echo "DATA: $data_cadastrada <br>";
 	//echo "SHIT: " . $fatura["data"] . "<br>\n";
 	
 	list ($dia,$mes,$ano) = explode("/",$fatura["data"]);
+	
 	
 	$mes_array = array("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
 	
@@ -3739,8 +3746,10 @@ public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$se
 	
 	}else if ($forma_pagamento == "POS"){
 	
-		$mes_ref = mktime(0, 0, 0, $mes-1);
-		$referente = $mes_array[(int)$mes_ref-1]."/".$ano;
+		//$mes_ref = mktime(0, 0, 0, $mes-1);
+		//echo "MES: $mes <br>\n";
+		//echo "MES REF: $mes_ref <br>\n";
+		$referente = $mes_array[(int)$mes-1]."/".$ano;
 	
 	}
 	

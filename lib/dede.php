@@ -358,6 +358,7 @@
 													$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $ini_m, $ini_d, $ini_a));
 												}else{
 													$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $ini_m, $ini_d, $ini_a));
+													//$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $cm+$i, $dia_vencimento, $ca));
 												}
 
 
@@ -388,17 +389,16 @@
 												$this->bd->consulta($sSQL);
 													
 											}*/
-											
-											$this->carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento);
-											
+
 											
 											
 											
-											fputs($fd,$fatura);
-											if( ($i+1) % 3 == 0 ) {
-												$new_page = "<hr>";
-												fputs($fd,$new_page);
-											}
+											
+											//fputs($fd,$fatura);
+											//if( ($i+1) % 3 == 0 ) {
+											///	$new_page = "<hr>";
+											//	fputs($fd,$new_page);
+											//}
 
 
 										}else{
@@ -432,12 +432,9 @@
 										//echo "FATURA: $sSQL<br>";
 										$this->bd->consulta($sSQL);
 
-										
-										$this->carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento);
-										/*if($i == 0){
-											$head = "<html><head></head><body>";
-											fputs($fd,$new_page);
-										}*/
+										$data = $fatura_dt_vencimento;
+										$fatura = $this->carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento);
+
 										if( $i>0 && $i % 3 == 0 ) {
 											$new_page = "<hr>";
 											fputs($fd,$new_page);

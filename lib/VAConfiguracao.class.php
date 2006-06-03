@@ -971,6 +971,7 @@ class VAConfiguracao extends VirtexAdmin {
 							$sSQL  = "UPDATE ";
 							$sSQL .= "	pftb_preferencia_cobranca ";
 							$sSQL .= "SET ";
+							$sSQL .= "  carencia = '".@$_REQUEST["carencia"]."', ";
 							$sSQL .= "  tx_juros = '".@$_REQUEST["tx_juros"]."', ";
 							$sSQL .= "  multa = '".@$_REQUEST["multa"]."', ";
 							$sSQL .= "  dia_venc = '".@$_REQUEST["dia_venc"]."', ";

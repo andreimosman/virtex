@@ -452,6 +452,7 @@ function JSFX_FloatTopDiv()
 	window.stayTopLeft=function()
 	{
 		if (verticalpos=="fromtop"){
+		//if (verticalpos=="frombottom"){
 		var pY = ns ? pageYOffset : document.body.scrollTop;
 		ftlObj.y += (pY + startY - ftlObj.y)/2;
 		}
