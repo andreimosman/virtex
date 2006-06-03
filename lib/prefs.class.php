@@ -2,6 +2,7 @@
 
 /*
 *
+*
 *  Classe para obtenção das Preferências.
 *
 */

@@ -39,7 +39,7 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "   cp.id_cliente is not null ";
 		$sSQL .= "   AND cp.id_cliente_produto = '".$this->bd->escape($id_cliente_produto)."' ";
 		
-		//echo $sSQL . "<br>\n";
+		////echo $sSQL . "<br>\n";
 		
 		return($this->bd->obtemUnicoRegistro($sSQL));
 		
@@ -57,11 +57,11 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "GROUP BY pr.tipo";
 									
 		$prcliente = $this->bd->obtemRegistros($sSQL);
-		////echo "QUERY: $sSQL<br> ";
+		//////echo "QUERY: $sSQL<br> ";
 									
 		$prod_contr = array();
 									
-		////echo count($prcliente);
+		//////echo count($prcliente);
 									
 		for($i = 0; $i < count($prcliente); $i++ ) {
 			$prod_contr[ trim(strtolower($prcliente[$i]["tipo"])) ] = true;
@@ -112,7 +112,7 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "   cftb_nas ";
 		$sSQL .= "WHERE ";
 		$sSQL .= "   id_nas = '". $this->bd->escape($id_nas) . "' ";
-		////echo "OBTEM NAS: $sSQL <br>";
+		//////echo "OBTEM NAS: $sSQL <br>";
 		return( $this->bd->obtemUnicoRegistro($sSQL) );
 	}
 	
@@ -156,7 +156,7 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "LIMIT 1 ";
 
 
-		////echo "IP_EXTERNO: $sSQL <br>";
+		//////echo "IP_EXTERNO: $sSQL <br>";
 		return( $this->bd->obtemUnicoRegistro($sSQL));
 	
 
@@ -182,7 +182,7 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "   r.rede DESC ";
 		$sSQL .= "LIMIT ";
 		$sSQL .= "   1 ";
-		////echo "retorno do obtemNAS: $sSQL;";
+		//////echo "retorno do obtemNAS: $sSQL;";
 		return( $this->bd->obtemUnicoRegistro($sSQL) );
 	}
 	
@@ -387,12 +387,12 @@ class VAClientes extends VirtexAdmin {
 
 
 					}
-					////echo "$sSQL";
+					//////echo "$sSQL";
 					$this->bd->consulta($sSQL);  
 
 					//if( $this->bd->obtemErro() != MDATABASE_OK ) {
-					//	//echo "ERRO: " . $this->bd->obtemMensagemErro() , "<br>\n";
-					//	//echo "QUERY: " . $sSQL . "<br>\n";
+					//	////echo "ERRO: " . $this->bd->obtemMensagemErro() , "<br>\n";
+					//	////echo "QUERY: " . $sSQL . "<br>\n";
 					//
 					//}
 
@@ -430,7 +430,7 @@ class VAClientes extends VirtexAdmin {
 			
 				
 				
-				////echo $erros;
+				//////echo $erros;
 			if ($acao == "cad"){
 				$titulo = "Cadastrar";
 			}else if ($acao == "alt"){
@@ -564,7 +564,7 @@ class VAClientes extends VirtexAdmin {
 						if( $tipo_pesquisa == "CONTA" ) {
 							$tp = "CONTA";
 							if( preg_match( '/([0-9A-Fa-f]{1,2}[:\-]){5}([0-9A-Fa-f]{1,2})/', $texto_pesquisa) ) {
-								// //echo "MAC<br>\n";
+								// ////echo "MAC<br>\n";
 								$tp = "MAC";
 						    }
 						               
@@ -665,7 +665,7 @@ class VAClientes extends VirtexAdmin {
 
 		} else if ($op == "cobranca") {
 			// Sistema de contratação de produtos e resumo de cobrança
-			////echo "cobranca<br>";
+			//////echo "cobranca<br>";
 					
 			$rotina = @$_REQUEST["rotina"];
 			$acao = @$_REQUEST["acao"];
@@ -684,7 +684,7 @@ class VAClientes extends VirtexAdmin {
 			$rotina = "contratar";
 			}
 			if( $rotina == "resumo" ) {
-			////echo "resumo<br>";
+			//////echo "resumo<br>";
 				$id_cliente = @$_REQUEST['id_cliente'];
 			
 			
@@ -712,7 +712,7 @@ class VAClientes extends VirtexAdmin {
 					$sSQL .= "WHERE ";
 					$sSQL .= "	id_cliente_produto = '$id_cp'";
 						   
-					////echo $sSQL ."<hr>\n";
+					//////echo $sSQL ."<hr>\n";
 					
 					$this->tpl->atribui("id_cliente",$id_cliente);
 						   
@@ -762,7 +762,7 @@ class VAClientes extends VirtexAdmin {
 
 
 		$lista_faturas = $this->bd->obtemRegistros($sSQL);
-		////echo "Lista: $sSQL <br>";
+		//////echo "Lista: $sSQL <br>";
 		
 		
 				$this->obtemPR($id_cliente);
@@ -806,7 +806,7 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "ORDER BY f.data ASC ";
 		
 		$lista_faturas = $this->bd->obtemRegistros($sSQL);
-		////echo "Lista: $sSQL <br>";
+		//////echo "Lista: $sSQL <br>";
 		
 		$sSQL = "SELECT nome_razao FROM cltb_cliente WHERE id_cliente = '$id_cliente'";
 		$cliente = $this->bd->obtemUnicoRegistro($sSQL);
@@ -823,7 +823,7 @@ class VAClientes extends VirtexAdmin {
 		
 		$lista_contrato = $this->bd->obtemRegistros($sSQL);
 		
-		////echo "lista: $sSQL <br>";
+		//////echo "lista: $sSQL <br>";
 			$this->tpl->atribui("lista_contrato",$lista_contrato);
 			$this->tpl->atribui("cliente",$cliente);
 			$this->tpl->atribui("id_cliente", $id_cliente);
@@ -924,8 +924,8 @@ class VAClientes extends VirtexAdmin {
 						
 						$this->bd->consulta($sSQL);  
 						//if( $this->bd->obtemErro() ) {
-						//	//echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
-						//	//echo "SQL: $sSQL <br>\n";
+						////echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
+						////echo "SQL: $sSQL <br>\n";
 						//}
 						
 						$username = @$_REQUEST["username"];
@@ -970,8 +970,8 @@ class VAClientes extends VirtexAdmin {
 												
 						$this->bd->consulta($sSQL);  
 						//if( $this->bd->obtemErro() ) {
-						//	//echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
-						//	//echo "SQL: $sSQL <br>\n";
+						//	////echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
+						////echo "SQL: $sSQL <br>\n";
 						//}
 						
 												
@@ -1009,8 +1009,8 @@ class VAClientes extends VirtexAdmin {
 																		
 							$this->bd->consulta($sSQL);  
 							//if( $this->bd->obtemErro() ) {
-							//	//echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
-							//	//echo "SQL: $sSQL <br>\n";
+							//	////echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
+							////echo "SQL: $sSQL <br>\n";
 							//}
 							
 							
@@ -1039,8 +1039,8 @@ class VAClientes extends VirtexAdmin {
 							
 							$this->bd->consulta($sSQL);
 							//if( $this->bd->obtemErro() ) {
-							//	//echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
-							//	//echo "SQL: $sSQL <br>\n";
+							//	////echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
+							//	////echo "SQL: $sSQL <br>\n";
 							//}
 
 							
@@ -1072,7 +1072,7 @@ class VAClientes extends VirtexAdmin {
 								$sSQL .= ")VALUES ( ";
 								$sSQL .= "'$username', '$tipo_conta', '$dominio', '$foneinfo' )";
 								
-								////echo "SQL DISCADO: $sSQL <br>\n";
+								//////echo "SQL DISCADO: $sSQL <br>\n";
 								
 								$this->bd->consulta($sSQL);
 								
@@ -1084,7 +1084,7 @@ class VAClientes extends VirtexAdmin {
 								$tipo_de_ip = $this->bd->escape(trim(@$_REQUEST["selecao_ip"]));
 								if($tipo_de_ip == "A"){
 									$nas = $this->obtemNAS($_REQUEST["id_nas"]);
-									////echo "NAS: ".$nas["id_nas"]."<BR>";
+									//////echo "NAS: ".$nas["id_nas"]."<BR>";
 									if( $nas["tipo_nas"] == "I" ) {
 									   // Cadastrar REDE em cntb_conta
 									   $rede_disponivel = $this->obtemRede($nas["id_nas"]);
@@ -1106,7 +1106,7 @@ class VAClientes extends VirtexAdmin {
 								if($redirecionar == "true"){
 									
 									$ip_externo = $this->obtemIPExterno($_REQUEST["id_nas"]);
-									//echo $ip_externo["ip_externo"];
+									////echo $ip_externo["ip_externo"];
 									
 									if($nas["tipo_nas"] == "P"){
 										
@@ -1120,11 +1120,19 @@ class VAClientes extends VirtexAdmin {
 									
 									$username = @$_REQUEST["username"];
 									$tipo_conta = @$_REQUEST["tipo"];
-									$dominio = $prefs["geral"]["dominio_padrao"];
+									//$dominio = $prefs["geral"]["dominio_padrao"];
+									//$dom = $prefs["total"];
+									
+									$dSQL = "SELECT dominio_padrao FROM pftb_preferencia_geral WHERE id_provedor = '1' ";
+									$dom = $this->bd->obtemUnicoRegistro($dSQL);
+									//echo "SQL DOMINIO: $dSQL <br>";
+									
+									$dominio = $dom["dominio_padrao"];
 
 									
 									$sSQL = "SELECT id_conta FROM cntb_conta WHERE username = '$username' AND tipo_conta = 'BL' AND dominio = '$dominio' ";
 									$_id_conta = $this->bd->obtemUnicoRegistro($sSQL);
+									//echo "ID_CONTA: $sSQL";
 									$id_conta = $_id_conta["id_conta"];
 									$_ip_externo = $ip_externo["ip_externo"];
 									
@@ -1146,7 +1154,7 @@ class VAClientes extends VirtexAdmin {
 								if($rede_disp != "NULL"){
 								
 									$rede_disp = "'".$rede_disponivel["rede"]."'";
-									////echo "rede:". $rede_disponivel["rede"]. "<br>";
+									//////echo "rede:". $rede_disponivel["rede"]. "<br>";
 								
 								
 								}
@@ -1171,7 +1179,7 @@ class VAClientes extends VirtexAdmin {
 								//$id_conta_banda_larga = $this->bd->proximoID("clsq_id_conta_bandalarga_seq");
 								
 								//$id_pop = $_REQUEST["id_pop"];
-								////echo "IDPOP: $id_pop <br>";
+								//////echo "IDPOP: $id_pop <br>";
 								
 								// INSERE EM CNTB_CONTA_BANDALARGA
 								$sSQL  = "INSERT INTO ";
@@ -1207,11 +1215,11 @@ class VAClientes extends VirtexAdmin {
 								$sSQL .= "     )";						
 								
 								
-								//echo "INSERT NA BL: $sSQL <br>";
+								////echo "INSERT NA BL: $sSQL <br>";
 								$this->bd->consulta($sSQL);  
 								//if( $this->bd->obtemErro() ) {
-								//	//echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
-								//	//echo "SQL: $sSQL <br>\n";
+								//	////echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
+								//	////echo "SQL: $sSQL <br>\n";
 								//}
 								
 								break;
@@ -1253,12 +1261,12 @@ class VAClientes extends VirtexAdmin {
 									$sSQL .= ") ";
 
 									$this->bd->consulta($sSQL);
-									////echo "QUERY INSERÇÃO: $sSQL <BR>\n";
+									//////echo "QUERY INSERÇÃO: $sSQL <BR>\n";
 
 
 
 									//SPOOL
-									////echo "Tipo: $tipo_hospedagem <br> Username: $username <br> Dominio: $dominio <br> DominioHosp: $dominio_hospedagem<br>";
+									//////echo "Tipo: $tipo_hospedagem <br> Username: $username <br> Dominio: $dominio <br> DominioHosp: $dominio_hospedagem<br>";
 									$this->spool->hospedagemAdicionaRede($server,$id_conta,$tipo_hospedagem,$username,$dominio,$dominio_hospedagem);
 								//}
 								break;
@@ -1270,7 +1278,7 @@ class VAClientes extends VirtexAdmin {
 
 						if ($tipo && $tipo == "BL"){
 						
-						////echo $tipo;
+						//////echo $tipo;
 							// Envia instrucao pra spool
 							if ($nas && $nas["tipo_nas"] == "I"){
 
@@ -1286,7 +1294,7 @@ class VAClientes extends VirtexAdmin {
 								$sSQL .= "   cftb_nas ";
 								$sSQL .= "WHERE ";
 								$sSQL .= "   id_nas = '$id_nas'";
-								////echo "SQL : " . $sSQL . "<br>\n";
+								//////echo "SQL : " . $sSQL . "<br>\n";
 
 								$nas = $this->bd->obtemUnicoRegistro($sSQL);
 								$this->tpl->atribui("n",$nas);
@@ -1334,7 +1342,7 @@ class VAClientes extends VirtexAdmin {
 						$externo = $this->bd->obtemUnicoRegistro($sSQL);
 						
 						
-						//echo "EXTERNO: $sSQL <br>";
+						////echo "EXTERNO: $sSQL <br>";
 							if(count($externo)){
 								$this->tpl->atribui("ip_externo",$externo["ip_externo"]);
 							}
@@ -1352,10 +1360,10 @@ class VAClientes extends VirtexAdmin {
 						$this->tpl->atribui("dominio_hospedagem",@$dominio_hospedagem);
 						
 						
-						/*echo "id_cliente: $id_cliente <br>";
-						echo "id_cliente_produto: $id_cliente_produto <br>";
-						echo "id_carne: $id_carne <br>";
-						echo "data: $data <br>";*/
+						/*//echo "id_cliente: $id_cliente <br>";
+						//echo "id_cliente_produto: $id_cliente_produto <br>";
+						//echo "id_carne: $id_carne <br>";
+						//echo "data: $data <br>";*/
 						
 						$this->tpl->atribui("id_cliente",$id_cliente);
 						$this->tpl->atribui("id_clçiente_produto",$id_cliente_produto);
@@ -1546,7 +1554,7 @@ class VAClientes extends VirtexAdmin {
 			
 			} else if( $rotina == "excluir" ){
 			
-				////echo "PASSO 1 DA EXCLUSÃO: executa o excluiContrato";
+				//////echo "PASSO 1 DA EXCLUSÃO: executa o excluiContrato";
 				
 				$id_cliente_produto = @$_REQUEST['id_cliente_produto'];
 				$id_cliente = @$_REQUEST['id_cliente'];
@@ -1573,7 +1581,7 @@ class VAClientes extends VirtexAdmin {
 				$sSQL .= "FROM cbtb_cliente_produto cp INNER JOIN prtb_produto p ";
 				$sSQL .= "USING( id_produto ) ";
 				$sSQL .= "WHERE cp.id_cliente_produto='".@$_REQUEST['id_cliente_produto']."' ";
-				////echo $sSQL ."<hr>\n";
+				//////echo $sSQL ."<hr>\n";
 			
 			
 				$produtos = $this->bd->obtemRegistros($sSQL);
@@ -1589,7 +1597,7 @@ class VAClientes extends VirtexAdmin {
 				   $sSQL .= "WHERE ";
 				   $sSQL .= "	id_cliente_produto = '$id_cp'";
 			   
-				   ////echo $sSQL ."<hr>\n";
+				   //////echo $sSQL ."<hr>\n";
 			   
 				   $contas = $this->bd->obtemRegistros($sSQL);
 				   
@@ -1613,7 +1621,7 @@ class VAClientes extends VirtexAdmin {
 						
 				$carnes = $this->bd->obtemRegistros($sSQL);
 				$this->obtemPR($id_cliente);
-				//echo "CARNES: $sSQL <br>";
+				////echo "CARNES: $sSQL <br>";
 				$id_cliente_produto = $carnes[0]["id_cliente_produto"];
 				
 				if ($p == "faturas"){
@@ -1749,7 +1757,7 @@ class VAClientes extends VirtexAdmin {
 			$sSQL .= "FROM cbtb_cliente_produto cp INNER JOIN prtb_produto p ";
 			$sSQL .= "USING( id_produto ) ";
 			$sSQL .= "WHERE cp.id_cliente='$id_cliente' AND p.tipo = '$tipo' ";
-			////echo $sSQL ."<hr>\n";
+			//////echo $sSQL ."<hr>\n";
 			
 			
 			$produtos = $this->bd->obtemRegistros($sSQL);
@@ -1765,7 +1773,7 @@ class VAClientes extends VirtexAdmin {
 			   $sSQL .= "WHERE ";
 			   $sSQL .= "	id_cliente_produto = '$id_cp'";
 			   
-			   ////echo $sSQL ."<hr>\n";
+			   //////echo $sSQL ."<hr>\n";
 			   
 			   $contas = $this->bd->obtemRegistros($sSQL);
 			   
@@ -1801,7 +1809,7 @@ class VAClientes extends VirtexAdmin {
 			$sSQL .= "   nome";
 
 
-			////echo "POPs: $sSQL <br>";
+			//////echo "POPs: $sSQL <br>";
 			$lista_pops = $this->bd->obtemRegistros($sSQL);
 			$this->tpl->atribui("lista_pops",$lista_pops);
 
@@ -1815,7 +1823,7 @@ class VAClientes extends VirtexAdmin {
 			$sSQL .= "ORDER BY ";
 			$sSQL .= "   tipo_nas,nome ";
 
-			////echo "NASs: $sSQL <br>";
+			//////echo "NASs: $sSQL <br>";
 
 			$lista_nas = $this->bd->obtemRegistros($sSQL);
 
@@ -1842,7 +1850,7 @@ class VAClientes extends VirtexAdmin {
 				
 				while(list($vr,$vl)=each($dados_pcontratado)) {
 					// DEBUG
-					//echo "$vr = $vl <br>\n";
+					////echo "$vr = $vl <br>\n";
 					
 					// Atribui os valores ao template
 					if($vr) {
@@ -1882,7 +1890,7 @@ class VAClientes extends VirtexAdmin {
 				
 				$prefs = $this->prefs->obtem("total");								
 				$dominio_padrao = $prefs["dominio_padrao"];
-				//echo "DOMINIO: $dominio_padrao <br>";
+				////echo "DOMINIO: $dominio_padrao <br>";
 				$this->arquivoTemplate = "cliente_nova_conta.html";
 				
 				$acao = @$_REQUEST["acao"];
@@ -1912,7 +1920,7 @@ class VAClientes extends VirtexAdmin {
 					
 					$id_produto = $_prod["id_produto"];
 					
-					//echo $id_produto ."<br>";
+					////echo $id_produto ."<br>";
 					
 					$lista_dominiop = $this->prefs->obtem("geral");
 
@@ -2059,7 +2067,7 @@ class VAClientes extends VirtexAdmin {
 								$sSQL .= ")VALUES ( ";
 								$sSQL .= "'$username', '$tipo_conta', '$dominio', '$foneinfo' )";
 
-								////echo "SQL DISCADO: $sSQL <br>\n";
+								//////echo "SQL DISCADO: $sSQL <br>\n";
 
 								$this->bd->consulta($sSQL);
 
@@ -2071,7 +2079,7 @@ class VAClientes extends VirtexAdmin {
 								$tipo_de_ip = $this->bd->escape(trim(@$_REQUEST["selecao_ip"]));
 								if($tipo_de_ip == "A"){
 									$nas = $this->obtemNAS($_REQUEST["id_nas"]);
-									////echo "NAS: ".$nas["id_nas"]."<BR>";
+									//////echo "NAS: ".$nas["id_nas"]."<BR>";
 									if( $nas["tipo_nas"] == "I" ) {
 										 // Cadastrar REDE em cntb_conta
 										 $rede_disponivel = $this->obtemRede($nas["id_nas"]);
@@ -2093,7 +2101,7 @@ class VAClientes extends VirtexAdmin {
 								if($redirecionar == "true"){
 
 									$ip_externo = $this->obtemIPExterno($_REQUEST["id_nas"]);
-									//echo $ip_externo["ip_externo"];
+									////echo $ip_externo["ip_externo"];
 
 									if($nas["tipo_nas"] == "P"){
 
@@ -2133,7 +2141,7 @@ class VAClientes extends VirtexAdmin {
 								if($rede_disp != "NULL"){
 
 									$rede_disp = "'".$rede_disponivel["rede"]."'";
-									////echo "rede:". $rede_disponivel["rede"]. "<br>";
+									//////echo "rede:". $rede_disponivel["rede"]. "<br>";
 
 
 								}
@@ -2155,7 +2163,7 @@ class VAClientes extends VirtexAdmin {
 									$_MAC = "'".$MAC."'";
 								}
 
-								////echo "IDPOP: $id_pop <br>";
+								//////echo "IDPOP: $id_pop <br>";
 
 								// INSERE EM CNTB_CONTA_BANDALARGA
 								$sSQL  = "INSERT INTO ";
@@ -2191,7 +2199,7 @@ class VAClientes extends VirtexAdmin {
 								$sSQL .= "     )";						
 
 
-								//echo "INSERT NA BL: $sSQL <br>";
+								////echo "INSERT NA BL: $sSQL <br>";
 								$this->bd->consulta($sSQL);  
 
 								break;
@@ -2233,12 +2241,12 @@ class VAClientes extends VirtexAdmin {
 									$sSQL .= ") ";
 
 									$this->bd->consulta($sSQL);
-									////echo "QUERY INSERÇÃO: $sSQL <BR>\n";
+									//////echo "QUERY INSERÇÃO: $sSQL <BR>\n";
 
 
 
 									//SPOOL
-									////echo "Tipo: $tipo_hospedagem <br> Username: $username <br> Dominio: $dominio <br> DominioHosp: $dominio_hospedagem<br>";
+									//////echo "Tipo: $tipo_hospedagem <br> Username: $username <br> Dominio: $dominio <br> DominioHosp: $dominio_hospedagem<br>";
 									$this->spool->hospedagemAdicionaRede($server,$id_conta,$tipo_hospedagem,$username,$dominio,$dominio_hospedagem);
 								//}
 								break;
@@ -2247,7 +2255,7 @@ class VAClientes extends VirtexAdmin {
 						$tipo = $tipo_conta;
 						if ($tipo && $tipo == "BL"){
 
-						////echo $tipo;
+						//////echo $tipo;
 							// Envia instrucao pra spool
 							if ($nas && $nas["tipo_nas"] == "I"){
 
@@ -2263,7 +2271,7 @@ class VAClientes extends VirtexAdmin {
 								$sSQL .= "   cftb_nas ";
 								$sSQL .= "WHERE ";
 								$sSQL .= "   id_nas = '$id_nas'";
-								////echo "SQL : " . $sSQL . "<br>\n";
+								//////echo "SQL : " . $sSQL . "<br>\n";
 
 								$nas = $this->bd->obtemUnicoRegistro($sSQL);
 								$this->tpl->atribui("n",$nas);
@@ -2305,7 +2313,7 @@ class VAClientes extends VirtexAdmin {
 							$externo = $this->bd->obtemUnicoRegistro($sSQL);
 
 
-							//echo "EXTERNO: $sSQL <br>";
+							////echo "EXTERNO: $sSQL <br>";
 							$this->tpl->atribui("ip_externo",$externo["ip_externo"]);
 
 
@@ -2394,7 +2402,7 @@ class VAClientes extends VirtexAdmin {
 			$sSQL .= "   nome";
 
 
-			////echo "POPs: $sSQL <br>";
+			//////echo "POPs: $sSQL <br>";
 			$lista_pops = $this->bd->obtemRegistros($sSQL);
 			$this->tpl->atribui("lista_pops",$lista_pops);
 
@@ -2408,7 +2416,7 @@ class VAClientes extends VirtexAdmin {
 			$sSQL .= "ORDER BY ";
 			$sSQL .= "   tipo_nas,nome ";
 			
-			////echo "NASs: $sSQL <br>";
+			//////echo "NASs: $sSQL <br>";
 			
 			$lista_nas = $this->bd->obtemRegistros($sSQL);
 			
@@ -2432,7 +2440,7 @@ class VAClientes extends VirtexAdmin {
 			$sSQL .= "   AND tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
 			$sSQL .= "";
 			
-			////echo "sql conta: $sSQL <br>/n";
+			//////echo "sql conta: $sSQL <br>/n";
 			$conta = $this->bd->obtemUnicoRegistro($sSQL);
 			
 			
@@ -2478,7 +2486,7 @@ class VAClientes extends VirtexAdmin {
 					$sSQL .= "   AND dominio = '".$this->bd->escape($dominio)."' ";
 					$sSQL .= "   AND tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
 					
-					////echo "SQL: $sSQL <BR>";
+					//////echo "SQL: $sSQL <BR>";
 					
 					$dsc = $this->bd->obtemUnicoRegistro($sSQL);					
 					$conta = array_merge($conta,$dsc);
@@ -2504,7 +2512,7 @@ class VAClientes extends VirtexAdmin {
 					$sSQL .= "";
 					$sSQL .= "";
 
-					////echo "$sSQL;<br>\n";
+					//////echo "$sSQL;<br>\n";
 
 
 
@@ -2517,7 +2525,7 @@ class VAClientes extends VirtexAdmin {
 					$this->tpl->atribui("upload_kbps",@$_REQUEST["upload_kbps"]);
 					$this->tpl->atribui("download_kbps",@$_REQUEST["download_kbps"]);
 
-					////echo "ID NAS:". $conta["id_nas"] ."<BR>";
+					//////echo "ID NAS:". $conta["id_nas"] ."<BR>";
 
 					$nas = $this->obtemNas($conta["id_nas"]);
 					$conta["endereco_ip"] = $nas["tipo_nas"] == "I" ? $conta["rede"] : $conta["ipaddr"];
@@ -2587,7 +2595,7 @@ class VAClientes extends VirtexAdmin {
 					$sSQL .= "   AND dominio = '".$this->bd->escape($dominio)."' ";
 					$sSQL .= "   AND tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
 				
-					////echo "$sSQL;<br>\n";
+					//////echo "$sSQL;<br>\n";
 				
 				
 				
@@ -2657,11 +2665,11 @@ class VAClientes extends VirtexAdmin {
 
 						$rede = $conta["rede"];
 						
-						////echo "MAC: " . $conta["mac"] . "|" . $mac . "<br>\n";
-						////echo "UP: " . $conta["upload_kbps"] . "|" . $upload_kbps . "<br>\n";
-						////echo "DN: " . $conta["download_kbps"] . "|" . $download_kbps . "<br>\n";
-						////echo "MAC: " . $conta["mac"] . "|" . $mac . "<br>\n";
-						////echo "MAC: " . $conta["mac"] . "|" . $mac . "<br>\n";
+						//////echo "MAC: " . $conta["mac"] . "|" . $mac . "<br>\n";
+						//////echo "UP: " . $conta["upload_kbps"] . "|" . $upload_kbps . "<br>\n";
+						//////echo "DN: " . $conta["download_kbps"] . "|" . $download_kbps . "<br>\n";
+						//////echo "MAC: " . $conta["mac"] . "|" . $mac . "<br>\n";
+						//////echo "MAC: " . $conta["mac"] . "|" . $mac . "<br>\n";
 
 						if( $conta["mac"] != $mac || $conta["upload_kbps"] != $upload_kbps || $conta["download_kbps"] != $download_kbps ) {
 							$excluir = true;
@@ -2734,7 +2742,7 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= "	foneinfo = '".@$_REQUEST['foneinfo']."' ";
 							$sSQL .= "WHERE ";
 							$sSQL .= "	username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta'";
-							////echo "SQL: $sSQL <br>";
+							//////echo "SQL: $sSQL <br>";
 													
 							$this->bd->consulta($sSQL);
 							
@@ -2746,7 +2754,7 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= "senha_cript = '$senha_cript' ";
 							$sSQL .= "WHERE ";
 							$sSQL .= "username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta'";
-							////echo "SQL: $sSQL <br>";
+							//////echo "SQL: $sSQL <br>";
 													
 							$this->bd->consulta($sSQL);
 
@@ -2754,16 +2762,16 @@ class VAClientes extends VirtexAdmin {
 							break;
 					
 						case 'BL':
-						////echo "TESTE";
+						//////echo "TESTE";
 				
 							// SPOOL
 							if( $excluir ) {
-								////echo "excluir";
+								//////echo "excluir";
 								$this->spool->bandalargaExcluiRede($nas_atual["id_nas"],$conta["id_conta"],$conta["rede"]);
 							}
 
 							if( $incluir ) {
-								////echo "incluir<br>";
+								//////echo "incluir<br>";
 								$id_conta = $conta["id_conta"];
 								$this->spool->bandalargaAdicionaRede($nas_novo["id_nas"],$id_conta,$rede,$mac,$upload_kbps,$download_kbps,$username);
 							}
@@ -2785,7 +2793,7 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= "   AND tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
 							$sSQL .= "";
 
-							////echo "$sSQL;<br>\n";
+							//////echo "$sSQL;<br>\n";
 
 							$this->bd->consulta($sSQL);
 
@@ -2837,7 +2845,7 @@ class VAClientes extends VirtexAdmin {
 							$uSQL .= "   AND tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
 							$uSQL .= "";
 
-							////echo "$uSQL;<br>\n";
+							//////echo "$uSQL;<br>\n";
 							$this->bd->consulta($uSQL);
 							
 							// SPOOL MEGAFOCKER
@@ -2873,7 +2881,7 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= "WHERE ";
 							$sSQL .= "	username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta'";
 
-							////echo "SQL1: $sSQL <br>\n";
+							//////echo "SQL1: $sSQL <br>\n";
 
 
 							$this->bd->consulta($sSQL);
@@ -2886,7 +2894,7 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= "WHERE ";
 							$sSQL .= "username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta'";
 
-							////echo "SQL1: $sSQL <br>\n";
+							//////echo "SQL1: $sSQL <br>\n";
 
 							$this->bd->consulta($sSQL);
 							
@@ -2912,7 +2920,7 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= "	senha_cript = '$senha_cript' ";
 							$sSQL .= "WHERE ";
 							$sSQL .= "	username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta'";
-							////echo "SQL: $sSQL <br>";
+							//////echo "SQL: $sSQL <br>";
 						
 							$this->bd->consulta($sSQL);
 							
@@ -2924,7 +2932,7 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= "senha_cript = '$senha_cript' ";
 							$sSQL .= "WHERE ";
 							$sSQL .= "username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta'";
-							////echo "SQL: $sSQL <br>";
+							//////echo "SQL: $sSQL <br>";
 						
 							$this->bd->consulta($sSQL);
 
@@ -3014,7 +3022,7 @@ class VAClientes extends VirtexAdmin {
 			
 			if( $tipo_conta == "D" || $tipo_conta == "H" ) {
 				// Exibir mensagem de indisponivel
-				////echo "indisponivel";
+				//////echo "indisponivel";
 				//return;
 			}
 			
@@ -3039,8 +3047,8 @@ class VAClientes extends VirtexAdmin {
 						$this->tpl->atribui("nas",$nas);
 						$this->tpl->atribui("pop",$pop);
 
-						////echo $nas;
-						////echo $pop;
+						//////echo $nas;
+						//////echo $pop;
 
 						if( $nas["tipo_nas"] == "I" ) {
 						   $r = new RedeIP($endereco_ip);
@@ -3167,7 +3175,7 @@ class VAClientes extends VirtexAdmin {
 		// CHAMADA PARA EXCLUSÃO DE CLIENTES
 		
 			$rotina = @$_REQUEST["rotina"];
-			////echo "rotina = $rotina <br>";
+			//////echo "rotina = $rotina <br>";
 			$id_cliente = @$_REQUEST["id_cliente"];
 		
 			if (!$rotina){
@@ -3216,7 +3224,7 @@ class VAClientes extends VirtexAdmin {
 					$sSQL .= "FROM cbtb_cliente_produto cp INNER JOIN prtb_produto p ";
 					$sSQL .= "USING( id_produto ) ";
 					$sSQL .= "WHERE cp.id_cliente='$id_cliente' ";
-					////echo $sSQL ."<hr>\n";
+					//////echo $sSQL ."<hr>\n";
 
 
 					$produtos = $this->bd->obtemRegistros($sSQL);
@@ -3232,7 +3240,7 @@ class VAClientes extends VirtexAdmin {
 						$sSQL .= "WHERE ";
 						$sSQL .= "	id_cliente_produto = '$id_cp'";
 
-						////echo $sSQL ."<hr>\n";
+						//////echo $sSQL ."<hr>\n";
 
 						$contas = $this->bd->obtemRegistros($sSQL);
 
@@ -3367,8 +3375,8 @@ class VAClientes extends VirtexAdmin {
 			$path = $_path["path_contrato"];
 			$host = "dev.mosman.com.br";
 
-			////echo "path_contratos: $sSQL <br>";
-			////echo "path: $path <br>";
+			//////echo "path_contratos: $sSQL <br>";
+			//////echo "path: $path <br>";
 			//contrato-418-2006-05-10.html
 
 			$base_nome = "contrato-".$id_cliente_produto."-".$data_contratacao;
@@ -3380,7 +3388,7 @@ class VAClientes extends VirtexAdmin {
 			
 			if ($rotina == "pdf"){
 
-				////echo "nome arquivo: $nome_arq <br>";	
+				//////echo "nome arquivo: $nome_arq <br>";	
 
 				$p = new MHTML2PDF();
 				$p->setDebug(0);
@@ -3390,9 +3398,9 @@ class VAClientes extends VirtexAdmin {
 
 				if (!$arqPDF){
 
-					//echo "papocou esta bosta";
-					//echo "path_contratos: $sSQL <br>";
-					//echo "path: $path <br>";
+					////echo "papocou esta bosta";
+					////echo "path_contratos: $sSQL <br>";
+					////echo "path: $path <br>";
 
 				}else{
 
@@ -3408,8 +3416,8 @@ class VAClientes extends VirtexAdmin {
 				
 			}else{
 			
-			////echo $arqPDF;
-			////echo "BOSTA";
+			//////echo $arqPDF;
+			//////echo "BOSTA";
 			
 			//$this->arquivoTemplate = "home.html";
 			
@@ -3503,15 +3511,15 @@ public function excluiContrato($id_cliente_produto,$permanente,$obs=""){
 				}
 				
 				/*
-				//echo "<hr>\n";
-				//echo "ID_CONTA: " . $contas[$i]["id_conta"] . "<br>\n";
-				//echo "USERNAME: " . $contas[$i]["username"] . "<br>\n";
-				//echo "DOMINIO: " . $contas[$i]["dominio"] . "<br>\n";
-				//echo "ID_NAS: " . $info["id_nas"] . "<br>\n";
-				//echo "REDE: " . $info["rede"] . "<br>\n";
-				//echo "IP: " . $info["ipaddr"] . "<br>\n";
-				//echo "IP NAS: " . $nas["ip"] . "<br>\n";
-				//echo "<hr>";
+				////echo "<hr>\n";
+				////echo "ID_CONTA: " . $contas[$i]["id_conta"] . "<br>\n";
+				////echo "USERNAME: " . $contas[$i]["username"] . "<br>\n";
+				////echo "DOMINIO: " . $contas[$i]["dominio"] . "<br>\n";
+				////echo "ID_NAS: " . $info["id_nas"] . "<br>\n";
+				////echo "REDE: " . $info["rede"] . "<br>\n";
+				////echo "IP: " . $info["ipaddr"] . "<br>\n";
+				////echo "IP NAS: " . $nas["ip"] . "<br>\n";
+				////echo "<hr>";
 				
 				break;			
 			case 'E':
@@ -3542,7 +3550,7 @@ public function excluiContrato($id_cliente_produto,$permanente,$obs=""){
 			
 			$this->bd->consulta($sSQL);
 			
-			////echo "$sSQL<hr>";
+			//////echo "$sSQL<hr>";
 
 		} else {
 			// Exclusão não destrutiva - Alterar flag.
@@ -3564,13 +3572,13 @@ public function excluiContrato($id_cliente_produto,$permanente,$obs=""){
 		$sSQL .= "id_cliente_produto = '$id_cliente_produto' ";
 		
 		$this->bd->consulta($sSQL);
-		////echo "$sSQL<hr>";
+		//////echo "$sSQL<hr>";
 		
 		$sSQL  = "DELETE FROM ";
 		$sSQL .= "cbtb_cliente_produto ";
 		$sSQL .= "WHERE ";
 		$sSQL .= "id_cliente_produto = '$id_cliente_produto' ";
-		////echo "$sSQL<hr>";
+		//////echo "$sSQL<hr>";
 
 		$this->bd->consulta($sSQL);
 
@@ -3588,7 +3596,7 @@ public function excluiContrato($id_cliente_produto,$permanente,$obs=""){
 		
 		$this->bd->consulta($sSQL);
 		
-		////echo "$sSQL<hr>";
+		//////echo "$sSQL<hr>";
 		
 	}
 
@@ -3613,7 +3621,7 @@ public function gravarLogExclusao($id_excluido,$tipo,$obs=""){
 	$sSQL .= "		'$id_exclusao', '$admin', now(), '$tipo', '$id_excluido','".$this->bd->escape($obs)."' ";
 	$sSQL .= " ) ";
 	
-	////echo "SQL: $sSQL ";
+	//////echo "SQL: $sSQL ";
 	
 	$this->bd->consulta($sSQL);
 	
@@ -3702,7 +3710,7 @@ public function days_diff($date_ini, $date_end, $round = 1) {
 public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$segunda_via=false){
 
 
-	//echo "DATA ENVIADA: $data <BR>\n";
+	////echo "DATA ENVIADA: $data <BR>\n";
 
 	
 	$sSQL  = "SELECT cl.nome_razao, cl.endereco, cl.id_cidade, cl.estado, cl.cep, cl.cpf_cnpj, cd.cidade as nome_cidade, cd.id_cidade  ";
@@ -3713,7 +3721,7 @@ public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$se
 	$sSQL .= "cd.id_cidade = cl.id_cidade";
 
 	$cliente = $this->bd->obtemUnicoRegistro($sSQL);
-	//echo "CLIENTE: $sSQL  <br>";
+	////echo "CLIENTE: $sSQL  <br>";
 	
 	if( strstr($data,"/") && $segunda_via) {
 	   list($d,$m,$y) = explode("/",$data);
@@ -3729,11 +3737,11 @@ public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$se
 
 	$fatura = $this->bd->obtemUnicoRegistro($sSQL);
 	
-	//echo "fatura: $sSQL<br>";
+	////echo "fatura: $sSQL<br>";
 	
 	//$data_cadastrada = $fatura["data"];
-	//echo "DATA: $data_cadastrada <br>";
-	//echo "SHIT: " . $fatura["data"] . "<br>\n";
+	////echo "DATA: $data_cadastrada <br>";
+	////echo "SHIT: " . $fatura["data"] . "<br>\n";
 	
 	list ($dia,$mes,$ano) = explode("/",$fatura["data"]);
 	
@@ -3747,8 +3755,8 @@ public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$se
 	}else if ($forma_pagamento == "POS"){
 	
 		//$mes_ref = mktime(0, 0, 0, $mes-1);
-		//echo "MES: $mes <br>\n";
-		//echo "MES REF: $mes_ref <br>\n";
+		////echo "MES: $mes <br>\n";
+		////echo "MES REF: $mes_ref <br>\n";
 		$referente = $mes_array[(int)$mes-1]."/".$ano;
 	
 	}
@@ -3761,7 +3769,7 @@ public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$se
 
 	$sSQL = "SELECT ct.id_produto, pd.nome from cbtb_contrato ct, prtb_produto pd WHERE ct.id_cliente_produto = '$id_cliente_produto' and ct.id_produto = pd.id_produto";
 	$produto = $this->bd->obtemUnicoRegistro($sSQL);
-	////echo "PRODUTO: $sSQL <br>";
+	//////echo "PRODUTO: $sSQL <br>";
 
 	//$codigo = @$_REQUEST["codigo"];
 	//$data_venc = "30/04/2006";
@@ -3782,7 +3790,7 @@ public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$se
 	$data_venc = $fatura["data"];
 	@list($dia,$mes,$ano) = explode("/",$fatura["data"]);
 	$vencimento = $ano.$mes.$dia;
-	////echo $codigo;
+	//////echo $codigo;
 	$valor = $fatura["valor"];
 	$id_cobranca = $fatura["id_cobranca"];
 	$nome_cliente = $cliente["nome_razao"];
@@ -3820,7 +3828,7 @@ public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$se
 	}
 	
    	
-	//echo "FATURA: $sSQL <br>";
+	////echo "FATURA: $sSQL <br>";
 	
 	$target = "/mosman/virtex/dados/carnes/codigos";
 	//$target = "carnes/codigos";
@@ -3916,7 +3924,7 @@ public function contratoHTML($id_cliente,$id_cliente_produto,$tipo_produto){
 
 	$contrato = $this->bd->obtemUnicoRegistro($sSQL);
 
-	//echo "SQL: $sSQL <br>";
+	////echo "SQL: $sSQL <br>";
 
 	$this->tpl->atribui("data_contratacao", $contrato["data_contratacao"]);
 	$this->tpl->atribui("vigencia", $contrato["vigencia"]);
@@ -3977,14 +3985,14 @@ public function contratoHTML($id_cliente,$id_cliente_produto,$tipo_produto){
 	$nome_arq = $path."contrato-".$id_cliente_produto."-".$contrato["data_contratacao"].".html";
 	$fd = fopen($nome_arq,"w");
 	
-	////echo "path: $_path - $path<br>";
+	//////echo "path: $_path - $path<br>";
 
 	//$arq = explode("/",$arquivo_contrato);
 	//$arq = $arq[count($arq)-1];
 	$arq = $arquivo_contrato;
 
 	//$image_path = $path."/template/default/images";
-	////echo "<BR>IMAGE PATH".$image_path ."<br>";
+	//////echo "<BR>IMAGE PATH".$image_path ."<br>";
 
 	$this->tpl->atribui("path",$image_path);
 	$arquivo = $path."/".$arq;
@@ -4008,11 +4016,11 @@ public function contratoPDF($id_cliente_produto,$data_contratacao){
 	$path = $_path["path_contratos"];
 	$host = "dev.mosman.com.br";
 	
-	////echo "path_contratos: $sSQL <br>";
-	////echo "path: $path <br>";
+	//////echo "path_contratos: $sSQL <br>";
+	//////echo "path: $path <br>";
 		
 	$nome_arq = "contrato-".$id_cliente_produto."-".$data_contratacao.".html";
-	////echo "nome arquivo: $nome_arq <br>";	
+	//////echo "nome arquivo: $nome_arq <br>";	
 
 	$p = new MHTML2PDF();
 	$p->setDebug(1);
@@ -4031,10 +4039,10 @@ public function testePDF(){
 				$host = "dev.mosman.com.br";
 				$path = "/tmp";
 				
-				//echo $nome_arq."<br>";
-				//echo $base_nome."<br>";
-				//echo $host."<br>";
-				//echo $path."<br>";
+				////echo $nome_arq."<br>";
+				////echo $base_nome."<br>";
+				////echo $host."<br>";
+				////echo $path."<br>";
 				
 
 				$p = new MHTML2PDF();

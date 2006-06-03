@@ -816,8 +816,8 @@ class VARelatorio extends VirtexAdmin {
 				$legendas = array();
 				$outros = 0;
 				$prefs = $this->prefs->obtem("geral");
-				$agrupar = $prefs["agrupar"];
-				
+				//$agrupar = $prefs["agrupar"];
+				$agrupar = 20;
 				//$agrupar_cidades_com_menos_de = 20;
 				
 				for($i=0;$i<count($relat);$i++) {

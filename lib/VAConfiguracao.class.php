@@ -893,12 +893,12 @@ class VAConfiguracao extends VirtexAdmin {
 									
 									$sSQL  = "INSERT INTO ";
 									$sSQL .= "  dominio ";
-									$sSQL .= "  (dominio, id_cliente, status, dominio_provedor) ";
+									$sSQL .= "  (dominio, id_cliente, status, dominio_provedor,provedor) ";
 									$sSQL .= "VALUES ";
 									$sSQL .= "  ('".@$_REQUEST["dominio_padrao"]."', ";
 									$sSQL .= "  '1', ";
 									$sSQL .= "  'A', ";
-									$sSQL .= "  't') ";
+									$sSQL .= "  true, true) ";
 									//echo "INSERT NO DOMINIO: $sSQL <br>";
 									$this->bd->consulta($sSQL);
 									

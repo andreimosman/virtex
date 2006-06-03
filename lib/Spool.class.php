@@ -60,6 +60,7 @@ class Spool {
 		$sSQL .= "		now(), '".$destino."', 'BL', 'a', '$id_conta', '$parametros' ,'A' ";
 		$sSQL .= ") ";
 		//echo "SPOOL INCLUIR: " . $sSQL . ";<br>\n";
+		//
 		//echo "ID: ". $id_conta . "<br>";
 		//echo "REDE: ". $rede . "<br>";
 		$this->bd->consulta($sSQL);
