@@ -301,7 +301,7 @@ function check(){
 						       <input type="hidden" name="dominio" value="{$dominio}">
 						       <input type="hidden" name="tipo_conta" value="{$tipo_conta}">
 						       <input type="hidden" name="acao" value="cad">
-    <input name="sop2" type="hidden" value="nova_conta" id="sop2">
+    <input name="sop" type="hidden" value="nova_conta" id="sop">
     <table align="center">
 								<tr>
 									<td align="center" valign="middle"><strong><font face="arial" size="4" color="black">E-Mail</font></strong></td>
@@ -310,12 +310,18 @@ function check(){
 
                           <table width="450" border=0 bgcolor="#F1F1F1" align="center">
 						                <tr>
-						                  <td colspan=2><h2><font color="#000000">Dados da Conta</font></h2></td>
+						                  
+        <td colspan=2><h2><font color="#000000">Dados da Conta 
+          <input name="_dominio2" type="hidden" value="{$dominio}" id="_dominio2">
+          <input name="_username2" type="hidden" value="{$username}" id="_username2">
+          <input name="id_cliente_produto" type="hidden" value="{$id_cliente_produto}" id="id_cliente_produto">
+          </font></h2></td>
 						                </tr>
 						                <tr>
 						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
 						  					<p>Username:</p></td>
-						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p><input type="text" maxlength="30" name="username" disabled="true" value="{$username}">@{$dominio}</p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p><input type="text" maxlength="30" name="username" value="{$username}">
+            @{$dominio}</p></td>
 						                </tr>
 						                <tr>
 						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">

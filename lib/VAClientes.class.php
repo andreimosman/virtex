@@ -1988,7 +1988,7 @@ class VAClientes extends VirtexAdmin {
 						$sSQL .= "     'A' )";						
 
 						$this->bd->consulta($sSQL);  
-
+						//echo "CNTB_CONTA: $sSQL <br>";
 
 						if ($email_igual == "1"){
 
@@ -2022,6 +2022,7 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= "     'A' )";						
 
 							$this->bd->consulta($sSQL);  
+							//echo "CNTB_CONTA: $sSQL <br>";
 
 							$id_produto = @$_REQUEST['id_produto'];
 							$prod = $this->obtemProduto($id_produto);	
@@ -2044,7 +2045,7 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= " )";
 
 							$this->bd->consulta($sSQL);
-
+							echo "E-MAIL: $sSQL <br>";
 
 						}
 	
@@ -2243,14 +2244,28 @@ class VAClientes extends VirtexAdmin {
 									$this->bd->consulta($sSQL);
 									//////echo "QUERY INSERÇÃO: $sSQL <BR>\n";
 
-
-
 									//SPOOL
 									//////echo "Tipo: $tipo_hospedagem <br> Username: $username <br> Dominio: $dominio <br> DominioHosp: $dominio_hospedagem<br>";
 									$this->spool->hospedagemAdicionaRede($server,$id_conta,$tipo_hospedagem,$username,$dominio,$dominio_hospedagem);
 								//}
 								break;
+								case "E":
+								
+									$sSQL  = "INSERT INTO ";
+									$sSQL .= "	cntb_conta_email( ";
+									$sSQL .= "		username, tipo_conta, dominio, quota, email) ";
+									$sSQL .= "VALUES (";
+									$sSQL .= "     '" . @$_REQUEST["username"] . "', ";
+									$sSQL .= "     'E', ";
+									$sSQL .= "     '" . $dominioPadrao . "', ";
+									$sSQL .= "     '".(int)@$_REQUEST["quota"]."', ";
+									$sSQL .= "     '". @$_REQUEST["username"]."@". $dominioPadrao ."' ";
+									$sSQL .= " )";
 
+									$this->bd->consulta($sSQL);
+									//echo "E-MAIL: $sSQL <br>";
+								
+								break;
 						}						
 						$tipo = $tipo_conta;
 						if ($tipo && $tipo == "BL"){
@@ -2331,7 +2346,8 @@ class VAClientes extends VirtexAdmin {
 						//$this->arquivoTemplate="cliente_cobranca_intro.html";
 
 						//$url = $_SERVER["PHP_SELF"] . "?op=conta&pg=ficha&id_cliente=" . $id_cliente . "&username=" . @$_REQUEST["username"] . "&dominio=" . @$_REQUEST["dominio"] . "&tipo_conta=" . $tipo_conta;
-						$url = $_SERVER["PHP_SELF"] . "?op=produto&pg=&tipo=" . $tipo_conta . "&id_cliente=" . $id_cliente;
+						$url = $_SERVER["PHP_SELF"] . "?op=cadastro&pg=&tipo=" . $tipo_conta . "&id_cliente=" . $id_cliente;
+						
 						$msg_final = "Conta cadastrada com sucesso.";
 						$this->tpl->atribui("mensagem",$msg_final);
 						$this->tpl->atribui("url",$url);
@@ -2362,7 +2378,9 @@ class VAClientes extends VirtexAdmin {
 						}
 
 						$this->tpl->atribui("mensagem",$msg_final);
-						$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=produto&id_cliente=$id_cliente");
+						//$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=produto&id_cliente=$id_cliente");
+						$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=conta&sop=nova_conta&tipo_conta=$tipo_conta&id_cliente=$id_cliente&id_cliente_produto=$id_cliente_produto");
+
 						$this->tpl->atribui("target","_top");
 
 						$this->arquivoTemplate="msgredirect.html";
@@ -2378,6 +2396,12 @@ class VAClientes extends VirtexAdmin {
 				RETURN;
 
 
+			}else if ($sop == "novo_email"){
+			
+			
+			
+			
+			
 			}
 			
 			
@@ -2570,6 +2594,9 @@ class VAClientes extends VirtexAdmin {
 					$sSQL .= "	AND ce.tipo_conta = '$tipo_conta'";
 					
 					$conta_email = $this->bd->obtemUnicoRegistro($sSQL);
+					
+					//echo "CONTA EMAIL: $sSQL <br>";
+					
 					$conta = array_merge($conta,$conta_email);
 					
 					
@@ -2577,7 +2604,7 @@ class VAClientes extends VirtexAdmin {
 					$server = $this->prefs->obtem();
 					
 					
-					$this->tpl->atribui("quota",$conta["quota"]);
+					$this->tpl->atribui("quota",@$conta["quota"]);
 					$this->tpl->atribui("server",$server);
 
 
@@ -2595,7 +2622,7 @@ class VAClientes extends VirtexAdmin {
 					$sSQL .= "   AND dominio = '".$this->bd->escape($dominio)."' ";
 					$sSQL .= "   AND tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
 				
-					//////echo "$sSQL;<br>\n";
+					//echo "$sSQL;<br>\n";
 				
 				
 				
