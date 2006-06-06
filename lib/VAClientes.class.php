@@ -1080,6 +1080,8 @@ class VAClientes extends VirtexAdmin {
 								
 							break;	
 							case 'BL':
+							echo "TIPO: " . $this->bd->escape(trim(@$_REQUEST["selecao_ip"])) . "<br>\n";
+							
 								// PRODUTO BANDA LARGA
 								$tipo_de_ip = $this->bd->escape(trim(@$_REQUEST["selecao_ip"]));
 								if($tipo_de_ip == "A"){
@@ -1099,6 +1101,72 @@ class VAClientes extends VirtexAdmin {
 																			
 									}
 									
+								} else if ($tipo_de_ip == "M"){
+								
+								
+									$erro = array();
+									
+									$id_nas = @$_REQUEST["id_nas"];
+									$endereco_ip = @$_REQUEST["endereco_ip"];
+									$nas = $this->obtemNAS($_REQUEST["id_nas"]);
+									
+									$sSQL = "SELECT rede FROM cftb_rede WHERE rede >> '$endereco_ip' or rede = '$endereco_ip'	";
+									$_rede = $this->bd->obtemUnicoRegistro($sSQL);
+									$rede = @$_rede["rede"];
+									
+									if( !$rede ) {
+									   $erro[] = "Rede não cadastrada no sistema.";
+									} else {
+									   $sSQL = "SELECT rede FROM cftb_nas_rede WHERE rede = '$rede' AND id_nas = '$id_nas'";
+									   $nas_rede = $this->bd->obtemUnicoRegistro($sSQL);
+									   
+									   if( !count($nas_rede) ) {
+									      $erro[] = "Rede não disponível para este NAS";
+									   } else {
+									// verificar de acordo com o tipo do nas
+												$sSQL = "SELECT username,rede FROM cntb_conta_bandalarga WHERE ";
+												if ($nas["tipo_nas"] == "I"){
+										     $sSQL .= " rede = '$rede' ";
+										     
+												}else if ($nas["tipo_nas"] == "P"){
+														$sSQL .= " ipaddr = '$endereco_ip' ";
+														
+												}
+												$rede_bl = $this->bd->obtemUnicoRegistro($sSQL);
+												if(count($rede_bl)){
+														$erro[] = "Endereço utilizado por outro cliente (".$rede_bl["username"].")";
+												} 
+
+										}
+									}
+									
+									
+									
+									
+									if (!count($erro)){
+									
+										if ($nas["tipo_nas"] == "I"){
+									
+											$ip_disp = "NULL";
+											$rede_disp = $rede;
+									
+										} else if ($nas["tipo_nas"] == "P"){
+											
+											$rede_disp = "NULL";
+											$ip_disp = $endereco_ip;
+										
+										}
+									
+									}//else{
+										//ECHO count($erro);
+										//for($i=0;$i<count($erro);$i++) {
+										   //echo $erro[$i] . "<br>\n";
+										//}
+									//}
+								
+								
+								
+								
 								}
 								
 								$redirecionar = @$_REQUEST["redirecionar"];
@@ -1153,7 +1221,7 @@ class VAClientes extends VirtexAdmin {
 								
 								if($rede_disp != "NULL"){
 								
-									$rede_disp = "'".$rede_disponivel["rede"]."'";
+									$rede_disp = "'".$rede_disp."'";
 									//////echo "rede:". $rede_disponivel["rede"]. "<br>";
 								
 								
@@ -1161,7 +1229,7 @@ class VAClientes extends VirtexAdmin {
 								
 								if($ip_disp !="NULL"){
 								
-									$ip_disp = "'".$ip_disponivel["ipaddr"]."'";
+									$ip_disp = "'".$ip_disp."'";
 								
 								
 								}
@@ -1285,7 +1353,7 @@ class VAClientes extends VirtexAdmin {
 								$id_nas = $_REQUEST["id_nas"];
 								$banda_upload_kbps = $bandaUp_dow["banda_upload_kbps"];
 								$banda_download_kbps = $bandaUp_dow["banda_download_kbps"];
-								$rede = $rede_disponivel["rede"];
+								$rede = str_replace("'","",$rede_disp); //$rede_disponivel["rede"];
 								$mac = $_REQUEST["mac"];
 
 								$sSQL  = "SELECT ";

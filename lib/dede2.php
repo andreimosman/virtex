@@ -72,6 +72,7 @@
 		$pagamento = @$_REQUEST["pagamento"];
 		$pri_venc = @$_REQUEST["pri_venc"];	
 		$redirecionar = @$_REQUEST["redirecionar"];
+		$endereco_ip = @$_REQUEST["endereco_ip"];
 		
 		//Informações de banco e cartão de crédito
 		$cc_vencimento = @$_REQUEST["cc_vencimento"];
@@ -174,6 +175,7 @@
 		$this->tpl->atribui("pri_venc",$pri_venc);
 		$this->tpl->atribui("pagamento",$pagamento);
 		$this->tpl->atribui("redirecionar",$redirecionar);
+		$this->tpl->atribui("endereco_ip",$endereco_ip);
 		
 		
 		$this->tpl->atribui("cc_vencimento",$cc_vencimento); 
