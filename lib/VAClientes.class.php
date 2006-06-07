@@ -502,7 +502,15 @@ class VAClientes extends VirtexAdmin {
 				$texto_pesquisa = @$_REQUEST['texto_pesquisa'];
 				$tipo_pesquisa = @$_REQUEST['tipo_pesquisa'];
 				$a = @$_REQUEST['a'];
-				$this->arquivoTemplate = "clientes_pesquisa.html";
+				$retorno = @$_REQUEST['retorno'];
+				
+				if( $retorno == "XML" ) {
+					// Retorno em XML para utilização com ajax
+					$this->arquivoTemplate = "clientes_pesquisa.xml";
+					header("Content-type: text/xml");
+				} else {
+					$this->arquivoTemplate = "clientes_pesquisa.html";
+				}
 
 				$texto_pesquisa = trim($texto_pesquisa);
 
