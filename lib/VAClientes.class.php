@@ -1088,7 +1088,7 @@ class VAClientes extends VirtexAdmin {
 								
 							break;	
 							case 'BL':
-							echo "TIPO: " . $this->bd->escape(trim(@$_REQUEST["selecao_ip"])) . "<br>\n";
+							//echo "TIPO: " . $this->bd->escape(trim(@$_REQUEST["selecao_ip"])) . "<br>\n";
 							
 								// PRODUTO BANDA LARGA
 								$tipo_de_ip = $this->bd->escape(trim(@$_REQUEST["selecao_ip"]));
