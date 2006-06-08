@@ -86,11 +86,13 @@ function pesquisaUsuario() {
 			nome_razao = itens[i].getElementsByTagName("nome_razao")[0].firstChild.nodeValue;
 			lnk = "clientes.php?op=cadastro&id_cliente=" + id_cliente;
 			contas     = itens[i].getElementsByTagName("conta");
+			
+			clklnk = 'javascript:clickLink("'+lnk+'","CONTEUDO");';
 
 			ihtml += "<tr id='pesquisa_info_cliente'>";
-			ihtml += "<td class='p_id_cliente'><a href='"+lnk+"'>"+id_cliente+"</a></td>\n";
-			ihtml += "<td class='p_nome_razao'><a href='"+lnk+"'>"+nome_razao+"</a></td>\n";
-			ihtml += "<td class='p_link'><a href='"+lnk+"'><img src=\"template/default/images/gif_alterar.gif\" width=\"16\" height=\"16\" border=\"0\"></a></td>\n";
+			ihtml += "<td class='p_id_cliente'><a href='"+clklnk+"'>"+id_cliente+"</a></td>\n";
+			ihtml += "<td class='p_nome_razao'><a href='"+clklnk+"'>"+nome_razao+"</a></td>\n";
+			ihtml += "<td class='p_link'><a href='"+clklnk+"'><img src=\"template/default/images/gif_alterar.gif\" width=\"16\" height=\"16\" border=\"0\"></a></td>\n";
 			ihtml += "</tr>";
 
 			if( contas.length > 0 ) {
@@ -99,11 +101,14 @@ function pesquisaUsuario() {
 							dominio     = contas[x].getElementsByTagName("dominio")[0].firstChild.nodeValue;
 							tipo_conta  = contas[x].getElementsByTagName("tipo_conta")[0].firstChild.nodeValue;
 							clnk        = "clientes.php?op=conta&pg=ficha&id_cliente=" + id_cliente + "&username="+username+"&dominio="+dominio+"&tipo_conta="+tipo_conta;
+							
+							cclklnk = 'javascript:clickLink("'+lnk+'","CONTEUDO");';
+							
 
 
 							ihtml += "<tr id='pesquisa_info_contas'>";
 
-							ihtml += "<td colspan=3 class='p_conta'> &nbsp; &nbsp; - <a href='"+clnk+"'>";
+							ihtml += "<td colspan=3 class='p_conta'> &nbsp; &nbsp; - <a href='"+cclnk+"'>";
 							ihtml += username;
 
 							if( tipo_conta == "E" ) {
@@ -129,3 +134,10 @@ function pesquisaUsuario() {
 	}
 
 }
+
+
+function clickLink(url,target) {
+   window.open(url,target)
+   fechaPesquisa();
+}
+
