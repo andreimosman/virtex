@@ -665,6 +665,14 @@ class VAClientes extends VirtexAdmin {
 					
 				}
 				
+				for($i=0;$i<count($clientes);$i++) {
+					while(list($campo,$valor) = each($clientes[$i]) ) {
+						if( $campo != "conta" ) {
+							$clientes[$i][$campo] = htmlspecialchars($valor);
+						}
+					}
+				}
+				
 				$this->tpl->atribui("erros",$erros);
 				$this->tpl->atribui("clientes",$clientes);
 										
