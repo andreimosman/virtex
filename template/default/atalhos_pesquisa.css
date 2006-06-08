@@ -1,0 +1,66 @@
+.box_fechada {
+	visibility: hidden;
+}
+
+.box_aberta {
+	visibility: visible;
+}
+.label_pesquisa {
+  font-family: arial;
+	font-size: 11px;
+}
+
+#box_pesquisa {
+  font-family: arial;
+	font-size: 11px;
+  border:1px dotted;
+  background-color: dcfadc;
+	padding:1.5px;
+	width=100;
+}
+.p_id_cliente {
+	font-family: arial;
+	font-size: 11px;
+	width=40;
+	border-bottom: solid 1px;
+	valign: top;
+}
+.p_nome_razao {
+	font-family: arial;
+	font-size: 11px;
+	width=260;
+	border-bottom: solid 1px;
+	valign: top;
+
+}
+.p_link {
+	font-family: arial;
+	font-size: 11px;
+	border-bottom: solid 1px;
+	width: 40;
+	align: right;
+	valign: top;
+}
+.p_conta {
+	font-family: arial;
+	font-size: 11px;
+	valign: top;
+}
+
+#resultado_pesquisa {
+	position: absolute;
+	width: 100%;
+	height: 160;
+	overflow: hidden;
+	background-color:lightyellow;
+	border:2px solid green;
+	padding:1.5px;
+}
+#caixa_pesquisa {
+	position: absolute;
+  width: 330;
+  height: 170;
+	max-height:80px;
+	padding:1.5px;
+	border: 1px solid;
+}
