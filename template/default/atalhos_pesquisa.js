@@ -90,9 +90,9 @@ function pesquisaUsuario() {
 			clklnk = 'javascript:clickLink("'+lnk+'","CONTEUDO");';
 
 			ihtml += "<tr id='pesquisa_info_cliente'>";
-			ihtml += "<td class='p_id_cliente'><a href='"+clklnk+"'>"+id_cliente+"</a></td>\n";
-			ihtml += "<td class='p_nome_razao'><a href='"+clklnk+"'>"+nome_razao+"</a></td>\n";
-			ihtml += "<td class='p_link'><a href='"+clklnk+"'><img src=\"template/default/images/gif_alterar.gif\" width=\"16\" height=\"16\" border=\"0\"></a></td>\n";
+			ihtml += "<td class='p_id_cliente'><a href='"+clklnk+"' target='_self'>"+id_cliente+"</a></td>\n";
+			ihtml += "<td class='p_nome_razao'><a href='"+clklnk+"' target='_self'>"+nome_razao+"</a></td>\n";
+			ihtml += "<td class='p_link'><a href='"+clklnk+"' target='_self'><img src=\"template/default/images/gif_alterar.gif\" width=\"16\" height=\"16\" border=\"0\"></a></td>\n";
 			ihtml += "</tr>";
 
 			if( contas.length > 0 ) {
@@ -108,7 +108,7 @@ function pesquisaUsuario() {
 
 							ihtml += "<tr id='pesquisa_info_contas'>";
 
-							ihtml += "<td colspan=3 class='p_conta'> &nbsp; &nbsp; - <a href='"+cclnk+"'>";
+							ihtml += "<td colspan=3 class='p_conta'> &nbsp; &nbsp; - <a href='"+cclnk+"' target='_self'>";
 							ihtml += username;
 
 							if( tipo_conta == "E" ) {
@@ -139,5 +139,10 @@ function pesquisaUsuario() {
 function clickLink(url,target) {
    window.open(url,target)
    fechaPesquisa();
+   /**
+   var t = document.getElementById(target);
+   v.focus();
+   v.setActive();
+   */
 }
 
