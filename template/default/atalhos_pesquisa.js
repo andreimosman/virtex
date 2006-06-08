@@ -72,7 +72,7 @@ function pesquisaUsuario() {
 	 */
 
 	if( response.getElementsByTagName("item").length == 0 ) {
-	   pW.innerHTML = jPesqOrig + "<p id='msgErro'>Nenhum registro encontrado</p>";
+	   pW.innerHTML = "<p id='msgErro'>Nenhum registro encontrado</p>";
 	} else {
 		/**
 		 * Cria a tabela de resultado
