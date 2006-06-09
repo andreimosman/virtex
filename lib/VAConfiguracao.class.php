@@ -143,7 +143,7 @@ class VAConfiguracao extends VirtexAdmin {
 					// Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
 					$this->tpl->atribui("mensagem",$msg_final); 
 					$this->tpl->atribui("url",$url);
-					$this->tpl->atribui("target","_top");
+					$this->tpl->atribui("target","_self");
 
 					$this->arquivoTemplate = "msgredirect.html";
 					
@@ -391,7 +391,7 @@ class VAConfiguracao extends VirtexAdmin {
 						// Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
 						$this->tpl->atribui("mensagem",$msg_final); 
 						$this->tpl->atribui("url","configuracao.php?op=lista_nas");
-						$this->tpl->atribui("target","_top");
+						$this->tpl->atribui("target","_self");
 			
 						$this->arquivoTemplate = "msgredirect.html";
 								
@@ -544,7 +544,7 @@ class VAConfiguracao extends VirtexAdmin {
 				// Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
 				$this->tpl->atribui("mensagem",$msg_final); 
 				$this->tpl->atribui("url",$url);
-				$this->tpl->atribui("target","_top");
+				$this->tpl->atribui("target","_self");
 						
 				$this->arquivoTemplate = "msgredirect.html";
 											
@@ -1226,7 +1226,7 @@ class VAConfiguracao extends VirtexAdmin {
 								$this->tpl->atribui("mensagem",$mensagem);
 
 								$this->tpl->atribui("url","configuracao.php?op=registro");
-								$this->tpl->atribui("target","_top");
+								$this->tpl->atribui("target","_self");
 
 								$this->arquivoTemplate = "msgredirect.html";
 								return;
@@ -1252,7 +1252,7 @@ class VAConfiguracao extends VirtexAdmin {
 							$this->tpl->atribui("mensagem",$mensagem);
 
 							$this->tpl->atribui("url","configuracao.php?op=registro");
-							$this->tpl->atribui("target","_top");
+							$this->tpl->atribui("target","_self");
 
 							$this->arquivoTemplate = "msgredirect.html";
 
@@ -1316,7 +1316,7 @@ class VAConfiguracao extends VirtexAdmin {
 									$this->tpl->atribui("mensagem",$mensagem);
 
 									$this->tpl->atribui("url","configuracao.php?op=externo&id_nas={$id_nas}&tipo_nas={$tipo_nas}&acao=novo");
-									$this->tpl->atribui("target","_top");
+									$this->tpl->atribui("target","_self");
 
 									$this->arquivoTemplate = "msgredirect.html";
 									RETURN;
@@ -1330,7 +1330,7 @@ class VAConfiguracao extends VirtexAdmin {
 								$this->tpl->atribui("mensagem",$mensagem);
 
 								$this->tpl->atribui("url","configuracao.php?op=externo&id_nas={$id_nas}&tipo_nas={$tipo_nas}&acao=novo");
-								$this->tpl->atribui("target","_top");
+								$this->tpl->atribui("target","_self");
 
 								$this->arquivoTemplate = "msgredirect.html";
 								return;

@@ -1120,7 +1120,7 @@ class VAClientes extends VirtexAdmin {
 								} else if ($tipo_de_ip == "M"){
 								
 								
-									$erro = array();
+									//$erro = array();
 									
 									$id_nas = @$_REQUEST["id_nas"];
 									$endereco_ip = @$_REQUEST["endereco_ip"];
@@ -1131,13 +1131,13 @@ class VAClientes extends VirtexAdmin {
 									$rede = @$_rede["rede"];
 									
 									if( !$rede ) {
-									   $erro[] = "Rede não cadastrada no sistema.";
+									   $erro = "Rede não cadastrada no sistema.";
 									} else {
 									   $sSQL = "SELECT rede FROM cftb_nas_rede WHERE rede = '$rede' AND id_nas = '$id_nas'";
 									   $nas_rede = $this->bd->obtemUnicoRegistro($sSQL);
 									   
 									   if( !count($nas_rede) ) {
-									      $erro[] = "Rede não disponível para este NAS";
+									      $erro = "Rede não disponível para este NAS";
 									   } else {
 									// verificar de acordo com o tipo do nas
 												$sSQL = "SELECT username,rede FROM cntb_conta_bandalarga WHERE ";
@@ -1150,7 +1150,7 @@ class VAClientes extends VirtexAdmin {
 												}
 												$rede_bl = $this->bd->obtemUnicoRegistro($sSQL);
 												if(count($rede_bl)){
-														$erro[] = "Endereço utilizado por outro cliente (".$rede_bl["username"].")";
+														$erro = "Endereço utilizado por outro cliente (".$rede_bl["username"].")";
 												} 
 
 										}
@@ -1173,14 +1173,21 @@ class VAClientes extends VirtexAdmin {
 										
 										}
 									
-									}//else{
+									}else{
 										//ECHO count($erro);
 										//for($i=0;$i<count($erro);$i++) {
 										   //echo $erro[$i] . "<br>\n";
 										//}
 									//}
-								
-								
+
+
+										$this->tpl->atribui("mensagem",$erro);
+										$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=cobranca&id_cliente=$id_cliente");
+										$this->tpl->atribui("target","_top");
+
+										$this->arquivoTemplate="msgredirect.html";
+										return;
+								}
 								
 								
 								}

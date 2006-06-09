@@ -147,7 +147,8 @@ if ($op == "lista"){
 		$sSQL .= "   b.banda";
 
 		$bandas = $this->bd->obtemRegistros($sSQL);
-		
+		//echo "BANDA: $sSQL <br>";
+
 		
 		$extra = @$_REQUEST['extra'];
 		

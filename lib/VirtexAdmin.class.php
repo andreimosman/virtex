@@ -83,7 +83,7 @@ class VirtexAdmin extends MWebApp {
 		   // Redireciona pra tela de login
 		   $url = 'login.php';
 		   $mensagem = 'Tentativa de acesso invalido ao sistema';
-		   $target = '_top';
+		   $target = '_self';
 
 		   $this->tpl->atribui('url',$url);
 		   $this->tpl->atribui('mensagem',$mensagem);
@@ -97,7 +97,7 @@ class VirtexAdmin extends MWebApp {
 		} else if( $veriPrimeiroLogin && $this->admLogin->primeiroLogin() ) {
 		   $url = 'administrador.php?op=altera';
 		   //$mensagem = 'Tentativa de acesso invalido ao sistema';
-		   $target = '_top';
+		   $target = '_self';
 
 		   // Tela de alteração de senha
 		   $this->tpl->atribui('url',$url);
@@ -137,7 +137,64 @@ class VirtexAdmin extends MWebApp {
 	   return( crypt($senha,$sal) );
 	}	
 	
-
+	public function checa_preferencia(){
+	
+		$preferencias = $this->prefs->obtem("total");
+		
+		$obrigatorio_geral = false;
+		$obrigatorio_email = false;
+		$obrigatorio_cobranca = false;
+		
+		// campos completamente obrigatórios
+		$dominio_padrao = $preferencias["dominio_padrao"];
+		$nome = $preferencias["nome"];
+		
+		// campos obrigatorios para uso de e-mail
+		$radius_server = $preferencias["radius_server"];
+		$mail_server = $preferencias["mail_server"];
+		$mail_uid = $preferencias["mail_uid"];
+		$mail_gid = $preferencias["mail_gid"];
+		$pop_host = $preferencias["pop_host"];
+		$smtp_host = $preferencias["smtp_host"];
+		
+		// campos obrigatorios para cobranca
+		$endereco = $preferencias["endereco"];
+		$cep = $preferencias["cep"];
+		$cnpj = $preferencias["cnpj"];
+		$localidade = $preferencias["localidade"];
+		$tx_juros = $preferencias["tx_juros"];
+		$multa = $preferencias["multa"];
+		$dia_venc = $preferencias["dia_venc"];
+		$carencia = $preferencias["carencia"];
+		$cod_banco = $preferencias["cod_banco"];
+		$carteira = $preferencias["carteira"];
+		$agencia = $preferencias["agencia"];
+		$num_conta = $preferencias["num_conta"];
+		$convenio = $preferencias["convenio"];
+		$pagamento = $preferencias["pagamento"];
+		$path_contrato = $preferencias["path_contrato"];
+		
+		
+		
+		if ($dominio_padrao == "" || !$dominio_padrao || !$nome || $nome == ""){
+			$this->tpl->atribui("obrigatorio_geral",true);
+		}
+		
+		if ($radius_server == "" || $mail_server == "" || $mail_uid == "" || $mail_gid == "" || $pop_host == "" || $smtp_host == ""){
+			$this->tpl->atribui("obrigatorio_email",true);
+		
+		}
+		
+		if ($endereco == "" || $cep == "" || $cnpj == "" || $localidade == "" || $tx_juros == "" || $multa == "" || $dia_venc == "" || $carencia == "" || $cod_banco == "" || $carteira == "" || $agencia == "" || $num_conta == "" || $convenio == "" || $pagamento == "" || $path_contrato == ""){;
+			$this->tpl->atribui("obrigatorio_cobranca",true);
+		
+		}
+		
+		return;
+	}
+		
+	
+	
 }
 
 

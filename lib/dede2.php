@@ -299,7 +299,7 @@
 		$this->tpl->atribui("mensagem",$msg_final);
 		//$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=cobranca&rotina=contratar&id_cliente=$id_cliente");
 		$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=cobranca&id_cliente=$id_cliente");
-		$this->tpl->atribui("target","_top");
+		$this->tpl->atribui("target","_self");
 
 		$this->arquivoTemplate="msgredirect.html";
 		return;

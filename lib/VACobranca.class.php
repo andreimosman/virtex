@@ -391,7 +391,7 @@ class VACobranca extends VirtexAdmin {
 			      // Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
 			      $this->tpl->atribui("mensagem",$msg_final); //pega o conteúdo de msg_final e envia para mensagem que é uma val do smart.
 			      $this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=lista");
-			      $this->tpl->atribui("target","_top");
+			      $this->tpl->atribui("target","_self");
 
 
 
@@ -898,7 +898,7 @@ class VACobranca extends VirtexAdmin {
 				//$this->tpl->atribui("susp",$suspenso);
 				$this->tpl->atribui("mensagem",$msg_final); 
 				$this->tpl->atribui("url", "clientes.php?op=cobranca&id_cliente=".$id_cliente."&rotina=resumo");
-				$this->tpl->atribui("target","_top");
+				$this->tpl->atribui("target","_self");
 				
 				$this->arquivoTemplate="msgredirect.html";
 
@@ -1179,7 +1179,7 @@ class VACobranca extends VirtexAdmin {
 		$msg_final = "Retornos registrados com sucesso.";
 		$this->tpl->atribui("mensagem",$msg_final); 
 		$this->tpl->atribui("url", "cobranca.php?op=retornos");
-		$this->tpl->atribui("target","_top");
+		$this->tpl->atribui("target","_self");
 
 		$this->arquivoTemplate="msgredirect.html";
 
@@ -1422,7 +1422,7 @@ class VACobranca extends VirtexAdmin {
 				$msg_final = "CONTRATOS CANCELADOS COM SUCESSO!<BR>FATURAS CANCELADAS COM SUCESSO!<BR>CONTAS CANCELADAS COM SUCESSO!";
 				$this->tpl->atribui("mensagem",$msg_final);
 				$this->tpl->atribui("url", "clientes.php?op=cobranca&id_cliente=".$id_cliente."&rotina=resumo");
-				$this->tpl->atribui("target","_top");
+				$this->tpl->atribui("target","_self");
 				$this->arquivoTemplate="msgredirect.html";
 				return;
 
@@ -1546,7 +1546,7 @@ class VACobranca extends VirtexAdmin {
 				$msg_final = "CONTRATOS EXCLUIDOS COM SUCESSO!<BR>FATURAS EXCLUIDAS COM SUCESSO!";
 				$this->tpl->atribui("mensagem",$msg_final);
 				$this->tpl->atribui("url", "clientes.php?op=cobranca&id_cliente=".$id_cliente."&rotina=resumo");
-				$this->tpl->atribui("target","_top");
+				$this->tpl->atribui("target","_self");
 				$this->arquivoTemplate="msgredirect.html";
 				return;
 			
@@ -1714,7 +1714,7 @@ class VACobranca extends VirtexAdmin {
 					$msg_final = "NÃO HOUVE NENHUMA MODIFICAÇÃO NO CONTRATO!";
 					$this->tpl->atribui("mensagem",$msg_final);
 					$this->tpl->atribui("url", "clientes.php?op=cobranca&id_cliente=".$id_cliente."&rotina=resumo");
-					$this->tpl->atribui("target","_top");
+					$this->tpl->atribui("target","_self");
 					$this->arquivoTemplate="msgredirect.html";
 					return;
 
@@ -2075,7 +2075,7 @@ class VACobranca extends VirtexAdmin {
 							$msg_final = "CONTRATO MIGRADO COM SUCESSO!";
 							$this->tpl->atribui("mensagem",$msg_final);
 							$this->tpl->atribui("url", "clientes.php?op=cobranca&id_cliente=".$id_cliente."&rotina=resumo");
-							$this->tpl->atribui("target","_top");
+							$this->tpl->atribui("target","_self");
 							$this->arquivoTemplate="msgredirect.html";
 							return;
 						

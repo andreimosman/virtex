@@ -14,7 +14,7 @@ class VALogin extends VirtexAdmin {
 
 		$this->arquivoTemplate = "jsredir.html";
 		$url = "login.php";
-		$target = "_top";
+		$target = "_self";
 
 		$admin = @$_REQUEST["admin"];
 		$senha = @$_REQUEST["senha"];

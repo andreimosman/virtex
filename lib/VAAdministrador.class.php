@@ -96,7 +96,7 @@ class VAAdministrador extends VirtexAdmin {
 					  		
 					  		$this->tpl->atribui("mensagem",$msg_final);
 							$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=cadastro");
-							$this->tpl->atribui("target","_top");
+							$this->tpl->atribui("target","_self");
 									      
 							$this->arquivoTemplate="msgredirect.html";
 							return;
@@ -150,7 +150,7 @@ class VAAdministrador extends VirtexAdmin {
 		      // Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
 		      $this->tpl->atribui("mensagem",$msg_final);
 		      $this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=lista");
-		      $this->tpl->atribui("target","_top");
+		      $this->tpl->atribui("target","_self");
 		      
 		      $this->arquivoTemplate="msgredirect.html";
 
@@ -245,7 +245,7 @@ class VAAdministrador extends VirtexAdmin {
 			
 			$mensagem = "";
 			$url = "administrador.php?op=altera";
-			$target = "_top";
+			$target = "_self";
 			
 			
 			if( $erro ) {
@@ -369,7 +369,7 @@ class VAAdministrador extends VirtexAdmin {
 						// Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
 						$this->tpl->atribui("mensagem","Privilegios Alterados com Sucesso!");
 						$this->tpl->atribui("url","administrador.php?op=lista");
-						$this->tpl->atribui("target","_top");
+						$this->tpl->atribui("target","_self");
 						
 						$this->arquivoTemplate="msgredirect.html";
 						// cai fora da função (ou seja, deixa de processar o resto do aplicativo: a parte de exibicao da tela);

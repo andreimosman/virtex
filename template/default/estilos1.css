@@ -81,3 +81,30 @@ h2 {
 	color: #000000;
 	text-decoration: none;
 }
+
+@media screen {
+	#imprimir {
+		position:absolute;
+		left:8px;
+		top:8px;
+		font-family:arial,helvetica;
+		text-decoration: none;
+		font-size:12px;
+		font-color: #000000;
+		align: center;
+		vertical-align: bottom;
+		background-color:#CACAFF;
+		width:70px;
+		height:10px;
+		border-top-width: 1px;
+		border-right-width: 1px;
+		border-bottom-width: 1px;
+		border-left-width: 1px;
+		border-top-style: solid;
+		border-right-style: solid;
+		border-bottom-style: solid;
+		border-left-style: solid;
+
+
+	}
+}

@@ -351,6 +351,7 @@ class VARelatorio extends VirtexAdmin {
 
 						
 				$reg = $this->bd->obtemRegistros($aSQL);
+				
 																		
 				$this->tpl->atribui("ult_cli",$reg);
 			
@@ -368,7 +369,7 @@ class VARelatorio extends VirtexAdmin {
 				$aSQL .= "ORDER BY id_cliente DESC LIMIT (5)";
 											
 				$reg = $this->bd->obtemRegistros($aSQL);
-											
+										
 				$this->tpl->atribui("ult_cli",$reg);
 			}
 	
@@ -386,7 +387,7 @@ class VARelatorio extends VirtexAdmin {
 			$aSQL .= "WHERE (cl.nome_razao ilike '$inicial_up%' OR cl.nome_razao ilike '$inicial_lo%') AND c.id_cidade = cl.id_cidade ";
 												
 			$reg = $this->bd->obtemRegistros($aSQL);
-												
+											
 			$this->tpl->atribui("ult_cli",$reg);
 
 		
@@ -816,8 +817,8 @@ class VARelatorio extends VirtexAdmin {
 				$legendas = array();
 				$outros = 0;
 				$prefs = $this->prefs->obtem("geral");
-				//$agrupar = $prefs["agrupar"];
-				$agrupar = 20;
+				$agrupar = $prefs["agrupar"];
+				//$agrupar = 20;
 				//$agrupar_cidades_com_menos_de = 20;
 				
 				for($i=0;$i<count($relat);$i++) {
