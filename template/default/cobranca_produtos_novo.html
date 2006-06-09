@@ -1,3 +1,4 @@
+<!-- COBRANCA_PRODUTOS_NOVO.HTML -->
 <html>
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
@@ -59,16 +60,9 @@ function CampoBranco(campo){
 </script>
 { /literal }
 
-
-
-
-
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-          <td>{ include file='menu_principal.html' }</td>
-        </tr>
         <tr>
           <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
@@ -121,7 +115,7 @@ function CampoBranco(campo){
 
 
 </p>{if $prod }
-                  <form name="form1" method="post" action="{$smarty.server.PHP_SELF}" onsubmit="return submit_page(this);">
+                  <form name="form1" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return submit_page(this);">
 
                     
                   <table width="500" border="0" id="tabform">
@@ -357,7 +351,7 @@ function CampoBranco(campo){
                               </p></td>
                             <td><p> 
                                 <input name="quota_por_conta"type="text" id="quota_por_conta" value="{$quota_por_conta}">
-                              </p></td>
+                                bytes </p></td>
                           </tr>
                           <tr> 
                             <td><p>Email Adicional (R$)<br>
@@ -449,14 +443,6 @@ function CampoBranco(campo){
                   <p>&nbsp;</p></td>
               </tr>
             </table></td>
-        </tr>
-      </table></td>
-  </tr>
-  <tr>
-    <td height="20" align="center" bgcolor="#BCD3C4"><table width="400" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy;
-              Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
         </tr>
       </table></td>
   </tr>

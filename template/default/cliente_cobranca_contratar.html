@@ -747,7 +747,7 @@ frmContratacao.pri_venc.value = hoje();
             <tr> 
               <td bgcolor="#FFFFFF" align="right"><p>Comodato</p></td>
               <td bgcolor="#FFFFFF" width="137"><p> 
-                  <input name="comodato" type="checkbox" value="true" id="comodato" onClick="javascript:Comodato()" class="checkbox" {if $comodato == "t"}CHECKED{/if} checked>
+                  <input name="comodato" type="checkbox" value="true" id="comodato" onClick="javascript:Comodato()" class="checkbox" {if $comodato == true}CHECKED{/if}>
                 </p></td>
               <td bgcolor="#FFFFFF" width="76"><p>Valor:</p></td>
               <td bgcolor="#FFFFFF" width="121"><p> 
@@ -761,7 +761,7 @@ frmContratacao.pri_venc.value = hoje();
               <td bgcolor="#FFFFFF" align="right"><p>Pro-Rata</p></td>
               <td bgcolor="#FFFFFF" colspan="3"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                   <tr> 
-                    <td width="8%"><input name="prorata" type="checkbox" value="true" id="prorata3" class="checkbox" checked></td>
+                    <td width="8%"><input name="prorata" type="checkbox" value="true" id="prorata3" class="checkbox" ></td>
                     <td width="92%"></td>
                   </tr>
                 </table></td>
@@ -893,7 +893,6 @@ calculaDataCarne();
                           </table>
                         </form>
 
-{include file='cliente_footer.html'}
 
 
 { literal }

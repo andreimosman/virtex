@@ -58,7 +58,7 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 
 			</tr>
 		  </table></td>
-	  </tr>
+  </tr>
 	{/if}
 	{if $n.tipo_nas=="P"}
 
@@ -80,7 +80,7 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 
         </tr>
 
-			</table></td>
+</table></td>
 	  </tr>
 
 {/if}
@@ -105,4 +105,3 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 	  </tr>
 <p>{/if} </table> </p>
 <p align="center">{if $primeira}<a href="javascript:;"><img alt="EMITIR CARNE PARA IMPRESSÃO" src="template/default/images/carne_impressao.gif" width="217" height="90" onclick="MM_openBrWindow('clientes.php?op=segunda_via&id_cliente={$id_cliente}&id_cliente_produto={$id_cliente_produto}&data={$data}&id_carne={$id_carne}','carne','scrollbars=yes,width=700,height=600')" border="0"></a>{/if}</p>
-<p>{include file=cliente_footer.html}</p>

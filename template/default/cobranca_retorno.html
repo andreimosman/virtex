@@ -1,3 +1,4 @@
+<!-- COBRANCA_RETORNO.HTML -->
 <html>
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
@@ -10,94 +11,80 @@
   <tr>
     <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
-          <td>{ include file='menu_principal.html' }</td>
-        </tr>
-        <tr>
-          <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <td height="100%" align="center" valign="middle"><h1>Retorno </h1>
+            <table width="400" border="0" cellspacing="0" cellpadding="0" bgcolor="#666666">
               <tr>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td align="center" valign="middle">
-				<P align="center">&nbsp; </P>
-                  <h1>Retorno </h1>
-                  <table width="400" border="0" cellspacing="0" cellpadding="0" bgcolor="#666666">
+                <td><table width="400" border="0" cellspacing="1" cellpadding="0" height="150">
                     <tr>
-                      <td><table width="400" border="0" cellspacing="1" cellpadding="0" height="150">
-                          <tr>
-                            <td bgcolor="#EEEEEE"><form enctype="multipart/form-data" name="form1" method="post" action="{$smarty.server.PHP_SELF}">
-                            {if $erro}<center><font face="arial" color="red" size="-1"><b>Erro: {$erro}</b></font></center><br>{/if}
-                            <input type="hidden" name="MAX_FILE_SIZE" value="30000">
-                            <input type="hidden" name="op" value="{$op}" />
-                            <input type="hidden" name="sop" value="{$sop}" />
-                              <table align="CENTER" width="250" border="0" cellspacing="1" cellpadding="0">
-                                <tr>
-                                  <td width="317"><p>Arquivo</p></td>
-                                </tr>
-                                <tr>
-                                  <td><p>
-                                      <input name="arquivo" type="file" size="40" id="arquivo">
-                                    </p></td>
-                                </tr>
-                                <tr>
-                                  <td><p>Formato</p></td>
-                                </tr>
-                                <tr>
-                                  <td><select name="formato">
+                      <td bgcolor="#EEEEEE"><form enctype="multipart/form-data" name="form1" method="post" action="{$smarty.server.PHP_SELF}">
+                        {if $erro}
+                  <center>
+                    <font face="arial" color="red" size="-1"><b>Erro: {$erro}</b></font>
+                  </center>
+                        <br>
+                        {/if}
+                        <input type="hidden" name="MAX_FILE_SIZE" value="30000">
+                  <input type="hidden" name="op" value="{$op}" />
+                  <input type="hidden" name="sop" value="{$sop}" />
+                  <table align="CENTER" width="250" border="0" cellspacing="1" cellpadding="0">
+                    <tr>
+                      <td width="317"><p>Arquivo</p></td>
+                    </tr>
+                    <tr>
+                      <td><p>
+                          <input name="arquivo" type="file" size="40" id="arquivo">
+                      </p></td>
+                    </tr>
+                    <tr>
+                      <td><p>Formato</p></td>
+                    </tr>
+                    <tr>
+                      <td><select name="formato">
+                        
 								  {foreach key=id item=nome from=$ls_formatos}
-								      <option value="{$id}" >{$nome}</option>
+								      
+                        <option value="{$id}" >{$nome}</option>
+                        
 								  {/foreach}
-                                    </select></td>
-                                </tr>
-                                <tr>
-                                  <td>&nbsp;</td>
-                                </tr>
-                                <tr>
-                                  <td><input type="submit" name="submit" value="Enviar Retorno"></td>
-                                </tr>
-                              </table>
-                              </form></td>
-                          </tr>
-                        </table></td>
+                                    
+                      </select></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td><input type="submit" name="submit" value="Enviar Retorno"></td>
                     </tr>
                   </table>
-                  <p><font face="Arial, Helvetica, sans-serif" size="3"><strong>Ultimos 
-                    arquivos de retorno aplicados</strong></font></p>
-                  <table width="550" border="0" cellspacing="1" cellpadding="0">
-                    <tr bgcolor="#f1f1f1" align="CENTER"> 
-                      <td><p><strong>Arquivo</strong></p></td>
-                      <td><p><strong>Data</strong></p></td>
-                      <td width="50"> <p><strong>Status</strong></p></td>
-                      <td width="50"> <p><strong>NRA</strong></p></td>
-                      <td width="50"> <p><strong>NRPE</strong></p></td>
-                      <td width="50"> <p><strong>NRSC</strong></p></td>
+                      </form></td>
                     </tr>
-					{foreach item=r from=$ret}
-                    <tr align="CENTER"> 
-                      <td><p><a href="cobranca.php?op=retornos&acao=detalhe&id_arquivo={$r.id_arquivo}">{$r.nome_arquivo}</a></p></td>
-                      <td><p><a href="cobranca.php?op=retornos&acao=detalhe&id_arquivo={$r.id_arquivo}">{$r.data}</a></p></td>
-                      <td><p><a href="cobranca.php?op=retornos&acao=detalhe&id_arquivo={$r.id_arquivo}">{$r.status}</a></p></td>
-                      <td><p><a href="cobranca.php?op=retornos&acao=detalhe&id_arquivo={$r.id_arquivo}">{$r.nra}</a></p></td>
-                      <td><p><a href="cobranca.php?op=retornos&acao=detalhe&id_arquivo={$r.id_arquivo}">{$r.nrpe}</a></p></td>
-                      <td><p><a href="cobranca.php?op=retornos&acao=detalhe&id_arquivo={$r.id_arquivo}">{$r.nrsc}</a></p></td>
-                    </tr>
-					{/foreach}
-                  </table>
-                  <p><strong><font face="Arial, Helvetica, sans-serif"></font></strong></p>
-                  <p>&nbsp;</p></td>
+                </table></td>
               </tr>
-            </table></td>
-        </tr>
-      </table></td>
+            </table>
+            <p><font face="Arial, Helvetica, sans-serif" size="3"><strong>Ultimos
+                  arquivos de retorno aplicados</strong></font></p>
+            <table width="550" border="0" cellspacing="1" cellpadding="0">
+              <tr bgcolor="#f1f1f1" align="CENTER">
+                <td><p><strong>Arquivo</strong></p></td>
+                <td><p><strong>Data</strong></p></td>
+                <td width="50"><p><strong>Status</strong></p></td>
+                <td width="50"><p><strong>NRA</strong></p></td>
+                <td width="50"><p><strong>NRPE</strong></p></td>
+                <td width="50"><p><strong>NRSC</strong></p></td>
+              </tr>
+              {foreach item=r from=$ret}
+  <tr align="CENTER">
+    <td><p><a href="cobranca.php?op=retornos&acao=detalhe&id_arquivo={$r.id_arquivo}">{$r.nome_arquivo}</a></p></td>
+    <td><p><a href="cobranca.php?op=retornos&acao=detalhe&id_arquivo={$r.id_arquivo}">{$r.data}</a></p></td>
+    <td><p><a href="cobranca.php?op=retornos&acao=detalhe&id_arquivo={$r.id_arquivo}">{$r.status}</a></p></td>
+    <td><p><a href="cobranca.php?op=retornos&acao=detalhe&id_arquivo={$r.id_arquivo}">{$r.nra}</a></p></td>
+    <td><p><a href="cobranca.php?op=retornos&acao=detalhe&id_arquivo={$r.id_arquivo}">{$r.nrpe}</a></p></td>
+    <td><p><a href="cobranca.php?op=retornos&acao=detalhe&id_arquivo={$r.id_arquivo}">{$r.nrsc}</a></p></td>
   </tr>
-  <tr>
-    <td height="20" align="center" bgcolor="#BCD3C4"><table width="400" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy;
-              Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
+              {/foreach}
+            </table>
+          <p><strong><font face="Arial, Helvetica, sans-serif"></font></strong></p></td>
         </tr>
-      </table></td>
-  </tr>
 </table>
 </body>
 

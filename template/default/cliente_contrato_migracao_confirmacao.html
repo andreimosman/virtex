@@ -1,3 +1,4 @@
+<!-- CLIENTE_CONTRATO_MIGRACAO_CONFIRMACAO.HTML-->
 <html>
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
@@ -8,259 +9,232 @@
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-          <td>{ include file='menu_principal.html' }</td>
+    <td align="center" valign="top"><table width="701" border="0" cellspacing="3" cellpadding="3">
+        <tr align="CENTER" valign="MIDDLE">
+          <td colspan="3" bgcolor="#f1f1f1"><font face="Arial, Helvetica, sans-serif" size="5" color="#666666"><strong><font size="4">Contratos
+                  - Migra&ccedil;&atilde;o</font></strong></font></td>
         </tr>
-        <tr>
-          <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr align="CENTER" valign="MIDDLE">
+          <td width="350"><strong><font face="Arial, Helvetica, sans-serif" size="3">Contrato
+                em Vigor</font></strong></td>
+          <td width="1" rowspan="4" bgcolor="#FFFFFF"><img src="template/default/images/menu/spacer.gif" alt="," width="1" height="1"></td>
+          <td width="350"><strong><font face="Arial, Helvetica, sans-serif" size="3">Novo
+                Contrato</font></strong></td>
+        </tr>
+        <tr align="CENTER" valign="MIDDLE">
+          <td width="350"><table width="350" border="0" cellspacing="0" cellpadding="0">
               <tr>
+                <td width="128"><p><strong>Nome:</strong></p></td>
+                <td width="222"><p>{$id_cliente}{$contrato.nome_razao}</p></td>
+              </tr>
+              <tr>
+                <td><p><strong>Username:</strong></p></td>
+                <td><p>{$produto_carac.username}</p></td>
+              </tr>
+              <tr>
+                <td><p><strong>Produto:</strong></p></td>
+                <td><p>{$produto_geral.nome}</p></td>
+              </tr>
+              <tr>
+                <td><p><strong>Valor do Contrato:</strong></p></td>
+                <td><p>{$contrato.valor_contrato}</p></td>
+              </tr>
+              <tr>
+                <td><p><strong>Status:</strong></p></td>
+                <td><p>{$contrato.status}</p></td>
+              </tr>
+              <tr>
+                <td><p><strong>Data Contrata&ccedil;&atilde;o:</strong></p></td>
+                <td><p>{$contrato.data_contratacao}</p></td>
+              </tr>
+              <tr>
+                <td><p><strong>Banda Download</strong></p></td>
+                <td><p>{$produto_carac.download_kbps}</p></td>
+              </tr>
+              <tr>
+                <td><p><strong>Banda Upload</strong></p></td>
+                <td><p>{$produto_carac.upload_kbps}</p></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td align="center" valign="middle">
-				<P align="center">&nbsp; </P>
-                  <table width="701" border="0" cellspacing="3" cellpadding="3">
-                    <tr align="CENTER" valign="MIDDLE"> 
-                      <td colspan="3" bgcolor="#f1f1f1"><font face="Arial, Helvetica, sans-serif" size="5" color="#666666"><strong><font size="4">Contratos 
-                        - Migra&ccedil;&atilde;o</font></strong></font></td>
-                    </tr>
-                    <tr align="CENTER" valign="MIDDLE"> 
-                      <td width="350"><strong><font face="Arial, Helvetica, sans-serif" size="3">Contrato 
-                        em Vigor</font></strong></td>
-                      <td width="1" rowspan="4" bgcolor="#FFFFFF"><img src="template/default/images/menu/spacer.gif" width="1" height="1"></td>
-                      <td width="350"><strong><font face="Arial, Helvetica, sans-serif" size="3">Novo 
-                        Contrato</font></strong></td>
-                    </tr>
-                    <tr align="CENTER" valign="MIDDLE"> 
-                      <td width="350"> <table width="350" border="0" cellspacing="0" cellpadding="0">
-                          <tr> 
-                            <td width="128"><p><strong>Nome:</strong></p></td>
-                            <td width="222"><p>{$id_cliente}{$contrato.nome_razao}</p></td>
-                          </tr>
-                          <tr> 
-                            <td><p><strong>Username:</strong></p></td>
-                            <td><p>{$produto_carac.username}</p></td>
-                          </tr>
-                          <tr> 
-                            <td><p><strong>Produto:</strong></p></td>
-                            <td><p>{$produto_geral.nome}</p></td>
-                          </tr>
-                          <tr> 
-                            <td><p><strong>Valor do Contrato:</strong></p></td>
-                            <td><p>{$contrato.valor_contrato}</p></td>
-                          </tr>
-                          <tr> 
-                            <td><p><strong>Status:</strong></p></td>
-                            <td><p>{$contrato.status}</p></td>
-                          </tr>
-                          <tr> 
-                            <td><p><strong>Data Contrata&ccedil;&atilde;o:</strong></p></td>
-                            <td><p>{$contrato.data_contratacao}</p></td>
-                          </tr>
-                          <tr> 
-                            <td><p><strong>Banda Download</strong></p></td>
-                            <td><p>{$produto_carac.download_kbps}</p></td>
-                          </tr>
-                          <tr> 
-                            <td><p><strong>Banda Upload</strong></p></td>
-                            <td><p>{$produto_carac.upload_kbps}</p></td>
-                          </tr>
-                          <tr> 
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                          </tr>
-                          <tr> 
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                          </tr>
-                        </table></td>
-                      <td width="350"><table width="350" border="0" cellspacing="0" cellpadding="0">
-                          <tr> 
-                            <td width="128"><p><strong>Nome:</strong></p></td>
-                            <td width="222"><p>{$contrato.nome_razao}</p></td>
-                          </tr>
-                          <tr> 
-                            <td><p><strong>Username:</strong></p></td>
-                            <td><p>{$username_new}</p></td>
-                          </tr>
-                          <tr> 
-                            <td><p><strong>Produto:</strong></p></td>
-                            <td><p>{$id_produto_new}- {$info_produto.nome}</p></td>
-                          </tr>
-                          <tr> 
-                            <td><p><strong>Valor do Contrato:</strong></p></td>
-                            <td><p>{$valor_contrato_new}</p></td>
-                          </tr>
-                          <tr> 
-                            <td><p><strong>Status:</strong></p></td>
-                            <td><p>{$status_new}</p></td>
-                          </tr>
-                          <tr> 
-                            <td><p><strong>Data Contrata&ccedil;&atilde;o:</strong></p></td>
-                            <td><p>{$data_contratacao_new}</p></td>
-                          </tr>
-                          <tr> 
-                            <td><p><strong>Banda Download</strong></p></td>
-                            <td><p>{$bl_banda_download_kbps}</p></td>
-                          </tr>
-                          <tr> 
-                            <td><p><strong>Banda Upload</strong></p></td>
-                            <td><p>{$bl_banda_upload_kbps}</p></td>
-                          </tr>
-                          <tr> 
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                          </tr>
-                          <tr> 
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                          </tr>
-                        </table></td>
-                    </tr>
-                    <tr align="CENTER" valign="MIDDLE"> 
-                      <td width="350"><font size="3" face="Arial, Helvetica, sans-serif"><strong>Faturas 
-                        que ser&atilde;o extornadas</strong></font></td>
-                      <td width="350">&nbsp;</td>
-                    </tr>
-                    <tr align="CENTER" valign="MIDDLE"> 
-                      <td><table width="350" border="0" cellspacing="0" cellpadding="0">
-                          <tr bgcolor="#f1f1f1"> 
-                            <td width="175" align="CENTER"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Venc.</font></strong></td>
-                            <td width="175" align="RIGHT"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Valor</font></strong></td>
-                          </tr>
-                          <tr> 
-                            <td colspan="2"> {foreach item=v from=$ft_ant} 
-                              <table width="350" border="0" cellspacing="0" cellpadding="0">
-                                <tr> 
-                                  <td width="175" align="CENTER"><p>{$v.data}</p></td>
-                                  <td width="175" align="RIGHT"><p>{$v.valor}</p></td>
-                                </tr>
-                                <tr> 
-                                  <td colspan="2" bgcolor="#999999"><img src="images/menu/spacer.gif" width="150" height="1"></td>
-                                </tr>
-                              </table>
-                              {/foreach} </td>
-                          </tr>
-                        </table></td>
-                      <td width="350">&nbsp;</td>
-                    </tr>
-                  </table>
-                  <br>
-                  <table width="700" border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                      <td bgcolor="#666666"><table width="700" border="0" cellspacing="1" cellpadding="0">
-                          <tr>
-                            <td bgcolor="#f1f1f1" height="80" align="CENTER">
-<p>Ao 
-                                confirmar a migra&ccedil;&atilde;o o contrato 
-                                antigo ser&aacute; marcado como cancelado e o 
-                                contrato a direita ser&aacute; criado.<br>
-                                As faturas n&atilde;o pagas do contrato antigo 
-                                ser&atilde;o estornadas e ser&atilde;o ciadas 
-                                novas faturas com base no novo contrato<br>
-                                para o per&iacute;odo especificado.</p></td>
-                          </tr>
-                        </table></td>
-                    </tr>
-                  </table>
-                  <form name="form1" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="confirm('Você tem certeza de quer proseguir com a migração deste contrato?')">
-                  <table width="700" border="0" cellspacing="1" cellpadding="0">
-                    <tr> 
-                      <td align="CENTER"><input type="submit" name="Submit" value="Confirmar Migração de Contrato"></td>
-                    </tr>
-                    <tr>
-                      <td align="CENTER">
-					    <!-- info do contrato antigo -->
-						<input name="nome_razao" type="hidden" value="{$contrato.nome_razao}" id="nome_razao">
-                        <input name="username" type="hidden" value="{$produto_carac.username}" id="username">
-                        <input name="nome_produto" type="hidden" value="{$produto_geral.nome}" id="nome_produto">
-                        <input name="valo_contrato" type="hidden" value="{$contrato.valor_contrato}" id="valo_contrato">
-                        <input name="status" type="hidden" value="{$contrato.status}" id="status">
-                        <input name="data_contratacao" type="hidden" value="{$contrato.data_contratacao}" id="data_contratacao">
-                        <input name="download_kbps" type="hidden" value="{$produto_carac.download_kbps}" id="download_kbps">
-                        <input name="upload_kbps_old" type="hidden" value="{$produto_carac.upload_kbps}" id="upload_kbps_old">
-                        <input name="id_cliente_produto" type="hidden" value="{$contrato.id_cliente_produto}" id="id_cliente_produto">
-                      </td>
-                    </tr>
-                    <tr> 
-                      <td align="CENTER">
-					    <!-- info do contrato novo -->
-						<input type="hidden" name="tipo_produto" value="{$tipo}"> 
-                        <input type="hidden" name="id_produto" value="{$id_produto_new}"> 
-                        <input type="hidden" name="email_igual" value="{$email_igual_new}"> 
-                        <input type="hidden" name="data_contratacao" value="{$data_contratacao_new}"> 
-                        <input type="hidden" name="vigencia" value="{$vigencia_new}"> 
-                        <input type="hidden" name="status" value="{$status_new}"> 
-                        <input type="hidden" name="dia_vencimento" value="{$dia_vencimento_new}"> 
-                        <input type="hidden" name="carencia_pagamento" value="{$carencia_pagamento_new}"> 
-                        <input type="hidden" name="desconto_promo" value="{$desconto_promo_new}"> 
-                        <input type="hidden" name="periodo_desconto" value="{$periodo_desconto_new}"> 
-                        <input type="hidden" name="tx_instalacao" value="{$tx_instalacao_new}"> 
-                        <input type="hidden" name="comodato" value="{$comodato_new}"> 
-                        <input type="hidden" name="valor_comodato" value="{$valor_comodato_new}"> 
-                        <input type="hidden" name="prorata" value="{$prorata_new}"> 
-                        <input type="hidden" name="tipo_cobranca" value="{$tipo_cobranca_new}"> 
-                        <input type="hidden" name="forma_pagamento" value="{$forma_pagamento_new}"> 
-                        <input type="hidden" name="ini_carne" value="{$ini_carne_new}"> 
-                        <input type="hidden" name="data_carne" value="{$data_carne_new}"> 
-                        <input type="hidden" name="username" value="{$username_new}"> 
-                        <input type="hidden" name="senha" value="{$senha_new}"> 
-                        <input type="hidden" name="conf_senha" value="{$conf_senha_new}"> 
-                        <input type="hidden" name="id_nas" value="{$id_nas_new}"> 
-                        <input type="hidden" name="selecao_ip" value="{$selecao_ip_new}"> 
-                        <input type="hidden" name="mac" value="{$mac_new}"> <input type="hidden" name="id_cliente" value="{$id_cliente}"> 
-                        
-                        <input type="hidden" name="id_pop" value="{$id_pop_new}"> 
-                        <input type="hidden" name="pri_venc" value="{$pri_venc_new}"> 
-                        <input type="hidden" name="valor_prorata" value="{$valor_prorata_new}"> 
-                        <input type="hidden" name="dias_prorata" value="{$dias_prorata_new}"> 
-                        <input type="hidden" name="cc_vencimento" value="{$cc_vencimento_new}"> 
-                        <input type="hidden" name="cc_numero" value="{$cc_numero_new}"> 
-                        <input type="hidden" name="cc_operadora" value="{$cc_operadora_new}"> 
-                        <input type="hidden" name="db_banco" value="{$db_banco_new}"> 
-                        <input type="hidden" name="db_agencia" value="{$db_agencia_new}"> 
-                        <input type="hidden" name="db_conta" value="{$db_conta_new}">
-                        {if $tipo == "D"} 
-                        <input type="hidden" name="foneinfo" value="{$foneinfo}"> 
-                        <input type="hidden" name="d_franquia_horas" value="{$d_franquia_horas}"> 
-                        <input type="hidden" name="d_permitir_duplicidade" value="{$d_permitir_duplicidade}"> 
-                        <input type="hidden" name="d_valor_hora_adicional" value="{$d_valor_hora_adicional}">
-                        {/if} {if $tipo == "H"} 
-                        <input type="hidden" name="h_dominio" value="{$h_dominio}"> 
-                        <input type="hidden" name="h_franquia_em_mb" value="{$h_franquia_em_mb}"> 
-                        <input type="hidden" name="h_valor_mb_adicional" value="{$h_valor_mb_adicional}"> 
-                        <input type="hidden" name="tipo_hospedagem" value="{$tipo_hospedagem}"> 
-                        <input type="hidden" name="dominio_hospedagem" value="{$dominio_hospedagem}">
-                        {/if} {if $tipo == "BL"} 
-                        <input type="hidden" name="bl_banda_upload_kbps" value="{$bl_banda_upload_kbps}"> 
-                        <input type="hidden" name="bl_banda_download_kbps" value="{$bl_banda_download_kbps}"> 
-                        <input type="hidden" name="bl_franquia_trafego_mensal_gb" value="{$bl_franquia_trafego_mensal_gb}"> 
-                        <input type="hidden" name="bl_valor_trafego_adicional_gb" value="{$bl_valor_trafego_adicional_gb}">
-                        {/if} 
-                        <!--Funções de operação de formulário -->
-                        : 
-                        <input type="hidden" name="op" value="contratos"> <input type="hidden" name="acao" value="migrar"> 
-                        <input type="hidden" name="rotina" value="modificar"> 
-                        <input type="hidden" name="p" value="ok"> 
-                        <!-- informações adicionais sobre cadastro do produto -->
-                      </td>
-                    </tr>
-                  </table>
-                  </form>
-                  <p>&nbsp;</p></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
               </tr>
-            </table></td>
+          </table></td>
+          <td width="350"><table width="350" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="128"><p><strong>Nome:</strong></p></td>
+                <td width="222"><p>{$contrato.nome_razao}</p></td>
+              </tr>
+              <tr>
+                <td><p><strong>Username:</strong></p></td>
+                <td><p>{$username_new}</p></td>
+              </tr>
+              <tr>
+                <td><p><strong>Produto:</strong></p></td>
+                <td><p>{$id_produto_new}- {$info_produto.nome}</p></td>
+              </tr>
+              <tr>
+                <td><p><strong>Valor do Contrato:</strong></p></td>
+                <td><p>{$valor_contrato_new}</p></td>
+              </tr>
+              <tr>
+                <td><p><strong>Status:</strong></p></td>
+                <td><p>{$status_new}</p></td>
+              </tr>
+              <tr>
+                <td><p><strong>Data Contrata&ccedil;&atilde;o:</strong></p></td>
+                <td><p>{$data_contratacao_new}</p></td>
+              </tr>
+              <tr>
+                <td><p><strong>Banda Download</strong></p></td>
+                <td><p>{$bl_banda_download_kbps}</p></td>
+              </tr>
+              <tr>
+                <td><p><strong>Banda Upload</strong></p></td>
+                <td><p>{$bl_banda_upload_kbps}</p></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+          </table></td>
         </tr>
-      </table></td>
-  </tr>
-  <tr>
-    <td height="20" align="center" bgcolor="#BCD3C4"><table width="400" border="0" cellspacing="0" cellpadding="0">
+        <tr align="CENTER" valign="MIDDLE">
+          <td width="350"><font size="3" face="Arial, Helvetica, sans-serif"><strong>Faturas
+                que ser&atilde;o extornadas</strong></font></td>
+          <td width="350">&nbsp;</td>
+        </tr>
+        <tr align="CENTER" valign="MIDDLE">
+          <td><table width="350" border="0" cellspacing="0" cellpadding="0">
+              <tr bgcolor="#f1f1f1">
+                <td width="175" align="CENTER"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Venc.</font></strong></td>
+                <td width="175" align="RIGHT"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Valor</font></strong></td>
+              </tr>
+              <tr>
+                <td colspan="2"> {foreach item=v from=$ft_ant}
+                  <table width="350" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td width="175" align="CENTER"><p>{$v.data}</p></td>
+                        <td width="175" align="RIGHT"><p>{$v.valor}</p></td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" bgcolor="#999999"><img src="images/menu/spacer.gif" alt="," width="150" height="1"></td>
+                      </tr>
+                    </table>
+                  {/foreach} </td>
+              </tr>
+          </table></td>
+          <td width="350">&nbsp;</td>
+        </tr>
+      </table>
+      <br>
+      <table width="700" border="0" cellspacing="0" cellpadding="0">
         <tr>
-          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy;
-              Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
+          <td bgcolor="#666666"><table width="700" border="0" cellspacing="1" cellpadding="0">
+              <tr>
+                <td bgcolor="#f1f1f1" height="80" align="CENTER"><p>Ao confirmar
+                    a migra&ccedil;&atilde;o o contrato antigo ser&aacute; marcado
+                    como cancelado e o contrato a direita ser&aacute; criado.<br>
+                  As faturas n&atilde;o pagas do contrato antigo ser&atilde;o
+                  estornadas e ser&atilde;o ciadas novas faturas com base no
+                  novo contrato<br>
+                  para o per&iacute;odo especificado.</p></td>
+              </tr>
+          </table></td>
         </tr>
-      </table></td>
+      </table>
+      <form name="form1" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="confirm('Voc&ecirc; tem certeza de quer proseguir com a migra&ccedil;&atilde;o deste contrato?')">
+        <table width="700" border="0" cellspacing="1" cellpadding="0">
+          <tr>
+            <td align="CENTER"><input type="submit" name="Submit" value="Confirmar Migra&ccedil;&atilde;o de Contrato"></td>
+          </tr>
+          <tr>
+            <td align="CENTER"><!-- info do contrato antigo -->
+                <input name="nome_razao" type="hidden" value="{$contrato.nome_razao}" id="nome_razao">
+                <input name="username" type="hidden" value="{$produto_carac.username}" id="username">
+                <input name="nome_produto" type="hidden" value="{$produto_geral.nome}" id="nome_produto">
+                <input name="valo_contrato" type="hidden" value="{$contrato.valor_contrato}" id="valo_contrato">
+                <input name="status" type="hidden" value="{$contrato.status}" id="status">
+                <input name="data_contratacao" type="hidden" value="{$contrato.data_contratacao}" id="data_contratacao">
+                <input name="download_kbps" type="hidden" value="{$produto_carac.download_kbps}" id="download_kbps">
+                <input name="upload_kbps_old" type="hidden" value="{$produto_carac.upload_kbps}" id="upload_kbps_old">
+                <input name="id_cliente_produto" type="hidden" value="{$contrato.id_cliente_produto}" id="id_cliente_produto">
+            </td>
+          </tr>
+          <tr>
+            <td align="CENTER"><!-- info do contrato novo -->
+                <input type="hidden" name="tipo_produto" value="{$tipo}">
+                <input type="hidden" name="id_produto" value="{$id_produto_new}">
+                <input type="hidden" name="email_igual" value="{$email_igual_new}">
+                <input type="hidden" name="data_contratacao" value="{$data_contratacao_new}">
+                <input type="hidden" name="vigencia" value="{$vigencia_new}">
+                <input type="hidden" name="status" value="{$status_new}">
+                <input type="hidden" name="dia_vencimento" value="{$dia_vencimento_new}">
+                <input type="hidden" name="carencia_pagamento" value="{$carencia_pagamento_new}">
+                <input type="hidden" name="desconto_promo" value="{$desconto_promo_new}">
+                <input type="hidden" name="periodo_desconto" value="{$periodo_desconto_new}">
+                <input type="hidden" name="tx_instalacao" value="{$tx_instalacao_new}">
+                <input type="hidden" name="comodato" value="{$comodato_new}">
+                <input type="hidden" name="valor_comodato" value="{$valor_comodato_new}">
+                <input type="hidden" name="prorata" value="{$prorata_new}">
+                <input type="hidden" name="tipo_cobranca" value="{$tipo_cobranca_new}">
+                <input type="hidden" name="forma_pagamento" value="{$forma_pagamento_new}">
+                <input type="hidden" name="ini_carne" value="{$ini_carne_new}">
+                <input type="hidden" name="data_carne" value="{$data_carne_new}">
+                <input type="hidden" name="username" value="{$username_new}">
+                <input type="hidden" name="senha" value="{$senha_new}">
+                <input type="hidden" name="conf_senha" value="{$conf_senha_new}">
+                <input type="hidden" name="id_nas" value="{$id_nas_new}">
+                <input type="hidden" name="selecao_ip" value="{$selecao_ip_new}">
+                <input type="hidden" name="mac" value="{$mac_new}">
+                <input type="hidden" name="id_cliente" value="{$id_cliente}">
+                <input type="hidden" name="id_pop" value="{$id_pop_new}">
+                <input type="hidden" name="pri_venc" value="{$pri_venc_new}">
+                <input type="hidden" name="valor_prorata" value="{$valor_prorata_new}">
+                <input type="hidden" name="dias_prorata" value="{$dias_prorata_new}">
+                <input type="hidden" name="cc_vencimento" value="{$cc_vencimento_new}">
+                <input type="hidden" name="cc_numero" value="{$cc_numero_new}">
+                <input type="hidden" name="cc_operadora" value="{$cc_operadora_new}">
+                <input type="hidden" name="db_banco" value="{$db_banco_new}">
+                <input type="hidden" name="db_agencia" value="{$db_agencia_new}">
+                <input type="hidden" name="db_conta" value="{$db_conta_new}">
+              {if $tipo == "D"}
+              <input type="hidden" name="foneinfo" value="{$foneinfo}">
+              <input type="hidden" name="d_franquia_horas" value="{$d_franquia_horas}">
+              <input type="hidden" name="d_permitir_duplicidade" value="{$d_permitir_duplicidade}">
+              <input type="hidden" name="d_valor_hora_adicional" value="{$d_valor_hora_adicional}">
+              {/if} {if $tipo == "H"}
+              <input type="hidden" name="h_dominio" value="{$h_dominio}">
+              <input type="hidden" name="h_franquia_em_mb" value="{$h_franquia_em_mb}">
+              <input type="hidden" name="h_valor_mb_adicional" value="{$h_valor_mb_adicional}">
+              <input type="hidden" name="tipo_hospedagem" value="{$tipo_hospedagem}">
+              <input type="hidden" name="dominio_hospedagem" value="{$dominio_hospedagem}">
+              {/if} {if $tipo == "BL"}
+              <input type="hidden" name="bl_banda_upload_kbps" value="{$bl_banda_upload_kbps}">
+              <input type="hidden" name="bl_banda_download_kbps" value="{$bl_banda_download_kbps}">
+              <input type="hidden" name="bl_franquia_trafego_mensal_gb" value="{$bl_franquia_trafego_mensal_gb}">
+              <input type="hidden" name="bl_valor_trafego_adicional_gb" value="{$bl_valor_trafego_adicional_gb}">
+              {/if}
+              <!--Fun&ccedil;&otilde;es de opera&ccedil;&atilde;o de formul&aacute;rio -->
+              :
+              <input type="hidden" name="op" value="contratos">
+              <input type="hidden" name="acao" value="migrar">
+              <input type="hidden" name="rotina" value="modificar">
+              <input type="hidden" name="p" value="ok">
+              <!-- informa&ccedil;&otilde;es adicionais sobre cadastro do produto -->
+            </td>
+          </tr>
+        </table>
+      </form>
+    <p></p></td>
   </tr>
 </table>
 </body>

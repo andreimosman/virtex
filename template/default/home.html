@@ -1,65 +1,233 @@
+<!--INICIO DO HEADER.HTML-->
 <html>
 <head>
-<title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
-
-<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+<script language="JavaScript1.2" type="text/javascript" src="template/default/mm_css_menu.js"></script>
+<style type="text/css" media="screen">
+	@import url("template/default/menu.css");
+</style>
+<title>Virtex Admin - Área de Gerenciamento </title>
 </head>
+<base target="CONTEUDO">
+<body topmargin=0 leftmargin=0 > 
+<!-- INICIO DO MENU -->
+<table width="100%" height="100%" cellspacing=0 cellpadding=0 border=0>
+ <tr>
+  <td colspan=2 background="template/default/images/pixel_top.gif" height="51">
+	 <table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr> 
+			<td width="194"><img src="template/default/images/logo.gif" width="194" height="51"></td>
+			<td align="center"><img src="template/default/images/titulo.gif" width="211" height="51"></td>
+		</tr>
+	</table>
+  </td>
+ </tr>
+ <tr>
+    <td width=150 align="center" valign="top" bgcolor="#BCD3C4"> 
+      <!-- INICIO DA BARRA LATERAL -->
+<table height="100%" border=0 cellspacing=0 cellpadding=0>
+<tr><td valign="top" width="100%" align="center">
+      <img src="template/default/images/menu/menu_r2_c1.gif" width="150" height="6"> <br>
 
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
-  <tr>
-    <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-          <td>{ include file='menu_principal.html' }</td>
-        </tr>
-        <tr>
-          <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-              <tr>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td align="center" valign="middle">
-				<P align="center">&nbsp; </P>
-                  <table width="500" border="0" cellspacing="3" cellpadding="3">
-                    <tr align="CENTER" valign="MIDDLE"> 
-                      <td colspan="3" bgcolor="#f1f1f1"><font face="Arial, Helvetica, sans-serif" size="5" color="#666666"><strong><font size="4">Menu 
-                        Principal</font><br>
-                        </strong><font face="Verdana, Arial, Helvetica, sans-serif" size="1" color="#000000">Você 
-                        está logado com o usuário <strong>{$admin} 
-                        </strong></font></font></td>
-                    </tr>
-                    <tr align="CENTER" valign="MIDDLE"> 
-                      <td><img src="template/default/images/cadastrar.gif" width="77" height="73"></td>
-                      <td><img src="template/default/images/bt_cadastrar_novo.gif" width="77" height="73"></td>
-                      <td><img src="template/default/images/bt_cobranca.gif" width="77" height="73"></td>
-                    </tr>
-                    <tr align="CENTER" valign="MIDDLE"> 
-                      <td><img src="template/default/images/bt_nas.gif" width="77" height="73"></td>
-                      <td><img src="template/default/images/bt_pop.gif" width="77" height="73"></td>
-                      <td><img src="template/default/images/bt_helpdesk.gif" width="77" height="73"></td>
-                    </tr>
-                    <tr align="CENTER" valign="MIDDLE"> 
-                      <td>&nbsp;</td>
-                      <td>&nbsp;</td>
-                      <td>&nbsp;</td>
-                    </tr>
-                  </table>
-                  <p>&nbsp;</p></td>
-              </tr>
-            </table></td>
-        </tr>
-      </table></td>
-  </tr>
-  <tr>
-    <td height="20" align="center" bgcolor="#BCD3C4"><table width="400" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy;
-              Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
-        </tr>
-      </table></td>
-  </tr>
+
+<script type="text/javascript" src="template/default/ajax.js"></script>
+<script language="JavaScript" src="template/default/atalhos_pesquisa.js"></script>
+<link href="template/default/atalhos_pesquisa.css" rel="stylesheet" type="text/css"></link>
+
+<form name="form_pesquisa" onSubmit="return pesquisaUsuario();">
+<div name="box_pesquisa" id="box_pesquisa">
+	<table width="120" border="0" cellspacing="1" cellpadding="1">
+		<tr align="left">
+			<td><font face="arial" size="-1"><b> Procurar Cliente</b><br><input name="texto_pesquisa" value="" type="text" size="15" class="campos" onFocus="this.style.backgroundColor='#E7EFEA'" onBlur="this.style.backgroundColor='#FFFFFF'"> </td>
+		</tr>
+		<tr>
+			<td>
+				<table width="120" border="0" cellspacing="2" cellpadding="0" align="center">
+					<tr>
+						<td align="left"> <p>
+							<label class="label_pesquisa">
+							<input type="radio" name="tipo_pesquisa" value="NOME" class="checkbox" {if $tipo_pesquisa=="NOME"}CHECKED{/if} checked="checked">
+							Nome</label>
+							</p>
+						</td>
+						<td> <p>
+							<label class="label_pesquisa">
+							<input type="radio" name="tipo_pesquisa" value="DOCTOS" class="checkbox" {if $tipo_pesquisa=="DOCTOS"}CHECKED{/if}>
+							Doctos</label>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td> <p>
+							<label class="label_pesquisa">
+							<input type="radio" name="tipo_pesquisa" value="CONTA" class="checkbox" {if $tipo_pesquisa=="CONTA"}CHECKED{/if}>
+							Conta</label>
+							</p>
+						</td>
+						<td> <p>
+							<label class="label_pesquisa">
+							<input type="radio" name="tipo_pesquisa" value="EMAIL" class="checkbox" {if $tipo_pesquisa=="EMAIL"}CHECKED{/if}>
+							E-Mail</label>
+							</p>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td align="center">
+				<input type="button" name="Submit" value="Pesquisa" class="campos" onClick="javascript:pesquisaUsuario();">
+				<input name="op" type="hidden" id="op" value="pesquisa"> <input name="a" type="hidden" id="a" value="pesquisa">
+			</td>
+		</tr>
+	</table>
+
+	
+	<div name="caixa_pesquisa" id="caixa_pesquisa" class="box_fechada">
+		<table width="100%" class="barra_pequisa" bgcolor="#7BA88B" cellspacing=1 cellpadding=0>
+			<tr>
+				<td width="90%">&nbsp;<span style="font-family: arial; font-size: 12px; color: ffffff; text-decoration: none"><b>Resultado da Pesquisa</b></span></td>
+				<td width="10%" align="right"><a href="javascript:fechaPesquisa();" target="_top"><IMG src="template/default/images/bt_fechar.gif" border="0"></a>&nbsp;</td>
+			</tr>
+		</table>	
+		<table width="100%" height="100%" bgcolor="#7BA88B">
+			<tr>
+				<td rowspan=3 width="315" valign="top">
+					<div name="pesquisa" id="resultado_pesquisa" border=1>&nbsp;</div>
+				</td>
+				<td width=10 valign="top">
+					<a href="javaScript:scrollUpPesquisa();" target="_top"><img src="template/default/images/seta_acima.gif" border="0"></a>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td width=10 valign="bottom">
+					<a href="javaScript:scrollDownPesquisa();" target="_top"><img src="template/default/images/seta_abaixo.gif" border="0"></a>
+				</td>
+			</tr>
+		</table>	
+	</div>
+
+
+</div>
+<table><tr><td><a href="clientes.php?op=cadastro"><img src="template/default/images/bt_usuario_novo_barra.gif" width="77" height="73" border="0"></a></td></tr></table>
+</form>
+</td></tr>
+<tr><td align="center" valign="top"></td></tr>
+</table>
+
+    </td>
+    <td height="100%" bgcolor="#FFFFFF" valign="top" width="100%">
+		<table border=0 width="100%" height="100%" cellspacing=0 cellpadding=0>
+		<tr><td height=15>
+			  <!-- INICIO DO MENU -->
+			   <div id="FWTableContainer294739288" zindex="999"> 
+			  <table border="0" cellpadding="0" cellspacing="0" width="621">
+		  <tr> 
+			<td><img src="template/default/images/menu/spacer.gif" width="3" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="1" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="16" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="39" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="4" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="61" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="63" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="7" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="53" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="2" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="17" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="73" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="3" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="104" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="3" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="28" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="14" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="3" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="34" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="6" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="58" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="11" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="18" height="1" border="0" alt="" /></td>
+			<td><img src="template/default/images/menu/spacer.gif" width="1" height="1" border="0" alt="" /></td>
+		  </tr>
+		  <tr> 
+			<td rowspan="2"><img name="menu_r1_c1" src="template/default/images/menu/menu_r1_c1.gif" width="3" height="20" border="0" id="menu_r1_c1" alt="" /></td><td rowspan="2"><img name="menu_r1_c2" src="template/default/images/menu/menu_r1_c2.gif" width="1" height="20" border="0" id="menu_r1_c2" alt="" /></td><td colspan="20"><img name="menu_r1_c3" src="template/default/images/menu/menu_r1_c3.gif" width="599" height="5" border="0" id="menu_r1_c3" alt="" /></td><td rowspan="3"><img name="menu_r1_c23" src="template/default/images/menu/menu_r1_c23.gif" width="18" height="26" border="0" id="menu_r1_c23" alt="" /></td><td><img src="template/default/images/menu/spacer.gif" width="1" height="5" border="0" alt="" /></td></tr><tr><td><img name="menu_r2_c3" src="template/default/images/menu/menu_r2_c3.gif" width="16" height="15" border="0" id="menu_r2_c3" alt="" /></td><td><a href="home.php" target="_top"><img name="menu_r2_c4" src="template/default/images/menu/menu_r2_c4.gif" width="39" height="15" border="0" id="menu_r2_c4" alt="" /></a></td><td><img name="menu_r2_c5" src="template/default/images/menu/menu_r2_c5.gif" width="4" height="15" border="0" id="menu_r2_c5" alt="" /></td><td><a href="javascript:;" onMouseOut="MM_menuStartTimeout(500);" onMouseOver="MM_menuShowMenu('MMMenuContainer0205174323_0', 'MMMenu0205174323_0',0,15,'menu_r2_c6');"><img name="menu_r2_c6" src="template/default/images/menu/menu_r2_c6.gif" width="61" height="15" border="0" id="menu_r2_c6" alt="" /></a></td><td><a href="javascript:;" onMouseOut="MM_menuStartTimeout(500);" onMouseOver="MM_menuShowMenu('MMMenuContainer0205175354_1', 'MMMenu0205175354_1',0,15,'menu_r2_c7');"><img name="menu_r2_c7" src="template/default/images/menu/menu_r2_c7.gif" width="63" height="15" border="0" id="menu_r2_c7" alt="" /></a></td><td colspan="2"><a href="javascript:;" onMouseOut="MM_menuStartTimeout(500);" onMouseOver="MM_menuShowMenu('MMMenuContainer0205175428_2', 'MMMenu0205175428_2',0,15,'menu_r2_c8');"><img name="menu_r2_c8" src="template/default/images/menu/menu_r2_c8.gif" width="60" height="15" border="0" id="menu_r2_c8" alt="" /></a></td><td><img name="menu_r2_c10" src="template/default/images/menu/menu_r2_c10.gif" width="2" height="15" border="0" id="menu_r2_c10" alt="" /></td><td colspan="2"><a href="javascript:;" onMouseOut="MM_menuStartTimeout(500);" onMouseOver="MM_menuShowMenu('MMMenuContainer0205175531_3', 'MMMenu0205175531_3',0,15,'menu_r2_c11');"><img name="menu_r2_c11" src="template/default/images/menu/menu_r2_c11.gif" width="90" height="15" border="0" id="menu_r2_c11" alt="" /></a></td><td><img name="menu_r2_c13" src="template/default/images/menu/menu_r2_c13.gif" width="3" height="15" border="0" id="menu_r2_c13" alt="" /></td><td><a href="javascript:;" onMouseOut="MM_menuStartTimeout(500);" onMouseOver="MM_menuShowMenu('MMMenuContainer0205175615_4', 'MMMenu0205175615_4',0,15,'menu_r2_c14');"><img name="menu_r2_c14" src="template/default/images/menu/menu_r2_c14.gif" width="104" height="15" border="0" id="menu_r2_c14" alt="" /></a></td><td><img name="menu_r2_c15" src="template/default/images/menu/menu_r2_c15.gif" width="3" height="15" border="0" id="menu_r2_c15" alt="" /></td><td colspan="4"><a href="cobranca.php?op=faturamento"><img name="menu_r2_c16" src="template/default/images/menu/menu_r2_c16.gif" width="79" height="15" border="0" id="menu_r2_c16" alt="" /></a></td><td><img name="menu_r2_c20" src="template/default/images/menu/menu_r2_c20.gif" width="6" height="15" border="0" id="menu_r2_c20" alt="" /></td><td><a href="login.php" target="_top"><img name="menu_r2_c21" src="template/default/images/menu/menu_r2_c21.gif" width="58" height="15" border="0" id="menu_r2_c21" alt="" /></a></td><td><img name="menu_r2_c22" src="template/default/images/menu/menu_r2_c22.gif" width="11" height="15" border="0" id="menu_r2_c22" alt="" /></td><td><img src="template/default/images/menu/spacer.gif" width="1" height="15" border="0" alt="" /></td></tr><tr><td colspan="22"><img name="menu_r3_c1" src="template/default/images/menu/menu_r3_c1.gif" width="603" height="6" border="0" id="menu_r3_c1" alt="" /></td><td><img src="template/default/images/menu/spacer.gif" width="1" height="6" border="0" alt="" /></td></tr></table>
+			  <div id="MMMenuContainer0205174323_0"><div id="MMMenu0205174323_0" onMouseOut="MM_menuStartTimeout(500);" onMouseOver="MM_menuResetTimeout();"><a href="clientes.php?op=pesquisa" id="MMMenu0205174323_0_Item_0" class="MMMIFVStyleMMMenu0205174323_0" onMouseOver="MM_menuOverMenuItem('MMMenu0205174323_0');">Pesquisa 
+			  </a><a href="clientes.php?op=cadastro" id="MMMenu0205174323_0_Item_1" class="MMMIVStyleMMMenu0205174323_0" onMouseOver="MM_menuOverMenuItem('MMMenu0205174323_0');">Cadastro 
+			  </a> <a href="clientes.php?op=excluir_cliente" id="MMMenu0205174323_0_Item_2" class="MMMIVStyleMMMenu0205174323_0" onMouseOver="MM_menuOverMenuItem('MMMenu0205174323_0');">Eliminar 
+			  </a> <a href="javascript:;" id="MMMenu0205174323_0_Item_3" class="MMMIVStyleMMMenu0205174323_0" onMouseOver="MM_menuOverMenuItem('MMMenu0205174323_0','1');"><span class="MMMenuItemSpanMMMenu0205174323_0">Relat&oacute;rios</span><img src="template/default/images/menu/arrows.gif" alt="" class="MMArrowStyleMMMenu0205174323_0" /></a> 
+			  </div><div id="MMMenu0205174323_0_1" onMouseOut="MM_menuStartTimeout(500);" onMouseOver="MM_menuResetTimeout();"><a href="relatorio.php?op=geral" id="MMMenu0205174323_0_1_Item_0" class="MMMIFVStyleMMMenu0205174323_0_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205174323_0_1');">Lista&nbsp;Geral 
+			  </a> <a href="relatorio.php?op=estat" id="MMMenu0205174323_0_1_Item_1" class="MMMIVStyleMMMenu0205174323_0_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205174323_0_1');">Estat&iacute;sticas 
+			  </a> <a href="relatorio.php?op=cidade_cliente" id="MMMenu0205174323_0_1_Item_1" class="MMMIVStyleMMMenu0205174323_0_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205174323_0_1');">Cliente&nbsp;X&nbsp;Cidade 
+			  </a></div></div><div id="MMMenuContainer0205175354_1"><div id="MMMenu0205175354_1" onMouseOut="MM_menuStartTimeout(500);" onMouseOver="MM_menuResetTimeout();"><a href="cobranca.php?op=bloqueados" id="MMMenu0205175354_1_Item_0" class="MMMIFVStyleMMMenu0205175354_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205175354_1');">Bloqueios 
+			  </a> <a href="cobranca.php?op=lista" id="MMMenu0205175354_1_Item_1" class="MMMIVStyleMMMenu0205175354_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205175354_1');"> 
+			  Produtos&nbsp;e&nbsp;Planos </a> <a href="cobranca.php?op=gerar_boletos" id="MMMenu0205175354_1_Item_2" class="MMMIVStyleMMMenu0205175354_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205175354_1');">Emitir&nbsp;Faturas 
+			  </a> <a href="cobranca.php?op=retornos" id="MMMenu0205175354_1_Item_3" class="MMMIVStyleMMMenu0205175354_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205175354_1');">Retornos 
+			  </a> <a href="javascript:;" id="MMMenu0205175354_1_Item_4" class="MMMIVStyleMMMenu0205175354_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205175354_1','1');"><span class="MMMenuItemSpanMMMenu0205175354_1">Relatorios</span> 
+			  <img src="template/default/images/menu/arrows.gif" alt="" class="MMArrowStyleMMMenu0205175354_1" /></a> 
+			  </div><div id="MMMenu0205175354_1_1" onMouseOut="MM_menuStartTimeout(500);" onMouseOver="MM_menuResetTimeout();"> 
+			  <a href="relatorio.php?op=cortesia" id="MMMenu0205175354_1_1_Item_0" class="MMMIVStyleMMMenu0205175354_1_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205175354_1_1');">Cortesias 
+			  </a><a href="relatorio.php?op=evolucao" id="MMMenu0205175354_1_1_Item_1" class="MMMIVStyleMMMenu0205175354_1_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205175354_1_1');"> 
+			  Evolu&ccedil;&atilde;o </a> <a href="relatorio.php?op=adesao" id="MMMenu0205175354_1_1_Item_2" class="MMMIVStyleMMMenu0205175354_1_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205175354_1_1');">Ades&otilde;es 
+			  </a> <a href="relatorio.php?op=cancelamento" id="MMMenu0205175354_1_1_Item_3" class="MMMIVStyleMMMenu0205175354_1_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205175354_1_1');">Cancelamentos 
+			  </a> <a href="relatorio.php?op=inadimplencia" id="MMMenu0205175354_1_1_Item_4" class="MMMIVStyleMMMenu0205175354_1_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205175354_1_1');">Atrasos 
+			  </a> <a href="relatorio.php?op=bloqueios" id="MMMenu0205175354_1_1_Item_5" class="MMMIVStyleMMMenu0205175354_1_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205175354_1_1');"> 
+			  Bloqueios&nbsp;e&nbsp;Desbloqueios </a> <a href="relatorio.php?op=produto_cliente" id="MMMenu0205175354_1_1_Item_6" class="MMMIVStyleMMMenu0205175354_1_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205175354_1_1');"> 
+			  Clientes&nbsp;X&nbsp;Prod. </a><a href="relatorio.php?op=tproduto_cliente" id="MMMenu0205175354_1_1_Item_7" class="MMMIVStyleMMMenu0205175354_1_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205175354_1_1');">Clientes&nbsp;X&nbsp;Tp. 
+			  Prod. </a><a href="cobranca.php?op=relatorio_reagendamento" id="MMMenu0205175354_1_1_Item_8" class="MMMIVStyleMMMenu0205175354_1_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205175354_1_1');">Reagendamentos 
+			  </a></div></div><div id="MMMenuContainer0205175428_2"><div id="MMMenu0205175428_2" onMouseOut="MM_menuStartTimeout(500);" onMouseOver="MM_menuResetTimeout();"><a href="suporte.php?op=graf" id="MMMenu0205175428_2_Item_0" class="MMMIFVStyleMMMenu0205175428_2" onMouseOver="MM_menuOverMenuItem('MMMenu0205175428_2');">Gr&aacute;ficos 
+			  </a> <a href="suporte.php?op=log" id="MMMenu0205175428_2_Item_1" class="MMMIVStyleMMMenu0205175428_2" onMouseOver="MM_menuOverMenuItem('MMMenu0205175428_2');">Log&nbsp;Radius 
+			  </a><a href="relatorio.php?op=lista_banda" id="MMMenu0205175428_2_Item_2" class="MMMIVStyleMMMenu0205175428_2" onMouseOver="MM_menuOverMenuItem('MMMenu0205175428_2');">Relat&oacute;rio&nbsp;Banda 
+			  </a><a href="javascript:;" id="MMMenu0205175428_2_Item_3" class="MMMIVStyleMMMenu0205175428_2" onMouseOver="MM_menuOverMenuItem('MMMenu0205175428_2','1');"><span class="MMMenuItemSpanMMMenu0205175428_2">Ferramentas</span> 
+			  <img src="template/default/images/menu/arrows.gif" alt="" class="MMArrowStyleMMMenu0205175428_2" /></a></div><div id="MMMenu0205175428_2_1" onMouseOut="MM_menuStartTimeout(500);" onMouseOver="MM_menuResetTimeout();"><a href="suporte.php?op=calc" id="MMMenu0205175428_2_1_Item_0" class="MMMIFVStyleMMMenu0205175428_2_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205175428_2_1');">Calculadora&nbsp;IP 
+			  </a> <a href="suporte.php?op=arp" id="MMMenu0205175428_2_1_Item_1" class="MMMIVStyleMMMenu0205175428_2_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205175428_2_1');">ARP 
+			  </a> <a href="suporte.php?op=ping" id="MMMenu0205175428_2_1_Item_2" class="MMMIVStyleMMMenu0205175428_2_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205175428_2_1');">PING 
+			  </a><a href="suporte.php?op=backup" id="MMMenu0205175428_2_1_Item_3" class="MMMIVStyleMMMenu0205175428_2_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205175428_2_1');">Backup 
+			  </a></div></div><div id="MMMenuContainer0205175531_3"> <div id="MMMenu0205175531_3" onMouseOut="MM_menuStartTimeout(500);" onMouseOver="MM_menuResetTimeout();"><a href="javascript:;" id="MMMenu0205175531_3_Item_0" class="MMMIFVStyleMMMenu0205175531_3" onMouseOver="MM_menuOverMenuItem('MMMenu0205175531_3','1');"><span class="MMMenuItemSpanMMMenu0205175531_3">Equipamento</span> 
+			  <img src="template/default/images/menu/arrows.gif" alt="" class="MMArrowStyleMMMenu0205175531_3" /></a> 
+			  <a href="javascript:;" id="MMMenu0205175531_3_Item_1" class="MMMIVStyleMMMenu0205175531_3" onMouseOver="MM_menuOverMenuItem('MMMenu0205175531_3','2');"><span class="MMMenuItemSpanMMMenu0205175531_3">Prefer&ecirc;ncias</span> 
+			  <img src="template/default/images/menu/arrows.gif" alt="" class="MMArrowStyleMMMenu0205175531_3" /></a> 
+			  <a href="javascript:;" id="MMMenu0205175531_3_Item_2" class="MMMIVStyleMMMenu0205175531_3" onMouseOver="MM_menuOverMenuItem('MMMenu0205175531_3','3');"><span class="MMMenuItemSpanMMMenu0205175531_3">Relat&oacute;rios</span> 
+			  <img src="template/default/images/menu/arrows.gif" alt="" class="MMArrowStyleMMMenu0205175531_3" /></a> 
+			  </div><div id="MMMenu0205175531_3_1" onMouseOut="MM_menuStartTimeout(500);" onMouseOver="MM_menuResetTimeout();"><a href="configuracao.php?op=lista_pop" id="MMMenu0205175531_3_1_Item_0" class="MMMIFVStyleMMMenu0205175531_3_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205175531_3_1');"> 
+			  POPs </a> <a href="configuracao.php?op=lista_nas" id="MMMenu0205175531_3_1_Item_1" class="MMMIVStyleMMMenu0205175531_3_1" onMouseOver="MM_menuOverMenuItem('MMMenu0205175531_3_1');">NAS 
+			  </a> </div><div id="MMMenu0205175531_3_2" onMouseOut="MM_menuStartTimeout(500);" onMouseOver="MM_menuResetTimeout();"><a href="configuracao.php?op=preferencia" id="MMMenu0205175531_3_2_Item_0" class="MMMIFVStyleMMMenu0205175531_3_2" onMouseOver="MM_menuOverMenuItem('MMMenu0205175531_3_2');">Prefer&ecirc;ncia&nbsp;Geral 
+			  </a> <a href="configuracao.php?op=preferencia_provedor" id="MMMenu0205175531_3_2_Item_1" class="MMMIVStyleMMMenu0205175531_3_2" onMouseOver="MM_menuOverMenuItem('MMMenu0205175531_3_2');"> 
+			  Preferencia&nbsp;do&nbsp;Provedor </a> <a href="configuracao.php?op=preferencia_cobranca" id="MMMenu0205175531_3_2_Item_2" class="MMMIVStyleMMMenu0205175531_3_2" onMouseOver="MM_menuOverMenuItem('MMMenu0205175531_3_2');">Preferencia&nbsp;de&nbsp;Cobran&ccedil;a 
+			  </a> <a href="configuracao.php?op=contratos" id="MMMenu0205175531_3_2_Item_3" class="MMMIVStyleMMMenu0205175531_3_2" onMouseOver="MM_menuOverMenuItem('MMMenu0205175531_3_2');">Modelos&nbsp;de&nbsp;Contrato 
+			  </a><a href="configuracao.php?op=cidades&acao=nada" id="MMMenu0205175531_3_2_Item_4" class="MMMIVStyleMMMenu0205175531_3_2" onMouseOver="MM_menuOverMenuItem('MMMenu0205175531_3_2');">Cidades 
+			  </a><a href="configuracao.php?op=registro" id="MMMenu0205175531_3_2_Item_5" class="MMMIVStyleMMMenu0205175531_3_2" onMouseOver="MM_menuOverMenuItem('MMMenu0205175531_3_2');">Registro 
+			  </a></div><div id="MMMenu0205175531_3_3" onMouseOut="MM_menuStartTimeout(500);" onMouseOver="MM_menuResetTimeout();"><a href="relatorio.php?op=config&pg=carga_pop" id="MMMenu0205175531_3_3_Item_0" class="MMMIFVStyleMMMenu0205175531_3_3" onMouseOver="MM_menuOverMenuItem('MMMenu0205175531_3_3');">Carga&nbsp;por&nbsp;POP 
+			  </a><a href="relatorio.php?op=config&pg=carga_nas" id="MMMenu0205175531_3_3_Item_1" class="MMMIVStyleMMMenu0205175531_3_3" onMouseOver="MM_menuOverMenuItem('MMMenu0205175531_3_3');">Carga&nbsp;por&nbsp;NAS 
+			  </a> <a href="relatorio.php?op=config&pg=carga_ap" id="MMMenu0205175531_3_3_Item_2" class="MMMIVStyleMMMenu0205175531_3_3" onMouseOver="MM_menuOverMenuItem('MMMenu0205175531_3_3');">Carga&nbsp;por&nbsp;AP 
+			  </a> </div></div><div id="MMMenuContainer0205175615_4"><div id="MMMenu0205175615_4" onMouseOut="MM_menuStartTimeout(500);" onMouseOver="MM_menuResetTimeout();"><a href="administrador.php?op=altera" id="MMMenu0205175615_4_Item_0" class="MMMIFVStyleMMMenu0205175615_4" onMouseOver="MM_menuOverMenuItem('MMMenu0205175615_4');">Alterar&nbsp;Senha 
+			  </a><a href="administrador.php?op=cadastro" id="MMMenu0205175615_4_Item_1" class="MMMIVStyleMMMenu0205175615_4" onMouseOver="MM_menuOverMenuItem('MMMenu0205175615_4');">Cadastro 
+			  </a><a href="administrador.php?op=lista" id="MMMenu0205175615_4_Item_2" class="MMMIVStyleMMMenu0205175615_4" onMouseOver="MM_menuOverMenuItem('MMMenu0205175615_4');"><em>Listagem 
+			  </em></a></div></div></div>
+			  <!-- FIM DO MENU -->
+		
+			</td>
+		 </tr>
+		 <tr>
+			<td valign="top" align="CENTER"><div align="left"><img src="template/default/images/canto.gif" width="10" height="11"><br>
+		      <!--FIM DO HEADER.HTML-->
+			  
+			  
+			  </div>
+			  <iframe src="about:blank" id="CONTEUDO" name = "CONTEUDO" align="top" frameborder="0" height="90%" scrolling="auto" width="100%" hspace="10"  marginheight="0" marginwidth="0" vspace="10"></iframe>
+
+
+
+			  <!--INICIO DO FOOTER.HTML-->
+		   </td>
+		 </tr>
+		</table>
+	</td>
+ </tr>
+ <tr>
+  <td colspan=2 bgcolor="#BCD3C4" height='20'><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy; Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
+ </tr>
 </table>
 </body>
-
-
 </html>
+<!--FIM DO FOOTER.HTML-->

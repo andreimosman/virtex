@@ -7,84 +7,60 @@
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
-  <tr>
-    <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td valign="top"><table width=100% cellpadding=0 cellspacing=0 height='100%'>
+  <tr height="100%">
+    <td width=100% align="center" valign="top" style="border-right: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"><form method="post" action="{$smarty.server.PHP_SELF}">
+      <input type="hidden" name="oper" value="alt">
+      <input type="hidden" name="id_admin" value="{$admin.id_admin}">
+      <input type="hidden" name="op" value="privilegio">
+      <table class=table_main width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#F0f0f0">
         <tr>
-          <td>{ include file='menu_principal.html' }</td>
+          <th bgcolor="#FFFFFF" class=th_main ><font face="Arial" size="4"><b>Privil&eacute;gios</b></font></th>
         </tr>
+      </table>
+      <font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>Administrador:</b> {$admin.id_admin}
+      - {$admin.admin} - {$admin.nome} </font>
+      <br>
+      <table border=0 cellspacing=1 cellpadding=0 bgcolor="#444444" align="center">
         <tr>
-          <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-              <tr>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td align="center" valign="middle"><table width=100% cellpadding=0 cellspacing=0 height='100%'>
-                    <tr height="100%">
-                      <td width=100% style="border-right: 1px solid #cccccc; border-bottom: 1px solid #cccccc;" align="center">
-                        <form method="post" action="{$smarty.server.PHP_SELF}">
-                          <input type="hidden" name="oper" value="alt">
-                          <input type="hidden" name="id_admin" value="{$admin.id_admin}">
-                          <input type="hidden" name="op" value="privilegio">
-
-                          <table class=table_main width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#F0f0f0">
-                            <tr>
-                              <th bgcolor="#FFFFFF" class=th_main ><font face="Arial" size="4"><b>Privilégios</b></font></th>
-                            </tr>
-                          </table>
-                          <font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>Administrador:</b> {$admin.id_admin}
-                          - {$admin.admin} - {$admin.nome} </font>
-                          <hr size=1>
-                          <br>
-                          <table border=0 cellspacing=1 cellpadding=0 bgcolor="#444444" align="center">
-                            <tr>
-                              <td> <table border=0 width="400" cellspacing=0 cellpadding=0>
-                                  <tr bgcolor="#FAFAFA">
-                                    <td colspan=2><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><b>..privilegio..</b></font></td>
-                                    <td><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><b>..opção..</b></font>
-                                  </tr>
-                                  <tr>
-                                    <td colspan=3><img src="img/nada.gif" widht=1 height=1></td>
-                                  </tr>
-								  {foreach item=v from=$privilegios}
-                                  <tr bgcolor="#FFFFFF">
-                                    <td><input type="checkbox" name="id[{$v.id_priv}]" class="checkbox" {if $v.id_admin}CHECKED{ /if }>
-                                    </td>
-                                    <td> <p>{$v.nome}</p></td>
-
-                                    <td> <SELECT name='pode_gravar[{$v.id_priv}]'>
+          <td><table border=0 width="400" cellspacing=0 cellpadding=0>
+            <tr bgcolor="#FAFAFA">
+              <td colspan=2><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><b>..privilegio..</b></font></td>
+              <td><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><b>..op&ccedil;&atilde;o..</b></font> 
+            </tr>
+            <tr>
+              <td colspan=3><img src="img/nada.gif" alt="." height=1 widht=1></td>
+            </tr>
+            {foreach item=v from=$privilegios}
+            <tr bgcolor="#FFFFFF">
+              <td><input type="checkbox" name="id[{$v.id_priv}]" class="checkbox" {if $v.id_admin}CHECKED{ /if }>
+              </td>
+              <td><p>{$v.nome}</p></td>
+              <td><SELECT name='pode_gravar[{$v.id_priv}]'>
+                
                                     	{foreach key=id item=nome from=$lista_privilegio}
-                                        <OPTION VALUE='{$id}' {if $id == $v.pode_gravar}SELECTED{/if}>{$nome}</OPTION>
+                                        
+                <OPTION VALUE='{$id}' {if $id == $v.pode_gravar}SELECTED{/if}>{$nome}</OPTION>
+                
                                         {/foreach}
-                                      </SELECT> </td>
-                                  </tr>
-                                  <tr>
-								  {/foreach}
-                                    <td colspan=3><img src="template/default/images/menu/spacer.gif" width=1 height=1></td>
-                                  </tr>
-                                  <tr bgcolor="#FFFFFF">
-                                    <td colspan=3 align="center"><input name="cadastro_cliente" type="submit" class="campos" id="cadastro_cliente2" value="Alterar Privilégios &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;"></td>
-                                  </tr>
-                                </table></tr>
-                          </table>
-                        </form></td>
-                    </tr>
-                  </table>
-                  <p><br>
-                  </p>
-                  <p>&nbsp;</p></td>
-              </tr>
-            </table></td>
-        </tr>
-      </table></td>
+                                      
+              </SELECT>
+              </td>
+            </tr>
+            <tr> {/foreach}
+              <td colspan=3><img src="template/default/images/menu/spacer.gif" alt="." width=1 height=1></td>
+            </tr>
+            <tr bgcolor="#FFFFFF">
+              <td colspan=3 align="center"><input name="cadastro_cliente" type="submit" class="campos" id="cadastro_cliente2" value="Alterar Privil&eacute;gios &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;"></td>
+            </tr>
+          </table>
+          </tr>
+      </table>
+    </form></td>
   </tr>
-  <tr>
-    <td height="20" align="center" bgcolor="#BCD3C4"><table width="400" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy;
-              Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
-        </tr>
-      </table></td>
-  </tr>
+</table></td>
+</tr>
 </table>
 </body>
 

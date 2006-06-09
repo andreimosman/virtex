@@ -23,6 +23,8 @@ function fechaPesquisa() {
 	pC.className = "box_fechada";
 	var pR = document.getElementById("resultado_pesquisa");
 	pR.className = "box_fechada";
+	window.focus();
+
 }
 
 function scrollPesquisa(str) {
@@ -137,11 +139,11 @@ function pesquisaUsuario() {
 
 
 function clickLink(url,target) {
+   var t = document.getElementById(target);
+   t.focus();
    window.open(url,target)
    fechaPesquisa();
    /**
-   var t = document.getElementById(target);
-   v.focus();
    v.setActive();
    */
 }
