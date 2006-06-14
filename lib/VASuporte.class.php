@@ -119,6 +119,9 @@ class VASuporte extends VirtexAdmin {
 			$this->arquivoTemplate = "suporte_calculadoraip.html";
 
 			$netmask = @$_REQUEST["netmask"];
+			// adicionado pelo grande Hugo.. retira a / caso tenham colocado no campo mascara
+			$netmask = substr(strrchr($netmask, "/"), 1);
+			
 			$ip = @$_REQUEST["ip"];
 
 			if( !$netmask ) $netmask = 24;

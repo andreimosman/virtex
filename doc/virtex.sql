@@ -1,6 +1,6 @@
 /*
 Created		22/2/2006
-Modified		2/6/2006
+Modified		9/6/2006
 Project		
 Model		
 Company		
@@ -151,7 +151,7 @@ Create table  cbtb_contrato
 	tipo_produto Char(2) NULL ,
 	valor_produto Numeric(7,2) NULL ,
 	num_emails Smallint NULL ,
-	quota_por_conta Smallint NULL ,
+	quota_por_conta integer NULL ,
 	tx_instalacao Numeric(7,2) NULL ,
 	comodato Boolean NULL ,
 	valor_comodato Numeric(7,2) NULL ,
@@ -446,11 +446,11 @@ Create table  pftb_preferencia_geral
 	hosp_server Inet NULL ,
 	hosp_ns1 Inet NULL ,
 	hosp_ns2 Inet NULL ,
-	hosp_uid Smallint NULL ,
-	hosp_gid Smallint NULL ,
+	hosp_uid integer NULL ,
+	hosp_gid integer NULL ,
 	mail_server Inet NULL ,
-	mail_uid Smallint NULL ,
-	mail_gid Smallint NULL ,
+	mail_uid integer NULL ,
+	mail_gid integer NULL ,
 	pop_host Varchar(255) NULL ,
 	smtp_host Varchar(255) NULL ,
 	hosp_base Varchar(255) NULL ,
@@ -679,5 +679,16 @@ INSERT INTO cftb_forma_pagamento (id_cobranca,nome_cobranca,disponivel) VALUES (
 INSERT INTO cftb_forma_pagamento (id_cobranca,nome_cobranca,disponivel) VALUES ('3','Fatura Avulsa',false);
 INSERT INTO cftb_forma_pagamento (id_cobranca,nome_cobranca,disponivel) VALUES ('4','Cartão de Crédito',false);
 INSERT INTO cftb_forma_pagamento (id_cobranca,nome_cobranca,disponivel) VALUES ('5','Depósito Bancário',false);
+INSERT INTO cftb_banda (banda) VALUES ('0');
+INSERT INTO cftb_banda (banda) VALUES ('32');
+INSERT INTO cftb_banda (banda) VALUES ('64');
+INSERT INTO cftb_banda (banda) VALUES ('96');
+INSERT INTO cftb_banda (banda) VALUES ('128');
+INSERT INTO cftb_banda (banda) VALUES ('192');
+INSERT INTO cftb_banda (banda) VALUES ('256');
+INSERT INTO cftb_banda (banda) VALUES ('384');
+INSERT INTO cftb_banda (banda) VALUES ('512');
+INSERT INTO cftb_banda (banda) VALUES ('768');
+INSERT INTO cftb_banda (banda) VALUES ('1024');
 
 

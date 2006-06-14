@@ -1,4 +1,4 @@
-<!-- CLIENTE_CONTRAYO_CANCEL.HTML-->
+<!-- CLIENTE_CONTRATO_CANCEL.HTML-->
 <html>
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
@@ -114,7 +114,7 @@
                 <input name="nome_razao" type="hidden" value="{$contrato.nome_razao}" id="nome_razao">
                 <input name="username" type="hidden" value="{$produto_carac.username}" id="username">
                 <input name="nome_produto" type="hidden" value="{$produto_geral.nome}" id="nome_produto">
-                <input name="valo_contrato" type="hidden" value="{$contrato.valor_contrato}" id="valo_contrato">
+                <input name="valor_contrato" type="hidden" value="{$contrato.valor_contrato}" id="valor_contrato">
                 <input name="status" type="hidden" value="{$contrato.status}" id="status">
                 <input name="data_contratacao" type="hidden" value="{$contrato.data_contratacao}" id="data_contratacao">
                 <input name="download_kbps" type="hidden" value="{$produto_carac.download_kbps}" id="download_kbps">
@@ -124,7 +124,8 @@
                 <input type="hidden" name="acao" value="cancelar">
                 <input type="hidden" name="rotina" value="modificar">
                 <input type="hidden" name="p" value="ok">
-            </td>
+            <input name="id_cliente" type="hidden" value="{$id_cliente}" id="id_cliente">
+            <input name="tipo_produto" type="hidden" value="{$tipo_produto}" id="tipo_produto"></td>
           </tr>
           <tr>
             <td align="CENTER">&nbsp;</td>

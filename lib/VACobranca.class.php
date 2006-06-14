@@ -1289,6 +1289,7 @@ class VACobranca extends VirtexAdmin {
 			$contrato = $this->bd->obtemUnicoRegistro($sSQL);
 			//echo "CONTRATO: $sSQL <br>";
 			
+				
 			
 			$this->tpl->atribui("contrato",$contrato);
 			
@@ -1347,6 +1348,7 @@ class VACobranca extends VirtexAdmin {
 			$this->tpl->atribui("acao",$acao);
 			$this->tpl->atribui("id_cliente",$id_cliente);
 			$this->tpl->atribui("id_cliente_produto",$id_cliente_produto);
+			$this->tpl->atribui("tipo_produto",$tipo_produto);
 			
 			
 			
@@ -1367,22 +1369,22 @@ class VACobranca extends VirtexAdmin {
 					$sSQL .= "bl.username = '".$contrato["username"]."' AND bl.tipo_conta = '$tipo_produto' AND bl.dominio = '".$contrato["dominio"]."' AND ";
 					$sSQL .= "bl.username = cn.username AND bl.tipo_conta = cn.tipo_conta AND bl.dominio = cn.dominio ";
 					$bl = $this->bd->obtemUnicoRegistro($sSQL);
-					//echo "SPOOL BL: $sSQL <br>";
+			//		echo "SPOOL BL: $sSQL <br>";
 					
 					$sSQL  = "SELECT ip FROM cftb_nas WHERE id_nas = '".$bl["id_nas"]."' ";
 					$nas = $this->bd->obtemUnicoRegistro($sSQL);
-					//echo "SPOOL NAS: $sSQL <br>";
+			//		echo "SPOOL NAS: $sSQL <br>";
 					
 					
 					
 					if ($bl["tipo_bandalarga"] == "P"){
 						
-						//ECHO "PPPOE<BR>";
+			//			ECHO "PPPOE<BR>";
 						$this->spool->bandalargaExcluiRedePPPoE($nas["ip"],$bl["id_conta"],$bl["ipaddr"]);
 					
 					}else {
 						
-						//echo "IP <BR>";
+			//			echo "IP <BR>";
 						$this->spool->bandalargaExcluiRede($nas["ip"],$bl["id_conta"],$bl["rede"]);
 					
 					}
@@ -1394,12 +1396,19 @@ class VACobranca extends VirtexAdmin {
 			
 				$sSQL = "UPDATE cbtb_contrato SET status = 'C' where id_cliente_produto = '$id_cliente_produto' ";
 				$this->bd->consulta($sSQL);
+			//	echo "UPDATE CANCELAR1: $sSQL <br>";
 				
 				$sSQL = "UPDATE cbtb_faturas SET status = 'C' where id_cliente_produto = '$id_cliente_produto' ";
 				$this->bd->consulta($sSQL);
+			//	echo "UPDATE CANCELAR2: $sSQL <br>";
 				
 				$sSQL = "UPDATE cntb_conta SET status = 'C' where username = '".$contrato["username"]."' AND tipo_conta = '".$contrato["tipo_produto"]."' AND dominio = '".$contrato["dominio"]."' ";
 				$this->bd->consulta($sSQL);
+			//	echo "UPDATE CANCELAR3: $sSQL <br>";
+			
+				$sSQL = "UPDATE cbtb_carne SET status = 'C' where id_carne = '".$faturas["id_carne"]."' ";
+				$this->bd->consulta($sSQL);
+				// echo UPDATE CARNE: $sSQL <br>";
 				
 				$sSQL  = "UPDATE "; 
 				
@@ -1418,7 +1427,8 @@ class VACobranca extends VirtexAdmin {
 						 
 				$sSQL .= "SET status = 'C' where username = '".$contrato["username"]."' AND tipo_conta = '".$contrato["tipo_produto"]."' AND dominio = '".$contrato["dominio"]."' ";
 				$this->bd->consulta($sSQL);
-			
+			//	echo "UPDATE CANCELAR4: $sSQL <br>";
+				
 				$msg_final = "CONTRATOS CANCELADOS COM SUCESSO!<BR>FATURAS CANCELADAS COM SUCESSO!<BR>CONTAS CANCELADAS COM SUCESSO!";
 				$this->tpl->atribui("mensagem",$msg_final);
 				$this->tpl->atribui("url", "clientes.php?op=cobranca&id_cliente=".$id_cliente."&rotina=resumo");

@@ -163,7 +163,7 @@
 							$sSQL =  "UPDATE cbtb_contrato SET";
 							$sSQL .= "	hosp_dominio = '$hosp_dominio',";
 							$sSQL .= "	hosp_franquia_em_mb = $hosp_franquia_em_mb, ";
-  							$sSQL .= "	hosp_valor_mb_adicional = $hosp_valor_mb_adicional ";
+  						$sSQL .= "	hosp_valor_mb_adicional = $hosp_valor_mb_adicional ";
 							$sSQL .= "WHERE id_cliente_produto = $id_cliente_produto";
 							
 							//echo "$sSQL";
@@ -214,6 +214,8 @@
 					$fatura_pg_parcial=0;
 					$fatura_vl_pago=0;
 					$fatura_desconto=0;
+					
+					$fatura_valor = $valor_produto;
 					
 					$pos = 0; //Jogar para o próximo mês
 					
