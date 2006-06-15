@@ -15,6 +15,17 @@ class VAClientes extends VirtexAdmin {
 	   return $erros;
 	}
 	
+	private function specialChars($valor) {
+		if( is_array($valor) ) {
+			while(list($tc,$tv)=each($valor) ) {
+			   $valor[$tc] = $this->specialChars($tv);
+			}
+		} else {
+		   $valor = htmlspecialchars($valor);
+		}
+		return($valor);
+	}
+	
 	/**
 	 * Obtem Informações do produto contratado
 	 */
@@ -665,13 +676,25 @@ class VAClientes extends VirtexAdmin {
 					
 				}
 				
+				/**
 				for($i=0;$i<count($clientes);$i++) {
+					
 					while(list($campo,$valor) = each($clientes[$i]) ) {
-						if( $campo != "conta" ) {
-							$clientes[$i][$campo] = htmlspecialchars($valor);
+						//if( $campo != "conta" ) {
+						if( is_array( $valor ) ) {
+						   $tmp = $clientes[$i][$campo];
+						   while( list($tc,$tv) = each($tmp) ) {
+						      $tmp[$tc] = htmlspecialchars($tv);
+						   }
+						   $clientes[$i][$campo] = $tmp;
+						} else {
+						   $clientes[$i][$campo] = htmlspecialchars($valor);
 						}
 					}
+					
 				}
+				*/
+				$clientes = $this->specialChars($clientes);
 				
 				$this->tpl->atribui("erros",$erros);
 				$this->tpl->atribui("clientes",$clientes);

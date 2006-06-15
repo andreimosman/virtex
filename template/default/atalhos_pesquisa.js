@@ -104,13 +104,13 @@ function pesquisaUsuario() {
 							tipo_conta  = contas[x].getElementsByTagName("tipo_conta")[0].firstChild.nodeValue;
 							clnk        = "clientes.php?op=conta&pg=ficha&id_cliente=" + id_cliente + "&username="+username+"&dominio="+dominio+"&tipo_conta="+tipo_conta;
 							
-							cclklnk = 'javascript:clickLink("'+lnk+'","CONTEUDO");';
+							cclklnk = 'javascript:clickLink("'+clnk+'","CONTEUDO");';
 							
 
 
 							ihtml += "<tr id='pesquisa_info_contas'>";
 
-							ihtml += "<td colspan=3 class='p_conta'> &nbsp; &nbsp; - <a href='"+cclnk+"' target='_self'>";
+							ihtml += "<td colspan=3 class='p_conta'> &nbsp; &nbsp; - <a href='"+cclklnk+"' target='_self'>";
 							ihtml += username;
 
 							if( tipo_conta == "E" ) {
