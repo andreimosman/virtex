@@ -2,37 +2,42 @@
 <html>
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
-	
+
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
-</head> 
+</head>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <!-- INICIO código de verificacao de campos -->
 {literal}
 <script>
+
+	function Vlocation(){
+			window.location="administrador.php?op=lista";
+			}
 	function check(){
-		        										
+
 			var cnome, cemail, cusername, csenha, cconfsenha, erro;
-									
+
 			cnome=document.dados.nome.value;
 			cemail=document.dados.email.value;
 			cusername=document.dados.admin.value;
 			csenha=document.dados.senha.value;
 			cconfsenha=document.dados.confsenha.value;
-									
+			btitulo=document.dados.submit.value;
+
 			msg="";
 			erro=0;
-								
+
 			if  (cnome ==""){
 				msg= msg + "O campo Nome está vazio!\n";
 				erro = 1;
 			}
-								
+
 			if (cemail ==""){
 				msg= msg + "O campo Email está vazio!\n";
 				erro = 1;
 			}
-			
+
 			if (cemail != ""){
 			   			parte1 = cemail.indexOf("@");
 	            		parte2 = cemail.indexOf(".");
@@ -40,35 +45,42 @@
 	       	    		if (!(parte1 >= 3 && parte2 >= 6 && parte3 >= 9)) {
 		            	    	msg= msg + "O campo email deve conter um endereco eletrônico!\n";
 								erro = 1;
-	   	        		}					
-			}	
-			
-									
+	   	        		}
+			}
+
+
 			if (cusername ==""){
 				msg= msg + "O campo Username está vazio!\n";
 				erro = 1;
 			}
-									
-			if (csenha ==""){
-				msg= msg + "O campo Senha está vazio!\n";
-				erro = 1;
+
+			if (btitulo == "Cadastrar"){
+
+				if (csenha ==""){
+					msg= msg + "O campo Senha está vazio!\n";
+					erro = 1;
+				}
+
+
+				if (cconfsenha ==""){
+					msg= msg + "O campo Confirmação está vazio!\n";
+					erro = 1;
+				}
+
+				if (csenha != cconfsenha) {
+					msg = msg + "Os campos Senha e Confirmação devem conter o mesmo conteúdo.\n";
+					erro = 1;
+				}
 			}
 
-			if (cconfsenha ==""){
-				msg= msg + "O campo Confirmação está vazio!\n";
-				erro = 1;
-			}
-									
-			if (csenha != cconfsenha) {
-				msg = msg + "Os campos Senha e Confirmação devem conter o mesmo conteúdo.\n"; 
-				erro = 1;
-			} 
-									
+			else{
+
 			if (erro == 1){
 				alert(msg);
 				return false;
 			}
-			
+			}
+
 	return true;
 	}
 
@@ -147,16 +159,16 @@
                                   <font size="2" face="Verdana, Arial, Helvetica, sans-serif">*</font> </td>
                                   <td valign="top"><p>
                                     <SELECT name='status' >
-                                      
+
                                   		{foreach key=id item=nome from=$lista_status}
-										
-                                     		 
+
+
                                       <option value='{$id}' {if $id == $status}SELECTED {/if}>{$nome}</option>
-                                      
-											
+
+
                                   		{/foreach}
-										
-                                       
+
+
                                     </SELECT>
                                   </p>
                                   <p>&nbsp; </p></td>
@@ -177,6 +189,7 @@
                                   <td>&nbsp;</td>
                                   <td><div align="center">
                                     <input name="cadastro_admin" type="submit" id="cadastro_admin" value="{$titulo}">
+                                    <input name="voltar" type="button" id="voltar" value="Voltar" onClick="Vlocation();">
                                   </div></td>
                                   <td>&nbsp;</td>
                                 </tr>

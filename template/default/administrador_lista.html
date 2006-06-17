@@ -3,7 +3,7 @@
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
 
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
-</head> 
+</head>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
@@ -27,9 +27,11 @@
                   </tr>
                 {foreach item=a from=$lista_admin}
                 <tr bgcolor="#FFFFFF">
-                  <td><p>{$a.admin} - {if $a.status == "t"}Ativo{/if}{if $a.status
-                      =="f"}Inativo{/if}</p></td>
-                  <td><p>{$a.nome}</p></td>
+                  <td><p><a href="administrador.php?op=cadastro&id_admin={$a.id_admin}">
+                  	{$a.admin} - {if $a.status == "t"}Ativo{/if}{if $a.status=="f"}Inativo{/if}
+                  		</p></a>
+                  </td>
+                  <td><p><a href="administrador.php?op=cadastro&id_admin={$a.id_admin}">{$a.nome}</p></a></td>
                   <td align="center" width=60><p><a href="administrador.php?op=cadastro&id_admin={$a.id_admin}"><img src="template/default/images/gif_alterar.gif" alt="Alterar dados do Administrador" width="16" height="16" border="0"></a></font></p></td>
                   <td width=60 align="center"><p><a href="administrador.php?op=privilegio&id_admin={$a.id_admin}"><img src="template/default/images/bt_privilegios.gif" alt="Alterar Privil&eacute;gios" width="26" height="26" border="0"></a></p></td>
                 </tr>

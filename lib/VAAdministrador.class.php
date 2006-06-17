@@ -25,6 +25,8 @@ class VAAdministrador extends VirtexAdmin {
 
 			$acao = @$_REQUEST["acao"];
 			$id_admin = @$_REQUEST["id_admin"];
+			$senha = @$_REQUEST["senha"];
+			$confsenha = @$_REQUEST["confsenha"];
 
 			$enviando = false;
 
@@ -123,19 +125,25 @@ class VAAdministrador extends VirtexAdmin {
 			   $sSQL .= "     )";
                       }else {
                          // alteracao
-
+			
 			$sSQL  = "UPDATE ";
 			$sSQL .= "   adtb_admin ";
 			$sSQL .= "SET ";
 			$sSQL .= "   admin = '" . $this->bd->escape(@$_REQUEST["admin"]) . "', ";
-			$sSQL .= "   senha = '" . md5($this->bd->escape(@$_REQUEST["senha"])) . "', ";
        			$sSQL .= "   status = '" . $this->bd->escape(@$_REQUEST["status"]) . "', ";
        			$sSQL .= "   nome = '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
        			$sSQL .= "   email = '" . $this->bd->escape(@$_REQUEST["email"]) . "' ";
 //      			$sSQL .= "   primeiro_login = '" . $this->bd->escape($primeiro_login) . "' ";
+       				if(($confsenha =="") && ($senha=="")){	
        			$sSQL .= "WHERE ";
 			$sSQL .= "   id_admin = '" . $this->bd->escape(@$_REQUEST["id_admin"]) . "' ";
-			         
+			        }
+			        else{
+			$sSQL .= " ,   senha = '" . md5($this->bd->escape(@$_REQUEST["senha"])) . "' ";
+			$sSQL .= " WHERE ";
+			$sSQL .= "   id_admin = '" . $this->bd->escape(@$_REQUEST["id_admin"]) . "' ";
+					}
+
 
                       }
                       
