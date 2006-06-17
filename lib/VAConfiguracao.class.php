@@ -1365,7 +1365,19 @@ class VAConfiguracao extends VirtexAdmin {
 						
 						$this->arquivoTemplate = "configuracao_rede_externa.html";
 
-					
+						}else if ($op == "resumo"){
+						
+						$geral = $this->prefs->obtem("geral");
+						$cobranca = $this->prefs->obtem("cobranca");
+						$provedor = $this->prefs->obtem("provedor");
+						
+						$this->tpl->atribui("geral",$geral);
+						$this->tpl->atribui("cobranca",$cobranca);
+						$this->tpl->atribui("provedor",$provedor);
+						
+						$this->arquivoTemplate = "preferencia_resumo.html";
+						return;						
+						
 					}// $ops
 				
 		

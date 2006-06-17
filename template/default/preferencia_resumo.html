@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body><form name=prefs method="post" action="{$smarty.server.PHP_SELF}">
+<form name="form1" method="post" action="">
+  <input type="hidden" name="op" id="op" value="resumo">
+</form>
+<div align="center">
+<H1><strong>Resumo de Prefer&ecirc;ncias </strong> </H1>
+<br>
+  <table width="710" border="0" align="center" cellpadding="0" cellspacing="1">
+    <tr bgcolor="#CDCDCD">
+		<td colspan="6" align="center" height="20"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Preferência Geral</font></strong></td>
+	</tr>
+	<tr bgcolor="#EFEFEF">
+      <td width="155" align="center"><p><strong>Dominio Padrão</strong></p>
+      <td width="94" align="center"><p><strong>Nome</strong></p></td>
+      <td width="137" align="center"><p><strong>Radius Server</strong></p></td>
+      <td width="130" align="center"><p><strong>Servidor de Hospedagem</strong></p></td>
+      <td width="160" align="center"><p><strong>Servidor de E-Mail</strong></p></td>
+	  <td align="center">&nbsp;</td>
+    </tr>
+    <tr> 
+      <td width="155" align="center"><p><a href="configuracao.php?op=preferencia">{$geral.dominio_padrao}</a></p></td>
+      <td width="94" align="center"><p><a href="configuracao.php?op=preferencia">{$geral.nome}</a></p></td>
+      <td width="137" align="center"><p><a href="configuracao.php?op=preferencia">{$geral.radius_server}</a></p></td>
+      <td width="130" align="center"><p><a href="configuracao.php?op=preferencia">{$geral.hosp_server}</a></p></td>
+      <td width="160" align="center"><p><a href="configuracao.php?op=preferencia">{$geral.mail_server}</a></p></td>
+	  <td  width="27" align="center"><a href="configuracao.php?op=preferencia"><img src="template/default/images/gif_alterar.gif" width="16" height="16" border="0"></a></td>
+    </tr>
+  </table>
+  <br>
+  <table width="710" border="0" align="center" cellpadding="0" cellspacing="1">
+   <tr bgcolor="#CDCDCD">
+		<td colspan="5" align="center" height="20"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Preferência do Provedor</font></strong></td>
+	</tr>
+    <tr bgcolor="#EFEFEF"> 
+      <td width="100" align="center"><p><strong>Endereço</strong></p></td>
+      <td width="100" align="center"><p><strong>Localidade</strong></p></td>
+      <td width="100" align="center"><p><strong>CEP</strong></p></td>
+      <td width="100" align="center"><p><strong>Cnpj</strong></p></td>
+	  <td align="center">&nbsp;</td>
+    </tr>
+    <tr> 
+      <td align="center"><p><a href="configuracao.php?op=preferencia_provedor">{$provedor.endereco}</a></p></td>
+      <td align="center"><p><a href="configuracao.php?op=preferencia_provedor">{$provedor.localidade}</a></p></td>
+      <td align="center"><p><a href="configuracao.php?op=preferencia_provedor">{$provedor.cep}</a></p></td>
+      <td align="center"><p><a href="configuracao.php?op=preferencia_provedor">{$provedor.cnpj}</a></p></td>
+	  <td  width="27" align="center"><a href="configuracao.php?op=preferencia_provedor"><img src="template/default/images/gif_alterar.gif" width="16" height="16" border="0"></a></td>
+    </tr>
+  </table>
+  <br>
+  <table width="710" border="0" align="center" cellpadding="0" cellspacing="1">
+  <tr bgcolor="#CDCDCD">
+		<td colspan="8" align="center" height="20"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Preferência de Cobrança</font></strong></td>
+	</tr>
+    <tr bgcolor="#EFEFEF"> 
+      <td width="100" align="center"><p><strong>Dia de Vencimento</strong></p></td>
+      <td width="100" align="center"><p><strong>Carência</strong></p></td>
+      <td width="100" align="center"><p><strong>Taxa de Juros</strong></p></td>
+      <td width="100" align="center"><p><strong>Multa</strong></p></td>
+      <td width="100" align="center"><p><strong>Agência</strong></p></td>
+      <td width="100" align="center"><p><strong>Número da Conta</strong></p></td>
+      <td width="100" align="center"><p><strong>Forma de Pagamento</strong></p></td>
+	  <td align="center">&nbsp;</td>
+    </tr>
+    <tr> 
+      <td align="center"><p><a href="configuracao.php?op=preferencia_cobranca">{$cobranca.dia_venc}</a></p></td>
+      <td align="center"><p><a href="configuracao.php?op=preferencia_cobranca">{$cobranca.carencia}</a></p></td>
+      <td align="center"><p><a href="configuracao.php?op=preferencia_cobranca">{$cobranca.tx_juros}</a></p></td>
+      <td align="center"><p><a href="configuracao.php?op=preferencia_cobranca">{$cobranca.multa}</a></p></td>
+      <td align="center"><p><a href="configuracao.php?op=preferencia_cobranca">{$cobranca.agencia}</a></p></td>
+      <td align="center"><p><a href="configuracao.php?op=preferencia_cobranca">{$cobranca.num_conta}</a></p></td>
+      <td align="center"><p><a href="configuracao.php?op=preferencia_cobranca">{$cobranca.pagamento}</a></p></td>
+	  <td  width="27" align="center"><a href="configuracao.php?op=preferencia_cobranca"><img src="template/default/images/gif_alterar.gif" width="16" height="16" border="0"></a></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>
