@@ -943,7 +943,7 @@ class VAConfiguracao extends VirtexAdmin {
 							
 							
 							$this->tpl->atribui("mensagem","PREFERENCIAS GRAVADAS COM SUCESSO! "); 
-							$this->tpl->atribui("url","home.php");
+							$this->tpl->atribui("url","configuracao.php?op=resumo");
 							$this->tpl->atribui("target","_top");
 													
 							$this->arquivoTemplate = "msgredirect.html";
@@ -1001,26 +1001,28 @@ class VAConfiguracao extends VirtexAdmin {
 							//echo "zerando fp: $sSQL <br>";
 							
 							$this->bd->consulta($sSQL);
+							
+							if (@$_REQUEST['disponivel']){
 
-							while(list($id,$valor)=each($_REQUEST['disponivel'])){
+								while(list($id,$valor)=each($_REQUEST['disponivel'])){
 
 
-								$uSQL  = "UPDATE ";
-								$uSQL .= "   cftb_forma_pagamento ";
-								$uSQL .= "SET ";
-								$uSQL .= "   disponivel = '$valor' ";
-								$uSQL .= "WHERE ";
-								$uSQL .= "   id_cobranca = '$id' ";
+									$uSQL  = "UPDATE ";
+									$uSQL .= "   cftb_forma_pagamento ";
+									$uSQL .= "SET ";
+									$uSQL .= "   disponivel = '$valor' ";
+									$uSQL .= "WHERE ";
+									$uSQL .= "   id_cobranca = '$id' ";
 
-								$this->bd->consulta($uSQL);
-								//echo $uSQL ."<br>";			
-								
-								
-								
+									$this->bd->consulta($uSQL);
+									//echo $uSQL ."<br>";			
+
+
+								}	
 							}
 							
 							$this->tpl->atribui("mensagem","PREFERENCIAS GRAVADAS COM SUCESSO! "); 
-							$this->tpl->atribui("url","home.php");
+							$this->tpl->atribui("url","configuracao.php?op=resumo");
 							$this->tpl->atribui("target","_top");
 																												
 							$this->arquivoTemplate = "msgredirect.html";
@@ -1057,7 +1059,7 @@ class VAConfiguracao extends VirtexAdmin {
 								$this->bd->consulta($sSQL);
 								
 								$this->tpl->atribui("mensagem","PREFERENCIAS GRAVADAS COM SUCESSO! "); 
-								$this->tpl->atribui("url","home.php");
+								$this->tpl->atribui("url","configuracao.php?op=resumo");
 								$this->tpl->atribui("target","_top");
 																					
 								$this->arquivoTemplate = "msgredirect.html";
