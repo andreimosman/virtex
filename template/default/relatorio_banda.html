@@ -1,4 +1,4 @@
-<!-- relatorio_config_cliente.html-->
+<!-- relatorio_banda.html-->
 <html>
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
@@ -68,7 +68,9 @@ if (da && !pr && !mac) with (document) {
                 <td align="center" valign="middle">{if $bandas}
                   <h1>Relat&oacute;rio
                     de Clientes por Banda</h1>
+                    		{if $total_contas > 0}
                   <img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico"><br>
+							{/if}
 
 				  <table width="450" border="0" cellspacing="0" cellpadding="0">
                     <tr>
@@ -89,6 +91,7 @@ if (da && !pr && !mac) with (document) {
                             <td width="225" height="20">
 							{if $v.banda != 0}<p><a href="relatorio.php?op=lista_banda&banda={$v.banda}">{$v.banda} kbps</a></p>{/if}{if $v.banda == 0}<p><a href="relatorio.php?op=lista_banda&banda={$v.banda}">Sem Controle</a></p>{/if}</td>
                             <td width="225" height="20">
+
 							<p><a href="relatorio.php?op=lista_banda&banda={$v.banda}">{$v.num_contas}</a></p></td>
                           </tr>
                           <tr bgcolor="#FFFFFF" align="CENTER">
@@ -139,7 +142,7 @@ if (da && !pr && !mac) with (document) {
                         {/foreach}</td>
                     </tr>
                   </table>
-				  
+
 				  <p><a href="relatorio.php?op=lista_banda">voltar</a></p>
 				  {/if}
 				  {if $contas && $msg}
