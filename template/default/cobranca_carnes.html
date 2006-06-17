@@ -13,27 +13,13 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 }
 //-->
 {/literal}//-->
-</script> 
+</script>
 </head>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <p>{include file='cliente_header.html'} </p>
+{include file=cliente_cobranca_menu.html}
 <TABLE align="CENTER" WIDTH="100%"><TR><TD align="center">
-<h1>Cobranca </h1>
-                  <table width="400" border="0" cellspacing="0" cellpadding="0" bgcolor="#666666">
-                    <tr>
-                      <td><table width="400" border="0" cellspacing="1" cellpadding="0">
-                          <tr align="CENTER" valign="MIDDLE" bgcolor="#CCCCCC">
-                            <td height="30"><strong><a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}">Novo
-                              Contrato</a></strong></td>
-                            <td height="30"><strong><a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&rotina=resumo&tipo_lista=">Resumo</a></strong></td>
-                            <td height="30"><strong><a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&rotina=resumo&tipo_lista=tudo">Faturas</a></strong></td>
-                            <td><a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&rotina=carne"><strong>Carn&ecirc;s</strong></a></td>
-                          </tr>
-                        </table></td>
-                    </tr>
-                  </table>
-                  <p>&nbsp;</p>
                   <table width="500" border="0" cellspacing="0" cellpadding="0">
                     <tr>
                       <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -54,7 +40,7 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                               </table></td>
                           </tr>
                           <tr>
-                            <td>{if !count($carnes)}<p align="center"><b><font size=+1> Não existem carnês emitidos para este cliente</font></b></p>{else}{foreach item=a from=$carnes}
+                            <td>{if !count($carnes)}<p align="center"><b><font> Não existem carnês emitidos para este cliente</font></b></p>{else}{foreach item=a from=$carnes}
                               <table width="100%" border="0" cellspacing="2" cellpadding="3">
                                 <tr>
                                   <td width="100" align="center"><p><a href="{$smarty.server.PHP_SELF}?op=cobranca&rotina=carne&p=faturas&&id_cliente={$id_cliente}&id_carne={$a.id_carne}">{$a.id_carne}-{$a.id_cliente_produto}</a></p></td>
@@ -77,7 +63,7 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                     </tr>
                   </table>
 				  </TD></TR></TABLE>
-				  
+
 </body>
 
 
