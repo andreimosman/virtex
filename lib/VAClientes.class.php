@@ -1446,7 +1446,7 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= "FROM ";
 							$sSQL .= "   cftb_pop ";
 							$sSQL .= "WHERE ";
-							$sSQL .= "   id_pop = '". $this->bd->escape(trim(@$_REQUEST["id_pop"])) ."'";
+							$sSQL .= "   id_pop = '". $this->bd->escape(trim(@$_REQUEST["id_pop"])) ."' AND status = 'A'";
 						
 							$lista_pops = $this->bd->obtemUnicoRegistro($sSQL);
 							
@@ -1607,6 +1607,7 @@ class VAClientes extends VirtexAdmin {
 					$sSQL .= "   id_pop, nome ";
 					$sSQL .= "FROM ";
 					$sSQL .= "   cftb_pop ";
+					$sSQL .= "WHERE status = 'A' ";
 					$sSQL .= "ORDER BY ";
 					$sSQL .= "   nome";
 

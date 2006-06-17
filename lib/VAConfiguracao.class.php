@@ -124,6 +124,7 @@ class VAConfiguracao extends VirtexAdmin {
 						$sSQL .= "   id_pop, nome, info, tipo, id_pop_ap, status ";
 						$sSQL .= "FROM cftb_pop ";
 						$sSQL .= "WHERE id_pop = '$id_pop' AND status != 'D' ";
+						$sSQL .= "ORDER BY nome ASC";
 					
 										
 						$reg = $this->bd->obtemUnicoRegistro($sSQL);
@@ -188,7 +189,7 @@ class VAConfiguracao extends VirtexAdmin {
 						$sSQL .= "   info = '" . $this->bd->escape(@$_REQUEST["info"]) . "', ";
 						$sSQL .= "   tipo = '" . $this->bd->escape(@$_REQUEST["tipo"]) . "', ";
 						$sSQL .= "   id_pop_ap = ". (@$_REQUEST["tipo"] != "CL" ? "NULL" : "'" . $this->bd->escape(@$_REQUEST["id_pop_ap"]) . "'" ) .   ", ";
-						$sSQL .= "	 status = '" . $REQUEST["status"] . "' ";
+						$sSQL .= "	 status = '" . $_REQUEST["status"] . "' ";
 						$sSQL .= "WHERE ";
 						$sSQL .= "   id_pop = '" . $this->bd->escape(@$_REQUEST["id_pop"]) . "' ";  
 
