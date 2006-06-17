@@ -76,10 +76,7 @@
 					  {else}
 					  <a href="cobranca.php?op=cadastro&id_produto={$v.id_produto}&prod={$v.tipo}"><img src="template/default/images/gif_indisp.gif" width="26" height="26" alt="Produto NÃO Disponível para contratação" border=0></a>
 					  {/if}
-
-
-
-					  </td>
+			  </td>
                     </tr>
                     { /foreach }
                   </table>
@@ -88,7 +85,9 @@
               </tr>
             </table></td>
         </tr>
-      </table></td>
+      </table>
+      {if !count($lista_produtos)}<p><b>Não há Produtos cadastrados</b></p>{/if}
+      </td>
   </tr>
 </table>
 </body>

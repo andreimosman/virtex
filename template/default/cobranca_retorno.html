@@ -40,13 +40,13 @@
                     </tr>
                     <tr>
                       <td><select name="formato">
-                        
+
 								  {foreach key=id item=nome from=$ls_formatos}
-								      
+
                         <option value="{$id}" >{$nome}</option>
-                        
+
 								  {/foreach}
-                                    
+
                       </select></td>
                     </tr>
                     <tr>
@@ -86,6 +86,7 @@
           <p><strong><font face="Arial, Helvetica, sans-serif"></font></strong></p></td>
         </tr>
 </table>
+                  {if !count($ret)}<p><b>Não há Retornos aplicados</b></p>{/if}
 </body>
 
 
