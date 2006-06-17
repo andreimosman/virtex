@@ -293,15 +293,79 @@
                                       </strong></p></td>
                                   <td><p>{$valor_contrato}</p></td>
                                 </tr>
+								<tr>
+								<td><p><b>NAS:</b></p></td>
+								<TD><p>{$id_nas} - {$nome_nas}</p></TD>
+								</tr>
+								<tr>
+								<td><p><b>Username:</b></p></td>
+								<TD> <p>{$username}</p></TD>
+								</tr>
+								<tr>
+								<td><p><b>POP</b></p></td>
+								<td><p>{$id_pop} - {$nome_pop}</p></td>
+								</tr>
                               </table></td>
                           </tr>
-                          <tr>
-                            <td>&nbsp;</td>
+                        </table>
+						<tr>
+						<td bgcolor="#fafafa"><p><strong>- <font size="2">Informações técnicas</font></strong></p></td>
+								
+								
+								{if $tipo == "BL"}
+								<table width="550" border="0" cellspacing="2" cellpadding="0" bgcolor="#FFFFFF">
+								<tr>
+								<td><p><b>NAS:</b></p></td>
+								<TD><p>{$id_nas} - {$nome_nas}</p></TD>
+								</tr>
+								<tr>
+								<td><p><b>Username:</b></p></td>
+								<TD> <p>{$username}</p></TD>
+								</tr>
+								<tr>
+								<td><p><b>POP:</b></p></td>
+								<td><p>{$id_pop} - {$nome_pop}</p></td>
+								</tr>
+								<TR>
+								<TD>
+								<p><b>IP:</b></p>
+								</TD>
+								<TD><p>{if $endereco_ip}{$endereco_ip}{else}IP atribuido automaticamente{/if}</p></TD>
+								</TR>
+                              </table>
+							  {/if}
+							  {if $tipo|trim == "D"}
+							  <table width="550" border="0" cellspacing="2" cellpadding="0" bgcolor="#FFFFFF">
+								<tr>
+								<td><p><b>Username:</b></p></td>
+								<td><p>{$username}</p></td>
+								</tr>
+								<tr>
+								<td><p><b>Fone:</b></p></td>
+								<td><p>{$foneinfo}</p></td>
+								</tr>
+							  </table>
+							  {/if}
+							  {if $tipo|trim == "H"}
+							  <table width="550" border="0" cellspacing="2" cellpadding="0" bgcolor="#FFFFFF">
+								<tr><td>654654</td></tr>
+							  </table>							  
+							  
+							  {/if}
+							  
+							  
+							  </td>
                           </tr>
                           <tr>
                             <td>&nbsp;</td>
                           </tr>
-                        </table></td>
+                          <tr>
+                            <td>&nbsp;</td>
+                          </tr>
+                        </table>
+						</td>
+						</tr>
+						</td>
                     </tr>
                   </table>
                   <p><br>

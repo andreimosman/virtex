@@ -2,6 +2,8 @@
 
 <script>
 var dataVenc = '{$data}';
+var status_fatura = '{$amort.status|trim}';
+//var v = new String ('status_fatura');
 </script>
 {literal}
 <script language="JavaScript" src="util.js"></script>
@@ -136,7 +138,7 @@ function calculaValores() {
 }
 function pago(){
 	//alert(formulario.status.value);
-	if (formulario.status.value == "P"){
+	if (formulario.status.value == "P" || status_fatura != "A"){
 		//alert(formulario.status.value);
 		formulario.valor_pago.disabled=true;
 		formulario.desconto.disabled=true;
@@ -151,6 +153,7 @@ function pago(){
 		formulario.observacoes.disabled=true;
 		formulario.hoje.disabled=true;
 		formulario.venc.disabled=true;
+		formulario.submit.disabled=true;
 		change("valor_pago","disabled");
 		change("desconto","disabled");
 		change("acrescimo","disabled");
@@ -200,52 +203,7 @@ function change(id, newClass) {
     <td align="center" valign="top">
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<td>
-		<table width="500" border="0" cellspacing="2" cellpadding="2" align="center">
-	<tr>
-
-    <td>
-      <!-- FICHA CADASTRAL -->
-      {if $op == "cadastro" } <a href="clientes.php?op=cadastro&id_cliente={$id_cliente}"><img src="template/default/images/bt_ficha_cliente.gif" border=0 alt="Ficha do Cliente"></a>
-      {else } <a href="clientes.php?op=cadastro&id_cliente={$id_cliente}"><img src="template/default/images/bt_ficha_cliente_inativo.gif" border=0 alt="Ficha do Cliente"></a>
-      {/if} </td>
-		<!-- PRODUTOS -->
-
-    <td> {if ($op == "produto" || $op == "conta") && $tipo == "D"} <a href="clientes.php?op=produto&tipo=D&id_cliente={$id_cliente}"><img src="template/default/images/bt_discado.gif" border=0 alt="Acesso Discado"></a>
-      {else } {if $id_cliente}<a href="clientes.php?op=produto&tipo=D&id_cliente={$id_cliente}">{/if}<img src="template/default/images/bt_discado_inativo.gif" border=0 alt="Acesso Discado"></a>
-      {/if} </td>
-
-    <td> {if ($op == "produto" || $op == "conta") && $tipo == "BL"} <a href="clientes.php?op=produto&tipo=BL&id_cliente={$id_cliente}&msg="><img src="template/default/images/bt_bandalarga.gif" border=0 alt="Acesso Banda Larga"></a>
-      {else } {if $id_cliente}<a href="clientes.php?op=produto&tipo=BL&id_cliente={$id_cliente}&msg=">{/if}<img src="template/default/images/bt_bandalarga_inativo.gif" border=0 alt="Acesso Banda Larga"></a>
-      {/if} </td>
-    <td> {if ($op == "produto" || $op == "conta") && $tipo == "H"} <a href="clientes.php?op=produto&tipo=H&id_cliente={$id_cliente}"><img src="template/default/images/bt_hospedagem.gif" border=0 alt="Hospedagem"></a>
-      {else } {if $id_cliente}<a href="clientes.php?op=produto&tipo=H&id_cliente={$id_cliente}">{/if}<img src="template/default/images/bt_hospedagem_inativo.gif" border=0 alt="Cobranca"></a>
-      {/if} </td>
-		<!-- COBRANCA -->
-
-    <td> {if $op == "cobranca"} <a href="clientes.php?op=cobranca&id_cliente={$id_cliente}&rotina=resumo"><img src="template/default/images/bt_cobranca.gif" border=0 alt="Cobrança"></a>
-      {else } {if $id_cliente}<a href="clientes.php?op=cobranca&id_cliente={$id_cliente}&rotina=resumo">{/if}<img src="template/default/images/bt_cobranca_inativo.gif" border=0 alt="Cobranca"></a>
-      {/if} </td>
-        <!-- HELPDESK -->
-
-    <td> {if $op == "helpdesk"} <a href="clientes.php?op=helpdesk&id_cliente={$id_cliente}"><img src="template/default/images/bt_helpdesk.gif" border=0 alt="Helpdesk"></a>
-      {else } {if $id_cliente}<a href="clientes.php?op=helpdesk&id_cliente={$id_cliente}">{/if}<img src="template/default/images/bt_helpdesk_inativo.gif" border=0 alt="Helpdesk"></a>
-      {/if} </td>
-	</tr>
-	{if $id_cliente}
-
-  <tr align="center">
-    <td colspan="6" bgcolor="#779977"> <font face="arial" size=+1><b><font color="#FFFFFF">{$cliente.nome_razao}</font></b></font>
-      <font color="#FFFFFF">
-      <!--table width="100%" cellpadding=2 cellspacing=1 bgcolor="#559955">
-				<tr bgcolor="#FFFFFF">
-					<td width="50%"><u><small>CLIENTE:</small></u>&nbsp;{$cliente.nome_razao}</td>
-					<td width="50%"><u><small>CPF/CNPJ:</small></u>&nbsp;{$cliente.cpf_cnpj}</td>
-				</tr>
-			</table-->
-      </font> </td>
-	</tr>
-	{/if}
-</table>
+{include file=cliente_header.html}
 		</td>
         <tr>
           <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">

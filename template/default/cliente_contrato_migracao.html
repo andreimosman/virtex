@@ -1,5 +1,5 @@
 {literal}
- <!-- cliente_cobranca_contratar.html -->
+ <!-- cliente_contrato_migracao.html -->
  <script language="JavaScript" type="text/JavaScript">
 <!--
 function MM_reloadPage(init) {  //reloads the window if Nav4 resized
@@ -794,7 +794,7 @@ frmContratacao.pri_venc.value = hoje();
               <td bgcolor="#FFFFFF" align="right"><p>Pro-Rata</p></td>
               <td bgcolor="#FFFFFF" colspan="3"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                   <tr>
-                    <td width="8%"><input name="prorata" type="checkbox" value="true" id="prorata3" class="checkbox" checked></td>
+                    <td width="8%"><input name="prorata" type="checkbox" value="true" id="prorata3" class="checkbox"></td>
                     <td width="92%"></td>
                   </tr>
                 </table></td>
@@ -812,7 +812,7 @@ frmContratacao.pri_venc.value = hoje();
               <td bgcolor="#FFFFFF">
 			  <select name="forma_pagamento">
                 {foreach key=id item=nome from=$forma_pagamento}
-				  <option value="{$id}" { if $id == $pagamento }SELECTED{ /if }>{$nome}</option>
+				  <option value="{$id}" { if $id == "POS" }SELECTED{ /if }>{$nome}</option>
 				{/foreach}
                 </select></td>
             </tr>
