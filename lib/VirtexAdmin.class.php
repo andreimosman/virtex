@@ -83,7 +83,7 @@ class VirtexAdmin extends MWebApp {
 		   // Redireciona pra tela de login
 		   $url = 'login.php';
 		   $mensagem = 'Tentativa de acesso invalido ao sistema';
-		   $target = '_self';
+		   $target = '_top';
 
 		   $this->tpl->atribui('url',$url);
 		   $this->tpl->atribui('mensagem',$mensagem);
@@ -97,7 +97,7 @@ class VirtexAdmin extends MWebApp {
 		} else if( $veriPrimeiroLogin && $this->admLogin->primeiroLogin() ) {
 		   $url = 'administrador.php?op=altera';
 		   //$mensagem = 'Tentativa de acesso invalido ao sistema';
-		   $target = '_self';
+		   $target = '_top';
 
 		   // Tela de alteração de senha
 		   $this->tpl->atribui('url',$url);
