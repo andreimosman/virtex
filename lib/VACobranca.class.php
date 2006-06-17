@@ -1406,9 +1406,9 @@ class VACobranca extends VirtexAdmin {
 				$this->bd->consulta($sSQL);
 			//	echo "UPDATE CANCELAR3: $sSQL <br>";
 			
-				$sSQL = "UPDATE cbtb_carne SET status = 'C' where id_carne = '".$faturas["id_carne"]."' ";
+				$sSQL = "UPDATE cbtb_carne SET status = 'C' where id_carne = '".$faturas[0]["id_carne"]."' ";
 				$this->bd->consulta($sSQL);
-				// echo UPDATE CARNE: $sSQL <br>";
+				//echo "UPDATE CARNE: $sSQL <br>";
 				
 				$sSQL  = "UPDATE "; 
 				
@@ -1429,7 +1429,7 @@ class VACobranca extends VirtexAdmin {
 				$this->bd->consulta($sSQL);
 			//	echo "UPDATE CANCELAR4: $sSQL <br>";
 				
-				$msg_final = "CONTRATOS CANCELADOS COM SUCESSO!<BR>FATURAS CANCELADAS COM SUCESSO!<BR>CONTAS CANCELADAS COM SUCESSO!";
+				$msg_final = "CONTRATOS CANCELADOS COM SUCESSO!<BR>FATURAS CANCELADAS COM SUCESSO!<BR>CONTAS CANCELADAS COM SUCESSO!<br>CARNE CANCELADO COM SUCESSO!";
 				$this->tpl->atribui("mensagem",$msg_final);
 				$this->tpl->atribui("url", "clientes.php?op=cobranca&id_cliente=".$id_cliente."&rotina=resumo");
 				$this->tpl->atribui("target","_self");
@@ -1470,7 +1470,7 @@ class VACobranca extends VirtexAdmin {
 
 				$this->tpl->atribui("contrato",$contrato);
 
-				$sSQL  = "SELECT to_char(data, 'DD/mm/YYYY') as data, valor, status FROM cbtb_faturas where id_cliente_produto = '$id_cliente_produto' ";
+				$sSQL  = "SELECT to_char(data, 'DD/mm/YYYY') as data, valor, status, id_carne FROM cbtb_faturas where id_cliente_produto = '$id_cliente_produto' ";
 				//echo "fatura: $sSQL <br>";
 				$faturas = $this->bd->obtemRegistros($sSQL);
 
@@ -1496,7 +1496,7 @@ class VACobranca extends VirtexAdmin {
 					$bl = $this->bd->obtemUnicoRegistro($sSQL);
 					//echo "SPOOL BL: $sSQL <br>";
 					
-					$sSQL  = "SELECT ip FROM cftb_nas WHERE id_nas = '".$bl["id_nas"]."' ";
+					$sSQL  = "SELECT ip, id_nas FROM cftb_nas WHERE id_nas = '".$bl["id_nas"]."' ";
 					$nas = $this->bd->obtemUnicoRegistro($sSQL);
 					//echo "SPOOL NAS: $sSQL <br>";
 					
@@ -1552,6 +1552,15 @@ class VACobranca extends VirtexAdmin {
 				
 				$sSQL = "DELETE FROM cbtb_cliente_produto WHERE id_cliente_produto = '$id_cliente_produto' ";
 				$this->bd->consulta($sSQL);
+				
+				$sSQL = "SELECT id_carne FROM cbtb_faturas WHERE id_cliente_produto = $id_cliente_produto GROUP BY id_carne";
+				$fat = $this->bd->obtemUnicoRegistro($sSQL);
+				//
+				
+				$sSQL = "DELETE FROM cbtb_carne WHERE id_carne = '".$fat["id_carne"]."' ";
+				$this->bd->consulta($sSQL);
+				
+				
 				
 				$msg_final = "CONTRATOS EXCLUIDOS COM SUCESSO!<BR>FATURAS EXCLUIDAS COM SUCESSO!";
 				$this->tpl->atribui("mensagem",$msg_final);
@@ -2043,6 +2052,9 @@ class VACobranca extends VirtexAdmin {
 							//echo "contrato novo: $sSQL <br>";
 							$this->bd->consulta($sSQL);
 							
+							$this->contratoHTML($id_cliente,$id_cliente_produto_new,$tipo_produto);
+
+							
 							/* FINAL CRIAÇÃO CONTRATO */
 						
 							/* SETA CONTRATO ANTIGO COM STATUS = M (modificado) */
@@ -2077,6 +2089,7 @@ class VACobranca extends VirtexAdmin {
 							
 							
 							$sSQL = "UPDATE cbtb_carne SET status = 'E' WHERE id_carne ='$id_carne' ";
+							$this->bd->consulta($sSQL);
 							
 							/* FINAL DO ESTORNO DO CARNE */
 							
@@ -2744,7 +2757,7 @@ class VACobranca extends VirtexAdmin {
 
 	}
 
-	public function carne($id_cliente_produto,$data,$id_cliente){
+	public function carne($id_cliente_produto,$data,$id_cliente,$segunda_via=false){
 	
 	$sSQL  = "SELECT cl.nome_razao, cl.endereco, cl.id_cidade, cl.estado, cl.cep, cl.cpf_cnpj, cd.cidade as nome_cidade, cd.id_cidade  ";
 	$sSQL .= "FROM ";
@@ -2807,7 +2820,29 @@ class VACobranca extends VirtexAdmin {
 	//	$codigo = MArrecadacao::pagConta(...);
 		
 		
+		  if( $segunda_via ) {
 		
+		     $hoje = $fatura["data"];
+		     $codigo_barras = $fatura["cod_barra"];
+		     $linha_digitavel = $fatura["linha_digitavel"];
+		     
+		  } else {
+		  
+		   	$codigo_barras = MArrecadacao::codigoBarrasPagContas($valor,$id_empresa,$nosso_numero,$vencimento);
+		   	$hoje = date("d/m/Y");
+		   	$linha_digitavel = MArrecadacao::linhaDigitavel($codigo_barras);
+			
+		   	$sSQL  = "UPDATE ";
+				$sSQL .= "cbtb_faturas SET ";
+				$sSQL .= "nosso_numero = '$nosso_numero', ";
+				$sSQL .= "linha_digitavel = '$linha_digitavel', ";
+				$sSQL .= "cod_barra = '$codigo_barras' ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "id_cliente_produto = '$id_cliente_produto' AND ";
+				$sSQL .= "data = '$data' ";
+			
+				$this->bd->consulta($sSQL);
+			}
 
 	//$barra = MArrecadacao::barCode($codigo_barras);
 	
@@ -2849,6 +2884,15 @@ class VACobranca extends VirtexAdmin {
 	return($fatura);
 
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	private function obtemPR($id_cliente){
 	
 		$sSQL  = "SELECT ";
@@ -2877,6 +2921,200 @@ class VACobranca extends VirtexAdmin {
 	
 	
 	}
+
+public function contratoHTML($id_cliente,$id_cliente_produto,$tipo_produto){
+	
+	//$tipo_produto = @$_REQUEST["tipo_produto"];
+	$rotina = @$_REQUEST["rotina"];
+
+	$hoje = date("Y-m-d");
+
+	$provedor = $this->prefs->obtem("provedor");
+	$geral = $this->prefs->obtem("geral");
+	$id_cliente = @$_REQUEST["id_cliente"];
+	$cobranca = $this->prefs->obtem("cobranca");
+
+
+
+	$this->tpl->atribui("nome_provedor",$geral["nome"]);
+	$this->tpl->atribui("localidade",$provedor["localidade"]);
+	$this->tpl->atribui("cnpj_provedor",$provedor["cnpj"]);
+
+	$sSQL  = "SELECT ";
+	$sSQL .= "	ct.id_cliente_produto, ct.data_contratacao, ct.vigencia, ct.data_renovacao, ct.valor_contrato, ct.id_cobranca, ct.status, ";
+	$sSQL .= "	ct.tipo_produto, ct.valor_produto, ct.num_emails, ct.quota_por_conta, ct.comodato, ct.valor_comodato, ct.desconto_promo, ";
+	$sSQL .= "	ct.periodo_desconto, ct.bl_banda_download_kbps, ct.id_produto, ";
+	$sSQL .= "	pr.id_produto,pr.nome ";
+	$sSQL .= "FROM ";
+	$sSQL .= "	cbtb_contrato ct, prtb_produto pr ";
+	$sSQL .= "WHERE ";
+	$sSQL .= "ct.id_cliente_produto = '$id_cliente_produto' ";
+	$sSQL .= "AND ct.id_produto = pr.id_produto ";
+
+	$contrato = $this->bd->obtemUnicoRegistro($sSQL);
+
+	////echo "SQL: $sSQL <br>";
+
+	$this->tpl->atribui("data_contratacao", $contrato["data_contratacao"]);
+	$this->tpl->atribui("vigencia", $contrato["vigencia"]);
+	$this->tpl->atribui("valor_contrato", $contrato["valor_contrato"]);
+	$this->tpl->atribui("tipo_produto", $contrato["tipo_produto"]);
+	$this->tpl->atribui("valor_produto", $contrato["valor_produto"]);
+	$this->tpl->atribui("banda_kbps", $contrato["bl_banda_download_kbps"]);
+	$this->tpl->atribui("id_produto", $contrato["id_produto"]);
+	$this->tpl->atribui("nome_produto", $contrato["nome"]);
+
+	$sSQL  = "SELECT * FROM cltb_cliente WHERE id_cliente = '$id_cliente' ";
+
+	$cli = $this->bd->obtemUnicoRegistro($sSQL);
+
+
+	$valor_extenso = $this->extenso($contrato["valor_contrato"]);
+	$hoje_extenso = $this->escreveData($hoje);
+	$data_extenso = $this->escreveData($contrato["data_contratacao"]);
+	$this->tpl->atribui("data_extenso",$data_extenso);
+	$this->tpl->atribui("valor_extenso",$valor_extenso);
+	$this->tpl->atribui("hoje_extenso",$hoje_extenso);
+	$this->tpl->atribui("cli",$cli);
+	$this->tpl->atribui("tipo_produto",$tipo_produto);
+
+	if ($tipo_produto == "BL"){
+
+		$arquivo_contrato = "../../contratos/contrato_padrao_BL.html";
+
+	}else if ($tipo_produto == "D"){
+
+		$arquivo_contrato = "../../contratos/contrato_padrao_D.html";
+
+	}else if ($tipo_produto == "H"){
+
+		$arquivo_contrato = "../../contratos/contrato_padrao_H.html";
+
+	}
+
+
+		$this->arquivoTemplate = $arquivo_contrato;
+
+		//$this->contratoHTML($nome_provedor,$localidade,cnpj_provedor,$data_contratacao,$vigencia,$valor_contrato,$tipo_produto,$valor_produto,$banda_kbps,$id_produto,$nome_produto,$valor_extenso,$hoje_extenso,$data_extenso,$arquivo_contrato);
+
+	$hoje = date("Y-m-d");
+	
+	$ph = new MUtils;
+	
+	$_image_path = MUtils::getPwd();
+	$host = "http://dev.mosman.com.br";
+	$image_path = $host.$_image_path."/template/default/images";
+	$sSQL = "SELECT path_contrato FROM pftb_preferencia_cobranca WHERE id_provedor = '1'";
+	
+	$provedor = $this->prefs->obtem("total");
+	$path = $provedor["path_contrato"];
+	//$_path = $this->bd->obtemUnicoRegistro($sSQL);
+	//$path = $_path["path_contratos"];
+	
+	$nome_arq = $path."contrato-".$id_cliente_produto."-".$contrato["data_contratacao"].".html";
+	$fd = fopen($nome_arq,"w");
+	
+	//////echo "path: $_path - $path<br>";
+
+	//$arq = explode("/",$arquivo_contrato);
+	//$arq = $arq[count($arq)-1];
+	$arq = $arquivo_contrato;
+
+	//$image_path = $path."/template/default/images";
+	//////echo "<BR>IMAGE PATH".$image_path ."<br>";
+
+	$this->tpl->atribui("path",$image_path);
+	$arquivo = $path."/".$arq;
+	$arqtmp = $this->tpl->obtemPagina($arq);
+
+	fwrite($fd,$arqtmp);
+	
+	fclose($fd);
+	
+	return;
+	
+	
+	
+
+}
+
+public function extenso($valor=0, $maiusculas=false) { 
+
+	$rt = null;
+    // verifica se tem virgula decimal 
+    if (strpos($valor,",") > 0) 
+    { 
+      // retira o ponto de milhar, se tiver 
+      $valor = str_replace(".","",$valor); 
+
+      // troca a virgula decimal por ponto decimal 
+      $valor = str_replace(",",".",$valor); 
+    } 
+
+        $singular = array("centavo", "real", "mil", "milhão", "bilhão", "trilhão", "quatrilhão"); 
+        $plural = array("centavos", "reais", "mil", "milhões", "bilhões", "trilhões", "quatrilhões"); 
+
+        $c = array("", "cem", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos"); 
+        $d = array("", "dez", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa"); 
+        $d10 = array("dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezesete", "dezoito", "dezenove"); 
+        $u = array("", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove"); 
+
+        $z=0; 
+
+        $valor = number_format($valor, 2, ".", "."); 
+        $inteiro = explode(".", $valor); 
+        for($i=0;$i<count($inteiro);$i++) 
+                for($ii=strlen($inteiro[$i]);$ii<3;$ii++) 
+                        $inteiro[$i] = "0".$inteiro[$i]; 
+
+        $fim = count($inteiro) - ($inteiro[count($inteiro)-1] > 0 ? 1 : 2); 
+        for ($i=0;$i<count($inteiro);$i++) { 
+                $valor = $inteiro[$i]; 
+                $rc = (($valor > 100) && ($valor < 200)) ? "cento" : $c[$valor[0]]; 
+                $rd = ($valor[1] < 2) ? "" : $d[$valor[1]]; 
+                $ru = ($valor > 0) ? (($valor[1] == 1) ? $d10[$valor[2]] : $u[$valor[2]]) : ""; 
+
+                $r = $rc.(($rc && ($rd || $ru)) ? " e " : "").$rd.(($rd && $ru) ? " e " : "").$ru; 
+                $t = count($inteiro)-1-$i; 
+                $r .= $r ? " ".($valor > 1 ? $plural[$t] : $singular[$t]) : ""; 
+                if ($valor == "000")$z++; elseif ($z > 0) $z--; 
+                if (($t==1) && ($z>0) && ($inteiro[0] > 0)) $r .= (($z>1) ? " de " : "").$plural[$t]; 
+                if ($r) $rt = $rt . ((($i > 0) && ($i <= $fim) && ($inteiro[0] > 0) && ($z < 1)) ? ( ($i < $fim) ? ", " : " e ") : " ") . $r; 
+        } 
+
+         if(!$maiusculas){ 
+                          return($rt ? $rt : "zero"); 
+         } elseif($maiusculas == "2") { 
+                          return (strtoupper($rt) ? strtoupper($rt) : "Zero"); 
+         } else { 
+                          return (ucwords($rt) ? ucwords($rt) : "Zero"); 
+         } 
+         
+        
+
+}
+
+public function escreveData($data)  {  
+	list($ano,$mes,$dia) = explode("-",$data);
+	$mes_array = array("janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"); 
+	return $dia ." de ". $mes_array[(int)$mes-1] ." de ". $ano;
+
+}
+
+public function days_diff($date_ini, $date_end, $round = 1) { 
+    $date_ini = strtotime($date_ini); 
+    $date_end = strtotime($date_end); 
+
+    $date_diff = ($date_end - $date_ini) / 86400; 
+
+    if($round != 0) {
+        return floor($date_diff); 
+    } else {
+        return $date_diff; 
+    }
+} 
+
+
 
 
 	

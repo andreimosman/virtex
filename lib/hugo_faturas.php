@@ -4,6 +4,23 @@
 										
 					//Cadastro de faturas do contrato.
 					
+					//* CARNE - INICIO
+
+					$_id_carne = $this->bd->proximoID('cbsq_id_carne');
+					$q = 0;
+
+					$sSQL  = "INSERT INTO cbtb_carne ";
+					$sSQL .= "(id_carne, data_geracao,id_cliente_produto,valor,status,vigencia,id_cliente) ";
+					$sSQL .= "VALUES ";
+					$sSQL .= "('$_id_carne','$data_contratacao','$id_cliente_produto','$valor_contrato','A','$vigencia','$id_cliente') ";
+
+					$this->bd->consulta($sSQL);
+					//echo "CARNE: $sSQL <br>";
+					
+					$id_carne = $_id_carne;
+					
+					//* CARNE - FIM
+					
 					$pro_rata = @$_REQUEST["prorata"];
 					
 					$dia_vencimento = @$_REQUEST["dia_vencimento"];
@@ -121,14 +138,14 @@
 										$sSQL =  "INSERT INTO cbtb_faturas(";
 										$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
 										$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
-										$sSQL .= "	acrescimo, valor_pago ";
+										$sSQL .= "	acrescimo, valor_pago, id_carne";
 										$sSQL .= ") VALUES (";
 										$sSQL .= "	$id_cliente_produto_new, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
 										$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
-										$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
+										$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago, $id_carne";
 										$sSQL .= ")";
 																					
-										//echo "Fatura:  $sSQL<br>\n";
+										//Echo "Fatura:  $sSQL<br>\n";
 										$this->bd->consulta($sSQL);
 																						
 									}
@@ -190,10 +207,12 @@
 												$this->bd->consulta($sSQL);
 													
 											}*/
+											$fatura_valor = $valor_contrato;
 											
-											$this->carne($id_cliente_produto_new,$data,$id_cliente);
+											//$data = $fatura_dt_vencimento;
+											//$fatura = $this->carne($id_cliente_produto_new,$data,$id_cliente);
 																				
-											fputs($fd,$fatura);
+											//fputs($fd,$fatura);
 											
 
 
@@ -217,17 +236,18 @@
 										$sSQL =  "INSERT INTO cbtb_faturas(";
 										$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
 										$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
-										$sSQL .= "	acrescimo, valor_pago ";
+										$sSQL .= "	acrescimo, valor_pago, id_carne ";
 										$sSQL .= ") VALUES (";
 										$sSQL .= "	$id_cliente_produto_new, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
 										$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
-										$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
+										$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago, $id_carne ";
 										$sSQL .= ")";
 
-										//echo "$sSQL<br>";
+									//echo "FATURAS: $sSQL<br>";
 										$this->bd->consulta($sSQL);
-
-										$this->carne($id_cliente_produto_new,$data,$id_cliente);
+										
+										$data = $fatura_dt_vencimento;
+										$fatura = $this->carne($id_cliente_produto_new,$data,$id_cliente);
 										fputs($fd,$fatura);
 
 										
@@ -266,14 +286,14 @@
 										$sSQL =  "INSERT INTO cbtb_faturas(";
 										$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
 										$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
-										$sSQL .= "	acrescimo, valor_pago ";
+										$sSQL .= "	acrescimo, valor_pago, id_carne ";
 										$sSQL .= ") VALUES (";
 										$sSQL .= "	$id_cliente_produto_new, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
 										$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
-										$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
+										$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago, $id_carne ";
 										$sSQL .= ")";
 
-										//echo "$sSQL<br>";
+									//echo "FATURAS: $sSQL<br>";
 										$this->bd->consulta($sSQL);
 									}								
 									
@@ -357,14 +377,14 @@
 										$sSQL =  "INSERT INTO cbtb_faturas(";
 										$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
 										$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
-										$sSQL .= "	acrescimo, valor_pago ";
+										$sSQL .= "	acrescimo, valor_pago, id_carne ";
 										$sSQL .= ") VALUES (";
 										$sSQL .= "	$id_cliente_produto_new, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
 										$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
-										$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
+										$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago, $id_carne";
 										$sSQL .= ")";
 
-										//echo "$sSQL<br>";
+									//echo " FATURAS: $sSQL<br>";
 										$this->bd->consulta($sSQL);
 										
 										$data = $fatura_dt_vencimento;
@@ -406,14 +426,14 @@
 									$sSQL =  "INSERT INTO cbtb_faturas(";
 									$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
 									$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
-									$sSQL .= "	acrescimo, valor_pago ";
+									$sSQL .= "	acrescimo, valor_pago, id_carne ";
 									$sSQL .= ") VALUES (";
 									$sSQL .= "	$id_cliente_produto_new, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
 									$sSQL .= "	NULL, $fatura_pg_parcial, NULL, $fatura_desconto, ";
-									$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
+									$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago, $id_carne ";
 									$sSQL .= ")";
 
-									//echo "$sSQL<br>";
+								//echo "FATURAS: $sSQL<br>";
 									$this->bd->consulta($sSQL);
 								}
 							break;						
