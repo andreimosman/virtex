@@ -3096,7 +3096,7 @@ class VAClientes extends VirtexAdmin {
 
 					// Exibe mensagem (joga pra msgredirect)
 					$this->tpl->atribui("mensagem","Conta Alterada com sucesso!");
-					$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=pesquisa");
+					$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=produto&tipo=$tipo_conta&id_cliente=$id_cliente");
 					$this->tpl->atribui("target","_top");
 
 								   
