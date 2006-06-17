@@ -412,7 +412,7 @@ class VAClientes extends VirtexAdmin {
 
 					// Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
 					$this->tpl->atribui("mensagem",$msg_final); 
-					$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=pesquisa");
+					$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=cadastro&id_cliente=$id_cliente");
 					$this->tpl->atribui("target","_top");
 
 					$this->arquivoTemplate = "msgredirect.html";
