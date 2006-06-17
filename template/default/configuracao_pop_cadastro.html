@@ -26,7 +26,7 @@ function verificaTipoPop() {
               </tr>
               <tr>
                 <td align="center" valign="middle">
-<form name="formulario" method="post" action="{$smarty.server.PHP_SELF}">
+<form name="formulario" method="post" action="{$smarty.server.PHP_SELF}" onSubmit>
                 	<input type="hidden" name="op" value="pop">
 					<input type="hidden" name="acao" value="{$acao}">
 					<input type="hidden" name="id_pop" value="{$id_pop}">
@@ -75,7 +75,30 @@ function verificaTipoPop() {
                                </select></td>
                             </tr>
                             <tr>
-                              <td colspan="4" align="right">&nbsp;</td>
+                              <td colspan="4" align="right"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr> 
+                                  <td width="47"> <p>Status:</p></td>
+                                  <td><select name="status" id="status">
+								  		{foreach key=id item=valor from=$status_pop}
+										{if $id != "D"}
+                                      <option value="{$id}">{$valor}</option>
+									  	{/if}
+									  {/foreach}
+                                    </select></td>
+                                </tr>
+                                {if $qtde_cli_pop}
+								<tr> 
+                                  <td colspan="2"><div align="CENTER">
+                                    <p><strong>{$qtde_cli_pop}</strong> clientes 
+                                      cadastrados neste pop</p>
+                                    </div></td>
+                                </tr>
+                                {/if}
+								<tr> 
+                                  <td>&nbsp;</td>
+                                  <td>&nbsp;</td>
+                                </tr>
+                              </table></td>
                             </tr>
                             <tr>
                               <td colspan="4" align="right"><input type="submit" name="Submit" value="{$titulo}">

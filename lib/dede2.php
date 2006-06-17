@@ -235,6 +235,16 @@
 		
 		/*====> PRO-RATA - INICIO <=====*/
 							
+		$sSQL = "SELECT * FROM cftb_nas where id_nas = $id_nas";
+		$_nas = $this->bd->obtemUnicoRegistro($sSQL);
+
+		$sSQL = "SELECT * FROM cftb_pop where id_pop = $id_pop";
+		$_pop = $this->bd->obtemUnicoRegistro($sSQL);
+		
+		$this->tpl->atribui("nome_nas",$_nas["nome"]);
+		$this->tpl->atribui("nome_pop",$_pop["nome"]);
+
+
 							
 		$prorata = @$_REQUEST["prorata"];
 		if($prorata == true){

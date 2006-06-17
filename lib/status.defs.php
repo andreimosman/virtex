@@ -193,5 +193,10 @@ $_LS_CORES = array(
 		"#0000FF"
 		);
 
+$_STATUS_POP = array(
+		"A" => "ATIVO",
+		"D" => "DESATIVADO",
+		"N" => "NÃO DISPONIVEL PARA CONTRATAÇÕES"
+		);
 
 ?>

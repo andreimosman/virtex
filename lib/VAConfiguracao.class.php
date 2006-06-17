@@ -26,9 +26,11 @@ class VAConfiguracao extends VirtexAdmin {
 				$reg = array();
 				
 				$sSQL  = "SELECT ";
-				$sSQL .= "   id_pop, nome, info, tipo, id_pop_ap ";
+				$sSQL .= "   id_pop, nome, info, tipo, id_pop_ap, status ";
 				$sSQL .= "FROM cftb_pop ";
-								
+				$sSQL .= "WHERE status != 'D' ";
+				
+				
 				$reg = $this->bd->obtemRegistros($sSQL);
 								
 				$this->tpl->atribui("lista_pop",$reg);
@@ -43,20 +45,73 @@ class VAConfiguracao extends VirtexAdmin {
 
 				$erros = array();
 
+
+				$rotina = @$_REQUEST["rotina"];
 				$acao = @$_REQUEST["acao"];
 				$id_pop = @$_REQUEST["id_pop"];
 
 				$enviando = false;
 				
 				$tSQL  = "SELECT ";
-				$tSQL .= "   id_pop, nome, info, tipo, id_pop_ap ";
+				$tSQL .= "   id_pop, nome, info, tipo, id_pop_ap, status ";
 				$tSQL .= "FROM cftb_pop ";
-				$tSQL .= "WHERE tipo = 'AP'";
+				$tSQL .= "WHERE tipo = 'AP' AND status != 'D' ";
 	
 				$aps = $this->bd->obtemRegistros($tSQL);
 				
+				
+				
+				
+				
+				
 				$reg = array();
+				
+				if ($rotina == "desativar"){
+					
+					$p = @$_REQUEST["p"];
+					
+					$sSQL = "SELECT count(id_pop) as qtde_cli_pop FROM cntb_conta_bandalarga WHERE id_pop = '$id_pop' ";
+					$qtde = $this->bd->obtemUnicoRegistro($sSQL);
+					//echo "QTDE_POP: $sSQL <br>";
+					
+					$sSQL = "SELECT nome, tipo FROM cftb_pop WHERE id_pop = $id_pop";
+					$_pop = $this->bd->obtemUnicoRegistro($sSQL);
+					//echo "POP: $sSQL <br>";
+					
+						if ($p == "ok"){
+						
+							$sSQL = "UPDATE cftb_pop SET status = 'D' WHERE id_pop = $id_pop ";
+							$this->bd->consulta($sSQL);
+							
+							$msg_final = "POP DESATIVADO COM SUCESSO!!!";
+							
+							$this->tpl->atribui("mensagem",$msg_final);
+							$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=lista_pop");
+							$this->tpl->atribui("target","_self");
+							
+							
+							
+			      $this->arquivoTemplate="msgredirect.html";
+						return;
+							
+							
+						
+						}
+					
+					
+					
+					
+					$this->tpl->atribui("qtde_cli_pop",$qtde["qtde_cli_pop"]);
+					$this->tpl->atribui("id_pop", $id_pop);
+					$this->tpl->atribui("nome_pop",$_pop["nome"]);
+					$this->tpl->atribui("tipo_pop",$_pop["tipo"]);
+					
+					$this->arquivoTemplate = "configuracao_pop_desativar.html";
+					return;
+					
 
+					
+				}
 
 				if( $acao ) {
 				   // Se ele recebeu o campo ação é pq veio de um submit
@@ -66,14 +121,22 @@ class VAConfiguracao extends VirtexAdmin {
 					if( $id_pop ) {
 						// SELECT
 						$sSQL  = "SELECT ";
-						$sSQL .= "   id_pop, nome, info, tipo, id_pop_ap ";
+						$sSQL .= "   id_pop, nome, info, tipo, id_pop_ap, status ";
 						$sSQL .= "FROM cftb_pop ";
-						$sSQL .= "WHERE id_pop = '$id_pop'";
+						$sSQL .= "WHERE id_pop = '$id_pop' AND status != 'D' ";
 					
 										
 						$reg = $this->bd->obtemUnicoRegistro($sSQL);
 					
-
+						$sSQL = "SELECT count(id_pop) as qtde_cli_pop FROM cntb_conta_bandalarga WHERE id_pop = '$id_pop' ";
+						$qtde = $this->bd->obtemUnicoRegistro($sSQL);
+						
+						$qtde_cli_pop = 0;
+						$qtde_cli_pop = $qtde["qtde_cli_pop"];
+					
+						$this->tpl->atribui("qtde_cli_pop",$qtde["qtde_cli_pop"]);
+						
+						
 						$acao = "alt";
 						$titulo = "Alterar";
 
@@ -124,7 +187,8 @@ class VAConfiguracao extends VirtexAdmin {
 						$sSQL .= "   nome = '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
 						$sSQL .= "   info = '" . $this->bd->escape(@$_REQUEST["info"]) . "', ";
 						$sSQL .= "   tipo = '" . $this->bd->escape(@$_REQUEST["tipo"]) . "', ";
-						$sSQL .= "   id_pop_ap = ". (@$_REQUEST["tipo"] != "CL" ? "NULL" : "'" . $this->bd->escape(@$_REQUEST["id_pop_ap"]) . "'" ) .   " ";
+						$sSQL .= "   id_pop_ap = ". (@$_REQUEST["tipo"] != "CL" ? "NULL" : "'" . $this->bd->escape(@$_REQUEST["id_pop_ap"]) . "'" ) .   ", ";
+						$sSQL .= "	 status = '" . $REQUEST["status"] . "' ";
 						$sSQL .= "WHERE ";
 						$sSQL .= "   id_pop = '" . $this->bd->escape(@$_REQUEST["id_pop"]) . "' ";  
 
@@ -172,8 +236,12 @@ class VAConfiguracao extends VirtexAdmin {
 
 			global $_LS_TIPO_POP;
 			$this->tpl->atribui("tipo_pop",$_LS_TIPO_POP);
+			
+			global $_STATUS_POP;
+			$this->tpl->atribui("status_pop",$_STATUS_POP);
 
 			// Atribui os campos
+						$this->tpl->atribui("status",@$reg["status"]);
 		        $this->tpl->atribui("id_pop",@$reg["id_pop"]);
 		        $this->tpl->atribui("nome",@$reg["nome"]);
 		        $this->tpl->atribui("info",@$reg["info"]);// pega a info do db e atribui ao campo correspon do form

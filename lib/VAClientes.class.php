@@ -860,7 +860,7 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "FROM ";
 		$sSQL .= "	cbtb_contrato ct, cbtb_cliente_produto cl, prtb_produto pr ";
 		$sSQL .= "WHERE ";
-		$sSQL .= "	cl.id_cliente_produto = ct.id_cliente_produto  AND cl.id_cliente = '$id_cliente' AND ct.id_produto = pr.id_produto";
+		$sSQL .= "	cl.id_cliente_produto = ct.id_cliente_produto  AND cl.id_cliente = '$id_cliente' AND ct.id_produto = pr.id_produto AND ct.status = 'A' ";
 		$sSQL .= " ORDER BY ct.data_contratacao DESC ";
 		
 		$lista_contrato = $this->bd->obtemRegistros($sSQL);

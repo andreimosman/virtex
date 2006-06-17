@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Untitled Document</title>
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="CENTER" valign="TOP"> 
+      <table align="CENTER" width="500" border="0" cellspacing="2" cellpadding="0">
+        <tr> 
+          <td><h1 align="CENTER">DESATIVA&Ccedil;&Atilde;O DE POP</h1></td>
+        </tr>
+        <tr> 
+          <td><div align="CENTER"> 
+            <p><strong>{$id_pop} - {$nome_pop} - {$tipo_pop}</strong></p>
+            </div></td>
+        </tr>
+        <tr> 
+          <td><div align="CENTER"> 
+            <p>{if $qtde_cli_pop != "0"}<a href="relatorio.php?op=lista&tipo=POP&id={$id_pop}">{/if}<b>{$qtde_cli_pop}</b> clientes cadastrados neste POP{if $qtde_cli_pop != "0"}</a>{/if}</p>
+            </div></td>
+        </tr>
+        <tr> 
+          <td>&nbsp;</td>
+        </tr>
+		{if $qtde_cli_pop != "0"}
+        <tr> 
+          <td height="36"><div align="CENTER"> 
+            <p><strong><font color="#FF0000">&Eacute; necess&aacute;rio antes 
+              de efetuar esta transa&ccedil;&atilde;o migrar os clientes para 
+              outro POP</font></strong></p>
+            </div></td>
+        </tr>{/if}
+			{if $qtde_cli_pop == "0"}
+        <tr> 
+          <td align="CENTER"><form name="form1" method="post" action=""> 
+            <input type="submit" name="Submit" value="Desativar este POP">
+            <input name="id_pop" type="hidden" value="{$id_pop}" id="id_pop">
+            <input name="op" type="hidden" value="pop" id="op">
+            <input name="rotina" type="hidden" value="desativar" id="rotina">
+            <input name="p" type="hidden" value="ok" id="p">
+            </form></td>
+        </tr>{/if}
+        <tr>
+          <td><div align="CENTER"><a href="configuracao.php?op=lista_pop">VOLTAR</a></div></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

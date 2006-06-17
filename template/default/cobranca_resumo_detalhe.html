@@ -1,0 +1,47 @@
+<!-- COBRANCA_RESUMO_DETALHE.HTML -->
+<html>
+<head>
+<title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
+
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+</head>
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td align="center" valign="middle"> <h1 align="center">Retorno</h1>
+                  <table width="700" border="0" cellspacing="1" cellpadding="0">
+                    <tr bgcolor="#CCCCCC" align="CENTER"> 
+                      <td><p><strong>#</strong></p></td>
+                      <td><p><strong>Data Pagamento</strong></p></td>
+                      <td><p><strong>Data Cr&eacute;dito</strong></p></td>
+                      <td align="RIGHT"><p><strong>Valor Recebido</strong></p></td>
+                      <td><p><strong>Status</strong></p></td>
+                      <td><p><strong>Motivo</strong></p></td>
+                    </tr>
+					{foreach item=r from=$detalhe}
+                    <tr bgcolor="{cycle values="#ffffff,#f1f1f1"}"> 
+                      <td align="CENTER"><p>{$r.nsr}</p></td>
+                      <td align="CENTER"><p>{$r.data_pagamento}</p></td>
+                      <td align="CENTER"><p>{$r.data_credito}</p></td>
+                      <td align="RIGHT"><p>{$r.valor_recebido}</p></td>
+                      <td align="CENTER"><p>{$r.status}</p></td>
+                      <td align="CENTER"><p>{$r.motivo}</p></td>
+                    </tr>
+					{/foreach}
+                  </table>
+                  <p>&nbsp;</p></td>
+              </tr>
+            </table></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+</body>
+
+
+</html>

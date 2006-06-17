@@ -1888,6 +1888,8 @@ class VARelatorio extends VirtexAdmin {
 				$sSQL .= "  GROUP BY ";
 				$sSQL .= "     pop.id_pop ";
 				$sSQL .= "   ) cli_pop ON( p.id_pop = cli_pop.id_pop)  ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "   p.status != 'D' ";
 				$sSQL .= "ORDER BY ";
 				$sSQL .= "   p.nome ";
 
