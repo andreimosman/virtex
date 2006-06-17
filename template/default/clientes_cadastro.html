@@ -3,35 +3,87 @@
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="template/default/ajax.js"></script>
+<script type="text/javascript" src="template/default/ajax_validacoes.js"></script>
 {literal}
-<script>
+<script language="JavaScript">
 
-function check(){
-	var pessoa = document.cadastro.tipo_pessoa.value;
-	
+function checkForm(){
+  var frm = document.cadastro;
+	var pessoa     = frm.tipo_pessoa.value;
+	var id_cliente = frm.id_cliente.value;
+	var cpf_cnpj   = frm.cpf_cnpj.value;
+	var rg_inscr   = frm.rg_inscr.value;
+	var nome_razao = frm.nome_razao.value;
+
 	//alert('PESSOA: '+pessoa);
-	
-	if(pessoa == 'F'){
-		return validaCPF();
-	} else {
- 	    return validaCNPJ();
+
+	var erro = new String;
+
+	/**
+	 * Nome/razao não pode ser em branco.
+	 */
+
+	if( nome_razao.length == 0 ) {
+	   erro = "Nome/Razao Social deve ser preenchido.";
 	}
+
+	/**
+	 * Validacao de CPF/CNPJ
+	 */
+	if( erro.length == 0 ) {
+		if(pessoa == 'F'){
+			if( !validaCPF(cpf_cnpj) ) {
+				erro = "CPF Invalido";
+			}
+			if( rg_inscr.length == 0 ) {
+				erro = "O RG deve ser preenchido";
+			}
+		} else {
+			if( cpf_cnpj.length == 0 || !validaCNPJ(cpf_cnpj) ) {
+				 erro = "CNPJ Invalido";
+			}
+		}
+
+		if( cpf_cnpj.length > 0 && existeDOCTO(cpf_cnpj,id_cliente) ) {
+			if( pessoa == "F" ) {
+				erro = "CPF";
+			} else {
+				erro = "CNPJ";
+			}
+			erro += " já cadastrado para outro cliente.";
+		}
+
+		if( rg_inscr.length > 0 && existeDOCTO(rg_inscr,id_cliente) ) {
+			if( pessoa == "F" ) {
+				erro = "RG já cadastrado";
+			} else {
+				erro = "INSCRICAO já cadastrada";
+			}
+			erro += " para outro cliente.";
+		}
+	}
+
+	if(erro.length) {
+		window.alert(erro);
+		return false;
+	}
+
+	return confirmacao();
 
 }
 
 
-function validaCPF() {
-//alert('VALIDANDO CPF');
-	cpf = document.cadastro.cpf_cnpj.value;
+function validaCPF(cpf) {
+	// cpf = document.cadastro.cpf_cnpj.value;
 	erro = new String;
 
 	if (cpf == "11111111111" || cpf == "22222222222" || cpf == "33333333333" || cpf == "44444444444" || cpf == "55555555555" || cpf == "66666666666" || cpf == "77777777777" || cpf == "88888888888" || cpf == "99999999999" || cpf == "00000000000"){
-	erro += "Número de CPF/CNPJ Inválido! ";
+		erro += "Número de CPF/CNPJ Inválido! ";
 	}
 
 	if (cpf.length < 11) erro += "Sao necessarios 11 digitos para verificacao do CPF! ";
-
-	//substituir os caracteres que não são números
+		//substituir os caracteres que não são números
     if(document.layers && parseInt(navigator.appVersion) == 4){
     	x = cpf.substring(0,3);
         x += cpf. substring (3,6);
@@ -39,57 +91,57 @@ function validaCPF() {
         x += cpf. substring (9,10);
         cpf = x;
     } else {
-		cpf = cpf. replace (".","");
-		cpf = cpf. replace (".","");
-		cpf = cpf. replace ("-","");
-	}
+			cpf = cpf. replace (".","");
+			cpf = cpf. replace (".","");
+			cpf = cpf. replace ("-","");
+		}
 
     var a = [];
     var b = new Number;
     var c = 11;
-    for (i=0; i<11; i++){
+    for (i=0; i<11; i++) {
     	a[i] = cpf.charAt(i);
-		if (i < 9) b += (a[i] * --c);
-	}
+			if (i < 9) b += (a[i] * --c);
+		}
+
     if ((x = b % 11) < 2) { a[9] = 0 } else { a[9] = 11-x }
     b = 0;
     c = 11;
     for (y=0; y<10; y++) b += (a[y] * c--);
-    	if ((x = b % 11) < 2) { a[10] = 0; } else { a[10] = 11-x; }
-        if ((cpf.charAt(9) != a[9]) || (cpf.charAt(10) != a[10])){
-        	erro +="Digito verificador com problema!";
+		if ((x = b % 11) < 2) { a[10] = 0; } else { a[10] = 11-x; }
+		if ((cpf.charAt(9) != a[9]) || (cpf.charAt(10) != a[10])){
+			erro +="Digito verificador com problema!";
 		}
 		if (erro.length > 0){
-			alert(erro);
+			//alert(erro);
 			return false;
-		}else{
-			return confirmacao();
+		} else {
+			return true;
 		}
-return;
-//return confirmacao();
+
+		return false;
 
 }
 
 
-function validaCNPJ() {
-//alert('VALIDANDO CNPJ');
-	CNPJ = document.cadastro.cpf_cnpj.value;
-    erro = new String;
-    if (CNPJ.length < 18) erro += "É necessario preencher corretamente o número do CNPJ! ";
+function validaCNPJ(CNPJ) {
+	//CNPJ = document.cadastro.cpf_cnpj.value;
+	erro = new String;
+	if (CNPJ.length < 18) erro += "É necessario preencher corretamente o número do CNPJ! ";
 
 	if ((CNPJ.charAt(2) != ".") || (CNPJ.charAt(6) != ".") || (CNPJ.charAt(10) != "/") || (CNPJ.charAt(15) != "-")){
-    	if (erro.length == 0) erro += "É necessário preencher corretamente o número do CNPJ! ";
+		if (erro.length == 0) erro += "É necessário preencher corretamente o número do CNPJ! ";
 	}
-//alert('TAMANHO: '+CNPJ.length);
+
 	//substituir os caracteres que não são números
-    if(document.layers && parseInt(navigator.appVersion) == 4){
-    	x = CNPJ.substring(0,2);
-        x += CNPJ. substring (3,6);
-        x += CNPJ. substring (7,10);
-        x += CNPJ. substring (11,15);
-        x += CNPJ. substring (16,18);
-        CNPJ = x;
-    } else {
+	if(document.layers && parseInt(navigator.appVersion) == 4){
+		x = CNPJ.substring(0,2);
+		x += CNPJ. substring (3,6);
+		x += CNPJ. substring (7,10);
+		x += CNPJ. substring (11,15);
+		x += CNPJ. substring (16,18);
+		CNPJ = x;
+	} else {
 		CNPJ = CNPJ. replace (".","");
 		CNPJ = CNPJ. replace (".","");
 		CNPJ = CNPJ. replace ("-","");
@@ -101,43 +153,34 @@ function validaCNPJ() {
 	var a = [];
 	var b = new Number;
 	var c = [6,5,4,3,2,9,8,7,6,5,4,3,2];
-    for (i=0; i<12; i++){
-    	a[i] = CNPJ.charAt(i);
-    	b += a[i] * c[i+1];
+	for (i=0; i<12; i++){
+		a[i] = CNPJ.charAt(i);
+		b += a[i] * c[i+1];
 	}
 
 	if ((x = b % 11) < 2) { a[12] = 0 } else { a[12] = 11-x }
-    	b = 0;
-        for (y=0; y<13; y++) {
-        	b += (a[y] * c[y]);
-        }
-		if ((x = b % 11) < 2) { a[13] = 0; } else { a[13] = 11-x; }
-		if ((CNPJ.charAt(12) != a[12]) || (CNPJ.charAt(13) != a[13])){
-        	erro +="Dígito verificador com problema!";
-        }
-        if (erro.length > 0){
-        	alert(erro);
-            return false;
-        } else {
-			return confirmacao();
-        	alert("CNPJ valido!");
-        }
+	b = 0;
+	for (y=0; y<13; y++) {
+		b += (a[y] * c[y]);
+	}
+	if ((x = b % 11) < 2) { a[13] = 0; } else { a[13] = 11-x; }
 
-//return confirmacao();
-//alert("saindo fora!");
-return;
-
+	if ((CNPJ.charAt(12) != a[12]) || (CNPJ.charAt(13) != a[13])){
+		erro +="Dígito verificador com problema!";
+	}
+	if (erro.length > 0){
+		//alert(erro);
+		return false;
+	} else {
+		return true;
 	}
 
+	return false;
+
+}
+
 function confirmacao(){
-
-		var agree = confirm("Tem certeza da alteração/cadastro deste cliente?");
-		if (agree){
-			return;
-		}else{
-			return false ;
-		}
-
+		return confirm("Tem certeza da alteração/cadastro deste cliente?");
 }
 
 
@@ -170,7 +213,7 @@ function confirmacao(){
                   {/if}
 
                   </strong></font><p></p>
-                  <form action="{$smarty.server.PHP_SELF}" method="post" name=cadastro id="cadastro" onSubmit="return check(this)">
+                  <form action="{$smarty.server.PHP_SELF}" method="post" name="cadastro" id="cadastro" onSubmit="return checkForm();">
                     <input type="hidden" name="op" value="{$op}">
                      <input type="hidden" name="id_cliente" value="{$id_cliente}">
                      <input type="hidden" name="acao" value="{$acao}">

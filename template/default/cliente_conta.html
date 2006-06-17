@@ -1,5 +1,14 @@
 <!-- cliente_conta.html -->
 {include file='cliente_header.html'}
+<script type="text/javascript" src="template/default/ajax.js"></script>
+<script type="text/javascript" src="template/default/ajax_validacoes.js"></script>
+<script language="JavaScript">
+{literal}
+function confirmacao(){
+		return confirm("Deseja realmente alterar esta conta?");
+}
+{/literal}
+</script>
 {if $tipo_conta == "BL"}
 <script language="javascript">
 var ip_externo = "{$ip_externo}";
@@ -62,6 +71,8 @@ function init() {
 
 }
 
+
+
 function check(){
 			csenha=document.frmConta.senha.value;
 			cconfsenha=document.frmConta.conf_senha.value;
@@ -69,17 +80,42 @@ function check(){
 			msg="";
 			erro=0;
 
-
 			if (csenha != cconfsenha) {
 				msg = msg + "Os campos Senha e Confirmação devem conter o mesmo conteúdo.\n";
 				erro = 1;
 			}
+
+			/**
+			 * Verifica o endereco em caso de alteracao do mesmo de forma manual
+			 */
+			//document.frmConta.id_nas.value;
+
+			if( document.frmConta.altera_rede.checked && document.frmConta.selecao_ip.value=='M' ) {
+				/** Verifica usando ajax */
+				var endereco = enderecoPertenceAoNas(document.frmConta.endereco_ip.value,document.frmConta.id_nas.value);
+				if( endereco == "" ) {
+					msg += "O endereço escolhido não pertence ao NAS especificado.";
+					erro = 1;
+				} else {
+					if( enderecoUtilizado(document.frmConta.endereco_ip.value,document.frmConta.id_conta.value) ) {
+						msg += "O endereço escolhido já está sendo utilizado.";
+						erro = 1;
+					} else {
+						document.frmConta.endereco_ip.value = endereco;
+					}
+				}
+			}
+
+
+
+
+
 			if (erro == 1){
 				alert(msg);
 				return false;
 			}
 
-	return true;
+	return confirmacao();
 
 }
 
@@ -88,8 +124,8 @@ function check(){
 </script>
 {/if}
 
-<form name="frmConta" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="javascript:return check(this);">
-
+<form name="frmConta" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="javascript:return check();">
+	<input type="hidden" name="id_conta" value="{$id_conta}">
 				{if $tipo_conta == "BL"}
                  <table width="100" border="0" cellspacing="0" cellpadding="0" align="center">
                     <tr>

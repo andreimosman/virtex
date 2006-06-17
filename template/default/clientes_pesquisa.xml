@@ -8,6 +8,7 @@
 <contas>
 {foreach item=c from=$v.contas}
 <conta>
+<id_conta>{$c.id_conta}</id_conta>
 <username>{$c.username}</username>
 <dominio>{$c.dominio}</dominio>
 <tipo_conta>{$c.tipo_conta}</tipo_conta>

@@ -105,7 +105,7 @@ class VAClientes extends VirtexAdmin {
 
 	}
 
-	private function obtemPOP($id_pop) {
+	public function obtemPOP($id_pop) {
 		$sSQL = "SELECT ";
 		$sSQL .= "   id_pop,nome,info,tipo,id_pop_ap ";
 		$sSQL .= "FROM ";
@@ -116,7 +116,7 @@ class VAClientes extends VirtexAdmin {
 		return( $this->bd->obtemUnicoRegistro($sSQL) );
 	}
 	
-	private function obtemNAS($id_nas) {
+	public function obtemNAS($id_nas) {
 		$sSQL = "SELECT ";
 		$sSQL .= "   id_nas,nome,ip,secret,tipo_nas ";
 		$sSQL .= "FROM ";
@@ -618,7 +618,7 @@ class VAClientes extends VirtexAdmin {
 							@list($usr,$dom) = explode("@",$texto_pesquisa);
 
 							$campos_cliente = " cl.id_cliente,cl.nome_razao ";
-							$campos_conta   = " cn.username,cn.dominio,cn.tipo_conta ";
+							$campos_conta   = " cn.username,cn.dominio,cn.tipo_conta,cn.id_conta ";
 
 							$from  = "	cntb_conta cn LEFT OUTER JOIN cntb_conta_bandalarga cbl USING(username,dominio,tipo_conta),  ";
 							$from .= "	cbtb_cliente_produto cp, cltb_cliente cl ";
