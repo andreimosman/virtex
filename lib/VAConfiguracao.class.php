@@ -795,7 +795,9 @@ class VAConfiguracao extends VirtexAdmin {
 				
 
 					if($mov == "cadastro"){
-											
+						
+						if (@$_REQUEST['disponivel']){			
+					
 											
 						while(list($id,$valor)=each($_REQUEST['disponivel'])){
 											
@@ -810,7 +812,8 @@ class VAConfiguracao extends VirtexAdmin {
 							
 							$this->tpl->atribui("op","cidades");
 							$this->tpl->atribui("acao","ok");
-											
+						
+						}
 											
 						}
 					}
