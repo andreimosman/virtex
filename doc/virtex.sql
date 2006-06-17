@@ -1,6 +1,6 @@
 /*
 Created		22/2/2006
-Modified		9/6/2006
+Modified		14/6/2006
 Project		
 Model		
 Company		
@@ -87,7 +87,7 @@ Create table  prtb_produto
 	valor Numeric(7,2) NULL ,
 	disponivel Boolean NULL ,
 	num_emails Smallint NULL ,
-	quota_por_conta Smallint NULL ,
+	quota_por_conta integer NULL ,
 	vl_email_adicional Numeric(7,2) NULL ,
 	permitir_outros_dominios Boolean NULL ,
 	email_anexado Boolean NULL ,
@@ -294,7 +294,7 @@ Create table  cntb_conta_email
 	username Varchar(30) NOT NULL,
 	tipo_conta Varchar(2) NOT NULL,
 	dominio Varchar(255) NOT NULL,
-	quota Smallint NULL ,
+	quota integer NULL ,
 	email Varchar(255) NULL ,
  primary key (username,tipo_conta,dominio)
 );

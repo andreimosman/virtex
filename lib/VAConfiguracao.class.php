@@ -504,6 +504,12 @@ class VAConfiguracao extends VirtexAdmin {
 						
 						if($nas["tipo_nas"] == "P"){
 							// cadastraRede (a rede que o cara digitou)
+
+							//$_rede = new RedeIp($rede);
+    					//$rede = $_rede->obtemRede();
+    					//echo $rede;
+    					
+    					
 							$this->cadastraRede($rede,$tipo_rede);
 							
 							// vinculaRede (a mesma)
@@ -1383,6 +1389,7 @@ class VAConfiguracao extends VirtexAdmin {
 		$sSQL .= "";
 		
 		$this->bd->consulta($sSQL);
+		//echo "CADASTRAREDE: $sSQL <br>";
 		
 		return($rede);
 		

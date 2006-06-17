@@ -146,6 +146,8 @@ class VAClientes extends VirtexAdmin {
 	   	$sSQL .= "	i.ipaddr ";
 		$sSQL .= "LIMIT ";
 	   	$sSQL .= "	1 ";
+	   	
+	   	//echo "OBTEM_IP: $sSQL <br>";
 
 		return( $this->bd->obtemUnicoRegistro($sSQL) );
 	
@@ -859,6 +861,7 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "	cbtb_contrato ct, cbtb_cliente_produto cl, prtb_produto pr ";
 		$sSQL .= "WHERE ";
 		$sSQL .= "	cl.id_cliente_produto = ct.id_cliente_produto  AND cl.id_cliente = '$id_cliente' AND ct.id_produto = pr.id_produto";
+		$sSQL .= " ORDER BY ct.data_contratacao DESC ";
 		
 		$lista_contrato = $this->bd->obtemRegistros($sSQL);
 		
@@ -1182,7 +1185,7 @@ class VAClientes extends VirtexAdmin {
 									
 									
 									
-									if (!count($erro)){
+									if (!$erro){
 									
 										if ($nas["tipo_nas"] == "I"){
 									
@@ -1735,8 +1738,14 @@ class VAClientes extends VirtexAdmin {
 						
 				$carnes = $this->bd->obtemRegistros($sSQL);
 				$this->obtemPR($id_cliente);
+				
 				////echo "CARNES: $sSQL <br>";
-				$id_cliente_produto = $carnes[0]["id_cliente_produto"];
+				
+				if(count($carnes)){
+				
+					$id_cliente_produto = @$carnes[0]["id_cliente_produto"];
+				
+				}
 				
 				if ($p == "faturas"){
 					

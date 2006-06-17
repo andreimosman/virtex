@@ -8,7 +8,9 @@
 <!--
 {literal}
 <!--
-
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
 //-->
 {/literal}//-->
 </script> 
@@ -52,7 +54,7 @@
                               </table></td>
                           </tr>
                           <tr>
-                            <td>{foreach item=a from=$carnes}
+                            <td>{if !count($carnes)}<p align="center"><b><font size=+1> Não existem carnês emitidos para este cliente</font></b></p>{else}{foreach item=a from=$carnes}
                               <table width="100%" border="0" cellspacing="2" cellpadding="3">
                                 <tr>
                                   <td width="100" align="center"><p><a href="{$smarty.server.PHP_SELF}?op=cobranca&rotina=carne&p=faturas&&id_cliente={$id_cliente}&id_carne={$a.id_carne}">{$a.id_carne}-{$a.id_cliente_produto}</a></p></td>
@@ -69,7 +71,7 @@
                                   <td colspan="6" align="center" height="1" bgcolor="#CCCCCC"></td>
                                 </tr>
                               </table>
-                              {/foreach}</td>
+                              {/foreach}{/if}</td>
                           </tr>
                         </table></td>
                     </tr>

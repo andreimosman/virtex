@@ -1,4 +1,18 @@
 <!-- CLIENTE_CONTRATO_CANCEL.HTML-->
+<script>
+{literal}
+function confirma(){
+
+var agree = confirm("Você tem certeza que quer CANCELAR este contrato????");
+	if ( agree ){
+		return true;
+	}else{
+		return false;
+	}
+	
+}
+{/literal}
+</script>
 <html>
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
@@ -104,10 +118,10 @@
           </table></td>
         </tr>
       </table>
-      <form name="form1" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="confirm('Voc&ecirc; tem certeza de quer proseguir com o CANCELAMENTO deste contrato?')">
+      <form name="form1" method="post" action="{$smarty.server.PHP_SELF}">
         <table width="700" border="0" cellspacing="1" cellpadding="0">
           <tr>
-            <td align="CENTER"><input type="submit" name="Submit" value="Confirmar Cancelamento de Contrato"></td>
+            <td align="CENTER"><input type="submit" name="Submit" value="Confirmar Cancelamento de Contrato" onClick="return confirma();"></td>
           </tr>
           <tr>
             <td align="CENTER"><!-- info do contrato antigo -->

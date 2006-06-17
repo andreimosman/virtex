@@ -1,4 +1,18 @@
-<!-- CLIENTE_CONTRATO_EXCLUIR.html --> {literal} {/literal} 
+<!-- CLIENTE_CONTRATO_EXCLUIR.html --> 
+<script>
+{literal}
+function confirma(){
+
+var agree = confirm("Você tem certeza que quer EXCLUIR DEFINITIVAMENTE o contrato listade,\n bem como as faturas ligadas a ele?");
+	if ( agree ){
+		return true;
+	}else{
+		return false;
+	}
+	
+}
+{/literal}
+</script>
 <p>{include file='cliente_header.html'} </p>
 <table width="450" border="0" align="center" cellpadding="0" cellspacing="1">
   <tr> 
@@ -83,7 +97,7 @@
       </table> </td>
   </tr>
 </table>
-<form name="form1" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="confirm('Você tem certeza que quer EXCLUIR DEFINITIVAMENTE o contrato listade,\n bem como as faturas ligadas a ele?')">
+<form name="form1" method="post" action="{$smarty.server.PHP_SELF}">
 <table align="CENTER" width="300" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td align="CENTER"><input name="id_cliente_produto" type="hidden" value="{$contrato.id_cliente_produto}" id="id_cliente_produto">
@@ -95,7 +109,7 @@
       <input name="tipo_conta" type="hidden" value="{$contrato.tipo_conta}" id="tipo_conta"> 
 	  <input name="id_cliente" type="hidden" value="{$contrato.id_cliente}" id="id_cliente">
       <input name="username" type="hidden" value="{$contrato.username}" id="username"> 
-      <input type="submit" name="Submit" value="Confirma Exclusão" ></td>
+      <input type="submit" name="Submit" value="Confirma Exclusão" onClick="return confirma();"></td>
   </tr>
 </table>
 </form>
