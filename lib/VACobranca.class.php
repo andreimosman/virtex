@@ -1453,7 +1453,7 @@ class VACobranca extends VirtexAdmin {
 				$sSQL  = "SELECT ";
 				$sSQL .= "ct.id_cliente_produto, to_char(ct.data_contratacao, 'DD/mm/YYYY') as data_contratacao, ct.vigencia, ct.data_renovacao, ct.valor_contrato, ct.id_cobranca, ct.status, ct.tipo_produto, ";
 				$sSQL .= "ct.valor_produto,";
-				$sSQL .= "cn.id_cliente_produto, cn.id_cliente, cn.dominio, cn.tipo_conta, cn.username, ";
+				$sSQL .= "cn.id_cliente_produto, cn.id_cliente, cn.dominio, cn.tipo_conta, cn.username,cn.id_conta, ";
 				$sSQL .= "cl.id_cliente, cl.nome_razao ";
 				$sSQL .= "FROM ";
 				$sSQL .= "cbtb_contrato ct, cntb_conta cn, cltb_cliente cl ";
@@ -1517,10 +1517,118 @@ class VACobranca extends VirtexAdmin {
 				/* FINAL SPOOL */
 
 				}
+				
+				$sSQL  = "SELECT ";
+				$sSQL .= "ct.id_cliente_produto, to_char(ct.data_contratacao, 'DD/mm/YYYY') as data_contratacao, ct.vigencia, ct.data_renovacao, ct.valor_contrato, ct.id_cobranca, ct.status, ct.tipo_produto, ";
+				$sSQL .= "ct.valor_produto,";
+				$sSQL .= "cn.id_cliente_produto, cn.id_cliente, cn.dominio, cn.tipo_conta, cn.username,cn.id_conta, ";
+				$sSQL .= "cl.id_cliente, cl.nome_razao ";
+				$sSQL .= "FROM ";
+				$sSQL .= "cbtb_contrato ct, cntb_conta cn, cltb_cliente cl ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "ct.id_cliente_produto = '$id_cliente_produto' AND ";
+				$sSQL .= "ct.id_cliente_produto = cn.id_cliente_produto AND ";
+				$sSQL .= "cn.id_cliente = '$id_cliente' AND ";
+				$sSQL .= "cn.id_cliente = cl.id_cliente AND ";
+				$sSQL .= "ct.tipo_produto = '$tipo_produto' ";
+				$CONTR = $this->bd->obtemUnicoRegistro($sSQL);
+				
+				$username = $CONTR["username"];
+				$dominio = $CONTR["dominio"];
+				$tipo_conta = $CONTR["tipo_conta"];
+				$id_conta = $CONTR["id_conta"];
+				
+				$sSQL  = "SELECT ";
+				$sSQL .= " cn.senha, cn.conta_mestre, cn.observacoes, ";
+
+				switch ($tipo_conta){
+					
+					case 'BL':
+						$sSQL .= "bl.id_pop, bl.tipo_bandalarga, bl.ipaddr, bl.rede, bl.upload_kbps, bl.download_kbps, bl.status, bl.mac, bl.id_nas, bl.ip_externo ";
+						$sSQL .= "FROM cntb_conta_bandalarga bl, cntb_conta cn WHERE ";
+						$sSQL .= "bl.username = cn.username AND ";
+						$sSQL .= "bl.dominio = cn.dominio AND ";
+						$sSQL .= "bl.tipo_conta = cn.tipo_conta ";
+					break;
+					case 'D':
+						$sSQL .= "d.foneinfo ";
+						$sSQL .= "FROM cntb_conta_discado d, cntb_conta cn WHERE ";
+						$sSQL .= "d.username = cn.username AND ";
+						$sSQL .= "d.dominio = cn.dominio AND ";
+						$sSQL .= "d.tipo_conta = cn.tipo_conta ";
+					break;
+					case 'E':
+						$sSQL .= "e.quota, e.email ";
+						$sSQL .= "FROM cntb_conta_email e, cntb_conta cn WHERE ";
+						$sSQL .= "e.username = cn.username AND ";
+						$sSQL .= "e.dominio = cn.dominio AND ";
+						$sSQL .= "e.tipo_conta = cn.tipo_conta ";
+					break;
+					case 'H':
+						$sSQL .= "h.tipo_hospedagem, h.senha_cript, h.uid, h.gid, h.home, h.shell, h.dominio_hospedagem ";
+						$sSQL .= "FROM cntb_conta_hospedagem h, cntb_conta cn WHERE ";
+						$sSQL .= "h.username = cn.username AND ";
+						$sSQL .= "h.dominio = cn.dominio AND ";
+						$sSQL .= "h.tipo_conta = cn.tipo_conta ";
+					break;
+				}
+				
+				$sSQL .= "AND ";
+				$sSQL .= "cn.username = '$username' AND ";
+				$sSQL .= "cn.dominio = '$dominio' AND ";
+				$sSQL .= "cn.tipo_conta = '$tipo_conta' ";
+
+				$outros = $this->bd->obtemUnicoRegistro($sSQL);
+				//echo "OUTROS: $sSQL <br>";
+				
+				$id_pop = @$outros["id_pop"];
+				$tipo_bandalarga = @$outros["tipo_bandalarga"];
+				$ipaddr = @$outros["ipaddr"];
+				$rede = @$outros["rede"];
+				$upload_kbps = @$outros["upload_kbps"];
+				$download_kbps = @$outros["download_kbps"];
+				$status = @$outros["status"];
+				$mac = @$outros["mac"];
+				$id_nas = @$outros["id_nas"];
+				$ip_externo = @$outros["ip_externo"];
+				$quota = @$outros["quota"];
+				$email = @$outros["email"];
+				$foneinfo = @$outros["foneinfo"];
+				$tipo_hospedagem = @$outros["tipo_hospedagem"];
+				$senha_cript = @$outros["senha_cript"];
+				$uid = @$outros["uid"];
+				$gid = @$outros["gid"];
+				$home = @$outros["home"];
+				$shell = @$outros["shell"];
+				$dominio_hospedagem = @$outros["dominio_hospedagem"];
+				$senha = @$outros["senha"];
+				$conta_mestre = @$outros["conta_mestre"];
+				$observacoes = @$outros["observacoes"];
+				$admin = $this->admLogin->obtemAdmin();
+				
+				
+				$sSQL = "SELECT id_carne FROM cbtb_faturas WHERE id_cliente_produto = $id_cliente_produto GROUP BY id_carne";
+				$fat = $this->bd->obtemUnicoRegistro($sSQL);
+				//echo "ID_CARNE: $sSQL <br>";
+
+				$sSQL  = "INSERT INTO lgtb_contas_excluidas ";
+				$sSQL .= "(id_cliente, id_cliente_produto, id_conta, username, tipo_conta, dominio, id_pop, tipo_bandalarga, ipaddr, rede, upload_kbps, ";
+				$sSQL .= "download_kbps, status, mac, id_nas, ip_externo, quota, email, foneinfo, tipo_hospedagem, senha_cript, uid, gid, home, shell, ";
+				$sSQL .= "dominio_hospedagem, senha, conta_mestre, observacoes, admin) ";
+  			$sSQL .= "VALUES ";
+  			$sSQL .= "('$id_cliente','$id_cliente_produto','$id_conta','$username','$tipo_conta','$dominio','$id_pop','$tipo_bandalarga','$ipaddr','$rede','$upload_kbps', ";
+  			$sSQL .= "'$download_kbps','$status','$mac','$id_nas','$ip_externo','$quota','$email','$foneinfo','$tipo_hospedagem','$senha_cript','$uid','$gid','$home','$shell', ";
+  			$sSQL .= "'$dominio_hospedagem','$senha','$conta_mestre','$observacoes','$admin' ) ";
+  			$this->bd->consulta($sSQL);
+				//echo "INSERT LOG: $sSQL <br>";
+
 			
 				$sSQL  = "DELETE FROM cbtb_faturas WHERE id_cliente_produto = '$id_cliente_produto'";
 				$this->bd->consulta($sSQL);
 
+				$aSQL = "DELETE FROM cbtb_carne WHERE id_carne = '".$fat["id_carne"]."' ";
+				$this->bd->consulta($aSQL);
+				//echo "DELETAO: $aSQL <br>";
 				
 				$sSQL  = "DELETE FROM cbtb_contrato WHERE id_cliente_produto = '$id_cliente_produto' AND tipo_produto = '$tipo_produto' ";
 				$this->bd->consulta($sSQL);
@@ -1553,16 +1661,11 @@ class VACobranca extends VirtexAdmin {
 				$sSQL = "DELETE FROM cbtb_cliente_produto WHERE id_cliente_produto = '$id_cliente_produto' ";
 				$this->bd->consulta($sSQL);
 				
-				$sSQL = "SELECT id_carne FROM cbtb_faturas WHERE id_cliente_produto = $id_cliente_produto GROUP BY id_carne";
-				$fat = $this->bd->obtemUnicoRegistro($sSQL);
-				//
-				
-				$sSQL = "DELETE FROM cbtb_carne WHERE id_carne = '".$fat["id_carne"]."' ";
-				$this->bd->consulta($sSQL);
+				//echo "DELETA CLIENTE_PRODUTO: $sSQL <br>";
 				
 				
 				
-				$msg_final = "CONTRATOS EXCLUIDOS COM SUCESSO!<BR>FATURAS EXCLUIDAS COM SUCESSO!";
+				$msg_final = "CONTRATOS EXCLUIDOS COM SUCESSO!<BR>FATURAS EXCLUIDAS COM SUCESSO!<br>CONTAS EXCLUIDAS COM SUCESSO!<BR> ";
 				$this->tpl->atribui("mensagem",$msg_final);
 				$this->tpl->atribui("url", "clientes.php?op=cobranca&id_cliente=".$id_cliente."&rotina=resumo");
 				$this->tpl->atribui("target","_self");

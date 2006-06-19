@@ -113,7 +113,7 @@
 					
 					
 								
-					//echo "$sSQL"."<br>\n";
+					//echo "CONTRATO: $sSQL"."<br>\n";
 					$this->bd->consulta($sSQL);	//Salva as configurações de contrato
 					
 					

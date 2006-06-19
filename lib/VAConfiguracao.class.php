@@ -165,13 +165,14 @@ class VAConfiguracao extends VirtexAdmin {
 					
 						$sSQL  = "INSERT INTO ";
 						$sSQL .= "   cftb_pop( ";
-						$sSQL .= "      id_pop, nome, info, tipo, id_pop_ap ) ";
+						$sSQL .= "      id_pop, nome, info, tipo, id_pop_ap, status ) ";
 						$sSQL .= "   VALUES (";
 						$sSQL .= "     '" . $this->bd->escape($id_pop) . "', ";
 						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
 						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["info"]) . "', ";
 						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["tipo"]) . "', ";
-						$sSQL .= "      " . ($id_pop_ap ? "$id_pop_ap" : "NULL") . "  ";
+						$sSQL .= "      " . ($id_pop_ap ? "$id_pop_ap" : "NULL") . ",  ";
+						$sSQL .= "		 '" . $this->bd->escape(@$_REQUEST["status"]).  "' ";
 						//$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["id_pop_ap"]) . "' ";
 						$sSQL .= "     )";
 					

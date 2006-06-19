@@ -13,6 +13,7 @@ td img {
 	height:26px;
 	vertical-align: bottom;
 	text-align:left;
+	z-index:1500;
 }
 
 #MMMenuContainer0205174323_0 {
@@ -23,7 +24,7 @@ td img {
 	top:20px;
 	visibility:hidden;
 	vertical-align: bottom;
-	z-index:300;
+	z-index:999;
 }
 
 #MMMenu0205174323_0 {
@@ -243,7 +244,7 @@ td img {
 	top:20px;
 	visibility:hidden;
 	vertical-align: bottom;
-	z-index:300;
+	z-index:999;
 }
 
 #MMMenu0205175354_1 {
@@ -490,7 +491,7 @@ td img {
 	left:187px;
 	top:20px;
 	visibility:hidden;
-	z-index:300;
+	z-index:999;
 }
 
 #MMMenu0205175428_2 {
@@ -680,7 +681,7 @@ td img {
 	left:249px;
 	top:20px;
 	visibility:hidden;
-	z-index:300;
+	z-index:999;
 }
 
 #MMMenu0205175531_3 {

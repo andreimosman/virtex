@@ -6,7 +6,13 @@
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
 <script language="JavaScript">
 {literal}
-
+function checaNome(){
+	if (formulario.nome.value == ""){
+		window.alert('Não é possivel cadastrar POP com nome em branco');
+		return false;
+	}
+	return true;
+}
 function verificaTipoPop() {
    formulario.id_pop_ap.disabled = formulario.tipo.value != "CL";
 }
@@ -26,7 +32,7 @@ function verificaTipoPop() {
               </tr>
               <tr>
                 <td align="center" valign="middle">
-<form name="formulario" method="post" action="{$smarty.server.PHP_SELF}" onSubmit>
+<form name="formulario" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return checaNome();">
                 	<input type="hidden" name="op" value="pop">
 					<input type="hidden" name="acao" value="{$acao}">
 					<input type="hidden" name="id_pop" value="{$id_pop}">

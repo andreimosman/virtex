@@ -977,7 +977,7 @@ class VAClientes extends VirtexAdmin {
 					// Se nao tiver erros faz o cadastro
 					if( !count($erros) ) {
 					
-						// pega id_cliente_prodruto
+						// pega id_cliente_produto
 						$id_cliente_produto = $this->bd->proximoID("cbsq_id_cliente_produto");
 						
 						// Insere no banco de dados
@@ -994,7 +994,7 @@ class VAClientes extends VirtexAdmin {
 						$this->bd->consulta($sSQL);  
 						//if( $this->bd->obtemErro() ) {
 						////echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
-						////echo "SQL: $sSQL <br>\n";
+						//echo "cliente_produto: $sSQL <br>\n";
 						//}
 						
 						$username = @$_REQUEST["username"];
@@ -1040,7 +1040,7 @@ class VAClientes extends VirtexAdmin {
 						$this->bd->consulta($sSQL);  
 						//if( $this->bd->obtemErro() ) {
 						//	////echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
-						////echo "SQL: $sSQL <br>\n";
+						//echo "conta: $sSQL <br>\n";
 						//}
 						
 												
@@ -1079,7 +1079,7 @@ class VAClientes extends VirtexAdmin {
 							$this->bd->consulta($sSQL);  
 							//if( $this->bd->obtemErro() ) {
 							//	////echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
-							////echo "SQL: $sSQL <br>\n";
+							//echo "conta: $sSQL <br>\n";
 							//}
 							
 							
@@ -1212,7 +1212,7 @@ class VAClientes extends VirtexAdmin {
 									
 									
 									
-									if (!$erro){
+									if (!@$erro){
 									
 										if ($nas["tipo_nas"] == "I"){
 									
