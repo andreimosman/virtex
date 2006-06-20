@@ -120,7 +120,8 @@ $_LS_PRIVILEGIO = array(
 $_LS_ST_CONTA = array(
         "A" => "Ativo",
         "B" => "Bloqueado",
-		"S" => "Suspenso"
+				"S" => "Suspenso",
+				"C" => "Cancelada"
         ); 
         
 $_LS_FORMA_PAGAMENTO = array(

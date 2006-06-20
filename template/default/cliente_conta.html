@@ -3,7 +3,50 @@
 <script type="text/javascript" src="template/default/ajax.js"></script>
 <script type="text/javascript" src="template/default/ajax_validacoes.js"></script>
 <script language="JavaScript">
+var statusConta = "{$status}";
+var tpConta = "{$tipo_conta|trim}";
+//window.alert(statusConta);
 {literal}
+
+function checaStatus(){
+	var frm = document.frmConta;
+	if (statusConta == "C"){
+		frm.username.disabled = true;
+		frm.senha.disabled = true;
+		frm.conf_senha.disabled = true;
+		frm.status.disabled = true;
+		frm.submit.disabled = true;
+		
+		if (tpConta == "BL"){
+			frm.id_pop.disabled = true;
+			frm.id_nas.disabled = true;
+			frm.mac.disabled = true;
+			frm.selecao_ip.disabled = true;
+			frm.endereco_ip.disabled = true;
+			frm.redirecionar.disabled = true;
+			frm.altera_rede.disabled = true;
+			frm.upload_kbps.disabled = true;
+			frm.download_kbps.disabled = true;
+			
+		}else if (tpConta == "E"){
+		
+			frm.quota.disabled = true;
+		
+		}else if (tpConta == "D"){
+		
+			frm.foneinfo.disabled = true;
+		
+		}
+		
+		
+		
+		
+		return false;
+	}
+	
+}
+
+
 function confirmacao(){
 		return confirm("Deseja realmente alterar esta conta?");
 }
@@ -63,14 +106,17 @@ function alteraNovaSelecao() {
 
 
 function init() {
-
+	
+	
 	alteraNas();
 	alteraSelecaoIP();
 	alteraNovaSelecao();
+	
+	
+	
 
 
 }
-
 
 
 function check(){
@@ -292,7 +338,7 @@ function check(){
 							</tr>
 
                             <tr>
-                              <td align="center" valign="middle"><input name="botao_enviar2" type="submit" class=input2 id="botao_enviar23" value="Alterar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;"></td>
+                              <td align="center" valign="middle"><input name="submit" type="submit" class=input2 id="submit3" value="Alterar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;"></td>
                             </tr>
                           </table>
 
@@ -426,7 +472,7 @@ function check(){
 						                <tr>
 						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
 						  					<p>Username:</p></td>
-						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p><input type="text" maxlength="30" name="user" disabled="true" value="{$username}"></p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p><input type="text" maxlength="30" name="username" disabled="true" value="{$username}"></p></td>
 						                </tr>
 						                <tr>
 						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
@@ -506,7 +552,7 @@ function check(){
 						                <tr>
 						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
 						  					<p>Username:</p></td>
-						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p><input type="text" maxlength="30" name="user" disabled="true" value="{$username}"></p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p><input type="text" maxlength="30" name="username" disabled="true" value="{$username}"></p></td>
 						                </tr>
 						                <tr>
 						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
@@ -566,4 +612,8 @@ init();
 </script>
 { /literal }
 {/if}
-
+{literal}
+<script language="javascript">
+checaStatus();
+</script>
+{/literal}
