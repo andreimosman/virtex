@@ -1,6 +1,6 @@
 /*
 Created		22/2/2006
-Modified		14/6/2006
+Modified		19/6/2006
 Project		
 Model		
 Company		
@@ -302,10 +302,11 @@ Create table  cntb_conta_email
 Create table  cftb_pop
 (
 	id_pop Smallint NOT NULL,
-	nome Varchar(40) NOT NULL UNIQUE ,
+	nome Varchar(40) NOT NULL,
 	info Text NULL ,
 	tipo Varchar(2) NULL ,
 	id_pop_ap Smallint NULL ,
+	status Char(1) NULL  Default 'A',
  primary key (id_pop)
 );
 
@@ -574,6 +575,44 @@ Create table  cftb_banda
 (
 	banda Smallint NULL 
 );
+
+Create table  lgtb_contas_excluidas
+(
+	id_excluida Serial NOT NULL,
+	id_cliente Varchar(100) NULL ,
+	id_cliente_produto Varchar(100) NULL ,
+	id_conta Varchar(100) NULL ,
+	username Varchar(30) NULL ,
+	tipo_conta Varchar(2) NULL ,
+	dominio Varchar(255) NULL ,
+	id_pop Varchar(100) NULL ,
+	tipo_bandalarga Varchar(1) NULL ,
+	ipaddr Varchar(100) NULL ,
+	rede Varchar(100) NULL ,
+	upload_kbps Varchar(100) NULL ,
+	download_kbps Varchar(100) NULL ,
+	status Char(1) NULL ,
+	mac Varchar(100) NULL ,
+	id_nas Varchar(100) NULL ,
+	ip_externo Varchar(100) NULL ,
+	quota Varchar(100) NULL ,
+	email Varchar(255) NULL ,
+	foneinfo Varchar(64) NULL ,
+	tipo_hospedagem Char(1) NULL ,
+	senha_cript Varchar(64) NULL ,
+	uid Varchar(100) NULL ,
+	gid Varchar(100) NULL ,
+	home Varchar(255) NULL ,
+	shell Varchar(255) NULL ,
+	dominio_hospedagem Varchar(255) NULL ,
+	senha Varchar(64) NULL ,
+	conta_mestre Varchar(20) NULL ,
+	observacoes Text NULL ,
+	admin Varchar(255) NULL ,
+	data_exclusao Date NULL  Default now(),
+ primary key (id_excluida)
+);
+
 
 
 

@@ -77,7 +77,7 @@
 	$sSQL .= "ORDER BY f.data, cl.nome_razao, f.descricao, f.status, f.valor";
 
 	
-	//echo $sSQL;
+	echo $sSQL;
 	
 	/*
 	$sSQL  = "SELECT";

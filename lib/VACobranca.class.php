@@ -1658,6 +1658,43 @@ class VACobranca extends VirtexAdmin {
 				$this->bd->consulta($sSQL);
 				//echo "DELETA CONTAS: $sSQL <br>";
 				
+				$sSQL = "SELECT username, dominio, tipo_conta, id_cliente_produto FROM cntb_conta where id_cliente_produto = '$id_cliente_produto' ";
+				$cnt_adicional = $this->bd->obtemRegistros($sSQL);
+				//echo "SELECIONA CONTA ADICIONAL: $sSQL <br>";
+				
+				for($i=0;$i<count($cnt_adicional);$i++){
+				
+					$sSQL  = "DELETE FROM ";
+						switch($cnt_adicional[$i]["tipo_conta"]){
+							case 'BL':
+							$sSQL .= "cntb_conta_bandalarga ";
+							break;
+							case 'D':
+							$sSQL .= "cntb_conta_discado ";
+							break;
+							case 'H':
+							$sSQL .= "cntb_conta_hospedagem ";
+							break;
+							case 'E':
+							$sSQL .= "cntb_conta_email ";
+							break;
+						}
+					$sSQL .= "WHERE ";
+					$sSQL .= "dominio = '".$cnt_adicional[$i]["dominio"]."' AND ";
+					$sSQL .= "username = '".$cnt_adicional[$i]["username"]."' AND ";
+					$sSQL .= "tipo_conta = '".$cnt_adicional[$i]["tipo_conta"]."' ";
+
+					$this->bd->consulta($sSQL);
+					//echo "DELETA CONTA ADICIONAL: $sSQL <br>";
+				}
+					
+				
+				
+				$sSQL = "DELETE FROM cntb_conta WHERE id_cliente_produto = '$id_cliente_produto'";
+				$this->bd->consulta($sSQL);
+				//echo "DELETA CONTA ADICIONAL: $sSQL <br>";
+				
+				
 				$sSQL = "DELETE FROM cbtb_cliente_produto WHERE id_cliente_produto = '$id_cliente_produto' ";
 				$this->bd->consulta($sSQL);
 				
