@@ -29,30 +29,30 @@
                           <tr>
                             <td colspan="2"><p align="center"> <a href="configuracao.php?op=pop"><img src="template/default/images/bt_pop.gif" width="77" height="73" border="0"></a></p>
                               <div align="center">
-                                
+
                               <table border=0 width="632" cellspacing=0 cellpadding=0>
-                                <tr bgcolor="#FAFAFA"> 
+                                <tr bgcolor="#FAFAFA">
                                   <td width=188 align="left"><h2><b>..nome..</b></h2></td>
                                   <td width=306 align="left"><h2><b>..info..</b></h2></td>
                                   <td width=69 align="center"><h2><b>..tipo..</b></h2></td>
                                   <td align="center" colspan="2">&nbsp;</td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan=5 bgcolor="000000"><img src="template/default/menu/spacer.gif" width=1 height=1 border=0></td>
                                 </tr>
-                                {foreach item=a from=$lista_pop} 
-                                <tr bgcolor="#FFFFFF"> 
+                                {foreach item=a from=$lista_pop}
+                                <tr bgcolor="#FFFFFF">
                                   <td align="left"><p>{$a.tipo} - {$a.nome}</p></td>
-                                  <td align="left"><p>{$a.info}</p></td>
+                                  <td align="left"><p>{$a.info|nl2br}</p></td>
                                   <td align="center"><p>{$a.tipo}</p></td>
-                                  <td align="center" width="36"> 
+                                  <td align="center" width="36">
                                     <p><a href="configuracao.php?op=pop&id_pop={$a.id_pop}"><img src="template/default/images/gif_alterar.gif" border="0"></a></p></td>
                                   <td align="center" width="33"><a href="configuracao.php?op=pop&rotina=desativar&id_pop={$a.id_pop}"><img alt="DESATIVAR POP" src="template/default/images/delete.gif" width="15" height="15" border="0"></a></td>
                                 </tr>
-                                <tr> 
+                                <tr>
                                   <td colspan="5"><hr size="1"> </td>
                                 </tr>
-                                {/foreach} 
+                                {/foreach}
                               </table>
                               </div></td>
                           </tr>

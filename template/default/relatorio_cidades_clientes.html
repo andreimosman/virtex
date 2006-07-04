@@ -99,17 +99,17 @@ if (da && !pr && !mac) with (document) {
                                   <td colspan="4" height="1"></td>
                                 </tr>
                               </table>
+							  {assign var="total" value="`$total+$a.num_clientes`"}
 								  {/foreach}
 								  </td>
 							  </tr>
 							</table></td>
 						</tr>
 					  </table>
-					{/if}
-
-
-					{if $acao == "sub_cid"}
-					  <table width="500" border="0" cellspacing="0" cellpadding="0">
+					
+                  <p>Total de Clientes Cadastrados = {$total}</p>
+                  <p>{/if} {if $acao == "sub_cid"} </p>
+                  <table width="500" border="0" cellspacing="0" cellpadding="0">
 						  <tr>
 							<td><table width="500" border="0" cellspacing="0" cellpadding="0">
 								<tr>

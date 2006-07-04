@@ -1,15 +1,17 @@
 <?
-	//Bloquieio e Desbloqueio de clientes atrasados.
+	//Bloqueio e Desbloqueio de clientes atrasados.
 	
 	$acao = @$_REQUEST["acao"];
 	$op = @$_REQUEST["op"];
 	
 	
 	if($acao == "bloquear") {
-		
-			$id_bloqueio = @$_REQUEST["id_bloqueio"];
-			$n_bloqueio = count($id_bloqueio);
 			
+			$id_bloqueio = array();
+			$id_bloqueio = @$_REQUEST["id_bloqueio_box"];
+			//echo "id_bloqueio: $id_bloqueio <br><br>";
+			$n_bloqueio = count($id_bloqueio);
+			//echo "NUMERO BLOQUEIOS: $n_bloqueio <br>";
 			$tipo_bloqueio = "B";
 			
 			
@@ -17,10 +19,12 @@
 			
 				$admin = $this->admLogin->obtemAdmin();
 				
-				for ($i=0; $i<$n_bloqueio; $i++) {
+				for ($i=1; $i<=$n_bloqueio; $i++) {
 					
 					$id_processo = $this->bd->proximoID("lgsq_id_processo");
 					list($id_cli_produto, $tipo) = explode("-", $id_bloqueio[$i]);
+					//echo "ID_CLI_PRODUTO: $id_cli_produto <br>";
+					//echo "TIPO CONTA: $tipo <br>";
 					
 					$tipo = trim($tipo);
 					
@@ -31,9 +35,48 @@
 					$sSQL .= "  $id_processo, $id_cli_produto, now(), '$tipo_bloqueio', '$admin' ";
 					$sSQL .= ") ";
 					
-					//echo ""QUERY INERT: $sSQL<br>\n";
+					//echo "QUERY INERT: $sSQL<br>\n";
 					
 					$this->bd->consulta($sSQL);
+					
+					
+					if ($tipo == "BL"){
+
+						/* SPOOL */
+
+						$sSQL  = "SELECT ";
+						$sSQL .= "	bl.username, bl.tipo_conta, bl.dominio, bl.tipo_bandalarga, bl.ipaddr, bl.rede, bl.id_nas, ";
+						$sSQL .= "	cn.username, cn.dominio, cn.tipo_conta, cn.id_conta ";
+						$sSQL .= "FROM cntb_conta_bandalarga bl, cntb_conta cn ";
+						$sSQL .= "WHERE ";
+						$sSQL .= "cn.id_cliente_produto = '".$id_cli_produto."' AND cn.tipo_conta = '$tipo' AND ";
+						$sSQL .= "bl.username = cn.username AND ";
+						$sSQL .= "bl.dominio = cn.dominio AND ";
+						$sSQL .= "bl.tipo_conta = cn.tipo_conta ";
+						//$sSQL .= "bl.username = '".$contrato["username"]."' AND bl.tipo_conta = '$tipo_produto' AND bl.dominio = '".$contrato["dominio"]."' AND ";
+						//$sSQL .= "bl.username = cn.username AND bl.tipo_conta = cn.tipo_conta AND bl.dominio = cn.dominio ";
+						$bl = $this->bd->obtemUnicoRegistro($sSQL);
+						//echo "SPOOL BL: $sSQL <br>";
+
+						$sSQL  = "SELECT ip FROM cftb_nas WHERE id_nas = '".$bl["id_nas"]."' ";
+						$nas = $this->bd->obtemUnicoRegistro($sSQL);
+						//echo "SPOOL NAS: $sSQL <br>";
+						
+						if ($bl["tipo_bandalarga"] == "P"){
+
+						//ECHO "PPPOE<BR>";
+							$this->spool->bandalargaExcluiRedePPPoE($nas["ip"],$bl["id_conta"],$bl["ipaddr"]);
+
+						}else {
+
+							///echo "IP <BR>";
+							$this->spool->bandalargaExcluiRede($nas["ip"],$bl["id_conta"],$bl["rede"]);
+
+						}
+
+					/* FINAL SPOOL */
+					
+				}
 					
 					
 					$sSQL  = "UPDATE ";
@@ -64,7 +107,7 @@
 	$sSQL .= "	 USING(id_cliente_produto), prtb_produto as prd " ;
 	$sSQL .= "WHERE ";
 	$sSQL .= "   prd.id_produto = cp.id_produto AND ";
-	//$sSQL .= "	 cnt.conta_mestre is true AND ";
+	$sSQL .= "	 cnt.conta_mestre is true AND ";
 	$sSQL .= "   CASE WHEN ";
 	$sSQL .= "      f.reagendamento is not null ";
 	$sSQL .= "   THEN ";
