@@ -42,7 +42,7 @@
                                 </tr>
                                 {foreach item=a from=$lista_pop}
                                 <tr bgcolor="#FFFFFF">
-                                  <td align="left"><p>{$a.tipo} - {$a.nome}</p></td>
+                                  <td align="left"><p>{if $a.status != "A"}<font color="red"><b>{/if}{$a.tipo} - {$a.nome}{if $a.status != "A"}</b></font>{/if}</p></td>
                                   <td align="left"><p>{$a.info|nl2br}</p></td>
                                   <td align="center"><p>{$a.tipo}</p></td>
                                   <td align="center" width="36">

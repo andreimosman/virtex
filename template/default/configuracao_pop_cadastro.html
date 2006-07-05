@@ -87,7 +87,7 @@ function verificaTipoPop() {
                                   <td><select name="status" id="status">
 								  		{foreach key=id item=valor from=$status_pop}
 										{if $id != "D"}
-                                      <option value="{$id}">{$valor}</option>
+                                      <option value="{$id}" {if $id == $status}selected{/if}>{$valor}</option>
 									  	{/if}
 									  {/foreach}
                                     </select></td>
