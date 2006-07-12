@@ -15,6 +15,8 @@ function checkForm(){
 	var cpf_cnpj   = frm.cpf_cnpj.value;
 	var rg_inscr   = frm.rg_inscr.value;
 	var nome_razao = frm.nome_razao.value;
+	
+	rg_inscr = rg_inscr. replace(" ","");
 
 	//alert('PESSOA: '+pessoa);
 
@@ -94,6 +96,7 @@ function validaCPF(cpf) {
 			cpf = cpf. replace (".","");
 			cpf = cpf. replace (".","");
 			cpf = cpf. replace ("-","");
+			cpf = cpf. replace (" ","");
 		}
 
     var a = [];
@@ -127,11 +130,11 @@ function validaCPF(cpf) {
 function validaCNPJ(CNPJ) {
 	//CNPJ = document.cadastro.cpf_cnpj.value;
 	erro = new String;
-	if (CNPJ.length < 18) erro += "É necessario preencher corretamente o número do CNPJ! ";
+	if (CNPJ.length < 14) erro += "É necessario preencher corretamente o número do CNPJ! ";
 
-	if ((CNPJ.charAt(2) != ".") || (CNPJ.charAt(6) != ".") || (CNPJ.charAt(10) != "/") || (CNPJ.charAt(15) != "-")){
-		if (erro.length == 0) erro += "É necessário preencher corretamente o número do CNPJ! ";
-	}
+	//if ((CNPJ.charAt(2) != ".") || (CNPJ.charAt(6) != ".") || (CNPJ.charAt(10) != "/") || (CNPJ.charAt(15) != "-")){
+	//	if (erro.length == 0) erro += "É necessário preencher corretamente o número do CNPJ! ";
+	//}
 
 	//substituir os caracteres que não são números
 	if(document.layers && parseInt(navigator.appVersion) == 4){
@@ -146,6 +149,7 @@ function validaCNPJ(CNPJ) {
 		CNPJ = CNPJ. replace (".","");
 		CNPJ = CNPJ. replace ("-","");
 		CNPJ = CNPJ. replace ("/","");
+		CNPJ = CNPJ. replace (" ","");
 	}
 
 	var nonNumbers = /\D/;

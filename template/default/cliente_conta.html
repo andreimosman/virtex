@@ -1,7 +1,5 @@
-<!-- cliente_conta.html -->
-{include file='cliente_header.html'}
-<script type="text/javascript" src="template/default/ajax.js"></script>
-<script type="text/javascript" src="template/default/ajax_validacoes.js"></script>
+<!-- cliente_conta.html --> {include file='cliente_header.html'}<script type="text/javascript" src="template/default/ajax.js"></script> 
+<script type="text/javascript" src="template/default/ajax_validacoes.js"></script> 
 <script language="JavaScript">
 var statusConta = "{$status}";
 var tpConta = "{$tipo_conta|trim}";
@@ -51,9 +49,7 @@ function confirmacao(){
 		return confirm("Deseja realmente alterar esta conta?");
 }
 {/literal}
-</script>
-{if $tipo_conta == "BL"}
-<script language="javascript">
+</script> {if $tipo_conta == "BL"} <script language="javascript">
 var ip_externo = "{$ip_externo}";
 
 {literal}
@@ -167,11 +163,8 @@ function check(){
 
 
 {/literal}
-</script>
-{/if}
-
-<form name="frmConta" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="javascript:return check();">
-	<input type="hidden" name="id_conta" value="{$id_conta}">
+</script> {/if} <form name="frmConta" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="javascript:return check();"> 
+<input type="hidden" name="id_conta" value="{$id_conta}">
 				{if $tipo_conta == "BL"}
                  <table width="100" border="0" cellspacing="0" cellpadding="0" align="center">
                     <tr>
@@ -208,7 +201,7 @@ function check(){
               <tr>
                 <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
 <p>Username:</p></td>
-                <td bgcolor="#FFFFFF" colspan=2><input type="text" maxlength="30" name="username" disabled="true" value="{$username}"></td>
+                <td bgcolor="#FFFFFF" colspan=2><input type="text" maxlength="30" name="username"  disabled="true" value="{$username}"></td>
               </tr>
               <tr>
                 <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
@@ -516,7 +509,7 @@ function check(){
 						  			erro=0;
 
 
-						  			if (csenha != cconfsenha || csenha == "" || cconfsenha == "") {
+						  			if (csenha != cconfsenha) {
 						  				msg = msg + "Os campos Senha e Confirmação devem conter o mesmo conteúdo.\n";
 						  				erro = 1;
 						  			}

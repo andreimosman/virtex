@@ -469,7 +469,38 @@ function verificaTipoHosp() {
 
 </script> {literal} <script language="JavaScript" src="util.js"></script> <script language="JavaScript">
 
+
+
+
+
 function calculaDataCarne() {
+var formulario = document.frmContratacao;
+	
+   if( formulario.dia_vencimento.value.length == 0 ) {
+      formulario.ini_carne.value = formulario.data_contratacao.value;
+   } else {
+      var d = new String(formulario.data_contratacao.value);
+   		//window.alert(d);
+      // split;
+      var tmp = d.split("/");
+      dia = tmp[0];
+      //mes = tmp[1];
+	  
+	  mes = parseInt(tmp[1],10);
+      ano = parseInt(tmp[2]);
+	  //window.alert ("mesA:"+mes);
+	  //window.alert(tmp);
+	  
+	  if ( mes == "08") mes = "8";
+	  if ( mes == "09") mes = "9";
+      
+      formulario.ini_carne.value = criaData( formulario.dia_vencimento.value, mes, ano );
+   }
+   
+   formulario.ini_carne.value = incrementaMes( formulario.ini_carne.value, 1 );
+   formulario.data_carne.value = incrementaMes( formulario.ini_carne.value, parseInt(formulario.vigencia.value) - 1);
+}
+/*function calculaDataCarne() {
    if( frmContratacao.dia_vencimento.value.length == 0 ) {
       frmContratacao.ini_carne.value = frmContratacao.data_contratacao.value;
    } else {
@@ -478,16 +509,31 @@ function calculaDataCarne() {
       // split;
       var tmp = d.split("/");
       dia = tmp[0];
-      mes = parseInt(tmp[1]);
+	  mes = tmp[1];
+      //mes = parseInt(tmp[1]);
       ano = parseInt(tmp[2]);
+	  
+	  if ( mes == "08") mes = "8";
+	  if ( mes == "09") mes = "9";
 
       frmContratacao.ini_carne.value = criaData( frmContratacao.dia_vencimento.value, mes, ano );
    }
 
    frmContratacao.ini_carne.value = incrementaMes( frmContratacao.ini_carne.value, 1 );
    frmContratacao.data_carne.value = incrementaMes( frmContratacao.ini_carne.value, parseInt(frmContratacao.vigencia.value) - 1);
+}*/
+function processaVigencia() {
+var formulario = document.frmContratacao;
+   if( !parseInt(formulario.vigencia.value) ) {
+      window.alert("A vigência não é válida.");
+      formulario.vigencia.focus();
+   } else {
+      calculaDataCarne();
+   }
 }
 
+
+/*
 function processaVigencia() {
    if( !parseInt(frmContratacao.vigencia.value) ) {
       window.alert("A vigência não é válida.");
@@ -496,6 +542,7 @@ function processaVigencia() {
       calculaDataCarne();
    }
 }
+*/
 
 function processaDataContrato() {
 	var frm = document.frmContratacao;
@@ -520,7 +567,7 @@ function processaDataContrato() {
       calculaDataCarne();
    }
 }
-/*function checaProRata(){
+function checaProRata(){
 	var frm = document.frmContratacao;
 	var qDias;
 	var dia;
@@ -542,7 +589,7 @@ function processaDataContrato() {
 	return;
 	}
 	return;
-}*/
+}
 
 function change(id, newClass) {
 

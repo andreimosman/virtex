@@ -22,11 +22,10 @@
 </td>
 </tr>
   <tr>
-    <td width="200" bgcolor="#F1F1F1">
-      <font face="arial" size="2">#{$p.id_cliente_produto} - <b>{$p.nome}</b></font></td>
-    <td width="300" align="right" bgcolor="#F1F1F1">
-[<a href="{$smarty.server.PHP_SELF}?op=conta&sop=nova_conta&tipo_conta=E&id_cliente={$p.id_cliente}&id_cliente_produto={$p.id_cliente_produto}">Cadastrar E-mail Adicional</a>]
-			{if $p.numero_contas > count($p.contas)}<br>
+    <td width="200" bgcolor="#F1F1F1"> <font face="arial" size="2">#{$p.id_cliente_produto} 
+      - <b>{$p.nome} <!-- - {$p.quant} - {$p.numero_contas} --></b></font></td>
+    <td width="300" align="right" bgcolor="#F1F1F1"> [<a href="{$smarty.server.PHP_SELF}?op=conta&sop=nova_conta&tipo_conta=E&id_cliente={$p.id_cliente}&id_cliente_produto={$p.id_cliente_produto}">Cadastrar 
+      E-mail Adicional</a>] {if $p.numero_contas > $p.quant}<br>
 				[<a href="{$smarty.server.PHP_SELF}?op=conta&sop=nova_conta&tipo_conta={$p.tipo}&id_cliente={$p.id_cliente}&id_cliente_produto={$p.id_cliente_produto}">cadastrar conta adicional</a>]
 			{/if}
     </td>

@@ -56,11 +56,15 @@ function pesquisaUsuario() {
 		}
 	}
 
-	if( tp == "" || frm.texto_pesquisa == "" ) {
+	if( tp == "" || frm.texto_pesquisa.value == "" ) {
 	   window.alert("Parametros de pesquisa incompletos");
 	   return false;
 	}
-
+	
+	if( frm.texto_pesquisa.value != "" && frm.texto_pesquisa.value.length < 3 && tp == "NOME"){
+		window.alert("O numero minimo de caracteres para pesquisa é 3");
+		return false;	
+	}
 
 	abrePesquisa();
 	pW.innerHTML = "<p id='pesquisando'>Pesquisando</p>";

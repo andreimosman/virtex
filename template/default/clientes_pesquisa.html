@@ -1,4 +1,26 @@
 <!-- clientes_pesquisa.html -->
+<script>
+{literal}
+
+function valida(){
+	frm = document.form1;
+	tp = frm.tipo_pesquisa;
+	if (frm.texto_pesquisa.value == "" || tp == ""){
+		window.alert("Parametros de pesquisa incompletos");
+		return false;
+	}
+	
+	if (frm.texto_pesquisa.value != "" && frm.texto_pesquisa.value.length < 3){
+		window.alert("O numero minimo de caracteres para pesquisa é 3");
+		return false;
+	
+	}
+
+
+}
+
+{/literal}
+</script>
 <html>
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
@@ -8,7 +30,7 @@
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
 	<tr>
     	<td align="center" valign="top"><h1>Pesquisa pelo Cliente</h1>
-    	  <form name="form1" method="get" action="{$smarty.server.PHP_SELF}">
+    	  <form name="form1" method="get" action="{$smarty.server.PHP_SELF}" onSubmit="return valida();">
             <table width="450" border="0" cellspacing="1" cellpadding="1">
               <tr align="center">
                 <td><input name="texto_pesquisa" value="{$texto_pesquisa}" type="text" size="50" class="campos" onFocus="this.style.backgroundColor='#E7EFEA'" onBlur="this.style.backgroundColor='#FFFFFF'">

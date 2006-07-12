@@ -1,6 +1,7 @@
 <style type="text/css">
 {literal}
-	@import url("template/default/contratos.css");
+	@import url("http://dev.mosman.com.br/~hugo/virtex/template/default/contratos.css"); -->
+
 	{/literal}
 </style>
 
@@ -11,7 +12,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link href="estilos1.css" rel="stylesheet" type="text/css">
 </head>
-<body> <h1 align="CENTER"><img src="{$path}/LOGO_PROVEDOR.gif" alt="LOGOTIPO DO PROVEDOR"></h1><h1 align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">MINUTA 
+<body> <h1 align="CENTER"><img src="http://200.217.241.66:8080/virtexadmin/template/default/images/LOGO_PROVEDOR2.gif" alt="LOGOTIPO DO PROVEDOR" width="160" height="104"></h1>
+<h1 align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">MINUTA 
 DE CONTRATO DE PRESTA&Ccedil;&Atilde;O DE SERVI&Ccedil;O<br>
 DE ACESSO &Agrave; INTERNET VIA TCP/IP</font></h1>
 <p align="JUSTIFY"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><br>
@@ -19,9 +21,9 @@ DE ACESSO &Agrave; INTERNET VIA TCP/IP</font></h1>
   {$cli.endereco} Fone: {$cli.fone_residencial} {$cli.cidade} - {$cli.estado} 
   doravante simplesmente denominada CONTRATANTE.<br>
   <br>
-  <strong>Contratada:</strong> {$nome_provedor}, inscrita no CNPJ sob o n&ordm; 
-  {$cnpj_provedor}, com sede em {$localidade}, doravante simplesmente denominada 
-  CONTRATADA.</font></p>
+  <strong>Contratada:</strong> VIRTEX LTDA., inscrita no CNPJ sob o n&ordm; 
+  05.439.562/0001-50, com sede em PICOS PI &agrave; rua Cel. Francisco Santos, 319 ,
+  doravante simplesmente denominada CONTRATADA.</font></p>
 <p align="JUSTIFY"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><br>
   <strong>1 &#8211; OBJETO:</strong> O presente instrumento abrange os servi&ccedil;os 
   abaixo relacionados:<br>
@@ -59,18 +61,21 @@ DE ACESSO &Agrave; INTERNET VIA TCP/IP</font></h1>
 <p align="JUSTIFY"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><br>
   <strong>4</strong> &#8211; <strong>PRE&Ccedil;OS / TARIFAS:</strong> Pelos servi&ccedil;os 
   objeto do presente contrato, a Contratante pagar&aacute; o que segue:<br>
-  <strong>4.1</strong> &#8211; O valor mensal de R$ {$valor_contrato} ({$valor_extenso}), 
-  sempre com vencimento no dia 15 para uma banda de {$download_kbps} Kbps.( Garantido 
-  40% dessa banda contratada).</font></p>
+  <strong>4.1</strong> &#8211; O valor mensal de R$ {$valor_contrato} ({$valor_extenso}),
+  sempre com vencimento no dia {$dia_vencimento} para uma banda de {if $tec.download_kbps
+  ==
+  "0"}(SEM LIMITES){else}{$tec.download_kbps}{/if} Kbps.( Garantido 25% dessa
+  banda contratada).</font></p>
 <p align="JUSTIFY"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><br>
-  <strong>5 &#8211; FORMA DE PAGAMENTO:</strong> Os valores fixados na cl&aacute;usula 
-  anterior ser&atilde;o cobrados por {$forma_pagamento}. </font></p>
+  <strong>5 &#8211; FORMA DE PAGAMENTO:</strong> Os valores fixados na cl&aacute;usula
+   anterior ser&atilde;o cobrados por Boleto Pag Contas. </font></p>
 <p align="JUSTIFY"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><br>
-  <strong>6 &#8211; VIG&Ecirc;NCIA e PRAZO</strong>: Este contrato entra em vigor 
-  na data da ativa&ccedil;&atilde;o do acesso, que consta no Anexo A - Boletim 
-  de Ativa&ccedil;&atilde;o, e o prazo de contrata&ccedil;&atilde;o &eacute; de 
-  24 (Vinte e Quatro) meses, renovando-se automaticamente por per&iacute;odo indeterminado, 
-  caso n&atilde;o exista pronunciamento em contr&aacute;rio de nenhuma das partes. 
+  <strong>6 &#8211; VIG&Ecirc;NCIA e PRAZO</strong>: Este contrato entra em vigor
+   na data da ativa&ccedil;&atilde;o do acesso, que consta no Anexo A - Boletim
+    de Ativa&ccedil;&atilde;o, e o prazo de contrata&ccedil;&atilde;o &eacute; de
+  12 (doze) meses, renovando-se automaticamente por per&iacute;odo
+  indeterminado,  caso n&atilde;o exista pronunciamento em contr&aacute;rio de
+  nenhuma das partes. 
   </font></p>
 <p align="JUSTIFY"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><strong>7</strong> 
   &#8211;<strong> EXTIN&Ccedil;&Atilde;O CONTRATUAL</strong>: O presente contrato 
@@ -202,8 +207,8 @@ DE ACESSO &Agrave; INTERNET VIA TCP/IP</font></h1>
   destes servi&ccedil;os, n&atilde;o acarretar&atilde;o descontos ou isen&ccedil;&atilde;o 
   do pagamento das mensalidades.</font></p>
 <p align="JUSTIFY"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><br>
-  <strong>11 &#8211; FORO:</strong> As partes de comum acordo elegem o Foro de 
-  {$localidade} para resolu&ccedil;&atilde;o de todo e qualquer problema surgido 
+  <strong>11 &#8211; FORO:</strong> As partes de comum acordo elegem o Foro de
+  Picos PI para resolu&ccedil;&atilde;o de todo e qualquer problema surgido 
   em rela&ccedil;&atilde;o a este documento.</font></p>
 <p align="JUSTIFY"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><br>
   E, por assim estarem justos e contratados, assinam as partes o presente instrumento 
@@ -231,11 +236,13 @@ DE ACESSO &Agrave; INTERNET VIA TCP/IP</font></h1>
       </table></td>
   </tr>
   <tr>
-    <td width="50%"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">{$nome_provedor}</font></td>
-    <td width="50%"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">{$nome_razao}</font></td>
+    <td width="50%"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Virtex
+    Ltda. </font></td>
+    <td width="50%"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">{$cli.nome_razao}</font></td>
   </tr>
 </table>
 <p>&nbsp;</p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">TESTEMUNHAS:</font></p>
 <table width="100%" border="0" cellspacing="2" cellpadding="0">
   <tr> 
     <td width="50%"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -260,15 +267,15 @@ DE ACESSO &Agrave; INTERNET VIA TCP/IP</font></h1>
     <td width="50%"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Nome:</font></td>
   </tr>
 </table>
-<p align="center"></p>
+<p align="center"><hr></p>
 <p align="center"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2">ANEXO 
   A</font></strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><br>
   <strong>BOLETIM DE ATIVA&Ccedil;&Atilde;O DOS SERVI&Ccedil;OS</strong></font></p>
 <p align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><br>
   Nome do Cliente:{$cli.nome_razao}<br>
-  Endere&ccedil;o: {$cli.endereco}<br>
-  Cidade:{$cli.cidade} CEP: {$cli.cep} Estado: {$cli.uf}<br>
-  Telefone: {$cli.fone}</font></p>
+  Endere&ccedil;o: {$cli.endereco} - {$cli.complemento} - {$cli.bairro} <br>
+  Cidade:{$cli.cidade} CEP: {$cli.cep} Estado: {$cli.estado}<br>
+  Telefone: {$cli.fone_residencial}</font></p>
 <p align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><br>
   Na cidade de {$cli.cidade}, em {$hoje_extenso}, procede-se a ativa&ccedil;&atilde;o 
   dos servi&ccedil;os nos equipamentos abaixo listados e identificados, de acordo 
@@ -277,25 +284,32 @@ DE ACESSO &Agrave; INTERNET VIA TCP/IP</font></h1>
   declara expressa conformidade com a instala&ccedil;&atilde;o dos referidos equipamentos, 
   que foi realizada pela {$nome_provedor}.<br>
   SERVI&Ccedil;OS ATIVADOS:<br>
-  {$produto}<br>
-  {$tipo_produto}&#8211; POP {$pop}<br>
-  Acesso em r&aacute;dio enlace digital entre o Ponto de Presen&ccedil;a {$pop} 
-  e o Ponto de Repeti&ccedil;&atilde;o do Cliente.</font></p>
-<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"> Lembramos que 
-  a ativa&ccedil;&atilde;o t&eacute;cnica Internet &eacute; considerada conclu&iacute;da 
-  se h&aacute; conectividade entre as redes, verificada com o envio de pacotes 
-  de controle IP (PING) entre um servidor da {$nome_provedor} e o equipamento 
-  configurado (r&aacute;dio do Cliente). As demais configura&ccedil;&otilde;es 
-  (DNS, WWW, E-mail, etc.), devem ser realizadas pelo cliente e n&atilde;o est&atilde;o 
-  inclu&iacute;das no processo de ativa&ccedil;&atilde;o. </font></p>
+  {$nome_produto}<br>
+  {$tipo_produto}&#8211; POP {$tec.pop}</font></p>
+<p align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">INFORMA&Ccedil;&Otilde;ES
+  T&Eacute;CNICAS:<br>
+IP/rede: {$tec.ipaddr}{$tec.rede}<br>
+Username: {$tec.username}<br>
+</font></p>
+<p align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"> <br>
+  Acesso em r&aacute;dio enlace digital entre o Ponto de Presen&ccedil;a {$tec.pop}
+   e o Ponto de Repeti&ccedil;&atilde;o do Cliente.</font></p>
+<p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"> Lembramos que
+     a ativa&ccedil;&atilde;o t&eacute;cnica Internet &eacute; considerada conclu&iacute;da
+      se h&aacute; conectividade entre as redes, verificada com o envio de pacotes
+  de controle IP (PING) entre um servidor da Virtex Ltda. e o equipamento configurado
+      (r&aacute;dio
+  do Cliente). As demais configura&ccedil;&otilde;es 
+  (DNS, WWW, E-mail, etc.), devem ser realizadas pelo cliente e n&atilde;o est&atilde;o
+   inclu&iacute;das no processo de ativa&ccedil;&atilde;o. </font></p>
 <p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><br>
-  Nos casos de interrup&ccedil;&atilde;o do circuito, o telefone para reclama&ccedil;&otilde;es 
-  a ser utilizado &eacute; o (19) 5555-5555 fornecendo sempre o endere&ccedil;o 
-  IP informado acima.<br>
+  Nos casos de interrup&ccedil;&atilde;o do circuito, o telefone para reclama&ccedil;&otilde;es
+   a ser utilizado &eacute; o {$fone_provedor} fornecendo sempre o endere&ccedil;o
+    IP informado acima.<br>
   Forma colocados os seguintes equipamentos pertencentes a virtex:</font></p>
 <p><font face="Verdana, Arial, Helvetica, sans-serif" size="2">{$localidade}, 
   {$hoje_extenso}.</font></p>
-<p align="center"><DIV ID="IMPRIMIR" align="CENTER"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><a href="javascript:window.print()">imprimir</a></font></strong></DIV></p> 
+<p align="center" id="imprimir"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><a href="javascript:window.print()">imprimir</a></font></strong></p> 
 <p>&nbsp;</p>
 </body>
 </html>

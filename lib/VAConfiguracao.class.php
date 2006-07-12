@@ -1124,7 +1124,8 @@ class VAConfiguracao extends VirtexAdmin {
 								$sSQL .= "	endereco = '".$_REQUEST["endereco"]."', ";
 								$sSQL .= "	localidade = '".$_REQUEST["localidade"]."', ";
 								$sSQL .= "	cep = '".$_REQUEST["cep"]."', ";
-								$sSQL .= "	cnpj = '".$_REQUEST["cnpj"]."' ";
+								$sSQL .= "	cnpj = '".$_REQUEST["cnpj"]."', ";
+								$sSQL .= "	fone = '".$_REQUEST["fone"]."' ";
 								
 								$this->bd->consulta($sSQL);
 								

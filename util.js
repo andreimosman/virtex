@@ -40,7 +40,7 @@ function dataValida(d) {
 
 function criaData(d,m,a) {
    if( d == "08" ) d = "8";
-   if( d == "09" ) d = "9";
+   if( d == "09" ) d = "9";   
    d = parseInt(d);
    data  = d < 10 ? "0" + d : d;
    data += "/";
@@ -64,7 +64,7 @@ function incrementaMes(d,meses) {
    if( d == "09" ) d = "9";
    if( m == "08" ) m = "8";
    if( m == "09" ) m = "9";
-   
+	
    //window.alert("MES: " + tmp[1]);
    dia = parseInt(d);
    mes = parseInt(m);
@@ -88,7 +88,7 @@ function incrementaMes(d,meses) {
       dia = parseInt(dia);
       mes = parseInt(mes);
       ano = parseInt(ano);
-
+				
       novadata = criaData(dia,mes,ano);
 
    } while ( !dataValida(novadata) && dia > 0 )

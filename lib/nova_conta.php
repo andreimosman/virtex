@@ -18,7 +18,7 @@
 	$sSQL .= "cn.id_cliente_produto = cp.id_cliente_produto";
 	$_produto = $this->bd->obtemRegistros($sSQL);
 
-	//echo "_PRODUTO: $sSQL <br>";
+	echo "_PRODUTO: $sSQL <br>";
 	
 
 
@@ -104,16 +104,6 @@
 
 				$prefs = $this->prefs->obtem("total");
 
-				if (count($prefs)){
-					$erros2 = "Já existe um usuario com este dominio neste tipo de conta cadastrado. Por favor cadastre um novo usuario";
-
-					$this->tpl->atribui("username", $username);
-					$this->tpl->atribui("dominio_hospedagem",$dominio_hospedagem);
-					$this->tpl->atribui("mensagem", $erros2);
-					$this->tpl->atribui("url","clientes.php?op=pesquisa");
-					$this->arquivoTemplate = "msgredirect.html";
-					return;
-				}
 
 				$id_conta = $this->bd->proximoID("cnsq_id_conta");
 
@@ -179,7 +169,7 @@
 					$sSQL .= ")VALUES ( ";
 					$sSQL .= "'$username', '$tipo_conta', '$dominio', '$foneinfo' )";
 
-					////echo "SQL DISCADO: $sSQL <br>\n";
+					echo "SQL DISCADO: $sSQL <br>\n";
 
 					$this->bd->consulta($sSQL);
 

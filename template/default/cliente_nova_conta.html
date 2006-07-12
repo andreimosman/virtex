@@ -1,4 +1,4 @@
-<!-- cliente_conta.html -->
+<!-- cliente_nova_conta.html -->
 {include file='cliente_header.html'}
 {if $tipo_conta == "BL"}
 <script language="javascript">
@@ -339,7 +339,7 @@ function check(){
 						                  <td width="50" align="right" valign="top" bgcolor="#FFFFFF">
 						  					<p>Quota:</p></td>
 
-						                <td bgcolor="#FFFFFF" colspan=2> <input name="quota" type="text" id="quota" value="{$quota}"></td>
+						                <td bgcolor="#FFFFFF" colspan=2> <input name="quota" type="text" id="quota" value="{$quota_por_conta}"></td>
 						                </tr>
 						                <tr>
 						                <td colspan=2 align="center"><input type="submit" name="Submit" value="Alterar >>"></td>
@@ -392,12 +392,20 @@ function check(){
 
                           <table width="450" border=0 bgcolor="#F1F1F1" align="center">
 						                <tr>
-						                  <td colspan=2><h2><font color="#000000">Dados da Conta</font></h2></td>
+						                  
+        <td colspan=2><h2><font color="#000000">Dados da Conta
+          <input name="sop2" type="hidden" value="nova_conta" id="sop5">
+          <input name="_dominio32" type="hidden" value="{$dominio}" id="_dominio32">
+          <input name="_username32" type="hidden" value="{$username}" id="_username32">
+          <input name="op2" type="hidden" value="conta" id="op2">
+          <input name="id_cliente2" type="hidden" value="{$id_cliente}" id="id_cliente2">
+          <input name="id_cliente_produto2" type="hidden" value="{$id_cliente_produto}" id="id_cliente_produto2">
+          </font></h2></td>
 						                </tr>
 						                <tr>
 						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
 						  					<p>Username:</p></td>
-						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p><input type="text" maxlength="30" name="user" disabled="true" value="{$username}"></p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p><input type="text" maxlength="30" name="user" value="{$username}"></p></td>
 						                </tr>
 						                <tr>
 						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
@@ -459,11 +467,9 @@ function check(){
 
                                <input type="hidden" name="op" value="conta">
 						       <input type="hidden" name="id_cliente" value="{$id_cliente}">
-						  	   <input type="hidden" name="username" value="{$username}">
-						       <input type="hidden" name="dominio" value="{$dominio}">
-						       <input type="hidden" name="tipo_conta" value="{$tipo_conta}">
+    <input type="hidden" name="dominio" value="{$dominio}">
+						       <input type="hidden" name="tipo_conta" value="{$tipo_conta|trim}">
 						       <input type="hidden" name="acao" value="cad">
-    <input name="sop4" type="hidden" value="nova_conta" id="sop4">
     <table align="center">
 								<tr>
 									<td align="center" valign="middle"><strong><font face="arial" size="4" color="black">Discado</font></strong></td>
@@ -472,12 +478,22 @@ function check(){
 
                           <table width="450" border=0 bgcolor="#F1F1F1" align="center">
 						                <tr>
-						                  <td colspan=2><h2><font color="#000000">Dados da Conta</font></h2></td>
+						                  
+        <td colspan=2><h2><font color="#000000">Dados da Conta 
+          <input name="sop" type="hidden" value="nova_conta" id="sop">
+          <input name="_dominio" type="hidden" value="{$dominio}" id="_dominio">
+          <input name="_username" type="hidden" value="{$username}" id="_username">
+          <input name="op" type="hidden" value="conta" id="op">
+          <input name="id_cliente" type="hidden" value="{$id_cliente}" id="id_cliente">
+          <input name="id_cliente_produto" type="hidden" value="{$id_cliente_produto}" id="id_cliente_produto">
+          </font></h2></td>
 						                </tr>
 						                <tr>
 						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
 						  					<p>Username:</p></td>
-						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p><input type="text" maxlength="30" name="user" disabled="true" value="{$username}"></p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p>
+            <input name="username" type="text" value="{$username}" maxlength="30" id="username">
+          </p></td>
 						                </tr>
 						                <tr>
 						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">

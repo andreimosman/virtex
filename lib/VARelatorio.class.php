@@ -1793,6 +1793,50 @@ class VARelatorio extends VirtexAdmin {
 	
 	
 	
+	}else if ($op == "cidades_produto"){
+	
+
+		$sSQL  = "SELECT c.cidade, c.uf, cn.id_cliente, cn.id_cliente_produto, cl.id_cliente, cl.id_cidade, cn.tipo_conta, cn.status ";
+		$sSQL .= "FROM ";
+		$sSQL .= "cftb_cidade c, cntb_conta cn, cltb_cliente cl ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "cn.id_cliente = cl.id_cliente AND ";
+		$sSQL .= "cl.id_cidade = c.id_cidade AND ";
+		$sSQL .= "c.disponivel is true ";
+		$lista = $this->bd->obtemRegistros($sSQL);
+		
+		for ($i=0;$i<count($lista);$i++){
+		
+			$tp = $lista[$i]["tipo_conta"];
+		
+		
+			$sSQL  = "SELECT count(id_cliente_produto) as quantidade FROM cntb_conta WHERE ";
+			$sSQL .= " tipo_conta = '$tp' ";
+			$contas = $this->bd->obtemUnicoRegistro($sSQL);
+			
+			switch($lista[$i]["status"]){
+				case "A":
+					
+				break;
+			
+			
+			}
+			
+		$lista[$i]["quant"] = $contas["quantidade"];
+		
+		
+		}
+
+
+
+	 
+	 $this->tpl->atribui("lista",$lista);
+	 $this->arquivoTemplate = "relatorio_cidades_produtos.html";
+
+	
+	
+	
+	
 	}
 	
 	

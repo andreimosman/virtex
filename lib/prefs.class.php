@@ -42,7 +42,7 @@ class Preferencias {
 
 			// Preferencias do provedor
 			$sSQL  = "SELECT ";
-			$sSQL .= "endereco, localidade, cep, cnpj ";
+			$sSQL .= "endereco, localidade, cep, cnpj, fone ";
 			$sSQL .= "FROM pftb_preferencia_provedor ";
 			
 
@@ -64,7 +64,7 @@ class Preferencias {
 			$sSQL  = "SELECT ";
 			$sSQL .= " pc.tx_juros, pc.multa, pc.dia_venc, pc.carencia, pc.cod_banco, pc.carteira, pc.agencia, pc.num_conta, pc.convenio, pc.observacoes, pc.pagamento, pc.path_contrato, ";
 			$sSQL .= " pg.dominio_padrao, pg.nome, pg.radius_server, pg.hosp_server, pg.hosp_ns1, pg.hosp_ns2, pg.hosp_uid, pg.hosp_gid, pg.mail_server, pg.mail_uid, pg.mail_gid, pg.pop_host, pg.smtp_host, pg.hosp_base, ";
-			$sSQL .= " pp.endereco, pp.localidade, pp.cep, pp.cnpj ";
+			$sSQL .= " pp.endereco, pp.localidade, pp.cep, pp.cnpj, pp.fone ";
 			$sSQL .= "FROM ";
 			$sSQL .= "pftb_preferencia_cobranca pc, pftb_preferencia_geral pg, pftb_preferencia_provedor pp ";
 			$sSQL .= "WHERE pc.id_provedor = '1' ";
