@@ -4,6 +4,7 @@ require_once("MWebApp.class.php");
 require_once("MDatabase.class.php");
 require_once("MBoleto.class.php");
 require_once("prefs.class.php");
+require_once("VirtexAdminLicenca.class.php");
 
 class VirtexAdmin extends MWebApp {
 
@@ -14,10 +15,19 @@ class VirtexAdmin extends MWebApp {
 	protected $preferencias;
 	protected $prefs;
 
-
+	protected $lic;
+	
 	public function VirtexAdmin() {
 	   parent::MWebApp("etc/virtex.ini",'template/default');
-
+	   
+	   $this->lic = new VirtexAdminLicenca();
+	   
+	   //if( $this->lic->isValid() ) {
+	   //		$empresa = $this->lic->obtemEmpresa();
+	   //		$licenca  = $this->lic->obtemLicenca();
+	   //		echo "Licenciado para " . $licenca["empresa"]["nome"];
+	   //}
+	   
 	   @session_start();
 
 	   if( @$this->cfg->config["DB"]["dsn"] ) {
