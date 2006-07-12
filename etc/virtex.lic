@@ -1,0 +1,19 @@
+[geral]
+expira_em= 
+
+[empresa] 
+nome=Empresa Demo 
+endereco=Rua Demo, 123
+cidade=Demolandia
+estado=DM
+telefone=(55) 555-1234
+
+
+[modulos]
+discado = 1
+banda_larga = 1
+hospedagem = 1
+email = 1
+
+[licenca]
+chave= 558f535886e150b82fe7650a8c4eb1e7
