@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h2 align="left">Registrado para :</h2>
+<div align="left">
+  <table width="40%" border="0">
+    <tr> 
+      <td width="46%"><p align="left"><strong>Nome Empresa<br>
+          </strong></p></td>
+      <td width="54%"><p><strong>{$licenca.empresa.nome}</strong></p></td>
+    </tr>
+    <tr> 
+      <td><p align="left"><strong>Endereco<br>
+          </strong></p></td>
+      <td><p><strong>{$licenca.empresa.endereco}</strong></p></td>
+    </tr>
+    <tr> 
+      <td><p align="left"><strong>Cidade<br>
+          </strong></p></td>
+      <td><p><strong>{$licenca.empresa.cidade}</strong></p></td>
+    </tr>
+    <tr> 
+      <td><p align="left"><strong>Estado<br>
+          </strong></p></td>
+      <td><p><strong>{$licenca.empresa.estado}</strong></p></td>
+    </tr>
+    <tr> 
+      <td height="31"><p align="left"><strong>Telefone</strong></p></td>
+      <td><p><strong>{$licenca.empresa.telefone}</strong></p></td>
+    </tr>
+  </table>
+</div>
+<h2 align="left">Modulos Habilitados:</h2>
+<div align="left">
+  <table width="20" border="0">
+    <tr> 
+      <td> <p align="left"><b>Discado</b></p></td>
+      <td><p><strong>{if $licenca.modulos.discado}<img src="template/default/images/checksim.gif">{else}<img src="template/default/images/checnao.gif">{/if}</strong></p></td>
+    </tr>
+    <tr> 
+      <td><p align="left"><strong>Banda Larga <br>
+          </strong></p></td>
+      <td><p><strong>{if $licenca.modulos.banda_larga}<img src="template/default/images/checksim.gif">{else}<img src="template/default/images/checnao.gif">{/if}</strong></p></td>
+    </tr>
+    <tr> 
+      <td><p align="left"><strong>Hospedagem<br>
+          </strong></p></td>
+      <td><p><strong>{if $licenca.modulos.hospedagem}<img src="template/default/images/checksim.gif">{else}<img src="template/default/images/checnao.gif">{/if}</strong></p></td>
+    </tr>
+    <tr> 
+      <td><p align="left"><strong>Email </strong></p></td>
+      <td><p><strong>{if $licenca.modulos.email}<img src="template/default/images/checksim.gif">{else}<img src="template/default/images/checnao.gif">{/if}</strong></p></td>
+    </tr>
+  </table>
+</div>
+<h2 align="left">Inoforma&ccedil;&otilde;es de Registro:</h2>
+<table width="38%" border="0">
+  <tr> 
+    <td width="21%"><p><strong>Chave</strong></p></td>
+    <td width="79%"><p><strong>{$licenca.licenca.chave}</strong></p></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>
