@@ -1266,7 +1266,16 @@ class VAConfiguracao extends VirtexAdmin {
 						$_LICENSE_EXPIRES = "28/02/2007";
 						   
 					   //$local_id = $_MBM_LOCAL_ID;
-
+					   
+					   if( $this->lic->isValid() ) {
+					   
+					   $this->tpl->atribui("licenca",$this->lic->obtemLicenca());
+					   
+					   
+					   $this->arquivoTemplate = "licenca.html";
+					   	
+					   }	
+							
 						if ( $_LICENSE_EMPRESA != ""){
 
 							$registrado = "sim";
