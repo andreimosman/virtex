@@ -1274,16 +1274,10 @@ class VAConfiguracao extends VirtexAdmin {
 					   
 					   $this->arquivoTemplate = "licenca.html";
 					   	
-					   }	
-							
-						if ( $_LICENSE_EMPRESA != ""){
-
-							$registrado = "sim";
 
 						}else {
 							$registrado = "nao";
-						}
-
+						
 						
 						$this->tpl->atribui("registrado",$registrado);
 						$this->tpl->atribui("empresa",$_LICENSE_EMPRESA);
@@ -1293,7 +1287,7 @@ class VAConfiguracao extends VirtexAdmin {
 
 					   //$SELF = $PHP_SELF;
 
-
+						}
 
 
 						if ($acao == "upload"){
