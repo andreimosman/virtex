@@ -7,6 +7,7 @@ var status_fatura = '{$amort.status|trim}';
 </script>
 {literal}
 <script language="JavaScript" src="util.js"></script>
+<script type="text/javascript" src="template/default/formatar_text.js"></script>
 
 <script language="JavaScript">
 
@@ -240,7 +241,8 @@ function change(id, newClass) {
                           </tr>
                           <tr>
                             <td bgcolor="#FFFFFF" align="right" width="120"><p>Vencimento:</p></td>
-                            <td bgcolor="#FFFFFF"><p>{$data} {if $amort.reagendamento}<font color="#CC0000">reagendado para {$amort.reagendamento|date_format:"%e/%m/%Y"}</font>{/if} </p></td>
+                            <td bgcolor="#FFFFFF"><p>{$data} {if $amort.reagendamento}<font color="#CC0000"
+OnKeyPress="formatar(this, '##/##/####')">reagendado para {$amort.reagendamento|date_format:"%e/%m/%Y"}</font>{/if} </p></td>
                           </tr>
                           <tr>
                             <td bgcolor="#FFFFFF" align="right" width="120"><p>Valor
@@ -304,8 +306,8 @@ function change(id, newClass) {
                             <td bgcolor="#FFFFFF" align="right" width="120"><p>Data
                                 do Pagamento:</p></td>
                             <td bgcolor="#FFFFFF"><p>
-                                <input type="text" name="data_pagamento" value="{$data_pagamento}">
-                                <input type="button" name="hoje" value="Hoje" onClick="javascript:pagamentoHoje();" &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
+                                <input type="text" name="data_pagamento" value="{$data_pagamento}" maxlength="10" OnKeyPress="formatar(this, '##/##/####')">
+                                <input type="button" name="hoje" value="Hoje" onClick="javascript:pagamentoHoje();" &gt;&gt;"" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
                                 <input type="button" name="venc" value="Venc." onClick="javascript:pagamentoVencimento();" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
                               </p></td>
                           </tr>

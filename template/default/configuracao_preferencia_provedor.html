@@ -4,6 +4,7 @@
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
 
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="template/default/formatar_text.js"></script>
 </head>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
@@ -37,7 +38,7 @@
                     <tr>
                       <td><p><strong>CEP</strong></p></td>
                       <td colspan="3"><p><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><strong>
-                          <input name="cep" type="text" id="cep" value="{$prefs.cep}" size="15">
+                          <input name="cep" type="text" id="cep" value="{$prefs.cep}" size="15" maxlength="9" OnKeyPress="formatar(this, '#####-###')">
                           xxxxx-xxx </strong></font></p></td>
                     </tr>
                     <tr>

@@ -2,6 +2,7 @@
  <!-- cliente_cobranca_contratar.html -->
 <script type="text/javascript" src="template/default/ajax.js"></script>
 <script type="text/javascript" src="template/default/ajax_validacoes.js"></script>
+<script type="text/javascript" src="template/default/formatar_text.js"></script>
  <script language="JavaScript" type="text/JavaScript">
 <!--
 function MM_reloadPage(init) {  //reloads the window if Nav4 resized
@@ -475,7 +476,7 @@ function verificaTipoHosp() {
 
 function calculaDataCarne() {
 var formulario = document.frmContratacao;
-	
+
    if( formulario.dia_vencimento.value.length == 0 ) {
       formulario.ini_carne.value = formulario.data_contratacao.value;
    } else {
@@ -485,18 +486,18 @@ var formulario = document.frmContratacao;
       var tmp = d.split("/");
       dia = tmp[0];
       //mes = tmp[1];
-	  
+
 	  mes = parseInt(tmp[1],10);
       ano = parseInt(tmp[2]);
 	  //window.alert ("mesA:"+mes);
 	  //window.alert(tmp);
-	  
+
 	  if ( mes == "08") mes = "8";
 	  if ( mes == "09") mes = "9";
-      
+
       formulario.ini_carne.value = criaData( formulario.dia_vencimento.value, mes, ano );
    }
-   
+
    formulario.ini_carne.value = incrementaMes( formulario.ini_carne.value, 1 );
    formulario.data_carne.value = incrementaMes( formulario.ini_carne.value, parseInt(formulario.vigencia.value) - 1);
 }
@@ -512,7 +513,7 @@ var formulario = document.frmContratacao;
 	  mes = tmp[1];
       //mes = parseInt(tmp[1]);
       ano = parseInt(tmp[2]);
-	  
+
 	  if ( mes == "08") mes = "8";
 	  if ( mes == "09") mes = "9";
 
@@ -610,7 +611,11 @@ function priVenc(){
 frmContratacao.pri_venc.value = hoje();
 }
 
-</script> {/literal} <form name="frmContratacao" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return validaForm();">
+
+
+</script> {/literal}
+
+<form name="frmContratacao" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return validaForm();">
 <!-- DADOS DO frmContratacao: INI -->
 <div id="formBL">
 <table width="450" border=0 bgcolor="#F1F1F1" id="disc">
@@ -776,7 +781,7 @@ frmContratacao.pri_venc.value = hoje();
             <tr>
               <td bgcolor="#FFFFFF" align="right" width="98"><p>Dt Contrato:</p></td>
               <td bgcolor="#FFFFFF" colspan="3"><p>
-                  <input type="text" size=11 maxlength="10" name="data_contratacao" value="{$hoje}" onfocusout="javascript:processaDataContrato();"  onchange="javascript:processaDataContrato();">
+                  <input type="text" size=11 maxlength="10" name="data_contratacao" OnKeyPress="formatar(this, '##/##/####')" value="{$hoje}" onfocusout="javascript:processaDataContrato();"  onchange="javascript:processaDataContrato();">
                 </p></td>
             </tr>
             <tr>
@@ -805,8 +810,9 @@ frmContratacao.pri_venc.value = hoje();
             </tr>
             <tr>
               <td bgcolor="#FFFFFF" align="right"><p>Data 1&ordm; Vencimento</p></td>
-              <td bgcolor="#FFFFFF"><input name="pri_venc" type="text" size="," id="pri_venc"></td>
-              <td bgcolor="#FFFFFF"><input type="button" name="hoje" value="Hoje" onClick="javascript:priVenc();" &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;"></td>
+              <td bgcolor="#FFFFFF"><input name="pri_venc" type="text" size="," id="pri_venc" maxlength="10" OnKeyPress="formatar(this, '##/##/####')"></td>
+              <td bgcolor="#FFFFFF"><input type="button" name="hoje" value="Hoje" onClick="javascript:priVenc();" &gt;&gt;""
+              style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;"></td>
               <td bgcolor="#FFFFFF">&nbsp;</td>
             </tr>
             <tr>
@@ -870,9 +876,9 @@ frmContratacao.pri_venc.value = hoje();
                 <table width="100%" border="0" cellspacing="3" cellpadding="0">
                   <tr>
                     <td><p>de
-                        <input type="text" name="ini_carne" value="" size=11 maxlength=10>
+                        <input type="text" name="ini_carne" value="" size=11 maxlength=10 OnKeyPress="formatar(this, '##/##/####')">
                         até
-                        <input type="text" name="data_carne" value="" size=11 maxlength=10>
+                        <input type="text" name="data_carne" value="" size=11 maxlength=10 OnKeyPress="formatar(this, '##/##/####')">
                       </p></td>
                   </tr>
                   <tr>

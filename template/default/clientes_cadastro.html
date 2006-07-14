@@ -5,6 +5,7 @@
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="template/default/ajax.js"></script>
 <script type="text/javascript" src="template/default/ajax_validacoes.js"></script>
+<script type="text/javascript" src="template/default/formatar_text.js"></script>
 {literal}
 <script language="JavaScript">
 
@@ -15,7 +16,7 @@ function checkForm(){
 	var cpf_cnpj   = frm.cpf_cnpj.value;
 	var rg_inscr   = frm.rg_inscr.value;
 	var nome_razao = frm.nome_razao.value;
-	
+
 	rg_inscr = rg_inscr. replace(" ","");
 
 	//alert('PESSOA: '+pessoa);
@@ -320,7 +321,8 @@ function confirmacao(){
                                 </font></td>
                               <td width="20"></td>
                               <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
-                                <input  name="cep"type="text"  id="cep2" value="{$cep}" maxlength="10" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">
+                                <input  name="cep"type="text"  id="cep2" value="{$cep}" maxlength="9" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'"
+OnKeyPress="formatar(this, '#####-###')">
                                 </font></td>
                             </tr>
                             <tr>
