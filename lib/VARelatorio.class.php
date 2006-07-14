@@ -771,6 +771,7 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "      id_cidade) cnt ";
 			$sSQL .= "WHERE ";
 			$sSQL .= "   cid.id_cidade = cnt.id_cidade ";
+			$sSQL .= "ORDER BY cid.cidade ASC ";
 			
 			
 		} else if($acao == "sub_cid") {
@@ -1796,42 +1797,52 @@ class VARelatorio extends VirtexAdmin {
 	}else if ($op == "cidades_produto"){
 	
 
-		$sSQL  = "SELECT c.cidade, c.uf, cn.id_cliente, cn.id_cliente_produto, cl.id_cliente, cl.id_cidade, cn.tipo_conta, cn.status ";
+		$sSQL  = "SELECT ";
+		$sSQL .= "   cid.id_cidade,cid.cidade, p.tipo as tipo_conta, ctt.status, count(tipo) as quantidade ,sum(valor_contrato) ";
 		$sSQL .= "FROM ";
-		$sSQL .= "cftb_cidade c, cntb_conta cn, cltb_cliente cl ";
+		$sSQL .= "   cftb_cidade cid INNER JOIN cltb_cliente cli  USING(id_cidade) INNER JOIN  ";
+		$sSQL .= "   cbtb_cliente_produto cp USING(id_cliente) INNER JOIN prtb_produto p USING(id_produto), ";
+		$sSQL .= "   cbtb_contrato ctt ";
 		$sSQL .= "WHERE ";
-		$sSQL .= "cn.id_cliente = cl.id_cliente AND ";
-		$sSQL .= "cl.id_cidade = c.id_cidade AND ";
-		$sSQL .= "c.disponivel is true ";
-		$lista = $this->bd->obtemRegistros($sSQL);
-		
-		for ($i=0;$i<count($lista);$i++){
-		
-			$tp = $lista[$i]["tipo_conta"];
-		
-		
-			$sSQL  = "SELECT count(id_cliente_produto) as quantidade FROM cntb_conta WHERE ";
-			$sSQL .= " tipo_conta = '$tp' ";
-			$contas = $this->bd->obtemUnicoRegistro($sSQL);
-			
-			switch($lista[$i]["status"]){
-				case "A":
-					
-				break;
-			
-			
+		$sSQL .= "   ctt.id_cliente_produto = cp.id_cliente_produto ";
+		$sSQL .= "   AND cp.excluido is false ";
+		$sSQL .= "   AND ctt.status != 'M' ";
+		$sSQL .= "   AND ctt.status != 'C' ";
+		$sSQL .= "GROUP BY ";
+		$sSQL .= "   cid.id_cidade,cid.cidade,p.tipo,ctt.status ";
+		$sSQL .= "ORDER BY ";
+		$sSQL .= "   cid.cidade,p.tipo,status ";
+		$retorno = $this->bd->obtemRegistros($sSQL);
+		//echo $sSQL ;
+
+		$dados = array();
+		$ultimo_id=0;
+		$dados_cid = array();
+		$ultima_cidade = "";
+
+		for($i=0;$i<count($retorno);$i++) {
+			if($retorno[$i]["id_cidade"] != $ultimo_id) {
+				if( $ultimo_id ) {
+					$dados[] = array('cidade' => $ultima_cidade, 'dados' => $dados_cid);
+					$dados_cid = array();
+				}
 			}
 			
-		$lista[$i]["quant"] = $contas["quantidade"];
-		
-		
+			$dados_cid[] = $retorno[$i];
+			
+			//echo $dados[$i]['cidade']."<br>\n";
+			
+			$ultimo_id = $retorno[$i]["id_cidade"];
+			$ultima_cidade = $retorno[$i]["cidade"];            
+
 		}
-
-
-
-	 
-	 $this->tpl->atribui("lista",$lista);
-	 $this->arquivoTemplate = "relatorio_cidades_produtos.html";
+		
+		
+		$dados[] = array('cidade' => $ultima_cidade, 'dados' => $dados_cid);
+		
+		
+		$this->tpl->atribui("dados",$dados);
+		$this->arquivoTemplate = "relatorio_cidades_produtos.html";
 
 	
 	
