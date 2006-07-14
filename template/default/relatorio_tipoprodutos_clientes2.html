@@ -1,0 +1,166 @@
+<!-- RELATORIO_TIPOPRODUTOS_CLIENTES.HTML -->
+<html>
+<head>
+<title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
+
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+</head>
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td align="center" valign="middle">
+				<h1>Relatório</h1>
+				<p><b><font size="2">
+				{if $tipo == ""}
+                	Clientes x Tipo de Produto
+                {/if}
+                {if $tipo == "D"}
+					Clientes Discado
+                {/if}
+                {if $tipo == "H"}
+					Clientes Hospedagem
+                {/if}
+                {if $tipo == "BL"}
+					Clientes Banda Larga
+                {/if}
+				</font></b></p>
+				{if $acao == "geral"}
+				{if $relat}<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico">{/if}
+						  {if $relat}
+						  <table width="450" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+							  <td><table width="450" border="0" cellspacing="0" cellpadding="0">
+								  <tr>
+									<td bgcolor="#F1F1F1"><table width="450" border="0" cellspacing="2" cellpadding="0">
+										<tr>
+										  <td align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Tipo de Produto</font></td>
+										  <td align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Contratos</font></td>
+										</tr>
+									  </table></td>
+								  </tr>
+								  <tr>
+									<td>
+									{foreach item=a from=$relat}
+									  <table width="450" border="0" cellspacing="2" cellpadding="0">
+										<tr>
+		
+										  <td aligh="LEFT"><p><img src="template/default/images/{$a.tipo|lower|trim}.gif" width="24" height="24"></p></td>
+										  <td width="43%" align="LEFT"><p>{if $a.tipo=="D "}<a href="relatorio.php?op={$op}&acao=sub_tprd&tipo=D">Discado</a>{/if}{if $a.tipo=="BL"}<a href="relatorio.php?op={$op}&acao=sub_tprd&tipo=BL">Banda Larga</a>{/if}{if $a.tipo=="H "}<a href="relatorio.php?op={$op}&acao=sub_tprd&tipo=H">Hospedagem</a>{/if}</p></td>
+										  <td width="50%" align="RIGHT"><p>{$a.num_contratos}</p></td>
+										</tr>
+										<tr bgcolor="#999999">
+										  <td colspan="4" height="1"></td>
+										</tr>
+									  </table>
+									  {/foreach}
+									  </td>
+								  </tr>
+								</table></td>
+							</tr>
+						  </table>
+						 {/if}
+				
+				                  
+
+				  {else }
+                  <table width="450" border="0" cellspacing="0" cellpadding="0">
+
+						  <tr bgcolor="#F1F1F1">
+							<td width="208" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="3"><b>Cliente</b></font></td>
+							<td width="186" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="3"><b>Produto</b></font></td>
+							<td width="186" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="3"><b>Username</b></font></td>
+
+						  </tr>
+							  <td>
+							{foreach item=a from=$relat}
+							  <!--table width="400" border="0" cellspacing="2" cellpadding="0"-->
+								  <tr>
+									<td width="250" align="LEFT"><p><a href="clientes.php?op=produto&id_cliente={$a.id_cliente}&tipo={$tipo}">{$a.nome_razao}</a></p></td>
+									<td width="150" align="LEFT"><p><!--img src="template/default/images/{$a.tipo|lower|trim}.gif" width="24" height="24"-->{$a.produto}</p></td>
+									<td width="100" valign="LEFT" align="LEFT"><p>{$a.username}</p></td>
+								  </tr>
+								  <tr bgcolor="#999999">
+									<td colspan="3" height="1"></td>
+								  </tr>
+							  <!--/table-->
+							{/foreach}
+
+						  </table>
+						  </td>
+					  </tr>
+                  </table>
+
+                  <p><a href="#" onCLick="javascript:history.back()">Voltar</a></p>
+
+                  {/if}
+<script language="JavaScript">ready = "yes";</script>
+<script>
+{literal}
+var estado=false;
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_showHideLayers() { //v6.0
+  var i,p,v,obj,args=MM_showHideLayers.arguments;
+  for (i=0; i<(args.length-2); i+=3) if ((obj=MM_findObj(args[i]))!=null) { v=args[i+2];
+    if (obj.style) { obj=obj.style; v=(v=='show')?'visible':(v=='hide')?'hidden':v; }
+    obj.visibility=v; }
+}
+var da = (document.all) ? 1 : 0;
+var pr = (window.print) ? 1 : 0;
+var mac = (navigator.userAgent.indexOf("Mac") != -1);
+
+function printPage() {
+  if (pr) // NS4, IE5
+    window.print()
+  else if (da && !mac) // IE4 (Windows)
+       vbPrintPage()
+  else // other browsers
+    alert("Desculpe seu browser não suporta esta função. Por favor utilize a barra de trabalho para imprimir a página.");
+}
+
+if (da && !pr && !mac) with (document) {
+  writeln('<OBJECT ID="WB" WIDTH="0" HEIGHT="0" CLASSID="clsid:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>');
+  writeln('<' + 'SCRIPT LANGUAGE="VBScript">');
+  writeln('Sub window_onunload');
+  writeln('  On Error Resume Next');
+  writeln('  Set WB = nothing');
+  writeln('End Sub');
+  writeln('Sub vbPrintPage');
+  writeln('  OLECMDID_PRINT = 6');
+  writeln('  OLECMDEXECOPT_DONTPROMPTUSER = 1');
+  writeln('  OLECMDEXECOPT_PROMPTUSER = 1');
+  writeln('  On Error Resume Next');
+  writeln('  WB.ExecWB OLECMDID_PRINT, OLECMDEXECOPT_DONTPROMPTUSER');
+  writeln('End Sub');
+  writeln('<' + '/SCRIPT>');
+}
+{/literal}
+</script>
+<p id="imprimir" align="center"><a href="javascript:;" onClick="return printPage();">IMPRIMIR</a></p>
+
+				</td>
+              </tr>
+            </table></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+</body>
+
+
+</html>
