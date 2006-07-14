@@ -30,16 +30,41 @@
                       <tr align="CENTER" valign="MIDDLE">
                         <td bgcolor="#f1f1f1"><p><font face="Arial, Helvetica, sans-serif" size="5"><strong><font size="4"><span class="style1"><br>
                           Produto
-                                    N&atilde;o Registrado</span></font></strong></font><font face="Arial, Helvetica, sans-serif" size="5" color="#666666"><strong><font size="3"> <br>
-                                    M:ZSXL4-5GS2Z-35BAB-EP9HV </font></strong></font></p>
+                                    N&atilde;o Registrado</span></font></strong></font>
+
+                                    <font face="Arial, Helvetica, sans-serif" size="5" color="#666666"><strong><font size="3"> <br>
+                                    <!--M:ZSXL4-5GS2Z-35BAB-EP9HV--></font></strong></font></p>
+<p><span class="style2">Para solicitar o registro é necessário informar <br>somente um</b> dos códigos da tabela abaixo:<br /></span></p>
+                              </span></p>
+                            <table width="400" align="center" border=1 cellspacing=0 cellpadding=0>
+                             <tr>
+                              <td width="60">Interface</td>
+                              <td width="140">MAC</td>
+                              <td width="140">IP</td>
+                              <td><b>CODIGO</b></td>
+                             </tr>
+                            {foreach item=lid from=$local_id_info}
+                             <tr>
+                              <td>{$lid.interface}</td>
+                              <td>{$lid.mac}</td>
+                              <td>{$lid.ip}</td>
+                              <td><b>{$lid.local_id}</b></td>
+                             </tr>
+                            {/foreach}
+                            </table>
+<p><span class="style2">***Escolha o par adaptador/ip com menor probabilidade de alteração.<br/> Quaisquer alterações nas configurações de rede ou troca de placa<br> poderá invalidar a licença.</span></p>
+
+
+
+
                             <p><span class="style2">Se voc&ecirc; j&aacute; recebeu
                                 o arquivo de licen&ccedil;a<br />
                               atualize o registro utilizando-se do formul&aacute;rio
                               abaixo: </span></p>
-                              <form name="form1" method="post" action="{$smarty.server.PHP_SELF}" enctype="multipart/form-data"> 
+                              <form name="form1" method="post" action="{$smarty.server.PHP_SELF}" enctype="multipart/form-data">
                               <table width="100%" border="0" cellspacing="2" cellpadding="0">
                               <tr>
-                                  <td width="31%" align="RIGHT"> 
+                                  <td width="31%" align="RIGHT">
                                     <p>Encontre o arquivo: </p></td>
                                 <td width="49%">
                                   <input name="arquivo_registro" type="file" id="arquivo_registro">
