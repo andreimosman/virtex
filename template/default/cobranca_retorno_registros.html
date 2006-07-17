@@ -47,7 +47,7 @@
                                       </tr>
                                       <tr  {if !$r.nome_razao} bgcolor=#D17676 {else}bgcolor="#FFFFFF"{/if}> 
                                         <td>
-<input type="checkbox" name="nsr[{$r.nsr}]" value="true" style="border: 0px" {if $r.nome_razao == "" OR !$r.nome_razao OR $r.status == "P"}DISABLED{else}CHECKED{/if}>
+<input type="checkbox" name="nsr[{$r.nsr}]" value="true" style="border: 0px" {if $r.nome_razao == "" OR !$r.nome_razao OR $r.status == "P"}{assign var=n value=$n+1}DISABLED{else}CHECKED{/if}>
                                         </td>
 										<td><p>{$r.nsr}</p></td>
                                         <td><p>{$r.data_pagamento}</p></td>
@@ -67,7 +67,7 @@
                                               {if $r.nome_razao}<td width="233"><p><strong>Nome</strong></p></td>{/if}
                                             </tr>
                                             <tr bgcolor="#FFFFFF"> 
-                                              <td> <p>{$r.codigo_barras}</p></td>
+                                              <td> <p>{$r.codigo_barras} - {$n}</p></td>
                                               {if $r.nome_razao}<td> <p>{$r.nome_razao}</p></td>{/if}
                                             </tr>
                                           </table></td>
@@ -109,8 +109,8 @@
                                     {/foreach} </td>
                                 </tr>
                                 <tr>
-                                  <td align="CENTER">
-{if !$erro}<input type="submit" name="submit2" value="Processar">{/if}
+                                  <td align="CENTER"> {if !$erro } 
+                                    <input type="submit" name="submit2" value="Processar">{/if}
                                     <input name="acao" type="hidden" value="amortiza" id="acao">
                                     <input name="total" type="hidden" value="{$smarty.foreach.regs.total}" id="total"> </td>
                                 </tr>

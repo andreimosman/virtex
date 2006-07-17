@@ -1094,6 +1094,9 @@ class VACobranca extends VirtexAdmin {
 	   if ($acao == "amortiza"){
 	   
 	   	$total = @$_REQUEST["total"];
+	   	$_nsr = @$_REQUEST["nsr"];
+			
+			if ($_nsr != "" || $_nsr ){
 			
 			while(list($i,$lixo)=each($_REQUEST["nsr"])){
 
@@ -1175,7 +1178,7 @@ class VACobranca extends VirtexAdmin {
 					
 
 			}
-			
+		} // teste	
 		$msg_final = "Retornos registrados com sucesso.";
 		$this->tpl->atribui("mensagem",$msg_final); 
 		$this->tpl->atribui("url", "cobranca.php?op=retornos");
