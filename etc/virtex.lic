@@ -13,7 +13,7 @@ telefone=(55) 555-1234
 discado = 1
 banda_larga = 1
 hospedagem = 1
-email = 1
+email = 0
 
 [licenca]
-chave= DB23:D3F6:8C59
+chave= 2A04:BC96:0671
