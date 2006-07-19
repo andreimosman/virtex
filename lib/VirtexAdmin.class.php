@@ -1,11 +1,19 @@
 <?
 
+/**
+ * Definir o caminho de pesquisa
+ */
+
 require_once("MWebApp.class.php");
 require_once("MDatabase.class.php");
 require_once("MBoleto.class.php");
 require_once("prefs.class.php");
 require_once("VirtexAdminLicenca.class.php");
 
+
+/**
+ * Base do Aplicativo
+ */
 class VirtexAdmin extends MWebApp {
 
 	protected $bd;
