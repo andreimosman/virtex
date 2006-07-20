@@ -1,19 +1,30 @@
 [geral]
-expira_em= 
+expira_em = 2006-06-12
+congela_em = 2006-07-19
+emitida_em = 2006-06-11
+ 
+[empresa]
+nome = Bruno Francisco dos Santos_teste2
+endereco = José Bonifácio Pereira Casa
+bairro = Jardim Vila Rica
+cidade = ASSIS BRASIL
+telefone = 19-00000000
+cnpj = 38335803803
+dt_contratacao = 2006-06-11 
+dia_pagamento = 03
 
-[empresa] 
-nome=Empresa Demo 
-endereco=Rua Demo, 123
-cidade=Demolandia
-estado=DM
-telefone=(55) 555-1234
-
-
-[modulos]
+[frontend]
 discado = 1
 banda_larga = 1
 hospedagem = 1
-email = 0
+email = 1
+interface =1 
+
+[backend]
+discado = 1
+banda_larga = 1
+hospedagem = 1
+email = 0 
 
 [licenca]
-chave= 2A04:BC96:0671
+chave=411F:5050:3232
