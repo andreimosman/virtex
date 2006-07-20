@@ -26,43 +26,37 @@ class VirtexAdmin extends MWebApp {
 	protected $lic;
 	
 	public function VirtexAdmin() {
-	   parent::MWebApp("etc/virtex.ini",'template/default');
-	   
-	   $this->lic = new VirtexAdminLicenca();
-	   
-	   //if( $this->lic->isValid() ) {
-	   //		$empresa = $this->lic->obtemEmpresa();
-	   //		$licenca  = $this->lic->obtemLicenca();
-	   //		echo "Licenciado para " . $licenca["empresa"]["nome"];
-	   //}
-	   
-	   @session_start();
+		parent::MWebApp("etc/virtex.ini",'template/default');
+		
+		$this->lic = new VirtexAdminLicenca();
+		
+		@session_start();
 
-	   if( @$this->cfg->config["DB"]["dsn"] ) {
-	      // Instanciar BD;
+		if( @$this->cfg->config["DB"]["dsn"] ) {
+			// Instanciar BD;
 
-	      $this->bd = new MDatabase($this->cfg->config["DB"]["dsn"]);
+			$this->bd = new MDatabase($this->cfg->config["DB"]["dsn"]);
 
 
-	      if( $this->bd->obtemErro() != MDATABASE_OK ) {
-	         echo "ERRO: " . $this->bd->obtemMensagemErro() . "<br>\n";
-	      } else {
+			if( $this->bd->obtemErro() != MDATABASE_OK ) {
+				echo "ERRO: " . $this->bd->obtemMensagemErro() . "<br>\n";
+			} else {
 
-	      }
-	      
-	      $this->spool = new Spool($this->bd);
+			}
+			
+			$this->spool = new Spool($this->bd);
 
-		   if( isset($_SESSION["admLogin"]) ) {
+			if( isset($_SESSION["admLogin"]) ) {
 			  $this->admLogin = $_SESSION["admLogin"];
 			  $this->admLogin->bd = $this->bd;
-		   } else {
-		   		$this->admLogin = new AdminLogin($this->bd);
-		   }
-		   
-		   //$this->obtemPreferencias();
-		   $this->prefs = new Preferencias($this->bd);
+			} else {
+					$this->admLogin = new AdminLogin($this->bd);
+			}
+			
+			//$this->obtemPreferencias();
+			$this->prefs = new Preferencias($this->bd);
 
-	   }
+		}
 	}
 
 	public function __destruct() {
@@ -79,16 +73,16 @@ class VirtexAdmin extends MWebApp {
 	 * O status retornado indicara se deve ou nao chamar processa.
 	 */
 	public function adminLogin() {
-	    $op = @$_REQUEST["op"];
+		 $op = @$_REQUEST["op"];
 
 		if( !isset($_SESSION["admLogin"]) || $op == "logout" ) {
-		   // Se a variavel de sessao admLogin ainda não foi setada ou o
-		   // cara está fazendo um logout. Zera a sessao.
-		   $this->admLogin = new AdminLogin($this->bd);
+			// Se a variavel de sessao admLogin ainda não foi setada ou o
+			// cara está fazendo um logout. Zera a sessao.
+			$this->admLogin = new AdminLogin($this->bd);
 		} else {
-		   // Pega da sessao.
-		   $this->admLogin = @$_SESSION["admLogin"];
-		   $this->admLogin->bd = $this->bd;
+			// Pega da sessao.
+			$this->admLogin = @$_SESSION["admLogin"];
+			$this->admLogin->bd = $this->bd;
 		}
 		
 
@@ -98,32 +92,72 @@ class VirtexAdmin extends MWebApp {
 		$veriPrimeiroLogin = !($arquivoPHP == "administrador.php" && $op == "altera");
 		
 		if( !$this->admLogin->estaLogado() ) {
-		   // Redireciona pra tela de login
-		   $url = 'login.php';
-		   $mensagem = 'Tentativa de acesso invalido ao sistema';
-		   $target = '_top';
+			// Redireciona pra tela de login
+			$url = 'login.php';
+			$mensagem = 'Tentativa de acesso invalido ao sistema';
+			$target = '_top';
 
-		   $this->tpl->atribui('url',$url);
-		   $this->tpl->atribui('mensagem',$mensagem);
-		   $this->tpl->atribui('target',$target);
+			$this->tpl->atribui('url',$url);
+			$this->tpl->atribui('mensagem',$mensagem);
+			$this->tpl->atribui('target',$target);
 
 
-		   $this->arquivoTemplate = 'jsredir.html';
+			$this->arquivoTemplate = 'jsredir.html';
 
-		   return false;
+			return false;
 
-		} else if( $veriPrimeiroLogin && $this->admLogin->primeiroLogin() ) {
-		   $url = 'administrador.php?op=altera';
-		   //$mensagem = 'Tentativa de acesso invalido ao sistema';
-		   $target = '_top';
+		} else {
+			/***************************************
+			 *                                     *
+			 * VERIFICACAO DA LICENCA              *
+			 *                                     *
+			 ***************************************/
 
-		   // Tela de alteração de senha
-		   $this->tpl->atribui('url',$url);
-		   //$this->tpl->atribui('mensagem',$mensagem);
-		   $this->tpl->atribui('target',$target);
 
-		   $this->arquivoTemplate = 'jsredir.html';
-		   return false;
+
+			/**
+			 * Se a licença não for valida ou congelou
+			 */
+			if( !$this->lic->isValid() || $this->lic->congelou() ) {
+			
+				$tmp = explode('/',$_SERVER["PHP_SELF"]);
+				$arquivoPHP = $tmp[ count($tmp)-1 ];
+				
+				if( $arquivoPHP != "configuracao.php" || @$_REQUEST["op"] != "registro" ) {
+					// Joga pra tela que o cara têm que atualizar a licença.
+					$url      = 'configuracao.php?op=registro&x=fullscreen';
+					$mensagem = $this->lic->isValid() ? "Terminado o tempo para atualizacao da licenca" : "Licença inválida";
+					$target   = '_top';
+
+					$this->tpl->atribui('url',$url);
+					$this->tpl->atribui('mensagem',$mensagem);
+					$this->tpl->atribui('target',$target);
+					$this->arquivoTemplate = 'jsredir.html';
+					return false;
+				}
+				
+			}
+
+			if( $this->lic->expirou() && !$this->lic->congelou() ) {
+				// Exibir mensagem de que o sistema expirou e irá congelar dia X
+
+			}
+
+
+		
+			if( $veriPrimeiroLogin && $this->admLogin->primeiroLogin() ) {
+				$url = 'administrador.php?op=altera';
+				//$mensagem = 'Tentativa de acesso invalido ao sistema';
+				$target = '_top';
+
+				// Tela de alteração de senha
+				$this->tpl->atribui('url',$url);
+				//$this->tpl->atribui('mensagem',$mensagem);
+				$this->tpl->atribui('target',$target);
+
+				$this->arquivoTemplate = 'jsredir.html';
+				return false;
+			}
 
 		}
 
@@ -135,7 +169,7 @@ class VirtexAdmin extends MWebApp {
 
 
 	public function processa($op=null) {
-	   // Não faz nada por hora.
+		// Não faz nada por hora.
 	}
 	
 	public function criptSenha($senha) {
@@ -144,15 +178,15 @@ class VirtexAdmin extends MWebApp {
 			$j = mt_rand(0,53);
 			if($j<26)
 				$sal .= chr(rand(65,90));
-	        else if($j<52)
-	        	$sal .= chr(rand(97,122));
-	        else if($j<53)
-	        	$sal .= '.';
-	   		else
-	    		$sal .= '/';
-	    }
-	   $sal .= '$';
-	   return( crypt($senha,$sal) );
+			  else if($j<52)
+			  	$sal .= chr(rand(97,122));
+			  else if($j<53)
+			  	$sal .= '.';
+				else
+		 		$sal .= '/';
+		 }
+		$sal .= '$';
+		return( crypt($senha,$sal) );
 	}	
 	
 	public function checa_preferencia(){
