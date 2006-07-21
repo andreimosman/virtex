@@ -140,9 +140,12 @@ class VirtexAdmin extends MWebApp {
 
 			if( $this->lic->expirou() && !$this->lic->congelou() ) {
 				// Exibir mensagem de que o sistema expirou e irá congelar dia X
-
+				
+				$licenca = $this->lic->obtemLicenca();
+				$this->tpl->atribui("expirou",TRUE);
+				$this->tpl->atribui("licenca",$licenca);
+				
 			}
-
 
 		
 			if( $veriPrimeiroLogin && $this->admLogin->primeiroLogin() ) {
@@ -171,6 +174,8 @@ class VirtexAdmin extends MWebApp {
 	public function processa($op=null) {
 		// Não faz nada por hora.
 	}
+	
+	
 	
 	public function criptSenha($senha) {
 		$sal = '$1$';
@@ -244,7 +249,27 @@ class VirtexAdmin extends MWebApp {
 		
 		return;
 	}
+			/**
+			 * Privilégios
+			 */
+			public function obtemPrivilegio($cod_priv) {
+				return $this->admLogin->obtemPrivilegio($cod_priv);
+			}
 		
+			public function privPodeLer($cod_priv) {
+				return $this->admLogin->privPodeLer($cod_priv);
+			}
+		
+			public function privPodeGravar($cod_priv) {
+				return $this->admLogin->privPodeGravar($cod_priv);
+			}
+			
+			public function privMSG($mensagem="Você não possui privilégio para executar esta operação.",$url="home.php?op=home",$target="_top") {
+				$this->tpl->atribui("mensagem",$mensagem);
+				$this->tpl->atribui("url",$url);
+				$this->tpl->atribui("target",$target);
+				$this->arquivoTemplate="msgredirect.html";
+	}
 	
 	
 }

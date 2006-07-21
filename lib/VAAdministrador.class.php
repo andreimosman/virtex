@@ -20,7 +20,19 @@ class VAAdministrador extends VirtexAdmin {
 
 
 	public function processa($op=null) {
+	
+			if( ! $this->privPodeLer("_ADMIN") ) {
+				$this->privMSG();
+				return;
+		}			
+	
+	
 		if ($op == "cadastro"){
+		
+			if( ! $this->privPodeGravar("_ADMIN") ) {
+				$this->privMSG();
+				return;
+			}			
 	    	$erros = array();
 
 			$acao = @$_REQUEST["acao"];
@@ -217,6 +229,8 @@ class VAAdministrador extends VirtexAdmin {
 	 		   
 	    
 	    }else if ($op == "altera"){
+	    
+
 	    		$erro = array();
 		
 			$acao = @$_REQUEST["acao"];
@@ -310,6 +324,11 @@ class VAAdministrador extends VirtexAdmin {
 	    	
 	        
 	    } else if ($op == "privilegio"){
+
+				if( ! $this->privPodeGravar("_ADMIN") ) {
+					$this->privMSG();
+					return;
+				}	
 	    
 	    	$id_priv = Array();
 	    

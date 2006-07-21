@@ -1255,8 +1255,15 @@ class VAConfiguracao extends VirtexAdmin {
 				}else if ($op == "registro"){
 
 					$acao = @$_REQUEST["acao"];
-
-
+					$x = @$_REQUEST["x"];
+					
+					if ($x=="fulscreen"){
+					
+						$barra = "mostra";
+						$this->tpl->atribui("barra",$barra);
+					
+					}
+					
 
 					$prefs = $this->prefs->obtem("geral");
 
@@ -1269,7 +1276,23 @@ class VAConfiguracao extends VirtexAdmin {
 
 					if( $this->lic->isValid() ) {
 
+							$licenca = $this->lic->obtemLicenca();
+							$hoje = Date("Y-m-d");
+							//echo $hoje;
+							if($licenca["geral"]["expira_em"] < $hoje && $licenca["geral"]["congela_em"] > $hoje){
+							$status = "expirado";
+							}else if ($licenca["geral"]["congela_em"] < $hoje ){
+							$status = "congelado";
+							}else if ($licenca["geral"]["congela_em"] > $hoje && $licenca["geral"]["expira_em"] > $hoje){
+							$status = "ativo";
+							}
+							
+
+
+
+						$this->tpl->atribui("status",$status);
 					   $this->tpl->atribui("licenca",$this->lic->obtemLicenca());
+					   $this->tpl->atribui("local_id_info",MLicenca::obtemInfoLocalID());
 					   $this->arquivoTemplate = "licenca.html";
 
 

@@ -21,14 +21,24 @@ class VAHome extends VirtexAdmin {
 	
 	public function processa($op=null) {
 	
-		if( $op == "cad" ) {
+		if( $op == "home" ) {
 		   
+				$licenca = $this->lic->obtemLicenca();
+				$hoje = Date("Y-m-d");
+				//echo $hoje;
+				if($licenca["geral"]["expira_em"] < $hoje && $licenca["geral"]["congela_em"] > $hoje){
+					$status = "expirado";
+				}else if ($licenca["geral"]["congela_em"] < $hoje ){
+					$status = "congelado";
+				}else if ($licenca["geral"]["congela_em"] > $hoje && $licenca["geral"]["expira_em"] > $hoje){
+					$status = "ativo";
+				}
 		   
+		   $this->tpl->atribui("status",$status);
+		   $this->tpl->atribui("licenca",$licenca);
+
 		   
-		   
-		   
-		   
-		   $this->arquivoTemplate = "arquivoTal.html";
+		   $this->arquivoTemplate = "home_principal.html";
 		   
 		}
 	

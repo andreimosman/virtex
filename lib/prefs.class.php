@@ -50,7 +50,7 @@ class Preferencias {
          }else if ( $classe == "geral" ){
          	// Preferencias gerais
 		 	$sSQL  = "SELECT "; 
-		 	$sSQL .= "dominio_padrao, nome, radius_server, hosp_server, hosp_ns1, hosp_ns2, hosp_uid, hosp_gid, mail_server, mail_uid, mail_gid, pop_host, smtp_host, hosp_base, agrupar ";
+		 	$sSQL .= "dominio_padrao, nome, radius_server, hosp_server, hosp_ns1, hosp_ns2, hosp_uid, hosp_gid, mail_server, mail_uid, mail_gid, pop_host, smtp_host, hosp_base, agrupar, dominio_padrao2 ";
 		 	$sSQL .= "FROM pftb_preferencia_geral";
 
          }else if ( $classe == "cobranca" ){

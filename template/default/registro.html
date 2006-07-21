@@ -2,106 +2,107 @@
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
 
-<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
-{literal}
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css"><meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0"> {literal} 
 <style type="text/css">
 <!--
 .style1 {color: #000000}
 -->
-</style>
-{/literal}
-</head>
-
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+</style> {/literal} </head> <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0"> 
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr> 
+    <td align="center" valign="top"><table width="100%" border="0" cellpadding="0" cellspacing="0" background="template/default/images/top_pixel.gif">
+        <tr background="images/pixel_top.gif"> 
+          <td width="194" background="template/default/images/pixel_top.gif"><img src="template/default/images/logo_top.gif"></td>
+          <td width="80%" align="center" valign="middle" background="template/default/images/top_pixel.gif"></td>
+        </tr>
+      </table></td>
+  </tr>
   <tr>
-    <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-          <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-              <tr>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td align="center" valign="middle">
-				{if $registrado == "nao"}
-				<table width="150" border="0" cellpadding="0" cellspacing="0" bgcolor="#000000">
-                  <tr>
-                    <td><table width="500" border="0" cellspacing="1" cellpadding="0">
-                      <tr align="CENTER" valign="MIDDLE">
-                        <td bgcolor="#f1f1f1"><p><font face="Arial, Helvetica, sans-serif" size="5"><strong><font size="4"><span class="style1"><br>
-                          Produto
-                                    N&atilde;o Registrado</span></font></strong></font>
-
-                                    <font face="Arial, Helvetica, sans-serif" size="5" color="#666666"><strong><font size="3"> <br>
-                                    <!--M:ZSXL4-5GS2Z-35BAB-EP9HV--></font></strong></font></p>
-<p><span class="style2">Para solicitar o registro é necessário informar <br>somente um</b> dos códigos da tabela abaixo:<br /></span></p>
-                              </span></p>
-                            <table width="400" align="center" border=1 cellspacing=0 cellpadding=0>
-                             <tr>
-                              <td width="60">Interface</td>
-                              <td width="140">MAC</td>
-                              <td width="140">IP</td>
-                              <td><b>CODIGO</b></td>
-                             </tr>
-                            {foreach item=lid from=$local_id_info}
-                             <tr>
-                              <td>{$lid.interface}</td>
-                              <td>{$lid.mac}</td>
-                              <td>{$lid.ip}</td>
-                              <td><b>{$lid.local_id}</b></td>
-                             </tr>
-                            {/foreach}
-                            </table>
-<p><span class="style2">***Escolha o par adaptador/ip com menor probabilidade de alteração.<br/> Quaisquer alterações nas configurações de rede ou troca de placa<br> poderá invalidar a licença.</span></p>
-
-
-
-
-                            <p><span class="style2">Se voc&ecirc; j&aacute; recebeu
-                                o arquivo de licen&ccedil;a<br />
-                              atualize o registro utilizando-se do formul&aacute;rio
-                              abaixo: </span></p>
-                              <form name="form1" method="post" action="{$smarty.server.PHP_SELF}" enctype="multipart/form-data">
-                              <table width="100%" border="0" cellspacing="2" cellpadding="0">
-                              <tr>
-                                  <td width="31%" align="RIGHT">
-                                    <p>Encontre o arquivo: </p></td>
-                                <td width="49%">
-                                  <input name="arquivo_registro" type="file" id="arquivo_registro">
-                                </td>
-                                <td width="20%">
-                                  <input type="submit" name="Submit" value="atualizar">
-                                  <input name="op" type="hidden" id="op" value="registro">
-                                  <input name="acao" type="hidden" id="acao" value="upload">
-                                </td>
-                              </tr>
-                            </table>
-                              </form></td>
-                      </tr>
-                    </table></td>
-                  </tr>
-                </table>
-				{/if}
-				{if $registrado == "sim"}
-				<table width="150" border="0" cellpadding="0" cellspacing="0" bgcolor="#000000">
-                  <tr>
-                    <td><table width="500" height="150" border="0" cellpadding="0" cellspacing="1">
-                        <tr align="CENTER" valign="MIDDLE">
-                          <td bgcolor="#f1f1f1"><p><font face="Arial, Helvetica, sans-serif" size="5"><strong><font size="4"><span class="style1">Produto Registrado</span></font></strong></font><font face="Arial, Helvetica, sans-serif" size="5" color="#666666"><strong><font size="3"> <br>
-                            <br>
-                          </font></strong></font><font size="2"><b>{$empresa}</b></font><br>
-                          Expira em {$expires} </p>
-                            </td>
-                        </tr>
-                    </table></td>
-                  </tr>
-                </table>
-				{/if}
-</td>
+    <td align="center" valign="MIDDLE">{if $registrado == "nao"} 
+      <table width="150" border="0" cellpadding="0" cellspacing="0" bgcolor="#000000">
+        <tr> 
+          <td><table width="500" border="0" cellspacing="1" cellpadding="0">
+              <tr align="CENTER" valign="MIDDLE"> 
+                <td bgcolor="#E6ECE9"> <p><font face="Arial, Helvetica, sans-serif" size="5"><strong><font size="4"><span class="style1"><br>
+                    Produto N&atilde;o Registrado</span></font></strong></font> 
+                    <font face="Arial, Helvetica, sans-serif" size="5" color="#666666"><strong><font size="3"> 
+                    <br>
+                    <!--M:ZSXL4-5GS2Z-35BAB-EP9HV-->
+                    </font></strong></font></p>
+                  <p><span class="style2"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Para 
+                    solicitar o registro é necessário informar <br>
+                    somente um dos códigos da tabela abaixo:</font></span></p>
+                  <font face="Verdana, Arial, Helvetica, sans-serif" size="2">
+                  <p></p>
+                  </font> <table width="400" align="center" border=1 cellspacing=0 cellpadding=2>
+                    <tr> 
+                      <td width="60"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Interface</font></td>
+                      <td width="140"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">MAC</font></td>
+                      <td width="140"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">IP</font></td>
+                      <td><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><b>CODIGO</b></font></td>
+                    </tr>
+                    {foreach item=lid from=$local_id_info} 
+                    <tr> 
+                      <td><font face="Verdana, Arial, Helvetica, sans-serif" size="1">{$lid.interface}</font></td>
+                      <td><font face="Verdana, Arial, Helvetica, sans-serif" size="1">{$lid.mac}</font></td>
+                      <td><font face="Verdana, Arial, Helvetica, sans-serif" size="1">{$lid.ip}</font></td>
+                      <td><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><b>{$lid.local_id}</b></font></td>
+                    </tr>
+                    {/foreach} 
+                  </table>
+                  <p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><span class="style2">***Escolha 
+                    o par adaptador/ip com menor probabilidade de alteração.<br/>
+                    Quaisquer alterações nas configurações de rede ou troca de 
+                    placa<br>
+                    poderá invalidar a licença.</span></font></p>
+                  <p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><span class="style2">Se 
+                    voc&ecirc; j&aacute; recebeu o arquivo de licen&ccedil;a<br />
+                    atualize o registro utilizando-se do formul&aacute;rio abaixo: 
+                    </span></font></p>
+                  <form name="form1" method="post" action="{$smarty.server.PHP_SELF}" enctype="multipart/form-data"> 
+                  <table width="100%" border="0" cellspacing="2" cellpadding="0">
+                    <tr> 
+                      <td width="31%" align="RIGHT"> <p>Encontre o arquivo: </p></td>
+                      <td width="49%"> <input name="arquivo_registro" type="file" id="arquivo_registro"> 
+                      </td>
+                      <td width="20%"> <input type="submit" name="Submit" value="atualizar"> 
+                        <input name="op" type="hidden" id="op" value="registro"> 
+                        <input name="acao" type="hidden" id="acao" value="upload"> 
+                      </td>
+                    </tr>
+                  </table>
+                  </form></td>
               </tr>
             </table></td>
         </tr>
-      </table></td>
+      </table>
+      {/if} {if $registrado == "sim"} 
+      <table width="150" border="0" cellpadding="0" cellspacing="0" bgcolor="#000000">
+        <tr> 
+          <td><table width="500" height="150" border="0" cellpadding="0" cellspacing="1">
+              <tr align="CENTER" valign="MIDDLE"> 
+                <td bgcolor="#E6ECE9"> <p><font face="Arial, Helvetica, sans-serif" size="5"><strong><font size="4"><span class="style1">Produto 
+                    Registrado</span></font></strong></font><font face="Arial, Helvetica, sans-serif" size="5" color="#666666"><strong><font size="3"> 
+                    <br>
+                    <br>
+                    </font></strong></font><font size="2"><b>{$empresa}</b></font><br>
+                    Expira em {$expires} </p></td>
+              </tr>
+            </table></td>
+        </tr>
+      </table>
+      {/if} </td>
+  </tr>
+  <tr>
+    <td align="center" valign="MIDDLE" bgcolor="#E6ECE9" height="20"> 
+      <table width="400" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy; 
+            Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
+        </tr>
+      </table>
+    </td>
   </tr>
 </table>
 </body>

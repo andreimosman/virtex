@@ -1,0 +1,25 @@
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+
+	{if $status == "expirado"}
+	 <table width="500" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#000000">
+	  <tr>
+		<td><table width="500" border="0" cellspacing="1" cellpadding="0">
+		  <tr>
+			  <td height="150" align="center" valign="middle" bgcolor="#D9E8DD"><font size="2" face="Arial, Helvetica, sans-serif"><strong><br>
+				SR. USU&Aacute;RIO</strong><br>
+				<br>
+				<strong><font size="3" color="#006600">SUA LICEN&Ccedil;A EXPIROU 
+				</font></strong><font color="#006600"><br>
+				</font><br>
+            SISTEMA CONGELAR&Aacute; EM <font color="#990000"><strong>{$licenca.geral.congela_em|date_format:"%d/%m/%Y"}</strong></font><br>
+				<br>
+				ENTRE EM CONTATO ANTES DO PRAZO PARA N&Atilde;O HAVER<br>
+				INTERRUP&Ccedil;&Otilde;ES DE TRABALHO<br>
+				<br>
+				<a href="configuracao.php?op=registro">Tela de Registro</a><br><br>
+				</font></td>
+		  </tr>
+		</table></td>
+	  </tr>
+	</table>
+	{/if}

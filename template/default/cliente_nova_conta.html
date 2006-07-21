@@ -298,7 +298,7 @@ function check(){
                                <input type="hidden" name="op" value="conta">
 						       <input type="hidden" name="id_cliente" value="{$id_cliente}">
 						  	   <input type="hidden" name="username" value="{$username}">
-						       <input type="hidden" name="dominio" value="{$dominio}">
+						       <input name="dominio__" type="hidden" value="{$dominio}" id="dominio__">
 						       <input type="hidden" name="tipo_conta" value="{$tipo_conta}">
 						       <input type="hidden" name="acao" value="cad">
     <input name="sop" type="hidden" value="nova_conta" id="sop">
@@ -320,8 +320,15 @@ function check(){
 						                <tr>
 						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
 						  					<p>Username:</p></td>
-						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p><input type="text" maxlength="30" name="username" value="{$username}">
-            @{$dominio}</p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p>
+            <input type="text" maxlength="30" name="username" value="{$username}">
+            @ 
+            <select name="dominio" id="dominio">
+              {foreach item=a from=$dominios_provedor}
+			  <option value="{$a.dominio}" {if $a.dominio == $dominio}SELECTED{/if}>{$a.dominio}</option>
+			  {/foreach}              
+            </select>
+          </p></td>
 						                </tr>
 						                <tr>
 						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">

@@ -1,30 +1,30 @@
 [geral]
-expira_em = 2006-06-12
-congela_em = 2006-07-19
-emitida_em = 2006-06-11
+expira_em = 2006-07-15
+congela_em = 2007-07-15
+emitida_em = 2005-07-21
  
 [empresa]
-nome = Bruno Francisco dos Santos_teste2
-endereco = José Bonifácio Pereira Casa
-bairro = Jardim Vila Rica
-cidade = ASSIS BRASIL
-telefone = 19-00000000
-cnpj = 38335803803
-dt_contratacao = 2006-06-11 
-dia_pagamento = 03
+nome = Virtex Ltda ME
+endereco = Rua dos Bobos, 0 Teste
+bairro = Teste de Bairro
+cidade = PICOS
+telefone = 89-95455565
+cnpj = 17160785800
+dt_contratacao = 2005-07-21 
+dia_pagamento = 05
 
 [frontend]
 discado = 1
-banda_larga = 1
+banda_larga = 0
 hospedagem = 1
-email = 1
+email = 0
 interface =1 
 
 [backend]
 discado = 1
-banda_larga = 1
+banda_larga = 0
 hospedagem = 1
-email = 1 
+email = 0 
 
 [licenca]
-chave=411F:5050:3232
+chave=5B38:0011:0A3B

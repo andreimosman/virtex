@@ -220,6 +220,11 @@ class VAClientes extends VirtexAdmin {
 		$this->tpl->atribui("id_cliente",$id_cliente);
 		$this->tpl->atribui("tipo",$tipo);
 		
+		if( ! $this->privPodeLer("_CLIENTES") ) {
+			$this->privMSG();
+			return;
+		}			
+		
 		// Utilizado pelo menu ou por outras funcionalidades quaisquer.
 		if( $id_cliente ) {
 			$cliente = $this->obtemCliente($id_cliente);   
@@ -228,6 +233,11 @@ class VAClientes extends VirtexAdmin {
 
 
 		if ($op == "cadastro"){
+				if( ! $this->privPodeGravar("_CLIENTES") ) {
+					$this->privMSG();
+					return;
+				}			
+		
 
 			$erros = array();
 
@@ -509,6 +519,16 @@ class VAClientes extends VirtexAdmin {
 			$this->arquivoTemplate = "clientes_cadastro.html";
 			
 		} else if ( $op == "pesquisa" ){
+				if( ! $this->privPodeLer("_CLIENTES_FICHA") ) {
+							$this->privMSG();
+							return;
+				}		
+				
+				if( ! $this->privPodeGravar("_CLIENTES_FICHA") ) {
+							$this->privMSG();
+							return;
+				}		
+		
 
 				$erros = array();
 
@@ -2063,12 +2083,23 @@ class VAClientes extends VirtexAdmin {
 					
 					$id_produto = $_prod["id_produto"];
 					
-					//////echo $id_produto ."<br>";
+					//echo $id_produto ."<br>";
 					
 					$lista_dominiop = $this->prefs->obtem("geral");
 
-					$dominioPadrao = $lista_dominiop["dominio_padrao"]; 
-
+					//$dominioPadrao = $lista_dominiop["dominio_padrao"]; 
+					//$dominioPadrao2 = $lista_dominiop["dominio_padrao2"]; 
+					//echo "TIPO: ".$_prod["tipo_conta"]."<BR>";
+					
+					
+					//	$dominioPdrao = $lista_dominiop["dominio_padrao2"];
+					
+				
+					
+						$dominioPadrao = $lista_dominiop["dominio_padrao"]; 
+					
+				
+					
 					// Valida os dados
 
 					// TODO: Colocar isso em uma funcao private
@@ -2122,7 +2153,16 @@ class VAClientes extends VirtexAdmin {
 						$sSQL .= "   VALUES (";
 						$sSQL .= "			'".$id_conta."', ";
 						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["username"]) . "', ";
-						$sSQL .= "     '" . $dominioPadrao . "', ";
+						
+						if(trim(@$_REQUEST["tipo_conta"]) == "E"){
+
+							$sSQL .= " '". @$_REQUEST["dominio"] ."', ";
+						
+						
+						}else{
+
+							$sSQL .= "     '" . $dominioPadrao . "', ";
+						}
 						$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["tipo_conta"])) . "', ";
 						$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["senha"])) . "', "; 						
 						$sSQL .= "     '" .  $this->bd->escape(trim(@$_REQUEST["id_cliente"])) . "', "; 						
@@ -2253,7 +2293,9 @@ class VAClientes extends VirtexAdmin {
 
 									$username = @$_REQUEST["username"];
 									$tipo_conta = @$_REQUEST["tipo"];
-									$dominio = $prefs["geral"]["dominio_padrao"];
+									
+									// alteracao do hugo 20/07/06
+									$dominio = $prefs["geral"]["dominio_padrao2"];
 
 
 									$sSQL = "SELECT id_conta FROM cntb_conta WHERE username = '$username' AND tipo_conta = 'BL' AND dominio = '$dominio' ";
@@ -2527,6 +2569,13 @@ class VAClientes extends VirtexAdmin {
 					}
 
 				}// acao = cad
+				
+				$sSQL = "SELECT * FROM dominio WHERE dominio_provedor is true";
+				$dominios_provedor = $this->bd->obtemRegistros($sSQL);
+				
+				$this->tpl->atribui("dominios_provedor", $dominios_provedor);
+				
+				
 				
 				
 				$this->arquivoTemplate = "cliente_nova_conta.html";
