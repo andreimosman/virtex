@@ -305,21 +305,109 @@ class VARelatorio extends VirtexAdmin {
 		if (!$tipo_relatorio) $tipo_relatorio = "todos";
 					
 		$this->tpl->atribui("tipo_relatorio", $tipo_relatorio);
-		$this->tpl->atribui("acao", $acao);
+		$this->tpl->atribui("acao", $acao);	
+		
+					$sSQL  = " SELECT ";
+					$sSQL .= " clc.id_cliente, clc.nome_razao , cc.data_contratacao, prp.nome, prp.tipo ";
+					$sSQL .= " FROM ";
+					$sSQL .= " cbtb_cliente_produto cpb, cbtb_contrato cc, cltb_cliente clc, prtb_produto prp ";
+					$sSQL .= " WHERE ";
+					$sSQL .= " cpb.id_cliente_produto = clc.id_cliente ";
+					$sSQL .= " AND  cc.id_cliente_produto = cpb.id_cliente_produto " ; 
+					$sSQL .= " AND  cpb.id_produto = prp.id_produto ";
+					$sSQL .= " AND  cc.valor_contrato = 0 ";			
+		
 		
 		if ($acao == "consultar") {
 		
-			//TODO: Fazer a entrada das SQL's
-			
+		
+
+				
 			if ($tipo_relatorio == "todos") {
+			
+				
+				$sSQL  = " SELECT ";
+				$sSQL .= " clc.id_cliente, clc.nome_razao , cc.data_contratacao, prp.nome, prp.tipo ";
+				$sSQL .= " FROM ";
+				$sSQL .= " cbtb_cliente_produto cpb, cbtb_contrato cc, cltb_cliente clc, prtb_produto prp ";
+				$sSQL .= " WHERE ";
+				$sSQL .= " cpb.id_cliente_produto = clc.id_cliente ";
+				$sSQL .= " AND  cc.id_cliente_produto = cpb.id_cliente_produto " ; 
+				$sSQL .= " AND  cpb.id_produto = prp.id_produto ";
+				$sSQL .= " AND  cc.valor_contrato = 0 ";			
+				
+							
 			} else if($tipo_relatorio == "D") {
+			
+	
+				$sSQL  = " SELECT ";
+				$sSQL .= " clc.id_cliente, clc.nome_razao , cc.data_contratacao, prp.nome, prp.tipo ";
+				$sSQL .= " FROM ";
+				$sSQL .= " cbtb_cliente_produto cpb, cbtb_contrato cc, cltb_cliente clc, prtb_produto prp ";
+				$sSQL .= " WHERE ";
+				$sSQL .= " cpb.id_cliente_produto = clc.id_cliente ";
+				$sSQL .= " AND cc.id_cliente_produto = cpb.id_cliente_produto " ; 
+				$sSQL .= " AND cpb.id_produto = prp.id_produto ";
+				$sSQL .= " AND cc.valor_contrato = 0 ";
+				$sSQL .= " AND prp.tipo = 'D' ";
+
+
+			
+			
 			} else if($tipo_relatorio == "H") {
+			
+			
+				$sSQL  = " SELECT ";
+				$sSQL .= " clc.id_cliente, clc.nome_razao , cc.data_contratacao, prp.nome, prp.tipo ";
+				$sSQL .= " FROM ";
+				$sSQL .= " cbtb_cliente_produto cpb, cbtb_contrato cc, cltb_cliente clc, prtb_produto prp ";
+				$sSQL .= " WHERE ";
+				$sSQL .= " cpb.id_cliente_produto = clc.id_cliente ";
+				$sSQL .= " AND cc.id_cliente_produto = cpb.id_cliente_produto " ; 
+				$sSQL .= " AND cpb.id_produto = prp.id_produto ";
+				$sSQL .= " AND cc.valor_contrato = 0 ";
+				$sSQL .= " AND prp.tipo = 'H' ";
+
+
+			
 			} else if($tipo_relatorio == "BL") {
+			
+
+				$sSQL  = " SELECT ";
+				$sSQL .= " clc.id_cliente, clc.nome_razao , cc.data_contratacao, prp.nome, prp.tipo ";
+				$sSQL .= " FROM ";
+				$sSQL .= " cbtb_cliente_produto cpb, cbtb_contrato cc, cltb_cliente clc, prtb_produto prp ";
+				$sSQL .= " WHERE ";
+				$sSQL .= " cpb.id_cliente_produto = clc.id_cliente ";
+				$sSQL .= " AND cc.id_cliente_produto = cpb.id_cliente_produto " ; 
+				$sSQL .= " AND cpb.id_produto = prp.id_produto ";
+				$sSQL .= " AND cc.valor_contrato = 0 ";
+				$sSQL .= " AND prp.tipo = 'BL' ";
+
+
+
+			
 			} else if($tipo_relatorio == "E") {
-			}
+			
+				$sSQL  = " SELECT ";
+				$sSQL .= " clc.id_cliente, clc.nome_razao , cc.data_contratacao, prp.nome, prp.tipo ";
+				$sSQL .= " FROM ";
+				$sSQL .= " cbtb_cliente_produto cpb, cbtb_contrato cc, cltb_cliente clc, prtb_produto prp ";
+				$sSQL .= " WHERE ";
+				$sSQL .= " cpb.id_cliente_produto = clc.id_cliente ";
+				$sSQL .= " AND cc.id_cliente_produto = cpb.id_cliente_produto " ; 
+				$sSQL .= " AND cpb.id_produto = prp.id_produto ";
+				$sSQL .= " AND cc.valor_contrato = 0 ";
+				$sSQL .= " AND prp.tipo = 'E' ";
+
+
+			
+			}				
 		}
 			
-		
+			$rel_cortesia = $this->bd->obtemRegistros($sSQL);
+			$this->tpl->atribui("rel_cortesia",$rel_cortesia);
+			$this->arquivoTemplate = "relatorio_cortesia.html";		
 		
 	} else if ($op == "geral"){
 	// RELATORIO GERAL DE CLIENTES
