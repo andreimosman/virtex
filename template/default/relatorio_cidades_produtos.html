@@ -20,45 +20,47 @@
                   <table width="600" border="0" cellspacing="0" cellpadding="0">
                     <tr bgcolor="#E6ECE9"> 
                       <td width="300"><p><strong>Cidade</strong></p></td>
-                      <td width="300"> 
-                        <p><strong>Status - Tipo de Produto - Quantidade</strong><strong></strong></p>
-                      </td>
+                      <td width="100" align="CENTER"> <p><strong>Status</strong></p></td>
+                      <td width="100" align="LEFT">
+<p><strong>Tipo de Produto</strong></p></td>
+                      <td width="100" align="LEFT">
+<p><strong>Quantidade</strong><strong></strong></p></td>
                     </tr>
                     <tr> 
-                      <td colspan="2"><table width="600" border="0" cellspacing="2" cellpadding="0">
-					  {assign var="blb" value="0"}
-  					  {assign var="bla" value="0"}
-  					  {assign var="da" value="0"}
-  					  {assign var="db" value="0"}
-  					  {assign var="ha" value="0"}
-  					  {assign var="hb" value="0"}					  					  					  
+                      <td colspan="4"><table width="600" border="0" cellspacing="2" cellpadding="0">
+                          {assign var="blb" value="0"} {assign var="bla" value="0"} 
+                          {assign var="da" value="0"} {assign var="db" value="0"} 
+                          {assign var="ha" value="0"} {assign var="hb" value="0"}	
                           {foreach item=a from=$dados} 
                           <tr bgcolor="{cycle values="#ffffff,#f1f1f1"}"> 
-                            <td width="300" valign="TOP"><p>{$a.cidade}</p></td>
-                            <td width="300"><p>
-							{foreach item=b from=$a.dados}
-								{$b.status} - {if $b.tipo_conta|trim == "H"} Hospedagem {/if}{if $b.tipo_conta|trim == "D"} Discado {/if}{if $b.tipo_conta|trim == "BL"} Banda Larga {/if} - {$b.quantidade}<br>
-								
-								{if $b.status|trim == "B" AND $b.tipo_conta|trim == "BL"}
-									{$b.status} - {$b.tipo_conta}								
-									{assign var="blb" value=$blb+$b.quantidade}
-								{elseif $b.status|trim == "A" AND $b.tipo_conta|trim == "BL"}
-									{assign var="bla" value=$bla+$b.quantidade}
-								{elseif $b.status|trim == "B" AND $b.tipo_conta|trim == "D"}
-									{assign var="db" value=$db+$b.quantidade}
-								{elseif $b.status|trim == "A" AND $b.tipo_conta|trim == "D"}
-									{assign var="da" value=$da+$b.quantidade}
-								{elseif $b.status|trim == "B" AND $b.tipo_conta|trim == "H"}
-									{assign var="hb" value=$hb+$b.quantidade}
-								{elseif $b.status|trim == "A" AND $b.tipo_conta|trim == "H"}
-									{assign var="ha" value=$ha+$b.quantidade}																											
-								{/if}
-								
-								
-								
-								 
-								{/foreach}</p>
-							</td>
+                            <td width="300" valign="TOP"> <p>{$a.cidade}</p></td>
+                            <td width="300"> <table>
+                                {foreach item=b from=$a.dados} 
+                                <TR align="CENTER" valign="TOP"> 
+                                  <TD width="100"> <p>{if $b.status|trim == "A"}ATIVO{elseif $b.status|trim == "B"}BLOQUEADO{/if}</p></TD>
+                                  <td width="100" align="LEFT"> 
+                                    <p>{if $b.tipo_conta|trim == 
+                                      "H"} Hospedagem {/if}{if $b.tipo_conta|trim 
+                                      == "D"} Discado {/if}{if $b.tipo_conta|trim 
+                                      == "BL"} Banda Larga {/if}</p></td>
+                                  <td width="100" align="LEFT"> 
+                                    <p>{$b.quantidade}</p></td>
+                                </TR>
+                                <!--{$b.status} - {if $b.tipo_conta|trim == "H"} Hospedagem {/if}{if $b.tipo_conta|trim == "D"} Discado {/if}{if $b.tipo_conta|trim == "BL"} Banda Larga {/if} - {$b.quantidade}<br>-->
+                                {if $b.status|trim == "B" AND $b.tipo_conta|trim 
+                                == "BL"} {$b.status} - {$b.tipo_conta} {assign 
+                                var="blb" value=$blb+$b.quantidade} {elseif $b.status|trim 
+                                == "A" AND $b.tipo_conta|trim == "BL"} {assign 
+                                var="bla" value=$bla+$b.quantidade} {elseif $b.status|trim 
+                                == "B" AND $b.tipo_conta|trim == "D"} {assign 
+                                var="db" value=$db+$b.quantidade} {elseif $b.status|trim 
+                                == "A" AND $b.tipo_conta|trim == "D"} {assign 
+                                var="da" value=$da+$b.quantidade} {elseif $b.status|trim 
+                                == "B" AND $b.tipo_conta|trim == "H"} {assign 
+                                var="hb" value=$hb+$b.quantidade} {elseif $b.status|trim 
+                                == "A" AND $b.tipo_conta|trim == "H"} {assign 
+                                var="ha" value=$ha+$b.quantidade} {/if} {/foreach} 
+                              </table></td>
                           </tr>
                           {/foreach} </table></td>
                     </tr>

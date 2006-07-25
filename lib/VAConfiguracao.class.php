@@ -29,7 +29,7 @@ class VAConfiguracao extends VirtexAdmin {
 			$sSQL .= "   id_pop, nome, info, tipo, id_pop_ap, status ";
 			$sSQL .= "FROM cftb_pop ";
 			$sSQL .= "WHERE status != 'D' ";
-
+			$sSQL .= "ORDER BY nome ";
 
 			$reg = $this->bd->obtemRegistros($sSQL);
 
@@ -56,6 +56,7 @@ class VAConfiguracao extends VirtexAdmin {
 			$tSQL .= "   id_pop, nome, info, tipo, id_pop_ap, status ";
 			$tSQL .= "FROM cftb_pop ";
 			$tSQL .= "WHERE tipo = 'AP' AND status != 'D' ";
+			$tSQL .= "ORDER BY nome ";
 
 			$aps = $this->bd->obtemRegistros($tSQL);
 
@@ -74,7 +75,7 @@ class VAConfiguracao extends VirtexAdmin {
 				$qtde = $this->bd->obtemUnicoRegistro($sSQL);
 				//echo "QTDE_POP: $sSQL <br>";
 
-				$sSQL = "SELECT nome, tipo FROM cftb_pop WHERE id_pop = $id_pop";
+				$sSQL = "SELECT nome, tipo FROM cftb_pop WHERE id_pop = $id_pop ORDER BY nome ";
 				$_pop = $this->bd->obtemUnicoRegistro($sSQL);
 				//echo "POP: $sSQL <br>";
 

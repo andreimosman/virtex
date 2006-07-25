@@ -220,10 +220,10 @@ class VAClientes extends VirtexAdmin {
 		$this->tpl->atribui("id_cliente",$id_cliente);
 		$this->tpl->atribui("tipo",$tipo);
 		
-		if( ! $this->privPodeLer("_CLIENTES") ) {
-			$this->privMSG();
-			return;
-		}			
+		//if( ! $this->privPodeLer("_CLIENTES") ) {
+		//	$this->privMSG();
+		//	return;
+		//}			
 		
 		// Utilizado pelo menu ou por outras funcionalidades quaisquer.
 		if( $id_cliente ) {
@@ -233,10 +233,10 @@ class VAClientes extends VirtexAdmin {
 
 
 		if ($op == "cadastro"){
-				if( ! $this->privPodeGravar("_CLIENTES") ) {
-					$this->privMSG();
-					return;
-				}			
+				//if( ! $this->privPodeGravar("_CLIENTES") ) {
+				//	$this->privMSG();
+				//	return;
+				//}			
 		
 
 			$erros = array();
@@ -519,15 +519,15 @@ class VAClientes extends VirtexAdmin {
 			$this->arquivoTemplate = "clientes_cadastro.html";
 			
 		} else if ( $op == "pesquisa" ){
-				if( ! $this->privPodeLer("_CLIENTES_FICHA") ) {
-							$this->privMSG();
-							return;
-				}		
+				//if( ! $this->privPodeLer("_CLIENTES_FICHA") ) {
+				//			$this->privMSG();
+				//			return;
+				//}		
 				
-				if( ! $this->privPodeGravar("_CLIENTES_FICHA") ) {
-							$this->privMSG();
-							return;
-				}		
+				//if( ! $this->privPodeGravar("_CLIENTES_FICHA") ) {
+				//			$this->privMSG();
+				//			return;
+				//}		
 		
 
 				$erros = array();
@@ -3270,7 +3270,7 @@ class VAClientes extends VirtexAdmin {
 						// Consulta específica de banda larga
 						
 						$nas = $this->obtemNas($conta["id_nas"]);
-						$pop = $this->obtemPop($conta["id_nas"]);
+						$pop = $this->obtemPop($conta["id_pop"]);
 						$this->tpl->atribui("nas",$nas);
 						$this->tpl->atribui("pop",$pop);
 
