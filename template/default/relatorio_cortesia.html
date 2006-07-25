@@ -44,10 +44,7 @@
 									</tr>
 								  </table>
 							  </form>
-
-							{if !$acao} <p><strong>NÃO FORAM DEFINIDOS PARAMETROS DA PESQUISA</strong></p>
-                            {else}
-							  {if !$rel_faturas}<p align="center"><b>Não existem cortesias cadastradas do tipo especificado</b></p>
+							  {if !$rel_cortesia}<p align="center"><b>Não existem cortesias cadastradas do tipo especificado</b></p>
 						      {else}
 
                               <table width="65%" border="0" cellpadding="2" cellspacing="2">
@@ -58,24 +55,40 @@
                             <td width="20%"><p align="center" >Data</p></td>
                             <td width="35%"><p align="center" >Produto</p></td>
                             <td width="5%"><p align="center" >Tipo</p></td>
-                            <td width="50%"><p align="center" >Conta Principal</p></td>
+                            <td width="50%"><p align="center" >Username</p></td>
                           </tr>
-                          {foreach item=rel_fatura from=$rel_faturas}
+						  
+  								{assign var="nbl" value="0"}
+								{assign var="nh" value="0"}
+								{assign var="nd" value="0"}
+								{assign var="ne" value="0"}
+								{assign var="nt" value="0"}
+                          {foreach item=rc from=$rel_cortesia}
 							  <tr bgcolor="#FFFFFF">
-								<td colspan=4><p>{$rel_fatura.nome_razao}</p></td>
+								<td colspan=4><p><a href="clientes.php?op=cadastro&id_cliente={$rc.id_cliente}">{$rc.nome_razao}</a></p></td>
 							  </tr>
 							  <tr bgcolor="#F0F0F0">
-								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.data}</a></p></td>
-								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.data_pagamento}</a></p></td>
-								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.valor}</a></p></td>
-								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.desconto}</a></p></td>
+
+								<td align="center"> <p><a href="clientes.php?op=cadastro&id_cliente={$rc.id_cliente}">{$rc.data_contratacao|date_format:"%d/%m/%Y"}</a></p></td>
+								<td align="center"> <p><a href="clientes.php?op=cadastro&id_cliente={$rc.id_cliente}">{$rc.nome}</a></p></td>
+								<td align="center"> <p><a href="clientes.php?op=cadastro&id_cliente={$rc.id_cliente}">{$rc.tipo}</a>
+										{if $rc.tipo|trim =="D"}
+											{assign var="nd" value=$nd+1}
+										{elseif $rc.tipo|trim =="E"}
+											{assign var="ne" value=$ne+1}
+										{elseif $rc.tipo|trim =="H"}
+											{assign var="nh" value=$nh+1}
+										{elseif $rc.tipo|trim =="BL"}
+											{assign var="nbl" value=$nbl+1}
+										{/if}
+								</p></td>
+								<td align="center"> <p><a href="clientes.php?op=cadastro&id_cliente={$rc.id_cliente}">{$rc.username}</a></p></td>
 							  </tr>
                           {/foreach}
 
                         </table>
 
 						<br>
-
 						<table width="65%" border="0" cellpadding="2" cellspacing="2">
                           <tr align="center" valign="middle" bgcolor="#FAFAFA">
                                   <td colspan="5"><h2><strong>TOTAIS</strong></h2></td>
@@ -87,25 +100,20 @@
                             <td width="20%"><p align="center" >Hospedagem</p></td>
                             <td width="20%"><p align="center" >#Total</p></td>
                           </tr>
-                          {foreach item=rel_fatura from=$rel_faturas}
-							  <tr bgcolor="#FFFFFF">
-								<td colspan=4><p>{$rel_fatura.nome_razao}</p></td>
-							  </tr>
 							  <tr bgcolor="#F0F0F0">
-								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.data}</a></p></td>
-								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.data_pagamento}</a></p></td>
-								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.valor}</a></p></td>
-								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.desconto}</a></p></td>
-								<td align="center"> <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$rel_fatura.id_cliente_produto}&data={$rel_fatura.data}&id_cliente={$rel_fatura.id_cliente}">{$rel_fatura.desconto}</a></p></td>
+								<td align="center"> <p>{$nbl}</p></td>
+								<td align="center"> <p>{$nd}</p></td>
+								<td align="center"> <p>{$ne}</p></td>
+								<td align="center"> <p>{$nh}</p></td>
+								<td align="center"> <p>{assign var="nt" value=$nbl+$ne+$nh+$nd}{$nt}</p></td>
 							  </tr>
-                          {/foreach}
                         </table>{/if}
 
 
 
                           </tr>
                         </table>
-						<p>{/if}
+						<p>
 						  <br>
 						</p>
 						<script language="JavaScript">ready = "yes";</script>

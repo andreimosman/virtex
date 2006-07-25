@@ -308,13 +308,15 @@ class VARelatorio extends VirtexAdmin {
 		$this->tpl->atribui("acao", $acao);	
 		
 					$sSQL  = " SELECT ";
-					$sSQL .= " clc.id_cliente, clc.nome_razao , cc.data_contratacao, prp.nome, prp.tipo ";
+					$sSQL .= " clc.id_cliente, clc.nome_razao , cc.data_contratacao, prp.nome, prp.tipo, ctc.username ";
 					$sSQL .= " FROM ";
-					$sSQL .= " cbtb_cliente_produto cpb, cbtb_contrato cc, cltb_cliente clc, prtb_produto prp ";
+					$sSQL .= " cbtb_cliente_produto cpb, cbtb_contrato cc, cltb_cliente clc, prtb_produto prp, cntb_conta ctc";
 					$sSQL .= " WHERE ";
 					$sSQL .= " cpb.id_cliente_produto = clc.id_cliente ";
 					$sSQL .= " AND  cc.id_cliente_produto = cpb.id_cliente_produto " ; 
 					$sSQL .= " AND  cpb.id_produto = prp.id_produto ";
+					$sSQL .= " AND ctc.id_cliente_produto = cpb.id_cliente_produto ";
+					$sSQL .= " AND ctc.conta_mestre = TRUE ";
 					$sSQL .= " AND  cc.valor_contrato = 0 ";			
 		
 		
@@ -327,13 +329,15 @@ class VARelatorio extends VirtexAdmin {
 			
 				
 				$sSQL  = " SELECT ";
-				$sSQL .= " clc.id_cliente, clc.nome_razao , cc.data_contratacao, prp.nome, prp.tipo ";
+				$sSQL .= " clc.id_cliente, clc.nome_razao , cc.data_contratacao, prp.nome, prp.tipo, ctc.username ";
 				$sSQL .= " FROM ";
-				$sSQL .= " cbtb_cliente_produto cpb, cbtb_contrato cc, cltb_cliente clc, prtb_produto prp ";
+				$sSQL .= " cbtb_cliente_produto cpb, cbtb_contrato cc, cltb_cliente clc, prtb_produto prp, cntb_conta ctc";
 				$sSQL .= " WHERE ";
 				$sSQL .= " cpb.id_cliente_produto = clc.id_cliente ";
 				$sSQL .= " AND  cc.id_cliente_produto = cpb.id_cliente_produto " ; 
 				$sSQL .= " AND  cpb.id_produto = prp.id_produto ";
+				$sSQL .= " AND ctc.id_cliente_produto = cpb.id_cliente_produto ";
+				$sSQL .= " AND ctc.conta_mestre = TRUE ";
 				$sSQL .= " AND  cc.valor_contrato = 0 ";			
 				
 							
@@ -341,14 +345,16 @@ class VARelatorio extends VirtexAdmin {
 			
 	
 				$sSQL  = " SELECT ";
-				$sSQL .= " clc.id_cliente, clc.nome_razao , cc.data_contratacao, prp.nome, prp.tipo ";
+				$sSQL .= " clc.id_cliente, clc.nome_razao , cc.data_contratacao, prp.nome, prp.tipo, ctc.username ";
 				$sSQL .= " FROM ";
-				$sSQL .= " cbtb_cliente_produto cpb, cbtb_contrato cc, cltb_cliente clc, prtb_produto prp ";
+				$sSQL .= " cbtb_cliente_produto cpb, cbtb_contrato cc, cltb_cliente clc, prtb_produto prp, cntb_conta ctc";
 				$sSQL .= " WHERE ";
 				$sSQL .= " cpb.id_cliente_produto = clc.id_cliente ";
-				$sSQL .= " AND cc.id_cliente_produto = cpb.id_cliente_produto " ; 
-				$sSQL .= " AND cpb.id_produto = prp.id_produto ";
-				$sSQL .= " AND cc.valor_contrato = 0 ";
+				$sSQL .= " AND  cc.id_cliente_produto = cpb.id_cliente_produto " ; 
+				$sSQL .= " AND  cpb.id_produto = prp.id_produto ";
+				$sSQL .= " AND ctc.id_cliente_produto = cpb.id_cliente_produto ";
+				$sSQL .= " AND ctc.conta_mestre = TRUE ";
+				$sSQL .= " AND  cc.valor_contrato = 0 ";
 				$sSQL .= " AND prp.tipo = 'D' ";
 
 
@@ -358,14 +364,16 @@ class VARelatorio extends VirtexAdmin {
 			
 			
 				$sSQL  = " SELECT ";
-				$sSQL .= " clc.id_cliente, clc.nome_razao , cc.data_contratacao, prp.nome, prp.tipo ";
+				$sSQL .= " clc.id_cliente, clc.nome_razao , cc.data_contratacao, prp.nome, prp.tipo, ctc.username ";
 				$sSQL .= " FROM ";
-				$sSQL .= " cbtb_cliente_produto cpb, cbtb_contrato cc, cltb_cliente clc, prtb_produto prp ";
+				$sSQL .= " cbtb_cliente_produto cpb, cbtb_contrato cc, cltb_cliente clc, prtb_produto prp, cntb_conta ctc";
 				$sSQL .= " WHERE ";
 				$sSQL .= " cpb.id_cliente_produto = clc.id_cliente ";
-				$sSQL .= " AND cc.id_cliente_produto = cpb.id_cliente_produto " ; 
-				$sSQL .= " AND cpb.id_produto = prp.id_produto ";
-				$sSQL .= " AND cc.valor_contrato = 0 ";
+				$sSQL .= " AND  cc.id_cliente_produto = cpb.id_cliente_produto " ; 
+				$sSQL .= " AND  cpb.id_produto = prp.id_produto ";
+				$sSQL .= " AND ctc.id_cliente_produto = cpb.id_cliente_produto ";
+				$sSQL .= " AND ctc.conta_mestre = TRUE ";
+				$sSQL .= " AND  cc.valor_contrato = 0 ";
 				$sSQL .= " AND prp.tipo = 'H' ";
 
 
@@ -374,14 +382,16 @@ class VARelatorio extends VirtexAdmin {
 			
 
 				$sSQL  = " SELECT ";
-				$sSQL .= " clc.id_cliente, clc.nome_razao , cc.data_contratacao, prp.nome, prp.tipo ";
+				$sSQL .= " clc.id_cliente, clc.nome_razao , cc.data_contratacao, prp.nome, prp.tipo, ctc.username ";
 				$sSQL .= " FROM ";
-				$sSQL .= " cbtb_cliente_produto cpb, cbtb_contrato cc, cltb_cliente clc, prtb_produto prp ";
+				$sSQL .= " cbtb_cliente_produto cpb, cbtb_contrato cc, cltb_cliente clc, prtb_produto prp, cntb_conta ctc";
 				$sSQL .= " WHERE ";
 				$sSQL .= " cpb.id_cliente_produto = clc.id_cliente ";
-				$sSQL .= " AND cc.id_cliente_produto = cpb.id_cliente_produto " ; 
-				$sSQL .= " AND cpb.id_produto = prp.id_produto ";
-				$sSQL .= " AND cc.valor_contrato = 0 ";
+				$sSQL .= " AND  cc.id_cliente_produto = cpb.id_cliente_produto " ; 
+				$sSQL .= " AND  cpb.id_produto = prp.id_produto ";
+				$sSQL .= " AND ctc.id_cliente_produto = cpb.id_cliente_produto ";
+				$sSQL .= " AND ctc.conta_mestre = TRUE ";
+				$sSQL .= " AND  cc.valor_contrato = 0 ";
 				$sSQL .= " AND prp.tipo = 'BL' ";
 
 
@@ -390,14 +400,16 @@ class VARelatorio extends VirtexAdmin {
 			} else if($tipo_relatorio == "E") {
 			
 				$sSQL  = " SELECT ";
-				$sSQL .= " clc.id_cliente, clc.nome_razao , cc.data_contratacao, prp.nome, prp.tipo ";
+				$sSQL .= " clc.id_cliente, clc.nome_razao , cc.data_contratacao, prp.nome, prp.tipo, ctc.username ";
 				$sSQL .= " FROM ";
-				$sSQL .= " cbtb_cliente_produto cpb, cbtb_contrato cc, cltb_cliente clc, prtb_produto prp ";
+				$sSQL .= " cbtb_cliente_produto cpb, cbtb_contrato cc, cltb_cliente clc, prtb_produto prp, cntb_conta ctc";
 				$sSQL .= " WHERE ";
 				$sSQL .= " cpb.id_cliente_produto = clc.id_cliente ";
-				$sSQL .= " AND cc.id_cliente_produto = cpb.id_cliente_produto " ; 
-				$sSQL .= " AND cpb.id_produto = prp.id_produto ";
-				$sSQL .= " AND cc.valor_contrato = 0 ";
+				$sSQL .= " AND  cc.id_cliente_produto = cpb.id_cliente_produto " ; 
+				$sSQL .= " AND  cpb.id_produto = prp.id_produto ";
+				$sSQL .= " AND ctc.id_cliente_produto = cpb.id_cliente_produto ";
+				$sSQL .= " AND ctc.conta_mestre = TRUE ";
+				$sSQL .= " AND  cc.valor_contrato = 0 ";
 				$sSQL .= " AND prp.tipo = 'E' ";
 
 
@@ -2002,7 +2014,7 @@ class VARelatorio extends VirtexAdmin {
 				$sSQL .= "     pop.id_ap ";
 				$sSQL .= "   ) cli_pop ON( p.id_pop = cli_pop.id_ap)  ";
 				$sSQL .= "WHERE ";
-				$sSQL .= "   p.tipo = 'AP' ";
+				$sSQL .= "   p.tipo = 'AP' AND p.status != 'N' ";
 				$sSQL .= "ORDER BY ";
 				$sSQL .= "   p.nome ";
 				break;
@@ -2032,7 +2044,7 @@ class VARelatorio extends VirtexAdmin {
 				$sSQL .= "     pop.id_pop ";
 				$sSQL .= "   ) cli_pop ON( p.id_pop = cli_pop.id_pop)  ";
 				$sSQL .= "WHERE ";
-				$sSQL .= "   p.status != 'D' ";
+				$sSQL .= "   p.status != 'D' AND p.status != 'N' ";
 				$sSQL .= "ORDER BY ";
 				$sSQL .= "   p.nome ";
 
