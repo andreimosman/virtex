@@ -1854,13 +1854,14 @@ class VARelatorio extends VirtexAdmin {
 
 		$dados = array();
 		$ultimo_id=0;
+		$_id= "";
 		$dados_cid = array();
 		$ultima_cidade = "";
 
 		for($i=0;$i<count($retorno);$i++) {
 			if($retorno[$i]["id_cidade"] != $ultimo_id) {
 				if( $ultimo_id ) {
-					$dados[] = array('cidade' => $ultima_cidade, 'dados' => $dados_cid);
+					$dados[] = array('cidade' => $ultima_cidade, 'dados' => $dados_cid, 'id' => $_id);
 					$dados_cid = array();
 				}
 			}
@@ -1871,11 +1872,12 @@ class VARelatorio extends VirtexAdmin {
 			
 			$ultimo_id = $retorno[$i]["id_cidade"];
 			$ultima_cidade = $retorno[$i]["cidade"];            
+			$_id = $retorno[$i]["id_cidade"];
 
 		}
 		
 		
-		$dados[] = array('cidade' => $ultima_cidade, 'dados' => $dados_cid);
+		$dados[] = array('cidade' => $ultima_cidade, 'dados' => $dados_cid, 'id' => $_id);
 		
 		
 		$this->tpl->atribui("dados",$dados);

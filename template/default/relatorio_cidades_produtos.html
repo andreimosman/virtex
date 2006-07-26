@@ -33,7 +33,7 @@
                           {assign var="ha" value="0"} {assign var="hb" value="0"}	
                           {foreach item=a from=$dados} 
                           <tr bgcolor="{cycle values="#ffffff,#f1f1f1"}"> 
-                            <td width="300" valign="TOP"> <p>{$a.cidade}</p></td>
+                            <td width="300" valign="TOP"> <p><a href="relatorio.php?op=cidade_cliente&acao=sub_cid&id_cidade={$a.id}">{$a.cidade}</a></p></td>
                             <td width="300"> <table>
                                 {foreach item=b from=$a.dados} 
                                 <TR align="CENTER" valign="TOP"> 
