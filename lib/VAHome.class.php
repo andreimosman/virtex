@@ -76,6 +76,8 @@ class VAHome extends VirtexAdmin {
 			$cSQL .= "ORDER BY f.data, cl.nome_razao, f.descricao, f.status, f.valor";
 			
 		$lista_bloqueios = $this->bd->obtemRegistros($cSQL);
+		
+		echo $cSQL ;
 	
 		$this->tpl->atribui("status",$status);
 		$this->tpl->atribui("licenca",$licenca);
