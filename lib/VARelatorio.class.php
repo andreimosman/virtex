@@ -23,7 +23,10 @@ class VARelatorio extends VirtexAdmin {
 	
 	public function processa($op=null) {
 	if($op == "fatura"){
-	
+				if( ! $this->privPodeLer("_RELATORIOS_COBRANCA") ) {
+					$this->privMSG();
+					return;
+				}	
 		$this->arquivoTemplate = "relatorio_fatura.html";
 		
 		$acao = @$_REQUEST["acao"];
@@ -296,6 +299,11 @@ class VARelatorio extends VirtexAdmin {
 		//$this->arquivoTemplate = "cobranca_versaolight.html";
 		
 	} else if ($op == "cortesia"){
+	
+					if( ! $this->privPodeLer("_RELATORIOS_COBRANCA") ) {
+						$this->privMSG();
+						return;
+				}	
 		//$this->arquivoTemplate = "cobranca_versaolight.html";
 		$this->arquivoTemplate = "relatorio_cortesia.html";
 					
@@ -357,6 +365,13 @@ class VARelatorio extends VirtexAdmin {
 			$this->arquivoTemplate = "relatorio_cortesia.html";		
 		
 	} else if ($op == "geral"){
+	
+					if( ! $this->privPodeLer("_RELATORIOS_CLIENTE") ) {
+						$this->privMSG();
+						return;
+				}	
+	
+	
 	// RELATORIO GERAL DE CLIENTES
 			$erros = array();
 			$inicial = @$_REQUEST['inicial'];
@@ -434,7 +449,10 @@ class VARelatorio extends VirtexAdmin {
 	
 	
 	} else if ($op == "estat"){
-
+				if( ! $this->privPodeLer("_RELATORIOS_CLIENTE") ) {
+					$this->privMSG();
+					return;
+				}	
 
 
 		$this->arquivoTemplate = "cobranca_versaolight.html";
@@ -445,6 +463,10 @@ class VARelatorio extends VirtexAdmin {
 
 
 	} else if ($op == "filtro"){
+					if( ! $this->privPodeLer("_RELATORIOS_CLIENTE") ) {
+						$this->privMSG();
+						return;
+				}	
 	
 			
 	
@@ -489,6 +511,10 @@ class VARelatorio extends VirtexAdmin {
 		
 		
 	} else if ($op == "config"){
+					if( ! $this->privPodeLer("_RELATORIOS_CONFIG") ) {
+						$this->privMSG();
+						return;
+				}		
 	
 		$pg = @$_REQUEST["pg"];
 	
@@ -532,6 +558,10 @@ class VARelatorio extends VirtexAdmin {
 		$this->arquivoTemplate = "relatorio_config_carga.html";
 
 	} else if ($op == "grafico"){
+				if( ! $this->privPodeLer("_RELATORIOS_CONFIG") ) {
+							$this->privMSG();
+							return;
+				}	
 		$this->tpl->atribui("grop",@$_REQUEST["grop"]); 	// OP enviada para o gráfico
 		$this->tpl->atribui("tipo",@$_REQUEST["tipo"]); 	// Tipo do gráfico
 		$this->tpl->atribui("rl",@$_REQUEST["rl"]);		// Parametro extra e relatório
@@ -540,6 +570,11 @@ class VARelatorio extends VirtexAdmin {
 
 
 	} else if ($op == "produto_cliente"){
+	
+				if( ! $this->privPodeLer("_RELATORIOS_CLIENTE") ) {
+							$this->privMSG();
+							return;
+				}	
 		
 		$acao = @$_REQUEST["acao"];
 		$extra = @$_REQUEST["extra"];
@@ -652,6 +687,11 @@ class VARelatorio extends VirtexAdmin {
 
 	
 	} else if ($op == "tproduto_cliente"){
+		
+				if( ! $this->privPodeLer("_RELATORIOS_COBRANCA") ) {
+								$this->privMSG();
+								return;
+				}	
 		
 		$acao = @$_REQUEST["acao"];
 		$extra = @$_REQUEST["extra"];
@@ -784,6 +824,10 @@ class VARelatorio extends VirtexAdmin {
 		$this->arquivoTemplate = "relatorio_tipoprodutos_clientes.html";	
 	
 	} else if ($op == "cidade_cliente"){
+				if( ! $this->privPodeLer("_RELATORIOS_CLIENTE") ) {
+						$this->privMSG();
+						return;
+				}	
 		
 		$acao = @$_REQUEST["acao"];
 		$extra = @$_REQUEST["extra"];
@@ -835,7 +879,10 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "ORDER BY cid.uf, cid.id_cidade, cnt.nome_razao";	
 			
 			if ($sop == "contratos"){
-			
+				if( ! $this->privPodeLer("_RELATORIOS_COBRANCA") ) {
+									$this->privMSG();
+									return;
+				}	
 				/*$sSQL  = "SELECT ";
 				$sSQL .= "DISTINCT(cnt.nome_razao) cnt.id_cliente,cid.cidade,cid,uf ";
 				$sSQL .= "FROM ";
@@ -980,7 +1027,10 @@ class VARelatorio extends VirtexAdmin {
 		$this->arquivoTemplate = "relatorio_cidades_clientes.html";	
 	
 	}  else if ($op == "adesao"){
-		
+				if( ! $this->privPodeLer("_RELATORIOS_COBRANCA") ) {
+								$this->privMSG();
+								return;
+				}	
 		
 		$acao = @$_REQUEST["acao"];
 		$extra = @$_REQUEST["extra"];
@@ -1111,7 +1161,10 @@ class VARelatorio extends VirtexAdmin {
 		}
 	
 	} else if($op == "cancelamento") {
-	
+				if( ! $this->privPodeLer("_RELATORIOS_COBRANCA") ) {
+							$this->privMSG();
+							return;
+				}	
 
 		$acao = @$_REQUEST["acao"];
 		$extra = @$_REQUEST["extra"];
@@ -1245,6 +1298,11 @@ class VARelatorio extends VirtexAdmin {
 	
 		
 	} else if($op == "inadimplencia"){
+	
+						if( ! $this->privPodeLer("_RELATORIOS_COBRANCA") ) {
+							$this->privMSG();
+							return;
+				}	
 	
 		$acao = @$_REQUEST["acao"];
 		$extra = @$_REQUEST["extra"];
@@ -1424,7 +1482,10 @@ class VARelatorio extends VirtexAdmin {
 
 	
 	} else if($op == "bloqueios"){
-		
+				if( ! $this->privPodeLer("_COBRANCA_BLOQUEIOS") ) {
+								$this->privMSG();
+								return;
+				}	
 		$op = @$_REQUEST["op"];
 		$acao = @$_REQUEST["acao"];
 		$periodo = @$_REQUEST["periodo"];
@@ -1611,7 +1672,10 @@ class VARelatorio extends VirtexAdmin {
 			
 	} else if ($op == "evolucao"){
 	
-	
+						if( ! $this->privPodeLer("_RELATORIOS_COBRANCA") ) {
+							$this->privMSG();
+							return;
+				}	
 	
 		$sSQL  = "SELECT ";
 		$sSQL .= "p.id_produto,p.nome,p.tipo,p.valor,p.disponivel,mes,num_contratos ";
@@ -1638,6 +1702,14 @@ class VARelatorio extends VirtexAdmin {
 	
 	
 	}else if  ($op == "lista"){
+	
+				if( ! $this->privPodeLer("_RELATORIOS_CLIENTE") ) {
+							$this->privMSG();
+							return;
+				}	
+	
+	
+	
 		$tipo = @$_REQUEST["tipo"];
 		$id = @$_REQUEST["id"];
 	
@@ -1865,6 +1937,10 @@ class VARelatorio extends VirtexAdmin {
 	
 	
 	}else if ($op == "cidades_produto"){
+				if( ! $this->privPodeLer("_RELATORIOS_COBRANCA") ) {
+							$this->privMSG();
+							return;
+				}	
 	
 
 		$sSQL  = "SELECT ";

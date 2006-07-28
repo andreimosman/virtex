@@ -128,7 +128,7 @@ class AdminLogin {
 	
 	function obtemPrivilegio($cod_priv) {
               for($i=0;$i<count($this->privilegios);$i++) {
-                 if( trim($this->privilegios[$i]["cod_priv"]) == $cod_priv ) {
+                 if( trim($this->privilegios[$i]["cod_priv"]) == trim($cod_priv) ) {
                     return( $this->privilegios[$i]);
                  }
               }
@@ -139,7 +139,7 @@ class AdminLogin {
 	 * Retorna se o usuário tem o privilegio de leitura solicitado
 	 */
 	function privPodeLer($cod_priv) {
-		$prv = $this->obtemPrivilegio($cod_priv);
+		$prv = $this->obtemPrivilegio(trim($cod_priv));
 		if( !$prv ) return false;
 		return $prv["id_priv"] ? true : false;
 	}
@@ -148,7 +148,7 @@ class AdminLogin {
 	 * Retorna se o usuário tem o privilegio de gravação solicitado
 	 */
 	function privPodeGravar($cod_priv) {
-		$prv = $this->obtemPrivilegio($cod_priv);
+		$prv = $this->obtemPrivilegio(trim($cod_priv));
 		if( !$prv ) return false;
 		return( $prv["pode_gravar"] );
 	}
