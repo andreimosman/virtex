@@ -16,6 +16,10 @@ class VAConfiguracao extends VirtexAdmin {
 	public function processa($op=null) {// Cria função processa
 
 		if ($op == "lista_pop"){
+			if( ! $this->privPodeLer("_CONFIG_EQUIPAMENTOS") ) {
+				$this->privMSG();
+				return;
+			}		
 
 			$erros = array();
 
@@ -42,7 +46,11 @@ class VAConfiguracao extends VirtexAdmin {
 
 		}else if($op == "pop"){
 
-
+			if( ! $this->privPodeLer("_CONFIG_EQUIPAMENTOS") ) {
+				$this->privMSG();
+				return;
+			}		
+			
 			$erros = array();
 
 
@@ -68,6 +76,10 @@ class VAConfiguracao extends VirtexAdmin {
 			$reg = array();
 
 			if ($rotina == "desativar"){
+				if( ! $this->privPodeGravar("_CONFIG_EQUIPAMENTOS") ) {
+					$this->privMSG();
+					return;
+				}		
 
 				$p = @$_REQUEST["p"];
 
@@ -149,7 +161,10 @@ class VAConfiguracao extends VirtexAdmin {
 			}
 
 		if( $enviando ) {
-
+			if( ! $this->privPodeGravar("_CONFIG_EQUIPAMENTOS") ) {
+				$this->privMSG();
+				return;
+			}		
 
 			if( !count($erros) ) {
 			   // Grava no banco.
@@ -261,7 +276,10 @@ class VAConfiguracao extends VirtexAdmin {
 
 
 	}else if ($op == "lista_nas"){
-
+			if( ! $this->privPodeLer("_CONFIG_EQUIPAMENTOS") ) {
+				$this->privMSG();
+				return;
+			}		
 
 			$erros = array();
 
@@ -292,7 +310,10 @@ class VAConfiguracao extends VirtexAdmin {
 
 	}else if ($op =="nas"){
 
-
+			if( ! $this->privPodeLer("_CONFIG_EQUIPAMENTOS") ) {
+				$this->privMSG();
+				return;
+			}		
 
 			$erros = array();
 
@@ -330,7 +351,10 @@ class VAConfiguracao extends VirtexAdmin {
 			}//hugo2
 
 			if( $enviando ) {
-
+				if( ! $this->privPodeGravar("_CONFIG_EQUIPAMENTOS") ) {
+					$this->privMSG();
+					return;
+				}		
 
 				if( !count($erros) ) {
 					// Grava no banco.
@@ -513,7 +537,11 @@ class VAConfiguracao extends VirtexAdmin {
 
 	}else if($op == "rede"){
 		// CADASTRA E ALTERA REDE EM DETERMINADO NAS
-
+			if( ! $this->privPodeLer("_CONFIG_EQUIPAMENTOS") ) {
+				$this->privMSG();
+				return;
+			}		
+			
 		$erros = array();
 
 		$acao = @$_REQUEST["acao"];
@@ -563,6 +591,10 @@ class VAConfiguracao extends VirtexAdmin {
 		}
 
 		if( $enviando ) {
+			if( ! $this->privPodeGravar("_CONFIG_EQUIPAMENTOS") ) {
+				$this->privMSG();
+				return;
+			}				
 			if( !count($erros) ) {
 				// Grava no banco.
 				if( $acao == "cad" ) {
@@ -724,7 +756,10 @@ class VAConfiguracao extends VirtexAdmin {
 ///////////////////////////////		
 
 	}else if ($op == "cidades"){
-
+			if( ! $this->privPodeLer("_CONFIG_PREFERENCIAS") ) {
+				$this->privMSG();
+				return;
+			}		
 
 
 			$eSQL  = "SELECT ";
@@ -866,6 +901,10 @@ class VAConfiguracao extends VirtexAdmin {
 
 
 				if($mov == "cadastro"){
+					if( ! $this->privPodeGravar("_CONFIG_PREFERENCIAS") ) {
+						$this->privMSG();
+						return;
+					}						
 
 					if (@$_REQUEST['disponivel']){			
 
@@ -901,9 +940,18 @@ class VAConfiguracao extends VirtexAdmin {
 
 
 				}else if ($op == "monitor"){
+					if( ! $this->privPodeLer("_CONFIG_MONITORAMENTO") ) {
+						$this->privMSG();
+						return;
+					}						
+				
 				$this->arquivoTemplate = "cobranca_versaolight.html";
 
 				}else if ($op == "preferencia"){
+					if( ! $this->privPodeGravar("_CONFIG_PREFERENCIAS") ) {
+						$this->privMSG();
+						return;
+					}										
 
 					$acao = @$_REQUEST["acao"];
 
@@ -1036,6 +1084,10 @@ class VAConfiguracao extends VirtexAdmin {
 
 
 				}else if ($op == "preferencia_cobranca"){
+					if( ! $this->privPodeGravar("_CONFIG_PREFERENCIAS") ) {
+						$this->privMSG();
+						return;
+					}										
 
 					$acao = @$_REQUEST["acao"];
 
@@ -1111,6 +1163,10 @@ class VAConfiguracao extends VirtexAdmin {
 
 
 				}else if ($op == "preferencia_provedor"){
+					if( ! $this->privPodeGravar("_CONFIG_PREFERENCIAS") ) {
+						$this->privMSG();
+						return;
+					}										
 
 
 					$acao = @$_REQUEST["acao"];
@@ -1151,6 +1207,10 @@ class VAConfiguracao extends VirtexAdmin {
 
 
 				}else if ($op == "contratos"){
+					if( ! $this->privPodeGravar("_CONFIG_PREFERENCIAS") ) {
+						$this->privMSG();
+						return;
+					}										
 
 					$acao = @$_REQUEST["acao"];
 					$tipo_contrato = @$_REQUEST["tipo_contrato"];
@@ -1254,6 +1314,10 @@ class VAConfiguracao extends VirtexAdmin {
 
 
 				}else if ($op == "registro"){
+					if( ! $this->privPodeLer("_CONFIG_REGISTRO") ) {
+						$this->privMSG();
+						return;
+					}										
 
 					$acao = @$_REQUEST["acao"];
 					$x = @$_REQUEST["x"];
@@ -1322,7 +1386,10 @@ class VAConfiguracao extends VirtexAdmin {
 
 					if ($acao == "upload"){
 
-
+						if( ! $this->privPodeGravar("_CONFIG_REGISTRO") ) {
+							$this->privMSG();
+							return;
+						}							
 
 						$diretorio = "./etc";
 
@@ -1379,6 +1446,11 @@ class VAConfiguracao extends VirtexAdmin {
 
 
 				}else if ($op == "externo"){
+					if( ! $this->privPodeLer("_CONFIG_EQUIPAMENTOS") ) {
+						$this->privMSG();
+						return;
+					}												
+				
 
 					$acao = @$_REQUEST["acao"];
 					$id_nas = @$_REQUEST["id_nas"];
@@ -1410,6 +1482,10 @@ class VAConfiguracao extends VirtexAdmin {
 
 
 					if ($acao == "novo"){
+						if( ! $this->privPodeGravar("_CONFIG_EQUIPAMENTOS") ) {
+							$this->privMSG();
+							return;
+						}												
 						$rede = @$_REQUEST["rede"];
 
 						if ($rede){
@@ -1475,6 +1551,10 @@ class VAConfiguracao extends VirtexAdmin {
 					$this->arquivoTemplate = "configuracao_rede_externa.html";
 
 					}else if ($op == "resumo"){
+					if( ! $this->privPodeLer("_CONFIG_PREFERENCIAS") ) {
+						$this->privMSG();
+						return;
+					}												
 
 					$geral = $this->prefs->obtem("geral");
 					$cobranca = $this->prefs->obtem("cobranca");

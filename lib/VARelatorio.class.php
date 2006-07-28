@@ -788,6 +788,7 @@ class VARelatorio extends VirtexAdmin {
 		$acao = @$_REQUEST["acao"];
 		$extra = @$_REQUEST["extra"];
 		if (!$acao) $acao = "geral";
+		$sop = @$_REQUEST["sop"];
 		
 		
 		if ($acao == "geral") {		
@@ -832,6 +833,37 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "	cnt.id_cidade = cid.id_cidade AND cnt.id_cidade = $id_cidade AND";
 			$sSQL .= "	cnt.excluido = 'FALSE' ";
 			$sSQL .= "ORDER BY cid.uf, cid.id_cidade, cnt.nome_razao";	
+			
+			if ($sop == "contratos"){
+			
+				/*$sSQL  = "SELECT ";
+				$sSQL .= "DISTINCT(cnt.nome_razao) cnt.id_cliente,cid.cidade,cid,uf ";
+				$sSQL .= "FROM ";
+				$sSQL .= "cltb_cliente cnt, (SELECT id_cidade,cidade,uf FROM cftb_cidade ORDER BY uf) cid, cbtb_cliente_produto cb  ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "cnt.id_cidade = cid.id_cidade AND ";
+				$sSQL .= "cnt.id_cidade = $id_cidade AND ";
+				$sSQL .= "cnt.excluido is false ";
+				$sSQL .= " AND cb.id_cliente = cnt.id_cliente ";
+				$sSQL .= "ORDER BY cid.uf,cid.id_cidade,cnt.nome_razao ";
+				//$sSQL .= "GROUP BY cnt.nome_razao,cnt.id_cliente,cid.cidade,cid.uf ";*/
+				
+				$sSQL = "SELECT DISTINCT(cnt.nome_razao) as nome_razao,cnt.id_cliente,cid.cidade,cid.uf 
+								 FROM cltb_cliente cnt, (SELECT id_cidade,cidade,uf FROM cftb_cidade) cid, cbtb_cliente_produto cb 
+								 WHERE cnt.id_cidade = cid.id_cidade AND cnt.id_cidade = $id_cidade AND
+								 cnt.excluido is false AND
+								 cb.id_cliente = cnt.id_cliente 
+								 ORDER BY nome_razao";
+			
+				//echo $sSQL ."<br>";
+			
+				$this->tpl->atribui("contrato"," com contratos");
+			
+			}
+			
+			
+			
+			
 			
 		}
 		
@@ -1590,9 +1622,10 @@ class VARelatorio extends VirtexAdmin {
 		$sSQL .= "prtb_produto p LEFT OUTER JOIN cbtb_contrato cp USING(id_produto) ";
 		$sSQL .= "WHERE ";
 		$sSQL .= "data_contratacao > now() - INTERVAL '6 months' OR data_contratacao is null ";
+		
 		$sSQL .= "GROUP BY ";
 		$sSQL .= "mes, p.id_produto ) c USING(id_produto) ";
-		
+		$sSQL .= "ORDER BY mes ASC";
 		
 		$relat = $this->bd->obtemRegistros($sSQL);
 		

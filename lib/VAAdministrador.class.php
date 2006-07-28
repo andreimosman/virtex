@@ -21,10 +21,7 @@ class VAAdministrador extends VirtexAdmin {
 
 	public function processa($op=null) {
 	
-			if( ! $this->privPodeLer("_ADMIN") ) {
-				$this->privMSG();
-				return;
-		}			
+			
 	
 	
 		if ($op == "cadastro"){
@@ -207,6 +204,10 @@ class VAAdministrador extends VirtexAdmin {
 
 	// processa os links
 	    } else if($op == "lista"){
+				if( ! $this->privPodeLer("_ADMIN") ) {
+					$this->privMSG();
+					return;
+				}
 	    
 			$sSQL  = "SELECT ";
 			$sSQL .= "   id_admin, admin, senha, status, ";
@@ -229,7 +230,7 @@ class VAAdministrador extends VirtexAdmin {
 	 		   
 	    
 	    }else if ($op == "altera"){
-	    
+
 
 	    		$erro = array();
 		

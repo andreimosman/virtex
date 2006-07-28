@@ -16,6 +16,12 @@ class VASuporte extends VirtexAdmin {
 	
 	
 	public function processa($op=null) {	
+		if( ! $this->privPodeLer("_SUPORTE") ) {
+					$this->privMSG();
+					return;
+		}		
+	
+	
 		if($op == "graf"){	
 		
 			$pesquisa = @$_REQUEST["pesquisa"];
@@ -292,7 +298,10 @@ class VASuporte extends VirtexAdmin {
 			} 
 				
 		}else if($op == "backup") {
-			
+			if( ! $this->privPodeGravar("_SUPORTE_BACKUP") ) {
+				$this->privMSG();
+				return;
+			}		
 						
 			$this->arquivoTemplate="suporte_backup.html";
 			

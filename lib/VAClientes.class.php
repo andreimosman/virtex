@@ -2154,15 +2154,15 @@ class VAClientes extends VirtexAdmin {
 						$sSQL .= "			'".$id_conta."', ";
 						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["username"]) . "', ";
 						
-						if(trim(@$_REQUEST["tipo_conta"]) == "E"){
+						//if(trim(@$_REQUEST["tipo_conta"]) == "E"){
 
-							$sSQL .= " '". @$_REQUEST["dominio"] ."', ";
+						//	$sSQL .= " '". @$_REQUEST["dominio"] ."', ";
 						
 						
-						}else{
+						//}else{
 
 							$sSQL .= "     '" . $dominioPadrao . "', ";
-						}
+						//}
 						$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["tipo_conta"])) . "', ";
 						$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["senha"])) . "', "; 						
 						$sSQL .= "     '" .  $this->bd->escape(trim(@$_REQUEST["id_cliente"])) . "', "; 						
@@ -2436,7 +2436,8 @@ class VAClientes extends VirtexAdmin {
 									$sSQL .= "VALUES (";
 									$sSQL .= "     '" . @$_REQUEST["username"] . "', ";
 									$sSQL .= "     'E', ";
-									$sSQL .= "     '" . $dominioPadrao . "', ";
+									$sSQL .= " $dominio , ";
+									//$sSQL .= "     '" . $dominioPadrao . "', ";
 									$sSQL .= "     '".(int)@$_REQUEST["quota"]."', ";
 									$sSQL .= "     '". @$_REQUEST["username"]."@". $dominioPadrao ."' ";
 									$sSQL .= " )";
