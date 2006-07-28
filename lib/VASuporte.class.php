@@ -82,6 +82,7 @@ class VASuporte extends VirtexAdmin {
 				$sSQL .= "WHERE ";
 				$sSQL .= "	username LIKE '$username' ";
 			}
+			$sSQL .= "ORDER BY CASE WHEN logout is NULL then login ELSE logout END DESC ";
 			$sSQL .= "LIMIT $limite ";
 			
 			
