@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>::.. Virtex Admin - Interface Cliente ..::</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+{literal}
+<script language="JavaScript" type="text/javascript" >
+<!--
+	function valida(){
+
+		var csenha, csenha_conf
+			
+			csenha=document.ic.senha.value;
+			csenha_conf = document.ic.senha_conf.value;
+			
+				if ((csenha != csenha_conf)||(csenha == "")||(csenha_conf=="")){
+					alert("Os Campos Senha e Confirmação de Senha têm que Ter o Mesmo Valor!");
+					document.ic.senha.value = "";
+					document.ic.senha_conf.value = "";
+					document.ic.senha.focus();
+					return false;
+				
+				}else{
+					return true;		
+				}
+
+	}
+//-->
+</script>
+{/literal}
+</head>
+
+<body  leftmargin="160" topmargin="60">
+<div align="center">
+<table  width="92%" height="345" border="0" cellpadding="0" cellspacing="0" background="template/default/images/top_pixel.gif">
+  <tr>
+    <td width="170" height="55" ><img src="template/default/images/logo_top_interface.gif">
+    <td width="450" align="center" valign="middle">
+	 <div align="right">
+        <p>&nbsp;</p>
+        <p><strong><a href="index.php"> <font color="#F1F1F1">logout</font></a></strong></p>
+      </div></td>
+	<td width="1"></td>
+  </tr>
+  <tr bgcolor="#BACEBF">
+    <td height="0" colspan="4">
+      <table width="607" bgcolor="#BACEBF">
+        <tr>
+          <td width="47" height="21" >
+            <p align="left"><strong><a href="index_home.php?op=home">Home</a></strong></p></td>
+          <td width="105"><p align="left"><strong><a href="index_home.php?op=alterar_senha&id_conta={$id_conta}">Altera&ccedil;&atilde;o
+              de Senha</a></strong></p></td>
+          <td width="207" ><p align="left"><strong><a href="index_home.php?op=contas">{if $conta_mestre=='t'}Contas{/if}</a></strong></p></td>
+          <td width="228" > <div align="right">
+              <p><strong><font size="-3">username:</font></strong> <strong>{$username_conf}</strong></p>
+            </div></td>
+        </tr>
+      </table>
+  <tr  bgcolor="#F9F9F9">
+    <td height="380" colspan="4"><p align="center"><font color="#BACEBF">{if !$alterar_senhas
+        && !$contas && !$dados}<strong>Bem Vindo à Central do Assinante.{/if}</strong></font></p>
+      <div align="center">
+<form action="{$smarty.server.PHP_SELF}" name=ic method="post" onSubmit="return valida(this.value);">
+          <p><br>
+            {if $alterar_senhas}</p>
+          <div align="center">
+<table width=40% cellpadding=0 cellspacing=0 bgcolor="#000000">
+              <tr>
+                <td> <table width=100% cellpadding=0 cellspacing=1>
+                    <tr bgcolor="#FFFFFF">
+                      <td align="center" bgcolor="#FEFEFE"> <p><br>
+                          <font size="1" face="Verdana, Arial, Helvetica, sans-serif">Usuário:
+                          <br>
+                          {$username}</font><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><br>
+                          <br>
+                          Senha Atual: <br>
+                          <input type="hidden" name="acao" value="alterar">
+                          <input type="hidden" name="op" value="alterar_senha">
+                          <input type="password" name="senha_atual" class= "campos" id="senha_atual3">
+                          <br>
+                          <br>
+                          Nova Senha:<br>
+                          <input type="password" name="senha" class= "campos" id="senha">
+                          <br>
+                          <br>
+                          Confirme: </font><br>
+                          <input type="password" name="senha_conf"  class= "campos" id="senha_conf">
+                          <br>
+                          <br>
+                          <input type="submit" value="Alterar" name="bttroca">
+                          <br>
+                          <input name="username" type="hidden" id="username" value="{$username}">
+                          <input name="tipo_conta" type="hidden" id="tipo_conta" value="{$tipo_conta}">
+                          <input name="dominio" type="hidden" id="dominio" value="{$dominio}">
+                          <br>
+                        </p>
+                        </td>
+                    </tr>
+                  </table></td>
+              </tr>
+            </table>
+          </div>
+          {/if}
+</form>
+        <form  action="{$smarty.server.PHP_SELF}" name="dados" method="post">
+          <p>{if $dados}</p>
+          <table width="75%" border="0" align="center">
+            <tr bgcolor="F1F1F1">
+              <td><div align="center"><strong><font color="#99B7A0">Username</font></strong></div></td>
+              <td><div align="center"><strong><font color="#99B7A0">Tipo da conta</font></strong></div></td>
+              <td><div align="center"><font color="#99B7A0"><strong>Dom&iacute;nio</strong></font></div></td>
+            </tr>
+            <tr>
+              <td><div align="center">
+                  <p><strong>{$username}</strong></p>
+                </div></td>
+              <td><div align="center">
+                  <p><strong>{$tipo_conta}</strong></p>
+                </div></td>
+              <td><div align="center">
+                  <p><strong>{$dominio}</strong></p>
+                </div></td>
+            </tr>
+          </table>
+          <p>
+            <input type="submit" name="Submit" value="Alterar senha &gt;&gt;">
+            <input type="hidden" name="username" value="{$username}">
+            <input type="hidden" name="tipo_conta" value="{$tipo_conta}">
+            <input type="hidden" name="dominio" value="{$dominio}">
+            <font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+            <input name="op" type="hidden" id="op" value="alterar_senha">
+            </font> {/if} </p>
+          </form>
+        {if $contas} </div>
+      <table width="471" align="center">
+        <tr>
+          <td width="161" bgcolor="f1f1f1"> <p align="left"><font color="#99B7A0"><strong>Username</strong></font></p></td>
+          <td width="179" bgcolor="f1f1f1"> <p align="center"><font color="#99B7A0"><strong>Tipo</strong></font></p></td>
+        </tr>
+        {foreach item=c from=$contas}
+        <tr>
+          <td><p align="left"><strong>{$c.username}</strong></p></td>
+          <td> <p><strong>{$c.nome}</strong></p></td>
+          <td width="115" ><a href="index_home.php?op=dados&id_conta={$c.id_conta}">[Dados da conta]</a> </td>
+        </tr>
+        {/foreach}
+      </table>
+      <p>{/if} </p></td>
+  </tr>
+  <tr>
+
+    <td height="20" colspan="4">
+      <div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy;
+        Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
+        </tr>
+</table>
+</body>
+</html>
