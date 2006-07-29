@@ -34,6 +34,8 @@ require_once(PATH_LIB . '/VASuporte.class.php');
 require_once(PATH_LIB . '/VAConfiguracao.class.php');
 require_once(PATH_LIB . '/VAAdministrador.class.php');
 require_once(PATH_LIB . '/VARelatorio.class.php');
+require_once(PATH_LIB . '/VAInterface_cliente.class.php');
+require_once(PATH_LIB . '/VAInterface_cliente_home.class.php');
 
 
 ?>
