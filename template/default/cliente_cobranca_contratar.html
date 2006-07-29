@@ -367,9 +367,32 @@ function Comodato(){
 }
 
 
+function datavenc(){
+
+	var frm = document.frmContratacao;
+	var msg = new Array();
+
+	if (frm.pri_venc.value < frm.data_contratacao.value){
+
+		window.alert("::-- Data do Primeiro Vencimento Inválida.--:: \n É necessário que a data de primeiro vencimento seja MAIOR do que a data de contratação.");
+		//msg.push("Data de Contratação maior que Data do Primeiro Vencimento");
+		frm.pri_venc.focus();
+	}
+
+}
+
+
+
 function validaForm() {
 	var frm = document.frmContratacao;
 	var msg = new Array();
+
+	if (frm.pri_venc.value < frm.data_contratacao.value){
+		msg.push("Data de Contratação maior que Data do Primeiro Vencimento");
+
+	}
+
+
 
 	if( frm.tipo.value == "" ) {
 		msg.push("Você não escolheu o tipo do produto");
@@ -810,7 +833,7 @@ frmContratacao.pri_venc.value = hoje();
             </tr>
             <tr>
               <td bgcolor="#FFFFFF" align="right"><p>Data 1&ordm; Vencimento</p></td>
-              <td bgcolor="#FFFFFF"><input name="pri_venc" type="text" size="," id="pri_venc" maxlength="10" OnKeyPress="formatar(this, '##/##/####')"></td>
+              <td bgcolor="#FFFFFF"><input name="pri_venc" type="text" size="," id="pri_venc" maxlength="10" OnKeyPress="formatar(this, '##/##/####')" onblur="return datavenc();"></td>
               <td bgcolor="#FFFFFF"><input type="button" name="hoje" value="Hoje" onClick="javascript:priVenc();" &gt;&gt;""
               style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;"></td>
               <td bgcolor="#FFFFFF">&nbsp;</td>

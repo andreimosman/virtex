@@ -72,7 +72,7 @@ class VAClientes extends VirtexAdmin {
 									
 		$prod_contr = array();
 									
-		////////echo count($prcliente);
+	//echo count($prcliente);
 									
 		for($i = 0; $i < count($prcliente); $i++ ) {
 			$prod_contr[ trim(strtolower($prcliente[$i]["tipo"])) ] = true;
@@ -220,10 +220,10 @@ class VAClientes extends VirtexAdmin {
 		$this->tpl->atribui("id_cliente",$id_cliente);
 		$this->tpl->atribui("tipo",$tipo);
 		
-		if( ! $this->privPodeLer("_CLIENTES") ) {
-			$this->privMSG();
-			return;
-		}			
+		//if( ! $this->privPodeLer("_CLIENTES") ) {
+		//	$this->privMSG();
+		//	return;
+		//}			
 		
 		// Utilizado pelo menu ou por outras funcionalidades quaisquer.
 		if( $id_cliente ) {
@@ -233,10 +233,10 @@ class VAClientes extends VirtexAdmin {
 
 
 		if ($op == "cadastro"){
-				if( ! $this->privPodeGravar("_CLIENTES") ) {
-					$this->privMSG();
-					return;
-				}			
+				//if( ! $this->privPodeGravar("_CLIENTES") ) {
+				//	$this->privMSG();
+				//	return;
+				//}			
 		
 
 			$erros = array();
@@ -519,10 +519,10 @@ class VAClientes extends VirtexAdmin {
 			$this->arquivoTemplate = "clientes_cadastro.html";
 			
 		} else if ( $op == "pesquisa" ){
-				if( ! $this->privPodeLer("_CLIENTES_FICHA") ) {
-							$this->privMSG();
-							return;
-				}		
+				//if( ! $this->privPodeLer("_CLIENTES_FICHA") ) {
+				//			$this->privMSG();
+				//			return;
+				//}		
 				
 				//if( ! $this->privPodeGravar("_CLIENTES_FICHA") ) {
 				//			$this->privMSG();
@@ -728,10 +728,10 @@ class VAClientes extends VirtexAdmin {
 			// Sistema de contratação de produtos e resumo de cobrança
 			////////echo "cobranca<br>";
 			
-				if( ! $this->privPodeLer("_CLIENTES_COBRANCA") ) {
-					$this->privMSG();
-					return;
-				}	
+				//if( ! $this->privPodeLer("_CLIENTES_COBRANCA") ) {
+				//	$this->privMSG();
+				//	return;
+				//}	
 			
 			
 			$rotina = @$_REQUEST["rotina"];
@@ -952,10 +952,10 @@ class VAClientes extends VirtexAdmin {
 				
 
 			} else if( $rotina == "contratar" ) {
-				if( ! $this->privPodeGravar("_CLIENTES_COBRANCA") ) {
-					$this->privMSG();
-					return;
-				}	
+				//if( ! $this->privPodeGravar("_CLIENTES_COBRANCA") ) {
+				//	$this->privMSG();
+				//	return;
+				//}	
 								
 				$enviando = false;
 				$exibeForm = true;
@@ -1027,9 +1027,9 @@ class VAClientes extends VirtexAdmin {
 						//}
 						
 						$username = @$_REQUEST["username"];
-						$dominio = @$_REQUEST["dominio"];
+						$dominio = @str_replace("/","",$_REQUEST["dominio"]);
 						$tipo_conta = @$_REQUEST["tipo_conta"];
-						$dominio_hospedagem = @$_REQUEST["dominio_hospedagem"];
+						$dominio_hospedagem = @str_replace("/","",$_REQUEST["dominio_hospedagem"]);
 						
 						//$sSQL  = "SELECT * from cntb_contas where username = '$username', dominio = '$dominio', tipo_conta = '$tipo_conta'";
 						//$prep = $this->bd->obtemUnicoRegistro($sSQL);
@@ -1395,7 +1395,7 @@ class VAClientes extends VirtexAdmin {
 								$gid = $prefs["hosp_gid"];
 								$home = $prefs["hosp_base"];
 								$shell = "/bin/false";
-								$dominio_hospedagem = @$_REQUEST["dominio_hospedagem"];
+								$dominio_hospedagem = @str_replace("/","",$_REQUEST["dominio_hospedagem"]);
 								$server = $prefs["hosp_server"];
 								
 								
@@ -1708,10 +1708,10 @@ class VAClientes extends VirtexAdmin {
 				$this->arquivoTemplate = "cliente_cobranca_relatorio.html";
 			
 			} else if( $rotina == "excluir" ){
-				if( ! $this->privPodeGravar("_CLIENTES_COBRANCA_ELIMINAR_CONTRATO") ) {
-					$this->privMSG();
-					return;
-				}	
+				//if( ! $this->privPodeGravar("_CLIENTES_COBRANCA_ELIMINAR_CONTRATO") ) {
+				//	$this->privMSG();
+				//	return;
+				//}	
 
 			
 			
@@ -1736,10 +1736,10 @@ class VAClientes extends VirtexAdmin {
 			
 			}else if ( $rotina == "excl_confirma"){
 			
-				if( ! $this->privPodeGravar("_CLIENTES_COBRANCA_ELIMINAR_CONTRATO") ) {
-					$this->privMSG();
-					return;
-				}				
+				//if( ! $this->privPodeGravar("_CLIENTES_COBRANCA_ELIMINAR_CONTRATO") ) {
+				//	$this->privMSG();
+				//	return;
+				//}				
 			
 			
 			
@@ -1782,10 +1782,10 @@ class VAClientes extends VirtexAdmin {
 			
 			}else if ($rotina == "carne"){
 			
-				if( ! $this->privPodeGravar("_CLIENTES_COBRANCA") ) {
-					$this->privMSG();
-					return;
-				}				
+				//if( ! $this->privPodeGravar("_CLIENTES_COBRANCA") ) {
+				//	$this->privMSG();
+				//	return;
+				//}				
 			
 			
 			
@@ -1842,10 +1842,10 @@ class VAClientes extends VirtexAdmin {
 		
 		} else if ($op == "produto") {
 		
-				if( ! $this->privPodeGravar("_CLIENTES_COBRANCA") ) {
-					$this->privMSG();
-					return;
-				}	
+				//if( ! $this->privPodeGravar("_CLIENTES_COBRANCA") ) {
+				//	$this->privMSG();
+				//	return;
+				//}	
 
 
 			// PRECISA PASSAR O TIPO PRO MENU
@@ -2002,7 +2002,7 @@ class VAClientes extends VirtexAdmin {
 			$id_cliente = @$_REQUEST["id_cliente"];
 			$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
 			$username = @$_REQUEST["username"];
-			$dominio  = @$_REQUEST["dominio"];
+			$dominio  = @str_replace("/","",$_REQUEST["dominio"]);
 			$tipo_conta = @$_REQUEST["tipo_conta"];
 			$sop = @$_REQUEST["sop"];
 			$acao = @$_REQUEST["acao"];
@@ -2046,7 +2046,7 @@ class VAClientes extends VirtexAdmin {
 			$this->tpl->atribui("lista_nas",$lista_nas);
 
 			$prefs = $this->prefs->obtem("geral");
-			$dominio = @$_REQUEST["dominio"];
+			$dominio = str_replace("/","",@$_REQUEST["dominio"]);
 			if(!$dominio) $dominio = $prefs["dominio_padrao"];
 
 
@@ -2107,14 +2107,14 @@ class VAClientes extends VirtexAdmin {
 				if ($acao == "cad"){
 				
 					$_username = @$_REQUEST["_username"];
-					$dominio = @$_REQUEST["dominio"];
+					$dominio = @str_replace("/","",$_REQUEST["dominio"]);
 					$tipo_conta = @trim($_REQUEST["tipo_conta"]);
 					$id_cliente = @$_REQUEST["id_cliente"];
 					$email_igual = @$_REQUEST["email_igual"];
 					
 					
 					
-					if ($tipo_conta == "BL"){
+					/*if ($tipo_conta == "BL"){
 						if( ! $this->privPodeGravar("_CLIENTES_BANDALARGA") ) {
 								$this->privMSG();
 								return;
@@ -2140,7 +2140,7 @@ class VAClientes extends VirtexAdmin {
 						}					
 					
 					
-					}
+					}*/
 					
 					
 					
@@ -2174,10 +2174,36 @@ class VAClientes extends VirtexAdmin {
 					//	$dominioPdrao = $lista_dominiop["dominio_padrao2"];
 					
 				
-					
+						$dominio_novo = @str_replace("/","",$_REQUEST["dominio"]);
 						$dominioPadrao = $lista_dominiop["dominio_padrao"]; 
+						
+					$sSQL = "SELECT * FROM dominio WHERE dominio = '$dominio_novo'";
+					$_prov = $this->bd->obtemRegistros($sSQL);
 					
-				
+					
+					if (!count($_prov)){
+					
+						$sSQL = "INSERT INTO dominio (dominio,id_cliente,provedor,status,dominio_provedor) VALUES ('$dominio','$id_cliente',false,'A',false)";
+						$this->bd->consulta($sSQL);
+					
+					}				
+					
+					
+					$sSQL = "SELECT * FROM dominio WHERE dominio_provedor is true AND dominio = '$dominio_novo'";
+					$_prov2 = $this->bd->obtemRegistros($sSQL);
+					
+					if(count($_prov2)){
+					
+						$dominio = $dominio_padrao;
+					
+					
+					}else{
+					
+						$dominio = @$_REQUEST["dominio"];
+					
+					}
+					
+				//echo "DOMINIO: $dominio <br>";
 					
 					// Valida os dados
 
@@ -2240,7 +2266,7 @@ class VAClientes extends VirtexAdmin {
 						
 						//}else{
 
-							$sSQL .= "     '" . $dominioPadrao . "', ";
+							$sSQL .= "     '" . $dominio . "', ";
 						//}
 						$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["tipo_conta"])) . "', ";
 						$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["senha"])) . "', "; 						
@@ -2266,7 +2292,7 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= "   VALUES (";
 							$sSQL .= "			'". $id_conta. "', ";
 							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["username"]) . "', ";
-							$sSQL .= "     '" . $dominioPadrao . "', ";
+							$sSQL .= "     '" . $dominio . "', ";
 							$sSQL .= "     'E', ";
 							$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["senha"])) . "', "; 						
 							$sSQL .= "     '" .  $this->bd->escape(trim(@$_REQUEST["id_cliente"])) . "', "; 						
@@ -2295,7 +2321,7 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= "VALUES (";
 							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["username"]) . "', ";
 							$sSQL .= "     'E', ";
-							$sSQL .= "     '" . $dominioPadrao . "', ";
+							$sSQL .= "     '" . $dominio . "', ";
 							$sSQL .= "     '$quota', ";
 							$sSQL .= "     '". $this->bd->escape(@$_REQUEST["username"])."@". $dominioPadrao ."' ";
 							$sSQL .= " )";
@@ -2480,7 +2506,7 @@ class VAClientes extends VirtexAdmin {
 								$gid = $prefs["hosp_gid"];
 								$home = $prefs["hosp_base"];
 								$shell = "/bin/false";
-								$dominio_hospedagem = @$_REQUEST["dominio_hospedagem"];
+								$dominio_hospedagem = @str_replace("/","",$_REQUEST["dominio_hospedagem"]);
 								$server = $prefs["hosp_server"];
 
 
@@ -2515,14 +2541,14 @@ class VAClientes extends VirtexAdmin {
 									$sSQL .= "VALUES (";
 									$sSQL .= "     '" . @$_REQUEST["username"] . "', ";
 									$sSQL .= "     'E', ";
-									$sSQL .= " $dominioPadrao , ";
+									$sSQL .= " $dominio , ";
 									//$sSQL .= "     '" . $dominioPadrao . "', ";
 									$sSQL .= "     '".(int)@$_REQUEST["quota"]."', ";
 									$sSQL .= "     '". @$_REQUEST["username"]."@". $dominio ."' ";
 									$sSQL .= " )";
 
 									$this->bd->consulta($sSQL);
-									//echo "E-MAIL: $sSQL <br>";
+								//echo "E-MAIL: $sSQL <br>";
 								
 								break;
 						}						
@@ -2922,7 +2948,7 @@ class VAClientes extends VirtexAdmin {
 			
 			if( $acao == "cad" ) {
 			
-					if ($tipo_conta == "BL"){
+					/*if ($tipo_conta == "BL"){
 						if( ! $this->privPodeGravar("_CLIENTES_BANDALARGA") ) {
 								$this->privMSG();
 								return;
@@ -2948,7 +2974,7 @@ class VAClientes extends VirtexAdmin {
 						}					
 					
 					
-					}			
+					}*/			
 			
 			
 			
@@ -3253,7 +3279,7 @@ class VAClientes extends VirtexAdmin {
 							
 							$tipo_hospedagem = @$_REQUEST["tipo_hospedagem"];
 							$senha = @$_REQUEST["senha"];
-							$dominio_hospedagem = @$_REQUEST["dominio_hospedagem"];
+							$dominio_hospedagem = @str_replace("/","",$_REQUEST["dominio_hospedagem"]);
 							$senha_cript = $this->criptSenha($senha);
 							$id_conta = $conta["id_conta"];
 							$server = $conta["mail_server"];
@@ -3516,10 +3542,10 @@ class VAClientes extends VirtexAdmin {
 		
 		} else if ($op =="altera_contrato"){
 						
-				if( ! $this->privPodeGravar("_CLIENTES") ) {
-						$this->privMSG();
-						return;
-				}
+				//if( ! $this->privPodeGravar("_CLIENTES") ) {
+				//		$this->privMSG();
+				//		return;
+				//}
 						
 		
 				$sSQL  = "SELECT ";
@@ -3530,10 +3556,10 @@ class VAClientes extends VirtexAdmin {
 				$sSQL .= "	id_conta = '". @$_REQUEST["$id_conta"] ."'";
 				
 		} else if ($op == "excluir_cliente"){
-				if( ! $this->privPodeGravar("_ELIMINAR_CLIENTE") ) {
-						$this->privMSG();
-						return;
-				}
+				//if( ! $this->privPodeGravar("_ELIMINAR_CLIENTE") ) {
+				//		$this->privMSG();
+				//		return;
+				//}
 		
 		
 		
