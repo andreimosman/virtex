@@ -1,4 +1,4 @@
-<link href="template/default/estilos1.css" rel="stylesheet" type="text/css"> 
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
 {literal}
 <script language="JavaScript" type="text/JavaScript">
 <!--
@@ -8,15 +8,15 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 //-->
 </script>
 {/literal}
-<div align="center">{if $status == "expirado"} 
+<div align="center">{if $status == "expirado"}
   <table width="500" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#000000">
-    <tr> 
+    <tr>
       <td><table width="500" border="0" cellspacing="1" cellpadding="0">
-          <tr> 
+          <tr>
             <td height="150" align="center" valign="middle" bgcolor="#D9E8DD"><font size="2" face="Arial, Helvetica, sans-serif"><strong><br>
               SR. USU&Aacute;RIO</strong><br>
               <br>
-              <strong><font size="3" color="#006600">SUA LICEN&Ccedil;A EXPIROU 
+              <strong><font size="3" color="#006600">SUA LICEN&Ccedil;A EXPIROU
               </font></strong><font color="#006600"><br>
               </font><br>
               SISTEMA CONGELAR&Aacute; EM <font color="#990000"><strong>{$licenca.geral.congela_em|date_format:"%d/%m/%Y"}</strong></font><br>
@@ -30,22 +30,16 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
           </tr>
         </table></td>
     </tr>
-    <tr> 
-	{assign var="num_bloq" value="0"}
-	{foreach item=b from=$lista_bloqueios}
-	{if $b.nome_razao}
-	{assign var="num_bloq" value=$num_bloq+1}
-	{/if}
-	{/foreach}
+    <tr>
       <td height="24" bgcolor="#FFFFFF"> <div align="center">
           <p>&nbsp;</p>
-          <p>{if $lista_bloqueios}</p>
+          <p>{if $num_cli}</p>
           <table width="69%" border="0">
-            <tr> 
+            <tr>
               <td> <table width="339" border="0" cellpadding="0" cellspacing="1" bordercolor="#000000" bgcolor="#000000">
-                  <tr> 
-                    <td height="100" align="center" valign="middle" bordercolor="#FFFFFF" bgcolor="#FFFFFF"> 
-                      <p><strong>No momento existem {$num_bloq} <a href="cobranca.php?op=bloqueados">clientes 
+                  <tr>
+                    <td height="100" align="center" valign="middle" bordercolor="#FFFFFF" bgcolor="#FFFFFF">
+                      <p><strong>No momento existem {$num_cli} <a href="cobranca.php?op=bloqueados">clientes
                         passíveis de <font color="#FF0000">bloqueio. </font></a></strong></p></td>
                   </tr>
                 </table></td>
@@ -60,28 +54,28 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
         <div align="center"></div>
         <div align="center">
           <table width="83%" border="0">
-            <tr> 
+            <tr>
               <td> <table width="420" border="0" cellpadding="0" cellspacing="1" bordercolor="#000000" bgcolor="#000000">
-                  <tr> 
-                    <td align="center" valign="middle" bordercolor="#FFFFFF" bgcolor="#FFFFFF"> 
+                  <tr>
+                    <td align="center" valign="middle" bordercolor="#FFFFFF" bgcolor="#FFFFFF">
                       <table width="419" bordercolor="#CCCCCC">
-                        <tr> 
-                          <td colspan="5" bgcolor="#EAF4EE"> <p align="center"><font size="2" face="Arial, Helvetica, sans-serif"><strong>Contratos 
+                        <tr>
+                          <td colspan="5" bgcolor="#EAF4EE"> <p align="center"><font size="2" face="Arial, Helvetica, sans-serif"><strong>Contratos
                               que vencer&atilde;o em at&eacute; 30 dias:</strong></font></p></td>
                         </tr>
-                        <tr> 
-                          <td bgcolor="#f1f1f1"> <p align="center"><strong>Cliente 
+                        <tr>
+                          <td bgcolor="#f1f1f1"> <p align="center"><strong>Cliente
                               </strong></p></td>
                           <td bgcolor="#f1f1f1"> <p align="center"><strong>Descrição</strong></p></td>
                           <td bgcolor="#f1f1f1"> <p align="center"><strong>Vencimento</strong></p></td>
                           <td bgcolor="#f1f1f1"> <p align="center"><strong>Valor</strong></p></td>
                         </tr>
-                        {foreach item=c from=$lista_contrato} 
-                        <tr> 
-                          <td><div align="center"><a href="javascript:;" onclick="MM_openBrWindow('clientes.php?op=imprime_contrato&id_cliente_produto={$c.id_cliente_produto}&id_cliente={$c.id_cliente}','contrato','scrollbars=yes,width=500,height=600')">{$c.nome_razao}</a></div></td>
-                          <td><div align="center"><a href="javascript:;" onclick="MM_openBrWindow('clientes.php?op=imprime_contrato&id_cliente_produto={$c.id_cliente_produto}&id_cliente={$c.id_cliente}','contrato','scrollbars=yes,width=500,height=600')">{$c.nome}</a></div></td>
-                          <td><div align="center"><a href="javascript:;" onclick="MM_openBrWindow('clientes.php?op=imprime_contrato&id_cliente_produto={$c.id_cliente_produto}&id_cliente={$c.id_cliente}','contrato','scrollbars=yes,width=500,height=600')"><font size="1">{$c.data_renovacao|date_format:"%d/%m/%Y"}</font></a></div></td>
-                          <td><div align="center"><a href="javascript:;" onclick="MM_openBrWindow('clientes.php?op=imprime_contrato&id_cliente_produto={$c.id_cliente_produto}&id_cliente={$c.id_cliente}','contrato','scrollbars=yes,width=500,height=600')">{$c.valor_contrato}</a></div></td>
+                        {foreach item=c from=$lista_contrato}
+                        <tr>
+                          <td><div align="center"><a href="cobranca.php?op=renovacao&id_cliente_produto={$c.id_cliente_produto}&id_cliente={$c.id_cliente}">{$c.nome_razao}</a></div></td>
+                          <td><div align="center"><a href="cobranca.php?op=renovacao&id_cliente_produto={$c.id_cliente_produto}&id_cliente={$c.id_cliente}">{$c.nome}</a></div></td>
+                          <td><div align="center"><a href="cobranca.php?op=renovacao&id_cliente_produto={$c.id_cliente_produto}&id_cliente={$c.id_cliente}"><font size="1">{$c.data_renovacao|date_format:"%d/%m/%Y"}</font></a></div></td>
+                          <td><div align="center"><a href="cobranca.php?op=renovacao&id_cliente_produto={$c.id_cliente_produto}&id_cliente={$c.id_cliente}">{$c.valor_contrato}</a></div></td>
                         </tr>
                         {/foreach} </table>
                     </td>
@@ -90,6 +84,6 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
             </tr>
           </table>
         </div></tr>
-     {/if} </tr> 
+     {/if} </tr>
   </table>
   {/if} </div>
