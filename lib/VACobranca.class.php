@@ -671,6 +671,10 @@ class VACobranca extends VirtexAdmin {
 					}
 			}
 				
+				
+			// PONTO G
+			
+			/**
 		
 			$sSQL  = "SELECT";
 			$sSQL .= "   f.data,f.descricao,f.valor,f.status,ctt.status as cnt_status, ";
@@ -694,6 +698,8 @@ class VACobranca extends VirtexAdmin {
 			$sSQL .= "   AND (f.status != 'P' AND f.status != 'E' AND f.status != 'C') ";
 			$sSQL .= "   AND ctt.status = 'A' AND cnt.status = 'A'";
 			$sSQL .= "ORDER BY f.data, cl.nome_razao, f.descricao, f.status, f.valor";
+			
+			*/
 		
 			
 			//echo $sSQL;
@@ -713,10 +719,15 @@ class VACobranca extends VirtexAdmin {
 			$sSQL .= "   END  ";
 			$sSQL .= "   AND (f.status != 'P' AND f.status != 'E' AND f.status != 'C') ";
 			$sSQL .= "   AND ctt.status = 'A' ";
-			$sSQL .= "ORDER BY f.data, f.descricao, f.status, f.valor";*/
+			$sSQL .= "ORDER BY f.data, f.descricao, f.status, f.valor";
 			
 			
 			$relat = $this->bd->obtemRegistros($sSQL);
+			
+			*/
+			
+			$relat = $this->clientesParaBloqueio();
+			
 			
 			$this->tpl->atribui("relat", $relat);	
 			$this->tpl->atribui("op", $op);
@@ -4021,27 +4032,117 @@ public function extenso($valor=0, $maiusculas=false) {
          
         
 
-}
+	}
+	
+	
+	public function clientesParaBloqueio() {
+	
+		$carencia = (int)$this->prefs->obtem("cobranca","carencia");
 
-public function escreveData($data)  {  
-	list($ano,$mes,$dia) = explode("-",$data);
-	$mes_array = array("janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"); 
-	return $dia ." de ". $mes_array[(int)$mes-1] ." de ". $ano;
+	
+		$sSQL  = "SELECT ";
+		$sSQL .= "   cl.nome_razao, p.nome as produto, p.tipo, cp.id_cliente_produto, count(f.id_cliente_produto) as num_faturas_atrazadas, sum(f.valor) as valor_total ";
+		$sSQL .= "FROM ";
+		$sSQL .= "   cltb_cliente cl, prtb_produto p, cbtb_faturas f, ";
+		$sSQL .= "   cbtb_cliente_produto cp, cbtb_contrato ctt ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "   cl.id_cliente = cp.id_cliente ";
+		$sSQL .= "   AND p.id_produto = cp.id_produto ";
+		$sSQL .= "   AND ctt.id_cliente_produto = cp.id_cliente_produto ";		
+		$sSQL .= "   AND f.id_cliente_produto = cp.id_cliente_produto ";
+		$sSQL .= "   AND ";
+		$sSQL .= "   CASE WHEN ";
+		$sSQL .= "      f.reagendamento is not null ";
+		$sSQL .= "   THEN ";
+		$sSQL .= "      f.reagendamento < CAST(now() as date)  ";
+		$sSQL .= "   ELSE ";
+		$sSQL .= "      f.data < CAST(now() as date) - INTERVAL '$carencia days' ";
+		$sSQL .= "   END  ";
+		$sSQL .= "   AND f.status not in ('P','E','C') ";
+		$sSQL .= "   AND ctt.status = 'A' ";
+		$sSQL .= "GROUP BY ";
+		$sSQL .= "   cl.nome_razao, p.nome, p.tipo, cp.id_cliente_produto ";
+		$sSQL .= "ORDER BY ";
+		$sSQL .= "   cl.nome_razao, p.nome ";
+		
+		$r = $this->bd->obtemRegistros($sSQL);
+		
+		for( $i=0;$i<count($r);$i++ ) {
+		
+			$sSQL = "SELECT ";
+			$sSQL .= "   username,dominio,tipo_conta ";
+			$sSQL .= "FROM ";
+			$sSQL .= "   cntb_conta ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "   id_cliente_produto = '".$r[$i]["id_cliente_produto"]."' ";
+			$sSQL .= "   AND conta_mestre is true AND tipo_conta != 'E' ";
+			
+			$c = $this->bd->obtemRegistros($sSQL);
+			
+			$contas = array();
+			for($x=0;$x<count($c);$x++) {
+				$contas[] = $c[$x]["username"];
+			}
+			
+			$r[$i]["contas"] = $contas;
+			
+			
+		}
+		
+		return($r);
+		
+		/**
 
-}
+		
+		$sSQL  = "SELECT";
+		$sSQL .= "   f.data,f.descricao,f.valor,f.status,ctt.status as cnt_status, ";
+		$sSQL .= "   cp.id_cliente_produto, cnt.username, prd.tipo, ";
+		$sSQL .= "	 cl.id_cliente, cl.nome_razao ";
+		$sSQL .= "FROM ";
+		$sSQL .= "	 ((cltb_cliente cl INNER JOIN cbtb_cliente_produto cp USING (id_cliente)) INNER JOIN cntb_conta cnt USING(id_cliente_produto)) ";
+		$sSQL .= "	 INNER JOIN ";
+		$sSQL .= "   (cbtb_faturas f INNER JOIN cbtb_contrato ctt USING(id_cliente_produto))";
+		$sSQL .= "	 USING(id_cliente_produto), prtb_produto as prd " ;
+		$sSQL .= "WHERE ";
+		$sSQL .= "   prd.id_produto = cp.id_produto AND ";
+		$sSQL .= "	 cnt.conta_mestre is true AND ";
+		$sSQL .= "   CASE WHEN ";
+		$sSQL .= "      f.reagendamento is not null ";
+		$sSQL .= "   THEN ";
+		$sSQL .= "      f.reagendamento < CAST(now() as date)  ";
+		$sSQL .= "   ELSE ";
+		$sSQL .= "      f.data < CAST(now() as date) - INTERVAL '10 days' ";
+		$sSQL .= "   END  ";
+		$sSQL .= "   AND (f.status != 'P' AND f.status != 'E' AND f.status != 'C') ";
+		$sSQL .= "   AND ctt.status = 'A' AND cnt.status = 'A'";
+		$sSQL .= "ORDER BY f.data, cl.nome_razao, f.descricao, f.status, f.valor";
+		
+		*/
+		
 
-public function days_diff($date_ini, $date_end, $round = 1) { 
-    $date_ini = strtotime($date_ini); 
-    $date_end = strtotime($date_end); 
+	
+	
+	}
 
-    $date_diff = ($date_end - $date_ini) / 86400; 
+	public function escreveData($data)  {  
+		list($ano,$mes,$dia) = explode("-",$data);
+		$mes_array = array("janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"); 
+		return $dia ." de ". $mes_array[(int)$mes-1] ." de ". $ano;
 
-    if($round != 0) {
-        return floor($date_diff); 
-    } else {
-        return $date_diff; 
-    }
-} 
+	}
+
+	public function days_diff($date_ini, $date_end, $round = 1) { 
+		$date_ini = strtotime($date_ini); 
+		$date_end = strtotime($date_end); 
+
+		$date_diff = ($date_end - $date_ini) / 86400; 
+
+		if($round != 0) {
+			return floor($date_diff); 
+		} else {
+			return $date_diff; 
+		}
+	} 
 
 
 
