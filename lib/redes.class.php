@@ -46,14 +46,15 @@
       public $wildcard;
       public $broadcast;
       
-      
-
+      /**
+       * Constructor
+       */
       function RedeIP($rede,$mask="") {
          $bits=0;
          if( $mask ) {
             $this->mask = addr2bin($mask);
          } else {
-         //echo "Rede: ". $rede;
+         	//echo "Rede: ". $rede;
             list($rede,$bits) = explode("/", $rede);
             $this->mask = bitcount2bitmask($bits);
          }

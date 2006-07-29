@@ -217,9 +217,7 @@
 				$mac_pattern = "^([0-9a-fA-F]{1,2}:){5}[0-9a-fA-F]{1,2}$";
 				$this->tipo_conta = ereg($mac_pattern,$this->foneinfo) ? "BL" : "D";
 				
-				// TODO: PEGAR DOMINIO PADRAO
-				$dominio_padrao = "firme.com.br";
-				
+				$dominio_padrao = $this->prefs->obtem("geral","dominio_padrao");
 				
 				// Obter usuario
 				$sSQL  = "SELECT ";

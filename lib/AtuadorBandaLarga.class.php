@@ -17,8 +17,10 @@
 		protected $ext_if;
 		protected $nas_list;
 		protected $iface_list;
-		
 		protected $lista_nas;
+		protected $pppoe_nas_list;
+		protected $pppoe_iface_list;
+		protected $pppoe_lista_nas;
 		
 	
 		/**
@@ -57,28 +59,53 @@
 			}
 		}
 		
-		protected function loadCacheInfo() {
-			$n = $this->tcpip_cfg;
+		
+		
+		protected function loadInfo($tipo="TCPIP") {
+			$n = $tipo == "PPPoE" ? $this->pppoe_cfg : $this->tcpip_cfg;
 			
-			$this->ext_if = $this->obtemInterfaceExterna();
-			
-			$this->nas_list   = array();
-			$this->iface_list = array();
-			$this->lista_nas  = array();
+			if($tipo == "PPPoE") {
+				$this->pppoe_nas_list 	= array();
+				$this->pppoe_iface_list	= array();
+				$this->pppoe_lista_nas 	= array();
+			} else {
+				$this->nas_list   = array();
+				$this->iface_list = array();
+				$this->lista_nas  = array();
+			}
 
 			while( list($iface,$dados) = each($n) ) {
 				if( $dados["enabled"] ) {
-					$this->lista_nas[] = $dados["nas_id"];
-					$this->nas_list[ $dados["nas_id"] ] = $iface;
-					$this->iface_list[$iface] = $dados["nas_id"];
+					if( $tipo == "PPPoE" ) {
+						$this->pppoe_lista_nas[] = $dados["nas_id"];
+						$this->pppoe_nas_list[ $dados["nas_id"] ] = $iface;
+						$this->pppoe_iface_list[$iface] = $dados["nas_id"];
+					} else {
+						$this->lista_nas[] = $dados["nas_id"];
+						$this->nas_list[ $dados["nas_id"] ] = $iface;
+						$this->iface_list[$iface] = $dados["nas_id"];
+					}
 				}
 			}
-
+		}
+		
+		
+		protected function loadCacheInfo() {
+			$n = $this->tcpip_cfg;
+			$this->ext_if = $this->obtemInterfaceExterna();
+			
+			$this->loadInfo("TCPIP");
+			$this->loadInfo("PPPoE");
 		}
 
 		// Retorna quais NAS estão ativos neste sistema.
 		public function obtemListaNasIPAtivos() {
 			return($this->lista_nas);
+		}
+
+		// Retorna quais NAS estão ativos neste sistema.
+		public function obtemListaNasPPPoEAtivos() {
+			return($this->pppoe_lista_nas);
 		}
 
 		
@@ -98,18 +125,28 @@
 		}
 
 		
+		/**
+		 * Os $parametros_pppoe são utilizados para que seja possível usar o mesmo atuador para
+		 * Processar requisições PPPoE.
+		 */
 
-		public function processa($op,$id_conta,$parametros) {
+		public function processa($op,$id_conta,$parametros,$parametros_pppoe="") {
 
-			// TODO: PEGAR INTERFACES DO ARQUIVO DE CONFIGURAÇÕES
 			$ext_if = $this->obtemInterfaceExterna();
-			
-			//$int_if = "rl1";
 			
 			$nas_id = $this->obtemNasConta($id_conta);
 			if(!$nas_id) return;
 			
+			$tipo_nas = "TCPIP";
 			$int_if = @$this->nas_list[$nas_id];
+			
+			if( !$int_if ) {
+				$tipo_nas = "PPPoE";
+				$int_if = @$this->pppoe_nas_list[$nas_id];
+			}
+			
+			// Este NAS não deveria estar chamando desta máquina. Não está habilitado ou configurado;
+			if( !$int_if ) return;
 			
 			switch($op) {
 				
@@ -118,22 +155,48 @@
 					 * Adicionar.
 					 *
 					 * Parametros: 
-					 *   rede,mac,up,down,user
+					 *   rede(ou ip pppoe),mac,up,down,user
+					 *
+					 * Parametros Adicionais PPPoE (situação especial):
+					 *	 interface,pid
+					 *
 					 */
+					
+					@list($rede,$mac,$up,$down,$user) = explode(",",$parametros);
+					if( !$rede ) return;	// Se não recebeu a rede não faz nada.
+					
+					if( $tipo_nas == "TCPIP" ) {
+						$r = new RedeIP($rede);
+
+						$ip_interface	= $r->minHost();
+						$ip_cliente	= $r->maxHost();
+						$mascara		= $r->mascara();
+						
+						$iface = $int_if;
 					 
-					list($rede,$mac,$up,$down,$user) = explode(",",$parametros);
-					 
-					$r = new RedeIP($rede);
-					 
-					$ip_interface	= $r->minHost();
-					$ip_cliente	= $r->maxHost();
-					$mascara		= $r->mascara();
-					 
-					 
-					$this->so->ifConfig($int_if,$ip_interface,$mascara);
-					$this->so->adicionaRegraBW((int)$id_conta,SistemaOperacional::$FW_IP_BASERULE,
-					                             SistemaOperacional::$FW_IP_BASEPIPE_IN, SistemaOperacional::$FW_IP_BASEPIPE_OUT,
-					                             $int_if, $ext_if, $ip_cliente, $mac, $up, $down, $user );
+						$this->so->ifConfig($int_if,$ip_interface,$mascara);
+						
+						$baserule     = SistemaOperacional::$FW_IP_BASERULE;
+						$basepipe_in  = SistemaOperacional::$FW_IP_BASEPIPE_IN;
+						$basepipe_out = SistemaOperacional::$FW_IP_BASEPIPE_OUT;
+						
+						
+					} else {
+						@list($iface,$pid) = explode(",",$parametros);
+						
+						// A interface é requerida para uso PPPoE
+						if( !$iface ) return;
+
+						$baserule     = SistemaOperacional::$FW_PPPoE_BASERULE;
+						$basepipe_in  = SistemaOperacional::$FW_PPPoE_BASEPIPE_IN;
+						$basepipe_out = SistemaOperacional::$FW_PPPoE_BASEPIPE_OUT;
+
+
+					}
+
+					$this->so->adicionaRegraBW((int)$id_conta,$baserule,
+					                             $basepipe_in, $basepipe_out,
+					                             $iface, $ext_if, $ip_cliente, $mac, $up, $down, $user );
 					
 					break;
 					 
@@ -142,14 +205,28 @@
 					 * Excluir.
 					 *
 					 * Parametros: 
-					 *   $ipaddr (ip da interface interna)
+					 *   $ipaddr (ip da interface interna, apenas pra tcpip)
 					 */
 					
-					$ipaddr = $parametros;
+					if( $tipo_nas == "TCPIP" ) {
+						$ipaddr = $parametros;
 					
-					$this->so->ifUnConfig($int_if,$ipaddr);
-					$this->so->deletaRegraBW((int)$id_conta, SistemaOperacional::$FW_IP_BASERULE, 
-												SistemaOperacional::$FW_IP_BASEPIPE_IN, SistemaOperacional::$FW_IP_BASEPIPE_OUT);
+						$this->so->ifUnConfig($int_if,$ipaddr);
+
+						$baserule     = SistemaOperacional::$FW_IP_BASERULE;
+						$basepipe_in  = SistemaOperacional::$FW_IP_BASEPIPE_IN;
+						$basepipe_out = SistemaOperacional::$FW_IP_BASEPIPE_OUT;
+
+					} else {
+
+						$baserule     = SistemaOperacional::$FW_PPPoE_BASERULE;
+						$basepipe_in  = SistemaOperacional::$FW_PPPoE_BASEPIPE_IN;
+						$basepipe_out = SistemaOperacional::$FW_PPPoE_BASEPIPE_OUT;
+
+					}
+
+					$this->so->deletaRegraBW((int)$id_conta, $baserule, 
+												$basepipe_in, $basepipe_out);
 					
 					break;
 					
