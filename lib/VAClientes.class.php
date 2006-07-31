@@ -1411,7 +1411,7 @@ class VAClientes extends VirtexAdmin {
 									$sSQL .= " cntb_conta_hospedagem ( ";
 									$sSQL .= "		username, tipo_conta, dominio, tipo_hospedagem, senha_cript, uid, gid, home, shell, dominio_hospedagem ";
 									$sSQL .= ") VALUES ( ";
-									$sSQL .= " 		'$username', '$tipo_conta', '$dominio', '$tipo_hospedagem', '$senha_cript', '$uid', '$gid', '$home', '$shell', '$dominio_hospedagem' ";
+									$sSQL .= " 		'$username', '$tipo_conta', '$dominio', '$tipo_hospedagem', '$senha_cript', '$uid', '$gid', '$home/$dominio_hospedagem', '$shell', '$dominio_hospedagem' ";
 									$sSQL .= ") ";
 
 									$this->bd->consulta($sSQL);
