@@ -39,6 +39,7 @@
 <link href="template/default/atalhos_pesquisa.css" rel="stylesheet" type="text/css"></link>
 
 <form name="form_pesquisa" onSubmit="return pesquisaUsuario();">
+{if $privilegio_cliente == "sim"}
 <div name="box_pesquisa" id="box_pesquisa">
 	<table width="120" border="0" cellspacing="1" cellpadding="1">
 		<tr align="left">
@@ -86,7 +87,7 @@
 		</tr>
 	</table>
 
-
+{/if}
 	<div name="caixa_pesquisa" id="caixa_pesquisa" class="box_fechada">
 		<table width="100%" class="barra_pequisa" bgcolor="#7BA88B" cellspacing=1 cellpadding=0>
 			<tr>
@@ -116,12 +117,29 @@
 
 
 </div>
-<table><tr><td><a href="clientes.php?op=cadastro"><img src="template/default/images/bt_usuario_novo_barra.gif" width="77" height="73" border="0"></a></td></tr>
+<table><tr><td>
+{if $privilegio_gravar_cliente == "sim" }
+<a href="clientes.php?op=cadastro"><img src="template/default/images/bt_usuario_novo_barra.gif" width="77" height="73" border="0"></a></td></tr>
+{/if}
 <tr>
 <td>
+{if $privilegio_radius == "sim"}
 <a href="suporte.php?op=log"><img src="template/default/images/bt_log_radius.gif" width="77" height="73" border="0"></a>
+{/if}
 </td>
 </tr>
+<tr><td>
+{if $privilegio_cobranca == "sim"}
+<a href="cobranca.php?op=gerar_boletos"><img src="template/default/images/bt_emitir_faturas.gif" width="77" height="73" border="0"></a></td></tr>
+{/if}
+<tr><td>
+{if $privilegio_config == "sim"}
+<a href="configuracao.php?op=resumo"><img src="template/default/images/bt_preferencias.gif" width="77" height="73" border="0"></a></td></tr>
+{/if}
+<tr><td>
+{if $privilegio_radius == "sim"}
+<a href="suporte.php?op=graf"><img src="template/default/images/bt_graficos.gif" width="77" height="73" border="0"></a></td></tr>
+{/if}
 </table>
 </form>
 </td></tr>

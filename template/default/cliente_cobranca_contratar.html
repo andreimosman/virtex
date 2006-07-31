@@ -700,8 +700,8 @@ frmContratacao.pri_venc.value = hoje();
               <tr>
                 <td bgcolor="#FFFFFF" align="right" width="70"> <p>Tipo: </p></td>
                 <td bgcolor="#FFFFFF" width="369"> <SELECT name='tipo_hospedagem' onChange='javascript:verificaTipoHosp();' onFocusOut='javascript:verificaTipoHosp();' onClick='javascript:verificaTipoHosp();'>
-                    <OPTION VALUE='U' >www.PROVEDOR.com.br/usuario/username</OPTION>
-                    <OPTION VALUE='D' >www.dominio.com.br/</OPTION>
+                   <OPTION VALUE='D'>www.dominio.com.br/</OPTION>
+                   <OPTION VALUE='U'>www.PROVEDOR.com.br/usuario/username</OPTION>
                   </SELECT> </td>
               </tr>
               <tr>
@@ -995,6 +995,7 @@ calculaDataCarne();
                                 <input type="hidden" name="rotina" value="{$rotina}">
                                 <input type="hidden" name="id_cliente_produto" value="">
                                 <input type="hidden" name="acao" value="conf">
+                                <input type="hidden" name="tipo_dominio" value="{$dominio}">
                                 </td>
                             </tr>
                             <tr>

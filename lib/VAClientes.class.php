@@ -1387,6 +1387,7 @@ class VAClientes extends VirtexAdmin {
 								//$prefs = $this->prefs->obtem();
 						
 								$username = @$_REQUEST["username"];
+								$tipo_dominio = @$_REQUEST["tipo_dominio"];
 								$tipo_conta = @$_REQUEST["tipo"];
 								$dominio = $prefs["dominio_padrao"];
 								$tipo_hospedagem = @$_REQUEST["tipo_hospedagem"];
@@ -1404,7 +1405,7 @@ class VAClientes extends VirtexAdmin {
 								
 
 
-								
+								if ($tipo_hospedagem == "D"){
 								
 								//if (!count($erros2)){
 									$sSQL  = "INSERT INTO ";
@@ -1413,11 +1414,23 @@ class VAClientes extends VirtexAdmin {
 									$sSQL .= ") VALUES ( ";
 									$sSQL .= " 		'$username', '$tipo_conta', '$dominio', '$tipo_hospedagem', '$senha_cript', '$uid', '$gid', '$home/$dominio_hospedagem', '$shell', '$dominio_hospedagem' ";
 									$sSQL .= ") ";
+								
+								
+								}else {
+								
+									$sSQL  = "INSERT INTO ";
+									$sSQL .= " cntb_conta_hospedagem ( ";
+									$sSQL .= "		username, tipo_conta, dominio, tipo_hospedagem, senha_cript, uid, gid, home, shell, dominio_hospedagem ";
+									$sSQL .= ") VALUES ( ";
+									$sSQL .= " 		'$username', '$tipo_conta', '$dominio', '$tipo_hospedagem', '$senha_cript', '$uid', '$gid', '$home/$dominio/www/usuarios/$username', '$shell', '$dominio_hospedagem' ";
+									$sSQL .= ") ";
 
+								}
+								
 									$this->bd->consulta($sSQL);
 									////////echo "QUERY INSERÇÃO: $sSQL <BR>\n";
 
-
+								 
 
 									//SPOOL
 									////////echo "Tipo: $tipo_hospedagem <br> Username: $username <br> Dominio: $dominio <br> DominioHosp: $dominio_hospedagem<br>";
@@ -2899,7 +2912,6 @@ class VAClientes extends VirtexAdmin {
 					$sSQL .= "	ce.username = '$username'";
 					$sSQL .= "	AND ce.dominio = '$dominio'";
 					$sSQL .= "	AND ce.tipo_conta = '$tipo_conta'";
-					$sSQL .= " 	AND status = true ";
 					
 					$conta_email = $this->bd->obtemUnicoRegistro($sSQL);
 					
