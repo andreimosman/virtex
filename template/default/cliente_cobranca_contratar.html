@@ -57,7 +57,6 @@ function MM_findObj(n, d) { //v4.01
 
 function preencheDadosProduto(id_produto) {
    var frm = document.frmContratacao;
-   var lst = frm.id_produto.options;
 
    if( frm.tipo.value == "D" ) {
       lst = lista_discado;
@@ -83,7 +82,7 @@ function preencheDadosProduto(id_produto) {
       return;
    }
 
-   for(i=0;i<lst.length;i++) {
+   for(i=0;i<lst;i++) {
       if( lst[i][0] == id_produto ) {
          // Achou o registro.
 
