@@ -1958,10 +1958,12 @@ class VAClientes extends VirtexAdmin {
 			   $sSQL  = "SELECT ";
 			   $sSQL .= "	username, dominio, tipo_conta, id_conta ";
 			   $sSQL .= "FROM ";
-			   $sSQL .= "	cntb_conta ";
+			   $sSQL .= "	cntb_conta  ";
 			   $sSQL .= "WHERE ";
 			   $sSQL .= "	id_cliente_produto = '$id_cp' ";
-			   //$sSQL .= "AND tipo_conta = '$tipo' ";
+			   $sSQL .= " AND status = 'A' ";
+
+			   
 			   
 			   ////////echo $sSQL ."<hr>\n";
 			   
@@ -2897,6 +2899,7 @@ class VAClientes extends VirtexAdmin {
 					$sSQL .= "	ce.username = '$username'";
 					$sSQL .= "	AND ce.dominio = '$dominio'";
 					$sSQL .= "	AND ce.tipo_conta = '$tipo_conta'";
+					$sSQL .= " 	AND status = true ";
 					
 					$conta_email = $this->bd->obtemUnicoRegistro($sSQL);
 					
@@ -3823,6 +3826,30 @@ class VAClientes extends VirtexAdmin {
 		
 			$this->testePDF();
 			
+		}
+		
+		if ($op == "excluir_email"){
+		
+		$username = @$_REQUEST["username"];
+		$dominio = @$_REQUEST["dominio"];
+		$tipo_conta = @$_REQUEST["tipo_conta"];
+		
+			$sSQL  = "UPDATE ";
+			$sSQL .= "	cntb_conta ";
+			$sSQL .= "SET ";
+			$sSQL .= "	status = 'D' ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "	username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta'";
+
+		$this->bd->consulta($sSQL);
+		
+		$this->tpl->atribui("mensagem","Email Excluido!");
+		$this->tpl->atribui("url","clientes.php?op=pesquisa");
+		$this->tpl->atribui("target","_top");
+
+
+		$this->arquivoTemplate = "msgredirect.html";
+		
 		}
 	}
 	

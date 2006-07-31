@@ -1,6 +1,16 @@
 <!-- CLIENTE_FICHA.HTML-->
 {include file='cliente_header.html'}
 
+{literal}
+<script language="JavaScript" type="text/javascript">
+
+function confirmacao(){
+		return confirm("Tem certeza da exclusão do email?");
+}
+
+</script>
+{/literal}
+
 <table width="100" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr>
 		<td>
@@ -109,7 +119,7 @@
                     <tr>
                       <td width="84%"><font face=arial size="+1" color="#000000"><b>Ficha
                         técnica</b></font> </td>
-                      <td width="16%" align="center"> <p>[<a href="{$smarty.server.PHP_SELF}?op=conta&id_cliente={$id_cliente}&username={$username}&dominio={$dominio}&tipo_conta={$tipo_conta}">alterar</a>]</p></td>
+                      <td width="16%" align="center"> <p>[<a href="{$smarty.server.PHP_SELF}?op=conta&id_cliente={$id_cliente}&username={$username}&dominio={$dominio}&tipo_conta={$tipo_conta}">alterar</a>][<a href="clientes.php?op=excluir_email&id_cliente={$id_cliente}&username={$c.username}&dominio={$c.dominio}&tipo_conta={$c.tipo_conta}" onClick="return confirmacao();">excluir</a>]</p></td>
                     </tr>
                   </table></td>
 			              </tr>
