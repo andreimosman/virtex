@@ -9,11 +9,11 @@ function valida(){
 		window.alert("Parametros de pesquisa incompletos");
 		return false;
 	}
-	
+
 	if (frm.texto_pesquisa.value != "" && frm.texto_pesquisa.value.length < 3){
 		window.alert("O numero minimo de caracteres para pesquisa é 3");
 		return false;
-	
+
 	}
 
 
@@ -86,7 +86,7 @@ function valida(){
     <td align="center"><p><a href="clientes.php?op=cadastro&id_cliente={$v.id_cliente}">{$v.id_cliente}</a></p></td>
     <td><p><a href="clientes.php?op=cadastro&id_cliente={$v.id_cliente}">{$v.nome_razao}</a></p></td>
     <td><div align="center">
-      <p><a href="clientes.php?op=cadastro&id_cliente={$v.id_cliente}"><img src="template/default/images/gif_alterar.gif" alt="," width="16" height="16" border="0"></a></p>
+      <p><a href="clientes.php?op=cadastro&id_cliente={$v.id_cliente}"><img src="template/default/images/gif_alterar.gif" alt="Alterar Cliente" width="16" height="16" border="0"></a></p>
     </div></td>
   </tr>
   {if count($v.contas) }
@@ -95,7 +95,7 @@ function valida(){
       &nbsp;&nbsp;&nbsp;&nbsp;- <a href="{$smarty.server.PHP_SELF}?op=conta&pg=ficha&id_cliente={$v.id_cliente}&username={$c.username}&dominio={$c.dominio}&tipo_conta={$c.tipo_conta}"> [{$c.tipo_conta|trim}]{$c.username}{if
       $c.tipo_conta|trim == 'E'}@{$c.dominio}{/if} </a><br>
       {/foreach}
-      
+
     </td>
   </tr>
   {/if} {/foreach}
