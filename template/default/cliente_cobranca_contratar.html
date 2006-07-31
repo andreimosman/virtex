@@ -57,7 +57,7 @@ function MM_findObj(n, d) { //v4.01
 
 function preencheDadosProduto(id_produto) {
    var frm = document.frmContratacao;
-   var lst;
+   var lst = frm.id_produto.options;
 
    if( frm.tipo.value == "D" ) {
       lst = lista_discado;
