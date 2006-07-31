@@ -1,7 +1,15 @@
 <html>
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
-
+{literal}
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+//-->
+</script>
+{/literal}
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
 </head>
 
@@ -47,7 +55,7 @@
                                   </tr>
                                   <tr><td><br>&nbsp;<br></td></tr>
                                   <tr align="center">
-                                  <td><p><a href="{$url}">Voltar</a></p></td>
+                                  <td><p><a href={$url} {if $targ}target="_top"{/if}>Voltar</a></p></td>
                                   </tr>
                                 </table>
                               </div></td>

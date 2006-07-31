@@ -303,16 +303,28 @@ class VASuporte extends VirtexAdmin {
 				return;
 			}		
 						
-			$this->arquivoTemplate="suporte_backup.html";
 			
-			$opcoes = @$_REQUEST["opcoes"];
+			
+			$opcoes_bd = @$_REQUEST["opcoes_bd"];
+			$opcoes_vtx = @$_REQUEST["opcoes_vtx"];
+			$opcoes_so = @$_REQUEST["opcoes_so"];
+			$opcoes_outros = @$_REQUEST["opcoes_outros"];
+			
 			$acao = @$_REQUEST["acao"];
 			$op = @$_REQUEST["op"];
 			
 			if ($acao == "backup") {
 			
+				if($opcoes_bd){
+				
+				system('pg_dump -U virtex > /mosman/virtex/backup/bd_'.$hoje'.sql', $retval);
+				
+				
+				}
+			
+			
 				//Diretórios para a criação do backup
-				$bkp_dir = "/tmp/vitexbkp/";
+				$bkp_dir = "/tmp/virtexbkp/";
 				$bkp_dir_bd = $bkp_dir . "bd/";
 				$bkp_dir_so = $bkp_dir . "so/";
 				$bkp_dir_vtx = $bkp_dir . "vtx/";
@@ -338,6 +350,13 @@ class VASuporte extends VirtexAdmin {
 									);
 				
 			}
+			
+			
+			
+			$this->arquivoTemplate="suporte_backup.html";
+			
+			
+	
 		}
 	}
 
