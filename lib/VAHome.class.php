@@ -23,7 +23,7 @@ class VAHome extends VirtexAdmin {
 			if( ! $this->privPodeLer("_CLIENTES") ) {
 				$privilegio_cliente = 'nao';
 			}
-			if( ! $this->privPodeLer("_CONFIG_EQUIPAMENTOS") ) {
+			if( ! $this->privPodeLer("_CONFIG_PREFERENCIAS") ) {
 				$privilegio_config = 'nao';
 			}
 			if( ! $this->privPodeLer("_COBRANCA") ) {
