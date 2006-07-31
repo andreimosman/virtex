@@ -124,11 +124,10 @@ var id_produto_saved = '{$id_produto}';
 function alteraTipo() {
 	var frm = document.frmContratacao;
 	tipo = frm.tipo;
-
-	e = frm.id_produto.options;
+	var esc = frm.id_produto.options;
 
 	// Remove ps elementos
-	for(i=e.length-1;i>=0;--i) {
+	for(i=esc.length-1;i>=0;--i) {
 		frm.id_produto.remove(i);
 	}
 
@@ -800,7 +799,7 @@ frmContratacao.pri_venc.value = hoje();
               <tr>
                 <td width="89" height="26" align="right" bgcolor="#FFFFFF">
 <p>Produto:</p></td>
-                <td width="65" bgcolor="#FFFFFF"> <SELECT name='id_produto' onChange="javascript:alteraProduto();" >
+                <td width="65" bgcolor="#FFFFFF"> <SELECT name=id_produto onChange="javascript:alteraProduto();" >
                   </SELECT> </td>
                 <td width="255" align="right" bgcolor="#FFFFFF">
 <p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Criar usuario de
