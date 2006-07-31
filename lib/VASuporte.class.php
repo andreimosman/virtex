@@ -317,7 +317,7 @@ class VASuporte extends VirtexAdmin {
 			
 				if($opcoes_bd){
 				
-				system('pg_dump -U virtex > /mosman/virtex/backup/bd_'.$hoje'.sql', $retval);
+//				system('pg_dump -U virtex > /mosman/virtex/backup/bd_'.$hoje'.sql', $retval);
 				
 				
 				}
