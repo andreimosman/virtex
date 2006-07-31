@@ -25,8 +25,8 @@ class VirtexAdmin extends MWebApp {
 
 	protected $lic;
 	
-	public function VirtexAdmin() {
-		parent::MWebApp("etc/virtex.ini",'template/default');
+	public function VirtexAdmin($ini="etc/virtex.ini",$tpldir="template/default") {
+		parent::MWebApp($ini,$tpldir);
 		
 		$this->lic = new VirtexAdminLicenca();
 		

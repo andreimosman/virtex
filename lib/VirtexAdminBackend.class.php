@@ -23,7 +23,7 @@ class VirtexAdminBackend extends VirtexAdmin {
 	
 	public function __construct() {
 		// Inicializações da classe pai
-		parent::__construct();
+		parent::__construct("etc/virtex.ini","template/backend");
 		
 		$this->_console = new Console_Getopt;
 		$this->_args = $this->_console->readPHPArgv();

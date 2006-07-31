@@ -1,0 +1,29 @@
+$TTL 86400
+@       IN      SOA     leticia.{$dominio_hospedagem} leticia@{$dominio_hospedagem} (
+                        {$serial} 	; serial
+                        28800 		; refresh
+                        7200 		; retry
+                        604800 		; expire
+                        86400 		; ttl
+                        )
+;
+
+                NS ns.{$dominio_hospedagem}.
+              {if !$hosp_ns2 or $hosp_ns2 != $hosp_ns1}
+                NS ns2.{$dominio_hospedagem}.
+              {/if}
+                MX 5 leticia.{$dominio_hospedagem}.
+
+ns 	IN      A       {$hosp_ns1}
+{if !$hosp_ns2 or $hosp_ns2 != $hosp_ns1}
+ns2	IN      A       {$hosp_ns2}
+{/if}
+www     IN      A       {$hosp_server}
+pop3    IN      A       {$hosp_server}
+smtp    IN      A       {$hosp_server}
+mail    IN      A       {$hosp_server}
+ftp     IN      A       {$hosp_server}
+dns1    IN      A       {$hosp_server}
+dns2    IN      A       {$hosp_server}
+webmail IN      A       {$hosp_server}
+
