@@ -372,7 +372,21 @@ function datavenc(){
 	var frm = document.frmContratacao;
 	var msg = new Array();
 
-	if (frm.pri_venc.value < frm.data_contratacao.value){
+	dia_venc = (document.forms[0].pri_venc.value.substring(0,2));
+	mes_venc = (document.forms[0].pri_venc.value.substring(3,5));
+	ano_venc = (document.forms[0].pri_venc.value.substring(6,10));
+
+	dia_atual = (document.forms[0].data_contratacao.value.substring(0,2));
+	mes_atual = (document.forms[0].data_contratacao.value.substring(3,5));
+	ano_atual = (document.forms[0].data_contratacao.value.substring(6,10));
+
+	if	(((dia_venc < dia_atual)&&(mes_venc < mes_atual)&&(ano_venc < ano_atual)) ||
+		((mes_venc < mes_atual)&&(ano_venc == ano_atual)) ||
+		((dia_venc == dia_atual)&&(mes_venc == mes_atual)&&(ano_venc < ano_atual)) ||
+		((dia_venc > 31)&&(mes_venc > 12)&&(ano_venc > 2099))||
+		((dia_venc < dia_atual)&&(mes_venc == mes_atual)&&(ano_venc == ano_atual))||
+		((dia_venc == dia_atual)&&(mes_venc < mes_atual)&&(ano_venc == ano_atual))||
+		((dia_venc < dia_atual)&&(mes_venc > mes_atual)&&(ano_venc < ano_atual))){
 
 		window.alert("::-- Data do Primeiro Vencimento Inválida.--:: \n É necessário que a data de primeiro vencimento seja MAIOR do que a data de contratação.");
 		//msg.push("Data de Contratação maior que Data do Primeiro Vencimento");
