@@ -5,7 +5,6 @@
  */
 require_once("defs.php");
 
-
 $sys = new VAInterface_cliente_home();
 //$sys->executa();
 if( $sys->userLogin() ) {
