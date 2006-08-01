@@ -393,7 +393,7 @@ function datavenc(){
 		((dia_venc < dia_atual)&&(mes_venc > mes_atual)&&(ano_venc < ano_atual))){
 
 		window.alert("::-- Data do Primeiro Vencimento Inválida.--:: \n É necessário que a data de primeiro vencimento seja MAIOR do que a data de contratação.");
-		//msg.push("Data de Contratação maior que Data do Primeiro Vencimento");
+
 		frm.pri_venc.focus();
 
 }
@@ -404,10 +404,10 @@ function validaForm() {
 	var frm = document.frmContratacao;
 	var msg = new Array();
 
-	if (frm.pri_venc.value < frm.data_contratacao.value){
-		msg.push("Data de Contratação maior que Data do Primeiro Vencimento");
-
-	}
+	//if (frm.pri_venc.value < frm.data_contratacao.value){
+	//	msg.push("Data de Contratação maior que Data do Primeiro Vencimento");
+//
+//	}
 
 
 
