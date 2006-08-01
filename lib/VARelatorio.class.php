@@ -511,7 +511,7 @@ class VARelatorio extends VirtexAdmin {
 		
 		
 	} else if ($op == "config"){
-					if( ! $this->privPodeLer("_RELATORIOS_CONFIG") ) {
+					if( ! $this->privPodeLer("_RELATORIO_CONFIG") ) {
 						$this->privMSG();
 						return;
 				}		
@@ -558,7 +558,7 @@ class VARelatorio extends VirtexAdmin {
 		$this->arquivoTemplate = "relatorio_config_carga.html";
 
 	} else if ($op == "grafico"){
-				if( ! $this->privPodeLer("_RELATORIOS_CONFIG") ) {
+				if( ! $this->privPodeLer("_RELATORIO_CONFIG") ) {
 							$this->privMSG();
 							return;
 				}	
