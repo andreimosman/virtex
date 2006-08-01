@@ -370,8 +370,8 @@
 						$parametros_dns = $fila[$i]["tipo"].",".$hosp_ns1.",".$hosp_ns2.",".$hosp_server;
 						$ad->processa($fila[$i]["op"],$fila[$i]["id_conta"],$fila[$i]["parametros"],$parametros_dns);
 	
-						//$sSQL = "UPDATE sptb_spool SET status = 'OK' WHERE id_spool = '".$this->bd->escape($fila[$i]["id_spool"])."'";
-						//$this->bd->consulta($sSQL);
+						$sSQL = "UPDATE sptb_spool SET status = 'OK' WHERE id_spool = '".$this->bd->escape($fila[$i]["id_spool"])."'";
+						$this->bd->consulta($sSQL);
 					}
 	
 					// Fim da transação

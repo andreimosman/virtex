@@ -53,6 +53,13 @@ include ("defs.php");
 			SOFreeBSD::installDir($dir1);
 			SOFreeBSD::installDir($dir2);
 			SOFreeBSD::installDir($dir3);
+			
+			$path = $email_base."/".$dominio."/".$username."/Maildir";
+			$comando = "chown -R nobody:nobody ".$path;
+			
+			SistemaOperacional::executa($comando);
+			
+			
 		}
 		
 		
