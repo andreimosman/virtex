@@ -1982,7 +1982,7 @@ class VAClientes extends VirtexAdmin {
 			   $sSQL .= "	cntb_conta  ";
 			   $sSQL .= "WHERE ";
 			   $sSQL .= "	id_cliente_produto = '$id_cp' ";
-			   $sSQL .= " AND status = 'A' ";
+			   $sSQL .= " AND status != 'C' ";
 
 			   
 			   
