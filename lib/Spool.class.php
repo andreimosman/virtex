@@ -168,7 +168,7 @@ class Spool {
 		$sSQL .= "	sptb_spool (";
 		$sSQL .= "		registro, destino, tipo, op, id_conta, parametros, status ";
 		$sSQL .= ") VALUES (";
-		$sSQL .= "		now(), '$destino', '$tipo', 'a', '$id_conta', '$dominio, 'A' ";
+		$sSQL .= "		now(), '$destino', '$tipo', 'a', '$id_conta', '$dominio', 'A'";
 		$sSQL .= ")";
 		
 		$this->bd->consulta($sSQL);

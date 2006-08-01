@@ -22,98 +22,102 @@
                   <form name="form1" method="post" action="">
 
                   <table width="500" border="0" cellspacing="2" cellpadding="0">
-                    <tr>
+                    <tr> 
                       <td width="122"><p><strong>Dominio Padr&atilde;o:</strong></p></td>
                       <td colspan="3" width="368"><input name="dominio_padrao" type="text" id="dominio_padrao" value="{$prefs.dominio_padrao}" size="40"></td>
                     </tr>
-                    <tr>
+                    <tr> 
                       <td><p><strong>Nome:</strong></p></td>
                       <td colspan="3"><input name="nome" type="text" id="nome" value="{$prefs.nome}" size="40"></td>
                     </tr>
-                    <tr>
+                    <tr> 
                       <td><p><strong>Radius Server:</strong></p></td>
                       <td colspan="3"><input name="radius_server" type="text" id="radius_server" value="{$prefs.radius_server}" size="30"></td>
                     </tr>
-                    <tr>
+                    <tr> 
                       <td><p>&nbsp;</p></td>
                       <td colspan="3">&nbsp;</td>
                     </tr>
-                    <tr>
+                    <tr> 
                       <td><p><strong>Servidor de Hospedagem:</strong></p></td>
                       <td colspan="3"><input name="hosp_server" type="text" id="hosp_server" value="{$prefs.hosp_server}" size="30"></td>
                     </tr>
-                    <tr>
+                    <tr> 
                       <td><p><strong>NS1</strong></p></td>
                       <td colspan="3"><input name="hosp_ns1" type="text" id="hosp_ns1" value="{$prefs.hosp_ns1}" size="30"></td>
                     </tr>
-                    <tr>
+                    <tr> 
                       <td><p><strong>NS2</strong></p></td>
                       <td colspan="3"><input name="hosp_ns2" type="text" id="hosp_ns2" value="{$prefs.hosp_ns2}" size="30"></td>
                     </tr>
-                    <tr>
+                    <tr> 
                       <td colspan="4"> <table width="100%" border="0" cellspacing="2" cellpadding="0">
-                          <tr>
+                          <tr> 
                             <td width="30%"><p><strong>UID Hospedagem</strong></p></td>
-                            <td width="20%"><strong>
+                            <td width="20%"><strong> 
                               <input name="hosp_uid" type="text" id="hosp_uid" value="{$prefs.hosp_uid}" size="10">
                               </strong></td>
-                            <td width="32%" align="center"><strong>
+                            <td width="32%" align="center"><strong> 
                               <p>GID Hospedagem</p>
                               </strong></td>
-                            <td width="18%"><strong>
+                            <td width="18%"><strong> 
                               <input name="hosp_gid" type="text" id="hosp_gid2" value="{$prefs.hosp_gid}" size="10">
                               </strong></td>
                           </tr>
                         </table></td>
                     </tr>
-                    <tr>
+                    <tr> 
                       <td><p><strong>Diret&oacute;rio base de Hosp.</strong></p></td>
                       <td colspan="3"><input name="hosp_base" type="text" id="hosp_base2" value="{$prefs.hosp_base}" size="40"></td>
                     </tr>
                     <tr>
+                      <td><p><strong>Diret&oacute;rio base de E-Mail</strong></p></td>
+                      <td colspan="3"><input name="email_base" type="text" id="hosp_base" value="{$prefs.email_base}" size="40"></td>
+                    </tr>
+                    <tr> 
                       <td><p>&nbsp;</p></td>
                       <td colspan="3">&nbsp;</td>
                     </tr>
-                    <tr>
+                    <tr> 
                       <td><p><strong>Servidor de E-Mail</strong></p></td>
                       <td colspan="3"><input name="mail_server" type="text" id="mail_server" value="{$prefs.mail_server}" size="40"></td>
                     </tr>
-                    <tr>
+                    <tr> 
                       <td colspan="4"><table width="100%" border="0" cellspacing="2" cellpadding="0">
-                          <tr>
+                          <tr> 
                             <td width="30%"><p><strong>UID E-mail</strong></p></td>
-                            <td width="20%"><strong>
+                            <td width="20%"><strong> 
                               <input name="mail_uid" type="text" id="mail_uid" value="{$prefs.mail_uid}" size="10">
                               </strong></td>
                             <td width="32%" align="center"> <p><strong>GID E-mail</strong></p></td>
-                            <td width="18%"><strong>
+                            <td width="18%"><strong> 
                               <input name="mail_gid" type="text" id="mail_gid" value="{$prefs.mail_gid}" size="10">
                               </strong></td>
                           </tr>
                         </table></td>
                     </tr>
-                    <tr>
+                    <tr> 
                       <td><p><strong>POP</strong></p></td>
                       <td colspan="3"><input name="pop_host" type="text" id="pop_host" value="{$prefs.pop_host}" size="40"></td>
                     </tr>
-                    <tr>
+                    <tr> 
                       <td><p><strong>SMTP</strong></p></td>
                       <td colspan="3"><input name="smtp_host" type="text" id="smtp_host" value="{$prefs.smtp_host}" size="40"></td>
                     </tr>
-                    <tr>
+                    <tr> 
                       <td><p><strong>Agrupar Clientes por cidade</strong></p></td>
                       <td colspan="3"><input name="agrupar" type="text" value="{$prefs.agrupar}" size="20" maxlength="5" id="agrupar"></td>
                     </tr>
-                    <tr>
+                    <tr> 
                       <td>&nbsp;</td>
-                      <td colspan="3"><input name="op" type="hidden" id="op" value="{$op}">
-                        <input name="id_preferencia" type="hidden" id="id_preferencia" value="{$prefs.id_preferencia}">
+                      <td colspan="3"><input name="op" type="hidden" id="op" value="{$op}"> 
+                        <input name="id_preferencia" type="hidden" id="id_preferencia" value="{$prefs.id_preferencia}"> 
                         <input name="acao" type="hidden" id="acao" value="alt"></td>
                     </tr>
-                    <tr align="center">
+                    <tr align="center"> 
                       <td>&nbsp;</td>
                     </tr>
-                    </table>
+                  </table>
                     <table>
                     <tr align="center">
                       <td><input type="button" name="voltar" value="Voltar" onClick="javascript: location='configuracao.php?op=resumo';"></td>

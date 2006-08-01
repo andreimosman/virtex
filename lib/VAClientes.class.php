@@ -220,10 +220,10 @@ class VAClientes extends VirtexAdmin {
 		$this->tpl->atribui("id_cliente",$id_cliente);
 		$this->tpl->atribui("tipo",$tipo);
 		
-		//if( ! $this->privPodeLer("_CLIENTES") ) {
-		//	$this->privMSG();
-		//	return;
-		//}			
+		if( ! $this->privPodeLer("_CLIENTES") ) {
+			$this->privMSG();
+			return;
+		}			
 		
 		// Utilizado pelo menu ou por outras funcionalidades quaisquer.
 		if( $id_cliente ) {
@@ -233,10 +233,10 @@ class VAClientes extends VirtexAdmin {
 
 
 		if ($op == "cadastro"){
-				//if( ! $this->privPodeGravar("_CLIENTES") ) {
-				//	$this->privMSG();
-				//	return;
-				//}			
+				if( ! $this->privPodeGravar("_CLIENTES") ) {
+					$this->privMSG();
+					return;
+				}			
 		
 
 			$erros = array();
@@ -519,15 +519,15 @@ class VAClientes extends VirtexAdmin {
 			$this->arquivoTemplate = "clientes_cadastro.html";
 			
 		} else if ( $op == "pesquisa" ){
-				//if( ! $this->privPodeLer("_CLIENTES_FICHA") ) {
-				//			$this->privMSG();
-				//			return;
-				//}		
+				if( ! $this->privPodeLer("_CLIENTES_FICHA") ) {
+							$this->privMSG();
+							return;
+				}		
 				
-				//if( ! $this->privPodeGravar("_CLIENTES_FICHA") ) {
-				//			$this->privMSG();
-				//			return;
-				//}		
+				if( ! $this->privPodeGravar("_CLIENTES_FICHA") ) {
+							$this->privMSG();
+							return;
+				}		
 		
 
 				$erros = array();
@@ -728,10 +728,10 @@ class VAClientes extends VirtexAdmin {
 			// Sistema de contratação de produtos e resumo de cobrança
 			////////echo "cobranca<br>";
 			
-				//if( ! $this->privPodeLer("_CLIENTES_COBRANCA") ) {
-				//	$this->privMSG();
-				//	return;
-				//}	
+				if( ! $this->privPodeLer("_CLIENTES_COBRANCA") ) {
+					$this->privMSG();
+					return;
+				}	
 			
 			
 			$rotina = @$_REQUEST["rotina"];
@@ -952,10 +952,10 @@ class VAClientes extends VirtexAdmin {
 				
 
 			} else if( $rotina == "contratar" ) {
-				//if( ! $this->privPodeGravar("_CLIENTES_COBRANCA") ) {
-				//	$this->privMSG();
-				//	return;
-				//}	
+				if( ! $this->privPodeGravar("_CLIENTES_COBRANCA") ) {
+					$this->privMSG();
+					return;
+				}	
 								
 				$enviando = false;
 				$exibeForm = true;
@@ -1122,7 +1122,9 @@ class VAClientes extends VirtexAdmin {
 							//	//////echo "SQL: $sSQL <br>\n";
 							//}
 
-							
+							$server = $this->prefs->obtem("geral","mail_server");
+
+							$this->spool->adicionarEmail($server, $id_conta, $this->bd->escape(@$_REQUEST["username"]), $dominioPadrao);
 						
 						}
 						
@@ -1414,7 +1416,13 @@ class VAClientes extends VirtexAdmin {
 									$sSQL .= ") VALUES ( ";
 									$sSQL .= " 		'$username', '$tipo_conta', '$dominio', '$tipo_hospedagem', '$senha_cript', '$uid', '$gid', '$home/$dominio_hospedagem', '$shell', '$dominio_hospedagem' ";
 									$sSQL .= ") ";
-								
+									
+									$ns1 = $this->prefs->obtem("geral","hosp_ns1");
+									$ns2 = $this->prefs->obtem("geral","hosp_ns2");
+									
+									$this->spool->configuraDNS($ns1, "N1", $id_conta, $dominio_hospedagem);
+									$this->spool->configuraDNS($ns2, "N2", $id_conta, $dominio_hospedagem);
+									
 								
 								}else {
 								
@@ -1721,10 +1729,10 @@ class VAClientes extends VirtexAdmin {
 				$this->arquivoTemplate = "cliente_cobranca_relatorio.html";
 			
 			} else if( $rotina == "excluir" ){
-				//if( ! $this->privPodeGravar("_CLIENTES_COBRANCA_ELIMINAR_CONTRATO") ) {
-				//	$this->privMSG();
-				//	return;
-				//}	
+				if( ! $this->privPodeGravar("_CLIENTES_COBRANCA_ELIMINAR_CONTRATO") ) {
+					$this->privMSG();
+					return;
+				}	
 
 			
 			
@@ -1749,10 +1757,10 @@ class VAClientes extends VirtexAdmin {
 			
 			}else if ( $rotina == "excl_confirma"){
 			
-				//if( ! $this->privPodeGravar("_CLIENTES_COBRANCA_ELIMINAR_CONTRATO") ) {
-				//	$this->privMSG();
-				//	return;
-				//}				
+				if( ! $this->privPodeGravar("_CLIENTES_COBRANCA_ELIMINAR_CONTRATO") ) {
+					$this->privMSG();
+					return;
+				}				
 			
 			
 			
@@ -1795,10 +1803,10 @@ class VAClientes extends VirtexAdmin {
 			
 			}else if ($rotina == "carne"){
 			
-				//if( ! $this->privPodeGravar("_CLIENTES_COBRANCA") ) {
-				//	$this->privMSG();
-				//	return;
-				//}				
+				if( ! $this->privPodeGravar("_CLIENTES_COBRANCA") ) {
+					$this->privMSG();
+					return;
+				}				
 			
 			
 			
@@ -1855,10 +1863,10 @@ class VAClientes extends VirtexAdmin {
 		
 		} else if ($op == "produto") {
 		
-				//if( ! $this->privPodeGravar("_CLIENTES_COBRANCA") ) {
-				//	$this->privMSG();
-				//	return;
-				//}	
+				if( ! $this->privPodeGravar("_CLIENTES_COBRANCA") ) {
+					$this->privMSG();
+					return;
+				}	
 
 
 			// PRECISA PASSAR O TIPO PRO MENU
@@ -2129,7 +2137,7 @@ class VAClientes extends VirtexAdmin {
 					
 					
 					
-					/*if ($tipo_conta == "BL"){
+					if ($tipo_conta == "BL"){
 						if( ! $this->privPodeGravar("_CLIENTES_BANDALARGA") ) {
 								$this->privMSG();
 								return;
@@ -2155,7 +2163,7 @@ class VAClientes extends VirtexAdmin {
 						}					
 					
 					
-					}*/
+					}
 					
 					
 					
@@ -2343,6 +2351,9 @@ class VAClientes extends VirtexAdmin {
 
 							$this->bd->consulta($sSQL);
 							////echo "E-MAIL: $sSQL <br>";
+							
+							$server = $this->prefs->obtem("geral","mail_server");
+							$this->spool->adicionarEmail($server, $id_conta, $this->bd->escape(@$_REQUEST["username"]), $dominioPadrao);
 
 						}
 	
@@ -2542,6 +2553,11 @@ class VAClientes extends VirtexAdmin {
 
 									$this->bd->consulta($sSQL);
 									////////echo "QUERY INSERÇÃO: $sSQL <BR>\n";
+									$ns1 = $this->prefs->obtem("geral","hosp_ns1");
+									$ns2 = $this->prefs->obtem("geral","hosp_ns2");
+									
+									$this->spool->configuraDNS($ns1, "N1", $id_conta, $dominio_hospedagem);
+									$this->spool->configuraDNS($ns2, "N2", $id_conta, $dominio_hospedagem);
 
 									//SPOOL
 									////////echo "Tipo: $tipo_hospedagem <br> Username: $username <br> Dominio: $dominio <br> DominioHosp: $dominio_hospedagem<br>";
@@ -2556,7 +2572,7 @@ class VAClientes extends VirtexAdmin {
 									$sSQL .= "VALUES (";
 									$sSQL .= "     '" . @$_REQUEST["username"] . "', ";
 									$sSQL .= "     'E', ";
-									$sSQL .= " $dominio , ";
+									$sSQL .= " '$dominio' , ";
 									//$sSQL .= "     '" . $dominioPadrao . "', ";
 									$sSQL .= "     '".(int)@$_REQUEST["quota"]."', ";
 									$sSQL .= "     '". @$_REQUEST["username"]."@". $dominio ."' ";
@@ -2564,6 +2580,10 @@ class VAClientes extends VirtexAdmin {
 
 									$this->bd->consulta($sSQL);
 								//echo "E-MAIL: $sSQL <br>";
+								
+								$server = $this->prefs->obtem("geral","mail_server");
+								
+								$this->spool->adicionarEmail($server, $id_conta, $this->bd->escape(@$_REQUEST["username"]), $dominio);
 								
 								break;
 						}						
@@ -2963,7 +2983,7 @@ class VAClientes extends VirtexAdmin {
 			
 			if( $acao == "cad" ) {
 			
-					/*if ($tipo_conta == "BL"){
+					if ($tipo_conta == "BL"){
 						if( ! $this->privPodeGravar("_CLIENTES_BANDALARGA") ) {
 								$this->privMSG();
 								return;
@@ -2989,7 +3009,7 @@ class VAClientes extends VirtexAdmin {
 						}					
 					
 					
-					}*/			
+					}			
 			
 			
 			
@@ -3557,10 +3577,10 @@ class VAClientes extends VirtexAdmin {
 		
 		} else if ($op =="altera_contrato"){
 						
-				//if( ! $this->privPodeGravar("_CLIENTES") ) {
-				//		$this->privMSG();
-				//		return;
-				//}
+				if( ! $this->privPodeGravar("_CLIENTES") ) {
+						$this->privMSG();
+						return;
+				}
 						
 		
 				$sSQL  = "SELECT ";
@@ -3571,10 +3591,10 @@ class VAClientes extends VirtexAdmin {
 				$sSQL .= "	id_conta = '". @$_REQUEST["$id_conta"] ."'";
 				
 		} else if ($op == "excluir_cliente"){
-				//if( ! $this->privPodeGravar("_ELIMINAR_CLIENTE") ) {
-				//		$this->privMSG();
-				//		return;
-				//}
+				if( ! $this->privPodeGravar("_ELIMINAR_CLIENTE") ) {
+						$this->privMSG();
+						return;
+				}
 		
 		
 		

@@ -10,6 +10,9 @@
 	 
 	require_once("Atuador.class.php");
 	require_once("AtuadorBandaLarga.class.php");
+	require_once("AtuadorEmail.class.php");
+	require_once("AtuadorHospedagem.class.php");
+	require_once("AtuadorDNS.class.php");
 
 
 	require_once(PATH_LIB."/VirtexAdminBackend.class.php");
@@ -245,6 +248,141 @@
 				// Fim da transação
 				$this->bd->consulta("END");
 			}
+			
+		/**
+		 * Consulta Spool Email p/ esta mquina
+		 */
+		 
+		 $ae = new AtuadorEmail($this->bd);
+		 
+		 $lista_srve = $ae->obtemListaServidores();
+		 
+		 if( count($lista_srve) ) {
+				// Início da transação
+				$this->bd->consulta("BEGIN");
+
+		 		// FAZ O SELECT		 		
+				$sSQL  = "SELECT ";
+				$sSQL .= "   id_spool, op, id_conta, parametros ";
+				$sSQL .= "FROM ";
+				$sSQL .= "   sptb_spool ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "   tipo = 'E' ";
+				$sSQL .= "   AND status = 'A' ";
+				$sSQL .= "   AND destino in ('". implode("','",$lista_srve) ."') ";
+				$sSQL .= "FOR UPDATE";
+				
+				$fila = $this->bd->obtemRegistros($sSQL);
+				
+				$base_email = $this->prefs->obtem("geral","email_base");
+
+
+				for($i=0;$i<count($fila);$i++) {
+					$ae->processa($fila[$i]["op"],$fila[$i]["id_conta"],$fila[$i]["parametros"],$base_email);
+					
+					$sSQL = "UPDATE sptb_spool SET status = 'OK' WHERE id_spool = '".$this->bd->escape($fila[$i]["id_spool"])."'";
+					$this->bd->consulta($sSQL);
+				}
+		 		
+				// Fim da transação
+				$this->bd->consulta("END");		 		
+		 }
+		 
+		/**
+		 * Consulta Spool Hospedagem p/ esta mquina
+		 */
+
+		 $ah = new AtuadorHospedagem($this->bd,$this->tpl);
+
+		 $lista_srvh = $ah->obtemListaServidores();
+
+		 if( count($lista_srvh) ) {
+				// Início da transação
+				$this->bd->consulta("BEGIN");
+
+				// FAZ O SELECT		 		
+				$sSQL  = "SELECT ";
+				$sSQL .= "   id_spool, op, id_conta, parametros ";
+				$sSQL .= "FROM ";
+				$sSQL .= "   sptb_spool ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "   tipo = 'H' ";
+				$sSQL .= "   AND status = 'A' ";
+				$sSQL .= "   AND destino in ('". implode("','",$lista_srvh) ."') ";
+				$sSQL .= "FOR UPDATE";
+
+				$fila = $this->bd->obtemRegistros($sSQL);
+
+				$base_hosp = $this->prefs->obtem("geral","hosp_base");
+				
+				$hosp_server = $this->prefs->obtem("geral","hosp_server");
+				
+				$parametros_hospedagem = $base_hosp.",".$hosp_server;
+
+
+				for($i=0;$i<count($fila);$i++) {
+					$ah->processa($fila[$i]["op"],$fila[$i]["id_conta"],$fila[$i]["parametros"],$parametros_hospedagem);
+
+					$sSQL = "UPDATE sptb_spool SET status = 'OK' WHERE id_spool = '".$this->bd->escape($fila[$i]["id_spool"])."'";
+					$this->bd->consulta($sSQL);
+				}
+
+				// Fim da transação
+				$this->bd->consulta("END");		 		
+ 		}
+	
+			/**
+			 * Consulta Spool DNS p/ esta mquina
+			 */
+	
+			 $ad = new AtuadorDNS($this->bd,$this->tpl);
+	
+			 $lista_srvd = $ad->obtemListaServidores();
+	
+			 if( count($lista_srvd) ) {
+					// Início da transação
+					$this->bd->consulta("BEGIN");
+	
+					// FAZ O SELECT		 		
+					$sSQL  = "SELECT ";
+					$sSQL .= "   id_spool, op, id_conta, parametros, tipo ";
+					$sSQL .= "FROM ";
+					$sSQL .= "   sptb_spool ";
+					$sSQL .= "WHERE ";
+					$sSQL .= "   (tipo = 'N1' OR tipo = 'N2') ";
+					$sSQL .= "   AND status = 'A' ";
+					$sSQL .= "   AND destino in ('". implode("','",$lista_srvd) ."') ";
+					$sSQL .= "FOR UPDATE";
+	
+					$fila = $this->bd->obtemRegistros($sSQL);
+	
+					$hosp_ns1 = $this->prefs->obtem("geral","hosp_ns1");
+					
+					$hosp_ns2 = $this->prefs->obtem("geral","hosp_ns2");
+					$hosp_server = $this->prefs->obtem("geral","hosp_server");
+					//$parametros_dns = $tipo.",".$hosp_ns1.",".$hosp_ns2;
+	
+						
+	
+	
+					for($i=0;$i<count($fila);$i++) {
+					
+						$parametros_dns = $fila[$i]["tipo"].",".$hosp_ns1.",".$hosp_ns2.",".$hosp_server;
+						$ad->processa($fila[$i]["op"],$fila[$i]["id_conta"],$fila[$i]["parametros"],$parametros_dns);
+	
+						//$sSQL = "UPDATE sptb_spool SET status = 'OK' WHERE id_spool = '".$this->bd->escape($fila[$i]["id_spool"])."'";
+						//$this->bd->consulta($sSQL);
+					}
+	
+					// Fim da transação
+					$this->bd->consulta("END");		 		
+ 		}
+	
+	
+	
+	
+	
+
 		
 		}
 
