@@ -542,7 +542,9 @@
 		 */	
 		protected function rcstart() {
 			$comando = "/mosman/virtex/radius/sbin/radiusd -y";
+			echo "EXECUTANDO\n\n";
 			SOFreeBSD::executa($comando);
+			echo "EXECUTADO\n\n";
 		}
 
 		protected function rcstop() {
