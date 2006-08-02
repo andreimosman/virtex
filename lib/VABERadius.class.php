@@ -294,10 +294,16 @@
 					 */
 					if( @$user["mac"] ) {
 						// MAC CADASTRADO, COMPARA
-						if( $this->foneinfo != $user["mac"] ) {
+						
+							$user_mac = $this->mac($user["mac"]);
+							$_foneinfo = $this->mac($this->foneinfo);
+						//if( $this->foneinfo != $user["mac"] ) {
+						if ($_foneinfo != $user_mac){	
+							
 							$mensagem = "MAC não confere";
 							$this->log(VABERadius::$log_erro,$this->username,$mensagem,$this->foneinfo,$this->nas);
 							return(-1);
+							
 						}
 					} else {
 						// MAC NÃO CADASTRADO. CADASTRA!!!
@@ -454,6 +460,20 @@
 
 			$this->bd->consulta($sSQL);
 
+		}
+		
+		protected function mac($mac){
+		
+			   $mac = strtoupper($mac);
+			   $el = explode(":",$mac);
+			   for($i=0;$i<count($el);$i++) {
+			     $el[$i] = "0".$el[$i];
+			   }
+   			$mac = implode(":",$el);
+   			
+   			return($mac);
+		
+		
 		}
 
 	}
