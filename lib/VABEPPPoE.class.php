@@ -218,24 +218,34 @@
 		 * Starta o PPPoE em todas as interfaces
 		 */
 		protected function rcstart() {
-			/**
-			$interfaces = $this->obtemListaNasPPPoEAtivos();
+			
+			$bl = new AtuadorBandaLarga($this->bd);
+			$interfaces = $this->bl->obtemListaNasPPPoEAtivos();
+			
+			//$interfaces = $this->obtemListaNasPPPoEAtivos();
 			
 			for ($i=0;$i<count($interfaces);$i++){
 			
 				$interface = $interface["iface"];
 				$comando_start = "/usr/libexec/pppoed -d -P /var/run/pppoe.pid -p '*' -l pppoe-in ".$interface;
 				
+				system($comando_start);
+				
 			}
-			*/
+			
 		}
 		
 		/**
 		 * Mata o processo PPPoE nas interfaces
 		 */
 		protected function rcstop() {
+		
 			$comando_stop_pppoe = "/usr/bin/killall -HUP pppoed";
 			$comando_stop_ppp = "/usr/bin/killall -HUP ppp";
+			
+			system($comando_stop_pppoe);
+			system($comando_stop_ppp);
+			
 		}
 		
 		

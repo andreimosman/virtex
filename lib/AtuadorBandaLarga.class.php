@@ -22,8 +22,13 @@
 		protected $pppoe_iface_list;
 		protected $pppoe_lista_nas;
 		protected $fator;
-
 		
+		public $FW_IP_BASERULE;
+		public $FW_IP_BASEPIPE_IN;
+		public $FW_IP_BASEPIPE_OUT;
+		public $FW_PPPoE_BASERULE;
+		public $FW_PPPoE_BASEPIPE_IN;
+		public $FW_PPPoE_BASEPIPE_OUT;		
 		
 	
 		/**
