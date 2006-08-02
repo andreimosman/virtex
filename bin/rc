@@ -11,7 +11,7 @@ PHP=/usr/local/bin/php
 
 ${VTXHOME}/radius/sbin/radiusd -y
 
-. ${VTXHOME}/etc/rc.firewall
+#. ${VTXHOME}/etc/rc.firewall
 
 ${PHP} ${VTXBIN}/vtx-spool.php -b
 ${PHP} ${VTXBIN}/vtx-pppoe.php -RU
