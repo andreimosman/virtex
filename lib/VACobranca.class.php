@@ -3101,6 +3101,7 @@ class VACobranca extends VirtexAdmin {
 			//migra a bagaça
 			 
 			$this->tpl->atribui("mensagem","O Produto esta com caracteristicas diferentes das contratadas anteriormente. Use MIGRAÇÃO.<br><br> <a href=cobranca.php?op=contratos&id_cliente_produto=$id_cliente_produto&id_cliente=$id_cliente&tipo_produto=$tipo_produto><b>IR PARA MIGRAÇÃO</b></a>");
+			$this->tpl->atribui("url","home.php?op=renovacao_contrato");
 			$this->arquivoTemplate = "msgredirect.html";
 			
 		
