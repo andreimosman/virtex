@@ -82,9 +82,6 @@ class VAClientes extends VirtexAdmin {
 									
 		}
 
-		
-						$this->tpl->atribui("bl_priv",$bl_priv);
-
 									
 		$this->tpl->atribui("prod_contr",$prod_contr);
 		return;
@@ -241,9 +238,13 @@ class VAClientes extends VirtexAdmin {
 
 
 		if ($op == "cadastro"){
-				if( ! $this->privPodeGravar("_CLIENTES") ) {
+				if(( ! $this->privPodeGravar("_CLIENTES") )&&( ! $this->privPodeLer("_CLIENTES") )) {
 					$this->privMSG();
 					return;
+				}			
+								if( ! $this->privPodeLer("_CLIENTES") ) {
+									$this->privMSG();
+									return;
 				}			
 		
 
@@ -265,6 +266,11 @@ class VAClientes extends VirtexAdmin {
 
 
 			if( $acao ) {
+			
+											if( ! $this->privPodeGravar("_CLIENTES") ) {
+												$this->privMSG();
+												return;
+				}		
 			   // Se ele recebeu o campo ação é pq veio de um submit
 			   $enviando = true;
 			} else {
@@ -532,7 +538,6 @@ class VAClientes extends VirtexAdmin {
 							return;
 			   }
 				if (( ! $this->privPodeGravar("_CLIENTES_FICHA"))&&( ! $this->privPodeLer("_CLIENTES_FICHA") )) {
-							echo "cu!!";
 							return;
 				}		
 		
@@ -1871,12 +1876,51 @@ class VAClientes extends VirtexAdmin {
 		
 		} else if ($op == "produto") {
 		
+					if ($tipo_conta == "BL"){
+						if( ! $this->privPodeLer("_CLIENTES_BANDALARGA") ) {
+								$this->privMSG();
+								return;
+							} if(( ! $this->privPodeGravar("_CLIENTES_BANDALARGA") )&&( ! $this->privPodeLer("_CLIENTES_BANDALARGA") ) ) {
+								$this->privMSG();
+								return;
+						}
+					}else if($tipo_conta == "D"){
+						if( ! $this->privPodeLer("_CLIENTES_DISCADO") ) {
+								$this->privMSG();
+								return;
+						}
+							 if(( ! $this->privPodeGravar("_CLIENTES_DISCADO") )&&( ! $this->privPodeLer("_CLIENTES_DISCADO") ) ) {
+														$this->privMSG();
+														return;
+												}
 
+										
+					}else if($tipo_conta == "H"){
+					
+						if( ! $this->privPodeLer("_CLIENTES_HOSPEDAGEM") ) {
+								$this->privMSG();
+								return;
+							} if(( ! $this->privPodeGravar("_CLIENTES_HOSPEDAGEM") )&&( ! $this->privPodeLer("_CLIENTES_HOSPEDAGEM") ) ) {
+								$this->privMSG();
+								return;
+						}
+					
+
+					}else if ($tipo_conta == "E"){
+					
+						if( ! $this->privPodeLer("_CLIENTES_EMAIL") ) {
+								$this->privMSG();
+								return;
+						}
+						 if(( ! $this->privPodeGravar("_CLIENTES_EMAIL") )&&( ! $this->privPodeLer("_CLIENTES_EMAIL") ) ) {
+								$this->privMSG();
+								return;
+						}
+					
+					
+					
+					}
 		
-				if( ! $this->privPodeGravar("_CLIENTES_COBRANCA") ) {
-					$this->privMSG();
-					return;
-				}	
 
 
 			// PRECISA PASSAR O TIPO PRO MENU
@@ -2084,7 +2128,9 @@ class VAClientes extends VirtexAdmin {
 
 
 
-			if ($sop == "nova_conta"){		
+			if ($sop == "nova_conta"){	
+			
+			//AQUI!!!
 			
 				$this->tpl->atribui("id_cliente_produto",@$_REQUEST["id_cliente_produto"]);
 				// Obtem os dados do produto contratado
