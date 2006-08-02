@@ -1876,7 +1876,7 @@ class VAClientes extends VirtexAdmin {
 		
 		} else if ($op == "produto") {
 		
-					if ($tipo_conta == "BL"){
+					if ($tipo == "BL"){
 						if( ! $this->privPodeLer("_CLIENTES_BANDALARGA") ) {
 								$this->privMSG();
 								return;
@@ -1884,7 +1884,7 @@ class VAClientes extends VirtexAdmin {
 								$this->privMSG();
 								return;
 						}
-					}else if($tipo_conta == "D"){
+					}else if($tipo == "D"){
 						if( ! $this->privPodeLer("_CLIENTES_DISCADO") ) {
 								$this->privMSG();
 								return;
@@ -1895,7 +1895,7 @@ class VAClientes extends VirtexAdmin {
 												}
 
 										
-					}else if($tipo_conta == "H"){
+					}else if($tipo == "H"){
 					
 						if( ! $this->privPodeLer("_CLIENTES_HOSPEDAGEM") ) {
 								$this->privMSG();
@@ -1906,7 +1906,7 @@ class VAClientes extends VirtexAdmin {
 						}
 					
 
-					}else if ($tipo_conta == "E"){
+					}else if ($tipo == "E"){
 					
 						if( ! $this->privPodeLer("_CLIENTES_EMAIL") ) {
 								$this->privMSG();
