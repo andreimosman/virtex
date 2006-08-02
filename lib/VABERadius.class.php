@@ -65,7 +65,7 @@
 			$this->initVars();
 			
 			// Configura o getopt e chama as opções para processamento posterior
-			$this->_shortopts = "BUDACu:w:f:ESs:I:O:n:i:t:c:";
+			$this->_shortopts = "RUDACu:w:f:ESs:I:O:n:i:t:c:";
 			$this->getopt();
 		
 		}
