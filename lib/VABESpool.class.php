@@ -144,13 +144,13 @@
 				/**
 				 * BandaLarga: PPPoE
 				 */
-				SOFreeBSD::executa("/usr/local/bin/php /mosman/virtex/app/bin/vtx-pppoe.php -RU &");
+				SOFreeBSD::executa("/usr/local/bin/php /mosman/virtex/app/bin/vtx-pppoe.php -RU");
 				
 
 				/**
 				 * Radius
 				 */
-				SOFreeBSD::executa("/usr/local/bin/php /mosman/virtex/app/bin/vtx-radius.php -RU &");
+				//SOFreeBSD::executa("/usr/local/bin/php /mosman/virtex/app/bin/vtx-radius.php -RU &");
 				
 				/**
 				 * Hospedagem
