@@ -6,8 +6,11 @@ require_once("MUtils.class.php");
 
 class VAClientes extends VirtexAdmin {
 
+
+
 	public function VAClientes() {
 		parent::VirtexAdmin();
+
 	}
 
 	protected function validaFormulario() {
@@ -78,8 +81,10 @@ class VAClientes extends VirtexAdmin {
 			$prod_contr[ trim(strtolower($prcliente[$i]["tipo"])) ] = true;
 									
 		}
-									
-				
+
+		
+						$this->tpl->atribui("bl_priv",$bl_priv);
+
 									
 		$this->tpl->atribui("prod_contr",$prod_contr);
 		return;
@@ -212,7 +217,8 @@ class VAClientes extends VirtexAdmin {
 		return( $this->bd->obtemUnicoRegistro($sSQL) );;	
 	}
 
-	public function processa($op=null) {
+	public function processa($op=null) {	
+	
 		$id_cliente = @$_REQUEST["id_cliente"];
 		$tipo = @$_REQUEST["tipo"];
 		// Variáveis gerais de template
@@ -227,8 +233,10 @@ class VAClientes extends VirtexAdmin {
 		
 		// Utilizado pelo menu ou por outras funcionalidades quaisquer.
 		if( $id_cliente ) {
+		
 			$cliente = $this->obtemCliente($id_cliente);   
 			$this->tpl->atribui("cliente",$cliente);
+			
 		}
 
 
@@ -510,8 +518,7 @@ class VAClientes extends VirtexAdmin {
 		        $this->tpl->atribui("obs",@$reg["obs"]);
 		        
 		        $this->tpl->atribui("titulo",@$titulo);// para que no clientes_cadastro.html a variavel do smart titulo consiga pegar o que foi definido no $titulo.
-		        
-					
+
 
 			
 			
@@ -519,19 +526,19 @@ class VAClientes extends VirtexAdmin {
 			$this->arquivoTemplate = "clientes_cadastro.html";
 			
 		} else if ( $op == "pesquisa" ){
+				
 				if( ! $this->privPodeLer("_CLIENTES_FICHA") ) {
 							$this->privMSG();
 							return;
-				}		
-				
-				if( ! $this->privPodeGravar("_CLIENTES_FICHA") ) {
-							$this->privMSG();
+			   }
+				if (( ! $this->privPodeGravar("_CLIENTES_FICHA"))&&( ! $this->privPodeLer("_CLIENTES_FICHA") )) {
+							echo "cu!!";
 							return;
 				}		
 		
 
 				$erros = array();
-
+				
 				$texto_pesquisa = @$_REQUEST['texto_pesquisa'];
 				$tipo_pesquisa = @$_REQUEST['tipo_pesquisa'];
 				$a = @$_REQUEST['a'];
@@ -868,6 +875,7 @@ class VAClientes extends VirtexAdmin {
 			$lista_contrato = $this->bd->obtemRegistros($sSQL);
 			
 			////////echo "lista: $sSQL <br>";
+
 				$this->tpl->atribui("lista_contrato",$lista_contrato);
 				$this->tpl->atribui("cliente",$cliente);
 				$this->tpl->atribui("id_cliente", $id_cliente);
@@ -1859,9 +1867,11 @@ class VAClientes extends VirtexAdmin {
 			
 			
 			
-		
+		//AQUI!
 		
 		} else if ($op == "produto") {
+		
+
 		
 				if( ! $this->privPodeGravar("_CLIENTES_COBRANCA") ) {
 					$this->privMSG();
@@ -1928,7 +1938,7 @@ class VAClientes extends VirtexAdmin {
 			
 			$this->obtemPR($id_cliente);
 
-			
+
 			
 			
 			
@@ -2074,7 +2084,7 @@ class VAClientes extends VirtexAdmin {
 
 
 
-			if ($sop == "nova_conta"){
+			if ($sop == "nova_conta"){		
 			
 				$this->tpl->atribui("id_cliente_produto",@$_REQUEST["id_cliente_produto"]);
 				// Obtem os dados do produto contratado
@@ -2138,7 +2148,10 @@ class VAClientes extends VirtexAdmin {
 					
 					
 					if ($tipo_conta == "BL"){
-						if( ! $this->privPodeGravar("_CLIENTES_BANDALARGA") ) {
+						if( ! $this->privPodeLer("_CLIENTES_BANDALARGA") ) {
+								$this->privMSG();
+								return;
+							}else if( ! $this->privPodeGravar("_CLIENTES_BANDALARGA") ) {
 								$this->privMSG();
 								return;
 						}
