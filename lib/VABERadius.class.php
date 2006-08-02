@@ -8,6 +8,7 @@
 	 */
 
 	require_once(PATH_LIB."/VirtexAdminBackend.class.php");
+	require_once("SOFreeBSD.class.php");
 
 	class VABERadius extends VirtexAdminBackend {
 	
