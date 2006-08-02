@@ -3076,10 +3076,23 @@ class VAClientes extends VirtexAdmin {
 						}
 
 						if( $altera_rede && $selecao_ip == "A" ) {
-							$endereco_rede = $this->obtemRede($id_nas);
-							$rede = $endereco_rede["rede"];
-							$excluir = true;
-							$incluir = true;
+						
+							if ($nas_atual["tipo_nas"] == "I" && $nas_novo["tipo_nas"] == "P"){
+								$endereco_ip = $this->obtemIP($id_nas);
+								$ip = $endereco_ip["ipaddr"];
+								$rede = NULL;
+								//echo "IP: $ip <br>";
+								//$excluir = true;
+								//$incluir = true;
+							}ELSE{
+								
+								$endereco_rede = $this->obtemRede($id_nas);
+								$rede = $endereco_rede["rede"];
+								$excluir = true;
+								$incluir = true;
+								
+								//echo "REDE: $rede <br>";
+							}
 						}
 
 						if( $id_nas != $nas_orig ) {
@@ -3223,6 +3236,11 @@ class VAClientes extends VirtexAdmin {
 								$uSQL .= ", ipaddr = null, ";
 								$uSQL .= "  rede = '".$rede."' ";
 								
+							}else if ($ip){
+							
+								$uSQL .= ", ipaddr = '$ip' ";
+								$uSQL .= ", rede = null ";
+							
 							}
 
 							$redirecionar = @$_REQUEST["redirecionar"];
