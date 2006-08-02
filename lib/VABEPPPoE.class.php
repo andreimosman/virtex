@@ -225,12 +225,8 @@
 			$interfaces = $bl->obtemListaNasPPPoEAtivos();
 			
 			for ($i=0;$i<count($interfaces);$i++){
-			
-				$interface = $interface["iface"];
-				$comando_start = "/usr/libexec/pppoed -d -P /var/run/pppoe.pid -p '*' -l pppoe-in ".$interface;
-				
+				$comando_start = "/usr/libexec/pppoed -d -P /var/run/pppoe.pid -p '*' -l pppoe-in ".$interfaces[$i];
 				SOFreeBSD::executa($comando_start);
-				
 			}
 			
 		}
