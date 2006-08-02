@@ -8,29 +8,32 @@
 
 <body>
 <table width="500" border="0" align="center">
-  <tr> 
-    <td> <div align="center"> 
+  <tr>
+    <td> <div align="center">
         <table width="420" border="0" cellpadding="0" cellspacing="1" bordercolor="#000000" bgcolor="#000000">
-          <tr> 
-            <td align="center" valign="middle" bordercolor="#FFFFFF" bgcolor="#FFFFFF"> 
+          <tr>
+            <td align="center" valign="middle" bordercolor="#FFFFFF" bgcolor="#FFFFFF">
               <table width="100%" height="100%" align="center" bordercolor="#CCCCCC">
-                <tr> 
-                  <td height="50" colspan="5" bgcolor="#EAF4EE"> <div align="center"><font size="2" face="Arial, Helvetica, sans-serif"><strong>Contratos 
+                <tr>
+                  <td height="50" colspan="5" bgcolor="#EAF4EE"> <div align="center"><font size="2" face="Arial, Helvetica, sans-serif"><strong>Contratos
                       que vencer&atilde;o em at&eacute; 30 dias:</strong></font></div></td>
                 </tr>
-                <tr> 
+                <tr>
                   <td bgcolor="#f1f1f1"> <p align="center"><strong>Cliente </strong></p></td>
                   <td bgcolor="#f1f1f1"> <p align="center"><strong>Descrição</strong></p></td>
                   <td bgcolor="#f1f1f1"> <p align="center"><strong>Vencimento</strong></p></td>
                   <td bgcolor="#f1f1f1"> <p align="center"><strong>Valor</strong></p></td>
                 </tr>
-                {foreach item=c from=$lista_contrato} 
-                <tr> 
+                {foreach item=c from=$lista_contrato}
+                {if $c.data_renovacao >= $smarty.now}
+                {else}
+                <tr>
                   <td><div align="center"><a href="cobranca.php?op=renovacao&id_cliente_produto={$c.id_cliente_produto}&id_cliente={$c.id_cliente}">{$c.nome_razao}</a></div></td>
                   <td><div align="center"><a href="cobranca.php?op=renovacao&id_cliente_produto={$c.id_cliente_produto}&id_cliente={$c.id_cliente}">{$c.nome}</a></div></td>
                   <td><div align="center"><a href="cobranca.php?op=renovacao&id_cliente_produto={$c.id_cliente_produto}&id_cliente={$c.id_cliente}"><font size="1">{$c.data_renovacao|date_format:"%d/%m/%Y"}</font></a></div></td>
                   <td><div align="center"><a href="cobranca.php?op=renovacao&id_cliente_produto={$c.id_cliente_produto}&id_cliente={$c.id_cliente}">{$c.valor_contrato}</a></div></td>
                 </tr>
+                {/if}
                 {/foreach} </table></td>
           </tr>
         </table>

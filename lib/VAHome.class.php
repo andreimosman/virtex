@@ -48,9 +48,6 @@ class VAHome extends VirtexAdmin {
 	
 		if( $op == "home" ) {
 
-
-
-		   
 				$licenca = $this->lic->obtemLicenca();
 				$hoje = Date("Y-m-d");
 				//echo $hoje;
@@ -70,7 +67,7 @@ class VAHome extends VirtexAdmin {
 			$sSQL .= "WHERE ";
 			$sSQL .= "f.id_cliente_produto = c.id_cliente_produto ";
 			$sSQL .= "AND p.tipo = f.tipo_produto ";
-			$sSQL .= "AND f.data_renovacao <= now() + interval '30 day' ";
+			$sSQL .= "AND f.data_renovacao < now() + interval '30 day' ";
 			$sSQL .= "AND cl.id_cliente = c.id_cliente  ";
 			$sSQL .= "AND c.id_cliente_produto = f.id_cliente_produto ";
 			$sSQL .= "AND p.id_produto = c.id_produto ";
@@ -103,7 +100,7 @@ class VAHome extends VirtexAdmin {
 			$sSQL .= "WHERE ";
 			$sSQL .= "f.id_cliente_produto = c.id_cliente_produto ";
 			$sSQL .= "AND p.tipo = f.tipo_produto ";
-			$sSQL .= "AND f.data_renovacao <= now() + interval '30 day' ";
+			$sSQL .= "AND f.data_renovacao < now()  + interval '30 day' ";
 			$sSQL .= "AND cl.id_cliente = c.id_cliente  ";
 			$sSQL .= "AND c.id_cliente_produto = f.id_cliente_produto ";
 			$sSQL .= "AND p.id_produto = c.id_produto ";
