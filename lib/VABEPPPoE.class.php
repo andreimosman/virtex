@@ -218,7 +218,7 @@
 		 * Starta o PPPoE em todas as interfaces
 		 */
 		protected function rcstart() {
-			$interfaces = $this->obtemNasPPPoEAtivos();
+			$interfaces = $this->obtemListaNasPPPoEAtivos();
 			
 			for ($i=0;$i<count($interfaces);$i++){
 			
@@ -232,20 +232,8 @@
 		 * Mata o processo PPPoE nas interfaces
 		 */
 		protected function rcstop() {
-		
-		
-			$interfaces = $this->obtemListaNasPPPoEAtivos();
-			
-			for ($i=0;$i<count($interfaces);$i++){
-								
-				$comando_stop_pppoe = "/usr/bin/killall -HUP pppoed";
-				$comando_stop_ppp = "/usr/bin/killall -HUP ppp";
-				
-			
-			}
-		
-
-		
+			$comando_stop_pppoe = "/usr/bin/killall -HUP pppoed";
+			$comando_stop_ppp = "/usr/bin/killall -HUP ppp";
 		}
 		
 		
