@@ -218,6 +218,7 @@
 		 * Starta o PPPoE em todas as interfaces
 		 */
 		protected function rcstart() {
+			/**
 			$interfaces = $this->obtemListaNasPPPoEAtivos();
 			
 			for ($i=0;$i<count($interfaces);$i++){
@@ -226,6 +227,7 @@
 				$comando_start = "/usr/libexec/pppoed -d -P /var/run/pppoe.pid -p '*' -l pppoe-in ".$interface;
 				
 			}
+			*/
 		}
 		
 		/**
