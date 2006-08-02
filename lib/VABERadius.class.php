@@ -541,12 +541,12 @@
 		 */	
 		protected function rcstart() {
 			$comando = "/mosman/virtex/radius/sbin/radiusd -y 2>&1";
-			SistemaOperacional::executa($comando);
+			SOFreeBSD::executa($comando);
 		}
 
 		protected function rcstop() {
 			$comando = "/usr/bin/killall -9 radiusd";
-			SistemaOperacional::executa($comando);
+			SOFreeBSD::executa($comando);
 		}
 
 	}
