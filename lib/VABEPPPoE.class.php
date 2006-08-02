@@ -219,7 +219,7 @@
 		/**
 		 * Starta o PPPoE em todas as interfaces
 		 */
-		protected function rcstart() {
+		public function rcstart() {
 			
 			$bl = new AtuadorBandaLarga($this->bd);
 			$interfaces = $bl->obtemListaNasPPPoEAtivos();
@@ -234,7 +234,7 @@
 		/**
 		 * Mata o processo PPPoE nas interfaces
 		 */
-		protected function rcstop() {
+		public function rcstop() {
 		
 			$comando_stop_pppoe = "/usr/bin/killall -HUP pppoed";
 			$comando_stop_ppp = "/usr/bin/killall -HUP ppp";

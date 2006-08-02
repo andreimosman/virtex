@@ -144,18 +144,18 @@
 				 * BandaLarga: PPPoE
 				 */
 				//SOFreeBSD::executa("/usr/local/bin/php /mosman/virtex/app/bin/vtx-pppoe.php -RU");
-				require_once(PATH_LIB."/VABEPPPoE.class.php");
-				$p = new VABEPPPoE();
-				$p->rcstart();
+				//require_once(PATH_LIB."/VABEPPPoE.class.php");
+				//$p = new VABEPPPoE();
+				//$p->rcstart();
 				
 
 				/**
 				 * Radius
 				 */
 				//SOFreeBSD::executa("/usr/local/bin/php /mosman/virtex/app/bin/vtx-radius.php -RU &");
-				require_once(PATH_LIB."/VABERadius.class.php");
-				$r = new VABERadius();
-				$r->rcstart();
+				//require_once(PATH_LIB."/VABERadius.class.php");
+				//$r = new VABERadius();
+				//$r->rcstart();
 				
 				/**
 				 * Hospedagem

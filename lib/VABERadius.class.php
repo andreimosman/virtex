@@ -540,12 +540,12 @@
 		/**
 		 * RC Scripts
 		 */	
-		protected function rcstart() {
+		public function rcstart() {
 			$comando = "/mosman/virtex/radius/sbin/radiusd -y";
 			SOFreeBSD::executa($comando);
 		}
 
-		protected function rcstop() {
+		public function rcstop() {
 			$comando = "/usr/bin/killall -9 radiusd";
 			SOFreeBSD::executa($comando);
 		}
