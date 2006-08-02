@@ -541,10 +541,8 @@
 		 * RC Scripts
 		 */	
 		protected function rcstart() {
-			$comando = "/mosman/virtex/radius/sbin/radiusd -y &";
-			echo "EXECUTANDO\n\n";
+			$comando = "/mosman/virtex/radius/sbin/radiusd -y 2>&1";
 			SOFreeBSD::executa($comando);
-			echo "EXECUTADO\n\n";
 		}
 
 		protected function rcstop() {
