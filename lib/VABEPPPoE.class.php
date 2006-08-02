@@ -222,9 +222,7 @@
 		protected function rcstart() {
 			
 			$bl = new AtuadorBandaLarga($this->bd);
-			$interfaces = $this->bl->obtemListaNasPPPoEAtivos();
-			
-			//$interfaces = $this->obtemListaNasPPPoEAtivos();
+			$interfaces = $bl->obtemListaNasPPPoEAtivos();
 			
 			for ($i=0;$i<count($interfaces);$i++){
 			
