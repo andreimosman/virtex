@@ -197,20 +197,29 @@ class VACobranca extends VirtexAdmin {
 			         	//INICIO DO CADASTRO DE PRODUTOS
 			         
 			         	//INSERÇÃO NA TABELA prtb_produto
+			         	
+			         	$quota_por_conta_valor = @$_REQUEST['$quota_por_conta'];
+
+			         	if ($quota_por_conta_valor == ""){
+			         	
+			         	$quota_por_conta_valor = '0';
+			         	
+			         	}
+
 				 	$sSQL  = "INSERT INTO ";
 				 	$sSQL .= "prtb_produto ";
 				 	$sSQL .= "(id_produto, nome, descricao, tipo, valor, disponivel, ";
 				 	$sSQL .= "num_emails, quota_por_conta, vl_email_adicional, permitir_outros_dominios, ";
 				 	$sSQL .= "numero_contas)";
 				 	$sSQL .= "VALUES (";
-				 	$sSQL .= " '" . $this->bd->escape($id_produto) . "', ";
+				 	$sSQL .= " '$id_produto', ";
 				 	$sSQL .= " '" . $this->bd->escape(@$_REQUEST['nome']) . "', ";
 				 	$sSQL .= " '" . $this->bd->escape($descricao) . "', ";
 				 	$sSQL .= " '" . $this->bd->escape($prod) . "', ";
 				 	$sSQL .= " '" . $this->bd->escape($valor) . "', ";
 				 	$sSQL .= " '" . $this->bd->escape(@$_REQUEST['disponivel']) . "', ";
 				 	$sSQL .= " '" . $this->bd->escape($num_emails) . "', ";
-				 	$sSQL .= " '" . $this->bd->escape($quota_por_conta) . "', ";
+				 	$sSQL .= " '$quota_por_conta_valor' , ";
 				 	$sSQL .= " '" . $this->bd->escape($vl_email_adicional) . "', ";
 				 	$sSQL .= " '" . $this->bd->escape(@$_REQUEST['permitir_outros_dominios']) . "', ";
 				 	$sSQL .= " '" . $this->bd->escape($numero_contas) ."' ";
