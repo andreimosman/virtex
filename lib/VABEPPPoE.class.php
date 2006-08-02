@@ -9,6 +9,8 @@
 
 	require_once(PATH_LIB."/VirtexAdminBackend.class.php");
 	require_once(PATH_LIB."/AtuadorBandaLarga.class.php");
+	//require_once(PATH_LIB."/Atuador.class.php");
+	require_once("SOFreeBSD.class.php");
 
 	class VABEPPPoE extends VirtexAdminBackend {
 	
@@ -229,7 +231,7 @@
 				$interface = $interface["iface"];
 				$comando_start = "/usr/libexec/pppoed -d -P /var/run/pppoe.pid -p '*' -l pppoe-in ".$interface;
 				
-				system($comando_start);
+				SOFreeBSD::executa($comando_start);
 				
 			}
 			
@@ -243,8 +245,8 @@
 			$comando_stop_pppoe = "/usr/bin/killall -HUP pppoed";
 			$comando_stop_ppp = "/usr/bin/killall -HUP ppp";
 			
-			system($comando_stop_pppoe);
-			system($comando_stop_ppp);
+			SOFreeBSD::executa($comando_stop_pppoe);			
+			SOFreeBSD::executa($comando_stop_ppp);
 			
 		}
 		
