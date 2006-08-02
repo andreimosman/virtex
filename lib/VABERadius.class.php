@@ -465,16 +465,18 @@
 		
 		protected function mac($mac){
 		
-			   $mac = strtoupper($mac);
-			   $el = explode(":",$mac);
-			   for($i=0;$i<count($el);$i++) {
-			     $el[$i] = "0".$el[$i];
-			   }
-   			$mac = implode(":",$el);
-   			
-   			return($mac);
-		
-		
+			$mac = strtoupper($mac);
+			$el = explode(":",$mac);
+			for($i=0;$i<count($el);$i++) {
+				if( strlen($el[$i] < 2 ) {
+					$el[$i] = "0".$el[$i];
+				}
+			}
+			$mac = implode(":",$el);
+
+			return($mac);
+
+
 		}
 
 	}
