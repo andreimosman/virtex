@@ -82,7 +82,7 @@
 			while( list($iface,$dados) = each($n) ) {
 				if( $dados["enabled"] ) {
 					if( $tipo == "PPPoE" ) {
-						$this->fator[] = $dados["fator"];
+						$this->fator[ $dados["nas_id"] ] = $dados["fator"];
 						$this->pppoe_lista_nas[] = $dados["nas_id"];
 						$this->pppoe_nas_list[ $dados["nas_id"] ] = $iface;
 						$this->pppoe_iface_list[$iface] = $dados["nas_id"];
@@ -202,7 +202,8 @@
 					}
 
 					
-					$fator = $this->
+					$fator = @$this->fator[ $nas_id ];
+					if( !$fator ) $fator = 1;
 
 					$this->so->adicionaRegraBW((int)$id_conta,$baserule,
 					                             $basepipe_in, $basepipe_out,
