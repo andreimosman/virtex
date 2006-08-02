@@ -289,16 +289,17 @@
 				if( $this->tipo_conta == "BL" ) {
 					// BANDA LARGA
 					
+					$this->foneinfo = $this->mac($this->foneinfo);
+					
 					/**
 					 * Validação/Registro de MAC.
 					 */
 					if( @$user["mac"] ) {
 						// MAC CADASTRADO, COMPARA
-						
-							$user_mac = $this->mac($user["mac"]);
-							$_foneinfo = $this->mac($this->foneinfo);
-						//if( $this->foneinfo != $user["mac"] ) {
-						if ($_foneinfo != $user_mac){	
+
+						$user_mac = $this->mac($user["mac"]);
+
+						if ($this->foneinfo != $user_mac){	
 							
 							$mensagem = "MAC não confere";
 							$this->log(VABERadius::$log_erro,$this->username,$mensagem,$this->foneinfo,$this->nas);
