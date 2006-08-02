@@ -271,9 +271,69 @@ class VirtexAdmin extends MWebApp {
 				$this->arquivoTemplate="msgredirect.html";
 	}
 	
-	
+		/** 
+    	 *  Interface cliente
+		 */
+	public function UserLogin() {
+		 $op = @$_REQUEST["op"];
+
+		if( !isset($_SESSION["usrLogin"]) || $op == "logout" ) {
+			// Se a variavel de sessao ainda não foi setada ou o
+			// cara está fazendo um logout. Zera a sessao.
+			$this->usrLogin = new UserLogin($this->bd);
+		} else {
+			// Pega da sessao.
+			$this->usrLogin = @$_SESSION["usrLogin"];
+			$this->usrLogin->bd = $this->bd;
+		}
+		
+
+		$op = @$_REQUEST["op"];
+		$tmp = explode("/",$_SERVER["PHP_SELF"]);
+		$arquivoPHP = $tmp[ count($tmp)-1 ];
+		$veriPrimeiroLogin = !($arquivoPHP == "administrador.php" && $op == "altera");
+		
+		if( !$this->usrLogin->estaLogado() ) {
+			// Redireciona pra tela de login
+			$url = 'index.php';
+			$mensagem = 'Tentativa de acesso invalido ao sistema';
+			$target = '_top';
+
+			$this->tpl->atribui('url',$url);
+			$this->tpl->atribui('mensagem',$mensagem);
+			$this->tpl->atribui('target',$target);
+
+
+			$this->arquivoTemplate = 'jsredir.html';
+
+			return false;
+
+		}
+		
+/*					if( $veriPrimeiroLogin && $this->usrLogin->primeiroLogin() ) {
+						$url = 'administrador.php?op=altera';
+						//$mensagem = 'Tentativa de acesso invalido ao sistema';
+						$target = '_top';
+		
+						// Tela de alteração de senha
+						$this->tpl->atribui('url',$url);
+						//$this->tpl->atribui('mensagem',$mensagem);
+						$this->tpl->atribui('target',$target);
+		
+						$this->arquivoTemplate = 'jsredir.html';
+						return false;
+					}*/
+					
+				// Joga a variável pra sessao.
+				$_SESSION["usrLogin"] = $this->usrLogin;
+				return true;	
+			}	
+	 			
+
 }
+			
+	
 
 
+?>	
 
-?>
