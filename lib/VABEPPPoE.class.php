@@ -205,7 +205,9 @@
 				$parametros_pppoe = $this->interface . "," . $this->pid;
 
 				$abl->processa('a',$info["id_conta"],$parametros,$parametros_pppoe);
+				
 			} else {
+			
 				$abl->processa('x',$info["id_conta"],"");
 			
 			}
@@ -216,7 +218,14 @@
 		 * Starta o PPPoE em todas as interfaces
 		 */
 		protected function rcstart() {
-		
+			$interfaces = $this->obtemNasPPPoEAtivos();
+			
+			for ($i=0;$i<count($interfaces);$i++){
+			
+				$interface = $interface["iface"];
+				$comando_start = "/usr/libexec/pppoed -d -P /var/run/pppoe.pid -p '*' -l pppoe-in ".$interface;
+				
+			}
 		}
 		
 		/**
@@ -224,14 +233,23 @@
 		 */
 		protected function rcstop() {
 		
+		
+			$interfaces = $this->obtemListaNasPPPoEAtivos();
+			
+			for ($i=0;$i<count($interfaces);$i++){
+								
+				$comando_stop_pppoe = "/usr/bin/killall -HUP pppoed";
+				$comando_stop_ppp = "/usr/bin/killall -HUP ppp";
+				
+			
+			}
+		
+
+		
 		}
 		
 		
-		
-		
-		
-		
-		
+	
 		protected function print_who() {
 		
 		}

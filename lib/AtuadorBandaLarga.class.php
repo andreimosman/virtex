@@ -21,6 +21,9 @@
 		protected $pppoe_nas_list;
 		protected $pppoe_iface_list;
 		protected $pppoe_lista_nas;
+		protected $fator;
+
+		
 		
 	
 		/**
@@ -68,19 +71,23 @@
 				$this->pppoe_nas_list 	= array();
 				$this->pppoe_iface_list	= array();
 				$this->pppoe_lista_nas 	= array();
+				$this->fator = array();
 			} else {
 				$this->nas_list   = array();
 				$this->iface_list = array();
 				$this->lista_nas  = array();
+				$this->fator = array();
 			}
 
 			while( list($iface,$dados) = each($n) ) {
 				if( $dados["enabled"] ) {
 					if( $tipo == "PPPoE" ) {
+						$this->fator[] = $dados["fator"];
 						$this->pppoe_lista_nas[] = $dados["nas_id"];
 						$this->pppoe_nas_list[ $dados["nas_id"] ] = $iface;
 						$this->pppoe_iface_list[$iface] = $dados["nas_id"];
 					} else {
+						$this->fator[] = $dados["fator"];
 						$this->lista_nas[] = $dados["nas_id"];
 						$this->nas_list[ $dados["nas_id"] ] = $iface;
 						$this->iface_list[$iface] = $dados["nas_id"];
@@ -194,9 +201,12 @@
 
 					}
 
+					
+					$fator = $this->
+
 					$this->so->adicionaRegraBW((int)$id_conta,$baserule,
 					                             $basepipe_in, $basepipe_out,
-					                             $iface, $ext_if, $ip_cliente, $mac, $up, $down, $user );
+					                             $iface, $ext_if, $ip_cliente, $mac, $up*$fator, $down*$fator, $user );
 					
 					break;
 					 
