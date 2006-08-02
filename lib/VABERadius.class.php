@@ -29,6 +29,13 @@
 		protected $tipo_conta;	// Tipo da conta que está tentando fazer autenticação
 		
 		/**
+		 * Opções de inicialização
+		 */
+		protected $rc;
+		protected $rcup;
+		protected $rcdown;
+		
+		/**
 		 * Parametros de autenticação
 		 */
 		protected $username;
@@ -58,7 +65,7 @@
 			$this->initVars();
 			
 			// Configura o getopt e chama as opções para processamento posterior
-			$this->_shortopts = "ACu:w:f:ESs:I:O:n:i:t:c:";
+			$this->_shortopts = "BUDACu:w:f:ESs:I:O:n:i:t:c:";
 			$this->getopt();
 		
 		}
@@ -71,6 +78,10 @@
 			$this->auth 			= 0;
 			$this->acct 			= 0;
 			$this->tipo_conta		= "";
+			
+			$this->rc 				= 0;
+			$this->rcup 			= 0;
+			$this->rcdown 			= 0;
 			
 			$this->username 		= "";
 			$this->password 		= "";
@@ -112,6 +123,19 @@
 						break;
 					case 'C':
 						$this->acct = 1;
+						break;
+					
+					/**
+					 * RC start/stop
+					 */
+					case 'R':
+						$this->rc = 1;
+						break;
+					case 'U':
+						$this->rcup = 1;
+						break;
+					case 'D':
+						$this->rcdown = 1;
 						break;
 					
 					/**
@@ -173,8 +197,35 @@
 			$mensagem = "";
 			
 			/**
-			 * Consistências de parâmetros
+			 * Rotina de inicialização
 			 */
+			
+			if( $this->rc ) {
+
+				if( !$this->rcup && !$this->rcdown) {
+					// Restart
+					$this->rcup		= 1;
+					$this->rcdown 	= 1;
+				}
+
+				// Para o Radius				
+				if( $this->rcdown ) {
+					$this->rcstop();
+				}
+				
+				// Inicia o Radius
+				if( $this->rcup ) {
+					$this->rcstart();
+				}
+			
+				return(0);
+			}
+			
+
+
+			/**
+			 * Consistências de parâmetros
+			 */			
 			
 			if( ($this->auth && $this->acct) || (!$this->auth && !$this->acct) ) {
 				// A execução requer um (e somente um) parametro de tipo de operação (autenticação ou accounting)
@@ -462,6 +513,11 @@
 			$this->bd->consulta($sSQL);
 
 		}
+
+
+		/**
+		 * Padronização do MAC (para fins de comparação)
+		 */
 		
 		protected function mac($mac){
 		
@@ -477,6 +533,20 @@
 			return($mac);
 
 
+		}
+
+
+		/**
+		 * RC Scripts
+		 */	
+		protected function rcstart() {
+			$comando = "/mosman/virtex/radius/sbin/radiusd -y 2>&1";
+			SistemaOperacional::executa($comando);
+		}
+
+		protected function rcstop() {
+			$comando = "/usr/bin/killall -9 radiusd";
+			SistemaOperacional::executa($comando);
 		}
 
 	}
