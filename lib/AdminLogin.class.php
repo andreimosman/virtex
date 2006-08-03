@@ -29,7 +29,7 @@ class AdminLogin {
 	 * Constructor
 	 * Recebe referencia à instância do banco de dados.
 	 */
-	function VirtexAdminLogin($bd) {
+	function __construct($bd) {
 		$this->bd = $bd;
 		$this->logout();
 	}
