@@ -47,15 +47,11 @@ class VirtexAdmin extends MWebApp {
 			$this->spool = new Spool($this->bd);
 
 			if( isset($_SESSION["admLogin"]) ) {
-				echo "TEM SESSAO!!!<br>\n";
 				$this->admLogin = $_SESSION["admLogin"];
 				$this->admLogin->bd = $this->bd;
 			} else {
-				echo "NAO TEM SESSAO!!!<br>\n";
 				$this->admLogin = new AdminLogin($this->bd);
-				$_SESSION["admLogin"] = $this->admLogin;
-				
-				
+				//$_SESSION["admLogin"] = $this->admLogin;
 			}
 			
 			//$this->obtemPreferencias();

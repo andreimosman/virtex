@@ -71,7 +71,7 @@ class AdminLogin {
 				} else {
 				   // Carrega os privilegios
 				   $this->carregaPrivilegios();
-				   $_SESSION["admLogin"] = $this;
+				   //$_SESSION["admLogin"] = $this;
 				}
 				
 				return;
