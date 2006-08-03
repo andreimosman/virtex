@@ -38,4 +38,11 @@ require_once(PATH_LIB . '/VAInterface_cliente.class.php');
 require_once(PATH_LIB . '/VAInterface_cliente_home.class.php');
 require_once(PATH_LIB . '/spool_hospedagem.class.php');
 
+
+function __autoload($class_name) {
+   require_once PATH_LIB . "/" . $class_name . '.class.php';
+}
+
+session_start();
+
 ?>

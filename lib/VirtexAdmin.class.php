@@ -336,5 +336,4 @@ class VirtexAdmin extends MWebApp {
 	
 
 
-?>	
-
+?>
