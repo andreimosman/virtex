@@ -92,7 +92,7 @@
 						$this->pppoe_nas_list[ $dados["nas_id"] ] = $iface;
 						$this->pppoe_iface_list[$iface] = $dados["nas_id"];
 					} else {
-						$this->fator[] = $dados["fator"];
+						$this->fator[ $dados["nas_id"] ] = $dados["fator"];
 						$this->lista_nas[] = $dados["nas_id"];
 						$this->nas_list[ $dados["nas_id"] ] = $iface;
 						$this->iface_list[$iface] = $dados["nas_id"];
