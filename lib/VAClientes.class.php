@@ -993,9 +993,10 @@ class VAClientes extends VirtexAdmin {
 					
 					$lista_dominop = $this->prefs->obtem("geral");
 					
-					$dominioPadrao = $lista_dominop["dominio_padrao"]; 
+					$dominioPadrao = $lista_dominop["dominio"]; 
 
 					// Valida os dados
+					//DOMINIO PADRAO
 					
 					// TODO: Colocar isso em uma funcao private
 					$sSQL  = "SELECT ";
@@ -1005,7 +1006,7 @@ class VAClientes extends VirtexAdmin {
 					$sSQL .= "WHERE ";
 					$sSQL .= "   username = '".$this->bd->escape(trim(@$_REQUEST["username"]))."' ";
 					$sSQL .= "   and tipo_conta = '". $this->bd->escape(trim(@$_REQUEST["tipo"])) ."' ";
-					$sSQL .= "   and dominio = '".$dominioPadrao."' ";
+					$sSQL .= "   and dominio = '".$dominio_host."' ";
 					$sSQL .= "ORDER BY ";
 					$sSQL .= "   username ";
 					
@@ -2257,6 +2258,7 @@ class VAClientes extends VirtexAdmin {
 					
 				
 						$dominio_novo = @str_replace("/","",$_REQUEST["dominio"]);
+						$dominio_host = @$_REQUEST["dominio"];
 						$dominioPadrao = $lista_dominiop["dominio_padrao"]; 
 						
 					$sSQL = "SELECT * FROM dominio WHERE dominio = '$dominio_novo'";
@@ -2274,16 +2276,9 @@ class VAClientes extends VirtexAdmin {
 					$sSQL = "SELECT * FROM dominio WHERE dominio_provedor is true AND dominio = '$dominio_novo'";
 					$_prov2 = $this->bd->obtemRegistros($sSQL);
 					
-					if(count($_prov2)){
-					
-						$dominio = $dominio_padrao;
-					
-					
-					}else{
 					
 						$dominio = @$_REQUEST["dominio"];
 					
-					}
 					
 				//echo "DOMINIO: $dominio <br>";
 					
