@@ -26,6 +26,8 @@
 		protected $boot;
 		protected $daemon;
 		
+		protected $debug;
+		
 		
 		/**
 		 * Construtor
@@ -37,6 +39,8 @@
 			$this->boot   = 0;
 			$this->daemon = 0;
 			
+			$this->debug = 0;
+			
 			
 			
 			/**
@@ -45,8 +49,8 @@
 			 * -b|--boot	Boot
 			 * 
 			 */
-			$this->_shortopts = "bd";
-			$this->_longopts = array("boot","daemon");
+			$this->_shortopts = "bdD";
+			$this->_longopts = array("boot","daemon","--debug");
 			
 			$this->getopt();
 
@@ -85,6 +89,11 @@
 					case '--daemon':
 						$this->daemon = 1;
 						break;
+					
+					case 'D':
+					case '--debug':
+						$this->debug = 1;
+						break;
 				
 				
 				}
@@ -111,6 +120,9 @@
 				 * BandaLarga: TCP/IP
 				 */
 				$abl = new AtuadorBandaLarga($this->bd);
+				if( $this->debug ) {
+					$abl->setDebug();
+				}
 				
 				$lista_nas = $abl->obtemListaNasIPAtivos();
 				
@@ -227,6 +239,9 @@
 			 */
 
 			$abl = new AtuadorBandaLarga($this->bd);
+			if( $this->debug ) {
+				$abl->setDebug();
+			}
 			$lista_nas = $abl->obtemListaNasIPAtivos();
 			
 			if( count($lista_nas) ) {

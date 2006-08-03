@@ -87,6 +87,7 @@
 			while( list($iface,$dados) = each($n) ) {
 				if( $dados["enabled"] ) {
 					$this->fator[ trim($dados["nas_id"]) ] = $dados["fator"];
+					$this->debug("loadInfo: I/[$iface] N/[" . $dados["nas_id"] . "] F/[" . $dados["fator"] . "] " );
 					if( $tipo == "PPPoE" ) {
 						$this->pppoe_lista_nas[] = $dados["nas_id"];
 						$this->pppoe_nas_list[ $dados["nas_id"] ] = $iface;
@@ -147,7 +148,8 @@
 			
 			$nas_id = trim($this->obtemNasConta($id_conta));
 			if(!$nas_id) return;
-			
+
+			$this->debug("processa: N/[" . $nas_id . "]" );			
 			$tipo_nas = "TCPIP";
 			$int_if = @$this->nas_list[$nas_id];
 			
@@ -209,6 +211,7 @@
 
 					
 					$fator = @$this->fator[ $nas_id ];
+					$this->debug("processa: F/[" . $fator . "] " );
 					if( !$fator ) $fator = 1;
 
 					$this->so->adicionaRegraBW((int)$id_conta,$baserule,

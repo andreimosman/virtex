@@ -15,6 +15,8 @@
 
 		protected $bd;
 		protected $so;
+		
+		protected $debug;
 
 		public function __construct($bd=NULL) {
 			$this->bd = $bd;
@@ -28,6 +30,17 @@
 		
 		
 		}
+		
+		public function setDebug($val=1) {
+			$this->debug=$val;
+		}
+		
+		protected function debug($mensagem) {
+			if( $this->debug ) {
+				echo "DEBUG: " . $mensagem . "\n";
+			}
+		}
+		
 	
 	
 	}
