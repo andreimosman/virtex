@@ -198,6 +198,8 @@
 						
 						// A interface é requerida para uso PPPoE
 						if( !$iface ) return;
+						
+						$ip_cliente = $rede;
 
 						$baserule     = SistemaOperacional::$FW_PPPoE_BASERULE;
 						$basepipe_in  = SistemaOperacional::$FW_PPPoE_BASEPIPE_IN;
