@@ -3941,7 +3941,7 @@ class VAClientes extends VirtexAdmin {
 			$sSQL  = "UPDATE ";
 			$sSQL .= "	cntb_conta ";
 			$sSQL .= "SET ";
-			$sSQL .= "	status = 'D' ";
+			$sSQL .= "	status = 'C' ";
 			$sSQL .= "WHERE ";
 			$sSQL .= "	username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta'";
 
