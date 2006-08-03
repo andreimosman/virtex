@@ -2400,7 +2400,7 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= "     'E', ";
 							$sSQL .= "     '" . $dominio . "', ";
 							$sSQL .= "     '$quota', ";
-							$sSQL .= "     '". $this->bd->escape(@$_REQUEST["username"])."@". $dominioPadrao ."' ";
+							$sSQL .= "     '". $this->bd->escape(@$_REQUEST["username"])."@". $dominio ."' ";
 							$sSQL .= " )";
 
 							$this->bd->consulta($sSQL);
