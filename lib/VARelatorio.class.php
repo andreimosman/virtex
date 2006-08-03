@@ -398,6 +398,7 @@ class VARelatorio extends VirtexAdmin {
 				$aSQL .= "FROM ";
 				$aSQL .= "cltb_cliente cl, cftb_cidade c ";
 				$aSQL .= "WHERE c.id_cidade = cl.id_cidade";
+				$aSQL .= "AND cl.excluido = false ";
 
 						
 				$reg = $this->bd->obtemRegistros($aSQL);
@@ -416,6 +417,7 @@ class VARelatorio extends VirtexAdmin {
 				$aSQL .= "   c.id_cidade, c.cidade ";
 				$aSQL .= "FROM cltb_cliente cl, cftb_cidade c ";
 				$aSQL .= "WHERE c.id_cidade = cl.id_cidade ";
+				$aSQL .= "AND cl.excluido = false ";
 				$aSQL .= "ORDER BY id_cliente DESC LIMIT (5)";
 											
 				$reg = $this->bd->obtemRegistros($aSQL);
