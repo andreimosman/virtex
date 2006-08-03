@@ -867,15 +867,17 @@ class VAClientes extends VirtexAdmin {
 			$cliente = $this->bd->obtemUnicoRegistro($sSQL);
 			
 			
-			$sSQL  = "SELECT ";
-			$sSQL .= "	ct.id_cliente_produto, ct.data_contratacao, ct.vigencia, ct.id_produto, ct.tipo_produto, ct.valor_contrato, ct.status, ";
-			$sSQL .= "	cl.id_cliente_produto, cl.id_cliente, ";
-			$sSQL .= "	pr.id_produto, pr.nome ";
-			$sSQL .= "FROM ";
-			$sSQL .= "	cbtb_contrato ct, cbtb_cliente_produto cl, prtb_produto pr ";
-			$sSQL .= "WHERE ";
-			$sSQL .= "	cl.id_cliente_produto = ct.id_cliente_produto  AND cl.id_cliente = '$id_cliente' AND ct.id_produto = pr.id_produto ";
-			$sSQL .= " ORDER BY ct.data_contratacao DESC ";
+		$sSQL  = "SELECT ";
+		$sSQL .= "	ct.id_cliente_produto, ct.data_contratacao, ct.vigencia, ct.id_produto, ct.tipo_produto, ct.valor_contrato, ct.status, ";
+		$sSQL .= "	cl.id_cliente_produto, cl.id_cliente, cn.username , ";
+		$sSQL .= "	pr.id_produto, pr.nome ";
+		$sSQL .= "FROM ";																	  
+		$sSQL .= "	cbtb_contrato ct, cbtb_cliente_produto cl, prtb_produto pr, cntb_conta cn ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "	cl.id_cliente_produto = ct.id_cliente_produto  AND cl.id_cliente = '$id_cliente' AND ct.id_produto = pr.id_produto AND ct.status = 'A' ";
+		$sSQL .= "AND  cn.id_cliente_produto = ct.id_cliente_produto ";
+		$sSQL .= "AND cn.tipo_conta = ct.tipo_produto ";
+		$sSQL .= " ORDER BY ct.data_contratacao DESC ";
 			
 			$lista_contrato = $this->bd->obtemRegistros($sSQL);
 			
@@ -921,12 +923,14 @@ class VAClientes extends VirtexAdmin {
 		
 		$sSQL  = "SELECT ";
 		$sSQL .= "	ct.id_cliente_produto, ct.data_contratacao, ct.vigencia, ct.id_produto, ct.tipo_produto, ct.valor_contrato, ct.status, ";
-		$sSQL .= "	cl.id_cliente_produto, cl.id_cliente, ";
+		$sSQL .= "	cl.id_cliente_produto, cl.id_cliente, cn.username , ";
 		$sSQL .= "	pr.id_produto, pr.nome ";
-		$sSQL .= "FROM ";
-		$sSQL .= "	cbtb_contrato ct, cbtb_cliente_produto cl, prtb_produto pr ";
+		$sSQL .= "FROM ";																	  
+		$sSQL .= "	cbtb_contrato ct, cbtb_cliente_produto cl, prtb_produto pr, cntb_conta cn ";
 		$sSQL .= "WHERE ";
 		$sSQL .= "	cl.id_cliente_produto = ct.id_cliente_produto  AND cl.id_cliente = '$id_cliente' AND ct.id_produto = pr.id_produto AND ct.status = 'A' ";
+		$sSQL .= "AND  cn.id_cliente_produto = ct.id_cliente_produto ";
+		$sSQL .= "AND cn.tipo_conta = ct.tipo_produto ";
 		$sSQL .= " ORDER BY ct.data_contratacao DESC ";
 		
 		$lista_contrato = $this->bd->obtemRegistros($sSQL);
