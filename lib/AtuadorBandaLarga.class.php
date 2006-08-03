@@ -34,9 +34,9 @@
 		/**
 		 * Recebe uma instância do banco de dados
 		 */
-		public function __construct($bd=NULL) {
+		public function __construct($bd=NULL,$debug=0) {
 			
-			parent::__construct($bd);
+			parent::__construct($bd,$debug);
 			
 			
 			// Carrega arquivos de configuração necessários
