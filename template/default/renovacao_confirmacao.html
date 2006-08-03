@@ -1,0 +1,130 @@
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<body> 
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%">
+  <tr>
+    <td align="CENTER" valign="TOP">
+<table width="600" border="0" cellspacing="1" cellpadding="0">
+        <tr> 
+          <td bgcolor="#F1F1F1"><div align="CENTER"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Novo 
+            Contrato</strong></font></div></td>
+        </tr>
+        <tr> 
+          <td><table width="600" border="0" cellspacing="1" cellpadding="0">
+              <tr> 
+                <td width="161"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Contratante:</font></p></td>
+                <td width="434"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$nome}</font></p></td>
+              </tr>
+              <tr> 
+                <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    da Contrata&ccedil;&atilde;o</font></p></td>
+                <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$data_contratacao|date_format:"%d/ 
+                    %m/ %Y"}</font></p></td>
+              </tr>
+              <tr> 
+                <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    da Renova&ccedil;&atilde;o</font></p></td>
+                <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$data_renovacao|date_format:"%d/ 
+                    %m/ %Y"}</font></p></td>
+              </tr>
+              <tr> 
+                <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
+                    do 1&ordm; Vencimento</font></p></td>
+                <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$pri_venc|date_format:"%d/ 
+                    %m/ %Y"}</font></p></td>
+              </tr>
+              <tr> 
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
+                <td><p><font size="1"><font face="Verdana, Arial, Helvetica, sans-serif"></font></font></p></td>
+              </tr>
+              <tr bgcolor="#f1f1f1"> 
+                <td colspan="2"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><strong>Produto 
+                  Contratado</strong></font></td>
+              </tr>
+              <tr> 
+                <td><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Produto</font></td>
+                <td><font face="Verdana, Arial, Helvetica, sans-serif" size="1">{$produto.nome}</font></td>
+              </tr>
+              <tr> 
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+            </table></td>
+        </tr>
+        <tr>
+          <td><form name="form1" method="post" action="">
+            <table width="600" border="0" cellspacing="1" cellpadding="0">
+              <tr> 
+                <td width="160"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Forma 
+                  de Cobranca:</font></td>
+                <td width="437"><table width="200">
+                    <tr> 
+                      <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><label> 
+                        <input type="radio" name="forma_pagamento" value="POS" {if $forma_pagamento == "POS"}checked{/if}>
+                        POS</label></font></td>
+                      <td> <font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                        <input type="radio" name="forma_pagamento" value="PRE" {if $forma_pagamento == "PRE"}checked{/if}>
+                        PRE</font></td>
+                    </tr>
+                  </table></td>
+              </tr>
+              <tr> 
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Tipo 
+                  de Pagamento:</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Carn&ecirc;</font></td>
+              </tr>
+              <tr> 
+                <td colspan="2"> <input type="hidden" name="pri_venc" value="{$pri_venc}"> 
+                  <input type="hidden" name="tipo" value="{$ct.tipo_produto}"> 
+                  <input type="hidden" name="id_produto" value="{$ct.id_produto}"> 
+                  <input type="hidden" name="email_igual" value="{$ct.email_igual}"> 
+                  <input type="hidden" name="data_contratacao" value="{$data_contratacao}"> 
+                  <input type="hidden" name="vigencia" value="{$vigencia}"> <input type="hidden" name="status" value="A"> 
+                  <input type="hidden" name="dia_vencimento" value="{$dia_vencimento}"> 
+                  <input type="hidden" name="carencia_pagamento" value="{$ct.carencia}"> 
+                  <input type="hidden" name="desconto_promo" value="{$desconto_promo}"> 
+                  <input type="hidden" name="periodo_desconto" value="{$periodo_desconto}"> 
+                  <input type="hidden" name="tx_instalacao" value="{$tx_instalacao}"> 
+                  <input type="hidden" name="comodato" value="{$comodato}"> <input type="hidden" name="valor_comodato" value="{$valor_comodato}"> 
+                  <input type="hidden" name="prorata" value="{$prorata}"> <input type="hidden" name="tipo_cobranca" value="2"> 
+                  <input type="hidden" name="ini_carne" value="{$ini_carne}"> 
+                  <input type="hidden" name="data_carne" value="{$data_carne}"> 
+                  <input type="hidden" name="id_cliente_produto" value="{$id_cliente_produto}">
+                  {if $tipo == "D"} 
+                  <input type="hidden" name="foneinfo" value="{$foneinfo}"> <input type="hidden" name="d_franquia_horas" value="{$d_franquia_horas}"> 
+                  <input type="hidden" name="d_permitir_duplicidade" value="{$d_permitir_duplicidade}"> 
+                  <input type="hidden" name="d_valor_hora_adicional" value="{$d_valor_hora_adicional}">
+                  {/if} {if $tipo == "H"} 
+                  <input type="hidden" name="h_dominio" value="{$h_dominio}"> 
+                  <input type="hidden" name="h_franquia_em_mb" value="{$h_franquia_em_mb}"> 
+                  <input type="hidden" name="h_valor_mb_adicional" value="{$h_valor_mb_adicional}"> 
+                  <input type="hidden" name="tipo_hospedagem" value="{$tipo_hospedagem}"> 
+                  <input type="hidden" name="dominio_hospedagem" value="{$dominio_hospedagem}">
+                  {/if} {if $tipo == "BL"} 
+                  <input type="hidden" name="bl_banda_upload_kbps" value="{$bl_banda_upload_kbps}"> 
+                  <input type="hidden" name="bl_banda_download_kbps" value="{$bl_banda_download_kbps}"> 
+                  <input type="hidden" name="bl_franquia_trafego_mensal_gb" value="{$bl_franquia_trafego_mensal_gb}"> 
+                  <input type="hidden" name="bl_valor_trafego_adicional_gb" value="{$bl_valor_trafego_adicional_gb}"> 
+                  <input type="hidden" name="redirecionar" value="{$redirecionar}"> 
+                  <input type="hidden" name="endereco_ip" value="{$endereco_ip}">
+                  {/if} 
+                  <!--Funções de operação de formulário -->
+                  <input type="hidden" name="p" value="{$p}"> <input type="hidden" name="op" value="renovacao"> 
+                  <input type="hidden" name="acao" value="cad"> </td>
+              </tr>
+              <tr align="CENTER"> 
+                <td colspan="2"> 
+                  <input type="submit" name="Submit" value="renovar este contrato">
+                </td>
+              </tr>
+            </table>
+            </form></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+</body>
+</html>
