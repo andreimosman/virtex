@@ -18,8 +18,9 @@
 		
 		protected $debug;
 
-		public function __construct($bd=NULL) {
+		public function __construct($bd=NULL,$debug=0) {
 			$this->bd = $bd;
+			$this->debug = $debug;
 			$this->so = new SOFreeBSD();
 		}
 		

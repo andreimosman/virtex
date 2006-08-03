@@ -119,10 +119,7 @@
 				/**
 				 * BandaLarga: TCP/IP
 				 */
-				$abl = new AtuadorBandaLarga($this->bd);
-				if( $this->debug ) {
-					$abl->setDebug();
-				}
+				$abl = new AtuadorBandaLarga($this->bd,$this->debug);
 				
 				$lista_nas = $abl->obtemListaNasIPAtivos();
 				
@@ -238,10 +235,7 @@
 			 * Consulta Spool Bandalarga p/ esta máquina
 			 */
 
-			$abl = new AtuadorBandaLarga($this->bd);
-			if( $this->debug ) {
-				$abl->setDebug();
-			}
+			$abl = new AtuadorBandaLarga($this->bd,$this->debug);
 			$lista_nas = $abl->obtemListaNasIPAtivos();
 			
 			if( count($lista_nas) ) {

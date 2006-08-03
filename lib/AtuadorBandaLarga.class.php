@@ -49,12 +49,26 @@
 			$tcfg = new MConfig(PATH_ETC."/pppoe.ini");
 			$this->pppoe_cfg = $tcfg->config;
 			
+			$this->initVars();
 			
 			// Cacheia as informações relevantes
 			$this->loadCacheInfo();
 			
 			//echo "ATUADOR BL!!!\n";
 			
+		}
+		
+		protected function initVars() {
+			$this->fator = array();
+
+			$this->pppoe_nas_list 	= array();
+			$this->pppoe_iface_list	= array();
+			$this->pppoe_lista_nas 	= array();
+
+			$this->nas_list   = array();
+			$this->iface_list = array();
+			$this->lista_nas  = array();
+
 		}
 		
 		
@@ -72,18 +86,6 @@
 		protected function loadInfo($tipo="TCPIP") {
 			$n = $tipo == "PPPoE" ? $this->pppoe_cfg : $this->tcpip_cfg;
 			
-			if($tipo == "PPPoE") {
-				$this->pppoe_nas_list 	= array();
-				$this->pppoe_iface_list	= array();
-				$this->pppoe_lista_nas 	= array();
-				$this->fator = array();
-			} else {
-				$this->nas_list   = array();
-				$this->iface_list = array();
-				$this->lista_nas  = array();
-				$this->fator = array();
-			}
-
 			while( list($iface,$dados) = each($n) ) {
 				if( $dados["enabled"] ) {
 					$this->fator[ trim($dados["nas_id"]) ] = $dados["fator"];
