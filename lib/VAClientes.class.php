@@ -993,7 +993,7 @@ class VAClientes extends VirtexAdmin {
 					
 					$lista_dominop = $this->prefs->obtem("geral");
 					
-					$dominioPadrao = $lista_dominop["dominio"]; 
+					$dominioPadrao = $lista_dominop["dominio_padrao"]; 
 
 					// Valida os dados
 					//DOMINIO PADRAO
@@ -1006,7 +1006,7 @@ class VAClientes extends VirtexAdmin {
 					$sSQL .= "WHERE ";
 					$sSQL .= "   username = '".$this->bd->escape(trim(@$_REQUEST["username"]))."' ";
 					$sSQL .= "   and tipo_conta = '". $this->bd->escape(trim(@$_REQUEST["tipo"])) ."' ";
-					$sSQL .= "   and dominio = '".$dominio_host."' ";
+					$sSQL .= "   and dominio = '".$dominioPadrao."' ";
 					$sSQL .= "ORDER BY ";
 					$sSQL .= "   username ";
 					
