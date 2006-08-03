@@ -994,6 +994,7 @@ class VAClientes extends VirtexAdmin {
 					$lista_dominop = $this->prefs->obtem("geral");
 					
 					$dominioPadrao = $lista_dominop["dominio_padrao"]; 
+					//echo "dominio $dominioPadrao <br>";
 
 					// Valida os dados
 					//DOMINIO PADRAO
