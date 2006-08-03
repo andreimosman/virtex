@@ -29,7 +29,7 @@ class AdminLogin {
 	 * Constructor
 	 * Recebe referencia à instância do banco de dados.
 	 */
-	function __construct($bd) {
+	function __construct($bd=NULL) {
 		$this->bd = $bd;
 		$this->logout();
 	}
