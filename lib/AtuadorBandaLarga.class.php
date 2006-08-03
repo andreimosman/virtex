@@ -86,13 +86,12 @@
 
 			while( list($iface,$dados) = each($n) ) {
 				if( $dados["enabled"] ) {
+					$this->fator[ trim($dados["nas_id"]) ] = $dados["fator"];
 					if( $tipo == "PPPoE" ) {
-						$this->fator[ $dados["nas_id"] ] = $dados["fator"];
 						$this->pppoe_lista_nas[] = $dados["nas_id"];
 						$this->pppoe_nas_list[ $dados["nas_id"] ] = $iface;
 						$this->pppoe_iface_list[$iface] = $dados["nas_id"];
 					} else {
-						$this->fator[ $dados["nas_id"] ] = $dados["fator"];
 						$this->lista_nas[] = $dados["nas_id"];
 						$this->nas_list[ $dados["nas_id"] ] = $iface;
 						$this->iface_list[$iface] = $dados["nas_id"];
@@ -146,7 +145,7 @@
 
 			$ext_if = $this->obtemInterfaceExterna();
 			
-			$nas_id = $this->obtemNasConta($id_conta);
+			$nas_id = trim($this->obtemNasConta($id_conta));
 			if(!$nas_id) return;
 			
 			$tipo_nas = "TCPIP";
