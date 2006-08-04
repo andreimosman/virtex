@@ -25,17 +25,20 @@ class VirtexAdmin extends MWebApp {
 
 	protected $lic;
 	
+	protected $debug;
+	
 	public function VirtexAdmin($ini="etc/virtex.ini",$tpldir="template/default") {
 		parent::MWebApp($ini,$tpldir);
 		
 		$this->lic = new VirtexAdminLicenca();
+		$this->debug = (int)@$this->cfg->config["geral"]["debug"];
 		
 		@session_start();
 
 		if( @$this->cfg->config["DB"]["dsn"] ) {
 			// Instanciar BD;
-
-			$this->bd = new MDatabase($this->cfg->config["DB"]["dsn"]);
+			
+			$this->bd = new MDatabase($this->cfg->config["DB"]["dsn"],$this->debug);
 
 
 			if( $this->bd->obtemErro() != MDATABASE_OK ) {
