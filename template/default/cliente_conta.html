@@ -1,5 +1,35 @@
-<!-- cliente_conta.html --> {include file='cliente_header.html'}<script type="text/javascript" src="template/default/ajax.js"></script> 
-<script type="text/javascript" src="template/default/ajax_validacoes.js"></script> 
+<!-- cliente_conta.html --> {include file='cliente_header.html'}<script type="text/javascript" src="template/default/ajax.js"></script>
+<script type="text/javascript" src="template/default/ajax_validacoes.js"></script>
+{if $erro_conta}
+<div align="center">
+	<b><p>
+	Inconsistência no cadastro do usuário {$erro_conta.nome_razao}.<br>
+	Acione suporte Mosman Consultoria. (consultoria@mosman.com.br)</p></b>
+	<table>
+		<tr>
+			<td><b><p>cliente</p></b></td><td><b><p>{$erro_conta.nome_razao}</p></b></td>
+		</tr>
+		<tr>
+			<td><b><p>id cliente</p></b></td><td><b><p>{$erro_conta.id_cliente}</p></b></td>
+		</tr>
+		<tr>
+			<td><b><p>valor contrato </p></b></td><td><b><p>{$erro_conta.valor_contrato}</p></b></td>
+		</tr>
+		<tr>
+			<td><b><p>username</p></b></td><td><b><p>{$erro_conta.username}</p></b></td>
+		</tr>
+		<tr>
+			<td><b><p>tipo conta</p></b></td><td><b><p>{$erro_conta.nome}</p></b></td>
+		</tr>
+	</table>
+
+</div>
+
+
+
+
+{else}
+
 <script language="JavaScript">
 var statusConta = "{$status}";
 var tpConta = "{$tipo_conta|trim}";
@@ -14,7 +44,7 @@ function checaStatus(){
 		frm.conf_senha.disabled = true;
 		frm.status.disabled = true;
 		frm.submit.disabled = true;
-		
+
 		if (tpConta == "BL"){
 			frm.id_pop.disabled = true;
 			frm.id_nas.disabled = true;
@@ -25,23 +55,23 @@ function checaStatus(){
 			frm.altera_rede.disabled = true;
 			frm.upload_kbps.disabled = true;
 			frm.download_kbps.disabled = true;
-			
+
 		}else if (tpConta == "E"){
-		
+
 			frm.quota.disabled = true;
-		
+
 		}else if (tpConta == "D"){
-		
+
 			frm.foneinfo.disabled = true;
-		
+
 		}
-		
-		
-		
-		
+
+
+
+
 		return false;
 	}
-	
+
 }
 
 
@@ -102,14 +132,14 @@ function alteraNovaSelecao() {
 
 
 function init() {
-	
-	
+
+
 	alteraNas();
 	alteraSelecaoIP();
 	alteraNovaSelecao();
-	
-	
-	
+
+
+
 
 
 }
@@ -163,7 +193,7 @@ function check(){
 
 
 {/literal}
-</script> {/if} <form name="frmConta" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="javascript:return check();"> 
+</script> {/if} <form name="frmConta" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="javascript:return check();">
 <input type="hidden" name="id_conta" value="{$id_conta}">
 				{if $tipo_conta == "BL"}
                  <table width="100" border="0" cellspacing="0" cellpadding="0" align="center">
@@ -404,7 +434,7 @@ function check(){
 						                  <td width="50" align="right" valign="top" bgcolor="#FFFFFF">
 						  					<p>Quota:</p></td>
 
-						                
+
         <td bgcolor="#FFFFFF" colspan=2> <p>
             <input name="quota" type="text" id="quota" value="{$quota}">
             bytes </p></td>
@@ -593,6 +623,9 @@ function check(){
 						<p align="center"><a href="{$smarty.server.PHP_SELF}?op=produto&tipo={$tipo}&id_cliente={$id_cliente}">voltar</a></p>
 
 
+
+
+
 {if $tipo_conta == "BL"}
 
 { literal }
@@ -610,3 +643,4 @@ init();
 checaStatus();
 </script>
 {/literal}
+		{/if}

@@ -125,13 +125,13 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "   cftb_nas ";
 		$sSQL .= "WHERE ";
 		$sSQL .= "   id_nas = '". $this->bd->escape($id_nas) . "' ";
-		////////echo "OBTEM NAS: $sSQL <br>";
+		//echo "OBTEM NAS: $sSQL <br>";
 		return( $this->bd->obtemUnicoRegistro($sSQL) );
 	}
 	
 	private function obtemIP($id_nas) {
 
-		$sSQL = "SELECT ";
+		$sSQL  = "SELECT ";
 		$sSQL .= "   	i.ipaddr ";
 		$sSQL .= "FROM ";
 		$sSQL .= "   cntb_conta_bandalarga cbl RIGHT OUTER JOIN cftb_ip i USING(ipaddr), "; 
@@ -1204,7 +1204,7 @@ class VAClientes extends VirtexAdmin {
 								} else if ($tipo_de_ip == "M"){
 								
 								
-									//$erro = array();
+									$erro = array();
 									
 									$id_nas = @$_REQUEST["id_nas"];
 									$endereco_ip = @$_REQUEST["endereco_ip"];
@@ -1274,6 +1274,8 @@ class VAClientes extends VirtexAdmin {
 								}
 								
 								
+
+
 								}
 								
 								$redirecionar = @$_REQUEST["redirecionar"];
@@ -1329,7 +1331,7 @@ class VAClientes extends VirtexAdmin {
 								if($rede_disp != "NULL"){
 								
 									$rede_disp = "'".$rede_disp."'";
-									////////echo "rede:". $rede_disponivel["rede"]. "<br>";
+									////echo "rede:". $rede_disponivel["rede"]. "<br>";
 								
 								
 								}
@@ -1379,18 +1381,18 @@ class VAClientes extends VirtexAdmin {
 								$sSQL .= "     '" . $dominioPadrao . "', ";
 								$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["id_pop"])) . "', ";
 								$sSQL .= "     '" . $nas["tipo_nas"] . "', ";
-								$sSQL .= "     " . $ip_disp . ", ";
-								$sSQL .= "     " . $rede_disp . ", ";
+								$sSQL .= "     "  . $ip_disp . ", ";
+								$sSQL .= "     "  . $rede_disp . ", ";
 								$sSQL .= "     '" . $bandaUp_dow["banda_upload_kbps"] . "', ";
 								$sSQL .= "     '" . $bandaUp_dow["banda_download_kbps"] . "', ";
 								$sSQL .= "     'A', ";
 								$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["id_nas"])) . "', ";
-								$sSQL .= "     ". $_MAC .", ";
-								$sSQL .= "	   ". $ip_externo ."  ";
+								$sSQL .= "     "  . $_MAC .", ";
+								$sSQL .= "	   "  . $ip_externo ."  ";
 								$sSQL .= "     )";						
 								
 								
-								//////echo "INSERT NA BL: $sSQL <br>";
+								echo  $sSQL;
 								$this->bd->consulta($sSQL);  
 								//if( $this->bd->obtemErro() ) {
 								//	//////echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
@@ -1926,11 +1928,13 @@ class VAClientes extends VirtexAdmin {
 					
 					
 					}
-		
+
+
+
 
 
 			// PRECISA PASSAR O TIPO PRO MENU
-			//$tipo = @$_REQUEST["tipo"];
+			//
 			
 			
 			//SELECTS PARA POPULAR OS CAMPOS DROP-DOWN
@@ -2089,8 +2093,14 @@ class VAClientes extends VirtexAdmin {
 			$tipo_conta = @$_REQUEST["tipo_conta"];
 			$sop = @$_REQUEST["sop"];
 			$acao = @$_REQUEST["acao"];
-			
+			$tipo = @$_REQUEST["tipo_conta"];
+			$id_cliente = @$_REQUEST["id_cliente"];
+
 			$this->obtemPR($id_cliente);
+
+
+
+
 			
 			
 			// LISTA DE POPS
@@ -2131,8 +2141,6 @@ class VAClientes extends VirtexAdmin {
 			$prefs = $this->prefs->obtem("geral");
 			$dominio = str_replace("/","",@$_REQUEST["dominio"]);
 			if(!$dominio) $dominio = $prefs["dominio_padrao"];
-
-
 
 			if ($sop == "nova_conta"){	
 			
@@ -2520,10 +2528,11 @@ class VAClientes extends VirtexAdmin {
 
 									$ip_disp = "'".$ip_disponivel["ipaddr"]."'";
 
-
 								}
 
-								$id_produto = $this->bd->escape(@$_REQUEST["id_produto"]);
+								
+
+								//echo "$id_produto";
 								$bandaUp_dow = $this->obtemDowUp($id_produto);
 								$MAC = @$_REQUEST["mac"];
 
@@ -2935,9 +2944,7 @@ class VAClientes extends VirtexAdmin {
 					$sSQL .= "";
 					$sSQL .= "";
 
-					////////echo "$sSQL;<br>\n";
-
-
+					 ////echo "$sSQL;<br>\n";
 
 					$cbl = $this->bd->obtemUnicoRegistro($sSQL);
 
@@ -2948,12 +2955,45 @@ class VAClientes extends VirtexAdmin {
 					$this->tpl->atribui("upload_kbps",@$_REQUEST["upload_kbps"]);
 					$this->tpl->atribui("download_kbps",@$_REQUEST["download_kbps"]);
 
-					////////echo "ID NAS:". $conta["id_nas"] ."<BR>";
+					////echo "ID NAS:". $conta["id_nas"] ."<BR>";
 
-					$nas = $this->obtemNas($conta["id_nas"]);
-					$conta["endereco_ip"] = $nas["tipo_nas"] == "I" ? $conta["rede"] : $conta["ipaddr"];
+					$nas = $this->obtemNas(@$conta["id_nas"]);
+					$conta["endereco_ip"] = @$nas["tipo_nas"] == "I" ? @$conta["rede"] : @$conta["ipaddr"];
+
+					  if (!$cbl){ 
+					  		
+							$id_cliente = @$_REQUEST["id_cliente"];
+							$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
+							$username = @$_REQUEST["username"];
+							$dominio  = @str_replace("/","",$_REQUEST["dominio"]);
+							$tipo_conta = @$_REQUEST["tipo_conta"];
+							$sop = @$_REQUEST["sop"];
+							$acao = @$_REQUEST["acao"];
+							$tipo = @$_REQUEST["tipo_conta"];
+							$id_cliente = @$_REQUEST["id_cliente"];
+
+							
+
+							$sSQL  = " SELECT ";
+							$sSQL .= " clc.id_cliente, cc.valor_contrato, cnc.username, pr.nome, clc.nome_razao";
+							$sSQL .= " FROM ";
+							$sSQL .= " cltb_cliente clc , cbtb_contrato cc , cntb_conta cnc , prtb_produto pr , cbtb_cliente_produto cp ";
+							$sSQL .= " WHERE ";
+							$sSQL .= " cp.id_cliente = clc.id_cliente ";
+							$sSQL .= " AND cc.id_cliente_produto = cc.id_cliente_produto ";
+							$sSQL .= " AND pr.tipo = '$tipo' ";
+							$sSQL .= " AND clc.id_cliente = '$id_cliente' ";
+							$sSQL .= " AND cnc.username = '$username' ";
+							$sSQL .= " AND cnc.dominio = '$dominio' ";
+							$sSQL .= " AND pr.tipo = cnc.tipo_conta ";
+							$sSQL .= " AND cnc.id_cliente_produto = cc.id_cliente_produto ";
+							$sSQL .= " AND cp.id_produto = pr.id_produto ";	
 
 
+					  $erro_conta = $this->bd->obtemUnicoRegistro($sSQL) ;
+					  $this->tpl->atribui("erro_conta",$erro_conta);
+					  
+					  }
 
 
 					//$nas_orig = @$_REQUEST["nas_orig"];

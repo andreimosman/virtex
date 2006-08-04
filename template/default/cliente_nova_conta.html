@@ -194,6 +194,8 @@ function check(){
               <td bgcolor="#FFFFFF" valign="top"><input type="text" name="mac" maxlength="17" size=17></td>
               {literal} <script>
 									//verificaTipoRede();
+
+
 									</script> {/literal} </tr>
             <tr valign="MIDDLE">
               <td bgcolor="#FFFFFF" align="right">
@@ -310,8 +312,8 @@ function check(){
 
                           <table width="450" border=0 bgcolor="#F1F1F1" align="center">
 						                <tr>
-						                  
-        <td colspan=2><h2><font color="#000000">Dados da Conta 
+
+        <td colspan=2><h2><font color="#000000">Dados da Conta
           <input name="_dominio2" type="hidden" value="{$dominio}" id="_dominio2">
           <input name="_username2" type="hidden" value="{$username}" id="_username2">
           <input name="id_cliente_produto" type="hidden" value="{$id_cliente_produto}" id="id_cliente_produto">
@@ -322,11 +324,11 @@ function check(){
 						  					<p>Username:</p></td>
 						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p>
             <input type="text" maxlength="30" name="username" value="{$username}">
-            @ 
+            @
             <select name="dominio" id="dominio">
               {foreach item=a from=$dominios_provedor}
 			  <option value="{$a.dominio}" {if $a.dominio == $dominio}SELECTED{/if}>{$a.dominio}</option>
-			  {/foreach}              
+			  {/foreach}
             </select>
           </p></td>
 						                </tr>
@@ -399,7 +401,7 @@ function check(){
 
                           <table width="450" border=0 bgcolor="#F1F1F1" align="center">
 						                <tr>
-						                  
+
         <td colspan=2><h2><font color="#000000">Dados da Conta
           <input name="sop2" type="hidden" value="nova_conta" id="sop5">
           <input name="_dominio32" type="hidden" value="{$dominio}" id="_dominio32">
@@ -485,8 +487,8 @@ function check(){
 
                           <table width="450" border=0 bgcolor="#F1F1F1" align="center">
 						                <tr>
-						                  
-        <td colspan=2><h2><font color="#000000">Dados da Conta 
+
+        <td colspan=2><h2><font color="#000000">Dados da Conta
           <input name="sop" type="hidden" value="nova_conta" id="sop">
           <input name="_dominio" type="hidden" value="{$dominio}" id="_dominio">
           <input name="_username" type="hidden" value="{$username}" id="_username">

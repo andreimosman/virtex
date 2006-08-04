@@ -439,7 +439,7 @@ function validaForm() {
 		// Selecao manual
 		if( frm.selecao_ip.value == "M" ) {
 			// Verifica se o endereco escolhido pertence ao nas especificado.
-			var endereco = enderecoPertenceAoNas(frm.endereco_ip.length, frm.id_nas.value)
+			var endereco = enderecoPertenceAoNas(frm.endereco_ip.value, frm.id_nas.value)
 			if( endereco ==" " ) {
 				msg.push("O endereço escolhido não existe ou não pertence ao NAS especificado.");
 			} else {
