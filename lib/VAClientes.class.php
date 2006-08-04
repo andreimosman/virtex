@@ -2474,73 +2474,65 @@ class VAClientes extends VirtexAdmin {
 								} else if ($tipo_de_ip == "M"){
 																
 																
-																	$erro = array();
-																	
-																	$id_nas = @$_REQUEST["id_nas"];
-																	$endereco_ip = @$_REQUEST["endereco_ip"];
-																	$nas = $this->obtemNAS($_REQUEST["id_nas"]);
-																	
-																	$sSQL = "SELECT rede FROM cftb_rede WHERE rede >> '$endereco_ip' or rede = '$endereco_ip'	";
-																	$_rede = $this->bd->obtemUnicoRegistro($sSQL);
-																	$rede = @$_rede["rede"];
-																	
-																	if( !$rede ) {
-																	   $erro = "Rede não cadastrada no sistema.";
-																	} else {
-																	   $sSQL = "SELECT rede FROM cftb_nas_rede WHERE rede = '$rede' AND id_nas = '$id_nas'";
-																	   $nas_rede = $this->bd->obtemUnicoRegistro($sSQL);
-																	   
-																	   if( !count($nas_rede) ) {
-																	      $erro = "Rede não disponível para este NAS";
-																	   } else {
-																	// verificar de acordo com o tipo do nas
-																				$sSQL = "SELECT username,rede FROM cntb_conta_bandalarga WHERE ";
-																				if ($nas["tipo_nas"] == "I"){
-																		     $sSQL .= " rede = '$rede' ";
-																		     
-																				}else if ($nas["tipo_nas"] == "P"){
-																						$sSQL .= " ipaddr = '$endereco_ip' ";
-																						
-																				}
-																				$rede_bl = $this->bd->obtemUnicoRegistro($sSQL);
-																				if(count($rede_bl)){
-																						$erro = "Endereço utilizado por outro cliente (".$rede_bl["username"].")";
-																				} 
-								
-																		}
-																	}
-																	
-																	
-																	
-																	
-																	if (!@$erro){
-																	
-																		if ($nas["tipo_nas"] == "I"){
-																	
-																			$ip_disp = "NULL";
-																			$rede_disp = $rede;
-																	
-																		} else if ($nas["tipo_nas"] == "P"){
-																			
-																			$rede_disp = "NULL";
-																			$ip_disp = $endereco_ip;
-																		
-																		}
-																	
-																	}else{
-																		////echo count($erro);
-																		//for($i=0;$i<count($erro);$i++) {
-																		   ////echo $erro[$i] . "<br>\n";
-																		//}
-																	//}
-								
-								
-																		$this->tpl->atribui("mensagem",$erro);
-																		$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=cobranca&id_cliente=$id_cliente");
-																		$this->tpl->atribui("target","_top");
-								
-																		$this->arquivoTemplate="msgredirect.html";
-																		return;
+									$erro = array();
+
+									$id_nas = @$_REQUEST["id_nas"];
+									$endereco_ip = @$_REQUEST["endereco_ip"];
+									$nas = $this->obtemNAS($_REQUEST["id_nas"]);
+
+									$sSQL = "SELECT rede FROM cftb_rede WHERE rede >> '$endereco_ip' or rede = '$endereco_ip'	";
+									$_rede = $this->bd->obtemUnicoRegistro($sSQL);
+									$rede = @$_rede["rede"];
+
+									if( !$rede ) {
+									   $erro = "Rede não cadastrada no sistema.";
+									} else {
+									   $sSQL = "SELECT rede FROM cftb_nas_rede WHERE rede = '$rede' AND id_nas = '$id_nas'";
+									   $nas_rede = $this->bd->obtemUnicoRegistro($sSQL);
+
+									   if( !count($nas_rede) ) {
+										  $erro = "Rede não disponível para este NAS";
+									   } else {
+									// verificar de acordo com o tipo do nas
+												$sSQL = "SELECT username,rede FROM cntb_conta_bandalarga WHERE ";
+												if ($nas["tipo_nas"] == "I"){
+											 $sSQL .= " rede = '$rede' ";
+
+												}else if ($nas["tipo_nas"] == "P"){
+														$sSQL .= " ipaddr = '$endereco_ip' ";
+
+												}
+												$rede_bl = $this->bd->obtemUnicoRegistro($sSQL);
+												if(count($rede_bl)){
+														$erro = "Endereço utilizado por outro cliente (".$rede_bl["username"].")";
+												} 
+
+										}
+									}
+
+									if (!@$erro){
+
+										if ($nas["tipo_nas"] == "I"){
+
+											$ip_disp = "NULL";
+											$rede_disp = $rede;
+
+										} else if ($nas["tipo_nas"] == "P"){
+
+											$rede_disp = "NULL";
+											$ip_disp = $endereco_ip;
+
+										}
+
+									}else{
+
+										$this->tpl->atribui("mensagem",$erro);
+										$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=cobranca&id_cliente=$id_cliente");
+										$this->tpl->atribui("target","_top");
+
+										$this->arquivoTemplate="msgredirect.html";
+										return;
+									}
 								}
 								
 								
