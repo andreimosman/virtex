@@ -2452,7 +2452,243 @@ class VAClientes extends VirtexAdmin {
 
 							break;	
 							case 'BL':
-								// PRODUTO BANDA LARGA
+							
+							
+							
+														////echo "TIPO: " . $this->bd->escape(trim(@$_REQUEST["selecao_ip"])) . "<br>\n";
+														
+															// PRODUTO BANDA LARGA
+															$tipo_de_ip = $this->bd->escape(trim(@$_REQUEST["selecao_ip"]));
+															if($tipo_de_ip == "A"){
+																$nas = $this->obtemNAS($_REQUEST["id_nas"]);
+																////////echo "NAS: ".$nas["id_nas"]."<BR>";
+																if( $nas["tipo_nas"] == "I" ) {
+																   // Cadastrar REDE em cntb_conta
+																   $rede_disponivel = $this->obtemRede($nas["id_nas"]);
+																   $rede_disp = $rede_disponivel["rede"];
+																   $ip_disp = "NULL";
+																} else if( $nas["tipo_nas"] == "P" ) {
+																   // Cadastrar IPADDR em cntb_conta
+																   $ip_disponivel = $this->obtemIP($nas["id_nas"]);
+																   $ip_disp = $ip_disponivel["ipaddr"];
+																   $rede_disp = "NULL";
+																
+																										
+																}
+																
+															} else if ($tipo_de_ip == "M"){
+															
+															
+																$erro = array();
+																
+																$id_nas = @$_REQUEST["id_nas"];
+																$endereco_ip = @$_REQUEST["endereco_ip"];
+																$nas = $this->obtemNAS($_REQUEST["id_nas"]);
+																
+																$sSQL = "SELECT rede FROM cftb_rede WHERE rede >> '$endereco_ip' or rede = '$endereco_ip'	";
+																$_rede = $this->bd->obtemUnicoRegistro($sSQL);
+																$rede = @$_rede["rede"];
+																
+																if( !$rede ) {
+																   $erro = "Rede não cadastrada no sistema.";
+																} else {
+																   $sSQL = "SELECT rede FROM cftb_nas_rede WHERE rede = '$rede' AND id_nas = '$id_nas'";
+																   $nas_rede = $this->bd->obtemUnicoRegistro($sSQL);
+																   
+																   if( !count($nas_rede) ) {
+																      $erro = "Rede não disponível para este NAS";
+																   } else {
+																// verificar de acordo com o tipo do nas
+																			$sSQL = "SELECT username,rede FROM cntb_conta_bandalarga WHERE ";
+																			if ($nas["tipo_nas"] == "I"){
+																	     $sSQL .= " rede = '$rede' ";
+																	     
+																			}else if ($nas["tipo_nas"] == "P"){
+																					$sSQL .= " ipaddr = '$endereco_ip' ";
+																					
+																			}
+																			$rede_bl = $this->bd->obtemUnicoRegistro($sSQL);
+																			if(count($rede_bl)){
+																					$erro = "Endereço utilizado por outro cliente (".$rede_bl["username"].")";
+																			} 
+							
+																	}
+																}
+																
+																
+																
+																
+																if (!@$erro){
+																
+																	if ($nas["tipo_nas"] == "I"){
+																
+																		$ip_disp = "NULL";
+																		$rede_disp = $rede;
+																
+																	} else if ($nas["tipo_nas"] == "P"){
+																		
+																		$rede_disp = "NULL";
+																		$ip_disp = $endereco_ip;
+																	
+																	}
+																
+																}else{
+																	////echo count($erro);
+																	//for($i=0;$i<count($erro);$i++) {
+																	   ////echo $erro[$i] . "<br>\n";
+																	//}
+																//}
+							
+							
+																	$this->tpl->atribui("mensagem",$erro);
+																	$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=cobranca&id_cliente=$id_cliente");
+																	$this->tpl->atribui("target","_top");
+							
+																	$this->arquivoTemplate="msgredirect.html";
+																	return;
+															}
+															
+															
+							
+							
+															}
+															
+															$redirecionar = @$_REQUEST["redirecionar"];
+															
+															if($redirecionar == "true"){
+																
+																$ip_externo = $this->obtemIPExterno($_REQUEST["id_nas"]);
+																//////echo $ip_externo["ip_externo"];
+																
+																if($nas["tipo_nas"] == "P"){
+																	
+																	$ipaddr = $ip_disp;
+																
+																}else if ($nas["tipo_nas"] == "I"){
+																
+																	$ipaddr = $rede_disp;
+																
+																}
+																
+																$username = @$_REQUEST["username"];
+																$tipo_conta = @$_REQUEST["tipo"];
+																//$dominio = $prefs["geral"]["dominio_padrao"];
+																//$dom = $prefs["total"];
+																
+																$dSQL = "SELECT dominio_padrao FROM pftb_preferencia_geral WHERE id_provedor = '1' ";
+																$dom = $this->bd->obtemUnicoRegistro($dSQL);
+																////echo "SQL DOMINIO: $dSQL <br>";
+																
+																$dominio = $dom["dominio_padrao"];
+							
+																
+																$sSQL = "SELECT id_conta FROM cntb_conta WHERE username = '$username' AND tipo_conta = 'BL' AND dominio = '$dominio' ";
+																$_id_conta = $this->bd->obtemUnicoRegistro($sSQL);
+																////echo "ID_CONTA: $sSQL";
+																$id_conta = $_id_conta["id_conta"];
+																$_ip_externo = $ip_externo["ip_externo"];
+																
+																$this->spool->adicionaIpExterno($_REQUEST["id_nas"],$_ip_externo,$ipaddr,$id_conta);
+																
+																
+															}else{
+																$ip_externo = "null";
+															
+															}
+															
+															
+															if ($ip_externo != "null"){
+															
+																$ip_externo = "'".$ip_externo["ip_externo"]."'";
+															}
+															
+															
+															if($rede_disp != "NULL"){
+															
+																$rede_disp = "'".$rede_disp."'";
+																////echo "rede:". $rede_disponivel["rede"]. "<br>";
+															
+															
+															}
+															
+															if($ip_disp !="NULL"){
+															
+																$ip_disp = "'".$ip_disp."'";
+															
+															
+															}
+															
+															$id_produto = $this->bd->escape(@$_REQUEST["id_produto"]);
+															$bandaUp_dow = $this->obtemDowUp($id_produto);
+															$download_kbps = @$_REQUEST["download_kbps"];
+															$upload_kbps = @$_REQUEST["upload_kbps"];
+															
+															echo "DOWN: $download_kbps <br>";
+															echo "UP: $upload_kbps <br>";
+															
+															
+															$MAC = @$_REQUEST["mac"];
+															
+															if($MAC ==""){
+																$_MAC = "NULL";
+															}else {
+																$_MAC = "'".$MAC."'";
+															}
+															
+															//$id_conta_banda_larga = $this->bd->proximoID("clsq_id_conta_bandalarga_seq");
+															
+															//$id_pop = $_REQUEST["id_pop"];
+															////////echo "IDPOP: $id_pop <br>";
+															
+															// INSERE EM CNTB_CONTA_BANDALARGA
+															$sSQL  = "INSERT INTO ";
+															$sSQL .= "   cntb_conta_bandalarga( ";
+															$sSQL .= "      username, ";
+															$sSQL .= "      tipo_conta, ";
+															$sSQL .= "      dominio, ";
+															$sSQL .= "      id_pop, ";
+															$sSQL .= "      tipo_bandalarga, ";
+															$sSQL .= "      ipaddr, ";
+															$sSQL .= "      rede, ";
+															$sSQL .= "      upload_kbps, ";
+															$sSQL .= "      download_kbps, ";
+															$sSQL .= "      status, ";
+															$sSQL .= "      id_nas, ";
+															$sSQL .= "      mac, ";
+															$sSQL .= "		ip_externo ";
+															$sSQL .= ") ";
+															$sSQL .= "   VALUES (";
+															$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["username"])  . "', ";
+															$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["tipo_conta"])). "', ";
+															$sSQL .= "     '" . $dominioPadrao . "', ";
+															$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["id_pop"])) . "', ";
+															$sSQL .= "     '" . $nas["tipo_nas"] . "', ";
+															$sSQL .= "     "  . $ip_disp . ", ";
+															$sSQL .= "     "  . $rede_disp . ", ";
+															$sSQL .= "     '" . $_REQUEST["upload_kbps"] . "', ";
+															$sSQL .= "     '" . $_REQUEST["download_kbps"] . "', ";
+															$sSQL .= "     'A', ";
+															$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["id_nas"])) . "', ";
+															$sSQL .= "     "  . $_MAC .", ";
+															$sSQL .= "	   "  . $ip_externo ."  ";
+															$sSQL .= "     )";						
+															
+															
+															echo  $sSQL;
+															$this->bd->consulta($sSQL);  
+							
+															break;
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+					/*			// PRODUTO BANDA LARGA
 								$tipo_de_ip = $this->bd->escape(trim(@$_REQUEST["selecao_ip"]));
 								if($tipo_de_ip == "A"){
 									$nas = $this->obtemNAS($_REQUEST["id_nas"]);
@@ -2652,7 +2888,7 @@ class VAClientes extends VirtexAdmin {
 								//////echo "INSERT NA BL: $sSQL <br>";
 								$this->bd->consulta($sSQL);  
 
-								break;
+								break;*/
 
 							case 'H':
 								// PRODUTO HOSPEDAGEM
@@ -2731,11 +2967,80 @@ class VAClientes extends VirtexAdmin {
 
 						////////echo $tipo;
 							// Envia instrucao pra spool
-							if ($nas && $nas["tipo_nas"] == "I"){
+							
+							
+														if ($nas && $nas["tipo_nas"] == "I"){
+							
+															$id_nas = $_REQUEST["id_nas"];
+															$banda_upload_kbps = @$_REQUEST["upload_kbps"];
+															$banda_download_kbps = @$_REQUEST["download_kbps"];
+															$rede = str_replace("'","",$rede_disp); //$rede_disponivel["rede"];
+															$mac = $_REQUEST["mac"];
+							
+															$sSQL  = "SELECT ";
+															$sSQL .= "   id_nas, nome, ip, tipo_nas ";
+															$sSQL .= "FROM ";
+															$sSQL .= "   cftb_nas ";
+															$sSQL .= "WHERE ";
+															$sSQL .= "   id_nas = '$id_nas'";
+															////////echo "SQL : " . $sSQL . "<br>\n";
+							
+															$nas = $this->bd->obtemUnicoRegistro($sSQL);
+															$this->tpl->atribui("n",$nas);
+															$this->tpl->atribui("tipo_nas",$nas["tipo_nas"]);
+							
+															$r =new RedeIP($rede);
+															$ip_gateway = $r->minHost();
+															$ip_cliente	= $r->maxHost(); // TODO: ObtemProximoIP();
+															$mascara    = $r->mascara();
+							
+															$this->tpl->atribui("ip_gateway",$ip_gateway);
+															$this->tpl->atribui("mascara",$mascara);
+															$this->tpl->atribui("ip_cliente",$ip_cliente);
+							
+							
+															$this->tpl->atribui("tipo",$tipo);
+															
+															//$destino = $nas['ip'];	
+															$destino = $nas['id_nas'];
+							
+															
+															$username = @$_REQUEST["username"];
+															$this->spool->bandalargaAdicionaRede($destino,$id_conta,$rede,$mac,$banda_upload_kbps,$banda_download_kbps,$username);
+							
+							
+							
+							}
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
 
-								$id_nas = $_REQUEST["id_nas"];
-								$banda_upload_kbps = @$_REQUEST["banda_upload_kbps"];
-								$banda_download_kbps = @$_REQUEST["banda_download_kbps"];
+							/*	$id_nas = $_REQUEST["id_nas"];
+								$rede_disponivel = $this->obtemRede("");
+								$banda_upload_kbps = @$_REQUEST["upload_kbps"];
+								$banda_download_kbps = @$_REQUEST["download_kbps"];
 								$rede = $rede_disponivel["rede"];
 								$mac = $_REQUEST["mac"];
 
@@ -2769,9 +3074,24 @@ class VAClientes extends VirtexAdmin {
 								$username = @$_REQUEST["username"];
 								$this->spool->bandalargaAdicionaRede($destino,$id_conta,$rede,$mac,$banda_upload_kbps,$banda_download_kbps,$username);
 
+*/
 
 
-							}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+							
 
 							// LISTA DE POPS
 							$sSQL  = "SELECT ";
