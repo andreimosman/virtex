@@ -2,68 +2,63 @@
 require_once(PATH_LIB . "/VirtexAdmin.class.php" );
 
 
-class HospedagemSpool extends VirtexAdmin {
+class PapokerEmail extends VirtexAdmin {
 
 
 
-	public function HospedagemSpool() {
+	public function PapokerEmail() {
 		parent::__construct();
 
 	}
 
 	public function processa($op=null){
 	
-			$sSQL  = "SELECT h.username,h.tipo_conta,h.dominio,h.tipo_hospedagem,n.id_conta,h.dominio_hospedagem ";
-			$sSQL .= "FROM cntb_conta_hospedagem h, cntb_conta n ";
-			$sSQL .= "WHERE ";
-			$sSQL .= "h.username = n.username AND ";
-			$sSQL .= "h.dominio = n.dominio AND ";
-			$sSQL .= "h.tipo_conta = n.tipo_conta ";
-			
-			$hospedagens = $this->bd->obtemRegistros($sSQL);
-			echo "SQL: $sSQL <br>";
-			
-			
-			$server = $this->prefs->obtem("geral","hosp_server");
-			
-			for($i=0;$i<count($hospedagens);$i++){
-			
-				$id_conta = $hospedagens[$i]["id_conta"];
-				$tipo_hospedagem = $hospedagens[$i]["tipo_hospedagem"];
-				$dominio = $hospedagens[$i]["dominio"];
-				$dominio_hospedagem = @str_replace("/","",$hospedagens[$i]["dominio_hospedagem"]);
-				$username = $hospedagens[$i]["username"];
-			
-				if ($hospedagens[$i]["tipo_hospedagem"] == "D"){
-				
-					$ns1 = $this->prefs->obtem("geral","hosp_ns1");
-					$ns2 = $this->prefs->obtem("geral","hosp_ns2");
+/* 
+CNTB_CONTA_EMAIL
+	username varchar(30) NOT NULL,
+  tipo_conta varchar(2) NOT NULL,
+  dominio varchar(255) NOT NULL,
+  quota int4,
+  email varchar(255),
 
-					$this->spool->configuraDNS($ns1, "N1", $id_conta, $dominio_hospedagem);
-					$this->spool->configuraDNS($ns2, "N2", $id_conta, $dominio_hospedagem);
 
-				
-				
-				
-				}
-				
-				
-				
+CNTB_CONTA
+  username varchar(30) NOT NULL,
+  dominio varchar(255) NOT NULL,
+  tipo_conta varchar(2) NOT NULL,
+  senha varchar(64),
+  id_cliente int2,
+  id_cliente_produto int2 NOT NULL,
+  id_conta int2,
+  senha_cript varchar(64),
+  conta_mestre bool DEFAULT true,
+  status char(1) DEFAULT 'A'::bpchar,
+  observacoes text,
+*/
 
-				
-				$this->spool->hospedagemAdicionaRede($server,$id_conta,$tipo_hospedagem,$username,$dominio,$dominio_hospedagem);
+		$sSQL = "SELECT * FROM cntb_conta WHERE tipo_conta = 'E' ";
+		$conta = $this->bd->obtemRegistros($sSQL);
+
+
+		for ($i=0;$i<count($conta);$i++){
+
+
+			$sSQL  = "INSERT INTO cntb_conta_email (username,tipo_conta,dominio,quota,email) VALUE ( ";
+			$sSQL .= " username = '" .$conta[$i]["username"]. "', ";
+			$sSQL .= " tipo_conta = 'E', ";
+			$sSQL .= " dominio = '" .$conta[$i]["dominio"]. "', ";
+			$sSQL .= " quota = '50000', ";
+			$sSQL .= " email = '" .$conta[$i]["username"]."@".$conta[$i]["dominio"]. "' ) ";
+			$this->bd->consulta($sSQL);
+			echo $sSQL . "<br>";
 			
-			}
-			
-			
-			echo "PAPOCOU A BAGAÇA!!! <BR>";
-			return;
-			
-			
-			
-			
-			
-			
+
+		}
+
+
+		echo "FOI!! $i registros encontrados<BR>";
+		
+
 	
 	}
 
