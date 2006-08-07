@@ -877,6 +877,8 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "	cl.id_cliente_produto = ct.id_cliente_produto  AND cl.id_cliente = '$id_cliente' AND ct.id_produto = pr.id_produto AND ct.status = 'A' ";
 		$sSQL .= "AND  cn.id_cliente_produto = ct.id_cliente_produto ";
 		$sSQL .= "AND cn.tipo_conta = ct.tipo_produto ";
+		$sSQL .= "AND cn.conta_mestre = true ";
+		$sSQL .= "AND cn.status = 'A' ";
 		$sSQL .= " ORDER BY ct.data_contratacao DESC ";
 			
 			$lista_contrato = $this->bd->obtemRegistros($sSQL);
@@ -931,6 +933,8 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "	cl.id_cliente_produto = ct.id_cliente_produto  AND cl.id_cliente = '$id_cliente' AND ct.id_produto = pr.id_produto AND ct.status = 'A' ";
 		$sSQL .= "AND  cn.id_cliente_produto = ct.id_cliente_produto ";
 		$sSQL .= "AND cn.tipo_conta = ct.tipo_produto ";
+		$sSQL .= "AND cn.conta_mestre = true ";
+		$sSQL .= "AND cn.status = 'A' ";
 		$sSQL .= " ORDER BY ct.data_contratacao DESC ";
 		
 		$lista_contrato = $this->bd->obtemRegistros($sSQL);
