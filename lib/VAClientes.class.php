@@ -877,9 +877,9 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "	cl.id_cliente_produto = ct.id_cliente_produto  AND cl.id_cliente = '$id_cliente' AND ct.id_produto = pr.id_produto AND ct.status = 'A' ";
 		$sSQL .= "AND  cn.id_cliente_produto = ct.id_cliente_produto ";
 		$sSQL .= "AND cn.tipo_conta = ct.tipo_produto ";
-		$sSQL .= "AND cn.conta_mestre = true ";
-		$sSQL .= "AND cn.status = 'A' ";
+		$sSQL .= "AND ct.tipo_produto = cn.tipo_conta";
 		$sSQL .= " ORDER BY ct.data_contratacao DESC ";
+		
 			
 			$lista_contrato = $this->bd->obtemRegistros($sSQL);
 			
@@ -925,21 +925,39 @@ class VAClientes extends VirtexAdmin {
 		
 		$sSQL  = "SELECT ";
 		$sSQL .= "	ct.id_cliente_produto, ct.data_contratacao, ct.vigencia, ct.id_produto, ct.tipo_produto, ct.valor_contrato, ct.status, ";
-		$sSQL .= "	cl.id_cliente_produto, cl.id_cliente, cn.username , ";
+		$sSQL .= "	cl.id_cliente_produto, cl.id_cliente,  ";
 		$sSQL .= "	pr.id_produto, pr.nome ";
 		$sSQL .= "FROM ";																	  
-		$sSQL .= "	cbtb_contrato ct, cbtb_cliente_produto cl, prtb_produto pr, cntb_conta cn ";
+		$sSQL .= "	cbtb_contrato ct, cbtb_cliente_produto cl, prtb_produto pr  ";
 		$sSQL .= "WHERE ";
 		$sSQL .= "	cl.id_cliente_produto = ct.id_cliente_produto  AND cl.id_cliente = '$id_cliente' AND ct.id_produto = pr.id_produto AND ct.status = 'A' ";
-		$sSQL .= "AND  cn.id_cliente_produto = ct.id_cliente_produto ";
-		$sSQL .= "AND cn.tipo_conta = ct.tipo_produto ";
-		$sSQL .= "AND cn.conta_mestre = true ";
-		$sSQL .= "AND cn.status = 'A' ";
 		$sSQL .= " ORDER BY ct.data_contratacao DESC ";
-		
+
 		$lista_contrato = $this->bd->obtemRegistros($sSQL);
+
+		for($i=0;$i<count($lista_contrato);$i++) {
+					
+			$id_cp = $lista_contrato[$i]["id_cliente_produto"];
+
+			$dSQL  = "SELECT ";
+			$dSQL .= "	username, dominio, tipo_conta, id_conta , id_cliente_produto ";
+			$dSQL .= "FROM ";
+			$dSQL .= "	cntb_conta ";
+			$dSQL .= "WHERE ";
+			$dSQL .= "	id_cliente_produto = '$id_cp'";
+			$dSQL .= " AND conta_mestre = true ";
+
+			//////////////////////////echo $dSQL ."<hr>\n";
+
+			$contas = $this->bd->obtemRegistros($dSQL);
+
+			$lista_contrato[$i]["conta"] = $contas;
 		
+		}	
+
+			
 		//////////echo "lista: $sSQL <br>";
+			$this->tpl->atribui("conta",$contas);
 			$this->tpl->atribui("lista_contrato",$lista_contrato);
 			$this->tpl->atribui("cliente",$cliente);
 			$this->tpl->atribui("id_cliente", $id_cliente);
