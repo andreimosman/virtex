@@ -2371,7 +2371,7 @@ class VACobranca extends VirtexAdmin {
 							$periodo_desconto = @$_REQUEST["periodo_desconto"];
 							$valor_prorata = @$_REQUEST["valor_prorata"];
 							$carencia = @$_REQUEST["carencia_pagamento"];
-
+							$forma_pagamento = @$_REQUEST["forma_pagamento"];
 
 							//Informações sobre banco e cartão de crédito
 							$cc_vencimento = @$_REQUEST["cc_vencimento"];
@@ -2496,6 +2496,13 @@ class VACobranca extends VirtexAdmin {
 							$this->bd->consulta($sSQL);
 							
 							/* FINAL DO ESTORNO DO CARNE */
+							
+							/* SETA NO CBTB_CLIENTE_PRODUTO COMO EXCLUIDO O ID_CLIENTE_PRODUTO DO CONTRATO ANTIGO */
+							
+							$sSQL = "UPDATE cbtb_cliente_produto SET excluido = true where id_cliente_produto = '$id_cliente_produto' ";
+							$this->bd->consulta($sSQL);
+							
+							/* FINAL DO CBTB_CLIENTE_PRODUTO */
 							
 							require_once("hugo_faturas.php");
 						

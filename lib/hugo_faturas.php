@@ -247,7 +247,8 @@
 										$this->bd->consulta($sSQL);
 										
 										$data = $fatura_dt_vencimento;
-										$fatura = $this->carne($id_cliente_produto_new,$data,$id_cliente);
+										$fatura = $this->carne($id_cliente_produto_new,$data,$id_cliente,$forma_pagamento);
+										
 										fputs($fd,$fatura);
 
 										
