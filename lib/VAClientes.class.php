@@ -2050,7 +2050,7 @@ class VAClientes extends VirtexAdmin {
 			$sSQL .= "	p.vl_email_adicional, p.permitir_outros_dominios, p.email_anexado, p.numero_contas ";
 			$sSQL .= "FROM cbtb_cliente_produto cp INNER JOIN prtb_produto p ";
 			$sSQL .= "USING( id_produto ) ";
-			$sSQL .= "WHERE cp.id_cliente='$id_cliente' AND p.tipo = '$tipo' ";
+			$sSQL .= "WHERE cp.id_cliente='$id_cliente' AND p.tipo = '$tipo' AND cp.excluido is false ";
 			//////////echo $sSQL ."<hr>\n";
 			
 			
