@@ -3851,7 +3851,7 @@ class VAClientes extends VirtexAdmin {
 							$sSQL  = "UPDATE ";
 							$sSQL .= "   cntb_conta ";
 							$sSQL .= "SET ";
-							$sSQL .= "   status = '".$this->bd->escape($status)."' ";
+							$sSQL .= "   status = 'A' ";
 							if( $senha ) {
 								$sSQL .= "   , senha = '".$this->bd->escape($senha)."' ";
 								$sSQL .= "   , senha_cript = '".$this->criptSenha($senha)."' ";
@@ -3876,15 +3876,17 @@ class VAClientes extends VirtexAdmin {
 							$dominio_hospedagem = @str_replace("/","",$_REQUEST["dominio_hospedagem"]);
 							$senha_cript = $this->criptSenha($senha);
 							$id_conta = $conta["id_conta"];
-							$server = $conta["mail_server"];
-							$dominio_padrao = $conta["dominio_padrao"];
+							//$server = $conta["mail_server"];
+							//$dominio_padrao = $conta["dominio_padrao"];
 																			
 							
 							$sSQL  = "UPDATE ";
 							$sSQL .= "	cntb_conta_hospedagem ";
 							$sSQL .= "SET ";
-							$sSQL .= "	dominio_hospedagem = '$dominio_hospedagem', ";
-							$sSQL .= "	senha_cript = '$senha_cript' ";
+							$sSQL .= "	dominio_hospedagem = '$dominio_hospedagem' ";
+							if ($senha){
+	              $sSQL .= "  , senha_cript = '$senha_cript' ";
+							}
 							$sSQL .= "WHERE ";
 							$sSQL .= "	username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta'";
 							//////////echo "SQL: $sSQL <br>";
@@ -3895,10 +3897,10 @@ class VAClientes extends VirtexAdmin {
 							$sSQL  = "UPDATE ";
 							$sSQL .= "   cntb_conta ";
 							$sSQL .= "SET ";
-							$sSQL .= "   status = '".$this->bd->escape($status)."' ";
+							$sSQL .= "   status = 'A' ";
 							if( $senha ) {
 								$sSQL .= "   , senha = '".$this->bd->escape($senha)."' ";
-								$sSQL .= "   , senha_cript = '".$this->criptSenha($senha)."' ";
+								$sSQL .= "   , senha_cript = '$senha_cript' ";
 							}
 
 							$sSQL .= "WHERE ";
