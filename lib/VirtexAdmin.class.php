@@ -35,6 +35,22 @@ class VirtexAdmin extends MWebApp {
 		
 		@session_start();
 
+		/**
+		 *  Se o sistema só aceita https
+		 */
+		 
+		if( @$this->cfg->config["geral"]["https_only"] ) {
+			// Verificar se o HTTPs tá ok.
+			if(@$_SERVER["REQUEST_METHOD"] && !@$_SERVER["SSL_PROTOCOL"]) {
+
+				$url = "https://".$_SERVER["HTTP_HOST"] . $_SERVER["PHP_SELF"];
+				$this->tpl->atribui("url",$url);
+
+				$this->tpl->exibe("https_only.html");
+				exit;
+			}
+		}
+
 		if( @$this->cfg->config["DB"]["dsn"] ) {
 			// Instanciar BD;
 			
@@ -61,6 +77,7 @@ class VirtexAdmin extends MWebApp {
 			$this->prefs = new Preferencias($this->bd);
 
 		}
+		
 	}
 
 	public function __destruct() {
