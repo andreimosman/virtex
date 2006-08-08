@@ -595,6 +595,7 @@ class VAClientes extends VirtexAdmin {
 						//$sSQL .= "WHERE $campo = '$campo_pesquisa' ";
 						$sSQL .= "WHERE ";
 						$sSQL .= " excluido = 'f' AND ";
+						
 
 						switch($tipo_pesquisa) {
 
@@ -609,6 +610,8 @@ class VAClientes extends VirtexAdmin {
 							  break;
 						}
 						
+						$sSQL .= " ORDER BY nome_razao ASC ";
+
 						$clientes = $this->bd->obtemRegistros($sSQL);
 
 											
