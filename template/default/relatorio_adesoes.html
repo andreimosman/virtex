@@ -1,7 +1,7 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
-
+<title>Untitled Document</title>
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
 <script language="JavaScript">ready = "yes";</script>
 <script>
@@ -55,50 +55,43 @@ if (da && !pr && !mac) with (document) {
 </script>
 
 
+
+
+
 </head>
-
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
-  <tr>
-    <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-          <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-              <tr>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio</h1>
-                <h2 align="center"><font size="2">
-                {if $mes}Adesões em {$meses_ano[$mes]} de {$ano}{else}Adesões{/if}
-
-                </font></h2>
-
-                	{if $acao == "geral"}
-
-                	<form action="{$smarty.server.PHP_SELF}" method="GET">
-                		<input type="HIDDEN" name="acao" value="{$acao}">
-                		<input type="HIDDEN" name="op" value="{$op}">
-
-                		<table width="200" border="0" cellspacing="0" cellpadding="0">
-
-						  <tr height="60">
-						  	<td align="center"><p><strong>Per&iacute;odo</strong></a></td>
-						  	<td>
-								<select name="periodo">
+<body><h1 align="center">Relat&oacute;rio</h1>
+<p align="center"><font size="3"><b>{if $mes}Adesões em {$meses_ano[$mes]} de {$ano}{else}Adesões{/if}</b>
+  </font></p>
+{if $acao == "geral"} <form action="{$smarty.server.PHP_SELF}" method="GET"> 
+<input type="HIDDEN" name="acao" value="{$acao}">
+<input type="HIDDEN" name="op" value="{$op}">
+<table align="CENTER" width="300" border="0" cellspacing="3" cellpadding="0">
+  <TR> 
+  <td><div align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><strong>Per&iacute;odo</strong></font></div></td>
+    <td><div align="CENTER"> 
+      <select name="periodo">
 									{foreach key=id item=nome from=$tpconsulta}
-										<option value="{$id}" {if $id==$periodo} SELECTED {/if}>{$nome}</option>
+										 
+        <option value="{$id}" {if $id==$periodo} SELECTED {/if}>{$nome}</option>
 									{/foreach}
 
-								</select>
-							</td>
-
-						  	<td><p><input type="submit" value="OK"></p></td>
-						  </tr>
-						<table> </form> <p>{if $relat}<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico">{/if}<br>
-                    {if !$relat}<p><b>N&atilde;o Existem Ades&otilde;es para o periodo 
-                    especificado</b></p>{/if} <br>
-                    {if $relat} </p>
-					  <table width="450" border="0" cellspacing="0" cellpadding="0">
+								 
+      </select>
+      </div></td>
+    <td><div align="CENTER"> 
+      <input type="submit" value="OK">
+      </div></td>
+  </tr>
+</table>
+</form>
+{/if}
+<p align="center">{if $acao == geral}<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico">{/if}</p>
+<BR>
+<p>
+{if $acao == "geral"}
+	{if $relat}
+<!-- 	COMEÇO DO acao = geral -->
+						  <table width="450" border="0" cellspacing="0" cellpadding="0" align="CENTER">
 						  <tr>
 							<td><table width="450" border="0" cellspacing="0" cellpadding="0">
 								<tr>
@@ -113,16 +106,16 @@ if (da && !pr && !mac) with (document) {
 								  <td>
 
 								{foreach item=a from=$relat}
-								  <table width="450" border="0" cellspacing="2" cellpadding="0">
-									  <tr>
-										<td width="225" align="LEFT"><p><a href="relatorio.php?op={$op}&acao=sub_ade&ano={$a.ano}&mes={$a.mes}">{$meses_ano[$a.mes]}/{$a.ano}</a></p></td>
-										<td align="RIGHT"><p><a href="relatorio.php?op={$op}&acao=sub_ade&ano={$a.ano}&mes={$a.mes}">{$a.num_contratos}</a></p></td>
-
-									  </tr>
-									  <tr bgcolor="#999999">
-										<td colspan="5" height="1"></td>
-									  </tr>
-									</table>
+								  
+            <table width="450" border="0" cellspacing="2" cellpadding="0">
+              <tr> 
+                <td width="225" align="LEFT"><p><a href="relatorio.php?op={$op}&acao=sub_ade&ano={$a.ano}&mes={$a.mes}">{$meses_ano[$a.mes]}/{$a.ano}</a></p></td>
+                <td align="RIGHT"><p><a href="relatorio.php?op={$op}&acao=sub_ade&ano={$a.ano}&mes={$a.mes}">{$a.num_contratos}</a></p></td>
+              </tr>
+              <tr bgcolor="#999999"> 
+                <td colspan="5" height="1"></td>
+              </tr>
+            </table>
 								 {/foreach}
 
 								  </td>
@@ -130,61 +123,53 @@ if (da && !pr && !mac) with (document) {
 							  </table></td>
 						  </tr>
                   	  </table>
+<!-- 	FIM DO acao = geral -->
+{else} 
+<font face="verdana" size="2" color="black"><b>N&atilde;o Existem Ades&otilde;es 
+para o periodo especificado</b></font> {/if} 
 
-					{/if}
-
-
-
-					{if $acao == "sub_ade"}
-					  <table width="500" border="0" cellspacing="0" cellpadding="0">
-						  <tr>
-							<td><table width="500" border="0" cellspacing="0" cellpadding="0">
-								<tr>
-								  <td bgcolor="#F1F1F1"><table width="500" border="0" cellspacing="2" cellpadding="0">
-									  <tr>
-									  	<td width="80" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Data</font></td>
-										<td width="200" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Cliente</font></td>
-										<td align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Tipo</font></td>
-										<td width="150" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Produto</font></td>
-
-
-									  </tr>
-									</table></td>
-								</tr>
-								<tr>
-								  <td>
-
-								{foreach item=a from=$relat}
-								  <table width="500" border="0" cellspacing="2" cellpadding="0">
-									  <tr>
-										<td width="80" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p>{$a.dia}-{$a.mes}-{$a.ano}</p></font></td>
-										<td width="200" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p><a href="clientes.php?op=cadastro&id_cliente={$a.id_cliente}">{$a.nome_razao}</a></p></font></td>
-										<td align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p><img src="template/default/images/{$a.tipo|lower|trim}.gif" width="24" height="24"></p></font></td>
-										<td width="150" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p>{$a.nome}</p></font></td>
-
-									  </tr>
-									  <tr bgcolor="#999999">
-									  	<td colspan="5" height="1"></td>
-									  </tr>
-								  </table>
-								 {/foreach}
-
-								  </td>
-								</tr>
-							  </table></td>
-						  </tr>
-                  	  </table>
-                  	  
-                  <p>{/if} </p>
-                  <p>{/if}              </p>
-                <p id="imprimir"><a href="javascript:;" onClick="return printPage();">IMPRIMIR</a></p></td>
+{elseif $acao == "sub_ade"} 
+<br><p align="center"><a href="relatorio.php?op=adesao">voltar para relatorio geral de Adesões</a></p><br>
+<table width="500" border="0" cellspacing="0" cellpadding="0" ALIGN="center">
+  <tr> 
+    <td><table width="500" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td bgcolor="#F1F1F1"><table width="500" border="0" cellspacing="2" cellpadding="0">
+              <tr> 
+                <td width="80" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Data</font></td>
+                <td width="200" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Cliente</font></td>
+                <td align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Tipo</font></td>
+                <td width="150" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Produto</font></td>
               </tr>
             </table></td>
+        </tr>
+        <tr> 
+          <td> {foreach item=a from=$relat} 
+            <table width="500" border="0" cellspacing="2" cellpadding="0">
+              <tr> 
+                <td width="80" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">
+                  <p>{$a.dia}-{$a.mes}-{$a.ano}</p>
+                  </font></td>
+                <td width="200" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">
+                  <p><a href="clientes.php?op=cadastro&id_cliente={$a.id_cliente}">{$a.nome_razao}</a></p>
+                  </font></td>
+                <td align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">
+                  <p><img src="template/default/images/{$a.tipo|lower|trim}.gif" width="24" height="24"></p>
+                  </font></td>
+                <td width="150" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">
+                  <p>{$a.nome}</p>
+                  </font></td>
+              </tr>
+              <tr bgcolor="#999999"> 
+                <td colspan="5" height="1"></td>
+              </tr>
+            </table>
+            {/foreach} </td>
         </tr>
       </table></td>
   </tr>
 </table>
+{/if} </p>
+ <p id="imprimir" align="center"><a href="javascript:;" onClick="return printPage();">IMPRIMIR</a></p>
 </body>
-
-
 </html>

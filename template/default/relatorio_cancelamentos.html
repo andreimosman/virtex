@@ -66,12 +66,9 @@ if (da && !pr && !mac) with (document) {
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio</h1><h2 align="center"><font size="2">Cancelamentos</font></h2>
-
-                	{if $acao == "geral"}
-
-                	<form action="{$smarty.server.PHP_SELF}" method="GET">
-                		<input type="HIDDEN" name="acao" value="{$acao}">
+                <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio</h1><h2 align="center"><font size="2">Cancelamentos-{$acao}</font></h2>{if 
+                  $acao == "geral"} <form action="{$smarty.server.PHP_SELF}" method="GET"> 
+                  <input type="HIDDEN" name="acao" value="{$acao}">
                 		<input type="HIDDEN" name="op" value="{$op}">
 
                 		<table width="200" border="0" cellspacing="0" cellpadding="0">
@@ -89,10 +86,10 @@ if (da && !pr && !mac) with (document) {
 
 						  	<td><p><input type="submit" value="OK"></p></td>
 						  </tr>
-						<table> </form> 
-                  {if !$relat || $relat == "255"}<p><strong>Não 
+						</table> </form>{if !$relat}
+<p><strong>Não 
                     Existe Cancelamentos no periodo</strong></p>{/if}<br>
-                    {if $relat && $relat != "" && $relat != "255"}{$relat}<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico"><br>
+                  {if $relat }<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico"><br>
                   
 					    <table width="450" border="0" cellspacing="0" cellpadding="0">
 						  <tr>
@@ -126,12 +123,8 @@ if (da && !pr && !mac) with (document) {
 						  </tr>
                   	  </table>
 
-					{/if}
-
-
-
-					{if $acao == "sub_ade"}
-					  <table width="500" border="0" cellspacing="0" cellpadding="0">
+					{/if} {if $acao == "sub_ade"}BOSTA 
+                  <table width="500" border="0" cellspacing="0" cellpadding="0">
 						  <tr>
 							<td><table width="500" border="0" cellspacing="0" cellpadding="0">
 								<tr>
