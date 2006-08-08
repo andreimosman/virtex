@@ -27,38 +27,48 @@
     <tr  bgcolor="#F9F9F9">
       <td height="380" colspan="4">
         <div align="center">
-        <table width="100" border="0" cellpadding="0" cellspacing="0" bgcolor="#666666">
-          <tr>
+          <table width="252" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#666666">
+            <tr>
             <td><div align="center">
-                <table width="100" border="0" cellspacing="1" cellpadding="1">
-                  <tr>
+                  <table width="100%" border="0" cellspacing="1" cellpadding="1">
+                    <tr>
                     <td bgcolor="#FFFFFF"><div align="center">
-                          <table width="100" border="0" cellpadding="5" cellspacing="5" bgcolor="fefefe">
-                            <tr>
-                              <td align="center" valign="middle" bgcolor="fefefe">
+                          <table width="231" border="0" align="center" cellpadding="5" cellspacing="5" bgcolor="fefefe">
+                            <tr> 
+                              <td width="211" align="center" valign="middle" bgcolor="fefefe"> 
                                 <form id="form1" name="form1" method="post" action="{$smarty.server.PHP_SELF}">
-                                <input type="hidden" name="op" value="login">
-                                <table width="265" border="0" cellspacing="2" cellpadding="0">
-                                  <tr>
-                                    <td colspan="2">&nbsp;</td>
-                                  </tr>
-                                  <tr>
-                                    <td width="72"><p>Usuário</p></td>
-                                    <td width="187"><input name="admin" type="text" id="admin" /></td>
-                                  </tr>
-                                  <tr>
-                                    <td><p>Senha</p></td>
-                                    <td><input name="senha" type="password" id="senha" /></td>
-                                  </tr>
-                                    <tr bgcolor="fefefe">
-                                      <td colspan="2" align="center">
-                                        <input type="submit" name="Submit" value="Entrar >>" />
-                                      </td>
-                                  </tr>
-                                </table>
-                              </form></td>
-                          </tr>
-                        </table>
+                                  <p align="center"> 
+                                    <input type="hidden" name="op" value="login">
+                                    <font color="f9f9f9">&lt;br&gt; </font></p>
+                                  <div align="center"> 
+                                    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="2">
+                                      <tr> 
+                                        <td><p align="center"> Usuário</p></td>
+                                        <td><input name="admin" type="text" id="admin3" /></td>
+                                      </tr>
+                                      <tr> 
+                                        <td><p align="center">Senha</p></td>
+                                        <td><input name="senha" type="password" id="senha4" /></td>
+                                      </tr>
+                                      <tr> 
+                                        <td><p align="center">Conta</p></td>
+                                        <td><select name="tipo_conta_log">
+                                            <option value=""></option>
+											<option value="BL">Banda Larga</option>
+                                            <option value="D">Discado</option>
+                                            <option value="E">E-Mail</option>
+                                            <option value="H">Hospedagem&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                                          </select></td>
+                                      </tr>
+                                      <tr bgcolor="fefefe"> 
+                                        <td colspan="2" align="center"> <input type="submit" name="Submit" value="Entrar >>" /> 
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </div>
+                                </form></td>
+                            </tr>
+                          </table>
                       </div></td>
                   </tr>
                 </table>

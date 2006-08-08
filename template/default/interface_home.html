@@ -45,7 +45,7 @@
   </tr>
   <tr bgcolor="#BACEBF">
     <td height="0" colspan="4">
-      <table width="607" bgcolor="#BACEBF">
+      <table width="800" bgcolor="#BACEBF">
         <tr>
           <td width="47" height="21" >
             <p align="left"><strong><a href="index_home.php?op=home">Home</a></strong></p></td>
@@ -53,7 +53,7 @@
               de Senha</a></strong></p></td>
           <td width="207" ><p align="left"><strong><a href="index_home.php?op=contas">{if $conta_mestre=='t'}Contas{/if}</a></strong></p></td>
           <td width="228" > <div align="right">
-              <p><strong><font size="-3">username:</font></strong> <strong>{$username_conf}</strong></p>
+              <p><strong><font size="-3">username:</font></strong> <strong>{$username_conf} {if $tipo_conta== "BL"}Banda Larga{/if}{if $tipo_conta=="E"}E-mail{/if}{if $tipo_conta=="H"}Hospedagem{/if}{if $tipo_conta=="D"}Discado{/if}</strong></p>
             </div></td>
         </tr>
       </table>
@@ -64,16 +64,14 @@
       <div align="center">
 <form action="{$smarty.server.PHP_SELF}" name=ic method="post" onSubmit="return valida(this.value);">
           <p><br>
-            {if $alterar_senhas}</p>
+            {if $alterar_senhas}<strong><font color="#FF0000">Voc&ecirc; est&aacute; 
+            alterando os dados do usu&aacute;rio {$username} da conta de {if $tipo_conta== "BL"}Banda Larga{/if}{if $tipo_conta=="E"}E-mail{/if}{if $tipo_conta=="H"}Hospedagem{/if}{if $tipo_conta=="D"}Discado{/if}.</font></strong></p>
           <div align="center">
 <table width=40% cellpadding=0 cellspacing=0 bgcolor="#000000">
               <tr>
                 <td> <table width=100% cellpadding=0 cellspacing=1>
                     <tr bgcolor="#FFFFFF">
-                      <td align="center" bgcolor="#FEFEFE"> <p><br>
-                          <font size="1" face="Verdana, Arial, Helvetica, sans-serif">Usuário:
-                          <br>
-                          {$username}</font><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><br>
+                      <td align="center" bgcolor="#FEFEFE"> <p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><br>
                           <br>
                           Senha Atual: <br>
                           <input type="hidden" name="acao" value="alterar">
@@ -107,19 +105,25 @@
         <form  action="{$smarty.server.PHP_SELF}" name="dados" method="post">
           <p>{if $dados}</p>
           <table width="75%" border="0" align="center">
-            <tr bgcolor="F1F1F1">
-              <td><div align="center"><strong><font color="#99B7A0">Username</font></strong></div></td>
-              <td><div align="center"><strong><font color="#99B7A0">Tipo da conta</font></strong></div></td>
-              <td><div align="center"><font color="#99B7A0"><strong>Dom&iacute;nio</strong></font></div></td>
+            <tr bgcolor="F1F1F1"> 
+              <td><div align="center"> 
+                  <p><strong><font color="#99B7A0">Username</font></strong></p>
+                </div></td>
+              <td><div align="center"> 
+                  <p><strong><font color="#99B7A0">Tipo da conta</font></strong></p>
+                </div></td>
+              <td><div align="center"> 
+                  <p><font color="#99B7A0"><strong>Dom&iacute;nio</strong></font></p>
+                </div></td>
             </tr>
-            <tr>
-              <td><div align="center">
+            <tr> 
+              <td><div align="center"> 
                   <p><strong>{$username}</strong></p>
                 </div></td>
-              <td><div align="center">
-                  <p><strong>{$tipo_conta}</strong></p>
+              <td><div align="center"> 
+                  <p><strong>{if $tipo_conta== "BL"}Banda Larga{/if}{if $tipo_conta=="E"}E-mail{/if}{if $tipo_conta=="H"}Hospedagem{/if}{if $tipo_conta=="D"}Discado{/if}</strong></p>
                 </div></td>
-              <td><div align="center">
+              <td><div align="center"> 
                   <p><strong>{$dominio}</strong></p>
                 </div></td>
             </tr>
@@ -135,17 +139,18 @@
           </form>
         {if $contas} </div>
       <table width="471" align="center">
-        <tr>
+        <tr> 
           <td width="161" bgcolor="f1f1f1"> <p align="left"><font color="#99B7A0"><strong>Username</strong></font></p></td>
           <td width="179" bgcolor="f1f1f1"> <p align="center"><font color="#99B7A0"><strong>Tipo</strong></font></p></td>
         </tr>
-        {foreach item=c from=$contas}
-        <tr>
+        {foreach item=c from=$contas} 
+        <tr> 
           <td><p align="left"><strong>{$c.username}</strong></p></td>
           <td> <p><strong>{$c.nome}</strong></p></td>
-          <td width="115" ><a href="index_home.php?op=dados&id_conta={$c.id_conta}">[Dados da conta]</a> </td>
+          <td width="115" ><a href="index_home.php?op=dados&id_conta={$c.id_conta}">[Dados 
+            da conta]</a> </td>
         </tr>
-        {/foreach}
+        {/foreach} 
       </table>
       <p>{/if} </p></td>
   </tr>

@@ -19,6 +19,7 @@ class VAInterface_cliente extends VirtexAdmin {
 
 		$admin = @$_REQUEST["admin"];
 		$senha = @$_REQUEST["senha"];
+		$conta = @$_REQUEST["tipo_conta_log"];
 
 		$erro = "";
 		
@@ -36,7 +37,7 @@ class VAInterface_cliente extends VirtexAdmin {
 
 				if( !$erro ) {
 					
-					$this->usrLogin->login($admin,$senha);
+					$this->usrLogin->login($admin,$senha,$conta);
 
 					if( !$this->usrLogin->estaLogado() ) {
 						$erro = "Usuário inválido ou senha incorreta";

@@ -16,6 +16,7 @@ class UserLogin extends VirtexAdmin {
 	protected $privilegios;
 	protected $logado;
 	protected $contamestre;
+	protected $conta;
 	
 	
 	function __sleep() {
@@ -39,7 +40,7 @@ class UserLogin extends VirtexAdmin {
 	/**
 	 * Verifica usuário e senha
 	 */
-	function login($username,$senha) {
+	function login($username,$senha,$conta) {
 		// Pega apenas os usuários vazios
 		$sSQL = "SELECT ";
 		$sSQL .= "   cc.id_conta, cc.username, cc.senha, cc.senha_cript, clc.nome_razao, cc.status , cc.conta_mestre, clc.id_cliente as id ";
@@ -50,12 +51,13 @@ class UserLogin extends VirtexAdmin {
 		$sSQL .= "   cc.username ilike '".$username."' ";
 		$sSQL .= "   AND cc.status = 'A'";
 		$sSQL .= "	 AND clc.id_cliente = cc.id_cliente ";
+		$sSQL .= "	 AND cc.tipo_conta = '".$conta."' ";
 		
 		$this->bd->consulta($sSQL);
 				$adm = $this->bd->obtemUnicoRegistro($sSQL);
 				
 				
-		$salt = substr($adm['senha_cript'],0,12);
+		$salt = substr(@$adm['senha_cript'],0,12);
 		$senhad_cript = crypt($senha,$salt);
 		
 		// Se encontrou o registro

@@ -15,7 +15,7 @@ class VAInterface_cliente_home extends VirtexAdmin {
 	$user = $this->usrLogin->obtemUser();
 	$id_conta = $this->usrLogin->obtemId();
 	$conta_mestre = $this->usrLogin->obtemConta();
-	$id_cliente = $this->usrLogin->obtemIdCliente();
+	$id_cliente = $this->usrLogin->obtemIdCliente();	
 
 	$this->tpl->atribui("conta_mestre",$conta_mestre);
 	
@@ -49,6 +49,7 @@ class VAInterface_cliente_home extends VirtexAdmin {
 	$this->arquivoTemplate = "interface_home.html";
 	
 	if ($op == "dados"){
+	
 	$dados = "true";	
 	
 	$id_conta2 = @$_REQUEST["id_conta"];
@@ -75,6 +76,7 @@ class VAInterface_cliente_home extends VirtexAdmin {
 	}
 	
 	$this->tpl->atribui("dados",$dados);
+
 	$this->arquivoTemplate = "interface_home.html";
 	
 	
