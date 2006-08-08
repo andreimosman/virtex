@@ -1027,6 +1027,10 @@ class VARelatorio extends VirtexAdmin {
 		$this->tpl->atribui("op", $op);
 		$this->tpl->atribui("relat",$relat);
 		$this->arquivoTemplate = "relatorio_cidades_clientes.html";	
+		
+		
+		
+		
 	
 	}  else if ($op == "adesao"){
 				if( ! $this->privPodeLer("_RELATORIOS_COBRANCA") ) {
@@ -1041,49 +1045,25 @@ class VARelatorio extends VirtexAdmin {
 		if (!$acao) $acao = "geral";
 		if (!$periodo) $periodo = "12";
 						
-				
-		if ($acao == "geral") {	
+		if ($acao == "geral")	$relat = $this->adesao($acao,$periodo);
+		//if (!$extra) $extra = "grafico";
 		
-			$sSQL  = "SELECT ";
-			$sSQL .= "	count(*) as num_contratos, ";
-			$sSQL .= "	EXTRACT( 'month' FROM data_contratacao) as mes, ";
-			$sSQL .= "	EXTRACT( 'year' FROM data_contratacao) as ano ";
-			$sSQL .= "FROM ";
-			$sSQL .= "	cbtb_contrato ";
-			$sSQL .= "WHERE ";
-			$sSQL .= "	data_contratacao > CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '$periodo months' ";
-			$sSQL .= "GROUP BY ano, mes ";
-			$sSQL .= "ORDER BY ano, mes ";		
+		$mes = @$_REQUEST["mes"];
+		$ano = @$_REQUEST["ano"];
+		
+		if ($acao == "sub_ade"){
+		
+					$mes = @$_REQUEST["mes"];
+					$ano = @$_REQUEST["ano"];
+					$data = $mes.",".$ano;
 					
-		} else if($acao = "sub_ade") {
-			
-			$mes = @$_REQUEST["mes"];
-			$ano = @$_REQUEST["ano"];
-			
-			$this->tpl->atribui("mes", $mes);
-			$this->tpl->atribui("ano", $ano);
-									
-			$data_inicial = date("Y-m-d", mktime(0,0,0,$mes, 1, $ano));
-			$data_final = date("Y-m-d",mktime(0,0,0,$mes+1, 1, $ano));
-		
-			$sSQL  = "SELECT ";
-			$sSQL .= "	clt.id_cliente, clt.nome_razao, cnt.data_contratacao, prd.id_produto, prd.nome, prd.tipo,  ";
-			$sSQL .= "	EXTRACT('day' FROM cnt.data_contratacao) as dia, ";
-			$sSQL .= "	EXTRACT('month' FROM cnt.data_contratacao) as mes, ";
-			$sSQL .= "	EXTRACT('year' FROM cnt.data_contratacao) as ano ";
-			$sSQL .= "FROM ";
-			$sSQL .= "	prtb_produto prd, cbtb_contrato cnt, cbtb_cliente_produto cp, cltb_cliente clt ";
-			$sSQL .= "WHERE  ";
-			$sSQL .= "	cnt.data_contratacao >= '$data_inicial' AND cnt.data_contratacao < '$data_final' AND ";
-			$sSQL .= "	cp.id_cliente_produto = cnt.id_cliente_produto AND ";
-			$sSQL .= "	prd.id_produto = cp.id_produto AND clt.id_cliente = cp.id_cliente ";
-			$sSQL .= "ORDER BY cnt.data_contratacao, clt.nome_razao ASC ";
+					$relat = $this->adesao($acao,$periodo,$data);
+					$this->tpl->atribui("mes",$mes);
+					$this->tpl->atribui("ano",$ano);
 		
 		}
 		
 		
-		$relat = $this->bd->obtemRegistros($sSQL);
-			
 		/*
 		$this->tpl->atribui("data_ini", $data_ini);
 		$this->tpl->atribui("data_fim", $data_fim);*/
@@ -1093,6 +1073,7 @@ class VARelatorio extends VirtexAdmin {
 		$this->tpl->atribui("meses_ano", $_LS_MESES_ANO);
 		$this->tpl->atribui("tpconsulta", $_LS_TP_CONSULTA);
 		$this->tpl->atribui("periodo", $periodo);
+		//echo "$acao";
 		$this->tpl->atribui("acao", $acao);
 		$this->tpl->atribui("op", $op);
 		$this->tpl->atribui("relat",$relat);
@@ -1103,13 +1084,13 @@ class VARelatorio extends VirtexAdmin {
 			
 			
 
-			$relat = $this->bd->obtemRegistros($sSQL);
+			//$relat = $this->bd->obtemRegistros($sSQL);
 					
 			$pontos = array();
 			$legendas = array();
 
 			for($i=0;$i<count($relat);$i++) {
-			   $mes_corrente = $_LS_MESES_ANO[$relat[$i]["mes"]];
+			   $mes_corrente = substr($_LS_MESES_ANO[$relat[$i]["mes"]],0,3);
 			   $legendas[] =  $mes_corrente . "/" . $relat[$i]["ano"];
 			   $pontos[] = $relat[$i]["num_contratos"];			   
 			}
@@ -1121,13 +1102,13 @@ class VARelatorio extends VirtexAdmin {
 			header("Content-type: Image/png");
 
 			//$pontos = array("9", "16", "20");
-			$grafico = new Graph(450,200,"png");
+			$grafico = new Graph(450,250,"png");
 
 
 			$grafico->SetScale("textlin"); 
 			//$grafico->SetShadow(); 
 			//$grafico->title->Set('Relatório de Adesões');
-			$grafico->img->SetMargin(40,40,40,40);
+			$grafico->img->SetMargin(40,40,40,80);
 			
 			//Imagem de Fundo
 			$grafico->SetBackgroundImage("./template/default/images/gr_back1.jpg",BGIMG_FILLPLOT); //BGIMG_FILLFRAME);
@@ -1142,6 +1123,7 @@ class VARelatorio extends VirtexAdmin {
 			//$gBarras->SetFillColor("#ff0000");
 			$gBarras->SetFillGradient("#aa0000","red",GRAD_VER);;
 			$gBarras->SetColor("#aa0000");
+			//$gBarras->xaxis->SetLabelAngle(90);
 
 			
 			//$gBarras->SetShadow("darkblue"); 
@@ -1150,7 +1132,7 @@ class VARelatorio extends VirtexAdmin {
 			
 			// título das barras
 			$grafico->xaxis->SetTickLabels($legendas);
-
+			$grafico->xaxis->SetLabelAngle(90);
 			// adicionar mostrage de barras ao gráfico 
 			$grafico->Add($gBarras); 
 
@@ -1176,53 +1158,21 @@ class VARelatorio extends VirtexAdmin {
 		if (!$periodo) $periodo = "12";
 						
 				
-		if ($acao == "geral") {	
+		if ($acao == "geral") $relat = $this->cancelamento($acao,$periodo);
 		
-			
-
-			$sSQL  = "SELECT ";
-			$sSQL .= "	count(*) as num_contratos, ";
-			$sSQL .= "	EXTRACT( 'month' FROM data_status) as mes, ";
-			$sSQL .= "	EXTRACT( 'year' FROM data_status) as ano ";
-			$sSQL .= "FROM ";
-			$sSQL .= "	cbtb_contrato ";
-			$sSQL .= "WHERE ";
-			$sSQL .= "	data_status > CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '$periodo months' ";
-			$sSQL .= "	AND status = 'C' ";
-			$sSQL .= "GROUP BY ano, mes ";
-			$sSQL .= "ORDER BY ano, mes ";
-				
-					
-		
-		} else if($acao = "sub_ade") {
+		if($acao == "sub_ade") {
 			
 			$mes = @$_REQUEST["mes"];
 			$ano = @$_REQUEST["ano"];
 									
-			$data_inicial = date("Y-m-d", mktime(0,0,0,$mes, 1, $ano));
-			$data_final = date("Y-m-d",mktime(0,0,0,$mes+1, 1, $ano));
-		
-			$sSQL  = "SELECT ";
-			$sSQL .= "	clt.id_cliente, clt.nome_razao, cnt.data_contratacao, prd.id_produto, prd.nome, prd.tipo,  ";
-			$sSQL .= "	EXTRACT('day' FROM cnt.data_status) as dia, ";
-			$sSQL .= "	EXTRACT('month' FROM cnt.data_status) as mes, ";
-			$sSQL .= "	EXTRACT('year' FROM cnt.data_status) as ano ";
-			$sSQL .= "FROM ";
-			$sSQL .= "	prtb_produto prd, cbtb_contrato cnt, cbtb_cliente_produto cp, cltb_cliente clt ";
-			$sSQL .= "WHERE  ";
-			$sSQL .= "	cnt.data_contratacao >= '$data_inicial' AND cnt.data_contratacao < '$data_final' AND ";
-			$sSQL .= "	cp.id_cliente_produto = cnt.id_cliente_produto AND ";
-			$sSQL .= "	prd.id_produto = cp.id_produto AND clt.id_cliente = cp.id_cliente ";
-			$sSQL .= "ORDER BY cnt.data_contratacao, clt.nome_razao ASC ";
+			$data = $mes.",".$ano;
+			$relat = $this->cancelamento($acao,$periodo,$data);
+
 		
 		}
 		
 		
-		$relat = $this->bd->obtemRegistros($sSQL);	
 	
-		/*
-		$this->tpl->atribui("data_ini", $data_ini);
-		$this->tpl->atribui("data_fim", $data_fim);*/
 		
 		global $_LS_TP_CONSULTA;
 		global $_LS_MESES_ANO;
@@ -1238,13 +1188,13 @@ class VARelatorio extends VirtexAdmin {
 		if ($extra == "grafico") {
 					
 
-			$relat = $this->bd->obtemRegistros($sSQL);
+			$relat = $relat;
 					
 			$pontos = array();
 			$legendas = array();
 
 			for($i=0;$i<count($relat);$i++) {
-			   $mes_corrente = $_LS_MESES_ANO[$relat[$i]["mes"]];
+			   $mes_corrente =  substr($_LS_MESES_ANO[$relat[$i]["mes"]],0,3);
 			   $legendas[] =  $mes_corrente . "/" . $relat[$i]["ano"];
 			   $pontos[] = $relat[$i]["num_contratos"];			   
 			}
@@ -1256,13 +1206,13 @@ class VARelatorio extends VirtexAdmin {
 			header("Content-type: Image/png");
 
 			//$pontos = array("9", "16", "20");
-			$grafico = new Graph(450,200,"png");
+			$grafico = new Graph(450,250,"png");
 
 
 			$grafico->SetScale("textlin"); 
 			//$grafico->SetShadow(); 
 			//$grafico->title->Set('Relatório de Cancelamentos');
-			$grafico->img->SetMargin(40,40,40,40);
+			$grafico->img->SetMargin(40,40,40,80);
 			
 			//Imagem de Fundo
 			$grafico->SetBackgroundImage("./template/default/images/gr_back1.jpg",BGIMG_FILLPLOT); //BGIMG_FILLFRAME);
@@ -1285,7 +1235,7 @@ class VARelatorio extends VirtexAdmin {
 			
 			// título das barras
 			$grafico->xaxis->SetTickLabels($legendas);
-
+			$grafico->xaxis->SetLabelAngle(90);
 			// adicionar mostrage de barras ao gráfico 
 			$grafico->Add($gBarras); 
 
@@ -2132,6 +2082,111 @@ class VARelatorio extends VirtexAdmin {
 		}
 		
 		return $sSQL ? $this->bd->obtemRegistros($sSQL) : array();
+    
+    }
+    
+    public function adesao($acao,$periodo,$data=null){
+    
+    			
+    			if ($data){
+    			
+    				list($mes,$ano) = explode(",",$data);
+    				//echo "DATA: $data<br>MES: $mes<br>ANO: $ano<br>ACAO:$acao<br>";
+    			
+    			}
+    
+    			if ($acao == "geral"){
+    			
+						$sSQL  = "SELECT ";
+						$sSQL .= "	count(*) as num_contratos, ";
+						$sSQL .= "	EXTRACT( 'month' FROM data_contratacao) as mes, ";
+						$sSQL .= "	EXTRACT( 'year' FROM data_contratacao) as ano ";
+						$sSQL .= "FROM ";
+						$sSQL .= "	cbtb_contrato ";
+						$sSQL .= "WHERE ";
+						$sSQL .= "	data_contratacao > CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '$periodo months' ";
+						$sSQL .= "GROUP BY ano, mes ";
+						$sSQL .= "ORDER BY ano, mes ";		
+
+					} else if($acao == "sub_ade") {
+
+						$data_inicial = date("Y-m-d", mktime(0,0,0,$mes, 1, $ano));
+						$data_final = date("Y-m-d",mktime(0,0,0,$mes+1, 1, $ano));
+
+						$sSQL  = "SELECT ";
+						$sSQL .= "	clt.id_cliente, clt.nome_razao, cnt.data_contratacao, prd.id_produto, prd.nome, prd.tipo,  ";
+						$sSQL .= "	EXTRACT('day' FROM cnt.data_contratacao) as dia, ";
+						$sSQL .= "	EXTRACT('month' FROM cnt.data_contratacao) as mes, ";
+						$sSQL .= "	EXTRACT('year' FROM cnt.data_contratacao) as ano ";
+						$sSQL .= "FROM ";
+						$sSQL .= "	prtb_produto prd, cbtb_contrato cnt, cbtb_cliente_produto cp, cltb_cliente clt ";
+						$sSQL .= "WHERE  ";
+						$sSQL .= "	cnt.data_contratacao >= '$data_inicial' AND cnt.data_contratacao < '$data_final' AND ";
+						$sSQL .= "	cp.id_cliente_produto = cnt.id_cliente_produto AND ";
+						$sSQL .= "	prd.id_produto = cp.id_produto AND clt.id_cliente = cp.id_cliente ";
+						$sSQL .= "ORDER BY cnt.data_contratacao, clt.nome_razao ASC ";
+						
+						//echo "QUERY: $sSQL<br>";
+
+					}
+
+							
+					$relat = $this->bd->obtemRegistros($sSQL);
+					return($relat);
+    
+    
+    }
+    
+    public function cancelamento($acao,$periodo,$data=null){
+    
+    
+    	if ($data){
+    	
+    		list($mes,$ano) = explode(",",$data);
+    	
+    	}
+    
+    
+    	if($acao == "geral"){
+    	
+				$sSQL  = "SELECT ";
+				$sSQL .= "	count(*) as num_contratos, ";
+				$sSQL .= "	EXTRACT( 'month' FROM data_alt_status) as mes, ";
+				$sSQL .= "	EXTRACT( 'year' FROM data_alt_status) as ano ";
+				$sSQL .= "FROM ";
+				$sSQL .= "	cbtb_contrato ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "	data_alt_status > CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '$periodo months' ";
+				$sSQL .= "	AND status = 'C' ";
+				$sSQL .= "GROUP BY ano, mes ";
+				$sSQL .= "ORDER BY ano, mes ";
+
+    	
+    	
+    	}else if ($acao == "sub_ade"){
+    	
+				$data_inicial = date("Y-m-d", mktime(0,0,0,$mes, 1, $ano));
+				$data_final = date("Y-m-d",mktime(0,0,0,$mes+1, 1, $ano));
+
+				$sSQL  = "SELECT ";
+				$sSQL .= "	clt.id_cliente, clt.nome_razao, cnt.data_contratacao, prd.id_produto, prd.nome, prd.tipo,  ";
+				$sSQL .= "	EXTRACT('day' FROM cnt.data_alt_status) as dia, ";
+				$sSQL .= "	EXTRACT('month' FROM cnt.data_alt_status) as mes, ";
+				$sSQL .= "	EXTRACT('year' FROM cnt.data_alt_status) as ano ";
+				$sSQL .= "FROM ";
+				$sSQL .= "	prtb_produto prd, cbtb_contrato cnt, cbtb_cliente_produto cp, cltb_cliente clt ";
+				$sSQL .= "WHERE  ";
+				$sSQL .= "	cnt.data_contratacao >= '$data_inicial' AND cnt.data_contratacao < '$data_final' AND ";
+				$sSQL .= "	cp.id_cliente_produto = cnt.id_cliente_produto AND ";
+				$sSQL .= "	prd.id_produto = cp.id_produto AND clt.id_cliente = cp.id_cliente ";
+				$sSQL .= "ORDER BY cnt.data_contratacao, clt.nome_razao ASC ";
+
+    	
+    	}
+    	//echo "QUERY: $sSQL<br>";
+    	$relat = $this->bd->obtemRegistros($sSQL);	
+    	return($relat);
+    
     
     }
 
