@@ -53,6 +53,7 @@ class VAInterface_cliente_home extends VirtexAdmin {
 	$dados = "true";	
 	
 	$id_conta2 = @$_REQUEST["id_conta"];
+	$tipo_conta2 = @$_REQUEST["tipo_conta"];
 	
 	 if ($id_conta2){
 	
@@ -61,7 +62,8 @@ class VAInterface_cliente_home extends VirtexAdmin {
 		$sSQL .= " FROM cntb_conta cc, cltb_cliente cl ";
 		$sSQL .= " WHERE status = 'A' ";
 		$sSQL .= " AND cc.id_cliente = cl.id_cliente ";
-		$sSQL .= " AND id_conta = '$id_conta2' ";
+		$sSQL .= " AND cc.id_conta = '$id_conta2' ";
+		$sSQL .= " AND cc.tipo_conta = '$tipo_conta2' ";
 
 		
 		$dados = $this->bd->obtemUnicoRegistro($sSQL);
@@ -138,7 +140,7 @@ class VAInterface_cliente_home extends VirtexAdmin {
 		if ($op == "contas"){
 		
 		$sSQL  = " SELECT ";
-		$sSQL .= " cc.username, pp.nome, cc.id_cliente, cc.dominio, cc.id_conta ";
+		$sSQL .= " cc.username, pp.nome, cc.id_cliente, cc.dominio, cc.id_conta , cc.tipo_conta";
 		$sSQL .= " FROM cntb_conta cc, cltb_cliente clc, prtb_produto pp, cbtb_cliente_produto prp  ";
 		$sSQL .= " WHERE ";
 		$sSQL .= " clc.id_cliente = prp.id_cliente ";
