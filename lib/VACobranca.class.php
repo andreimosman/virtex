@@ -2470,7 +2470,8 @@ class VACobranca extends VirtexAdmin {
 						
 							/* UPDATE DE CONTA */
 
-							$sSQL = "UPDATE cntb_conta SET id_cliente_produto = '$id_cliente_produto_new' WHERE username = '$username' AND tipo_conta = '$tipo_produto' AND dominio = '$dominio' ";
+							//$sSQL = "UPDATE cntb_conta SET id_cliente_produto = '$id_cliente_produto_new' WHERE username = '$username' AND tipo_conta = '$tipo_produto' AND dominio = '$dominio' ";
+							$sSQL = "UPDATE cntb_conta SET id_cliente_produto = '$id_cliente_produto_new' WHERE id_cliente_produto = '$id_cliente_produto'";
 							$this->bd->consulta($sSQL);
 
 							
