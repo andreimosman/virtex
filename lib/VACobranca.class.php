@@ -3097,14 +3097,14 @@ class VACobranca extends VirtexAdmin {
 		$vl_produto_antigo = $contrato["valor_contrato"];
 		$vl_produto_atual = $produto["valor"];
 		
-		$sSQL = "SELECT DISTINCT(cl.nome_razao),cn.username, cn.tipo_conta, cn.dominio,cl.id_cliente FROM cltb_cliente cl, cntb_conta cn WHERE cn.id_cliente_produto = $id_cliente_produto AND cl.id_cliente = cn.id_cliente";
+		$sSQL = "SELECT DISTINCT(cl.nome_razao),cn.username, cn.tipo_conta, cn.dominio,cl.id_cliente,cl.dia_pagamento FROM cltb_cliente cl, cntb_conta cn WHERE cn.id_cliente_produto = $id_cliente_produto AND cl.id_cliente = cn.id_cliente";
 		$cliente = $this->bd->obtemUnicoRegistro($sSQL);
 		
 		$id_cliente = $cliente["id_cliente"];
 		$tipo_produto = $contrato["tipo_produto"];
 		
 		
-		if( $vl_produto_antigo != $vl_produto_atual ){
+		if( $vl_produto_antigo != $vl_produto_atual || !$produto || $produto["disponivel"] != "t"){
 			
 			//migra a bagaça
 			 
@@ -3137,8 +3137,16 @@ class VACobranca extends VirtexAdmin {
 			
 			$preferencia = $this->prefs->obtem("total");
 			
-			$dia_venc = $preferencia["dia_venc"];
-			//echo "dia: $dia_venc<br>";
+			if ($cliente["dia_pagamento"] == "" || !$cliente["dia_pagamento"]){
+			
+				$dia_venc = $preferencia["dia_venc"];
+				//echo "dia: $dia_venc<br>";
+			}else{
+			
+				$dia_venc = $cliente["dia_pagamento"];
+			
+			}
+			
 			
 			$pri_venc = date("Y-m-d", mktime(0, 0, 0, $m+1,$dia_venc,$a));
 			//echo "pri_venc: $pri_venc<br>";
@@ -3677,7 +3685,7 @@ class VACobranca extends VirtexAdmin {
 					$sSQL = "UPDATE cbtb_contrato SET data_renovacao = '$data_renovacao' WHERE id_cliente_produto = $id_cliente_produto";
 					$this->bd->consulta($sSQL);
 					
-					$sSQL = "INSERT INTO lgtb_renovacao (id_cliente,data_renovacao,data_proxima_renovacao) VALUES ($id_cliente,$data_contratacao,$data_renovacao)";
+					$sSQL = "INSERT INTO lgtb_renovacao (id_cliente_produto,data_renovacao,data_proxima_renovacao) VALUES ($id_cliente_produto,'$data_contratacao','$data_renovacao')";
 					$this->bd->consulta($sSQL);
 					
 					$target = "clientes.php?op=segunda_via&id_cliente=$id_cliente&id_cliente_produto=$id_cliente_produto&data=$data&id_carne=$id_carne";
