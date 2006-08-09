@@ -327,9 +327,9 @@ function check(){
             @
             <select name="dominio" id="dominio">
               {foreach item=a from=$dominios_provedor}
-			  <option value="{$a.dominio}" {if $a.dominio == $dominio}SELECTED{/if}>{$a.dominio}</option>
+			  {if $a.dominio !=""}<option value="{$a.dominio}" {if $a.dominio == $dominio}SELECTED{/if}>{$a.dominio}</option>{/if}
 			  {/foreach}
-            </select>
+            </select> 
           </p></td>
 						                </tr>
 						                <tr>
