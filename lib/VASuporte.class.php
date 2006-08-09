@@ -1,6 +1,8 @@
 <?
 
 require_once( PATH_LIB . "/VirtexAdmin.class.php" );
+require_once( PATH_LIB . "/ICClient.class.php" );
+require_once( PATH_LIB . "/ICHostInfo.class.php");
 
 class VASuporte extends VirtexAdmin {
 
@@ -168,51 +170,24 @@ class VASuporte extends VirtexAdmin {
 			$arp=array();
 			
 			if( $ip ) {
-				// Recebeu IP faz a consulta do ARP
-				if( $ip == "-a" ) {
-					$cmd = "arp -an";
-					$fd = popen($cmd,"r");
-					
-				} else {
-					$cmd = "/sbin/ping -c 1 '" . $ip . "' 2>&1 > /dev/null";
-					system($cmd);
-					
-					$cmd = "/usr/sbin/arp -an |grep '(" . $ip . ")' 2>&1 "; 
-					$fd = popen($cmd,"r");
-					
-				}
+				$ich = new ICHostInfo();
+				$icc = new ICClient();
 				
-				if( $fd ) {
-					while(!feof($fd)) {
+				$hosts = $ich->obtemListaServidores();
+				
+				$arp = array();
+				
+				for($i=0;$i<count($hosts);$i++) {
+					$info = $ich->obtemInfoServidor($hosts[$i]);
 					
-					   $linha = fgets($fd,4096);
-					   //echo $linha;
-					   chop($linha);
-					   
-						if( $linha ) {
-							// SPLIT
-							@list($shit,$addr,$at,$mac,$on,$on,$iface) = preg_split('/[\s]+/',$linha);
-
-							//echo "shit: $shit<br>\n";
-							//echo "addr: $addr<br>\n";
-							//echo "mac: $mac<br>\n";
-							//echo "iface: $iface<br>\n";
-							
-							if( strstr($mac,"incomplete")) {
-								$mac = "ARP Não Enviado";
-								$iface = "N/A";
-							}
-							
-							$arp[] = array("addr" => $addr, "mac" => $mac , "iface" => $iface);
-							
-						}
-					   
-					   
-					   
+					if(!$icc->open($info["host"],$info["port"],$info["chave"],$info["username"],$info["password"])) {
+						continue;
 					}
-
-					pclose($fd);
+					
+					$arp[] = array("host"=>$hosts[$i], "tabela" => $icc->getARP($ip) );
+					
 				}
+
 				
 			}
 			
