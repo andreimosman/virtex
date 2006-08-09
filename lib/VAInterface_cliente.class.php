@@ -26,6 +26,13 @@ class VAInterface_cliente extends VirtexAdmin {
 
 			$admin = $admin_username[0];
 
+		if ($conta == "E"){
+		
+		
+		$dominio = $admin_username[1];
+
+		}
+
 		$erro = "";
 		
 		$_SESSION["usrLogin"] = new userLogin();	// Zera a informação de login (faz logout)
@@ -42,7 +49,7 @@ class VAInterface_cliente extends VirtexAdmin {
 
 				if( !$erro ) {
 					
-					$this->usrLogin->login($admin,$senha,$conta);
+					$this->usrLogin->login($admin,$senha,$conta,@$dominio);
 
 					if( !$this->usrLogin->estaLogado() ) {
 						$erro = "Usuário inválido ou senha incorreta";
