@@ -10,19 +10,19 @@
 	function valida(){
 
 		var csenha, csenha_conf
-			
+
 			csenha=document.ic.senha.value;
 			csenha_conf = document.ic.senha_conf.value;
-			
+
 				if ((csenha != csenha_conf)||(csenha == "")||(csenha_conf=="")){
 					alert("Os Campos Senha e Confirmação de Senha têm que Ter o Mesmo Valor!");
 					document.ic.senha.value = "";
 					document.ic.senha_conf.value = "";
 					document.ic.senha.focus();
 					return false;
-				
+
 				}else{
-					return true;		
+					return true;
 				}
 
 	}
@@ -58,13 +58,13 @@
         </tr>
       </table>
   <tr  bgcolor="#F9F9F9">
-    <td height="380" colspan="4"><p align="center"><font color="#BACEBF">{if !$alterar_senhas 
+    <td height="380" colspan="4"><p align="center"><font color="#BACEBF">{if !$alterar_senhas
         && !$contas && !$dados}<strong>Bem Vindo à Central do Assinante.</strong></font></p>
       <p align="center"><font color="#BACEBF"><strong><img src="template/default/images/interface_background.gif" alt="VirtexAdmin  - Central do Assinante" width="152" height="51">{/if}</strong></font></p>
       <div align="center">
 <form action="{$smarty.server.PHP_SELF}" name=ic method="post" onSubmit="return valida(this.value);">
           <p><br>
-            {if $alterar_senhas}<strong><font color="#FF0000">Voc&ecirc; est&aacute; 
+            {if $alterar_senhas}<strong><font color="#FF0000">Voc&ecirc; est&aacute;
             alterando os dados do usu&aacute;rio {$username} da conta de {if $tipo_conta== "BL"}Banda Larga{/if}{if $tipo_conta=="E"}E-mail{/if}{if $tipo_conta=="H"}Hospedagem{/if}{if $tipo_conta=="D"}Discado{/if}.</font></strong></p>
           <div align="center">
 <table width=40% cellpadding=0 cellspacing=0 bgcolor="#000000">
@@ -105,25 +105,25 @@
         <form  action="{$smarty.server.PHP_SELF}" name="dados" method="post">
           <p>{if $dados}</p>
           <table width="75%" border="0" align="center">
-            <tr bgcolor="F1F1F1"> 
-              <td><div align="center"> 
+            <tr bgcolor="F1F1F1">
+              <td><div align="center">
                   <p><strong><font color="#99B7A0">Username</font></strong></p>
                 </div></td>
-              <td><div align="center"> 
+              <td><div align="center">
                   <p><strong><font color="#99B7A0">Tipo da conta</font></strong></p>
                 </div></td>
-              <td><div align="center"> 
+              <td><div align="center">
                   <p><font color="#99B7A0"><strong>Dom&iacute;nio</strong></font></p>
                 </div></td>
             </tr>
-            <tr> 
-              <td><div align="center"> 
+            <tr>
+              <td><div align="center">
                   <p><strong>{$username}</strong></p>
                 </div></td>
-              <td><div align="center"> 
+              <td><div align="center">
                   <p><strong>{if $tipo_conta== "BL"}Banda Larga{/if}{if $tipo_conta=="E"}E-mail{/if}{if $tipo_conta=="H"}Hospedagem{/if}{if $tipo_conta=="D"}Discado{/if}</strong></p>
                 </div></td>
-              <td><div align="center"> 
+              <td><div align="center">
                   <p><strong>{$dominio}</strong></p>
                 </div></td>
             </tr>
@@ -139,18 +139,17 @@
           </form>
         {if $contas} </div>
       <table width="471" align="center">
-        <tr> 
+        <tr>
           <td width="161" bgcolor="f1f1f1"> <p align="left"><font color="#99B7A0"><strong>Username</strong></font></p></td>
           <td width="179" bgcolor="f1f1f1"> <p align="center"><font color="#99B7A0"><strong>Tipo</strong></font></p></td>
         </tr>
-        {foreach item=c from=$contas} 
-        <tr> 
+        {foreach item=c from=$contas}
+        <tr>
           <td><p align="left"><strong>{$c.username}</strong></p></td>
           <td> <p><strong>{$c.nome}</strong></p></td>
-          <td width="115" ><a href="index_home.php?op=dados&id_conta={$c.id_conta}&tipo_conta={$c.tipo_conta}">[Dados 
-            da conta]</a> </td>
+          <td width="115" ><a href="index_home.php?op=dados&id_conta={$c.id_conta}&tipo_conta={$c.tipo_conta}">[Dados da conta]</a> </td>
         </tr>
-        {/foreach} 
+        {/foreach}
       </table>
       <p>{/if} </p></td>
   </tr>

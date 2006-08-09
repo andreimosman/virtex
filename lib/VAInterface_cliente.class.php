@@ -20,6 +20,11 @@ class VAInterface_cliente extends VirtexAdmin {
 		$admin = @$_REQUEST["admin"];
 		$senha = @$_REQUEST["senha"];
 		$conta = @$_REQUEST["tipo_conta_log"];
+		
+		
+			$admin_username = explode("@",$admin);
+
+			$admin = $admin_username[0];
 
 		$erro = "";
 		

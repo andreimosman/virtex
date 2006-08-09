@@ -54,12 +54,11 @@ class UserLogin extends VirtexAdmin {
 		$sSQL .= "	 AND cc.tipo_conta = '".$conta."' ";
 		
 		$this->bd->consulta($sSQL);
-				$adm = $this->bd->obtemUnicoRegistro($sSQL);
-				
-				
+		$adm = $this->bd->obtemUnicoRegistro($sSQL);
+
 		$salt = substr(@$adm['senha_cript'],0,12);
 		$senhad_cript = crypt($senha,$salt);
-		
+
 		// Se encontrou o registro
 		if( count($adm) ) {
 			if( $senhad_cript == $adm["senha_cript"] ){

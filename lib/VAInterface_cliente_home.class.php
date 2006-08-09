@@ -148,7 +148,6 @@ class VAInterface_cliente_home extends VirtexAdmin {
 		$sSQL .= " AND cc.id_cliente = '$id_cliente' ";
 		$sSQL .= " AND cc.id_cliente_produto = prp.id_cliente_produto ";
 		$sSQL .= " AND pp.id_produto = prp.id_produto ";
-
 		
 		$contas = $this->bd->obtemRegistros($sSQL);
 

@@ -3,6 +3,34 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>::.. Virtex Admin - Interface Cliente ..::</title>
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+{literal}
+
+<script>
+
+function check(form){
+
+	campo = document.form1.admin.value;
+	drop = document.form1.tipo_conta_log.value;
+
+	if (drop == "E"){
+			   			parte1 = campo.indexOf("@");
+	            		parte2 = campo.indexOf(".");
+	   	        		parte3 = campo.length;
+	       	    		if (!(parte1 >= 3 && parte2 >= 6 && parte3 >= 9)) {
+		            	    	alert( "O campo email deve conter um endereco eletrônico no formato 'username@dominio.com.br' !");
+
+								return false;
+	   	        		}
+
+		}
+
+
+ return true;
+
+
+}
+</script>
+{/literal}
 </head>
 
 <body  leftmargin="160" topmargin="60" onLoad="document.form1.admin.focus()">
@@ -34,23 +62,23 @@
                     <tr>
                     <td bgcolor="#FFFFFF"><div align="center">
                           <table width="231" border="0" align="center" cellpadding="5" cellspacing="5" bgcolor="fefefe">
-                            <tr> 
-                              <td width="211" align="center" valign="middle" bgcolor="fefefe"> 
-                                <form id="form1" name="form1" method="post" action="{$smarty.server.PHP_SELF}">
-                                  <p align="center"> 
+                            <tr>
+                              <td width="211" align="center" valign="middle" bgcolor="fefefe">
+                                <form id="form1" name="form1" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return check(this);">
+                                  <p align="center">
                                     <input type="hidden" name="op" value="login">
                                     <font color="f9f9f9">&lt;br&gt; </font></p>
-                                  <div align="center"> 
+                                  <div align="center">
                                     <table width="100%" border="0" align="center" cellpadding="0" cellspacing="2">
-                                      <tr> 
+                                      <tr>
                                         <td><p align="center"> Usuário</p></td>
-                                        <td><input name="admin" type="text" id="admin3" /></td>
+                                        <td><input name="admin" type="text" id="admin" /></td>
                                       </tr>
-                                      <tr> 
+                                      <tr>
                                         <td><p align="center">Senha</p></td>
-                                        <td><input name="senha" type="password" id="senha4" /></td>
+                                        <td><input name="senha" type="password" id="senha" /></td>
                                       </tr>
-                                      <tr> 
+                                      <tr>
                                         <td><p align="center">Conta</p></td>
                                         <td><select name="tipo_conta_log">
                                             <option value=""></option>
@@ -60,8 +88,8 @@
                                             <option value="H">Hospedagem&nbsp;&nbsp;&nbsp;&nbsp;</option>
                                           </select></td>
                                       </tr>
-                                      <tr bgcolor="fefefe"> 
-                                        <td colspan="2" align="center"> <input type="submit" name="Submit" value="Entrar >>" /> 
+                                      <tr bgcolor="fefefe">
+                                        <td colspan="2" align="center"> <input type="submit" name="Submit" value="Entrar >>" />
                                         </td>
                                       </tr>
                                     </table>
