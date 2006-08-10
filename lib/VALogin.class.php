@@ -12,6 +12,19 @@ class VALogin extends VirtexAdmin {
 
 	function processa($op="") {
 
+		$lic_geral= 'sim';
+		
+		$licenca = $this->lic->obtemLicenca();
+		if((($licenca["frontend"]["discado"]) == "0")&&(($licenca["frontend"]["hospedagem"]) == "0")&&(($licenca["frontend"]["email"]) == "0")&&(($licenca["frontend"]["bandalarga"]) == "0")
+		&&(($licenca["frontend"]["interface"]) == "0")){
+
+			$lic_geral = 'nao';
+
+		}
+
+		$this->tpl->atribui("lic_geral",$lic_geral);
+
+
 		$this->arquivoTemplate = "jsredir.html";
 		$url = "login.php";
 		$target = "_self";

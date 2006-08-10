@@ -11,7 +11,21 @@ require_once("Userlogin.class.php");
 
 class VAInterface_cliente extends VirtexAdmin {
 
+
+
 	function processa($op="") {
+
+			$lic_interface = 'nao';
+	
+			 $licenca = $this->lic->obtemLicenca();
+	
+				if(($licenca["frontend"]["interface"]) == "1"){
+	
+					$lic_interface = 'sim';
+	
+				}
+	
+		$this->tpl->atribui("lic_interface",$lic_interface);
 
 		$this->arquivoTemplate = "jsredir.html";
 		$url = "index.php";

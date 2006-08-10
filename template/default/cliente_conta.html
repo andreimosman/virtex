@@ -261,7 +261,18 @@ function check(){
 					{/foreach}
 					</SELECT>
 				</td>
-              </tr>
+				</tr>
+					<tr>
+						 <td width="50" align="right" valign="top" bgcolor="#FFFFFF"><p>Tipo:</p></td>
+						<td bgcolor="#FFFFFF" colspan="3"><p>
+							<select name='conta_mestre' >
+								<option></option>
+									<option value='t' {if $conta_mestre_val=="t"}SELECTED{/if}>Conta Mestre</option>
+									<option value='f' {if $conta_mestre_val=="f"}SELECTED{/if}>Normal</option>
+							</select></p>
+						</td>
+					</tr>
+             
             </table>
 
 							  </td>
@@ -513,7 +524,18 @@ function check(){
 						  					<p>Confirme:</p></td>
 						                  <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="conf_senha" id="conf_senha" >
 						                  </td>
-						                </tr>
+										  </tr>
+										<tr>
+											 <td width="50" align="right" valign="top" bgcolor="#FFFFFF"><p>Tipo:</p></td>
+											<td bgcolor="#FFFFFF" colspan="3"><p>
+												<select name='conta_mestre' >
+													<option></option>
+													<option value='t' {if $conta_mestre_val=="t"}SELECTED{/if}>Conta Mestre</option>
+													<option value='f' {if $conta_mestre_val=="f"}SELECTED{/if}>Normal</option>
+												</select></p>
+											</td>
+										</tr>
+						              
 						                <tr>
 						                  <td width="50" align="right" valign="top" bgcolor="#FFFFFF">
 						  					<p>Dominio:</p></td>
@@ -607,6 +629,16 @@ function check(){
 
 						                </td>
 						                </tr>
+										<tr>
+											 <td width="50" align="right" valign="top" bgcolor="#FFFFFF"><p>Tipo:</p></td>
+											<td bgcolor="#FFFFFF" colspan="3"><p>
+												<select name='conta_mestre' >
+													<option></option>
+													<option value='t' {if $conta_mestre_val=="t"}SELECTED{/if}>Conta Mestre</option>
+													<option value='f' {if $conta_mestre_val=="f"}SELECTED{/if}>Normal</option>
+												</select></p>
+											</td>
+										</tr>
 						                	<tr>
 												<td width="50" align="right" valign="top" bgcolor="#FFFFFF">
 												<p>Telefone:</p></td>

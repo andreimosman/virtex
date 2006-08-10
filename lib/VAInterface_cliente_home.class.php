@@ -120,8 +120,6 @@ class VAInterface_cliente_home extends VirtexAdmin {
 			$sSQL .= " AND username= '" . $this->bd->escape(@$_REQUEST["username"]) . "' ";
 			$sSQL .= " AND dominio = '" . $this->bd->escape(@$_REQUEST["dominio"]) . "' ";
 			$sSQL .= " AND tipo_conta = '" . $this->bd->escape(@$_REQUEST["tipo_conta"]) . "' ";
-
-			echo $sSQL;
 			
 
 			$this->bd->consulta($sSQL);

@@ -214,7 +214,51 @@ class VAClientes extends VirtexAdmin {
 		return( $this->bd->obtemUnicoRegistro($sSQL) );;	
 	}
 
-	public function processa($op=null) {	
+	public function processa($op=null) {
+
+			  ////PRIVILEGIOS DE LICENÇA
+
+			$lic_interface = 'nao';
+			$lic_email = 'nao';
+			$lic_hospedagem = 'nao';
+			$lic_interface = 'nao';
+			$lic_discado = 'nao';
+			$lic_bandalarga = 'nao';
+		
+			 $licenca = $this->lic->obtemLicenca();
+				if(($licenca["frontend"]["discado"]) == "1"){
+		
+					$lic_discado = 'sim';
+		
+				}
+				if(($licenca["frontend"]["banda_larga"]) == "1"){
+					
+					$lic_bandalarga = 'sim';
+		
+				}
+				if(($licenca["frontend"]["email"]) == "1"){
+		
+					$lic_email = 'sim';
+				}
+				if(($licenca["frontend"]["hospedagem"]) == "1"){
+					 	
+					$lic_hospedagem = 'sim';
+				
+			 	}
+				if(($licenca["frontend"]["interface"]) == "1"){
+							 	
+					$lic_interface = 'sim';
+						
+			 	}
+		
+		
+				$this->tpl->atribui("lic_discado",$lic_discado);
+				$this->tpl->atribui("lic_email",$lic_email);
+				$this->tpl->atribui("lic_hospedagem",$lic_hospedagem);
+				$this->tpl->atribui("lic_email",$lic_email);
+				$this->tpl->atribui("lic_interface",$lic_interface);
+				$this->tpl->atribui("lic_bandalarga",$lic_bandalarga);
+
 	
 		$id_cliente = @$_REQUEST["id_cliente"];
 		$tipo = @$_REQUEST["tipo"];
@@ -594,21 +638,23 @@ class VAClientes extends VirtexAdmin {
 						$sSQL .= "FROM cltb_cliente ";
 						//$sSQL .= "WHERE $campo = '$campo_pesquisa' ";
 						$sSQL .= "WHERE ";
-						$sSQL .= " excluido = 'f' AND ";
 						
 
 						switch($tipo_pesquisa) {
 
 						   case 'NOME':
 							  $sSQL .= "   nome_razao ilike '%$texto_pesquisa%' ";
+							  $sSQL .= " AND excluido = 'f' ";
 							  break;
 						   case 'DOCTOS':
-							  $sSQL .= "   cpf_cnpj = '" . $this->bd->escape(@$_REQUEST["texto_pesquisa"]) . "' OR rg_inscr = '" . $this->bd->escape(@$_REQUEST["texto_pesquisa"]) . "' ";
+							  $sSQL .= "   cpf_cnpj = '" . $this->bd->escape(@$_REQUEST["texto_pesquisa"]) . "' AND excluido = 'f'  OR rg_inscr = '" . $this->bd->escape(@$_REQUEST["texto_pesquisa"]) . "' AND excluido = 'f' ";
 							  break;
 						   case 'cod':
 							  $sSQL .= "   id_cliente = '" . $this->bd->escape(@$_REQUEST["texto_pesquisa"]) . "' ";
+							  $sSQL .= " AND excluido = 'f' ";
 							  break;
 						}
+						
 						
 						$sSQL .= " ORDER BY nome_razao ASC ";
 
@@ -977,7 +1023,7 @@ class VAClientes extends VirtexAdmin {
 
 			
 		//////////echo "lista: $sSQL <br>";
-			$this->tpl->atribui("conta",$contas);
+			$this->tpl->atribui("conta",@$contas);
 			$this->tpl->atribui("lista_contrato",$lista_contrato);
 			$this->tpl->atribui("cliente",$cliente);
 			$this->tpl->atribui("id_cliente", $id_cliente);
@@ -1919,10 +1965,7 @@ class VAClientes extends VirtexAdmin {
 			
 			
 			}
-			
-			
-			
-		//AQUI!
+
 		
 		} else if ($op == "produto") {
 		
@@ -1968,6 +2011,8 @@ class VAClientes extends VirtexAdmin {
 						}
 					
 					
+
+
 					
 					}
 
@@ -2083,7 +2128,7 @@ class VAClientes extends VirtexAdmin {
 			   $id_cp = $produtos[$i]["id_cliente_produto"];
 			   
 			   $sSQL  = "SELECT ";
-			   $sSQL .= "	username, dominio, tipo_conta, id_conta ";
+			   $sSQL .= "	username, dominio, tipo_conta, id_conta , conta_mestre ";
 			   $sSQL .= "FROM ";
 			   $sSQL .= "	cntb_conta  ";
 			   $sSQL .= "WHERE ";
@@ -2137,6 +2182,7 @@ class VAClientes extends VirtexAdmin {
 			$acao = @$_REQUEST["acao"];
 			$tipo = @$_REQUEST["tipo_conta"];
 			$id_cliente = @$_REQUEST["id_cliente"];
+			$conta_mestre = @$_REQUEST["conta_mestre"];
 
 			$this->obtemPR($id_cliente);
 
@@ -2186,8 +2232,6 @@ class VAClientes extends VirtexAdmin {
 
 			if ($sop == "nova_conta"){	
 			
-			//AQUI!!!
-			
 				$this->tpl->atribui("id_cliente_produto",@$_REQUEST["id_cliente_produto"]);
 				// Obtem os dados do produto contratado
 				$dados_pcontratado = $this->obtemInfoProdutoContratado(@$_REQUEST["id_cliente_produto"]);
@@ -2220,6 +2264,7 @@ class VAClientes extends VirtexAdmin {
 				$this->tpl->atribui("id_cliente",$id_cliente);
 				$this->tpl->atribui("username",$username);
 				$this->tpl->atribui("dominio",$dominio);
+				$this->tpl->atribui("conta_mestre",$conta_mestre);
 				$this->tpl->atribui("tipo_conta",$tipo_conta);
 				$this->tpl->atribui("sop",$sop);
 				
@@ -3294,7 +3339,7 @@ class VAClientes extends VirtexAdmin {
 			$this->tpl->atribui("lista_nas",$lista_nas);
 
 			$sSQL  = "SELECT ";
-			$sSQL .= "   username, dominio, tipo_conta, senha, status, id_conta, id_cliente_produto ";
+			$sSQL .= "   username, dominio, tipo_conta, senha, status, id_conta, id_cliente_produto , conta_mestre ";
 			$sSQL .= "";
 			$sSQL .= "FROM ";
 			$sSQL .= "   cntb_conta ";
@@ -3305,11 +3350,10 @@ class VAClientes extends VirtexAdmin {
 			$sSQL .= "   AND tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
 			$sSQL .= "";
 			
-			//////////echo "sql conta: $sSQL <br>/n";
+			
 			$conta = $this->bd->obtemUnicoRegistro($sSQL);
-			
-			
-			
+			 $conta_mestre_val = $conta["conta_mestre"]	;
+	
 			/** PEGA O PRODUTO CONTRATADO */
 			
 			$sSQL  = "SELECT ";
@@ -3330,6 +3374,7 @@ class VAClientes extends VirtexAdmin {
 			
 			global $_LS_ST_CONTA;
 			$this->tpl->atribui("lista_status",$_LS_ST_CONTA);
+			$this->tpl->atribui("conta_mestre_val",$conta_mestre_val);
 
 
 
@@ -3738,7 +3783,8 @@ class VAClientes extends VirtexAdmin {
 							$sSQL  = "UPDATE ";
 							$sSQL .= "   cntb_conta ";
 							$sSQL .= "SET ";
-							$sSQL .= "   status = '".$this->bd->escape($status)."' ";
+							$sSQL .= "   status = '".$this->bd->escape($status)."',  ";
+							$sSQL .= "   conta_mestre = '$conta_mestre' ";
 							if( $senha ) {
 								$sSQL .= "   , senha = '".$this->bd->escape($senha)."' ";
 								$sSQL .= "   , senha_cript = '".$this->criptSenha($senha)."' ";
@@ -3776,7 +3822,8 @@ class VAClientes extends VirtexAdmin {
 							$sSQL  = "UPDATE ";
 							$sSQL .= "   cntb_conta ";
 							$sSQL .= "SET ";
-							$sSQL .= "   status = '".$this->bd->escape($status)."' ";
+							$sSQL .= "   status = '".$this->bd->escape($status)."', ";
+							$sSQL .= "   conta_mestre = '$conta_mestre' ";
 							if( $senha ) {
 								$sSQL .= "   , senha = '".$this->bd->escape($senha)."' ";
 								$sSQL .= "   , senha_cript = '".$this->criptSenha($senha)."' ";
@@ -3788,7 +3835,7 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= "   AND tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
 							$sSQL .= "";
 
-							//////////echo "$sSQL;<br>\n";
+							
 
 							$this->bd->consulta($sSQL);
 
@@ -3815,7 +3862,7 @@ class VAClientes extends VirtexAdmin {
 								$uSQL .= ", ipaddr = null, ";
 								$uSQL .= "  rede = '".$rede."' ";
 								
-							}else if ($ip){
+							}else if (@$ip){
 							
 								$uSQL .= ", ipaddr = '$ip' ";
 								$uSQL .= ", rede = null ";
@@ -3935,7 +3982,8 @@ class VAClientes extends VirtexAdmin {
 							$sSQL  = "UPDATE ";
 							$sSQL .= "   cntb_conta ";
 							$sSQL .= "SET ";
-							$sSQL .= "   status = 'A' ";
+							$sSQL .= "   status = 'A' , ";
+							$sSQL .= "   conta_mestre = '$conta_mestre' ";
 							if( $senha ) {
 								$sSQL .= "   , senha = '".$this->bd->escape($senha)."' ";
 								$sSQL .= "   , senha_cript = '$senha_cript' ";
@@ -3948,7 +3996,6 @@ class VAClientes extends VirtexAdmin {
 						
 							$this->bd->consulta($sSQL);
 
-						
 							break;
 					}
 
@@ -3959,6 +4006,10 @@ class VAClientes extends VirtexAdmin {
 					// Exibe mensagem (joga pra msgredirect)
 					$this->tpl->atribui("mensagem","Conta Alterada com sucesso!");
 					$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=produto&tipo=$tipo_conta&id_cliente=$id_cliente");
+					//manda a confirmação de email para outra pagina
+					if ($tipo_conta=="E"){
+					   $this->tpl->atribui("url","javascript:history.back();history.back();");
+					}
 					$this->tpl->atribui("target","_top");
 
 								   
