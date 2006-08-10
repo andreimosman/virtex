@@ -113,12 +113,15 @@ class VAInterface_cliente_home extends VirtexAdmin {
 			$sSQL  = " UPDATE ";
 			$sSQL .= " cntb_conta ";
 			$sSQL .= " SET ";
-			$sSQL .= " senha_cript = '" . $this->criptSenha($this->bd->escape(@$_REQUEST["senha"]))  . "' ";
+			$sSQL .= " senha_cript = '" . $this->criptSenha($this->bd->escape(@$_REQUEST["senha"]))  . "', ";
+			$sSQL .= " senha = '" . $this->bd->escape(@$_REQUEST["senha"])  . "' ";
 			$sSQL .= " WHERE ";
 			$sSQL .= " '" . $this->bd->escape(@$_REQUEST["senha"]) . "' = '" . $this->bd->escape(@$_REQUEST["senha_conf"]) . "' ";
 			$sSQL .= " AND username= '" . $this->bd->escape(@$_REQUEST["username"]) . "' ";
 			$sSQL .= " AND dominio = '" . $this->bd->escape(@$_REQUEST["dominio"]) . "' ";
 			$sSQL .= " AND tipo_conta = '" . $this->bd->escape(@$_REQUEST["tipo_conta"]) . "' ";
+
+			echo $sSQL;
 			
 
 			$this->bd->consulta($sSQL);
