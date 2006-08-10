@@ -83,7 +83,8 @@
 			$fd = fopen($this->arquivoLog,"r");
 			while( ($linha=fgets($fd)) && !feof($fd) ) {
 				@list($user,$up,$down) = explode(",",$linha);
-				if( $user && !strstr($user,"/") ) {
+				if( $user ) {
+					$user = str_replace("/","_",$user);
 					$arq = $this->diretorioMRTG ."/valog-" . strtolower(trim($user));
 					$fc = fopen($arq,"w");
 					if($fc) {
