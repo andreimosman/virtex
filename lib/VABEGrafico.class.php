@@ -62,6 +62,39 @@
 		
 		}
 		
+		/**
+		 *
+		 */
+		protected function geraArquivosIndividuais($contas) {
+		
+			/**
+			 * Gera arquivo truncado para todas as contas
+			 */
+			for($i=0;$i<count($contas);$i++) {
+				$arq = $this->diretorioMRTG ."/valog-" . strtolower( trim($contas[$i]["username"]) );
+				$fd=fopen($arq,"w");
+				if($fd) {
+					fputs($fd,"0\n0\n0\n0");
+					fclose($fd);
+				}
+			}
+		
+		
+			$fd = fopen($this->arquivoLog,"r");
+			while( ($linha=fgets($fd)) && !feof($fd) ) {
+				@list($user,$up,$down) = explode(",",$linha);
+				if( $user && !strstr($user,"/") ) {
+					$arq = $this->diretorioMRTG ."/valog-" . strtolower(trim($user));
+					$fc = fopen($arq,"w");
+					if($fc) {
+						$info = ((int)$down) . "\n". ((int)$up) . "\n". "0\n0";
+						fputs($fc,$info);
+						fclose($fc);
+					}
+				}
+			}
+			
+		}
 		
 		public function executa() {
 			parent::executa();	
@@ -184,10 +217,16 @@
 			
 			for($i=0;$i<count($contas);$i++) {
 				$contas[$i]["maxbytes"] = ($contas[$i]["download_kbps"]/8)*1000;
+				$contas[$i]["username"] = strtolower(trim($contas[$i]["username"]));
 			}
+			
 			
 			// Criar diretório alvo para geração dos rrds
 			SOFreeBSD::installDir($this->diretorioMRTG);
+			
+			// Gera as informações
+			$this->geraArquivosIndividuais($contas);
+
 			
 			$fd = fopen($this->arquivoMRTG,"w");
 			
