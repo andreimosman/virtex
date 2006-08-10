@@ -155,7 +155,7 @@
 		 * Obtem a tabela arp geral ou do endereço especificado
 		 */
 		public function getARP($ip="") {
-			$dados = $this->getData("VAAR","");
+			$dados = $this->getData("VAAR",$ip);
 			
 			$arp = array();
 			
