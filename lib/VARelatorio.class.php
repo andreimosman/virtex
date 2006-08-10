@@ -1764,7 +1764,7 @@ class VARelatorio extends VirtexAdmin {
 	
 	}else if ($op == "lista_banda"){
 
-						if( ! $this->privPodeLer("_RELATORIOS_CLIENTE_BANDA") ) {
+						if( ! $this->privPodeLer("_RELATORIOS_CLIENTE") ) {
 							$this->privMSG();
 							return;
 					}	
