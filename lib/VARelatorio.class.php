@@ -1763,6 +1763,12 @@ class VARelatorio extends VirtexAdmin {
 		$this->arquivoTemplate = "relatorio_config_cliente.html";
 	
 	}else if ($op == "lista_banda"){
+
+						if( ! $this->privPodeLer("_RELATORIOS_CLIENTE_BANDA") ) {
+							$this->privMSG();
+							return;
+					}	
+	
 		
 		$banda = @$_REQUEST["banda"]; 
 		

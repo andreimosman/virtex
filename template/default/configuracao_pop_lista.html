@@ -42,12 +42,12 @@
                                 </tr>
                                 {foreach item=a from=$lista_pop}
                                 <tr bgcolor="#FFFFFF">
-                                  <td align="left"><p>{if $a.status != "A"}<font color="red"><b>{/if}<a href="relatorio.php?op=lista&tipo=POP&id={$a.id_pop}">{$a.tipo} 
+                                  <td align="left"><p>{if $a.status != "A"}<font color="red"><b>{/if}<a href="relatorio.php?op=lista&tipo=POP&id={$a.id_pop}">{$a.tipo}
                                       - {$a.nome}</a>{if $a.status != "A"}</b></font>{/if}</p></td>
                                   <td align="left"><p>{$a.info|nl2br}</p></td>
                                   <td align="center"><p>{$a.tipo}</p></td>
                                   <td align="center" width="36">
-                                    <p><a href="configuracao.php?op=pop&id_pop={$a.id_pop}"><img src="template/default/images/gif_alterar.gif" border="0"></a></p></td>
+                                    <p><a href="configuracao.php?op=pop&id_pop={$a.id_pop}"><img src="template/default/images/gif_alterar.gif" alt="ALTERAR POP" border="0"></a></p></td>
                                   <td align="center" width="33"><a href="configuracao.php?op=pop&rotina=desativar&id_pop={$a.id_pop}"><img alt="DESATIVAR POP" src="template/default/images/delete.gif" width="15" height="15" border="0"></a></td>
                                 </tr>
                                 <tr>
