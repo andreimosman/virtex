@@ -16,6 +16,7 @@ class VAHome extends VirtexAdmin {
 			$privilegio_config = 'sim';
 			$privilegio_cobranca = 'sim';
 			$privilegio_gravar_cliente = 'sim';
+			$privilegio_registro  = 'sim';
 
 			if( ! $this->privPodeLer("_SUPORTE") ) {
 				$privilegio_radius = 'nao';
@@ -32,8 +33,12 @@ class VAHome extends VirtexAdmin {
 			if ( ! $this->privPodeGravar("_CLIENTES") ) {
 				$privilegio_gravar_cliente  = 'nao';
 			}
+			if( ! $this->privPodeLer("_CONFIG_REGISTRO") ) {
+				$privilegio_registro  = 'nao';
+			}
 
 			$this->tpl->atribui("privilegio_config",$privilegio_config);
+			$this->tpl->atribui("privilegio_registro",$privilegio_registro);
 			$this->tpl->atribui("privilegio_gravar_cliente",$privilegio_gravar_cliente);
 			$this->tpl->atribui("privilegio_cobranca",$privilegio_cobranca);
 			$this->tpl->atribui("privilegio_radius",$privilegio_radius);
