@@ -6,8 +6,8 @@
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
 </head>
 
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="document.form1.id_cliente.focus();">
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0" >
   <tr>
     <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
@@ -20,11 +20,11 @@
 				<h1 align="center">Exclus&atilde;o de Cliente</h1>
                   <form name="form1" method="post" action="{$smarty.server.PHP_SELF}">
                     <table width="300" border="0" cellspacing="2" cellpadding="3">
-                      <tr> 
+                      <tr>
                         <td><p>cod. do Cliente:</p></td>
                         <td><input name="id_cliente" type="text" id="id_cliente" size="10"></td>
                       </tr>
-                      <tr align="center" valign="middle"> 
+                      <tr align="center" valign="middle">
                         <td colspan="2"><input type="submit" name="Submit" value="Excluir Cliente"></td>
                       </tr>
                     </table>
