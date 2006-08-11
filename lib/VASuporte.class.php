@@ -33,7 +33,9 @@ class VASuporte extends VirtexAdmin {
 			$sSQL  = "SELECT ";
 			$sSQL .= "id_pop, nome ";
 			$sSQL .= "FROM ";
-			$sSQL .= "cftb_pop";
+			$sSQL .= "cftb_pop ";
+			$sSQL .= "WHERE status = 'A' ";
+			$sSQL .= "ORDER BY nome ASC ";
 			
 			$pops = $this->bd->obtemRegistros($sSQL);
 			
