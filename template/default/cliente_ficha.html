@@ -8,6 +8,10 @@ function confirmacao(){
 		return confirm("Tem certeza da exclusão do email?");
 }
 
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+
 </script>
 {/literal}
 
@@ -22,6 +26,7 @@ function confirmacao(){
 				</tr>
 				<tr>
 					<td align="center" valign="middle">
+						<a href="javascript:;" onClick="MM_openBrWindow('/virtex-cgi/stats/{$username}.html','graf','scrollbars=yes,width=550,height=500')"><img src="/virtex-cgi/stats/{$username}-day.png" border=0></a>
 
 						<table width="450" border=0 bgcolor="#F1F1F1">
               <tr>
