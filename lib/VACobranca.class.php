@@ -3145,8 +3145,11 @@ class VACobranca extends VirtexAdmin {
 		$vl_produto_antigo = $contrato["valor_contrato"];
 		$vl_produto_atual = $produto["valor"];
 		
-		$sSQL = "SELECT DISTINCT(cl.nome_razao),cn.username, cn.tipo_conta, cn.dominio,cl.id_cliente,cl.dia_pagamento FROM cltb_cliente cl, cntb_conta cn WHERE cn.id_cliente_produto = $id_cliente_produto AND cl.id_cliente = cn.id_cliente";
+		
+		$sSQL = "SELECT cl.nome_razao, cn.username, cn.tipo_conta, cn.dominio,cl.id_cliente FROM cltb_cliente cl, cntb_conta cn WHERE cn.id_cliente_produto = $id_cliente_produto AND cl.id_cliente = cn.id_cliente LIMIT 1";
+		//$sSQL = "SELECT DISTINCT(cl.nome_razao),cn.username, cn.tipo_conta, cn.dominio,cl.id_cliente,cl.dia_pagamento FROM cltb_cliente cl, cntb_conta cn WHERE cn.id_cliente_produto = $id_cliente_produto AND cl.id_cliente = cn.id_cliente";
 		$cliente = $this->bd->obtemUnicoRegistro($sSQL);
+		echo "CLIENTE: $sSQL <br>";
 		
 		$id_cliente = $cliente["id_cliente"];
 		$tipo_produto = $contrato["tipo_produto"];
@@ -3185,15 +3188,20 @@ class VACobranca extends VirtexAdmin {
 			
 			$preferencia = $this->prefs->obtem("total");
 			
-			if ($cliente["dia_pagamento"] == "" || !$cliente["dia_pagamento"]){
 			
-				$dia_venc = $preferencia["dia_venc"];
+			
+			//	$dia_venc = $preferencia["dia_venc"];
 				//echo "dia: $dia_venc<br>";
-			}else{
 			
-				$dia_venc = $cliente["dia_pagamento"];
+			$sSQL = "SELECT EXTRACT('day' from data) as dia_vencimento FROM cbtb_faturas WHERE id_cliente_produto = '$id_cliente_produto' LIMIT 1";
+			$_data = $this->bd->obtemUnicoRegistro($sSQL);
 			
-			}
+			
+				
+				
+				$dia_venc = $_data["dia_vencimento"];
+			
+			
 			
 			
 			$pri_venc = date("Y-m-d", mktime(0, 0, 0, $m+1,$dia_venc,$a));
