@@ -203,8 +203,8 @@
 			$sSQL .= "   c.username,cbl.upload_kbps,cbl.download_kbps ";
 			$sSQL .= "FROM ";
 			$sSQL .= "   cntb_conta c INNER JOIN cntb_conta_bandalarga cbl USING(username,dominio,tipo_conta) ";
-			$sSQL .= "WHERE ";
-			$sSQL .= "   c.status = 'A' ";
+			//$sSQL .= "WHERE ";
+			//$sSQL .= "   c.status = 'A' ";
 			
 			// echo $sSQL . "\n\n";
 			
