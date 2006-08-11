@@ -6,7 +6,7 @@
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
 </head>
 
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="document.formulario.ip.focus();">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -43,53 +43,53 @@
                           {if $ipaddr}
                           <hr size=1>
 							<table border=0 cellspacing=0 cellpadding=0 width=300>
-                            <tr> 
+                            <tr>
                               <td><p>Endereço:</p></td>
                               <td><p>{$ipaddr.endereco}</p></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td><p>Máscara:</p></td>
                               <td><p>{$ipaddr.mascara}</p></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td><p>Wildcard:</p></td>
                               <td><p>{$ipaddr.wildcard}</p></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td colspan="2"><img src="template/default/images/menu/spacer.gif" width="150" height="3"></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td colspan=2 bgcolor=#000000><p><img src="template/default/images/menu/spacer.gif" border=0 width=1 height=1></p></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td colspan="2"><img src="template/default/images/menu/spacer.gif" width="150" height="3"></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td><p>Rede:</p></td>
                               <td><p>{$ipaddr.nw}</p></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td><p>Broadcast:</p></td>
                               <td><p>{$ipaddr.bc}</p></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td colspan="2"><img src="template/default/images/menu/spacer.gif" width="150" height="3"></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td colspan=2 bgcolor=#000000><p><img src="template/default/images/menu/spacer.gif" border=0 width=1 height=1></p></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td colspan="2"><img src="template/default/images/menu/spacer.gif" width="150" height="3"></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td><p>Primeiro Host:</p></td>
                               <td><p>{$ipaddr.minhost}</p></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td><p>Último Host:</p></td>
                               <td><p>{$ipaddr.maxhost}</p></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td><p>Número de hosts</p></td>
                               <td><p>{$ipaddr.numhosts}</p></td>
                             </tr>
