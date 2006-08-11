@@ -69,15 +69,19 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 
 					  {foreach item=a from=$cli}
 					    <table width="530" border="0" cellspacing="1" cellpadding="0">
-                          <tr>
-                            <td colspan="2"><div align="CENTER"><img src="template/default/images/demonstracao_grafico.png" width="497" height="154"></div></td>
-                          </tr>
-                          <tr>
+                          <!--tr>
                             <td width="150"><a href="javascript:;" onClick="MM_openBrWindow('suporte.php?op=graf&rotina=mostra','graf','scrollbars=yes,width=550,height=500')"><font color="#000066">{$a.username}</font></a></td>
                             <td width="150"><a href="javascript:;" onClick="MM_openBrWindow('suporte.php?op=graf&rotina=mostra','graf','scrollbars=yes,width=550,height=500')">{$a.mac}</a></td>
+                          </tr-->
+                          <tr>
+                            <td width="150"><a href="javascript:;" onClick="MM_openBrWindow('/virtex-cgi/stats/{$a.username}.html','graf','scrollbars=yes,width=550,height=500')"><font color="#000066">{$a.username}</font></a></td>
+                            <td width="150"><a href="javascript:;" onClick="MM_openBrWindow('/virtex-cgi/stats/{$a.username}.html','graf','scrollbars=yes,width=550,height=500')">{$a.mac}</a></td>
                           </tr>
                           <tr bgcolor="#CCCCCC">
                             <td colspan="2" height="1"></td>
+                          </tr>
+                          <tr>
+                            <td colspan="2"><div align="CENTER"><img src="/virtex-cgi/stats/{$a.username}-day.png" width="497" height="154"></div></td>
                           </tr>
                         </table>
 						{/foreach}
