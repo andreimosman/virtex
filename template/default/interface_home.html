@@ -68,18 +68,15 @@
             {if $alterar_senhas}<strong><font color="#FF0000">Voc&ecirc; est&aacute;
             alterando os dados do usu&aacute;rio {$username}{if $tipo_conta=="E"}@{$dominio}{/if} da conta de {if $tipo_conta== "BL"}Banda Larga{/if}{if $tipo_conta=="E"}E-mail{/if}{if $tipo_conta=="H"}Hospedagem{/if}{if $tipo_conta=="D"}Discado{/if}.</font></strong></p>
           <div align="center">
-<table width=40% cellpadding=0 cellspacing=0 bgcolor="#000000">
+            <table width=20% cellpadding=0 cellspacing=0 bgcolor="#000000">
               <tr>
                 <td> <table width=100% cellpadding=0 cellspacing=1>
                     <tr bgcolor="#FFFFFF">
-                      <td align="center" bgcolor="#FEFEFE"> <p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><br>
-                          <br>
-                          Senha Atual: <br>
+                      <td align="center" bgcolor="#FEFEFE"> <p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
                           <input type="hidden" name="acao" value="alterar">
                           <input type="hidden" name="op" value="alterar_senha">
-                          <input type="password" name="senha_atual" class= "campos" id="senha_atual3">
                           <br>
-                          <br>
+                          </font><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><br>
                           Nova Senha:<br>
                           <input type="password" name="senha" class= "campos" id="senha">
                           <br>
@@ -89,6 +86,7 @@
                           <br>
                           <br>
                           <input type="submit" value="Alterar" name="bttroca">
+                          <br>
                           <br>
                           <input name="username" type="hidden" id="username" value="{$username}">
                           <input name="tipo_conta" type="hidden" id="tipo_conta" value="{$tipo_conta}">
