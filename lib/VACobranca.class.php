@@ -445,9 +445,9 @@ class VACobranca extends VirtexAdmin {
 					$this->bd->consulta($tSQL);
 						      
 			      if( $this->bd->obtemErro() != MDATABASE_OK ) {
-			         echo "ERRO: " . $this->bd->obtemMensagemErro() , "<br>\n";
-			         echo "QUERY: " . $sSQL . "<br>\n";
-			         echo "QUERY2: ". $tSQL . "<br>\n";
+			         //echo"ERRO: " . $this->bd->obtemMensagemErro() , "<br>\n";
+			         //echo"QUERY: " . $sSQL . "<br>\n";
+			         //echo"QUERY2: ". $tSQL . "<br>\n";
 			      }
 
 
@@ -496,8 +496,8 @@ class VACobranca extends VirtexAdmin {
 			
 			// tabela prtb_produto
 			
-			//echo "SQL: ". $sSQL . "<br>\n";
-			//echo "resultados: ". $reg ."<br>\n";
+			////echo"SQL: ". $sSQL . "<br>\n";
+			////echo"resultados: ". $reg ."<br>\n";
 			
 		        $this->tpl->atribui("id_produto",@$reg["id_produto"]);
 		        $this->tpl->atribui("nome",@$reg["nome"]);
@@ -593,8 +593,8 @@ class VACobranca extends VirtexAdmin {
 				$produtos = $this->bd->obtemRegistros($sSQL);
 				
 				if( $this->bd->obtemErro() != MDATABASE_OK ) {
-				echo "ERRO: " . $this->bd->obtemMensagemErro() , "<br>\n";
-				echo "QUERY: " . $sSQL . "<br>\n";
+				//echo"ERRO: " . $this->bd->obtemMensagemErro() , "<br>\n";
+				//echo"QUERY: " . $sSQL . "<br>\n";
 				}
 		
 				$this->tpl->atribui("disp",$disp);
@@ -638,9 +638,9 @@ class VACobranca extends VirtexAdmin {
 					
 					$id_bloqueio = array();
 					$id_bloqueio = @$_REQUEST["id_bloqueio_box"];
-					//echo "id_bloqueio: $id_bloqueio <br><br>";
+					////echo"id_bloqueio: $id_bloqueio <br><br>";
 					$n_bloqueio = count($id_bloqueio);
-					//echo "NUMERO BLOQUEIOS: $n_bloqueio <br>";
+					////echo"NUMERO BLOQUEIOS: $n_bloqueio <br>";
 					$tipo_bloqueio = "B";
 					
 					
@@ -652,8 +652,8 @@ class VACobranca extends VirtexAdmin {
 							
 							$id_processo = $this->bd->proximoID("lgsq_id_processo");
 							list($id_cli_produto, $tipo) = explode("-", $id_bloqueio[$i]);
-							//echo "ID_CLI_PRODUTO: $id_cli_produto <br>";
-							//echo "TIPO CONTA: $tipo <br>";
+							////echo"ID_CLI_PRODUTO: $id_cli_produto <br>";
+							////echo"TIPO CONTA: $tipo <br>";
 							
 							$tipo = trim($tipo);
 							
@@ -664,7 +664,7 @@ class VACobranca extends VirtexAdmin {
 							$sSQL .= "  $id_processo, $id_cli_produto, now(), '$tipo_bloqueio', '$admin' ";
 							$sSQL .= ") ";
 							
-							//echo "QUERY INERT: $sSQL<br>\n";
+							////echo"QUERY INERT: $sSQL<br>\n";
 							
 							$this->bd->consulta($sSQL);
 							
@@ -685,20 +685,20 @@ class VACobranca extends VirtexAdmin {
 								//$sSQL .= "bl.username = '".$contrato["username"]."' AND bl.tipo_conta = '$tipo_produto' AND bl.dominio = '".$contrato["dominio"]."' AND ";
 								//$sSQL .= "bl.username = cn.username AND bl.tipo_conta = cn.tipo_conta AND bl.dominio = cn.dominio ";
 								$bl = $this->bd->obtemUnicoRegistro($sSQL);
-								//echo "SPOOL BL: $sSQL <br>";
+								////echo"SPOOL BL: $sSQL <br>";
 		
 								$aSQL  = "SELECT ip FROM cftb_nas WHERE id_nas = '".$bl["id_nas"]."' ";
 								$nas = $this->bd->obtemUnicoRegistro($aSQL);
-								//echo "SPOOL NAS: $sSQL <br>";
+								////echo"SPOOL NAS: $sSQL <br>";
 								
 								if ($bl["tipo_bandalarga"] == "P"){
 		
-								//ECHO "PPPOE<BR>";
+								////echo"PPPOE<BR>";
 									$this->spool->bandalargaExcluiRedePPPoE($nas["ip"],$bl["id_conta"],$bl["ipaddr"]);
 		
 								}else {
 		
-									///echo "IP <BR>";
+									/////echo"IP <BR>";
 									$this->spool->bandalargaExcluiRede($nas["ip"],$bl["id_conta"],$bl["rede"]);
 		
 								}
@@ -718,7 +718,7 @@ class VACobranca extends VirtexAdmin {
 		   					$sSQL .= "AND status = 'A' "; /* conta ativa */
 		   					
 		   					$this->bd->consulta($sSQL);
-							//echo "QUERY UPDATE: $sSQL<br>\n";
+							////echo"QUERY UPDATE: $sSQL<br>\n";
 			
 						}
 					}
@@ -755,7 +755,7 @@ class VACobranca extends VirtexAdmin {
 			*/
 		
 			
-			//echo $sSQL;
+			////echo$sSQL;
 			
 			/*
 			$sSQL  = "SELECT";
@@ -815,7 +815,7 @@ class VACobranca extends VirtexAdmin {
 				$sSQL .= "cd.id_cidade = cl.id_cidade";
 
 				$cliente = $this->bd->obtemUnicoRegistro($sSQL);
-				//echo "CLIENTE: $sSQL  <br>";
+				////echo"CLIENTE: $sSQL  <br>";
 
 
 				$sSQL  = "SELECT valor, id_cobranca,to_char(data, 'DD/mm/YYYY') as data  FROM ";
@@ -824,7 +824,7 @@ class VACobranca extends VirtexAdmin {
 				$sSQL .= "id_cliente_produto = '$id_cliente_produto' AND ";
 				$sSQL .= "data = '$data' ";
 
-				//echo "fatura: $sSQL<br>";
+				////echo"fatura: $sSQL<br>";
 
 				$fatura = $this->bd->obtemUnicoRegistro($sSQL);
 
@@ -841,12 +841,12 @@ class VACobranca extends VirtexAdmin {
 				$codigo = @$_REQUEST["codigo"];
 				//$data_venc = "30/04/2006";
 				$data_venc = $fatura["data"];
-				//echo $codigo;
+				////echo$codigo;
 				$valor = $fatura["valor"];
 				$id_cobranca = $fatura["id_cobranca"];
 				$nome_cliente = $cliente["nome_razao"];
 				$cpf_cliente = $cliente["cpf_cnpj"];
-				//echo "VALOR: $valor <BR>";
+				////echo"VALOR: $valor <BR>";
 
 				$endereco = $cliente["endereco"]." - ". $cliente["nome_cidade"]." - ".$cliente["estado"]."<br> CEP: ".$cliente["cep"];
 
@@ -874,12 +874,12 @@ class VACobranca extends VirtexAdmin {
 				
 				$this->carne($id_cliente_produto,$data,$id_cliente);
 				
-				//echo $carne;
+				////echo$carne;
 
 //				copy("/mosman/virtex/dados/carnes/codigos/".$codigo_barras.".png","codigos/".$codigo_barras.".png");
 				$template = $this->tpl->obtemPagina("../boletos/pc-estilo.html");
 				$template .= $this->tpl->obtemPagina("../boletos/layout-pc.html");
-				//echo $template;
+				////echo$template;
 				//$this->arquivoTemplate = "../boletos/layout-pc.html";
 
 				/* PAGCONTAS */ 
@@ -902,8 +902,8 @@ class VACobranca extends VirtexAdmin {
 			$ano = @$_REQUEST["ano"];
 			$dti = date("Y-m-d", mktime(0,0,0, $mes, $dia_inicio, $ano));
 			$dtf = date("Y-m-d", mktime(0,0,0, $mes, $dia_final, $ano));
-			//echo "DTI: $dti<br>\n";
-			//echo "DTF: $dtf<br>\n";
+			////echo"DTI: $dti<br>\n";
+			////echo"DTF: $dtf<br>\n";
 			
 			//phpinfo();
 			
@@ -919,7 +919,7 @@ class VACobranca extends VirtexAdmin {
 				
 				$this->geraCarne($dia_inicio,$dia_final,$mes,$ano,$dti,$dtf);
 				
-				//echo $carne;
+				////echo$carne;
 				//$this->tpl->atribui("",);
 				//$this->tpl->obtemPagina("../boletos/layout-pc.html");
 				//$this->arquivoTemplate = "../boletos/layout-pc.html";
@@ -995,7 +995,7 @@ class VACobranca extends VirtexAdmin {
 				$sSQL .= "nome FROM prtb_produto WHERE id_produro = '".$contrato[$i]["id_produto"]."'";
 		
 				$produto = $this->bd->obtemUnicoRegistro($sSQL);
-				//echo "QUERY PRODUTO($i): $sSQL <br>\n";
+				////echo"QUERY PRODUTO($i): $sSQL <br>\n";
 										
 				// Verifica se existe fatura emitida para o contrato selecionado na data especificada
 				// em $fatura_dt_vencimento
@@ -1023,7 +1023,7 @@ class VACobranca extends VirtexAdmin {
 		            $sSQL .= ")";
 		
 		            $this->bd->consulta($sSQL);
-		            //echo "FATURA($i): $sSQL <br>\n";
+		            ////echo"FATURA($i): $sSQL <br>\n";
 		        }
 			}
 
@@ -1035,7 +1035,7 @@ class VACobranca extends VirtexAdmin {
 			$sSQL .= "cp.id_cliente = cl.id_cliente";
 					
 			$faturas = $this->bd->obtemRegistros($sSQL);
-			//echo "$sSQL <br>\n";
+			////echo"$sSQL <br>\n";
 
 			$largura = "720";
 			$altura = "400";
@@ -1072,7 +1072,7 @@ class VACobranca extends VirtexAdmin {
 			$sSQL .= "data = '$data'";
 			
 
-			//ECHO "AMORT: $sSQL<br>";
+			////echo"AMORT: $sSQL<br>";
 			
 			$amort = $this->bd->obtemUnicoRegistro($sSQL);
 			
@@ -1080,10 +1080,10 @@ class VACobranca extends VirtexAdmin {
 			$cliente = $this->bd->obtemUnicoRegistro($sSQL);
 			
 			$sSQL = "SELECT status, id_cliente, id_cliente_produto FROM cntb_conta where id_cliente = '$id_cliente' AND id_cliente_produto = '$id_cliente_produto' AND status = 'S' ";
-			//echo $sSQL;
+			////echo$sSQL;
 			$suspenso = $this->bd->obtemRegistros($sSQL);
 				
-			//echo "sql: $sSQL<br> Nome:".$cliente["nome_razao"]."<br> ";
+			////echo"sql: $sSQL<br> Nome:".$cliente["nome_razao"]."<br> ";
 			
 			$this->tpl->atribui("suspenso",$suspenso);
 			$this->tpl->atribui("cliente",$cliente);
@@ -1104,7 +1104,7 @@ class VACobranca extends VirtexAdmin {
 			    } 
 
 
-			//echo $data;
+			////echo$data;
 			$this->tpl->atribui("id_cliente",$id_cliente);
 			$this->tpl->atribui("data",$data);
 			$this->tpl->atribui("amort",$amort);
@@ -1137,19 +1137,19 @@ class VACobranca extends VirtexAdmin {
 				$sSQL .= "ORDER BY f.data ASC ";
 
 				$lista_faturas = $this->bd->obtemRegistros($sSQL);
-				//echo "Lista: $sSQL <br>";
+				////echo"Lista: $sSQL <br>";
 
 				$sSQL = "SELECT nome_razao FROM cltb_cliente WHERE id_cliente = '$id_cliente'";
 				$cliente = $this->bd->obtemUnicoRegistro($sSQL);*/
 
 				$sSQL = "SELECT * FROM cbtb_faturas WHERE id_cliente_produto = '$id_cliente_produto' AND reagendamento is null AND status = 'A' AND data <= now() + interval '10 day' ";
 				$suspenso = $this->bd->obtemRegistros($sSQL);
-				//echo $sSQL ."<BR>";
+				////echo$sSQL ."<BR>";
 				
 				if (!$suspenso){
 				
 					$sSQL = "UPDATE cntb_conta SET status = 'A' WHERE id_cliente_produto = '$id_cliente_produto' AND status = 'S' ";
-					//echo $sSQL ."<BR>";
+					////echo$sSQL ."<BR>";
 					$this->bd->consulta($sSQL);
 					
 					$msg_final = "Amortização/Pagamento efetuado com sucesso!";
@@ -1206,7 +1206,7 @@ class VACobranca extends VirtexAdmin {
 		   $sErro = "";
 
 		   // Verifica se foi feito upload do arquivo.
-		   //echo "F: " . $_FILES['retorno']['tmp_name'] . "<br>\n";
+		   ////echo"F: " . $_FILES['retorno']['tmp_name'] . "<br>\n";
 
 		   $arquivo = $_FILES['arquivo'];
 		   //phpinfo();
@@ -1236,7 +1236,7 @@ class VACobranca extends VirtexAdmin {
 
 						$sSQL = "SELECT nome_arquivo,to_char(data,'DD/MM/YYYY HH24:MM:SS') as data FROM lgtb_retorno WHERE nome_arquivo = '$nome' order by data desc limit 1";
 						$checa_arquivo = $this->bd->obtemUnicoRegistro($sSQL);
-						//echo $sSQL;
+						////echo$sSQL;
 						
 						if (!$checa_arquivo || $checa_arquivo == ""){
 
@@ -1244,7 +1244,7 @@ class VACobranca extends VirtexAdmin {
 							$sSQL = "INSERT INTO lgtb_retorno (nome_arquivo,tamanho,data,admin) VALUES ('$nome','$tamanho',now(),'$admin')";
 							$this->bd->consulta($sSQL);
 						
-							//echo "RETORNO: $sSQL <br>";
+							////echo"RETORNO: $sSQL <br>";
 
 						}else{
 
@@ -1283,10 +1283,10 @@ class VACobranca extends VirtexAdmin {
 						  $sSQL .= " cn.id_cliente = cl.id_cliente ";
 						  $_faturas = $this->bd->obtemUnicoRegistro($sSQL);
 						  
-						  //echo "SELEÇÃO: $sSQL <br>";
+						  ////echo"SELEÇÃO: $sSQL <br>";
 						  
 						  if ($_faturas && $_faturas["nome_razao"] != ""){
-						  	//echo $_faturas["nome_razao"]."<br>";
+						  	////echo$_faturas["nome_razao"]."<br>";
 						  	$qtde = $qtde + 1;
 						  	$_status = "P";
 						  	$motivo = "";
@@ -1298,7 +1298,7 @@ class VACobranca extends VirtexAdmin {
 						  //$qtde_validos = count($_faturas);
 						  
 						  $registros[$i] = array_merge($registros[$i],$_faturas);
-						  //echo "FATURAS: $sSQL <br>";
+						  ////echo"FATURAS: $sSQL <br>";
 						  
 						  
 						  $dt_pgto = list($dia,$mes,$ano) = explode("/",$registros[$i]["data_pagamento"]);
@@ -1326,21 +1326,21 @@ class VACobranca extends VirtexAdmin {
 						  $sSQL .= ")";
 						  $this->bd->consulta($sSQL);
 						  
-						  //echo "FATURAS: $sSQL <br>";
+						  ////echo"FATURAS: $sSQL <br>";
 						  
 						  
 						  
 						  
 						  
-						  //echo $registros[$i]["nsr"] . " - " . $registros[$i]["data_pagamento"] . " - " . $registros[$i]["data_credito"] . " - " . $registros[$i]["valor_recebido"] . " - " . $registros[$i]["valor_tarifa"] . " - ".$registros[$i]["codigo_barras"] . "<br>";
+						  ////echo$registros[$i]["nsr"] . " - " . $registros[$i]["data_pagamento"] . " - " . $registros[$i]["data_credito"] . " - " . $registros[$i]["valor_recebido"] . " - " . $registros[$i]["valor_tarifa"] . " - ".$registros[$i]["codigo_barras"] . "<br>";
 						  
 						}
 					   
 					   $qtde_validos = $qtde;
 					   $qtde_sem = $i - $qtde_validos;
 					   
-					   //echo "QTDE VALIDOS: $qtde_validos<br>";
-					   //echo "QTDE INVALIDOS: $qtde_sem<br>";
+					   ////echo"QTDE VALIDOS: $qtde_validos<br>";
+					   ////echo"QTDE INVALIDOS: $qtde_sem<br>";
 					   
 					   if ($i == $qtde){
 					   	$status = "S";
@@ -1352,7 +1352,7 @@ class VACobranca extends VirtexAdmin {
 					   $sSQL  = "UPDATE lgtb_retorno SET qtde_registros = '$i', NRA='$i', NRSC='$qtde_sem', NRPE='$qtde_validos', status = '$status' WHERE id_arquivo = currval('lgtb_retorno_id_arquivo_seq')";
 					   $this->bd->consulta($sSQL);
 					   
-					   //echo $sSQL ."<br>";
+					   ////echo$sSQL ."<br>";
 					
 						
 						
@@ -1390,7 +1390,7 @@ class VACobranca extends VirtexAdmin {
 					$dt = list($dia,$mes,$ano) = explode("/",$data_pagamento);
 					$data_pagamento = $ano."-".$mes."-".$dia;
 					
-					//echo " I: $i <br>";
+					////echo" I: $i <br>";
 
 
 					$sSQL  = "SELECT ";
@@ -1405,7 +1405,7 @@ class VACobranca extends VirtexAdmin {
 					$sSQL .= " cn.id_cliente = cl.id_cliente ";
 					$_faturas = $this->bd->obtemUnicoRegistro($sSQL);
 
-					//echo "FATURAS: $sSQL <br>";
+					////echo"FATURAS: $sSQL <br>";
 
 					if ($valor_recebido > $_faturas["valor"]){
 
@@ -1427,8 +1427,8 @@ class VACobranca extends VirtexAdmin {
 
 					}
 
-					//echo "VALOR RECEBIDO: $valor_recebido <br>";
-					//echo "VALOR FATURA: ".$_faturas["valor"]."<br>";
+					////echo"VALOR RECEBIDO: $valor_recebido <br>";
+					////echo"VALOR FATURA: ".$_faturas["valor"]."<br>";
 
 					$sSQL  = "UPDATE lgtb_retorno_faturas SET status = 'A' WHERE codigo_barras = '$codigo_barras'";
 					$this->bd->consulta($sSQL);
@@ -1443,7 +1443,7 @@ class VACobranca extends VirtexAdmin {
 					$sSQL .= "WHERE cod_barra = '$codigo_barras' ";
 
 					$this->bd->consulta($sSQL);
-					//echo "AMORT: $sSQL <br>";
+					////echo"AMORT: $sSQL <br>";
 					
 					$sSQL  = "UPDATE lgtb_retorno_faturas SET ";
 					$sSQL .= "status = 'A', ";
@@ -1496,7 +1496,7 @@ class VACobranca extends VirtexAdmin {
 
 
 
-	   //echo $sErro . "<br>\n";
+	   ////echo$sErro . "<br>\n";
 	   $this->tpl->atribui("sop",@$_REQUEST["sop"]);
 	   //$this->tpl->atribui("erro",$sErro);
 
@@ -1585,7 +1585,7 @@ class VACobranca extends VirtexAdmin {
 			
 			
 			$contrato = $this->bd->obtemUnicoRegistro($sSQL);
-			//echo "CONTRATO: $sSQL <br>";
+			////echo"CONTRATO: $sSQL <br>";
 			
 				
 			
@@ -1594,7 +1594,7 @@ class VACobranca extends VirtexAdmin {
 			$sSQL  = "SELECT * FROM cbtb_faturas where id_cliente_produto = '$id_cliente_produto' ";
 			
 			$faturas = $this->bd->obtemRegistros($sSQL);
-			//echo "FATURA: $sSQL <br>";
+			////echo"FATURA: $sSQL <br>";
 			
 			$sSQL  = "SELECT ";
 				switch ($tipo_produto){
@@ -1628,7 +1628,7 @@ class VACobranca extends VirtexAdmin {
 				}
 
 			$produto_carac = $this->bd->obtemUnicoRegistro($sSQL);		
-			//echo "PRODUTO CARACT: $sSQL <br>";
+			////echo"PRODUTO CARACT: $sSQL <br>";
 			
 			$sSQL  = "SELECT cp.id_cliente_produto, cp.id_cliente, cp.id_produto, pr.id_produto, pr.nome as nome_produto ";
 			$sSQL .= "FROM cbtb_cliente_produto cp, prtb_produto pr ";
@@ -1638,7 +1638,7 @@ class VACobranca extends VirtexAdmin {
 			$sSQL .= "cp.id_produto = pr.id_produto ";
 			
 			$produto = $this->bd->obtemUnicoRegistro($sSQL);
-			//echo "PRODUTO: $sSQL <br>";
+			////echo"PRODUTO: $sSQL <br>";
 			
 			$this->tpl->atribui("produto",$produto);
 			$this->tpl->atribui("produto_carac",$produto_carac);
@@ -1667,22 +1667,22 @@ class VACobranca extends VirtexAdmin {
 					$sSQL .= "bl.username = '".$contrato["username"]."' AND bl.tipo_conta = '$tipo_produto' AND bl.dominio = '".$contrato["dominio"]."' AND ";
 					$sSQL .= "bl.username = cn.username AND bl.tipo_conta = cn.tipo_conta AND bl.dominio = cn.dominio ";
 					$bl = $this->bd->obtemUnicoRegistro($sSQL);
-			//		echo "SPOOL BL: $sSQL <br>";
+			//		//echo"SPOOL BL: $sSQL <br>";
 					
 					$sSQL  = "SELECT ip FROM cftb_nas WHERE id_nas = '".$bl["id_nas"]."' ";
 					$nas = $this->bd->obtemUnicoRegistro($sSQL);
-			//		echo "SPOOL NAS: $sSQL <br>";
+			//		//echo"SPOOL NAS: $sSQL <br>";
 					
 					
 					
 					if ($bl["tipo_bandalarga"] == "P"){
 						
-			//			ECHO "PPPOE<BR>";
+			//			//echo"PPPOE<BR>";
 						$this->spool->bandalargaExcluiRedePPPoE($nas["ip"],$bl["id_conta"],$bl["ipaddr"]);
 					
 					}else {
 						
-			//			echo "IP <BR>";
+			//			//echo"IP <BR>";
 						$this->spool->bandalargaExcluiRede($nas["ip"],$bl["id_conta"],$bl["rede"]);
 					
 					}
@@ -1694,19 +1694,19 @@ class VACobranca extends VirtexAdmin {
 			
 				$sSQL = "UPDATE cbtb_contrato SET status = 'C' where id_cliente_produto = '$id_cliente_produto' ";
 				$this->bd->consulta($sSQL);
-			//	echo "UPDATE CANCELAR1: $sSQL <br>";
+			//	//echo"UPDATE CANCELAR1: $sSQL <br>";
 				
 				$sSQL = "UPDATE cbtb_faturas SET status = 'C' where id_cliente_produto = '$id_cliente_produto' ";
 				$this->bd->consulta($sSQL);
-			//	echo "UPDATE CANCELAR2: $sSQL <br>";
+			//	//echo"UPDATE CANCELAR2: $sSQL <br>";
 				
 				$sSQL = "UPDATE cntb_conta SET status = 'C' where username = '".$contrato["username"]."' AND tipo_conta = '".$contrato["tipo_produto"]."' AND dominio = '".$contrato["dominio"]."' ";
 				$this->bd->consulta($sSQL);
-			//	echo "UPDATE CANCELAR3: $sSQL <br>";
+			//	//echo"UPDATE CANCELAR3: $sSQL <br>";
 			
 				$sSQL = "UPDATE cbtb_carne SET status = 'C' where id_carne = '".$faturas[0]["id_carne"]."' ";
 				$this->bd->consulta($sSQL);
-				//echo "UPDATE CARNE: $sSQL <br>";
+				////echo"UPDATE CARNE: $sSQL <br>";
 				
 				$sSQL  = "UPDATE "; 
 				
@@ -1725,7 +1725,7 @@ class VACobranca extends VirtexAdmin {
 						 
 				$sSQL .= "SET status = 'C' where username = '".$contrato["username"]."' AND tipo_conta = '".$contrato["tipo_produto"]."' AND dominio = '".$contrato["dominio"]."' ";
 				$this->bd->consulta($sSQL);
-			//	echo "UPDATE CANCELAR4: $sSQL <br>";
+			//	//echo"UPDATE CANCELAR4: $sSQL <br>";
 				
 				$msg_final = "CONTRATOS CANCELADOS COM SUCESSO!<BR>FATURAS CANCELADAS COM SUCESSO!<BR>CONTAS CANCELADAS COM SUCESSO!<br>CARNE CANCELADO COM SUCESSO!";
 				$this->tpl->atribui("mensagem",$msg_final);
@@ -1765,14 +1765,14 @@ class VACobranca extends VirtexAdmin {
 				$sSQL .= "cn.id_cliente = cl.id_cliente AND ";
 				$sSQL .= "ct.tipo_produto = '$tipo_produto' ";
 
-				//echo "QUERY: $sSQL <br>";
+				////echo"QUERY: $sSQL <br>";
 
 				$contrato = $this->bd->obtemUnicoRegistro($sSQL);
 
 				$this->tpl->atribui("contrato",$contrato);
 
 				$sSQL  = "SELECT to_char(data, 'DD/mm/YYYY') as data, valor, status, id_carne FROM cbtb_faturas where id_cliente_produto = '$id_cliente_produto' ";
-				//echo "fatura: $sSQL <br>";
+				////echo"fatura: $sSQL <br>";
 				$faturas = $this->bd->obtemRegistros($sSQL);
 
 				$this->tpl->atribui("fatura",$faturas);
@@ -1800,22 +1800,22 @@ class VACobranca extends VirtexAdmin {
 					$sSQL .= "bl.username = '$username' AND bl.tipo_conta = '$tipo_conta' AND bl.dominio = '$dominio' AND ";
 					$sSQL .= "bl.username = cn.username AND bl.tipo_conta = cn.tipo_conta AND bl.dominio = cn.dominio ";
 					$bl = $this->bd->obtemUnicoRegistro($sSQL);
-					//echo "SPOOL BL: $sSQL <br>";
+					////echo"SPOOL BL: $sSQL <br>";
 					
 					$sSQL  = "SELECT ip, id_nas FROM cftb_nas WHERE id_nas = '".$bl["id_nas"]."' ";
 					$nas = $this->bd->obtemUnicoRegistro($sSQL);
-					//echo "SPOOL NAS: $sSQL <br>";
+					////echo"SPOOL NAS: $sSQL <br>";
 					
 					
 					
 					if ($bl["tipo_bandalarga"] == "P"){
 						
-						//ECHO "PPPOE<BR>";
+						////echo"PPPOE<BR>";
 						$this->spool->bandalargaExcluiRedePPPoE($nas["id_nas"],$bl["id_conta"],$bl["ipaddr"]);
 					
 					}else {
 						
-						//echo "IP <BR>";
+						////echo"IP <BR>";
 						$this->spool->bandalargaExcluiRede($nas["id_nas"],$bl["id_conta"],$bl["rede"]);
 					
 					}
@@ -1885,7 +1885,7 @@ class VACobranca extends VirtexAdmin {
 				$sSQL .= "cn.tipo_conta = '$tipo_conta' ";
 
 				$outros = $this->bd->obtemUnicoRegistro($sSQL);
-				//echo "OUTROS: $sSQL <br>";
+				////echo"OUTROS: $sSQL <br>";
 				
 				$id_pop = @$outros["id_pop"];
 				$tipo_bandalarga = @$outros["tipo_bandalarga"];
@@ -1915,7 +1915,7 @@ class VACobranca extends VirtexAdmin {
 				
 				$sSQL = "SELECT id_carne FROM cbtb_faturas WHERE id_cliente_produto = $id_cliente_produto GROUP BY id_carne";
 				$fat = $this->bd->obtemUnicoRegistro($sSQL);
-				//echo "ID_CARNE: $sSQL <br>";
+				////echo"ID_CARNE: $sSQL <br>";
 
 				$sSQL  = "INSERT INTO lgtb_contas_excluidas ";
 				$sSQL .= "(id_cliente, id_cliente_produto, id_conta, username, tipo_conta, dominio, id_pop, tipo_bandalarga, ipaddr, rede, upload_kbps, ";
@@ -1926,7 +1926,7 @@ class VACobranca extends VirtexAdmin {
   			$sSQL .= "'$download_kbps','$status','$mac','$id_nas','$ip_externo','$quota','$email','$foneinfo','$tipo_hospedagem','$senha_cript','$uid','$gid','$home','$shell', ";
   			$sSQL .= "'$dominio_hospedagem','$senha','$conta_mestre','$observacoes','$admin' ) ";
   			$this->bd->consulta($sSQL);
-				//echo "INSERT LOG: $sSQL <br>";
+				////echo"INSERT LOG: $sSQL <br>";
 
 			
 				$sSQL  = "DELETE FROM cbtb_faturas WHERE id_cliente_produto = '$id_cliente_produto'";
@@ -1934,11 +1934,11 @@ class VACobranca extends VirtexAdmin {
 
 				$aSQL = "DELETE FROM cbtb_carne WHERE id_carne = '".$fat["id_carne"]."' ";
 				$this->bd->consulta($aSQL);
-				//echo "DELETAO: $aSQL <br>";
+				////echo"DELETAO: $aSQL <br>";
 				
 				$sSQL  = "DELETE FROM cbtb_contrato WHERE id_cliente_produto = '$id_cliente_produto' AND tipo_produto = '$tipo_produto' ";
 				$this->bd->consulta($sSQL);
-				//echo "DELETA CONTRATO: $sSQL <br>";
+				////echo"DELETA CONTRATO: $sSQL <br>";
 				
 				
 				$sSQL  = "DELETE FROM ";
@@ -1958,15 +1958,15 @@ class VACobranca extends VirtexAdmin {
 				$sSQL .= "username = '$username' AND ";
 				$sSQL .= "tipo_conta = '$tipo_conta' ";
 				$this->bd->consulta($sSQL);
-				//echo "DELETA CONTA ESPECIFICA: $sSQL <br>";
+				////echo"DELETA CONTA ESPECIFICA: $sSQL <br>";
 				
 				$sSQL = "DELETE FROM cntb_conta WHERE username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta' ";
 				$this->bd->consulta($sSQL);
-				//echo "DELETA CONTAS: $sSQL <br>";
+				////echo"DELETA CONTAS: $sSQL <br>";
 				
 				$sSQL = "SELECT username, dominio, tipo_conta, id_cliente_produto FROM cntb_conta where id_cliente_produto = '$id_cliente_produto' ";
 				$cnt_adicional = $this->bd->obtemRegistros($sSQL);
-				//echo "SELECIONA CONTA ADICIONAL: $sSQL <br>";
+				////echo"SELECIONA CONTA ADICIONAL: $sSQL <br>";
 				
 				for($i=0;$i<count($cnt_adicional);$i++){
 				
@@ -1991,20 +1991,20 @@ class VACobranca extends VirtexAdmin {
 					$sSQL .= "tipo_conta = '".$cnt_adicional[$i]["tipo_conta"]."' ";
 
 					$this->bd->consulta($sSQL);
-					//echo "DELETA CONTA ADICIONAL: $sSQL <br>";
+					////echo"DELETA CONTA ADICIONAL: $sSQL <br>";
 				}
 					
 				
 				
 				$sSQL = "DELETE FROM cntb_conta WHERE id_cliente_produto = '$id_cliente_produto'";
 				$this->bd->consulta($sSQL);
-				//echo "DELETA CONTA ADICIONAL: $sSQL <br>";
+				////echo"DELETA CONTA ADICIONAL: $sSQL <br>";
 				
 				
 				$sSQL = "DELETE FROM cbtb_cliente_produto WHERE id_cliente_produto = '$id_cliente_produto' ";
 				$this->bd->consulta($sSQL);
 				
-				//echo "DELETA CLIENTE_PRODUTO: $sSQL <br>";
+				////echo"DELETA CLIENTE_PRODUTO: $sSQL <br>";
 				
 				
 				
@@ -2054,13 +2054,13 @@ class VACobranca extends VirtexAdmin {
 				$sSQL .= "cn.id_cliente = cl.id_cliente AND ";
 				$sSQL .= "ct.tipo_produto = '$tipo_produto' ";
 
-				//echo "QUERY: $sSQL <br>";
+				////echo"QUERY: $sSQL <br>";
 
 				$contrato = $this->bd->obtemUnicoRegistro($sSQL);
 
 				$sSQL = "SELECT * FROM prtb_produto WHERE tipo = '$tipo_produto' AND disponivel = 't' ";
 				$produto = $this->bd->obtemRegistros($sSQL);
-				//echo "PRODUTO: $sSQL <br>";
+				////echo"PRODUTO: $sSQL <br>";
 			}else{
 
 				$sSQL  = "SELECT ";
@@ -2078,13 +2078,13 @@ class VACobranca extends VirtexAdmin {
 				$sSQL .= "cn.id_cliente = cl.id_cliente AND ";
 				$sSQL .= "ct.tipo_produto = '$tipo_produto' ";
 
-				//echo "QUERY: $sSQL <br>";
+				////echo"QUERY: $sSQL <br>";
 
 				$contrato = $this->bd->obtemUnicoRegistro($sSQL);
 
 				$sSQL = "SELECT * FROM prtb_produto WHERE tipo = '$tipo_produto' AND disponivel = 't' ";
 				$produto = $this->bd->obtemRegistros($sSQL);
-				//echo "PRODUTO: $sSQL <br>";
+				////echo"PRODUTO: $sSQL <br>";
 
 			
 			
@@ -2127,7 +2127,7 @@ class VACobranca extends VirtexAdmin {
 
 			$produto_carac = $this->bd->obtemUnicoRegistro($sSQL);
 
-			//echo "CARACT. PRODUTOS: $sSQL <br>";
+			////echo"CARACT. PRODUTOS: $sSQL <br>";
 
 			$sSQL  = "SELECT * FROM cftb_pop ";
 			$lista_pop = $this->bd->obtemRegistros($sSQL);
@@ -2142,7 +2142,7 @@ class VACobranca extends VirtexAdmin {
 			$provedor = $this->prefs->obtem("geral");
 			$dominio = $provedor["dominio_padrao"];
 
-			//echo "dominio: $dominio <br>";
+			////echo"dominio: $dominio <br>";
 
 			global $_LS_FORMA_PAGAMENTO;
 
@@ -2179,7 +2179,7 @@ class VACobranca extends VirtexAdmin {
 
 				if ($id_produto == $contrato["id_produto"]){
 				
-					//echo "NADA DIFERENTE";
+					////echo"NADA DIFERENTE";
 					//$this->arquivoTemplate = "cliente_contrato_migracao_confirmacao.html";
 					
 					$msg_final = "NÃO HOUVE NENHUMA MODIFICAÇÃO NO CONTRATO!";
@@ -2349,7 +2349,7 @@ class VACobranca extends VirtexAdmin {
 							break;
 						case 'BL':
 								$sSQL = "SELECT * FROM prtb_produto_bandalarga WHERE id_produto = '$id_produto'";
-								//echo "query: $sSQL <br>";
+								////echo"query: $sSQL <br>";
 
 								$info_produto = $this->bd->obtemUnicoRegistro($sSQL);
 
@@ -2473,7 +2473,7 @@ class VACobranca extends VirtexAdmin {
 							$sSQL = "INSERT INTO cbtb_cliente_produto (id_cliente_produto, id_cliente, id_produto, dominio, excluido) VALUES ('$id_cliente_produto_novo', '$id_cliente', '$id_produto', '$dominio', FALSE) ";
 							$this->bd->consulta($sSQL);
 							
-							//echo "Cliente Produto: $sSQL <br>";
+							////echo"Cliente Produto: $sSQL <br>";
 							
 							$sSQL = "SELECT currval('cbsq_id_cliente_produto') as icpn";
 							$icpn = $this->bd->obtemUnicoRegistro($sSQL);
@@ -2501,7 +2501,7 @@ class VACobranca extends VirtexAdmin {
 							$sSQL .= "	'$convenio', '$cc_vencimento', '$cc_numero', '$cc_operadora', '$db_banco', '$db_agencia', '$db_conta', '$carencia'";
 							$sSQL .= ")";
 							
-							//echo "contrato novo: $sSQL <br>";
+							////echo"contrato novo: $sSQL <br>";
 							$this->bd->consulta($sSQL);
 							
 							$this->contratoHTML($id_cliente,$id_cliente_produto_new,$tipo_produto);
@@ -2664,14 +2664,14 @@ class VACobranca extends VirtexAdmin {
 			$eSQL .= "		CAST( '$data_ini' as date) ";
 			$eSQL .= "		AND CAST( '$data_fim' as date ) ";
 
-			//echo "$sSQL";
+			////echo"$sSQL";
 
 			$relat = $this->bd->obtemRegistros($sSQL);
 			$fat = $this->bd->obtemUnicoRegistro($eSQL);
 			
 			$tmp_relat = array();
 			
-			//echo "<br>\n";
+			////echo"<br>\n";
 			
 			for ($i=0; $i<$meses_periodo; $i++) {
 			
@@ -2686,11 +2686,11 @@ class VACobranca extends VirtexAdmin {
 				
 				//$tmp_relat["$indice"] = array("faturamento" => 0, "mes" => "$dm", "ano" => "$da");
 				
-				//echo "$i - $data_teste = [$indice]<br>";
+				////echo"$i - $data_teste = [$indice]<br>";
 						
 			}
 			
-			//echo "<br>";
+			////echo"<br>";
 			
 			for ($i=0; $i<count($relat); $i++) {
 				
@@ -2701,7 +2701,7 @@ class VACobranca extends VirtexAdmin {
 				$relat[$i]["mes"] = ($relat[$i]["mes"]<10?"0":"") . $relat[$i]["mes"] ;
 				
 				
-				//echo "[$indice]<br>";
+				////echo"[$indice]<br>";
 				
 				$tmp_relat["$indice"] = $relat[$i];
 								
@@ -2755,7 +2755,7 @@ class VACobranca extends VirtexAdmin {
 			$eSQL .= "		AND CAST( '$data_fim' as date ) ";
 		
 			
-			//echo $sSQL;
+			////echo$sSQL;
 			
 			//pega o ultimo dia do ano
 			
@@ -2766,7 +2766,7 @@ class VACobranca extends VirtexAdmin {
 
 			$tmp_relat = array();
 
-			//echo "<br>\n";
+			////echo"<br>\n";
 			
 
 			for ($i=0; $i<$ultimo_dia_mes; $i++) {
@@ -2782,11 +2782,11 @@ class VACobranca extends VirtexAdmin {
 
 				//$tmp_relat["$indice"] = array("faturamento" => 0, "dia" => "$dd", "mes" => "$dm", "ano" => "$da");
 
-				//echo "$i - $data_teste = [$indice]<br>";
+				////echo"$i - $data_teste = [$indice]<br>";
 
 			}
 
-			//echo "<br>";
+			////echo"<br>";
 
 			for ($i=0; $i<count($relat); $i++) {
 
@@ -2805,7 +2805,7 @@ class VACobranca extends VirtexAdmin {
 
 				//$relat[$i]["mes"] = ($relat[$i]["mes"]<10?"0":"") . $relat[$i]["mes"] ;
 
-				//echo "[$indice]<br>";
+				////echo"[$indice]<br>";
 
 				$tmp_relat["$indice"] = $relat[$i];
 
@@ -2873,7 +2873,7 @@ class VACobranca extends VirtexAdmin {
 				
 		$meses_ano = array();
 		while( list($m,$s) = each($_LS_MESES_ANO) ) {
-			//echo "idx: " . ($m<10?"0":"").$m;
+			////echo"idx: " . ($m<10?"0":"").$m;
 			$meses_ano[ ($m<10?"0":"") . $m ] = $s;
 		}
 		
@@ -2995,7 +2995,7 @@ class VACobranca extends VirtexAdmin {
 		$sSQL .= "fa.id_cliente_produto = ca.id_cliente_produto AND ";
 		$sSQL .= "ad.admin = re.admin ";
 		
-		//echo "REAGENDAMENTO: $sSQL <br>";
+		////echo"REAGENDAMENTO: $sSQL <br>";
 		
 		$reagendamentos = $this->bd->obtemRegistros($sSQL);
 		
@@ -3025,7 +3025,7 @@ class VACobranca extends VirtexAdmin {
 	$sSQL .= "cd.id_cidade = cl.id_cidade";
 
 	$cliente = $this->bd->obtemUnicoRegistro($sSQL);
-	//echo "CLIENTE: $sSQL  <br>";
+	////echo"CLIENTE: $sSQL  <br>";
 
 
 	$sSQL  = "SELECT valor, id_cobranca,to_char(data, 'DD/mm/YYYY') as data, cod_barra, descricao, status, observacoes, cod_barra, id_carne, nosso_numero, linha_digitavel FROM ";
@@ -3036,7 +3036,7 @@ class VACobranca extends VirtexAdmin {
 
 
 	$fatura = $this->bd->obtemUnicoRegistro($sSQL);
-	//echo "fatura: $sSQL<br>";
+	////echo"fatura: $sSQL<br>";
 
 
 	// PEGANDO INFORMAÇÕES DAS PREFERENCIAS
@@ -3121,7 +3121,7 @@ class VACobranca extends VirtexAdmin {
 	$template .= $this->tpl->obtemPagina("../boletos/layout-pc.html");
 	
 	
-	echo ($template);
+	//echo($template);
 	
 	
 	}else if($op == "renovacao"){
@@ -3149,7 +3149,7 @@ class VACobranca extends VirtexAdmin {
 		$sSQL = "SELECT cl.nome_razao, cn.username, cn.tipo_conta, cn.dominio,cl.id_cliente FROM cltb_cliente cl, cntb_conta cn WHERE cn.id_cliente_produto = $id_cliente_produto AND cl.id_cliente = cn.id_cliente LIMIT 1";
 		//$sSQL = "SELECT DISTINCT(cl.nome_razao),cn.username, cn.tipo_conta, cn.dominio,cl.id_cliente,cl.dia_pagamento FROM cltb_cliente cl, cntb_conta cn WHERE cn.id_cliente_produto = $id_cliente_produto AND cl.id_cliente = cn.id_cliente";
 		$cliente = $this->bd->obtemUnicoRegistro($sSQL);
-		echo "CLIENTE: $sSQL <br>";
+		//echo"CLIENTE: $sSQL <br>";
 		
 		$id_cliente = $cliente["id_cliente"];
 		$tipo_produto = $contrato["tipo_produto"];
@@ -3177,12 +3177,12 @@ class VACobranca extends VirtexAdmin {
 			$id_cliente = $cliente["id_cliente"];
 			$nome = $cliente["nome_razao"];
 			$vigencia = $contrato["vigencia"];
-			//echo "VIGENCIA: $vigencia <br>";
+			////echo"VIGENCIA: $vigencia <br>";
 			$data_contratacao = $hoje;
 			list($a,$m,$d) = explode("-",$data_contratacao);
 			//$data_expiracao = date("Y-m-d", mktime(0,0,0, $a,$m+$vigencia,$d));
 			$data_renovacao = date("Y-m-d", mktime(0, 0, 0, $m+$vigencia, $d, $a));	
-			//echo "DATA: $hoje <br> DATA EXP: $data_renovacao <br>";
+			////echo"DATA: $hoje <br> DATA EXP: $data_renovacao <br>";
 			
 
 			
@@ -3191,7 +3191,7 @@ class VACobranca extends VirtexAdmin {
 			
 			
 			//	$dia_venc = $preferencia["dia_venc"];
-				//echo "dia: $dia_venc<br>";
+				////echo"dia: $dia_venc<br>";
 			
 			$sSQL = "SELECT EXTRACT('day' from data) as dia_vencimento FROM cbtb_faturas WHERE id_cliente_produto = '$id_cliente_produto' LIMIT 1";
 			$_data = $this->bd->obtemUnicoRegistro($sSQL);
@@ -3205,16 +3205,16 @@ class VACobranca extends VirtexAdmin {
 			
 			
 			$pri_venc = date("Y-m-d", mktime(0, 0, 0, $m+1,$dia_venc,$a));
-			//echo "pri_venc: $pri_venc<br>";
+			////echo"pri_venc: $pri_venc<br>";
 			$forma_pagamento = $preferencia["pagamento"];
-			//echo "pagamento: $forma_pagamento<br>";
+			////echo"pagamento: $forma_pagamento<br>";
 			
 			$ini_carne = $pri_venc;
 			list($a,$m,$d) = explode("-",$ini_carne);
-			//echo "ini_carne : $ini_carne<br>";
+			////echo"ini_carne : $ini_carne<br>";
 			
 			$data_carne = date("Y-m-d", mktime(0, 0, 0, $m+$vigencia-1,$dia_venc,$a));			
-			//echo "data_carne: $data_carne<br>";
+			////echo"data_carne: $data_carne<br>";
 			
 			
 			
@@ -3250,7 +3250,7 @@ class VACobranca extends VirtexAdmin {
 			$sSQL .= "('$_id_carne','$data_contratacao','$id_cliente_produto','$valor_contrato','A','$vigencia','$id_cliente') ";
 
 			$this->bd->consulta($sSQL);
-			//echo "CARNE: $sSQL <br>";
+			////echo"CARNE: $sSQL <br>";
 
 			$id_carne = $_id_carne;
 
@@ -3304,14 +3304,14 @@ class VACobranca extends VirtexAdmin {
 			$primeiro = $m."/".$d."/".$a;
 
 			//$proxima = $dia_vencimento ."/".($m+1)."/".$a;
-			//echo "PROXIMA: ".$proxima."<br>";
+			////echo"PROXIMA: ".$proxima."<br>";
 			$diferenca = $this->days_diff($primeiro,$proxima);
 
 			$valor_dia = $valor_contrato / 30;
 			$valor_prorata = $valor_dia * $diferenca;
-			//echo "DIFERENCA: ".$diferenca."<br>";
-			//echo "VALOR DIA: ".$valor_dia."<br>";
-			//echo "VALOR_PRORATA: ".$valor_prorata."<br>";
+			////echo"DIFERENCA: ".$diferenca."<br>";
+			////echo"VALOR DIA: ".$valor_dia."<br>";
+			////echo"VALOR_PRORATA: ".$valor_prorata."<br>";
 
 			$this->tpl->atribui("dias_prorata",$diferenca);
 			$this->tpl->atribui("valor_prorata",$valor_prorata);
@@ -3345,8 +3345,8 @@ class VACobranca extends VirtexAdmin {
 							$valor_prorata = @$_REQUEST["valor_prorata"];
 							$pri_venc = @$_REQUEST["pri_venc"];
 							$tx_instalacao = @$_REQUEST["tx_instalacao"];
-							//echo "PRORATA: $prorata <br>";
-							//echo "VALOR: $valor_prorata <br>";
+							////echo"PRORATA: $prorata <br>";
+							////echo"VALOR: $valor_prorata <br>";
 
 							if (!$tx_instalacao){
 							$tx_instalacao = 0;
@@ -3370,7 +3370,7 @@ class VACobranca extends VirtexAdmin {
 							//$stamp_final = $data_carne;
 							
 							$diferenca_meses = (($stamp_final - $stamp_inicial) / 86400) / 30;
-							//echo $diferenca_meses."<br>";
+							////echo$diferenca_meses."<br>";
 							if($tx_instalacao > 0) {
 
 								$fatura_valor = $tx_instalacao;
@@ -3384,7 +3384,7 @@ class VACobranca extends VirtexAdmin {
 
 								//Calcula a data dos próximos pagamentos de fatura.
 
-								//echo "VALOR_FATURA1: $fatura_valor <br>";
+								////echo"VALOR_FATURA1: $fatura_valor <br>";
 
 
 
@@ -3398,7 +3398,7 @@ class VACobranca extends VirtexAdmin {
 								$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago, $id_carne ";
 								$sSQL .= ")";
 
-								//echo "Fatura:  $sSQL<br>\n";
+								////echo"Fatura:  $sSQL<br>\n";
 								$this->bd->consulta($sSQL);
 
 							}
@@ -3423,7 +3423,7 @@ class VACobranca extends VirtexAdmin {
 										if ($prorata == true){ // pega se existe prorata e soma no valor da primeira fatura
 
 											$fatura_valor = $valor_prorata;
-											//echo "valor com prorata: $fatura_valor <br>";
+											////echo"valor com prorata: $fatura_valor <br>";
 										}
 
 										if($pri_venc != ""){
@@ -3445,7 +3445,7 @@ class VACobranca extends VirtexAdmin {
 
 										//Calcula a data dos próximos pagamentos de fatura.
 
-										//echo "VALOR_FATURA: $fatura_valor <br>";
+										////echo"VALOR_FATURA: $fatura_valor <br>";
 
 
 										$sSQL =  "INSERT INTO cbtb_faturas(";
@@ -3458,7 +3458,7 @@ class VACobranca extends VirtexAdmin {
 										$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago ";
 										$sSQL .= ")";
 
-										//echo "Fatura:  $sSQL<br>\n";
+										////echo"Fatura:  $sSQL<br>\n";
 										$this->bd->consulta($sSQL);
 
 									}*/
@@ -3488,9 +3488,9 @@ class VACobranca extends VirtexAdmin {
 									$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $ini_m+$i, $ini_d, $ini_a));
 
 
-								//echo "VALOR FATURA: $fatura_valor <br>";
-								//echo "DT VENC: $fatura_dt_vencimento <br>";
-								//echo "count: $i<br>";
+								////echo"VALOR FATURA: $fatura_valor <br>";
+								////echo"DT VENC: $fatura_dt_vencimento <br>";
+								////echo"count: $i<br>";
 
 								$sSQL =  "INSERT INTO cbtb_faturas(";
 								$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
@@ -3502,7 +3502,7 @@ class VACobranca extends VirtexAdmin {
 								$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago, $id_carne ";
 								$sSQL .= ")";
 
-								//echo "FATURA: $sSQL<br>";
+								////echo"FATURA: $sSQL<br>";
 								$this->bd->consulta($sSQL);
 
 								$data = $fatura_dt_vencimento;
@@ -3557,7 +3557,7 @@ class VACobranca extends VirtexAdmin {
 								$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago, $id_carne ";
 								$sSQL .= ")";
 
-								//echo "FATURA: $sSQL<br>";
+								////echo"FATURA: $sSQL<br>";
 								$this->bd->consulta($sSQL);
 							}								
 
@@ -3615,7 +3615,7 @@ class VACobranca extends VirtexAdmin {
 									if ($pri_venc) {
 										list($d, $m, $a) = explode("/",$pri_venc);
 										$fatura_dt_vencimento = $a."-".$m."-".$d;
-										//echo "DT: $fatura_dt_vencimento <br>";
+										////echo"DT: $fatura_dt_vencimento <br>";
 									}
 									//TODO: Procurar função de adição do pro-rata
 									if($tx_instalacao > 0) $fatura_valor += $tx_instalacao;
@@ -3648,7 +3648,7 @@ class VACobranca extends VirtexAdmin {
 								$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago, $id_carne ";
 								$sSQL .= ")";
 
-								//echo "FATURA: $sSQL<br>";
+								////echo"FATURA: $sSQL<br>";
 								$this->bd->consulta($sSQL);
 
 								$data = $fatura_dt_vencimento;
@@ -3706,7 +3706,7 @@ class VACobranca extends VirtexAdmin {
 							$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago, $id_carne ";
 							$sSQL .= ")";
 
-							//echo "FATURA: $sSQL<br>";
+							////echo"FATURA: $sSQL<br>";
 							$this->bd->consulta($sSQL);
 						}
 					break;						
@@ -3735,7 +3735,7 @@ class VACobranca extends VirtexAdmin {
 						//header('Content-Disposition: attachment; filename="'.$arquivo.'.pdf"');
 						//readfile($arqPDF);
 
-					//echo "<br>$username";
+					////echo"<br>$username";
 					// fim de geração de faturas
 					
 					$sSQL = "UPDATE cbtb_contrato SET data_renovacao = '$data_renovacao' WHERE id_cliente_produto = $id_cliente_produto";
@@ -3839,7 +3839,7 @@ class VACobranca extends VirtexAdmin {
 		$sSQL .= "	data = '".@$_REQUEST["data"]."' ";
 
 
-		//echo "QUERY: $sSQL <br>\n";
+		////echo"QUERY: $sSQL <br>\n";
 		$this->bd->consulta($sSQL);
 
 		if ($reagendar && $reagendamento){
@@ -3849,7 +3849,7 @@ class VACobranca extends VirtexAdmin {
 			$sSQL = "INSERT INTO lgtb_reagendamento (data, id_cliente_produto, admin, data_para_reagendamento) VALUES ('".@$_REQUEST["data"]."','$id_cliente_produto','$adm','$reagendamento') ";
 			$this->bd->consulta($sSQL);
 
-			//echo "LOG REAGENDAMENTO: $sSQL <br>";
+			////echo"LOG REAGENDAMENTO: $sSQL <br>";
 		}
 
 
@@ -3871,7 +3871,7 @@ class VACobranca extends VirtexAdmin {
 public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$segunda_via=false){
 
 
-	//////echo "DATA ENVIADA: $data <BR>\n";
+	////////echo"DATA ENVIADA: $data <BR>\n";
 
 	
 	$sSQL  = "SELECT cl.nome_razao, cl.endereco, cl.complemento, cl.id_cidade, cl.estado, cl.cep, cl.cpf_cnpj,cl.bairro, cd.cidade as nome_cidade, cd.id_cidade  ";
@@ -3882,7 +3882,7 @@ public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$se
 	$sSQL .= "cd.id_cidade = cl.id_cidade";
 
 	$cliente = $this->bd->obtemUnicoRegistro($sSQL);
-	//////echo "CLIENTE: $sSQL  <br>";
+	////////echo"CLIENTE: $sSQL  <br>";
 	
 	if( strstr($data,"/") && $segunda_via) {
 	   list($d,$m,$y) = explode("/",$data);
@@ -3898,11 +3898,11 @@ public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$se
 
 	$fatura = $this->bd->obtemUnicoRegistro($sSQL);
 	
-	//////echo "fatura: $sSQL<br>";
+	////////echo"fatura: $sSQL<br>";
 	
 	//$data_cadastrada = $fatura["data"];
-	//////echo "DATA: $data_cadastrada <br>";
-	//////echo "SHIT: " . $fatura["data"] . "<br>\n";
+	////////echo"DATA: $data_cadastrada <br>";
+	////////echo"SHIT: " . $fatura["data"] . "<br>\n";
 	
 	list ($dia,$mes,$ano) = explode("/",$fatura["data"]);
 	
@@ -3916,8 +3916,8 @@ public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$se
 	}else if ($forma_pagamento == "POS"){
 	
 		//$mes_ref = mktime(0, 0, 0, $mes-1);
-		//////echo "MES: $mes <br>\n";
-		//////echo "MES REF: $mes_ref <br>\n";
+		////////echo"MES: $mes <br>\n";
+		////////echo"MES REF: $mes_ref <br>\n";
 		$referente = $mes_array[(int)$mes-1]."/".$ano;
 	
 	}
@@ -3930,7 +3930,7 @@ public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$se
 
 	$sSQL = "SELECT ct.id_produto, pd.nome from cbtb_contrato ct, prtb_produto pd WHERE ct.id_cliente_produto = '$id_cliente_produto' and ct.id_produto = pd.id_produto";
 	$produto = $this->bd->obtemUnicoRegistro($sSQL);
-	////////echo "PRODUTO: $sSQL <br>";
+	//////////echo"PRODUTO: $sSQL <br>";
 
 	//$codigo = @$_REQUEST["codigo"];
 	//$data_venc = "30/04/2006";
@@ -3951,7 +3951,7 @@ public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$se
 	$data_venc = $fatura["data"];
 	@list($dia,$mes,$ano) = explode("/",$fatura["data"]);
 	$vencimento = $ano.$mes.$dia;
-	////////echo $codigo;
+	//////////echo$codigo;
 	$valor = $fatura["valor"];
 	$id_cobranca = $fatura["id_cobranca"];
 	$nome_cliente = $cliente["nome_razao"];
@@ -3992,7 +3992,7 @@ public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$se
 	}
 	
    	
-	//////echo "FATURA: $sSQL <br>";
+	////////echo"FATURA: $sSQL <br>";
 	
 	$target = "/mosman/virtex/dados/carnes/codigos";
 	//$target = "carnes/codigos";
@@ -4078,11 +4078,11 @@ public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$se
 		$sSQL .= "GROUP BY pr.tipo";
 									
 		$prcliente = $this->bd->obtemRegistros($sSQL);
-		//echo "QUERY: $sSQL<br> ";
+		////echo"QUERY: $sSQL<br> ";
 									
 		$prod_contr = array();
 									
-		//echo count($prcliente);
+		////echocount($prcliente);
 									
 		for($i = 0; $i < count($prcliente); $i++ ) {
 			$prod_contr[ trim(strtolower($prcliente[$i]["tipo"])) ] = true;
@@ -4128,7 +4128,7 @@ public function contratoHTML($id_cliente,$id_cliente_produto,$tipo_produto){
 
 	$contrato = $this->bd->obtemUnicoRegistro($sSQL);
 
-	////echo "SQL: $sSQL <br>";
+	//////echo"SQL: $sSQL <br>";
 
 	$this->tpl->atribui("data_contratacao", $contrato["data_contratacao"]);
 	$this->tpl->atribui("vigencia", $contrato["vigencia"]);
@@ -4189,14 +4189,14 @@ public function contratoHTML($id_cliente,$id_cliente_produto,$tipo_produto){
 	$nome_arq = $path."contrato-".$id_cliente_produto."-".$contrato["data_contratacao"].".html";
 	$fd = fopen($nome_arq,"w");
 	
-	//////echo "path: $_path - $path<br>";
+	////////echo"path: $_path - $path<br>";
 
 	//$arq = explode("/",$arquivo_contrato);
 	//$arq = $arq[count($arq)-1];
 	$arq = $arquivo_contrato;
 
 	//$image_path = $path."/template/default/images";
-	//////echo "<BR>IMAGE PATH".$image_path ."<br>";
+	////////echo"<BR>IMAGE PATH".$image_path ."<br>";
 
 	$this->tpl->atribui("path",$image_path);
 	$arquivo = $path."/".$arq;
