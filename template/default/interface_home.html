@@ -31,6 +31,7 @@
 {/literal}
 </head>
 
+
 <body  leftmargin="160" topmargin="60">
 <div align="center">
 <table  width="92%" height="345" border="0" cellpadding="0" cellspacing="0" background="template/default/images/top_pixel.gif">
@@ -53,7 +54,7 @@
               de Senha</a></strong></p></td>
           <td width="207" ><p align="left"><strong><a href="index_home.php?op=contas">{if $conta_mestre=='t'}Contas{/if}</a></strong></p></td>
           <td width="228" > <div align="right">
-              <p><strong><font size="-3">username:</font></strong> <strong>{$username_conf}{if $tipo_conta=="E"}@{$dominio}{/if}</strong></p>
+              <p><strong><font size="-3">username:</font></strong> <strong>{$username_conf}{if $tipo_conta_fix=="E"}@{$dominio}{/if}</strong></p>
             </div></td>
         </tr>
       </table>
@@ -145,10 +146,16 @@
         </tr>
         {foreach item=c from=$contas}
         <tr>
-          <td><p align="left"><strong>{$c.username}</strong></p></td>
-          <td> <p><strong>{$c.nome}</strong></p></td>
-          <td width="115" ><a href="index_home.php?op=dados&id_conta={$c.id_conta}&tipo_conta={$c.tipo_conta}">[Dados da conta]</a> </td>
+          <td><p align="left"><strong>{$c.username}{if $c.tipo_conta=="E"}@{$c.dominio}{/if}</strong></p></td>
+          <td> <p><strong>{if $c.tipo_conta=="E"}E-MAIL{else}{$c.nome}{/if}</strong></p></td>
+          <td width="115" ><a href="index_home.php?op=dados&username={$c.username}&tipo_conta={$c.tipo_conta}&dominio={$c.dominio}">[Dados da conta]</a> </td>
         </tr>
+        <!--{foreach item=e from=$c.conta}<tr>
+          <td><p align="left"><strong>{$e.email}</strong></p></td>
+          <td> <p><strong>E-mail</strong></p></td>
+          <td width="115" ><a href="index_home.php?op=dados&username={$e.username}&dominio={$e.dominio}&tipo_conta={$e.tipo_conta}">[Dados da conta]</a> </td>
+        </tr>{/foreach}-->
+
         {/foreach}
       </table>
       <p>{/if} </p></td>
@@ -161,4 +168,5 @@
         </tr>
 </table>
 </body>
+
 </html>

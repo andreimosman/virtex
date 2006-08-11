@@ -38,7 +38,7 @@ class VAInterface_cliente_home extends VirtexAdmin {
 	$tipo_conta = $conta['tipo_conta'];
 
 
-	$this->tpl->atribui("tipo_conta",$tipo_conta);
+	$this->tpl->atribui("tipo_conta_fix",$tipo_conta);
 	$this->tpl->atribui("conta_mestre",$conta_mestre);
 	$this->tpl->atribui("username",$username);
 	$this->tpl->atribui("username_conf",$username);
@@ -52,30 +52,17 @@ class VAInterface_cliente_home extends VirtexAdmin {
 	
 	$dados = "true";	
 	
-	$id_conta2 = @$_REQUEST["id_conta"];
-	$tipo_conta2 = @$_REQUEST["tipo_conta"];
+	$username = @$_REQUEST["username"];
+	$tipo_conta = @$_REQUEST["tipo_conta"];
+	$dominio = @$_REQUEST["dominio"];
 	
-	 if ($id_conta2){
-	
-		$sSQL  = " SELECT ";
-		$sSQL .= " cl.nome_razao, cc.conta_mestre, cc.status, cc.tipo_conta, cc.id_cliente, cc.username, cc.id_conta, cc.dominio " ;
-		$sSQL .= " FROM cntb_conta cc, cltb_cliente cl ";
-		$sSQL .= " WHERE status = 'A' ";
-		$sSQL .= " AND cc.id_cliente = cl.id_cliente ";
-		$sSQL .= " AND cc.id_conta = '$id_conta2' ";
-		$sSQL .= " AND cc.tipo_conta = '$tipo_conta2' ";
 
-		
-		$dados = $this->bd->obtemUnicoRegistro($sSQL);
-		$tipo_conta = @$dados["tipo_conta"];
-		$username = @$dados["username"];
-		$dominio = @$dados["dominio"];
 		
 		$this->tpl->atribui("tipo_conta",$tipo_conta);
 		$this->tpl->atribui("username",$username);
 		$this->tpl->atribui("dominio",$dominio);	
 	
-	}
+	
 	
 	$this->tpl->atribui("dados",$dados);
 
@@ -141,18 +128,44 @@ class VAInterface_cliente_home extends VirtexAdmin {
 		if ($op == "contas"){
 		
 		$sSQL  = " SELECT ";
-		$sSQL .= " cc.username, pp.nome, cc.id_cliente, cc.dominio, cc.id_conta , cc.tipo_conta";
+		$sSQL .= " cc.username, pp.nome, cc.id_cliente, cc.dominio, cc.id_conta , cc.tipo_conta , cc.id_cliente_produto ";
 		$sSQL .= " FROM cntb_conta cc, cltb_cliente clc, prtb_produto pp, cbtb_cliente_produto prp  ";
 		$sSQL .= " WHERE ";
 		$sSQL .= " clc.id_cliente = prp.id_cliente ";
-		$sSQL .= " AND pp.tipo = cc.tipo_conta ";
 		$sSQL .= " AND cc.id_cliente = '$id_cliente' ";
 		$sSQL .= " AND cc.id_cliente_produto = prp.id_cliente_produto ";
 		$sSQL .= " AND pp.id_produto = prp.id_produto ";
+		$sSQL .= " AND cc.status = 'A' ";
+
+		//////////echo "$sSQL;	<br>";
+
 		
 		$contas = $this->bd->obtemRegistros($sSQL);
+		
+		/*		for($i=0;$i<count($contas);$i++) {
+							
+					$username = $contas[$i]["username"];
+					$dominio = $contas[$i]["dominio"];
+		
+					$dSQL  = "SELECT ";
+					$dSQL .= "	username, tipo_conta, dominio , email ";
+					$dSQL .= "FROM ";
+					$dSQL .= "	cntb_conta_email ";
+					$dSQL .= "WHERE ";
+					$dSQL .= "	dominio = '$dominio' ";
+					$dSQL .= "	AND username = '$username'";
+
+
+		
+					///echo $dSQL ."<hr>\n";
+		
+					$contas_email = $this->bd->obtemRegistros($dSQL);
+		
+					$contas[$i]["conta"] = $contas_email;
+		}	*/
 
 	$this->tpl->atribui("contas",$contas);
+	//$this->tpl->atribui("contas_email",$contas_email);
 	$this->arquivoTemplate = "interface_home.html";
 			
 	}
