@@ -80,6 +80,7 @@ class VAInterface_cliente_home extends VirtexAdmin {
 		if ($op == "alterar_senha"){
 		
 		$id_conta2 = @$_REQUEST["id_conta"];
+		$atual = @$_REQUEST["atual"];
 		
 		if (!$acao && !$id_conta2){
 		
@@ -92,10 +93,34 @@ class VAInterface_cliente_home extends VirtexAdmin {
 		
 		
 		
-		$alterar_senhas = "true";	
+		$alterar_senhas = "true";
+		$msg = "Senha Alterada com sucesso!";
+		$url ="index_home.php?op=home";
 		
 		if ($acao == "alterar" ){
+			
+		   if ($atual){
+			
 
+			
+				$aSQL  = "SELECT senha FROM cntb_conta WHERE username= '" . $this->bd->escape(@$_REQUEST["username"]) . "' AND dominio = '" . $this->bd->escape(@$_REQUEST["dominio"]) . "' AND tipo_conta = '" . $this->bd->escape(@$_REQUEST["tipo_conta"]) . "' " ;
+
+					$senha_conta = $this->bd->obtemUnicoRegistro($aSQL);
+					$senha_atual = $senha_conta['senha'];
+
+
+				if ($senha_atual == $this->bd->escape(@$_REQUEST["senha_atual"])){
+			
+					$msg = "Senha Alterada com sucesso!";
+					$url ="index_home.php?op=home";
+
+				}else{
+			
+					$msg = "Erro ao processar, as senhas não conferem.Tente Novamente";
+					$url ="javascript:history.back();";
+
+				}
+			}
 		
 			$sSQL  = " UPDATE ";
 			$sSQL .= " cntb_conta ";
@@ -107,12 +132,27 @@ class VAInterface_cliente_home extends VirtexAdmin {
 			$sSQL .= " AND username= '" . $this->bd->escape(@$_REQUEST["username"]) . "' ";
 			$sSQL .= " AND dominio = '" . $this->bd->escape(@$_REQUEST["dominio"]) . "' ";
 			$sSQL .= " AND tipo_conta = '" . $this->bd->escape(@$_REQUEST["tipo_conta"]) . "' ";
-			
 
-			$this->bd->consulta($sSQL);
+
+
+		
+		if ($atual){
+		
+			$sSQL .= " AND senha = '" . $this->bd->escape(@$_REQUEST["senha_atual"]) . "' ";
+
+		}
+
+
+		$this->bd->consulta($sSQL);
+
+			$this->tpl->atribui("mensagem",$msg); 
+			$this->tpl->atribui("url",$url);
+			$this->tpl->atribui("target","_top");
+
+			$this->arquivoTemplate = "interface_msgredirect.html";
+
 			$alterar_senhas = 0 ;
-			echo "<script>alert('Senha Alterada com Sucesso!!');</script>";
-			$this->arquivoTemplate = "interface_home.html";
+			return;
 		
 		}
 		

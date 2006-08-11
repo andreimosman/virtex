@@ -3,7 +3,7 @@
 <head>
 <title>::.. Virtex Admin - Interface Cliente ..::</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css"></head><body  leftmargin="160" topmargin="60">
 {literal}
 <script language="JavaScript" type="text/javascript" >
 <!--
@@ -29,10 +29,10 @@
 //-->
 </script>
 {/literal}
-</head>
 
 
-<body  leftmargin="160" topmargin="60">
+
+
 <div align="center">
 <table  width="92%" height="345" border="0" cellpadding="0" cellspacing="0" background="template/default/images/top_pixel.gif">
   <tr>
@@ -75,8 +75,11 @@
                       <td align="center" bgcolor="#FEFEFE"> <p><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
                           <input type="hidden" name="acao" value="alterar">
                           <input type="hidden" name="op" value="alterar_senha">
-                          <br>
-                          </font><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><br>
+                          <br><br>
+						  {if $username_conf == $username} Senha Atual:<br><input type="password" name="senha_atual"  class= "campos" id="senha_atual">
+						  <input type="hidden" value="atual" name="atual">
+						  {/if}
+                          </font><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><br><Br>
                           Nova Senha:<br>
                           <input type="password" name="senha" class= "campos" id="senha">
                           <br>
@@ -165,6 +168,6 @@
         Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
         </tr>
 </table>
-</body>
+</div></body>
 
 </html>
