@@ -464,7 +464,10 @@ function validaForm() {
 				msg.push("Campo MAC obrigatorio");
 
 		}
-	}*/
+
+		}
+
+*/
 
 	if( msg.length > 0 ) {
 		mensagem = "Foram encontrados erros ao processar seu formulário:\n\n";
@@ -651,7 +654,23 @@ function priVenc(){
 frmContratacao.pri_venc.value = hoje();
 }
 
-
+function Tecla(e)
+{
+	if (document.all) // Internet Explorer
+		var tecla = event.keyCode;
+	else if(document.layers) // Nestcape
+		var tecla = e.which;
+		if (tecla != 92 && tecla != 47 )
+			return true;
+		else
+			{
+				if (tecla != 8) // backspace
+					event.keyCode = 0;
+					//return false;
+				else
+					return true;
+			}
+}
 
 </script> {/literal}
 
@@ -794,9 +813,9 @@ frmContratacao.pri_venc.value = hoje();
                 </td>
                 <td colspan="3"> <select name="tipo" onChange="javascript:alteraTipo();">
                     <option value=""></option>
-                    <option value="BL" {if $tipo=="BL"}SELECTED{/if}>Banda Larga</option>
-                    <option value="D" {if $tipo=="D"}SELECTED{/if}>Discado</option>
-                    <option value="H" {if $tipo=="H"}SELECTED{/if}>Hospedagem</option>
+                    {if $lic_bandalarga=="sim"}<option value="BL" {if $tipo=="BL"}SELECTED{/if}>Banda Larga</option>{/if}
+                    {if $lic_discado=="sim"}<option value="D" {if $tipo=="D"}SELECTED{/if}>Discado</option>{/if}
+                    {if $lic_hospedagem=="sim"}<option value="H" {if $tipo=="H"}SELECTED{/if}>Hospedagem</option>{/if}
                   </select>
               </td>
               </tr>
@@ -983,7 +1002,7 @@ calculaDataCarne();
             </tr>
             <tr>
               <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Username:</p></td>
-              <td bgcolor="#FFFFFF" colspan=2><input type="text" maxlength="30" name="username" disabled="true" value="{$username}"></td>
+              <td bgcolor="#FFFFFF" colspan=2><input type="text" maxlength="30" name="username" disabled="true" value="{$username}" onKeyPress="return Tecla(event);" ></td>
             </tr>
             <tr>
               <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Senha:</p></td>
