@@ -88,7 +88,7 @@ function check(){
 {/literal}
 </script>
 {/if}
-
+<body {if $tipo_conta|trim == "H"}onLoad="document.frmConta.user.focus();"{else}onLoad="document.frmConta.username.focus();"{/if}>
 <form name="frmConta" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="javascript:return check(this);">
 
 				{if $tipo_conta == "BL"}
@@ -544,7 +544,7 @@ function check(){
     <p><br>
       {/if}</p>
     <p>&nbsp; </p></form>
-
+</body>
 
 <br>
 						<p align="center"><a href="{$smarty.server.PHP_SELF}?op=produto&tipo={$tipo}&id_cliente={$id_cliente}">voltar</a></p>
