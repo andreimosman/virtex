@@ -1072,6 +1072,7 @@ class VACobranca extends VirtexAdmin {
 			
 		
 		}else if ($op == "amortizacao"){
+
 			
 				if( ! $this->privPodeGravar("_COBRANCA") ) {
 											$this->privMSG();
@@ -1082,8 +1083,18 @@ class VACobranca extends VirtexAdmin {
 			
 			$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
 			$data = @$_REQUEST["data"];
+			$tipo_produto = @$_REQUEST["tipo"];
+			
 			$acao = @$_REQUEST["acao"];
 			$id_cliente = @$_REQUEST["id_cliente"];
+
+				if ((($lic_bandalarga == 'nao')&&($tipo_produto == "BL"))||(($lic_discado == 'nao')&&($tipo_produto == "D"))||(($lic_hospedagem == 'nao')&&($tipo_produto == "H"))||(($lic_email == 'nao')&&($tipo_produto == "E"))){
+
+					$this->licProib();
+
+				return;
+
+				}
 
 			$this->obtemPR($id_cliente);
 
@@ -1533,7 +1544,10 @@ class VACobranca extends VirtexAdmin {
 	
 	   $this->arquivoTemplate = "cobranca_retorno.html";*/
 	
-	}else if ($op == "contratos"){
+	}else if ($op == "contratos"){	 
+
+
+
 				if( ! $this->privPodeLer("_COBRANCA") ) {
 									$this->privMSG();
 									return;
@@ -1551,6 +1565,21 @@ class VACobranca extends VirtexAdmin {
 		$this->tpl->atribui("id_cliente_produto",$id_cliente_produto);
 		$this->tpl->atribui("id_cliente",$id_cliente);
 		$this->tpl->atribui("tipo_produto",$tipo_produto);
+
+				if ((($lic_bandalarga == 'nao')&&($tipo_produto == "BL"))||(($lic_discado == 'nao')&&($tipo_produto == "D"))||(($lic_hospedagem == 'nao')&&($tipo_produto == "H"))||(($lic_email == 'nao')&&($tipo_produto == "E"))){
+
+				$mensagem="<br>Você não está habilitado a visualizar esse módulo.<br>Em caso de dúvida, entre com contato com Mosman Consultoria & Desenvolvimento.<br>www.mosman.com.br<br>consultioria@mosman.com.br ";
+				$target="_top";
+				$this->tpl->atribui("mensagem",$mensagem);
+				$this->tpl->atribui("url","javascript:history.back();history.back();");
+				$this->tpl->atribui("target",$target);
+				$this->arquivoTemplate="msgredirect.html";
+
+
+				return;
+
+				}
+ 
 		
 		
 		$this->obtemPR($id_cliente);
@@ -3220,15 +3249,9 @@ class VACobranca extends VirtexAdmin {
 			
 			$sSQL = "SELECT EXTRACT('day' from data) as dia_vencimento FROM cbtb_faturas WHERE id_cliente_produto = '$id_cliente_produto' LIMIT 1";
 			$_data = $this->bd->obtemUnicoRegistro($sSQL);
-			
-			
-				
 				
 				$dia_venc = $_data["dia_vencimento"];
-			
-			
-			
-			
+
 			$pri_venc = date("Y-m-d", mktime(0, 0, 0, $m+1,$dia_venc,$a));
 			////echo"pri_venc: $pri_venc<br>";
 			$forma_pagamento = $preferencia["pagamento"];
@@ -3256,6 +3279,17 @@ class VACobranca extends VirtexAdmin {
 			$this->tpl->atribui("nome",$nome);
 			$this->tpl->atribui("cliente",$cliente);
 			$this->tpl->atribui("produto",$produto);
+			
+			
+			$tipo_produto = $produto["tipo"]; 
+
+				if ((($lic_bandalarga == 'nao')&&($tipo_produto == "BL"))||(($lic_discado == 'nao')&&($tipo_produto == "D"))||(($lic_hospedagem == 'nao')&&($tipo_produto == "H"))||(($lic_email == 'nao')&&($tipo_produto == "E"))){
+
+					$this->licProib();
+
+				return;
+
+				}
 			
 			$this->arquivoTemplate = "renovacao_confirmacao.html";	
 		
