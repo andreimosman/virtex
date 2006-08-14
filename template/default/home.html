@@ -69,12 +69,13 @@
 							Conta</label>
 							</p>
 						</td>
-						<td> <p>
+						{if $lic_email =="sim"}<td> <p>
 							<label class="label_pesquisa">
 							<input type="radio" name="tipo_pesquisa" value="EMAIL" class="checkbox" {if $tipo_pesquisa=="EMAIL"}CHECKED{/if}>
 							E-Mail</label>
 							</p>
 						</td>
+						{/if}
 					</tr>
 				</table>
 			</td>

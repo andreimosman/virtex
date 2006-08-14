@@ -1,5 +1,8 @@
 <!-- cliente_conta.html --> {include file='cliente_header.html'}<script type="text/javascript" src="template/default/ajax.js"></script>
 <script type="text/javascript" src="template/default/ajax_validacoes.js"></script>
+{if (($lic_bandalarga == 'nao')&&($tipo_conta == "BL"))||(($lic_discado == 'nao')&&($tipo_conta == "D"))||(($lic_hospedagem == 'nao')&&($tipo_conta == "H"))||(($lic_email == 'nao')&&($tipo_conta == "E"))}
+{literal}<script>window.location="home.php";</script>{/literal}
+{/if}
 {if $erro_conta}
 <div align="center">
 	<b><p>
