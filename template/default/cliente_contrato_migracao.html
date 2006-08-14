@@ -559,6 +559,33 @@ function MM_showHideLayers() { //v6.0
 
 function priVenc(){
 frmContratacao.pri_venc.value = hoje();
+
+
+var formulario = document.frmContratacao;
+
+   if( formulario.dia_vencimento.value.length == 0 ) {
+      formulario.ini_carne.value = formulario.data_contratacao.value;
+   } else {
+      var d = new String(formulario.data_contratacao.value);
+   		//window.alert(d);
+      // split;
+      var tmp = d.split("/");
+      dia = tmp[0];
+      //mes = tmp[1];
+
+	  mes = parseInt(tmp[1],10);
+      ano = parseInt(tmp[2]);
+	  //window.alert ("mesA:"+mes);
+	  //window.alert(tmp);
+
+	  if ( mes == "08") mes = "8";
+	  if ( mes == "09") mes = "9";
+
+      formulario.ini_carne.value =  hoje();
+   }
+
+   formulario.ini_carne.value = incrementaMes( formulario.ini_carne.value, 0 );
+   formulario.data_carne.value = incrementaMes( formulario.ini_carne.value, parseInt(formulario.vigencia.value) - 1);
 }
 -->
 </script> {/literal} <form name="frmContratacao" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return validaForm();">
@@ -644,7 +671,7 @@ frmContratacao.pri_venc.value = hoje();
         </tr>
       </table>
     </div>
-  </div>
+  
 
 <!-- DADOS DO frmContratacao: FIM -->
 
@@ -812,7 +839,7 @@ frmContratacao.pri_venc.value = hoje();
               <td bgcolor="#FFFFFF">
 			  <select name="forma_pagamento">
                 {foreach key=id item=nome from=$forma_pagamento}
-				  <option value="{$id}" { if $id == "POS" }SELECTED{ /if }>{$nome}</option>
+				  <option value="{$id}" {if $id == "POS" }SELECTED{ /if }>{$nome}</option>
 				{/foreach}
                 </select></td>
             </tr>
