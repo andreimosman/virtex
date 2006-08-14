@@ -824,10 +824,10 @@ function Tecla(e)
 <p>Produto:</p></td>
                 <td width="65" bgcolor="#FFFFFF"> <SELECT name=id_produto onChange="javascript:alteraProduto();" >
                   </SELECT> </td>
-                <td width="255" align="right" bgcolor="#FFFFFF">
+                {if $lic_email=="sim"}<td width="255" align="right" bgcolor="#FFFFFF">
 <p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Criar usuario de
                     e-mail com os mesmos dados?</font></p></td>
-                <td width="23" align="center" bgcolor="#FFFFFF"><input name="email_igual" type="checkbox" id="email_igual" value="1" class="checkbox"></td>
+                <td width="23" align="center" bgcolor="#FFFFFF"><input name="email_igual" type="checkbox" id="email_igual" value="1" class="checkbox"></td>{/if}
               </tr>
             </table>
                               </td>
