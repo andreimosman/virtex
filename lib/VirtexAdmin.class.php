@@ -289,8 +289,18 @@ class VirtexAdmin extends MWebApp {
 				$this->tpl->atribui("url",$url);
 				$this->tpl->atribui("target",$target);
 				$this->arquivoTemplate="msgredirect.html";
-	}
-	
+			}
+
+
+
+			public function licProib($mensagem="<br>Você não está habilitado a visualizar esse módulo.<br>Em caso de dúvida, entre com contato com Mosman Consultoria & Desenvolvimento.<br>www.mosman.com.br<br>consultioria@mosman.com.br ", $target="_top") {
+				$this->tpl->atribui("mensagem",$mensagem);
+				$this->tpl->atribui("url","javascript:history.back();");
+				$this->tpl->atribui("target",$target);
+				$this->arquivoTemplate="msgredirect.html";
+
+			}
+
 		/** 
     	 *  Interface cliente
 		 */

@@ -54,11 +54,13 @@ function valida(){
                           <input type="radio" name="tipo_pesquisa" value="CONTA" class="checkbox" {if $tipo_pesquisa=="CONTA"}CHECKED{/if}>
                             Conta</label>
                       </p></td>
+                      {if $lic_email=="sim"}
                       <td><p>
                           <label>
                           <input type="radio" name="tipo_pesquisa" value="EMAIL" class="checkbox" {if $tipo_pesquisa=="EMAIL"}CHECKED{/if}>
                             E-Mail</label>
                       </p></td>
+					  {/if}
                     </tr>
                 </table></td>
               </tr>

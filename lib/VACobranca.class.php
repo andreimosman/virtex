@@ -29,51 +29,49 @@ class VACobranca extends VirtexAdmin {
 			global $_LS_MESES_ANO;
 			return $_LS_MESES_ANO[$numero_mes];		
 	}
+
 		
 	public function processa($op=null) {
 
-
-		$lic_interface = 'nao';
-		$lic_email = 'nao';
-		$lic_hospedagem = 'nao';
-		$lic_interface = 'nao';
-		$lic_discado = 'nao';
-		$lic_bandalarga = 'nao';
-	
-		 $licenca = $this->lic->obtemLicenca();
-			if(($licenca["frontend"]["discado"]) == "1"){
-	
-				$lic_discado = 'sim';
-	
-			}
-			if(($licenca["frontend"]["banda_larga"]) == "1"){
-				
-				$lic_bandalarga = 'sim';
-	
-			}
-			if(($licenca["frontend"]["email"]) == "1"){
-	
-				$lic_email = 'sim';
-			}
-			if(($licenca["frontend"]["hospedagem"]) == "1"){
-				 	
-				$lic_hospedagem = 'sim';
+				   		$lic_interface = 'nao';
+				   		$lic_email = 'nao';
+				   		$lic_hospedagem = 'nao';
+				   		$lic_interface = 'nao';
+				   		$lic_discado = 'nao';
+				   		$lic_bandalarga = 'nao';
+				   	
+				   		 $licenca = $this->lic->obtemLicenca();
+				   			if(($licenca["frontend"]["discado"]) == "1"){
+				   	
+				   				$lic_discado = 'sim';
+				   	
+				   			}
+				   			if(($licenca["frontend"]["banda_larga"]) == "1"){
+				   				
+				   				$lic_bandalarga = 'sim';
+				   	
+				   			}
+				   			if(($licenca["frontend"]["email"]) == "1"){
+				   	
+				   				$lic_email = 'sim';
+				   			}
+				   			if(($licenca["frontend"]["hospedagem"]) == "1"){
+				   				 	
+				   				$lic_hospedagem = 'sim';
+				   			
+				   		 	}
+				   			if(($licenca["frontend"]["interface"]) == "1"){
+				   						 	
+				   				$lic_interface = 'sim';
+				   					
+				 	}						
 			
-		 	}
-			if(($licenca["frontend"]["interface"]) == "1"){
-						 	
-				$lic_interface = 'sim';
-					
-		 	}
-	
-	
-			$this->tpl->atribui("lic_discado",$lic_discado);
-			$this->tpl->atribui("lic_email",$lic_email);
-			$this->tpl->atribui("lic_hospedagem",$lic_hospedagem);
-			$this->tpl->atribui("lic_email",$lic_email);
-			$this->tpl->atribui("lic_interface",$lic_interface);
-			$this->tpl->atribui("lic_bandalarga",$lic_bandalarga);
-
+					$this->tpl->atribui("lic_discado",$lic_discado);
+					$this->tpl->atribui("lic_email",$lic_email);
+					$this->tpl->atribui("lic_hospedagem",$lic_hospedagem);
+					$this->tpl->atribui("lic_email",$lic_email);
+					$this->tpl->atribui("lic_interface",$lic_interface);
+					$this->tpl->atribui("lic_bandalarga",$lic_bandalarga);
 
 				if( ! $this->privPodeLer("_COBRANCA") ) {
 								$this->privMSG();
@@ -92,17 +90,28 @@ class VACobranca extends VirtexAdmin {
 			$enviando = false;
 			
 			
-			$reg = array();
+				if ((($lic_bandalarga == 'nao')&&($prod == "BL"))||(($lic_discado == 'nao')&&($prod == "D"))||(($lic_hospedagem == 'nao')&&($prod == "H"))||(($lic_email == 'nao')&&($prod == "E"))){
 
+					$this->licProib();
+
+				return;
+
+				} 
+
+			
+			$reg = array();
+			  
 
 			if( $acao ) {
 			   // Se ele recebeu o campo ação é pq veio de um submit
+			   
 			   $enviando = true;
 			} else {
 			   // Se não recebe o campo ação e tem id_produto é alteração, caso contrário é cadastro.
 			   if( $id_produto ) {
-			   
+
 			   	if ($prod == "BL"){
+				
 			   
 			      // SELECT
 			      $sSQL  = "SELECT ";
@@ -141,7 +150,8 @@ class VACobranca extends VirtexAdmin {
 
 			      //$sSQL = "SELECT * FROM prtb_produto INNER JOIN prtb_produto_hospedagem ON (prtb_produto.id_produto = $id_produto AND prtb_produto_hospedagem.id_produto = $id_produto)";
 			      
-			      }
+			      }    
+			      
 			      
 			      
 
@@ -243,12 +253,19 @@ class VACobranca extends VirtexAdmin {
 			         	//INSERÇÃO NA TABELA prtb_produto
 			         	
 			         	$quota_por_conta_valor = @$_REQUEST['$quota_por_conta'];
+						$outros_dominios = @$_REQUEST['permitir_outros_dominios'];
 
 			         	if ($quota_por_conta_valor == ""){
 			         	
 			         	$quota_por_conta_valor = '0';
 			         	
 			         	}
+						if ($outros_dominios == "" ){
+						
+						$outros_dominios = "f";
+						
+						}
+						
 
 				 	$sSQL  = "INSERT INTO ";
 				 	$sSQL .= "prtb_produto ";
@@ -265,7 +282,7 @@ class VACobranca extends VirtexAdmin {
 				 	$sSQL .= " '" . $this->bd->escape($num_emails) . "', ";
 				 	$sSQL .= " '$quota_por_conta_valor' , ";
 				 	$sSQL .= " '" . $this->bd->escape($vl_email_adicional) . "', ";
-				 	$sSQL .= " '" . $this->bd->escape(@$_REQUEST['permitir_outros_dominios']) . "', ";
+				 	$sSQL .= " '" . $this->bd->escape($outros_dominios) . "', ";
 				 	$sSQL .= " '" . $this->bd->escape($numero_contas) ."' ";
 				 	$sSQL .= " )";
 
@@ -375,6 +392,14 @@ class VACobranca extends VirtexAdmin {
 					
 					/* Final do tratamento de erros */
 
+					$outros_dominios = @$_REQUEST['permitir_outros_dominios'];
+
+						if ($outros_dominios == "" ){
+
+							$outros_dominios = "f";
+	
+						}
+
 
 					//UPDATE DA TABELA prtb_produto
 					$sSQL  = "UPDATE ";
@@ -388,7 +413,7 @@ class VACobranca extends VirtexAdmin {
 					$sSQL .= "   num_emails = '" . $this->bd->escape($num_emails) . "', ";
 					$sSQL .= "   quota_por_conta = '" . $this->bd->escape($quota_por_conta) . "', ";
 					$sSQL .= "   vl_email_adicional = '" . $this->bd->escape($vl_email_adicional) . "', ";
-					$sSQL .= "   permitir_outros_dominios = '" . $this->bd->escape(@$_REQUEST["permitir_outros_dominios"]) . "', ";
+					$sSQL .= "   permitir_outros_dominios = '" . $this->bd->escape($outros_dominios) . "', ";
 					$sSQL .= "   numero_contas = '" . $this->bd->escape($numero_contas) . "' ";
 					$sSQL .= "WHERE ";
 					$sSQL .= "   id_produto = " . $this->bd->escape(@$_REQUEST["id_produto"]) . " ";

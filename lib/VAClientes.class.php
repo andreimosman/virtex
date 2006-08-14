@@ -251,7 +251,7 @@ class VAClientes extends VirtexAdmin {
 						
 			 	}
 		
-		
+
 				$this->tpl->atribui("lic_discado",$lic_discado);
 				$this->tpl->atribui("lic_email",$lic_email);
 				$this->tpl->atribui("lic_hospedagem",$lic_hospedagem);
@@ -309,11 +309,10 @@ class VAClientes extends VirtexAdmin {
 
 
 
-			if( $acao ) {
-			
-											if( ! $this->privPodeGravar("_CLIENTES") ) {
-												$this->privMSG();
-												return;
+			if( $acao ) {			
+						if( ! $this->privPodeGravar("_CLIENTES") ) {
+							$this->privMSG();
+							return;
 				}		
 			   // Se ele recebeu o campo ação é pq veio de um submit
 			   $enviando = true;
@@ -1968,6 +1967,13 @@ class VAClientes extends VirtexAdmin {
 
 		
 		} else if ($op == "produto") {
+
+				if ((($lic_bandalarga == 'nao')&&($tipo == "BL"))||(($lic_discado == 'nao')&&($tipo == "D"))||(($lic_hospedagem == 'nao')&&($tipo == "H"))||(($lic_email == 'nao')&&($tipo == "E"))){
+
+				$this->licProib();
+				return;
+
+				} 
 		
 					if ($tipo == "BL"){
 						if( ! $this->privPodeLer("_CLIENTES_BANDALARGA") ) {
@@ -2166,10 +2172,8 @@ class VAClientes extends VirtexAdmin {
 			$this->arquivoTemplate = "cliente_produto.html";
 			
 		} else if ($op == "conta") {
-		
-			
-		
-		
+
+
 		
 			$erros = array();
 		
@@ -2186,7 +2190,13 @@ class VAClientes extends VirtexAdmin {
 
 			$this->obtemPR($id_cliente);
 
-
+				if ((($lic_bandalarga == 'nao')&&($tipo_conta == "BL"))||(($lic_discado == 'nao')&&($tipo_conta == "D"))||(($lic_hospedagem == 'nao')&&($tipo_conta == "H"))||(($lic_email == 'nao')&&($tipo_conta == "E"))){
+	  
+	  				$this->licProib();
+	  
+	  			return;
+	  
+		}
 
 
 			
@@ -2247,9 +2257,11 @@ class VAClientes extends VirtexAdmin {
 						$this->tpl->atribui($vr,$vl);	
 					}
 				}
+				
 				$tipo_conta = @$_REQUEST["tipo_conta"];
 				$upload_kbps = @$_REQUEST["upload_kbps"];
 				$download_kbps = @$_REQUEST["download_kbps"];
+ 
 				
 				if($tipo_conta == "BL") {
 					if(!$upload_kbps) $upload_kbps = $dados_pcontratado["banda_upload_kbps"];
@@ -2286,12 +2298,22 @@ class VAClientes extends VirtexAdmin {
 				
 				$acao = @$_REQUEST["acao"];
 				if ($acao == "cad"){
+
+
 				
 					$_username = @$_REQUEST["_username"];
 					$dominio = @str_replace("/","",$_REQUEST["dominio"]);
 					$tipo_conta = @trim($_REQUEST["tipo_conta"]);
 					$id_cliente = @$_REQUEST["id_cliente"];
 					$email_igual = @$_REQUEST["email_igual"];
+
+					if ((($lic_bandalarga == 'nao')&&($tipo_conta == "BL"))||(($lic_discado == 'nao')&&($tipo_conta == "D"))||(($lic_hospedagem == 'nao')&&($tipo_conta == "H"))||(($lic_email == 'nao')&&($tipo_conta == "E"))){
+
+						$this->licProib();
+
+					return;
+
+					}
 					
 					
 					
