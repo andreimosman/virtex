@@ -8,7 +8,7 @@
 <title>Virtex Admin - Área de Gerenciamento </title>
 </head>
 <base target="CONTEUDO">
-<body topmargin=0 leftmargin=0 >
+<body topmargin=0 leftmargin=0 onLoad="document.form_pesquisa.texto_pesquisa.focus();">
 <!-- INICIO DO MENU -->
 <table width="100%" height="100%" cellspacing=0 cellpadding=0 border=0>
  <tr>
@@ -41,7 +41,7 @@
 <form name="form_pesquisa" onSubmit="return pesquisaUsuario();">
 {if $privilegio_cliente == "sim"}
 <div name="box_pesquisa" id="box_pesquisa">
-	<table width="120" border="0" cellspacing="1" cellpadding="1">
+	<table width="120" border="0" cellspacing="1" cellpadding="1" >
 		<tr align="left">
 			<td><font face="arial" size="-1"><b> Procurar Cliente</b><br><input name="texto_pesquisa" id="texto_pesquisa" value="" type="text" size="15" class="campos" onFocus="this.style.backgroundColor='#E7EFEA'" onBlur="this.style.backgroundColor='#FFFFFF'"> </td>
 		</tr>
