@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
-<link href="template/default/estilos1.css" rel="stylesheet" type="text/css"></head><body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css"></head>
 { literal }
 <script language="JavaScript" type="text/JavaScript">
 function MM_reloadPage(init) {  //reloads the window if Nav4 resized
@@ -44,10 +44,11 @@ function submit_page(form) { //Inicio checa campos formulários
 }
 
 function CampoZero(campo){
-	if(campo.value == "Sem controle")
+	if(campo == "Sem controle" ){
 		return true;
-	else
+	}else{
 		return false;
+}
 }
 
 function CampoBranco(campo){
@@ -59,7 +60,7 @@ function CampoBranco(campo){
 
 </script>
 { /literal }
-
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" { if $prod }onLoad="document.form1.nome.focus();"{/if}>
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -72,41 +73,44 @@ function CampoBranco(campo){
                 <td align="center" valign="middle">
                   <table width="300" border="0" cellspacing="2" cellpadding="2">
 				  { if !$prod }
-<!-- 				  INICIO tabela dos produtos  -->
+					<!-- 				  INICIO tabela dos produtos  -->
                    <tr align="center" valign="middle">
-                      <td><a href="cobranca.php?op=cadastro&prod=BL"><img src="template/default/images/bt_bandalarga.gif" alt="Cadastrar Banda Larga" border="0"></a></td>
-                      <td><a href="cobranca.php?op=cadastro&prod=D"><img src="template/default/images/bt_discado.gif" alt="Cadastrar Discado" border="0"></a></td>
-                      <td><a href="cobranca.php?op=cadastro&prod=H"><img src="template/default/images/bt_hospedagem.gif" alt="Cadastrar Hospedagem" border="0"></a></td>
+                      {if $lic_bandalarga == "sim" }<td><a href="cobranca.php?op=cadastro&prod=BL"><img src="template/default/images/bt_bandalarga.gif" alt="Cadastrar Banda Larga" border="0"></a></td>{/if}
+                      {if $lic_discado == "sim" }<td><a href="cobranca.php?op=cadastro&prod=D"><img src="template/default/images/bt_discado.gif" alt="Cadastrar Discado" border="0"></a></td>{/if}
+                      {if $lic_hospedagem=="sim"}<td><a href="cobranca.php?op=cadastro&prod=H"><img src="template/default/images/bt_hospedagem.gif" alt="Cadastrar Hospedagem" border="0"></a></td>{/if}
                     </tr>
 					<!-- 				  INICIO tabela dos produtos  -->
 					{ /if }
+					{if $lic_bandalarga == "sim" }
 					{ if $prod && $prod == "BL" }
 					<!-- 				  INICIO tabela dos produtos  -->
                    <tr align="center" valign="middle">
-                      <td><img src="template/default/images/bt_bandalarga.gif" alt="Cadastramento de Banda Larga" border="0"></td>
-                      <td><img src="template/default/images/bt_discado_inativo.gif" border="0"></td>
-                      <td><img src="template/default/images/bt_hospedagem_inativo.gif" border="0"></td>
+                      {if $lic_bandalarga == "sim" }<td><img src="template/default/images/bt_bandalarga.gif" alt="Cadastramento de Banda Larga" border="0"></td>{/if}
+                      {if $lic_discado == "sim" }<td><img src="template/default/images/bt_discado_inativo.gif" border="0"></td>{/if}
+                      {if $lic_hospedagem=="sim"}<td><img src="template/default/images/bt_hospedagem_inativo.gif" border="0"></td>{/if}
                     </tr>
 					<!-- 				  INICIO tabela dos produtos  -->
-					{ /if }
+					{ /if }{/if}
+					{if $lic_discado=="sim"}
 					{ if $prod && $prod == "D" }
 					<!-- 				  INICIO tabela dos produtos  -->
                    <tr align="center" valign="middle">
-                      <td><img src="template/default/images/bt_bandalarga_inativo.gif" border="0"></td>
-                      <td><img src="template/default/images/bt_discado.gif" alt="Cadastramento de Discado" border="0"></td>
-                      <td><img src="template/default/images/bt_hospedagem_inativo.gif" border="0"></td>
+                      {if $lic_bandalarga == "sim" }<td><img src="template/default/images/bt_bandalarga_inativo.gif" border="0"></td>{/if}
+                      {if $lic_discado == "sim" }<td><img src="template/default/images/bt_discado.gif" alt="Cadastramento de Discado" border="0"></td>{/if}
+                      {if $lic_hospedagem=="sim"}<td><img src="template/default/images/bt_hospedagem_inativo.gif" border="0"></td>{/if}
                     </tr>
 					<!-- 				  INICIO tabela dos produtos  -->
-					{ /if }
+					{ /if }{/if}
+					{if $lic_hospedagem=="sim"}
 					{ if $prod && $prod == "H" }
 					<!-- 				  INICIO tabela dos produtos  -->
                    <tr align="center" valign="middle">
-                      <td><img src="template/default/images/bt_bandalarga_inativo.gif"border="0"></td>
-                      <td><img src="template/default/images/bt_discado_inativo.gif" border="0"></td>
-                      <td><img src="template/default/images/bt_hospedagem.gif" alt="Cadastramento de Hospedagem" border="0"></td>
+                      {if $lic_bandalarga=="sim"}<td><img src="template/default/images/bt_bandalarga_inativo.gif"border="0"></td>{/if}
+                      {if $lic_discado == "sim" }<td><img src="template/default/images/bt_discado_inativo.gif" border="0"></td>{/if}
+                      {if $lic_hospedagem=="sim"}<td><img src="template/default/images/bt_hospedagem.gif" alt="Cadastramento de Hospedagem" border="0"></td>{/if}
                     </tr>
 					<!-- 				  INICIO tabela dos produtos  -->
-					{ /if }
+					{ /if }{/if}
                   </table>
 
 <p>
@@ -231,7 +235,7 @@ function CampoBranco(campo){
                                 <SELECT name='banda_download_kbps' >
   									{ foreach key=id item=nome from=$ls_banda_download_kbps }
 									
-                                  <option value='{$id}'{if $id == $banda_download_kbps}SELECTED{/if}>{$nome}</option>
+                                 <option value='{$id}'{if $id == $banda_download_kbps}SELECTED{/if}>{$nome}</option>
 									{ /foreach }
                                   
                                 </SELECT>
@@ -341,7 +345,7 @@ function CampoBranco(campo){
                     </tr>
                     <tr> 
                       <td><table width="100%" border="0" cellpadding="0" cellspacing="2" id="tbl_email">
-                          <tr> 
+                          {if $lic_email=="sim"}<tr> 
                             <td width="50%"> <p>N&ordm; de E-Mails</p></td>
                             <td width="50%"> <p>Quota por conta de e-mail</p></td>
                           </tr>
@@ -371,7 +375,7 @@ function CampoBranco(campo){
                                   
                                 </SELECT>
                               </p></td>
-                          </tr>
+                          </tr>{/if}
                           <!--
                             <tr>
                               <td><p>Email Anexado?<br>
@@ -386,7 +390,7 @@ function CampoBranco(campo){
 									{ /foreach }
                                   </SELECT> -->
                               </p></td>
-                            <td> <p> 
+                            <td align="right"> <p> 
                                 <input name="submit" type="submit" id="submit2"  style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;" value="{$titulo}">
                               </p></td>
                           </tr>

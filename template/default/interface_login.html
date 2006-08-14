@@ -2,11 +2,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>::.. Virtex Admin - Interface Cliente ..::</title>
-<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css"></head>
 {literal}
-
 <script>
-
 function check(form){
 
 	campo = document.form1.admin.value;
@@ -18,22 +16,14 @@ function check(form){
 	   	        		parte3 = campo.length;
 	       	    		if (!(parte1 >= 3 && parte2 >= 6 && parte3 >= 9)) {
 		            	    	alert( "O campo email deve conter um endereco eletrônico no formato 'username@dominio.com.br' !");
-
 								return false;
 	   	        		}
-
 		}
-
-
  return true;
-
-
 }
 </script>
 {/literal}
-</head>
-
-<body  leftmargin="160" topmargin="60" onLoad="document.form1.admin.focus()">
+<body  leftmargin="160" topmargin="60" {if $lic_interface=="sim"}onLoad="document.form1.admin.focus()"{/if}>
 <div align="center">
 <table  width="92%" height="345" border="0" cellpadding="0" cellspacing="0" background="template/default/images/top_pixel.gif">
   <tr>
@@ -64,10 +54,11 @@ function check(form){
                           <table width="231" border="0" align="center" cellpadding="5" cellspacing="5" bgcolor="fefefe">
                             <tr>
                               <td width="211" align="center" valign="middle" bgcolor="fefefe">
+							   {if $lic_interface=="sim"}
                                 <form id="form1" name="form1" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return check(this);">
                                   <p align="center">
                                     <input type="hidden" name="op" value="login">
-                                    <font color="f9f9f9">&lt;br&gt; </font></p>
+                                   <br>
                                   <div align="center">
                                     <table width="100%" border="0" align="center" cellpadding="0" cellspacing="2">
                                       <tr>
@@ -94,7 +85,16 @@ function check(form){
                                       </tr>
                                     </table>
                                   </div>
-                                </form></td>
+                                </form>
+								{else} 
+                                            <p><strong>Você não está habilitado à 
+                                            visualizar esse módulo.<br>
+                                            Em caso de dúvida entre em contato 
+                                            com Mosman Consultoria & Desenvolvimento. 
+                                            www.mosman.com.br consultoria@mosman.com.br</strong><br>
+											</p>
+                                {/if} 
+							 </td>
                             </tr>
                           </table>
                       </div></td>
@@ -106,7 +106,6 @@ function check(form){
         </div></td>
   </tr>
   <tr>
-
     <td height="20" colspan="4">
       <div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy;
         Mosman Consultoria - Todos os Direitos Reservados</font></div></td>

@@ -23,9 +23,9 @@
                       <td><a href="cobranca.php?op=cadastro"><img src="template/default/images/bt_cadastrar_novo.gif" width="77" height="73" border="0"></a></td>
                       <td bgcolor="#666666" ><img src="template/default/images/menu/spacer.gif" width="1" height="1" border="0"></td>
                       <td height="50"><a href="cobranca.php?op=lista"><img src="template/default/images/bt_todos.gif" alt="Exibir Todos" width="77" height="73" border="0"></a></td>
-                      <td height="50"><a href="cobranca.php?op=lista&filtro=BL"><img src="template/default/images/bt_bandalarga.gif" alt="Exibir somente Banda Larga" width="77" height="73" border="0"></a></td>
-                      <td height="50"><a href="cobranca.php?op=lista&filtro=D"><img src="template/default/images/bt_discado.gif" alt="Exibir somente Discado" width="77" height="73" border="0"></a></td>
-                      <td height="50"><a href="cobranca.php?op=lista&filtro=H"><img src="template/default/images/bt_hospedagem.gif" alt="Exibir somente Hospedagem" width="77" height="73" border="0"></a></td>
+                      {if $lic_bandalarga=="sim"}<td height="50"><a href="cobranca.php?op=lista&filtro=BL"><img src="template/default/images/bt_bandalarga.gif" alt="Exibir somente Banda Larga" width="77" height="73" border="0"></a></td>{/if}
+                      {if $lic_discado=="sim"}<td height="50"><a href="cobranca.php?op=lista&filtro=D"><img src="template/default/images/bt_discado.gif" alt="Exibir somente Discado" width="77" height="73" border="0"></a></td>{/if}
+                      {if $lic_hospedagem=="sim"}<td height="50"><a href="cobranca.php?op=lista&filtro=H"><img src="template/default/images/bt_hospedagem.gif" alt="Exibir somente Hospedagem" width="77" height="73" border="0"></a></td>{/if}
 
                     </tr>
                     <tr align="center" valign="middle">
@@ -63,7 +63,7 @@
                     </tr>
                     {foreach item=v from=$lista_produtos}
                     <tr bgcolor="#FFFFFF">
-                      <td align="center" width=40><p><a href="cobranca.php?op=cadastro&id_produto={$v.id_produto}&prod={$v.tipo}"><img src="template/default/images/gif_alterar.gif" width="16" height="16" border="0"></a></p></td>
+                      <td align="center" width=40><p><a href="cobranca.php?op=cadastro&id_produto={$v.id_produto}&prod={$v.tipo}"><img src="template/default/images/gif_alterar.gif" width="16" height="16" alt="Alterar Produto" border="0"></a></p></td>
                       <td width="24" valign="middle"><img src="template/default/images/{$v.tipo|trim|lower}.gif" width="24" height="24">
                       </td>
                       <td valign="middle"><p><a href="cobranca.php?op=cadastro&id_produto={$v.id_produto}&prod={$v.tipo}">{$v.nome}</a></p></td>

@@ -23,25 +23,21 @@ function confirmacao(){
 		{/if}
 
   {foreach item=p from=$produtos}
-
 <table width="522" border="0" cellpadding="0" cellspacing="0" align="center">
   <tr align="center">
 <td align="center">
-
 </td>
 </tr>
   <tr>
     <td width="200" bgcolor="#F1F1F1"> <font face="arial" size="2">#{$p.id_cliente_produto}
       - <b>{$p.nome} <!-- - {$p.quant} - {$p.numero_contas} --></b></font></td>
-    <td width="300" align="right" bgcolor="#F1F1F1"> [<a href="{$smarty.server.PHP_SELF}?op=conta&sop=nova_conta&tipo_conta=E&id_cliente={$p.id_cliente}&id_cliente_produto={$p.id_cliente_produto}">Cadastrar
-      E-mail Adicional</a>] {if $p.numero_contas > $p.quant}<br>
-				[<a href="{$smarty.server.PHP_SELF}?op=conta&sop=nova_conta&tipo_conta={$p.tipo}&id_cliente={$p.id_cliente}&id_cliente_produto={$p.id_cliente_produto}">cadastrar conta adicional</a>]
+   <td width="300" align="right" bgcolor="#F1F1F1">{if $lic_email=="sim"}[<a href="{$smarty.server.PHP_SELF}?op=conta&sop=nova_conta&tipo_conta=E&id_cliente={$p.id_cliente}&id_cliente_produto={$p.id_cliente_produto}">Cadastrar
+      E-mail Adicional</a>]<br>{/if} {if $p.numero_contas > $p.quant}
+				[<a href="{$smarty.server.PHP_SELF}?op=conta&sop=nova_conta&tipo_conta={$p.tipo}&id_cliente={$p.id_cliente}&id_cliente_produto={$p.id_cliente_produto}">Cadastrar conta adicional</a>]
 			{/if}
     </td>
   </tr>
   <tr>
-
-
     <td colspan="2"> {foreach item=c from=$p.contas}
       <table width="525" border="0" cellspacing="0" cellpadding="0">
         <tr>
@@ -49,7 +45,7 @@ function confirmacao(){
           <td width="338">
              <a href="clientes.php?op=conta&id_cliente={$id_cliente}&username={$c.username}&dominio={$c.dominio}&tipo_conta={$c.tipo_conta}">{$c.username}{if $c.tipo_conta|trim == "E"}@{$c.dominio}{/if}</a>
           </td>
-          <td width=109> <a href="clientes.php?op=conta&pg=ficha&id_cliente={$id_cliente}&username={$c.username}&dominio={$c.dominio}&tipo_conta={$c.tipo_conta}">FICHA 
+          <td width=109> <a href="clientes.php?op=conta&pg=ficha&id_cliente={$id_cliente}&username={$c.username}&dominio={$c.dominio}&tipo_conta={$c.tipo_conta}">FICHA
             TÉCNICA</a>
 			{if $c.tipo_conta == "E"}<a href="clientes.php?op=excluir_email&id_cliente={$id_cliente}&username={$c.username}&dominio={$c.dominio}&tipo_conta={$c.tipo_conta}" onClick="return confirmacao();">EXCLUIR{/if}</a></td>
         </tr>
@@ -65,4 +61,4 @@ function confirmacao(){
 </table>
 
 </ul>
-<p>{/foreach} </p>
+{/foreach}
