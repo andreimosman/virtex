@@ -64,7 +64,7 @@
 		
 		
 		protected function numero($num) {
-			return( number_format((double)$num,0) );
+			return( number_format((double)$num,0,"","") );
 		}
 		
 		/**
