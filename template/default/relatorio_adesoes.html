@@ -91,45 +91,35 @@ if (da && !pr && !mac) with (document) {
 {if $acao == "geral"}
 	{if $relat}
 <!-- 	COMEÇO DO acao = geral -->
-						  <table width="450" border="0" cellspacing="0" cellpadding="0" align="CENTER">
-						  <tr>
-							<td><table width="450" border="0" cellspacing="0" cellpadding="0">
-								<tr>
-								  <td bgcolor="#F1F1F1"><table width="450" border="0" cellspacing="2" cellpadding="0">
-									  <tr>
-										<td width="225" align="LEFT"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Per&iacute;odo</font></td>
-										<td align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Adesões</font></td>
-									  </tr>
-									</table></td>
-								</tr>
-								<tr>
-								  <td>
-
-								{foreach item=a from=$relat}
-								  
-            <table width="450" border="0" cellspacing="2" cellpadding="0">
-              <tr> 
-                <td width="225" align="LEFT"><p><a href="relatorio.php?op={$op}&acao=sub_ade&ano={$a.ano}&mes={$a.mes}">{$meses_ano[$a.mes]}/{$a.ano}</a></p></td>
-                <td align="RIGHT"><p><a href="relatorio.php?op={$op}&acao=sub_ade&ano={$a.ano}&mes={$a.mes}">{$a.num_contratos}</a></p></td>
-              </tr>
-              <tr bgcolor="#999999"> 
-                <td colspan="5" height="1"></td>
-              </tr>
-            </table>
-								 {/foreach}
-
-								  </td>
-								</tr>
-							  </table></td>
-						  </tr>
-                  	  </table>
+						  
+<table width="450" border="0" cellspacing="0" cellpadding="0" align="CENTER">
+  <tr> 
+    <td><table width="450" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td width="110" align="LEFT"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Per&iacute;odo</font></td>
+          <td width="100" align="right"><p>Banda Larga</p></td>
+          <td width="80" align="right"><p>Discado</p></td>
+          <td width="80" align="right"><p>Hospedagem</p></td>
+          <td width="80" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>TOTAL</b></font></td>
+        </tr>
+        {foreach item=a from=$relat} 
+        <tr> 
+          <td align="LEFT"><p><a href="relatorio.php?op={$op}&acao=sub_ade&ano={$a.ano}&mes={$a.mes}">{$meses_ano[$a.mes]}/{$a.ano}</a></p></td>
+          <td align="right"><p>{$a.BL} &nbsp; &nbsp; </p></td>
+          <td align="right"><p>{$a.D} &nbsp; &nbsp; </p></td>
+          <td align="right"><p>{$a.H} &nbsp; &nbsp; </p></td>
+          <td align="RIGHT"><p><a href="relatorio.php?op={$op}&acao=sub_ade&ano={$a.ano}&mes={$a.mes}">{$a.num_contratos}</a></p></td>
+        </tr>
+        <tr bgcolor="#999999"> 
+          <td colspan="11" height="1"></td>
+        </tr>
+        {/foreach} </table></td>
+  </tr>
+</table>
 <!-- 	FIM DO acao = geral -->
-{else} 
-<font face="verdana" size="2" color="black"><b>N&atilde;o Existem Ades&otilde;es 
-para o periodo especificado</b></font> {/if} 
-
-{elseif $acao == "sub_ade"} 
-<br><p align="center"><a href="relatorio.php?op=adesao">voltar para relatorio geral de Adesões</a></p><br>
+{else} <font face="verdana" size="2" color="black"><b>N&atilde;o Existem Ades&otilde;es 
+para o periodo especificado</b></font> {/if} {elseif $acao == "sub_ade"} <br>
+<p align="center"><a href="relatorio.php?op=adesao">voltar para relatorio geral de Adesões</a></p><br>
 <table width="500" border="0" cellspacing="0" cellpadding="0" ALIGN="center">
   <tr> 
     <td><table width="500" border="0" cellspacing="0" cellpadding="0">

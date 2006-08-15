@@ -91,38 +91,31 @@ if (da && !pr && !mac) with (document) {
                     Existe Cancelamentos no periodo</strong></p>{/if}<br>
                   {if $relat }<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico"><br>
                   
-					    <table width="450" border="0" cellspacing="0" cellpadding="0">
-						  <tr>
-							<td><table width="450" border="0" cellspacing="0" cellpadding="0">
-								<tr>
-								  <td bgcolor="#F1F1F1"><table width="450" border="0" cellspacing="2" cellpadding="0">
-									  <tr>
-										<td width="225" align="CENTER"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Per&iacute;odo</font></td>
-										<td align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Cancelamentos</font></td>
+							<table width="503" border="0" cellspacing="0" cellpadding="0" align="CENTER">
+								<tr> 
+								   <td width="503"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr> 
+										<td width="118" align="CENTER"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Per&iacute;odo</font></td>
+										<td width="80" align="right"><p>Banda Larga</p></td>
+										<td width="55" align="right"><p>Discado</p></td>
+										<td width="92" align="right"><p>Hospedagem</p></td>
+										<td width="158" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Cancelamentos</font></td>
 									  </tr>
-									</table></td>
-								</tr>
-								<tr>
-								  <td>
-
 								{foreach item=a from=$relat}
-								  <table width="450" border="0" cellspacing="2" cellpadding="0">
 									  <tr>
-										<td width="225" align="CENTER"><p><a href="relatorio.php?op={$op}&acao=sub_ade&ano={$a.ano}&mes={$a.mes}">{$a.mes}/{$a.ano}</a></p></td>
+										<td width="118" align="CENTER"><p><a href="relatorio.php?op={$op}&acao=sub_ade&ano={$a.ano}&mes={$a.mes}">{$a.mes}/{$a.ano}</a></p></td>
+										<td align="right"><p>{$a.BL} &nbsp; &nbsp; </p></td>
+										<td align="right"><p>{$a.D} &nbsp; &nbsp; </p></td>
+										<td align="right"><p>{$a.H} &nbsp; &nbsp; </p></td>
 										<td align="CENTER"><p><a href="relatorio.php?op={$op}&acao=sub_ade&ano={$a.ano}&mes={$a.mes}">{$a.num_contratos}</a></p></td>
 									  </tr>
 									  <tr bgcolor="#999999">
 										<td colspan="5" height="1"></td>
 									  </tr>
-									</table>
 								 {/foreach}
-
 								  </td>
 								</tr>
-							  </table></td>
-						  </tr>
-                  	  </table>
-
+							  </table>
 					{/if} {if $acao == "sub_ade"}BOSTA 
                   <table width="500" border="0" cellspacing="0" cellpadding="0">
 						  <tr>

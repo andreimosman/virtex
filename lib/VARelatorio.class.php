@@ -2112,7 +2112,9 @@ class VARelatorio extends VirtexAdmin {
 						$sSQL .= "WHERE ";
 						$sSQL .= "	data_contratacao > CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '$periodo months' ";
 						$sSQL .= "GROUP BY ano, mes ";
-						$sSQL .= "ORDER BY ano, mes ";		
+						$sSQL .= "ORDER BY ano, mes ";	
+
+						 
 
 					} else if($acao == "sub_ade") {
 
@@ -2134,10 +2136,52 @@ class VARelatorio extends VirtexAdmin {
 						
 						//echo "QUERY: $sSQL<br>";
 
+
 					}
 
 							
 					$relat = $this->bd->obtemRegistros($sSQL);
+
+
+						for($i=0;$i<count($relat);$i++) {
+
+							$mes = $relat[$i]["mes"];
+							$ano = $relat[$i]["ano"];
+
+								//echo 	$mes = $relat[$i]["mes"]."\n";;
+								//echo 	$ano = $relat[$i]["ano"]."\n";;
+
+							$dSQL  = "SELECT ";
+							$dSQL .= "	tipo_produto, count(*) as num_contratos,  ";
+							$dSQL .= "	EXTRACT( 'month' FROM data_contratacao) as mes, ";
+							$dSQL .= "	EXTRACT( 'year' FROM data_contratacao) as ano ";
+							$dSQL .= "FROM ";
+							$dSQL .= "	cbtb_contrato ";
+							$dSQL .= "WHERE ";
+							$dSQL .= "	EXTRACT( 'month' FROM data_contratacao) = '$mes' ";
+							$dSQL .= " AND EXTRACT( 'year' FROM data_contratacao) = '$ano' ";
+							$dSQL .= " AND data_contratacao > CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '$periodo months' ";
+							$dSQL .= " GROUP BY tipo_produto, ano, mes ";
+							$dSQL .= " ORDER BY tipo_produto,  ano, mes ";
+
+							/////echo $dSQL ."<hr>\n";
+
+							
+
+							$tp_produto = $this->bd->obtemRegistros($dSQL);
+
+							$relat[$i]["D"] = 0;
+							$relat[$i]["BL"] = 0;
+							$relat[$i]["H"] = 0;
+
+							for($x=0;$x<count($tp_produto);$x++) {
+								$relat[$i][ trim($tp_produto[$x]["tipo_produto"]) ]  = (int)$tp_produto[$x]["num_contratos"];
+								////echo $tp_produto[$x]["tipo_produto"] . " - " . (int)$tp_produto[$x]["num_contratos"] . "<bR>\n";
+							}
+
+						$relat[$i]["tp_produto"] = $tp_produto;
+
+					}
 					return($relat);
     
     
@@ -2167,7 +2211,7 @@ class VARelatorio extends VirtexAdmin {
 				$sSQL .= "GROUP BY ano, mes ";
 				$sSQL .= "ORDER BY ano, mes ";
 
-    	
+    			////echo $sSQL;
     	
     	}else if ($acao == "sub_ade"){
     	
@@ -2191,7 +2235,48 @@ class VARelatorio extends VirtexAdmin {
     	}
     	//echo "QUERY: $sSQL<br>";
     	$relat = $this->bd->obtemRegistros($sSQL);	
-    	return($relat);
+
+						for($i=0;$i<count($relat);$i++) {
+
+							$mes = $relat[$i]["mes"];
+							$ano = $relat[$i]["ano"];
+
+								//echo 	$mes = $relat[$i]["mes"]."\n";;
+								//echo 	$ano = $relat[$i]["ano"]."\n";;
+
+							$dSQL  = "SELECT ";
+							$dSQL .= "	tipo_produto, count(*) as num_contratos,  ";
+							$dSQL .= "	EXTRACT( 'month' FROM data_alt_status) as mes, ";
+							$dSQL .= "	EXTRACT( 'year' FROM data_alt_status) as ano ";
+							$dSQL .= "FROM ";
+							$dSQL .= "	cbtb_contrato ";
+							$dSQL .= "WHERE ";
+							$dSQL .= "	EXTRACT( 'month' FROM data_alt_status)  = '$mes' ";
+							$dSQL .= " AND EXTRACT( 'year' FROM data_alt_status) = '$ano' ";
+							$dSQL .= " AND data_alt_status > CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '$periodo months' ";
+							$dSQL .= "	AND status = 'C' ";
+							$dSQL .= " GROUP BY tipo_produto, ano, mes ";
+							$dSQL .= " ORDER BY tipo_produto,  ano, mes ";
+
+							//////////echo $dSQL ."<hr>\n";
+
+							
+
+							$tp_produto = $this->bd->obtemRegistros($dSQL);
+
+							$relat[$i]["D"] = 0;
+							$relat[$i]["BL"] = 0;
+							$relat[$i]["H"] = 0;
+
+							for($x=0;$x<count($tp_produto);$x++) {
+								$relat[$i][ trim($tp_produto[$x]["tipo_produto"]) ]  = (int)$tp_produto[$x]["num_contratos"];
+								////echo $tp_produto[$x]["tipo_produto"] . " - " . (int)$tp_produto[$x]["num_contratos"] . "<bR>\n";
+							}
+
+						$relat[$i]["tp_produto"] = $tp_produto;
+
+					}
+					return($relat);
     
     
     }
