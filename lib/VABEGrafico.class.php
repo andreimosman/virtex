@@ -62,6 +62,11 @@
 		
 		}
 		
+		
+		protected function numero($num) {
+			return( number_format((double)$num,0) );
+		}
+		
 		/**
 		 *
 		 */
@@ -88,7 +93,7 @@
 					$arq = $this->diretorioMRTG ."/valog-" . strtolower(trim($user));
 					$fc = fopen($arq,"w");
 					if($fc) {
-						$info = ((int)$down) . "\n". ((int)$up) . "\n". "0\n0";
+						$info = $this->numero($down) . "\n". $this->numero($up) . "\n". "0\n0";
 						fputs($fc,$info);
 						fclose($fc);
 					}
