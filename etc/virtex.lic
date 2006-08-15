@@ -1,30 +1,30 @@
 [geral]
-expira_em = 2006-07-15
-congela_em = 2007-07-15
-emitida_em = 2005-07-21
+expira_em = 2006-09-14
+congela_em = 2006-09-29
+emitida_em = 2006-08-15
  
 [empresa]
-nome = Virtex Ltda ME
-endereco = Rua dos Bobos, 0 Teste
-bairro = Teste de Bairro
-cidade = PICOS
-telefone = 89-95455565
+nome = Alexandre Baggott Ayres
+endereco = rua carlos veronese 65 
+bairro = Mariluz
+cidade = SAO PEDRO
+telefone = 19-34814940
 cnpj = 17160785800
-dt_contratacao = 2005-07-21 
-dia_pagamento = 05
+dt_contratacao = 2006-08-15 
+dia_pagamento = 26
 
 [frontend]
 discado = 1
-banda_larga = 0
+banda_larga = 1
 hospedagem = 1
-email = 0
+email = 1
 interface =1 
 
 [backend]
 discado = 1
-banda_larga = 0
+banda_larga = 1
 hospedagem = 1
-email = 0 
+email = 1 
 
 [licenca]
-chave=5B38:0011:0A3B
+chave=B482:89C3:6AEF
