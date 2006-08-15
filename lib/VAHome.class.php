@@ -109,6 +109,7 @@ class VAHome extends VirtexAdmin {
 			$sSQL .= "AND cl.id_cliente = c.id_cliente  ";
 			$sSQL .= "AND c.id_cliente_produto = f.id_cliente_produto ";
 			$sSQL .= "AND p.id_produto = c.id_produto ";
+			$sSQL .= "AND f.status = 'A' ";
 			$sSQL .= "ORDER BY f.data_renovacao ASC ";
 		
 				$lista_contrato = $this->bd->obtemRegistros($sSQL);
