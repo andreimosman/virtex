@@ -96,6 +96,13 @@ class VAHome extends VirtexAdmin {
 		   
 		}
 		if ($op == "renovacao_contrato"){
+
+				if( ! $this->privPodeGravar("_COBRANCA") ) {
+							$this->privMSG();
+							return;
+				}
+
+
 		
 			$sSQL  = "SELECT ";
 			$sSQL .= "f.id_cliente_produto, cl.nome_razao, f.data_renovacao, f.valor_contrato, p.nome, ";
