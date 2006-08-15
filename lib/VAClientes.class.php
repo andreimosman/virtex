@@ -2318,13 +2318,12 @@ class VAClientes extends VirtexAdmin {
 					
 					
 					if ($tipo_conta == "BL"){
-						if( ! $this->privPodeLer("_CLIENTES_BANDALARGA") ) {
-								$this->privMSG();
-								return;
-							}else if( ! $this->privPodeGravar("_CLIENTES_BANDALARGA") ) {
+					
+						if( ! $this->privPodeGravar("_CLIENTES_BANDALARGA") ) {
 								$this->privMSG();
 								return;
 						}
+						
 					}else if($tipo_conta == "D"){
 						if( ! $this->privPodeGravar("_CLIENTES_DISCADO") ) {
 								$this->privMSG();
