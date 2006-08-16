@@ -61,12 +61,13 @@
                 </table></td>
               </tr>
             </table>
-            <p><font face="Arial, Helvetica, sans-serif" size="3"><strong>Ultimos
-                  arquivos de retorno aplicados</strong></font></p>
+            
+          <p><font face="Arial, Helvetica, sans-serif" size="3"><strong>Ultimos 
+            arquivos de retorno processados</strong></font></p>
             <table width="550" border="0" cellspacing="1" cellpadding="0">
               <tr bgcolor="#f1f1f1" align="CENTER">
-                <td><p><strong>Arquivo</strong></p></td>
                 <td><p><strong>Data</strong></p></td>
+				<td><p><strong>Arquivo</strong></p></td>
                 <td width="50"><p><strong>Status</strong></p></td>
                 <td width="50"><p><strong>NRA</strong></p></td>
                 <td width="50"><p><strong>NRPE</strong></p></td>
@@ -74,8 +75,8 @@
               </tr>
               {foreach item=r from=$ret}
   <tr align="CENTER">
+  	<td><p><a href="cobranca.php?op=retornos&acao=detalhe&id_arquivo={$r.id_arquivo}">{$r.data|date_format:'%d/%m/%Y'}</a></p></td>
     <td><p><a href="cobranca.php?op=retornos&acao=detalhe&id_arquivo={$r.id_arquivo}">{$r.nome_arquivo}</a></p></td>
-    <td><p><a href="cobranca.php?op=retornos&acao=detalhe&id_arquivo={$r.id_arquivo}">{$r.data}</a></p></td>
     <td><p><a href="cobranca.php?op=retornos&acao=detalhe&id_arquivo={$r.id_arquivo}">{$r.status}</a></p></td>
     <td><p><a href="cobranca.php?op=retornos&acao=detalhe&id_arquivo={$r.id_arquivo}">{$r.nra}</a></p></td>
     <td><p><a href="cobranca.php?op=retornos&acao=detalhe&id_arquivo={$r.id_arquivo}">{$r.nrpe}</a></p></td>

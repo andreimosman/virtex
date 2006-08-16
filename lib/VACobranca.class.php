@@ -1229,7 +1229,7 @@ class VACobranca extends VirtexAdmin {
 
 		if( !$sop ) $sop = "upload";
 		
-			$sSQL  = "SELECT id_arquivo, nome_arquivo, to_char(data,'DD/MM/YYYY') as data, status, nra, nrpe, nrsc FROM lgtb_retorno ORDER BY data DESC limit 10";
+			$sSQL  = "SELECT id_arquivo, nome_arquivo, data, status, nra, nrpe, nrsc FROM lgtb_retorno ORDER BY data DESC limit 10";
 			$ret = $this->bd->obtemRegistros($sSQL);
 			
 			$this->tpl->atribui("ret",$ret);
