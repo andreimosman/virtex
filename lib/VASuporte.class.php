@@ -28,7 +28,7 @@ class VASuporte extends VirtexAdmin {
 		
 			$pesquisa = @$_REQUEST["pesquisa"];
 			$rotina = @$_REQUEST["rotina"];
-		
+			$tipo_pesquisa = @$_REQUEST["tipo_pesquisa"];		
 		
 			$sSQL  = "SELECT ";
 			$sSQL .= "id_pop, nome ";
@@ -38,25 +38,119 @@ class VASuporte extends VirtexAdmin {
 			$sSQL .= "ORDER BY nome ASC ";
 			
 			$pops = $this->bd->obtemRegistros($sSQL);
+
+			$aSQL  = "SELECT ";
+			$aSQL .= "id_nas, nome ";
+			$aSQL .= "FROM ";
+			$aSQL .= "cftb_nas ";
+			$aSQL .= "ORDER BY nome ASC ";
+
+			$nas = $this->bd->obtemRegistros($aSQL);
 			
 			
-			if ($pesquisa){
+			if ($pesquisa)
 			
-				$sSQL  = "SELECT ";
-				$sSQL .= "username, id_pop, mac ";
-				$sSQL .= "FROM ";
-				$sSQL .= "cntb_conta_bandalarga ";
-				$sSQL .= "WHERE id_pop = '".$_REQUEST["pesquisa"]."'";
+			$tipo_pesquisa = @$_REQUEST["tipo_pesquisa"];
+
+			if (($tipo_pesquisa == "pop") && ($pesquisa!="")){
 				
-				$cli = $this->bd->obtemRegistros($sSQL);
-				$this->tpl->atribui("cli",$cli);
-				//echo $sSQL;
+				if ($pesquisa == "todos"){
+
+					$aSQL = " SELECT id_pop, nome FROM cftb_pop  ORDER BY id_pop ";
+
+					$num_todos = $this->bd->obtemRegistros($aSQL);
+
+					for ($i=0;$i<count($num_todos);$i++){
+
+						$id_pop = $num_todos[$i]["id_pop"];
+
+						$sSQL  = "SELECT ";
+						$sSQL .= "username, tipo_conta, dominio, id_pop, mac, download_kbps, upload_kbps, ipaddr , rede  ";
+						$sSQL .= "FROM ";
+						$sSQL .= "cntb_conta_bandalarga ";
+						$sSQL .= " WHERE id_pop = '$id_pop' ";
+
+						////////////echo $sSQL . "<br>\n<hr>\n";
+
+						$user_pop = $this->bd->obtemRegistros($sSQL);
+						$num_todos[$i]["usuarios"] = $user_pop;
+
+					}
+
+					$this->tpl->atribui("num_todos",$num_todos);
+					
+
+				}else{
 			
+					$sSQL  = "SELECT ";
+					$sSQL .= "username, tipo_conta, dominio, id_pop, mac, download_kbps, upload_kbps, ipaddr , rede  ";
+					$sSQL .= "FROM ";
+					$sSQL .= "cntb_conta_bandalarga ";
+					$sSQL .= "WHERE id_pop = '".$_REQUEST["pesquisa"]."'";
+
+					$cli = $this->bd->obtemRegistros($sSQL);
+					$this->tpl->atribui("cli",$cli);
+
+				}
+
 			}
+
+			else if (($tipo_pesquisa == "nas")&& ($pesquisa!="")){
+
+
+				if ($pesquisa == "todos"){
+				
+					$aSQL = " SELECT id_nas, nome FROM cftb_nas ";
+
+					$num_todos = $this->bd->obtemRegistros($aSQL);
+
+					
+					for ($i=0;$i<count($num_todos);$i++){
+
+						$id_nas = $num_todos[$i]["id_nas"];
+
+						$sSQL  = "SELECT ";
+						$sSQL .= "username, tipo_conta, dominio, id_nas, mac, download_kbps , upload_kbps, ipaddr , rede ";
+						$sSQL .= "FROM ";
+						$sSQL .= "cntb_conta_bandalarga ";
+						$sSQL .= " WHERE id_nas = '$id_nas' ";
+
+					///echo $sSQL . "<br>\n<hr>\n";
+
+						$user_nas = $this->bd->obtemRegistros($sSQL);
+						$num_todos[$i]["usuarios"] = $user_nas;
+
+
+					}
+
+					$this->tpl->atribui("num_todos",$num_todos);
+
+				}else{
 			
+					$sSQL  = "SELECT ";
+					$sSQL .= "username, tipo_conta, dominio, id_nas, mac, download_kbps , upload_kbps, ipaddr , rede ";
+					$sSQL .= "FROM ";
+					$sSQL .= "cntb_conta_bandalarga ";
+					$sSQL .= "WHERE id_nas = '".$_REQUEST["pesquisa"]."'";
+
+					$cli = $this->bd->obtemRegistros($sSQL);
+					$this->tpl->atribui("cli",$cli);
+
+			   }
+
+			}
+
+
+
+				///echo $sSQL;
+							
+				
 			
 			$this->tpl->atribui("pops",$pops);
+			$this->tpl->atribui("nas",$nas);
 			$this->tpl->atribui("pesquisa",$pesquisa);
+			$this->tpl->atribui("tipo_pesquisa",$tipo_pesquisa);
+			
 			
 			if($rotina == "mostra"){
 			
