@@ -366,12 +366,13 @@ class VirtexAdmin extends MWebApp {
 	
 	
 			$id_admin = $this->admLogin->obtemId();
+			$ip_admin = $_SERVER['REMOTE_ADDR']; 
 			
 	
 			$sSQL  = "INSERT INTO lgtb_administradores  ";
-			$sSQL .= "(id_admin,data,operacao,valor_original,valor_alterado,username,id_cliente_produto,tipo_conta,extras) ";
+			$sSQL .= "(id_admin,data,operacao,valor_original,valor_alterado,username,id_cliente_produto,tipo_conta,extras,ip) ";
 			$sSQL .= " VALUES ";
-			$sSQL .= "( $id_admin, '$data', '$operacao', '$valor_original', '$valor_alterado', '$username', $id_cliente_produto, '$tipo_conta', '$extra' )  ";
+			$sSQL .= "( $id_admin, '$data', '$operacao', '$valor_original', '$valor_alterado', '$username', $id_cliente_produto, '$tipo_conta', '$extra', '$ip_admin' )  ";
 			
 			//echo "LOG: $sSQL <br>";
 			$this->bd->consulta($sSQL);
