@@ -18,85 +18,88 @@
               <tr>
                 <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio</h1><h2 align="center"><font size="2">Evolu&ccedil;&atilde;o
                   de Contrata&ccedil;&atilde;o de Produtos</font></h2>
+
+                  <img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico">
+
 				  <table width="550" bgcolor="FFFFFF">
-                          <tr> 
-                            <td width="125" rowspan="2" bgcolor="f5f5f5"> 
+                          <tr>
+                            <td width="125" rowspan="2" bgcolor="f5f5f5">
                               <p align="left"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Mês/ano</strong></font></p></td>
-                            <td width="100" colspan="3" bgcolor="f5f5f5" > 
-                              <p align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Banda 
+                            <td width="100" colspan="3" bgcolor="f5f5f5" >
+                              <p align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Banda
                                 Larga</strong></font></p></td>
-                            <td width="100" colspan="3" bgcolor="f5f5f5" > 
+                            <td width="100" colspan="3" bgcolor="f5f5f5" >
                               <p align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Discado</strong></font></p></td>
-                            <td width="100" colspan="3" bgcolor="f5f5f5" > 
+                            <td width="100" colspan="3" bgcolor="f5f5f5" >
                               <p align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Hospedagem</strong></font></p></td>
-                            <td width="125" colspan="3" bgcolor="f5f5f5" > 
+                            <td width="125" colspan="3" bgcolor="f5f5f5" >
                               <p align="right"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>TOTAIS&nbsp;&nbsp;&nbsp;</strong></font></p></td>
                           </tr>
-                          <tr> 
-                            <td width="33" bgcolor="f8f8f8"> 
-                              <p align="center"><strong>A</strong></p></td>
-                            <td width="33" bgcolor="f8f8f8"> 
-                              <p align="center"><strong>C</strong></p></td>
-                            <td width="34" bgcolor="f8f8f8"> 
-                              <p align="center"><strong>T</strong></p></td>
-                            <td width="33" bgcolor="f8f8f8"> 
-                              <p align="center"><strong>A</strong></p></td>
-                            <td width="33" bgcolor="f8f8f8"> 
-                              <p align="center"><strong>C</strong></p></td>
-                            <td width="34" bgcolor="f8f8f8"> 
-                              <p align="center"><strong>T</strong></p></td>
-                            <td width="33" bgcolor="f8f8f8"> 
-                              <p align="center"><strong>A</strong></p></td>
-                            <td width="33" bgcolor="f8f8f8"> 
-                              <p align="center"><strong>C</strong></p></td>
-                            <td width="34" bgcolor="f8f8f8"> 
-                              <p align="center"><strong>T</strong></p></td>
-                            <td width="41" bgcolor="f8f8f8"> 
-                              <p align="center"><strong>A</strong></p></td>
-                            <td width="41" bgcolor="f8f8f8"> 
-                              <p align="center"><strong>C</strong></p></td>
-                            <td width="43" bgcolor="f8f8f8"> 
-                              <p align="center"><strong>T</strong></p></td>
+                          <tr>
+                            <td width="33" bgcolor="f8f8f8">
+                              <p align="center"><strong>A(+)</strong></p></td>
+                            <td width="33" bgcolor="f8f8f8">
+                              <p align="center"><strong>C(-)</strong></p></td>
+                            <td width="34" bgcolor="f8f8f8">
+                              <p align="center"><strong>T(=)</strong></p></td>
+                            <td width="33" bgcolor="f8f8f8">
+                              <p align="center"><strong>A(+)</strong></p></td>
+                            <td width="33" bgcolor="f8f8f8">
+                              <p align="center"><strong>C(-)</strong></p></td>
+                            <td width="34" bgcolor="f8f8f8">
+                              <p align="center"><strong>T(=)</strong></p></td>
+                            <td width="33" bgcolor="f8f8f8">
+                              <p align="center"><strong>A(+)</strong></p></td>
+                            <td width="33" bgcolor="f8f8f8">
+                              <p align="center"><strong>C(-)</strong></p></td>
+                            <td width="34" bgcolor="f8f8f8">
+                              <p align="center"><strong>T(=)</strong></p></td>
+                            <td width="41" bgcolor="f8f8f8">
+                              <p align="center"><strong>A(+)</strong></p></td>
+                            <td width="41" bgcolor="f8f8f8">
+                              <p align="center"><strong>C(-)</strong></p></td>
+                            <td width="43" bgcolor="f8f8f8">
+                              <p align="center"><strong>T(=)</strong></p></td>
                           </tr>
-                          {assign var=tot_ad value="0"} {assign var=tot_cn value="0"} 
-                          {assign var=tot_tot value="0"} {foreach item=e from=$relat} 
-                          <tr> 
+                          {assign var=tot_ad value="0"} {assign var=tot_cn value="0"}
+                          {assign var=tot_tot value="0"} {foreach item=e from=$relat}
+                          <tr>
                             <td bgcolor="f8f8f8">
 <p align="left">&nbsp;&nbsp;&nbsp;{$e.mes}/{$e.ano}</p></td>
                             <td bgcolor="f9f9f9">
-<p align="center">{$e.adBL}{assign var=tot_ad 
+<p align="center">{$e.adBL}{assign var=tot_ad
                                 value=$tot_ad+$e.adBL}</p></td>
                             <td bgcolor="f9f9f9">
-<p align="center">{$e.cnBL}{assign var=tot_cn 
+<p align="center">{$e.cnBL}{assign var=tot_cn
                                 value=$tot_cn+$e.cnBL}</p></td>
-                            <td bgcolor="f9f9f9">
+                            <td bgcolor="f0f0f0">
 <p align="center">{$e.BL}</p></td>
                             <td bgcolor="f9f9f9">
 <p align="center">{$e.adD}{assign var=tot_ad value=$tot_ad+$e.adD}</p></td>
                             <td bgcolor="f9f9f9">
 <p align="center">{$e.cnD}{assign var=tot_cn value=$tot_cn+$e.cnD}</p></td>
-                            <td bgcolor="f9f9f9">
+                            <td bgcolor="f0f0f0">
 <p align="center">{$e.D}</p></td>
                             <td bgcolor="f9f9f9">
 <p align="center">{$e.adH}{assign var=tot_ad value=$tot_ad+$e.adH}</p></td>
                             <td bgcolor="f9f9f9">
 <p align="center">{$e.cnH}{assign var=tot_cn value=$tot_cn+$e.cnH}</p></td>
-                            <td bgcolor="f9f9f9">
+                            <td bgcolor="f0f0f0">
 <p align="center">{$e.H}</p></td>
-                            <td bgcolor="f9f9f9">
+                            <td bgcolor="f0fff0">
 <p align="center">{$tot_ad}</p></td>
-                            <td bgcolor="f9f9f9">
+                            <td bgcolor="fff0f0">
 <p align="center">{$tot_cn}</p></td>
-                            <td bgcolor="f9f9f9">
+                            <td bgcolor="f0f0ff">
 <p align="center">{assign var=tot_tot value=$tot_ad-$tot_cn}{$tot_tot}</p></td>
-                            {assign var=tot_ad value="0"} {assign var=tot_cn value="0"} 
+                            {assign var=tot_ad value="0"} {assign var=tot_cn value="0"}
                             {assign var=tot_tot value="0"} </tr>
                           {/foreach} </table>
 					</td>
 					</tr>
 				  </table>
 
-            <p align="left"> 
+            <p align="left">
               <script language="JavaScript">ready = "yes";</script>
               <script>
 {literal}
@@ -148,21 +151,21 @@ if (da && !pr && !mac) with (document) {
 {/literal}
 </script>
               <br>
-			  
+
             <table align="center">
-              <tr> 
+              <tr>
                 <td><p><font color="d0d0d0"><strong>A: Adesões </strong></font></p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td><p><font color="d0d0d0"><strong>C: Cancelamentos</strong></font></p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td><p><font color="d0d0d0"><strong>T: Totais</strong></font></p></td>
               </tr>
             </table>
 
 <p id="imprimir" align="center"><a href="javascript:;" onClick="return printPage();">IMPRIMIR</a></p>
-				
+
           </td>
               </tr>
             </table></td>

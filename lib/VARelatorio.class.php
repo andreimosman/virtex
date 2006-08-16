@@ -1636,6 +1636,94 @@ class VARelatorio extends VirtexAdmin {
 		$this->arquivoTemplate = "relatorio_produtos_evolucao.html";
 		
 
+
+
+
+		if (@$_REQUEST["extra"] == "grafico") {
+			
+			
+
+			//$relat = $this->bd->obtemRegistros($sSQL);
+					
+			$evolucao 		= array();
+			$adesoes  		= array();
+			$cancelaments 	= array();
+			$legendas 		= array();
+			
+			global $_LS_MESES_ANO;
+
+			for($i=count($relat)-1;$i>=0;--$i) {
+			   $mes_corrente = substr($_LS_MESES_ANO[$relat[$i]["mes"]],0,3);
+			   $legendas[] 		=  $mes_corrente . "/" . $relat[$i]["ano"];
+			   $evolucao[] 		= $relat[$i]["num_contratos"];
+			   $adesoes[] 		= $relat[$i]["adD"] + $relat[$i]["adBL"] + $relat[$i]["adH"];
+			   $cancelamentos[] = ($relat[$i]["cnD"] + $relat[$i]["cnBL"] + $relat[$i]["cnH"]) ;
+			}
+					
+					
+			// GERA O Gráfico
+
+			header("pragma: no-cache");
+			header("Content-type: Image/png");
+
+			//$pontos = array("9", "16", "20");
+			$grafico = new Graph(450,250,"png");
+
+
+			$grafico->SetScale("textlin"); 
+			//$grafico->SetShadow(); 
+			//$grafico->title->Set('Relatório de Adesões');
+			$grafico->img->SetMargin(40,40,40,80);
+			
+			//Imagem de Fundo
+			$grafico->SetBackgroundImage("./template/default/images/gr_back1.jpg",BGIMG_FILLPLOT); //BGIMG_FILLFRAME);
+			$grafico->SetMarginColor("white");
+
+
+			// ADESOES
+			$gAdesoes = new LinePlot($adesoes); 
+			//$gAdesoes->SetFillGradient("#00aa00","green",GRAD_VER);;
+			$gAdesoes->SetColor("#00aa00");
+
+			// CANCELAMENTOS
+			$gCancela = new LinePlot($cancelamentos); 
+			$gCancela->SetFillGradient("#aa0000","red",GRAD_VER);;
+			$gCancela->SetColor("#aa0000");
+
+
+						
+			// EVOLUCAO
+			$gEvolucao = new LinePlot($evolucao); 
+			//$gEvolucao->SetFillGradient("#0000aa","blue",GRAD_VER);;
+			$gEvolucao->SetColor("#0000aa");
+			
+			// título das barras
+			$grafico->xaxis->SetTickLabels($legendas);
+			$grafico->xaxis->SetLabelAngle(90);
+			// adicionar mostrage de barras ao gráfico 
+			$grafico->Add($gAdesoes);
+			$grafico->Add($gCancela);
+			$grafico->Add($gEvolucao); 
+
+			// imprimir gráfico 
+			$grafico->Stroke();
+			
+			$this->arquivoTemplate = '';		
+			return;
+		
+		}
+
+
+
+
+
+
+
+
+
+
+
+
 	
 	
 	}else if  ($op == "lista"){
