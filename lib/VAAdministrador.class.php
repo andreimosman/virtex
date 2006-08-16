@@ -419,11 +419,76 @@ class VAAdministrador extends VirtexAdmin {
 	    
 	        $this->arquivoTemplate = "administrador_direitos.html";
 
-	    }else if ($op == "alt"){
+   }else if ($op == "alt"){
 		$this->arquivoTemplate = "administrador_altera.html";
-	   }
+   }else if ($op == "log"){
+   
+			$tipo = @$_REQUEST["tipo"];
+
+			$sSQL = "SELECT id_admin, admin FROM adtb_admin ORDER BY admin ASC";
+   		$lista_admin = $this->bd->obtemRegistros($sSQL);
+   		
+			$sSQL  = "SELECT l.id_admin, l.data, l.operacao, l.valor_original, l.valor_alterado, l.id_cliente_produto, l.username, l.tipo_conta, l.extras, ";
+			$sSQL .= "a.admin ";
+			$sSQL .= "FROM lgtb_administradores l, adtb_admin a ";
+			$sSQL .= "WHERE l.id_admin = a.id_admin ";
+			$sSQL .= "ORDER BY l.data, a.admin, l.operacao DESC LIMIT 50";
+			$log = $this->bd->obtemRegistros($sSQL);
+			   		
+   		
+   		if ($tipo == "admin"){
+   		
+				$sSQL  = "SELECT l.id_admin, l.data, l.operacao, l.valor_original, l.valor_alterado, l.id_cliente_produto, l.username, l.tipo_conta, l.extras, ";
+				$sSQL .= "a.admin ";
+				$sSQL .= "FROM lgtb_administradores l, adtb_admin a ";
+				$sSQL .= "WHERE l.id_admin = a.id_admin ";
+				$sSQL .= "AND l.id_admin = '".@$_REQUEST["admin"]."'";
+				$sSQL .= "ORDER BY l.data, a.admin, l.operacao DESC ";
+   			$log = $this->bd->obtemRegistros($sSQL);
+   			
+   			$this->tpl->atribui("admin",@$_REQUEST["admin"]);	
+   		
+   		
+   		}else if ($tipo == "operacao"){
+   		
+				$sSQL  = "SELECT l.id_admin, l.data, l.operacao, l.valor_original, l.valor_alterado, l.id_cliente_produto, l.username, l.tipo_conta, l.extras, ";
+				$sSQL .= "a.admin ";
+				$sSQL .= "FROM lgtb_administradores l, adtb_admin a ";
+				$sSQL .= "WHERE l.id_admin = a.id_admin ";
+				$sSQL .= "AND l.operacao = '".@$_REQUEST["operacao"]."'";
+				$sSQL .= "ORDER BY l.data, a.admin, l.operacao DESC ";
+   			$log = $this->bd->obtemRegistros($sSQL);   		
+   			
+   			$this->tpl->atribui("operacao",@$_REQUEST["operacao"]);
+   		
+   		}
+   		
+   		
+			
+   		$this->tpl->atribui("tipo",$tipo);
+   		
+   		$this->tpl->atribui("lista_admin",$lista_admin);
+   		$this->tpl->atribui("log",$log);
+   		
+   		$this->arquivoTemplate = "administrador_log.html";
+   		
+   		
+   		
+   
+   
+   }
+
+
+
+
+
+
+
+
       }//function processa
       
+
+
 
 
 public function __destruct() {
