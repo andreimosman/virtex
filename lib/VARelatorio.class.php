@@ -1627,25 +1627,10 @@ class VARelatorio extends VirtexAdmin {
 						if( ! $this->privPodeLer("_RELATORIOS_COBRANCA") ) {
 							$this->privMSG();
 							return;
-				}	
+				}   
 	
-		$sSQL  = "SELECT ";
-		$sSQL .= "p.id_produto,p.nome,p.tipo,p.valor,p.disponivel,mes,num_contratos ";
-		$sSQL .= "FROM ";
-		$sSQL .= "prtb_produto p INNER JOIN ";
-		$sSQL .= "(SELECT p.id_produto,count(cp.id_produto) as num_contratos, EXTRACT( 'month' from data_contratacao) as mes ";
-		$sSQL .= "FROM ";
-		$sSQL .= "prtb_produto p LEFT OUTER JOIN cbtb_contrato cp USING(id_produto) ";
-		$sSQL .= "WHERE ";
-		$sSQL .= "data_contratacao > now() - INTERVAL '6 months' OR data_contratacao is null ";
-		
-		$sSQL .= "GROUP BY ";
-		$sSQL .= "mes, p.id_produto ) c USING(id_produto) ";
-		$sSQL .= "ORDER BY mes ASC";
-		
-		$relat = $this->bd->obtemRegistros($sSQL);
-		
-		
+	
+		$relat = $this->evolucao();
 		
 		$this->tpl->atribui("relat",$relat);
 		$this->arquivoTemplate = "relatorio_produtos_evolucao.html";
@@ -2094,15 +2079,27 @@ class VARelatorio extends VirtexAdmin {
     public function adesao($acao,$periodo,$data=null){
     
     			
-    			if ($data){
-    			
+    			if (!$data){
+					$data = date("m,Y");
+
+				}
     				list($mes,$ano) = explode(",",$data);
     				//echo "DATA: $data<br>MES: $mes<br>ANO: $ano<br>ACAO:$acao<br>";
-    			
-    			}
-    
+
     			if ($acao == "geral"){
-    			
+						global $_LS_MESES_ANO;
+						$ls_ultimos_meses = array();
+
+						for ($i=0; $i<12; $i++) {
+							list($ca, $cm) = explode("-", date("Y-m", mktime(0, 0, 0, $mes - $i, 1, $ano)));
+
+							//$cperiodo = array( "ano" => $ca, "mes" => $cm);
+							$ls_ultimos_meses[] = array( "valor" => $ca."-". $cm, "texto" => $_LS_MESES_ANO[(int)$cm] . "/" . $ca ); 
+						}
+
+						
+
+
 						$sSQL  = "SELECT ";
 						$sSQL .= "	count(*) as num_contratos, ";
 						$sSQL .= "	EXTRACT( 'month' FROM data_contratacao) as mes, ";
@@ -2110,9 +2107,41 @@ class VARelatorio extends VirtexAdmin {
 						$sSQL .= "FROM ";
 						$sSQL .= "	cbtb_contrato ";
 						$sSQL .= "WHERE ";
-						$sSQL .= "	data_contratacao > CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '$periodo months' ";
+						$sSQL .= "	 data_contratacao between (now() - INTERVAL '1 months') - INTERVAL '$periodo months' AND now() ";
 						$sSQL .= "GROUP BY ano, mes ";
-						$sSQL .= "ORDER BY ano, mes ";	
+						$sSQL .= "ORDER BY ano DESC, mes  DESC";	
+							
+						 /////echo $sSQL;
+
+						$relatorio = $this->bd->obtemRegistros($sSQL);
+						$relat = array();
+
+
+						for($i=0;$i<count($ls_ultimos_meses);$i++) {
+							$achou = false;
+							list($ano,$mes) = explode("-",$ls_ultimos_meses[$i]["valor"]);
+
+							$mes = (int)$mes;
+							$ano = (int)$ano;
+
+							for($x=0;$x<count($relatorio);$x++) {
+								$m = (int)$relatorio[$x]["mes"];
+								$a = (int)$relatorio[$x]["ano"];
+
+							   if( $m == $mes && $a == $ano  ) {
+									$achou = true;
+									$relat[] = $relatorio[$x];
+							   }
+							}
+
+							if( !$achou ) {
+								$relat[] = array("num_contratos" => 0, "ano" => $ano, "mes" => $mes);
+							}
+
+
+						}
+
+
 
 						 
 
@@ -2136,20 +2165,21 @@ class VARelatorio extends VirtexAdmin {
 						
 						//echo "QUERY: $sSQL<br>";
 
+						$relat = $this->bd->obtemRegistros($sSQL);
 
 					}
 
-							
-					$relat = $this->bd->obtemRegistros($sSQL);
-
+						
 
 						for($i=0;$i<count($relat);$i++) {
 
 							$mes = $relat[$i]["mes"];
 							$ano = $relat[$i]["ano"];
 
-								//echo 	$mes = $relat[$i]["mes"]."\n";;
-								//echo 	$ano = $relat[$i]["ano"]."\n";;
+
+							///echo $mes = $relat[$i]["mes"];
+							///echo $ano = $relat[$i]["ano"];
+
 
 							$dSQL  = "SELECT ";
 							$dSQL .= "	tipo_produto, count(*) as num_contratos,  ";
@@ -2160,26 +2190,32 @@ class VARelatorio extends VirtexAdmin {
 							$dSQL .= "WHERE ";
 							$dSQL .= "	EXTRACT( 'month' FROM data_contratacao) = '$mes' ";
 							$dSQL .= " AND EXTRACT( 'year' FROM data_contratacao) = '$ano' ";
-							$dSQL .= " AND data_contratacao > CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '$periodo months' ";
+							$dSQL .= " AND data_contratacao between now() - INTERVAL '$periodo months' AND now() ";
 							$dSQL .= " GROUP BY tipo_produto, ano, mes ";
-							$dSQL .= " ORDER BY tipo_produto,  ano, mes ";
 
-							/////echo $dSQL ."<hr>\n";
 
-							
+							//echo $dSQL ."<hr>\n";
 
 							$tp_produto = $this->bd->obtemRegistros($dSQL);
 
-							$relat[$i]["D"] = 0;
-							$relat[$i]["BL"] = 0;
-							$relat[$i]["H"] = 0;
+							$relat[$i]["D"] = "0";
+							$relat[$i]["BL"] = "0";
+							$relat[$i]["H"] = "0";
+
 
 							for($x=0;$x<count($tp_produto);$x++) {
-								$relat[$i][ trim($tp_produto[$x]["tipo_produto"]) ]  = (int)$tp_produto[$x]["num_contratos"];
-								////echo $tp_produto[$x]["tipo_produto"] . " - " . (int)$tp_produto[$x]["num_contratos"] . "<bR>\n";
+								
+								$relat[$i][ trim($tp_produto[$x]["tipo_produto"])]  = (string)$tp_produto[$x]["num_contratos"];
+								///echo $tp_produto[$x]["tipo_produto"] . " - " . (string)$tp_produto[$x]["num_contratos"] . "<bR>\n";
 							}
 
-						$relat[$i]["tp_produto"] = $tp_produto;
+						$relat[$i]["tp_produto"] = $tp_produto ;
+
+						if (($relat[$i]["tp_produto"]) ==""){
+						
+						$relat[$i]["tp_produto"] = "0";
+						
+						}
 
 					}
 					return($relat);
@@ -2195,10 +2231,31 @@ class VARelatorio extends VirtexAdmin {
     		list($mes,$ano) = explode(",",$data);
     	
     	}
+
+			global $_LS_MESES_ANO;
+
+			$hoje = date("Y-m-d");
+			list($ano, $mes, $dia) = explode("-", $hoje);
+
+			//TODO: Inver ter alista de periodos
+
+			//Cria um array referente aos ultimos 
+			$ls_ultimos_meses = array();
+
     
     
     	if($acao == "geral"){
-    	
+
+			for ($i=0; $i<12; $i++) {
+				list($ca, $cm) = explode("-", date("Y-m", mktime(0, 0, 0, $mes - $i, 1, $ano)));
+
+				//$cperiodo = array( "ano" => $ca, "mes" => $cm);
+				$ls_ultimos_meses[] = array( "valor" => $ca."-". $cm, "texto" => $_LS_MESES_ANO[(int)$cm] . "/" . $ca ); 
+
+			}
+
+
+
 				$sSQL  = "SELECT ";
 				$sSQL .= "	count(*) as num_contratos, ";
 				$sSQL .= "	EXTRACT( 'month' FROM data_alt_status) as mes, ";
@@ -2206,12 +2263,42 @@ class VARelatorio extends VirtexAdmin {
 				$sSQL .= "FROM ";
 				$sSQL .= "	cbtb_contrato ";
 				$sSQL .= "WHERE ";
-				$sSQL .= "	data_alt_status > CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '$periodo months' ";
+				$sSQL .= " 	data_alt_status between now() - INTERVAL '$periodo months' AND now() ";
+				//$sSQL .= "	AND EXTRACT( 'month' FROM data_alt_status)  = '$cm' ";
+				//$sSQL .= "  AND   EXTRACT( 'year' FROM data_alt_status) = '$ca' ";
 				$sSQL .= "	AND status = 'C' ";
 				$sSQL .= "GROUP BY ano, mes ";
 				$sSQL .= "ORDER BY ano, mes ";
 
-    			////echo $sSQL;
+				//echo $sSQL . "<br><hr>\n" ;
+
+				$relatorio = $this->bd->obtemRegistros($sSQL);
+
+				$relat = array();
+
+				for($i=0;$i<count($ls_ultimos_meses);$i++) {
+					$achou = false;
+					list($ano,$mes) = explode("-",$ls_ultimos_meses[$i]["valor"]);
+
+					$mes = (int)$mes;
+					$ano = (int)$ano;
+
+					for($x=0;$x<count($relatorio);$x++) {
+						$m = (int)$relatorio[$x]["mes"];
+						$a = (int)$relatorio[$x]["ano"];
+
+					   if( $m == $mes && $a == $ano  ) {
+							$achou = true;
+							$relat[] = $relatorio[$x];
+					   }
+					}
+
+					if( !$achou ) {
+						$relat[] = array("num_contratos" => 0, "ano" => $ano, "mes" => $mes);
+					}
+
+
+				}
     	
     	}else if ($acao == "sub_ade"){
     	
@@ -2231,56 +2318,92 @@ class VARelatorio extends VirtexAdmin {
 				$sSQL .= "	prd.id_produto = cp.id_produto AND clt.id_cliente = cp.id_cliente ";
 				$sSQL .= "ORDER BY cnt.data_contratacao, clt.nome_razao ASC ";
 
+				$relat = $this->bd->obtemRegistros($sSQL);
     	
     	}
     	//echo "QUERY: $sSQL<br>";
-    	$relat = $this->bd->obtemRegistros($sSQL);	
+    	
+
+			
 
 						for($i=0;$i<count($relat);$i++) {
+
 
 							$mes = $relat[$i]["mes"];
 							$ano = $relat[$i]["ano"];
 
-								//echo 	$mes = $relat[$i]["mes"]."\n";;
-								//echo 	$ano = $relat[$i]["ano"]."\n";;
+							$relat[$i]["D"] = "0";
+							$relat[$i]["BL"] = "0";
+							$relat[$i]["H"] = "0";
 
-							$dSQL  = "SELECT ";
-							$dSQL .= "	tipo_produto, count(*) as num_contratos,  ";
-							$dSQL .= "	EXTRACT( 'month' FROM data_alt_status) as mes, ";
-							$dSQL .= "	EXTRACT( 'year' FROM data_alt_status) as ano ";
-							$dSQL .= "FROM ";
-							$dSQL .= "	cbtb_contrato ";
-							$dSQL .= "WHERE ";
-							$dSQL .= "	EXTRACT( 'month' FROM data_alt_status)  = '$mes' ";
-							$dSQL .= " AND EXTRACT( 'year' FROM data_alt_status) = '$ano' ";
-							$dSQL .= " AND data_alt_status > CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '$periodo months' ";
-							$dSQL .= "	AND status = 'C' ";
-							$dSQL .= " GROUP BY tipo_produto, ano, mes ";
-							$dSQL .= " ORDER BY tipo_produto,  ano, mes ";
 
-							//////////echo $dSQL ."<hr>\n";
 
-							
 
-							$tp_produto = $this->bd->obtemRegistros($dSQL);
+							if( (int)$relat[$i]["num_contratos"] ) {
 
-							$relat[$i]["D"] = 0;
-							$relat[$i]["BL"] = 0;
-							$relat[$i]["H"] = 0;
+								$dSQL  = "SELECT ";
+								$dSQL .= "	tipo_produto, count(*) as num_contratos,  ";
+								$dSQL .= "	EXTRACT( 'month' FROM data_alt_status) as mes, ";
+								$dSQL .= "	EXTRACT( 'year' FROM data_alt_status) as ano ";
+								$dSQL .= "FROM ";
+								$dSQL .= "	cbtb_contrato ";
+								$dSQL .= "WHERE ";
+								$dSQL .= "	EXTRACT( 'month' FROM data_alt_status)  = '$mes' ";
+								$dSQL .= "AND   EXTRACT( 'year' FROM data_alt_status) = '$ano' ";
+								$dSQL .= " AND	data_alt_status between now() - INTERVAL '$periodo months' AND now() ";
+								$dSQL .= " AND status = 'C' ";
+								$dSQL .= " GROUP BY tipo_produto, ano, mes ";
+								$dSQL .= " ORDER BY tipo_produto,  ano, mes ";
 
-							for($x=0;$x<count($tp_produto);$x++) {
-								$relat[$i][ trim($tp_produto[$x]["tipo_produto"]) ]  = (int)$tp_produto[$x]["num_contratos"];
-								////echo $tp_produto[$x]["tipo_produto"] . " - " . (int)$tp_produto[$x]["num_contratos"] . "<bR>\n";
+								$tp_produto = $this->bd->obtemRegistros($dSQL);
+
+
+								for($x=0;$x<count($tp_produto);$x++) {
+									$relat[$i][ trim($tp_produto[$x]["tipo_produto"]) ]  = (string)$tp_produto[$x]["num_contratos"];
+									///echo $tp_produto[$x]["tipo_produto"] . " - " . (int)$tp_produto[$x]["num_contratos"] . "<bR>\n";
+								}
+
 							}
 
-						$relat[$i]["tp_produto"] = $tp_produto;
+						}
 
-					}
 					return($relat);
     
     
     }
 
+	protected function evolucao() {
+
+
+	
+		$adesoes = $this->adesao('geral','12');
+		$cancelamentos = $this->cancelamento('geral','12');
+
+		for($i=0;$i<count($adesoes);$i++) {
+
+			// VALORES BRUTOS (ORIGINAL)
+			$adesoes[$i]["adBL"] = $adesoes[$i]["BL"];
+			$adesoes[$i]["adD"] = $adesoes[$i]["D"];
+			$adesoes[$i]["adH"] = $adesoes[$i]["H"];
+
+			$adesoes[$i]["cnBL"] = $cancelamentos[$i]["BL"];
+			$adesoes[$i]["cnD"] = $cancelamentos[$i]["D"];
+			$adesoes[$i]["cnH"] = $cancelamentos[$i]["H"];
+
+			$adesoes[$i]["ad_num_contratos"] = $adesoes[$i]["num_contratos"];
+			$adesoes[$i]["cn_num_contratos"] = $cancelamentos[$i]["num_contratos"];
+
+			// VALORES JÁ CALCULADOS (MODIFICADOS)
+			$adesoes[$i]["BL"] = $adesoes[$i]["BL"] - $cancelamentos[$i]["BL"];
+			$adesoes[$i]["D"]  = $adesoes[$i]["D"]  - $cancelamentos[$i]["D"];
+			$adesoes[$i]["H"]  = $adesoes[$i]["H"]  - $cancelamentos[$i]["H"];
+			$adesoes[$i]["num_contratos"] = $adesoes[$i]["num_contratos"] - $cancelamentos[$i]["num_contratos"];
+		} 
+	
+		return($adesoes);
+		
+	
+	}
 
 
 }
