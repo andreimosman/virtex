@@ -431,6 +431,7 @@ class VAClientes extends VirtexAdmin {
 						$sSQL .= "     )";
 					
 					
+					
 					} else {
 					   // ALTERACAO
 						$msg_final = "Cliente Alterado com sucesso!";
@@ -464,6 +465,9 @@ class VAClientes extends VirtexAdmin {
 						$sSQL .= "   obs = '" . $this->bd->escape(@$_REQUEST["obs"]) . "' ";
 						$sSQL .= "WHERE ";
 						$sSQL .= "   id_cliente = '" . $this->bd->escape(@$_REQUEST["id_cliente"]) . "' ";  // se idcliente for =  ao passado.
+						
+						
+						
 
 
 					}
@@ -3783,6 +3787,22 @@ class VAClientes extends VirtexAdmin {
 				
 				$tipo_conta = trim(@$_REQUEST["tipo_conta"]);
 				$status = @$_REQUEST["status"];		
+				$agora = DATE("Y-m-d h:i:s");
+				
+				$sSQL = "SELECT status,conta_mestre,senha,senha_cript,username,dominio,tipo_conta,id_cliente_produto FROM cntb_conta WHERE username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta' ";
+				$CONTA = $this->bd->obtemUnicoRegistro($sSQL);
+				
+				if ($CONTA["status"] != $status){
+				
+					$operacao = "ALTSTATUS";
+					$extra = $CONTA["dominio"];
+					
+					$this->logAdm($operacao,$agora,$CONTA["status"],$status,$username,$CONTA["id_cliente_produto"],$tipo_conta,$extra);
+				
+				
+				
+				}
+				
 				
 					switch($tipo_conta) {
 						case 'D':
@@ -3823,6 +3843,37 @@ class VAClientes extends VirtexAdmin {
 					
 						case 'BL':
 						//////////echo "TESTE";
+						
+							$aSQL = "SELECT * from cntb_conta_bandalarga where username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta' ";
+							$bandalarga = $this->bd->obtemUnicoRegistro($aSQL);
+							//echo "BANDALARGA: $aSQL <br>";
+							$extra = $bandalarga["dominio"];
+							
+							
+							if ($upload_kbps != $bandalarga["upload_kbps"] || $download_kbps != $bandalarga["download_kbps"]){
+							
+								$valor_original = $bandalarga["upload_kbps"]."|".$bandalarga["download_kbps"];
+								$valor_alterado = $upload_kbps."|".$download_kbps;
+								$operacao = "ALTBANDA";
+								
+								$this->logAdm($operacao,$agora,$valor_original,$valor_alterado,$username,$CONTA["id_cliente_produto"],$tipo_conta,$extra);
+								
+
+							
+							}
+							
+							if ($mac != $bandalarga["mac"] && $mac){
+
+								$operacao = "ALTMAC";
+								
+								$this->logAdm($operacao,$agora,$bandalarga["mac"],$mac,$username,$CONTA["id_cliente_produto"],$tipo_conta,$extra);
+							
+														
+							}
+							
+							
+							
+							
 				
 							// SPOOL
 							if( $excluir ) {
@@ -3913,6 +3964,10 @@ class VAClientes extends VirtexAdmin {
 							$uSQL .= "   AND tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
 							$uSQL .= "";
 
+							
+							
+							
+							
 							//////////echo "$uSQL;<br>\n";
 							$this->bd->consulta($uSQL);
 							

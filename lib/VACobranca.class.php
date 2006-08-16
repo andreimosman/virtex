@@ -1115,7 +1115,7 @@ class VACobranca extends VirtexAdmin {
 			$sSQL = "SELECT nome_razao FROM cltb_cliente WHERE id_cliente = '$id_cliente'";
 			$cliente = $this->bd->obtemUnicoRegistro($sSQL);
 			
-			$sSQL = "SELECT status, id_cliente, id_cliente_produto FROM cntb_conta where id_cliente = '$id_cliente' AND id_cliente_produto = '$id_cliente_produto' AND status = 'S' ";
+			$sSQL = "SELECT status, id_cliente, id_cliente_produto, username, tipo_conta FROM cntb_conta where id_cliente = '$id_cliente' AND id_cliente_produto = '$id_cliente_produto' AND status = 'S' ";
 			////echo$sSQL;
 			$suspenso = $this->bd->obtemRegistros($sSQL);
 				
@@ -1187,6 +1187,9 @@ class VACobranca extends VirtexAdmin {
 					$sSQL = "UPDATE cntb_conta SET status = 'A' WHERE id_cliente_produto = '$id_cliente_produto' AND status = 'S' ";
 					////echo$sSQL ."<BR>";
 					$this->bd->consulta($sSQL);
+					
+					
+					
 					
 					$msg_final = "Amortização/Pagamento efetuado com sucesso!";
 				
@@ -3838,6 +3841,36 @@ class VACobranca extends VirtexAdmin {
 		$reagendamento = @$_REQUEST["reagendamento"];
 		$reagendar = @$_REQUEST["reagendar"];
 		$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
+		$agora = DATE("Y-m-d h:i:s");
+
+		$sSQL = "SELECT * FROM cbtb_faturas WHERE id_cliente_produto = $id_cliente_produto AND data = '".@$_REQUEST["data"]."'";
+		$FATURA = $this->bd->obtemUnicoRegistro($sSQL);
+		//echo "FATURA: $sSQL <br>";
+		$extra = "VENC: ".@$_REQUEST["data"]."/AMORTIZAR: ".$_REQUEST["amortizar"]."/DESCONTO: ".$_REQUEST["desconto"]."/ACRESCIMO: ".$_REQUEST["acrescimo"];
+		
+		//echo $extra ."<br>";
+		
+		
+		if ($reagendar){
+
+			$valor_original = "";
+			$valor_alterado = $reagendamento;
+			$username = "";
+			$tipo_conta = "";
+
+			$operacao = "PAGREAGEND";
+			
+			$this->logAdm($operacao,$agora,$valor_original,$valor_alterado,$username,$FATURA["id_cliente_produto"],$tipo_conta,$extra);
+		
+		
+		}
+		
+		
+		$operacao = "PAGFATURA";
+		
+		$this->logAdm($operacao,$agora,$FATURA["valor"],$_REQUEST["amortizar"],null,$FATURA["id_cliente_produto"],null,$extra);
+
+
 
 
 		//Se existir uma data de reagendamento então faz 

@@ -182,6 +182,9 @@ class VirtexAdmin extends MWebApp {
 				return false;
 			}
 
+			
+			
+
 		}
 
 		// Joga a variável pra sessao.
@@ -293,7 +296,7 @@ class VirtexAdmin extends MWebApp {
 
 
 
-			public function licProib($mensagem="<br>Você não está habilitado a visualizar esse módulo.<br>Em caso de dúvida, entre com contato com Mosman Consultoria & Desenvolvimento.<br>www.mosman.com.br<br>consultioria@mosman.com.br ", $target="_top") {
+			public function licProib($mensagem="<br>Você não está habilitado a visualizar esse módulo.<br>Em caso de dúvida, entre com contato com Mosman Consultoria & Desenvolvimento.<br>www.mosman.com.br<br>consultoria@mosman.com.br ", $target="_top") {
 				$this->tpl->atribui("mensagem",$mensagem);
 				$this->tpl->atribui("url","javascript:history.back();");
 				$this->tpl->atribui("target",$target);
@@ -357,7 +360,30 @@ class VirtexAdmin extends MWebApp {
 				// Joga a variável pra sessao.
 				$_SESSION["usrLogin"] = $this->usrLogin;
 				return true;	
-			}	
+	}
+	
+	public function logAdm($operacao,$data,$valor_original,$valor_alterado,$username,$id_cliente_produto,$tipo_conta,$extra){
+	
+	
+			$id_admin = $this->admLogin->obtemId();
+			
+	
+			$sSQL  = "INSERT INTO lgtb_administradores  ";
+			$sSQL .= "(id_admin,data,operacao,valor_original,valor_alterado,username,id_cliente_produto,tipo_conta,extras) ";
+			$sSQL .= " VALUES ";
+			$sSQL .= "( $id_admin, '$data', '$operacao', '$valor_original', '$valor_alterado', '$username', $id_cliente_produto, '$tipo_conta', '$extra' )  ";
+			
+			//echo "LOG: $sSQL <br>";
+			$this->bd->consulta($sSQL);
+			
+			return;
+	
+	
+	
+	}
+	
+	
+	
 	 			
 
 }
