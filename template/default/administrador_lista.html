@@ -16,30 +16,29 @@
         <th bgcolor="#FFFFFF" class=th_main ><table width="700" border="0" cellspacing="2" cellpadding="0">
             <tr>
               <td><table border=0 width="100%" cellspacing=0>
-                  <tr bgcolor="#FAFAFA">
+                  <tr bgcolor="#FAFAFA"> 
                     <td width=100><p><font face="arial" size="-1"><b>..username..</b></font></p></td>
                     <td><p><font face="arial" size="-1"><b>..nome.. </b></font></p></td>
-                    <td colspan="2" align="center"><p><font face="arial" size="-1">&nbsp;</font><font face="arial" size="-1"><b>..
-                            ..</b></font></p></td>
+                    <td colspan="3" align="center"><p><font face="arial" size="-1">&nbsp;</font><font face="arial" size="-1"><b>.. 
+                        ..</b></font></p></td>
                   </tr>
-                  <tr>
-                    <td colspan=5><hr size=1></td>
+                  <tr> 
+                    <td colspan=6><hr size=1></td>
                   </tr>
-                {foreach item=a from=$lista_admin}
-                <tr bgcolor="#FFFFFF">
-                  <td><p><a href="administrador.php?op=cadastro&id_admin={$a.id_admin}">
-                  	{$a.admin} - {if $a.status == "t"}Ativo{/if}{if $a.status=="f"}Inativo{/if}
-                  		</p></a>
-                  </td>
-                  <td><p><a href="administrador.php?op=cadastro&id_admin={$a.id_admin}">{$a.nome}</p></a></td>
-                  <td align="center" width=60><p><a href="administrador.php?op=cadastro&id_admin={$a.id_admin}"><img src="template/default/images/gif_alterar.gif" alt="Alterar dados do Administrador" width="16" height="16" border="0"></a></font></p></td>
-                  <td width=60 align="center"><p><a href="administrador.php?op=privilegio&id_admin={$a.id_admin}"><img src="template/default/images/bt_privilegios.gif" alt="Alterar Privil&eacute;gios" width="26" height="26" border="0"></a></p></td>
-                </tr>
-                <tr>
-                  <td colspan="4" height="1"><hr align="center" size="1"></td>
-                </tr>
-                {/foreach}
-              </table></td>
+                  {foreach item=a from=$lista_admin} 
+                  <tr bgcolor="#FFFFFF"> 
+                    <td><p><a href="administrador.php?op=cadastro&id_admin={$a.id_admin}"> 
+                        {$a.admin} - {if $a.status == "t"}Ativo{/if}{if $a.status=="f"}Inativo{/if} 
+                        </a></p></td>
+                    <td><p><a href="administrador.php?op=cadastro&id_admin={$a.id_admin}">{$a.nome}</a></p></td>
+                    <td align="center" width=60><p><a href="administrador.php?op=cadastro&id_admin={$a.id_admin}"><img src="template/default/images/gif_alterar.gif" alt="Alterar dados do Administrador" width="16" height="16" border="0"></a></font></p></td>
+                    <td width=60 align="center"><a href="administrador.php?op=privilegio&id_admin={$a.id_admin}"><img src="template/default/images/bt_privilegios.gif" alt="Alterar Privil&eacute;gios" width="26" height="26" border="0"></a></td>
+                    <td width=60 align="center"><p><a href="administrador?op=log&tipo=admin&admin={$a.id_admin}"><img alt="ver log do usuario" src="template/default/images/log.gif" width="24" height="24" border="0"></a></p></td>
+                  </tr>
+                  <tr> 
+                    <td colspan="5" height="1"><hr align="center" size="1"></td>
+                  </tr>
+                  {/foreach} </table></td>
             </tr>
             <tr>
               <td>&nbsp;</td>

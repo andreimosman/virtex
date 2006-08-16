@@ -2,9 +2,104 @@
 <head>
 <title>Untitled Document</title>
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
-<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type"></head>
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+{literal}
+<style type="text/css">
+
+#dhtmltooltip{
+position: absolute;
+width: 150px;
+border: 2px solid black;
+padding: 2px;
+background-color: lightyellow;
+visibility: hidden;
+z-index: 100;
+/*Remove below line to remove shadow. Below line should always appear last within this CSS*/
+/*filter: progid:DXImageTransform.Microsoft.Shadow(color=gray,direction=135);*/
+}
+
+</style>
+{/literal}
+</head>
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-<table align="CENTER" width="90%" border="0" cellspacing="0" cellpadding="0">
+<div id="dhtmltooltip"></div>
+{literal}
+
+
+<script type="text/javascript">
+
+/***********************************************
+* Cool DHTML tooltip script- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+***********************************************/
+
+var offsetxpoint=-60 //Customize x offset of tooltip
+var offsetypoint=20 //Customize y offset of tooltip
+var ie=document.all
+var ns6=document.getElementById && !document.all
+var enabletip=false
+if (ie||ns6)
+var tipobj=document.all? document.all["dhtmltooltip"] : document.getElementById? document.getElementById("dhtmltooltip") : ""
+
+function ietruebody(){
+return (document.compatMode && document.compatMode!="BackCompat")? document.documentElement : document.body
+}
+
+function ddrivetip(thetext, thecolor, thewidth){
+if (ns6||ie){
+if (typeof thewidth!="undefined") tipobj.style.width=thewidth+"px"
+if (typeof thecolor!="undefined" && thecolor!="") tipobj.style.backgroundColor=thecolor
+tipobj.innerHTML=thetext
+enabletip=true
+return false
+}
+}
+
+function positiontip(e){
+if (enabletip){
+var curX=(ns6)?e.pageX : event.clientX+ietruebody().scrollLeft;
+var curY=(ns6)?e.pageY : event.clientY+ietruebody().scrollTop;
+//Find out how close the mouse is to the corner of the window
+var rightedge=ie&&!window.opera? ietruebody().clientWidth-event.clientX-offsetxpoint : window.innerWidth-e.clientX-offsetxpoint-20
+var bottomedge=ie&&!window.opera? ietruebody().clientHeight-event.clientY-offsetypoint : window.innerHeight-e.clientY-offsetypoint-20
+
+var leftedge=(offsetxpoint<0)? offsetxpoint*(-1) : -1000
+
+//if the horizontal distance isn't enough to accomodate the width of the context menu
+if (rightedge<tipobj.offsetWidth)
+//move the horizontal position of the menu to the left by it's width
+tipobj.style.left=ie? ietruebody().scrollLeft+event.clientX-tipobj.offsetWidth+"px" : window.pageXOffset+e.clientX-tipobj.offsetWidth+"px"
+else if (curX<leftedge)
+tipobj.style.left="5px"
+else
+//position the horizontal position of the menu where the mouse is positioned
+tipobj.style.left=curX+offsetxpoint+"px"
+
+//same concept with the vertical position
+if (bottomedge<tipobj.offsetHeight)
+tipobj.style.top=ie? ietruebody().scrollTop+event.clientY-tipobj.offsetHeight-offsetypoint+"px" : window.pageYOffset+e.clientY-tipobj.offsetHeight-offsetypoint+"px"
+else
+tipobj.style.top=curY+offsetypoint+"px"
+tipobj.style.visibility="visible"
+}
+}
+
+function hideddrivetip(){
+if (ns6||ie){
+enabletip=false
+tipobj.style.visibility="hidden"
+tipobj.style.left="-1000px"
+tipobj.style.backgroundColor=''
+tipobj.style.width=''
+}
+}
+
+document.onmousemove=positiontip
+
+</script>
+{/literal}
+<table align="CENTER" width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr> 
     <td align="CENTER"><h1>LOG de Opera&ccedil;&otilde;es de Administradores</h1></td>
   </tr>
@@ -24,7 +119,7 @@
                   Todos</a></td>
               </tr>
               <tr bgcolor="#FFFFFF" align="CENTER"> 
-                <td height="30"><form name="poradmin" method="post" action="administrador.php"> 
+                <td height="30"><form name="poradmin" method="GET" action="administrador.php"> 
                   <table width="100%" border="0" cellspacing="1" cellpadding="0">
                     <tr align="CENTER" valign="MIDDLE"> 
                       <td> <select name="admin" id="admin">
@@ -38,7 +133,7 @@
                     </tr>
                   </table>
                   </form></td>
-                <td height="30"><form name="form2" method="post" action=""> 
+                <td height="30"><form name="form2" method="GET" action=""> 
                   <table width="100%" border="0" cellspacing="1" cellpadding="0">
                     <tr align="CENTER" valign="MIDDLE"> 
                       <td> <select name="operacao" id="operacao">
@@ -65,52 +160,42 @@
     <td>&nbsp;</td>
   </tr>
   <tr> 
-    <td>
-	{if $log }
-	<table width="100%" border="0" cellspacing="1" cellpadding="0">
-        <tr align="CENTER"> 
-          <td height="20" width="80" bgcolor="#f1f1f1"> 
-            <p><strong>Admin</strong></p></td>
-          <td height="20" width="100" bgcolor="#f1f1f1"> 
-            <p><strong>Data</strong></p></td>
-          <td height="20" width="100" bgcolor="#f1f1f1"> 
-            <p><strong>Operacao</strong></p></td>
-          <td height="20" width="150" bgcolor="#f1f1f1"> 
-            <p><strong>Vlr. Orig.</strong></p></td>
-          <td height="20" width="150" bgcolor="#f1f1f1"> 
-            <p><strong>Vlr. Alt.</strong></p></td>
-          <td height="20" width="100" bgcolor="#f1f1f1"> 
-            <p><strong>Username</strong></p></td>
-          <td height="20" width="50" bgcolor="#f1f1f1"> 
-            <p><strong>IDCP</strong></p></td>
-          <td height="20" width="50" bgcolor="#f1f1f1"> 
-            <p><strong>Tipo_conta</strong></p></td>
-          <td height="20" width="300" bgcolor="#f1f1f1"> 
-            <p><strong>Extras</strong></p></td>
+    <td> {if $log } 
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#666666">
+        <tr>
+          <td><table width="100%" border="0" cellspacing="1" cellpadding="2">
+              <tr align="CENTER"> 
+                <td height="20" width="80" bgcolor="#f1f1f1"> <p><strong>Admin</strong></p></td>
+                <td height="20" width="200" bgcolor="#f1f1f1"> <p><strong>Data</strong></p></td>
+                <td height="20" width="100" bgcolor="#f1f1f1"> <p><strong>Operacao</strong></p></td>
+                <td height="20" width="150" bgcolor="#f1f1f1"> <p><strong>Vlr. 
+                    Orig.</strong></p></td>
+                <td height="20" width="150" bgcolor="#f1f1f1"> <p><strong>Vlr. 
+                    Alt.</strong></p></td>
+                <td height="20" width="100" bgcolor="#f1f1f1"> <p><strong>Username</strong></p></td>
+                <td height="20" width="50" bgcolor="#f1f1f1"> <p><strong>IDCP</strong></p></td>
+                <td height="20" width="50" bgcolor="#f1f1f1"> <p><strong>Tipo_conta</strong></p></td>
+                <td height="20" width="300" bgcolor="#f1f1f1"> <p><strong>Extras</strong></p></td>
+              </tr>
+              {foreach item=a from=$log} 
+              <tr bgcolor='{if $a.operacao == "ALTMAC" OR $a.operacao == "ALTSTATUS" OR $a.operacao == "ALTBANDA"}#F3F8F7{else}#F1E4E7{/if}' height=20> 
+                <td align="CENTER" onMouseover="ddrivetip('<p align=center>{$a.ip}</p>', '#FFFFEA')" onMouseout="hideddrivetip()"> 
+                  <p>{$a.admin}</p></td>
+                <td align="CENTER">
+<p>{$a.data}</p></td>
+                <td align="CENTER"> <p>{$a.operacao}</p></td>
+                <td align="CENTER"> <p>{$a.valor_original}</p></td>
+                <td align="CENTER"> <p>{$a.valor_alterado}</p></td>
+                <td align="CENTER"> <p>{$a.username}</p></td>
+                <td align="CENTER"> <p>{$a.id_cliente_produto}</p></td>
+                <td align="CENTER"> <p>{$a.tipo_conta}</p></td>
+                <td ><p>{$a.extras|replace:"/":"<br>
+                    "}</p></td>
+              </tr>
+              {/foreach} </table></td>
         </tr>
-        {foreach item=a from=$log} 
-        <tr bgcolor='{if $a.operacao == "ALTMAC" OR $a.operacao == "ALTSTATUS" OR $a.operacao == "ALTBANDA"}#F3F8F7{else}#F1E4E7{/if}'> 
-          <td align="CENTER">
-<p>{$a.admin}</p></td>
-          <td><p>{$a.data}</p></td>
-          <td align="CENTER">
-<p>{$a.operacao}</p></td>
-          <td align="CENTER">
-<p>{$a.valor_original}</p></td>
-          <td align="CENTER">
-<p>{$a.valor_alterado}</p></td>
-          <td align="CENTER">
-<p>{$a.username}</p></td>
-          <td align="CENTER">
-<p>{$a.id_cliente_produto}</p></td>
-          <td align="CENTER">
-<p>{$a.tipo_conta}</p></td>
-          <td><p>{$a.extras}</p></td>
-        </tr>
-        {/foreach} </table>
-
-		{else}
-				<br>
+      </table>
+      {else} <br>
 		<p align=center><b>NÃO EXISTE NENHUM REGISTRO CADASTRADO </b></p>
 		{/if}
 		</td>

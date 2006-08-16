@@ -326,7 +326,7 @@ class VAAdministrador extends VirtexAdmin {
 	        
 	    } else if ($op == "privilegio"){
 
-				if( ! $this->privPodeGravar("_ADMIN") ) {
+				if( ! $this->privPodeGravar("_ADMIN_PRIV") ) {
 					$this->privMSG();
 					return;
 				}	
@@ -423,12 +423,19 @@ class VAAdministrador extends VirtexAdmin {
 		$this->arquivoTemplate = "administrador_altera.html";
    }else if ($op == "log"){
    
+			if( ! $this->privPodeGravar("_ADMIN_LOG") ) {
+				$this->privMSG();
+				return;
+			}	
+   
+   
+   
 			$tipo = @$_REQUEST["tipo"];
 
 			$sSQL = "SELECT id_admin, admin FROM adtb_admin ORDER BY admin ASC";
    		$lista_admin = $this->bd->obtemRegistros($sSQL);
    		
-			$sSQL  = "SELECT l.id_admin, l.data, l.operacao, l.valor_original, l.valor_alterado, l.id_cliente_produto, l.username, l.tipo_conta, l.extras, ";
+			$sSQL  = "SELECT l.id_admin, l.data, l.operacao, l.valor_original, l.valor_alterado, l.id_cliente_produto, l.username, l.tipo_conta, l.extras,l.ip, ";
 			$sSQL .= "a.admin ";
 			$sSQL .= "FROM lgtb_administradores l, adtb_admin a ";
 			$sSQL .= "WHERE l.id_admin = a.id_admin ";
@@ -438,7 +445,7 @@ class VAAdministrador extends VirtexAdmin {
    		
    		if ($tipo == "admin"){
    		
-				$sSQL  = "SELECT l.id_admin, l.data, l.operacao, l.valor_original, l.valor_alterado, l.id_cliente_produto, l.username, l.tipo_conta, l.extras, ";
+				$sSQL  = "SELECT l.id_admin, l.data, l.operacao, l.valor_original, l.valor_alterado, l.id_cliente_produto, l.username, l.tipo_conta, l.extras,l.ip, ";
 				$sSQL .= "a.admin ";
 				$sSQL .= "FROM lgtb_administradores l, adtb_admin a ";
 				$sSQL .= "WHERE l.id_admin = a.id_admin ";
@@ -451,7 +458,7 @@ class VAAdministrador extends VirtexAdmin {
    		
    		}else if ($tipo == "operacao"){
    		
-				$sSQL  = "SELECT l.id_admin, l.data, l.operacao, l.valor_original, l.valor_alterado, l.id_cliente_produto, l.username, l.tipo_conta, l.extras, ";
+				$sSQL  = "SELECT l.id_admin, l.data, l.operacao, l.valor_original, l.valor_alterado, l.id_cliente_produto, l.username, l.tipo_conta, l.extras,l.ip, ";
 				$sSQL .= "a.admin ";
 				$sSQL .= "FROM lgtb_administradores l, adtb_admin a ";
 				$sSQL .= "WHERE l.id_admin = a.id_admin ";
