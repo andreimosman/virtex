@@ -1,0 +1,123 @@
+<html>
+<head>
+<title>Untitled Document</title>
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type"></head>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table align="CENTER" width="90%" border="0" cellspacing="0" cellpadding="0">
+  <tr> 
+    <td align="CENTER"><h1>LOG de Opera&ccedil;&otilde;es de Administradores</h1></td>
+  </tr>
+  <tr> 
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td><table align="CENTER" width="450" border="0" cellspacing="0" cellpadding="0" bgcolor="#000000">
+        <tr> 
+          <td><table width="450" border="0" cellspacing="1" cellpadding="0">
+              <tr bgcolor="#f1f1f1" align="CENTER"> 
+                <td height="30" width="33%"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Listar 
+                  por ADM</strong></font></td>
+                <td height="30" width="33%"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Listar 
+                  por Tipo</strong></font></td>
+                <td width="20%" rowspan="2" bgcolor="#f1f1f1"><a href="administrador.php?op=log">Listar 
+                  Todos</a></td>
+              </tr>
+              <tr bgcolor="#FFFFFF" align="CENTER"> 
+                <td height="30"><form name="poradmin" method="post" action="administrador.php"> 
+                  <table width="100%" border="0" cellspacing="1" cellpadding="0">
+                    <tr align="CENTER" valign="MIDDLE"> 
+                      <td> <select name="admin" id="admin">
+					  <option value="">&nbsp;</option>
+                      {foreach item=a from=$lista_admin}
+					  	  <option value={$a.id_admin} {if $a.id_admin == $admin}SELECTED{/if}>{$a.admin}</option>
+					  {/foreach}
+					   </select> <input name="op" type="hidden" value="log" id="op"> 
+                        <input name="tipo" type="hidden" value="admin" id="tipo"></td>
+                      <td> <input type="submit" name="Submit" value=">>"></td>
+                    </tr>
+                  </table>
+                  </form></td>
+                <td height="30"><form name="form2" method="post" action=""> 
+                  <table width="100%" border="0" cellspacing="1" cellpadding="0">
+                    <tr align="CENTER" valign="MIDDLE"> 
+                      <td> <select name="operacao" id="operacao">
+					  	  <option value="">&nbsp;</option>
+                          <option value="ALTMAC" {if $operacao == "ALTMAC"}SELECTED{/if}>Alteracao de MAC</option>
+                          <option value="ALTBANDA" {if $operacao == "ALTBANDA"}SELECTED{/if}>Altera&ccedil;&atilde;o de 
+                          Banda</option>
+                          <option value="ALTSTATUS" {if $operacao == "ALTSTATUS"}SELECTED{/if}>Altera&ccedil;&atilde;o de 
+                          Status</option>
+                          <option value="PAGFATURA" {if $operacao == "PAGFATURA"}SELECTED{/if}>Pagamentos</option>
+                          <option value="PAGREAGEND" {if $operacao == "PAGREAGEND"}SELECTED{/if}>Reagendamentos</option>
+                        </select> <input name="op" type="hidden" value="log" id="op2"> 
+                        <input name="tipo" type="hidden" value="operacao" id="tipo"></td>
+                      <td> <input type="submit" name="Submit2" value=">>"></td>
+                    </tr>
+                  </table>
+                  </form></td>
+              </tr>
+            </table></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr> 
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td>
+	{if $log }
+	<table width="100%" border="0" cellspacing="1" cellpadding="0">
+        <tr align="CENTER"> 
+          <td height="20" width="80" bgcolor="#f1f1f1"> 
+            <p><strong>Admin</strong></p></td>
+          <td height="20" width="100" bgcolor="#f1f1f1"> 
+            <p><strong>Data</strong></p></td>
+          <td height="20" width="100" bgcolor="#f1f1f1"> 
+            <p><strong>Operacao</strong></p></td>
+          <td height="20" width="150" bgcolor="#f1f1f1"> 
+            <p><strong>Vlr. Orig.</strong></p></td>
+          <td height="20" width="150" bgcolor="#f1f1f1"> 
+            <p><strong>Vlr. Alt.</strong></p></td>
+          <td height="20" width="100" bgcolor="#f1f1f1"> 
+            <p><strong>Username</strong></p></td>
+          <td height="20" width="50" bgcolor="#f1f1f1"> 
+            <p><strong>IDCP</strong></p></td>
+          <td height="20" width="50" bgcolor="#f1f1f1"> 
+            <p><strong>Tipo_conta</strong></p></td>
+          <td height="20" width="300" bgcolor="#f1f1f1"> 
+            <p><strong>Extras</strong></p></td>
+        </tr>
+        {foreach item=a from=$log} 
+        <tr bgcolor='{if $a.operacao == "ALTMAC" OR $a.operacao == "ALTSTATUS" OR $a.operacao == "ALTBANDA"}#F3F8F7{else}#F1E4E7{/if}'> 
+          <td align="CENTER">
+<p>{$a.admin}</p></td>
+          <td><p>{$a.data}</p></td>
+          <td align="CENTER">
+<p>{$a.operacao}</p></td>
+          <td align="CENTER">
+<p>{$a.valor_original}</p></td>
+          <td align="CENTER">
+<p>{$a.valor_alterado}</p></td>
+          <td align="CENTER">
+<p>{$a.username}</p></td>
+          <td align="CENTER">
+<p>{$a.id_cliente_produto}</p></td>
+          <td align="CENTER">
+<p>{$a.tipo_conta}</p></td>
+          <td><p>{$a.extras}</p></td>
+        </tr>
+        {/foreach} </table>
+
+		{else}
+				<br>
+		<p align=center><b>NÃO EXISTE NENHUM REGISTRO CADASTRADO </b></p>
+		{/if}
+		</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>
