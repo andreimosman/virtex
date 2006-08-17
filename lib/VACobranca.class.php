@@ -4370,9 +4370,10 @@ public function extenso($valor=0, $maiusculas=false) {
 		$sSQL  = "SELECT ";
 		$sSQL .= "   cl.nome_razao, p.nome as produto, p.tipo, cp.id_cliente_produto, count(f.id_cliente_produto) as num_faturas_atrazadas, sum(f.valor) as valor_total ";
 		$sSQL .= "FROM ";
-		$sSQL .= "   cltb_cliente cl, prtb_produto p, cbtb_faturas f, ";
+		$sSQL .= "   cltb_cliente cl, prtb_produto p, cbtb_faturas f,cntb_conta cn, ";
 		$sSQL .= "   cbtb_cliente_produto cp, cbtb_contrato ctt ";
 		$sSQL .= "WHERE ";
+		$sSQL .= "	 cn.status != 'S' AND";
 		$sSQL .= "   cl.id_cliente = cp.id_cliente ";
 		$sSQL .= "   AND p.id_produto = cp.id_produto ";
 		$sSQL .= "   AND ctt.id_cliente_produto = cp.id_cliente_produto ";		
