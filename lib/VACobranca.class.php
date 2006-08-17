@@ -4402,7 +4402,7 @@ public function extenso($valor=0, $maiusculas=false) {
 			$sSQL .= "   cntb_conta ";
 			$sSQL .= "WHERE ";
 			$sSQL .= "   id_cliente_produto = '".$r[$i]["id_cliente_produto"]."' ";
-			$sSQL .= "   AND conta_mestre is true AND tipo_conta != 'E' ";
+			$sSQL .= "   AND conta_mestre is true AND tipo_conta != 'E' AND status != 'S' ";
 			
 			$c = $this->bd->obtemRegistros($sSQL);
 			
