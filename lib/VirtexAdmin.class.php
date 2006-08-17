@@ -362,17 +362,17 @@ class VirtexAdmin extends MWebApp {
 				return true;	
 	}
 	
-	public function logAdm($operacao,$data,$valor_original,$valor_alterado,$username,$id_cliente_produto,$tipo_conta,$extra){
+	public function logAdm($operacao,$valor_original,$valor_alterado,$username,$id_cliente_produto,$tipo_conta,$extra){
 	
 	
 			$id_admin = $this->admLogin->obtemId();
 			$ip_admin = $_SERVER['REMOTE_ADDR']; 
-			
+			$agora = DATE("Y-m-d H:i:s");
 	
 			$sSQL  = "INSERT INTO lgtb_administradores  ";
 			$sSQL .= "(id_admin,data,operacao,valor_original,valor_alterado,username,id_cliente_produto,tipo_conta,extras,ip) ";
 			$sSQL .= " VALUES ";
-			$sSQL .= "( $id_admin, '$data', '$operacao', '$valor_original', '$valor_alterado', '$username', $id_cliente_produto, '$tipo_conta', '$extra', '$ip_admin' )  ";
+			$sSQL .= "( $id_admin, '$agora', '$operacao', '$valor_original', '$valor_alterado', '$username', $id_cliente_produto, '$tipo_conta', '$extra', '$ip_admin' )  ";
 			
 			//echo "LOG: $sSQL <br>";
 			$this->bd->consulta($sSQL);

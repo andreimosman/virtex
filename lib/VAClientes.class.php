@@ -3787,17 +3787,17 @@ class VAClientes extends VirtexAdmin {
 				
 				$tipo_conta = trim(@$_REQUEST["tipo_conta"]);
 				$status = @$_REQUEST["status"];		
-				$agora = DATE("Y-m-d h:i:s");
+				//$agora = DATE("Y-m-d h:i:s");
 				
 				$sSQL = "SELECT status,conta_mestre,senha,senha_cript,username,dominio,tipo_conta,id_cliente_produto FROM cntb_conta WHERE username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta' ";
 				$CONTA = $this->bd->obtemUnicoRegistro($sSQL);
 				
-				if ($CONTA["status"] != $status){
+				if ($status && $CONTA["status"] != $status){
 				
 					$operacao = "ALTSTATUS";
 					$extra = $CONTA["dominio"];
 					
-					$this->logAdm($operacao,$agora,$CONTA["status"],$status,$username,$CONTA["id_cliente_produto"],$tipo_conta,$extra);
+					$this->logAdm($operacao,$CONTA["status"],$status,$username,$CONTA["id_cliente_produto"],$tipo_conta,$extra);
 				
 				
 				
@@ -3856,7 +3856,7 @@ class VAClientes extends VirtexAdmin {
 								$valor_alterado = $upload_kbps."|".$download_kbps;
 								$operacao = "ALTBANDA";
 								
-								$this->logAdm($operacao,$agora,$valor_original,$valor_alterado,$username,$CONTA["id_cliente_produto"],$tipo_conta,$extra);
+								$this->logAdm($operacao,$valor_original,$valor_alterado,$username,$CONTA["id_cliente_produto"],$tipo_conta,$extra);
 								
 
 							
@@ -3866,7 +3866,7 @@ class VAClientes extends VirtexAdmin {
 
 								$operacao = "ALTMAC";
 								
-								$this->logAdm($operacao,$agora,$bandalarga["mac"],$mac,$username,$CONTA["id_cliente_produto"],$tipo_conta,$extra);
+								$this->logAdm($operacao,$bandalarga["mac"],$mac,$username,$CONTA["id_cliente_produto"],$tipo_conta,$extra);
 							
 														
 							}
