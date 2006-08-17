@@ -3841,7 +3841,7 @@ class VACobranca extends VirtexAdmin {
 		$reagendamento = @$_REQUEST["reagendamento"];
 		$reagendar = @$_REQUEST["reagendar"];
 		$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
-		$agora = DATE("Y-m-d h:i:s");
+		//$agora = DATE("Y-m-d h:i:s");
 
 		$sSQL = "SELECT * FROM cbtb_faturas WHERE id_cliente_produto = $id_cliente_produto AND data = '".@$_REQUEST["data"]."'";
 		$FATURA = $this->bd->obtemUnicoRegistro($sSQL);
@@ -3860,7 +3860,7 @@ class VACobranca extends VirtexAdmin {
 
 			$operacao = "PAGREAGEND";
 			
-			$this->logAdm($operacao,$agora,$valor_original,$valor_alterado,$username,$FATURA["id_cliente_produto"],$tipo_conta,$extra);
+			$this->logAdm($operacao,$valor_original,$valor_alterado,$username,$FATURA["id_cliente_produto"],$tipo_conta,$extra);
 		
 		
 		}
@@ -3868,7 +3868,7 @@ class VACobranca extends VirtexAdmin {
 		
 		$operacao = "PAGFATURA";
 		
-		$this->logAdm($operacao,$agora,$FATURA["valor"],$_REQUEST["amortizar"],null,$FATURA["id_cliente_produto"],null,$extra);
+		$this->logAdm($operacao,$FATURA["valor"],$_REQUEST["amortizar"],null,$FATURA["id_cliente_produto"],null,$extra);
 
 
 
