@@ -689,7 +689,7 @@ class VACobranca extends VirtexAdmin {
 							$sSQL .= "  $id_processo, $id_cli_produto, now(), '$tipo_bloqueio', '$admin' ";
 							$sSQL .= ") ";
 							
-							////echo"QUERY INERT: $sSQL<br>\n";
+							echo"QUERY INERT: $sSQL<br>\n";
 							
 							$this->bd->consulta($sSQL);
 							
@@ -740,13 +740,23 @@ class VACobranca extends VirtexAdmin {
 							$sSQL .= "WHERE ";
 							$sSQL .= "   id_cliente_produto = $id_cli_produto ";
 							$sSQL .= "   AND tipo_conta = '$tipo' "; /* esse bl é o tipo do produto contratado */
-		   					$sSQL .= "AND status = 'A' "; /* conta ativa */
+		   					//$sSQL .= "AND status = 'A' "; /* conta ativa */
 		   					
 		   					$this->bd->consulta($sSQL);
-							////echo"QUERY UPDATE: $sSQL<br>\n";
+							echo"QUERY UPDATE: $sSQL<br>\n";
 			
 						}
+					$mensagem = "Cliente(s) Bloqueado(s) com sucesso!";
+										$this->tpl->atribui("mensagem",$mensagem);
+										
+					$this->arquivoTemplate = "msgredirect.html";
 					}
+					
+					
+					
+					
+					
+					
 			}
 				
 				
