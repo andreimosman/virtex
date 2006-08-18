@@ -118,11 +118,29 @@ class VAHome extends VirtexAdmin {
 			$sSQL .= "AND p.id_produto = c.id_produto ";
 			$sSQL .= "AND f.status = 'A' ";
 			$sSQL .= "ORDER BY f.data_renovacao ASC ";
-		
-				$lista_contrato = $this->bd->obtemRegistros($sSQL);
-				$this->tpl->atribui("lista_contrato",$lista_contrato);
-				$this->arquivoTemplate = "renovacao_contrato.html";
-		
+
+			$lista_contrato = $this->bd->obtemRegistros($sSQL);
+			
+			for($i=0;$i<count($lista_contrato);$i++){
+			
+				$sSQL = "SELECT COUNT(*) as faturas_pendentes FROM cbtb_faturas WHERE id_cliente_produto = '".$lista_contrato[$i]["id_cliente_produto"]."' AND status != 'P' ";
+				$pendentes = $this->bd->obtemUnicoRegistro($sSQL);
+				
+				if ($pendentes["faturas_pendentes"] > 0 ){
+					
+					$lista_contrato[$i]["faturas_pendentes"] = $pendentes["faturas_pendentes"];
+					
+				}else{
+					$lista_contrato[$i]["faturas_pendentes"] = "0";
+				}
+			
+			
+			
+			}
+			
+			$this->tpl->atribui("lista_contrato",$lista_contrato);
+			$this->arquivoTemplate = "renovacao_contrato.html";
+
 		}
 	
 	
