@@ -1,4 +1,4 @@
-
+<!--  RENOVACAO_CONTRATO.HTML -->
 <html>
 <head>
 <title>Untitled Document</title>
@@ -35,7 +35,7 @@
               <tr bgcolor="{cycle values="#ffffff,#f1f1f1"}"> 
                 <td width="250"><div align="LEFT"><a href="cobranca.php?op=renovacao&id_cliente_produto={$c.id_cliente_produto}&id_cliente={$c.id_cliente}">{$c.nome_razao} 
                   </a></div></td>
-                <td align="CENTER" width="50" bgcolor="{if $c.faturas_pendentes > 0}#D17676{/if}"><a href="cobranca.php?op=renovacao&id_cliente_produto={$c.id_cliente_produto}&id_cliente={$c.id_cliente}">{$c.faturas_pendentes}</a></td>
+                <td align="CENTER" width="50" bgcolor="{if $c.faturas_pendentes > 0}#D17676{/if}"><a href="clientes.php?op=cobranca&id_cliente={$c.id_cliente}&rotina=resumo">{$c.faturas_pendentes}</a></td>
                 <td><div align="LEFT"><a href="cobranca.php?op=renovacao&id_cliente_produto={$c.id_cliente_produto}&id_cliente={$c.id_cliente}">{$c.nome}</a></div></td>
                 <td align="CENTER"><a href="cobranca.php?op=renovacao&id_cliente_produto={$c.id_cliente_produto}&id_cliente={$c.id_cliente}"><font size="1">{$c.data_renovacao|date_format:"%d/%m/%Y"}</font></a></td>
                 <td align="RIGHT"><a href="cobranca.php?op=renovacao&id_cliente_produto={$c.id_cliente_produto}&id_cliente={$c.id_cliente}">{$c.valor_contrato}</a></td>
