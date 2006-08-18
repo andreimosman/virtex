@@ -4380,6 +4380,7 @@ public function extenso($valor=0, $maiusculas=false) {
 		$sSQL .= "   cbtb_cliente_produto cp, cbtb_contrato ctt ";
 		$sSQL .= "WHERE ";
 		$sSQL .= "	 cn.status != 'S' AND ";
+		$sSQL .= "	 cn.tipo_conta = p.tipo AND ";
 		$sSQL .= "	 cn.id_cliente_produto = cp.id_cliente_produto AND ";
 		$sSQL .= "   cl.id_cliente = cp.id_cliente ";
 		$sSQL .= "   AND p.id_produto = cp.id_produto ";
