@@ -2184,7 +2184,7 @@ class VACobranca extends VirtexAdmin {
 
 			$produto_carac = $this->bd->obtemUnicoRegistro($sSQL);
 
-			echo"CARACT. PRODUTOS: $sSQL <br>";
+			//echo"CARACT. PRODUTOS: $sSQL <br>";
 
 			$sSQL  = "SELECT * FROM cftb_pop ";
 			$lista_pop = $this->bd->obtemRegistros($sSQL);
