@@ -587,6 +587,86 @@ var formulario = document.frmContratacao;
    formulario.ini_carne.value = incrementaMes( formulario.ini_carne.value, 0 );
    formulario.data_carne.value = incrementaMes( formulario.ini_carne.value, parseInt(formulario.vigencia.value) - 1);
 }
+
+function CalculaData(){
+
+var formulario = document.frmContratacao;
+
+   if( formulario.dia_vencimento.value.length == 0 ) {
+      formulario.ini_carne.value = formulario.data_contratacao.value;
+   } else {
+      var d = new String(formulario.data_contratacao.value);
+   		//window.alert(d);
+      // split;
+      var tmp = d.split("/");
+      dia = tmp[0];
+      //mes = tmp[1];
+
+	  mes = parseInt(tmp[1],10);
+      ano = parseInt(tmp[2]);
+	  //window.alert ("mesA:"+mes);
+	  //window.alert(tmp);
+
+	  if ( mes == "08") mes = "8";
+	  if ( mes == "09") mes = "9";
+
+      formulario.ini_carne.value = formulario.pri_venc.value;
+   }
+
+   formulario.ini_carne.value = incrementaMes( formulario.ini_carne.value, 0 );
+   formulario.data_carne.value = incrementaMes( formulario.ini_carne.value, parseInt(formulario.vigencia.value) - 1);
+}
+
+	function formatar(src, mask)
+		{
+		  var i = src.value.length;
+		  var saida = mask.substring(0,1);
+		  var texto = mask.substring(i)
+		if (texto.substring(0,1) != saida)
+		  {
+			src.value += texto.substring(0,1);
+		  }
+
+
+
+	}
+	
+	function datavenc(){
+
+	var frm = document.frmContratacao;
+	var msg = new Array();
+
+	dia_venc = (document.forms[0].pri_venc.value.substring(0,2));
+	mes_venc = (document.forms[0].pri_venc.value.substring(3,5));
+	ano_venc = (document.forms[0].pri_venc.value.substring(6,10));
+
+	dia_atual = (document.forms[0].data_contratacao.value.substring(0,2));
+	mes_atual = (document.forms[0].data_contratacao.value.substring(3,5));
+	ano_atual = (document.forms[0].data_contratacao.value.substring(6,10));
+
+	if ((dia_venc =="")&&(mes_venc=="")&&(ano_venc=="")){
+
+		return true;
+	}
+
+
+	if	(((dia_venc < dia_atual)&&(mes_venc < mes_atual)&&(ano_venc < ano_atual)) ||
+		((mes_venc < mes_atual)&&(ano_venc == ano_atual)) ||
+		((dia_venc == dia_atual)&&(mes_venc == mes_atual)&&(ano_venc < ano_atual)) ||
+		((dia_venc > 31)&&(mes_venc > 12)&&(ano_venc > 2099))||
+		((dia_venc < dia_atual)&&(mes_venc == mes_atual)&&(ano_venc == ano_atual))||
+		((dia_venc == dia_atual)&&(mes_venc < mes_atual)&&(ano_venc == ano_atual))||
+		((dia_venc < dia_atual)&&(mes_venc > mes_atual)&&(ano_venc < ano_atual))){
+
+		window.alert("::-- Data do Primeiro Vencimento Inválida.--:: \n É necessário que a data de primeiro vencimento seja MAIOR do que a data de contratação.");
+
+		frm.pri_venc.focus();
+
+}
+
+}
+
+
 -->
 </script> {/literal} <form name="frmContratacao" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return validaForm();">
 <!-- DADOS DO frmContratacao: INI -->
@@ -784,8 +864,8 @@ var formulario = document.frmContratacao;
             </tr>
             <tr>
               <td bgcolor="#FFFFFF" align="right"><p>Data 1&ordm; Vencimento</p></td>
-              <td bgcolor="#FFFFFF"><input name="pri_venc" type="text" size="," id="pri_venc"></td>
-              <td bgcolor="#FFFFFF"><input type="button" name="hoje" value="Hoje" onClick="javascript:priVenc();" &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;"></td>
+              <td bgcolor="#FFFFFF"><input name="pri_venc" type="text" size="," id="pri_venc" onBlur="javascript:CalculaData();datavenc();" maxlength="10" OnKeyPress="formatar(this, '##/##/####')"></td>
+              <td bgcolor="#FFFFFF"><input type="button" name="hoje" value="Hoje" onClick="javascript:priVenc();" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;"></td>
               <td bgcolor="#FFFFFF">&nbsp;</td>
             </tr>
             <tr>
