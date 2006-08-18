@@ -2159,7 +2159,7 @@ class VACobranca extends VirtexAdmin {
 						$sSQL .= "FROM cntb_conta_bandalarga bl, cftb_pop pop, cftb_nas nas ";
 						$sSQL .= "WHERE ";
 						$sSQL .= "username = '".$contrato["username"]."' AND ";
-						$sSQL .= "tipo_conta = '".$contrato["tipo_conta"]."' AND ";
+						$sSQL .= "tipo_conta = 'BL' AND ";
 						$sSQL .= "dominio = '".$contrato["dominio"]."' AND ";
 						$sSQL .= "bl.id_nas = nas.id_nas AND ";
 						$sSQL .= "bl.id_pop = pop.id_pop ";
@@ -2169,7 +2169,7 @@ class VACobranca extends VirtexAdmin {
 						$sSQL .= "FROM cntb_conta_discado ";
 						$sSQL .= "WHERE ";
 						$sSQL .= "username = '".$contrato["username"]."' AND ";
-						$sSQL .= "tipo_conta = '".$contrato["tipo_conta"]."' AND ";
+						$sSQL .= "tipo_conta = 'D' AND ";
 						$sSQL .= "dominio = '".$contrato["dominio"]."' ";
 					break;
 					case 'H':
@@ -2177,14 +2177,14 @@ class VACobranca extends VirtexAdmin {
 						$sSQL .= "FROM cntb_conta_hospedagem ";
 						$sSQL .= "WHERE ";
 						$sSQL .= "username = '".$contrato["username"]."' AND ";
-						$sSQL .= "tipo_conta = '".$contrato["tipo_conta"]."' AND ";
+						$sSQL .= "tipo_conta = 'H' AND ";
 						$sSQL .= "dominio = '".$contrato["dominio"]."' ";
 					break;
 				}
 
 			$produto_carac = $this->bd->obtemUnicoRegistro($sSQL);
 
-			////echo"CARACT. PRODUTOS: $sSQL <br>";
+			echo"CARACT. PRODUTOS: $sSQL <br>";
 
 			$sSQL  = "SELECT * FROM cftb_pop ";
 			$lista_pop = $this->bd->obtemRegistros($sSQL);
@@ -2234,7 +2234,7 @@ class VACobranca extends VirtexAdmin {
 	
 				//final do request
 
-				if ($id_produto == $contrato["id_produto"]){
+				/*if ($id_produto == $contrato["id_produto"]){
 				
 					////echo"NADA DIFERENTE";
 					//$this->arquivoTemplate = "cliente_contrato_migracao_confirmacao.html";
@@ -2248,7 +2248,7 @@ class VACobranca extends VirtexAdmin {
 
 
 					
-				} else {
+				} else {*/
 				
 					$tipo = @$_REQUEST["tipo"];
 					$id_produto = @$_REQUEST["id_produto"];
@@ -2624,7 +2624,7 @@ class VACobranca extends VirtexAdmin {
 						}
 					
 				
-				}
+	//			}
 			
 
 			
@@ -3302,6 +3302,12 @@ class VACobranca extends VirtexAdmin {
 		
 			$valor_contrato = $produto["valor"];
 			$id_cobranca = @$_REQUEST["tipo_cobranca"];
+			
+			
+			// ESTORNA FATURAS A VENCER DO CARA
+			$sSQL = "UPDATE cbtb_faturas SET status = 'E' WHERE id_cliente_produto = $id_cliente_produto AND status = 'A' ";
+			$this->bd->consulta($sSQL);
+			
 		
 			$_id_carne = $this->bd->proximoID('cbsq_id_carne');
 			$q = 0;
