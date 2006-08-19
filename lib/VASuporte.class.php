@@ -170,6 +170,7 @@ class VASuporte extends VirtexAdmin {
 			$limite = @$_REQUEST["limite"];
 			$username = @$_REQUEST["username"];
 			$op = @$_REQUEST["op"];
+			$erros = @$_REQUEST["erros"];
 			
 			if(!$limite) $limite = 50;
 			
@@ -185,6 +186,18 @@ class VASuporte extends VirtexAdmin {
 			if($username) {
 				$sSQL .= "WHERE ";
 				$sSQL .= "	username LIKE '$username' ";
+			}
+			if ($erros == "sim" && $username){
+
+				$sSQL .= " AND session_id ilike 'E:%' "; 
+
+			}
+
+			if ($erros == "sim" && !$username){
+			
+				$sSQL .= " WHERE ";
+				$sSQL .= " session_id ilike 'E:%' "; 
+			
 			}
 			$sSQL .= "ORDER BY CASE WHEN logout is NULL then login ELSE logout END DESC ";
 			$sSQL .= "LIMIT $limite ";
@@ -212,6 +225,7 @@ class VASuporte extends VirtexAdmin {
 						
 			$this->tpl->atribui("op",$op);
 			$this->tpl->atribui("relat", $relat);
+			$this->tpl->atribui("tipo_pesq", $erros);
 			$this->tpl->atribui("username", $username);
 			$this->tpl->atribui("limite", $limite);
 			
@@ -428,6 +442,166 @@ class VASuporte extends VirtexAdmin {
 			
 			
 	
+		}else if ($op == "extrato"){
+
+			$mes = date('n');
+			$ano = date('Y');
+
+			global $_LS_MESES_ANO;
+
+			//echo $_LS_MESES_ANO[$data];
+
+			$this->tpl->atribui("meses",$_LS_MESES_ANO);
+			$this->tpl->atribui("mes",$mes);
+			$this->tpl->atribui("ano",$ano);
+
+
+			$tipo_conta = @$_REQUEST["tipo_conta"];
+			$acao = @$_REQUEST["acao"];
+			$valor_pesquisa = @$_REQUEST["valor_pesquisa"];
+			$periodo = @$_REQUEST["periodo"];
+
+			if (!$periodo){
+
+				$ano = date("Y");
+				$mes = date("m");
+
+
+			}
+
+			if (!$acao && $valor_pesquisa){
+			
+				$sSQL  = "SELECT ";
+				$sSQL .= "username , ";
+				$sSQL .= "to_char(login,'DD/MM/YYYY HH24:MI:SS') as inicio, ";
+				$sSQL .= "to_char(logout,'DD/MM/YYYY HH24:MI:SS') as fim, "; 
+				$sSQL .= "tempo, caller_id as origem, session_id, ";
+				$sSQL .= "terminate_cause as mensagem, bytes_in, bytes_out ";
+				$sSQL .= "FROM ";
+				$sSQL .= "	rdtb_accounting ";
+				$sSQL .= " WHERE " ;
+				$sSQL .= " username = '$valor_pesquisa' "; 
+				$sSQL .= " AND logout is not null ";
+				$sSQL .= " AND tempo > 0 ";
+				$sSQL .= " AND session_id not ilike '%:%' ";
+				$sSQL .= " AND EXTRACT('month' FROM login) = '$mes' ";
+				$sSQL .= " AND EXTRACT('year' FROM login) = '$ano' ";
+
+				if ($tipo_conta ==	"D" ){
+
+				$sSQL .= " AND caller_id not ilike '%:%:%:%:%:%' ";
+
+				}
+
+				if ($tipo_conta ==	"BL" ){
+
+				$sSQL .= " AND caller_id ilike '%:%:%:%:%:%' ";
+
+				}
+
+
+				$sSQL .= " ORDER BY inicio DESC " ; 
+
+				$extrato = $this->bd->obtemRegistros($sSQL);
+
+				//////////echo $sSQL ; 
+				///echo $acao;
+
+			
+			}
+
+
+			else if ($acao == "pesquisar"){
+
+			@list($mes,$ano) = explode("/",$periodo);
+
+			$sSQL  = "SELECT ";
+			$sSQL .= "username , ";
+			$sSQL .= "to_char(login,'DD/MM/YYYY HH24:MI:SS') as inicio, ";
+			$sSQL .= "to_char(logout,'DD/MM/YYYY HH24:MI:SS') as fim, "; 
+			$sSQL .= "tempo, caller_id as origem, session_id, ";
+			$sSQL .= "terminate_cause as mensagem, bytes_in, bytes_out ";
+			$sSQL .= "FROM ";
+			$sSQL .= "	rdtb_accounting ";
+			$sSQL .= " WHERE " ;
+			$sSQL .= " username = '$valor_pesquisa' "; 
+			$sSQL .= " AND logout is not null ";
+			$sSQL .= " AND tempo > 0 ";
+			$sSQL .= " AND session_id not ilike '%:%' ";
+			$sSQL .= " AND EXTRACT('month' FROM login) = '$mes' ";
+			$sSQL .= " AND EXTRACT('year' FROM login) = '$ano' ";
+
+			if ($tipo_conta ==	"discado" ){
+
+				$sSQL .= " AND caller_id not ilike '%:%:%:%:%:%' ";
+
+			}
+
+			if ($tipo_conta ==	"pppoe" ){
+
+				$sSQL .= " AND caller_id ilike '%:%:%:%:%:%' ";
+
+			}
+
+
+			$sSQL .= " ORDER BY inicio DESC " ; ////echo $sSQL;
+
+			$extrato = $this->bd->obtemRegistros($sSQL);
+
+			}
+
+			if ($tipo_conta == "BL" ){
+			
+				$tipo_conta = 'pppoe';
+			
+			}
+
+			if ($tipo_conta == "D" ){
+
+				$tipo_conta = 'discado';
+
+			}
+
+			@$this->tpl->atribui("extrato",$extrato);
+			$this->tpl->atribui("valor_pesquisa",$valor_pesquisa);
+			$this->tpl->atribui("periodo",$periodo);
+			$this->tpl->atribui("tipo_conta",$tipo_conta);
+			$this->tpl->atribui("ano_pesq",$ano);
+			$this->tpl->atribui("mes_pesq",$mes);
+			///// ;
+            
+		$this->arquivoTemplate= "suporte_extrato_radios.html";
+		
+		}
+
+		
+		
+
+		
+
+		else if ($op=="online_users"){
+
+
+			$sSQL  = "SELECT ";
+			$sSQL .= "username , ";
+			$sSQL .= "login as inicio, "; 
+			$sSQL .= " CAST (now() -login as time) as tempo,  ";
+			$sSQL .= " caller_id as origem, session_id, nas,  ";
+			$sSQL .= "terminate_cause as mensagem, bytes_in, bytes_out ";
+			$sSQL .= "FROM ";
+			$sSQL .= "	rdtb_accounting ";
+			$sSQL .= " WHERE " ;
+			$sSQL .= " logout is null ";
+			$sSQL .= " ORDER BY login DESC " ; 
+
+			$relacao_users = $this->bd->obtemRegistros($sSQL);
+
+			///echo $sSQL;
+
+			$this->tpl->atribui("relacao_users",$relacao_users);
+			$this->arquivoTemplate="surporte_radius_online.html";
+		
+		
 		}
 	}
 
@@ -436,7 +610,5 @@ class VASuporte extends VirtexAdmin {
 	}
 
 }
-
-
 
 ?>

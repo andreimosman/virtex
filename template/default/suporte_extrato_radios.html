@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Untitled Document</title>
+
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+
+{literal}
+<script>
+	function valida(form){
+
+		username = document.pesquisa.valor_pesquisa.value;
+		mes = document.pesquisa.periodo.value;
+
+			if (username ==""){
+
+				alert("Coloque um usuário para que a pesquisa seja efetuada!");
+				return false;
+
+			}
+			if (mes == ""){
+
+				alert("Escolha um período válido!!");
+				return false;
+
+			}
+
+		return true;
+
+	}
+</script>
+{/literal}
+
+
+</head>
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="document.pesquisa.valor_pesquisa.focus();">
+<div align="center">
+
+  <h1><strong>Extrato de Acesso - Radius</strong></h1>
+			<form name="pesquisa" action="" method="post" onSubmit="return valida(this);">
+
+    <table>
+      <tr>
+        <td colspan="2"><p>&nbsp;</p></td>
+      </tr>
+      <tr>
+        <td height="28" align="center" colspan="2"><p>Consultar do usuário&nbsp;
+            <input  type="text" name="valor_pesquisa" id="valor_pesquisa" value="{$valor_pesquisa}" />
+          </p></td>
+        <input type="hidden" name="acao" value="pesquisar" />
+      </tr>
+      <tr>
+        <td colspan="2"><p align="right">&nbsp;&nbsp; &nbsp; &nbsp; nos últimos&nbsp;&nbsp; &nbsp;&nbsp;
+            &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+            <select name="periodo">
+              <option value=""></option>
+              <option value="{$mes}/{$ano}" {if $mes_pesq == $mes && $ano_pesq == $ano} selected {/if} >Neste Mês</option>
+			  {assign var=mes value=$mes-1}
+              <option value="{$mes}/{$ano}" {if $mes_pesq == $mes && $ano_pesq == $ano} selected {/if}>Mês Anterior</option>
+			  {assign var=mes value=$mes-1}
+			  {foreach item=a from=$meses }
+              <option value="{$mes}/{$ano}" {if $mes_pesq == $mes && $ano_pesq == $ano} selected {/if}>
+			  {$meses[$mes]}/{$ano}
+			  {if $mes >= 1 }{assign var=mes value= $mes-1}{/if}
+			  {if $mes == 0 }{assign var=mes value=13}
+			  {assign var=mes value=$mes-1}{assign var=ano value=$ano-1}{/if} </option>
+			  {/foreach}
+            </select>
+            <input  type="submit" name="submit" id="submit2" value="Ok"/>
+          </p></td>
+      </tr>
+      <tr>
+        <td><p align="right">
+            <input type="radio" name="tipo_conta" value="discado" class="checkbox" {if $tipo_conta == "discado"} checked {/if} >
+            Discado</p></td>
+        <td><p align="left">
+            <input type="radio" name="tipo_conta" value="pppoe" class="checkbox" {if $tipo_conta == "pppoe"} checked {/if} >
+            PPPoE</p></td>
+      </tr>
+    </table>
+		{if $extrato}
+    <table>
+      <tr bgcolor="#D9E2EC">
+        <td width="100" align="LEFT"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Usuário</font></td>
+        <td width="100" align="LEFT"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Origem</font></td>
+        <td width="145" align="CENTER"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Início</font></td>
+        <td width="135" align="CENTER"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Fim</font></td>
+        <td width="50" align="RIGHT"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Tempo</font></td>
+        <td width="130" align="CENTER"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Bytes</font></td>
+    </tr>
+    {foreach item=a from=$extrato}
+    <tr bgcolor="#EAF4FF" onMouseOver="style.background='#DAEBFF'; " onMouseout="style.background='#EAF4FF';">
+      <td align="LEFT" ><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.username}</font></td>
+      <td align="LEFT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.origem}</font></td>
+      <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.inicio|date_format:"%d/%m/%Y %H:%M:%S "}</font></td>
+      <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.fim|date_format:"%d/%m/%Y %H:%M:%S "}</font></td>
+      <td align="RIGHT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.tempo|date_format:"%H:%M:%S"}</font></td>
+      <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.bytes_in}/{$a.bytes_out}</font></td>
+    </tr>
+    {/foreach}
+  </table>
+
+  {/if}
+    <p> {if !$extrato && $valor_pesquisa} <strong><font color="#FF0000">Nao Há 
+      Registro de acessos desse usuário com os par&acirc;metros escolhidos.</font> 
+      </strong> {/if} </p>
+{if ($extrato && $valor_pesquisa)}
+  <table>
+  	<tr>
+		<td  style="position: relative; top: 20px;"><input type="button" value=" « Voltar" onClick="javascript:history.back();history.back();" /></td>
+	</tr>
+  </table>
+ {/if}
+ </form>
+</div>
+</body>
+</html>
+

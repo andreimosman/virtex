@@ -20,14 +20,18 @@
               <tr>
                 <td align="center" valign="middle"> <h1 align="center">Radius</h1><!--<h2 align="center"><font size="2">
                 Radius</font></h2>-->
-
-
-
                  	  <form name=formulario method="get" action="">
                 	  <input name="op" type="hidden" value="{$op}" id="op"></td>
 					  <table border=0  _bgcolor="#000000" cellspacing=1 cellpadding=1 width="90%">
 						<tr>
 						  <td align="center">
+						  <table align="center">
+                          <tr bgcolor="#FFFFFF"> 
+                            <td><p><a href="suporte.php?op=extrato"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Extrato de Acessos</font></a> | </p></td>
+                            <td><p><a href="suporte.php?op=online_users"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Usuários Online</font></a></p></td>
+							<td height="50px">&nbsp;&nbsp;</td>
+                          </tr>
+                        </table>
 						    <table border=0 cellspacing=0>
 							  <tr>
 							    <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Analisar
@@ -42,6 +46,11 @@
 							    <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
 							  	  <input type="text" name="username" value="{$username}" class="campos">
 							  	  </font></p></td>
+							  </tr>
+							  <tr>
+							    <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Consultar apenas erros</font></p></td>
+							    <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+							  	  <input type="checkbox" name="erros" value="sim" class="checkbox" {if $tipo_pesq == "sim"} checked {/if}></font></p></td>
 							  </tr>
 							  <tr>
 							    <td><p>&nbsp;</p></td>

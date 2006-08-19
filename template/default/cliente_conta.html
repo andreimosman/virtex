@@ -235,49 +235,47 @@ function check(){
                               <td align="center" valign="middle">
 
 									<table width="450" border=0 bgcolor="#F1F1F1">
-              <tr>
-                <td colspan=2><h2><font color="#000000">Dados do Usuário</font></h2></td>
+              <tr> 
+                <td ><h2><font color="#000000">Dados do Usuário</font></h2></td>
+                <td><div align="right"> 
+                    <p>[<a href="suporte.php?op=extrato&valor_pesquisa={$username}&tipo_conta={$tipo_conta}">extrato 
+                      de acesso</a>]<br>
+                      <strong><font color="#CCCCCC">(m&ecirc;s atual)</font></strong></p>
+                    </div></td>
               </tr>
-              <tr>
-                <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
-<p>Username:</p></td>
+              <tr> 
+                <td bgcolor="#FFFFFF" align="right" width="50" valign="top"> <p>Username:</p></td>
                 <td bgcolor="#FFFFFF" colspan=2><input type="text" maxlength="30" name="username"  disabled="true" value="{$username}"></td>
               </tr>
-              <tr>
-                <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
-<p>Senha:</p></td>
-                <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="senha" id="senha" >
+              <tr> 
+                <td bgcolor="#FFFFFF" align="right" width="50" valign="top"> <p>Senha:</p></td>
+                <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="senha" id="senha" > 
                 </td>
               </tr>
-              <tr>
-                <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
-<p>Confirme:</p></td>
-                <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="conf_senha" id="conf_senha" >
+              <tr> 
+                <td bgcolor="#FFFFFF" align="right" width="50" valign="top"> <p>Confirme:</p></td>
+                <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="conf_senha" id="conf_senha" > 
                 </td>
               </tr>
-              <tr>
-                <td width="50" align="right" valign="top" bgcolor="#FFFFFF">
-<p>Status:</p></td>
-                <td bgcolor="#FFFFFF" colspan=2>
-
-					<SELECT name='status'>
+              <tr> 
+                <td width="50" align="right" valign="top" bgcolor="#FFFFFF"> <p>Status:</p></td>
+                <td bgcolor="#FFFFFF" colspan=2> <SELECT name='status'>
 					{foreach key=id item=nome from=$lista_status}
 					<OPTION VALUE='{$id}'  {if $id == $status}SELECTED{/if} >{$nome}</OPTION>
 					{/foreach}
-					</SELECT>
-				</td>
-				</tr>
-					<tr>
-						 <td width="50" align="right" valign="top" bgcolor="#FFFFFF"><p>Tipo:</p></td>
-						<td bgcolor="#FFFFFF" colspan="3"><p>
-							<select name='conta_mestre' >
-								<option></option>
-									<option value='t' {if $conta_mestre_val=="t"}SELECTED{/if}>Conta Mestre</option>
-									<option value='f' {if $conta_mestre_val=="f"}SELECTED{/if}>Normal</option>
-							</select></p>
-						</td>
-					</tr>
-             
+					 </SELECT> </td>
+              </tr>
+              <tr> 
+                <td width="50" align="right" valign="top" bgcolor="#FFFFFF"><p>Tipo:</p></td>
+                <td bgcolor="#FFFFFF" colspan="3"><p> 
+                    <select name='conta_mestre' >
+                      <option></option>
+                      <option value='t' {if $conta_mestre_val=="t"}SELECTED{/if}>Conta 
+                      Mestre</option>
+                      <option value='f' {if $conta_mestre_val=="f"}SELECTED{/if}>Normal</option>
+                    </select>
+                  </p></td>
+              </tr>
             </table>
 
 							  </td>
@@ -601,8 +599,14 @@ function check(){
 							  </table>
 
                           <table width="450" border=0 bgcolor="#F1F1F1" align="center">
-						                <tr>
-						                  <td colspan=2><h2><font color="#000000">Dados da Conta</font></h2></td>
+						                <tr>	                  
+								 	         <td height="33" width="225"><h2><font color="#000000">Dados 
+              da Conta</font></h2></td>
+								 	         <td height="33"><div align="right">
+              <p>[<a href="suporte.php?op=extrato&valor_pesquisa={$username}&tipo_conta={$tipo_conta}">extrato 
+                de acesso</a>]<br>
+                <font color="#CCCCCC">(m&ecirc;s atual)</font></p>
+            </div></td>
 						                </tr>
 						                <tr>
 						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
