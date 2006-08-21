@@ -3249,7 +3249,7 @@ class VACobranca extends VirtexAdmin {
 			list($a,$m,$d) = explode("-",$data_contratacao);
 			//$data_expiracao = date("Y-m-d", mktime(0,0,0, $a,$m+$vigencia,$d));
 			$data_renovacao = date("Y-m-d", mktime(0, 0, 0, $m+$vigencia, $d, $a));	
-			////echo"DATA: $hoje <br> DATA EXP: $data_renovacao <br>";
+			//echo"DATA: $hoje <br> DATA EXP: $data_renovacao <br>";
 			
 
 			
@@ -3818,6 +3818,7 @@ class VACobranca extends VirtexAdmin {
 					
 					$sSQL = "UPDATE cbtb_contrato SET data_renovacao = '$data_renovacao' WHERE id_cliente_produto = $id_cliente_produto";
 					$this->bd->consulta($sSQL);
+					//echo "UPDATE DA RENOVACAO: $sSQL <br>";
 					
 					$sSQL = "INSERT INTO lgtb_renovacao (id_cliente_produto,data_renovacao,data_proxima_renovacao) VALUES ($id_cliente_produto,'$data_contratacao','$data_renovacao')";
 					$this->bd->consulta($sSQL);
@@ -4389,6 +4390,7 @@ public function extenso($valor=0, $maiusculas=false) {
 		$sSQL .= "   cltb_cliente cl, prtb_produto p, cbtb_faturas f,cntb_conta cn, ";
 		$sSQL .= "   cbtb_cliente_produto cp, cbtb_contrato ctt ";
 		$sSQL .= "WHERE ";
+		$sSQL .= "	 f.valor > '0.00' AND ";
 		$sSQL .= "	 cn.status != 'S' AND ";
 		$sSQL .= "	 cn.tipo_conta = p.tipo AND ";
 		$sSQL .= "	 cn.id_cliente_produto = cp.id_cliente_produto AND ";
@@ -4412,6 +4414,7 @@ public function extenso($valor=0, $maiusculas=false) {
 		$sSQL .= "   cl.nome_razao, p.nome ";
 		
 		$r = $this->bd->obtemRegistros($sSQL);
+		//echo "REGISTROS: $sSQL <br>";
 		
 		for( $i=0;$i<count($r);$i++ ) {
 		
@@ -4432,7 +4435,7 @@ public function extenso($valor=0, $maiusculas=false) {
 			
 			$r[$i]["contas"] = $contas;
 			
-			
+			//echo "contas: ".$r[$i]["contas"] = $contas;
 		}
 		
 		return($r);

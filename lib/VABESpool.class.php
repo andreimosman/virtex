@@ -139,7 +139,7 @@
 				
 				if(count($lista_nas)) {
 				
-					if ($licencaBL != 1) return -1;				
+					if ($licencaBL != 1) ? return -1;				
 				
 				
 				
@@ -260,7 +260,7 @@
 			
 			if( count($lista_nas) ) {
 			
-				if ($licencaBL != 1) return -1;
+				if ($licencaBL != 1) ? return -1 : return 1;
 			
 			
 			
@@ -305,7 +305,7 @@
 					// Início da transação
 					
 					
-					if ($licencaE != 1) return -1;
+					if ($licencaE != 1) ? return -1;
 					
 					
 					$this->bd->consulta("BEGIN");
@@ -429,7 +429,7 @@
 
 			 if( count($lista_srvd) ) {
 
-					if ($licencaBL != 1) return -1;
+					if ($licencaBL != 1) ? return -1;
 
 				// Início da transação
 				$this->bd->consulta("BEGIN");
