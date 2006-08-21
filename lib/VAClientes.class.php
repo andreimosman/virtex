@@ -4538,7 +4538,7 @@ class VAClientes extends VirtexAdmin {
 			$arq_mostra = $path."/".$base_nome.".pdf";
 			$arq = $base_nome.".html";
 			
-			echo $nome_arq ."<br>";
+			//echo $nome_arq ."<br>";
 			
 			if ($rotina == "pdf"){
 
