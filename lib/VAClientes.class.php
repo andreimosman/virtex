@@ -4538,7 +4538,7 @@ class VAClientes extends VirtexAdmin {
 			$arq_mostra = $path."/".$base_nome.".pdf";
 			$arq = $base_nome.".html";
 			
-			
+			echo $nome_arq ."<br>";
 			
 			if ($rotina == "pdf"){
 
@@ -4574,10 +4574,11 @@ class VAClientes extends VirtexAdmin {
 			//////////echo "BOSTA";
 			
 			//$this->arquivoTemplate = "home.html";
-			
-			
+			$contr = fopen($nome_arq, "r");
+			echo fread($contr,filesize($nome_arq));
+			fclose($contr);
 			//$this->tpl->atribui("arquivo_contrato",$arquivo_contrato);
-			$this->arquivoTemplate = $nome_arq;
+			//$this->arquivoTemplate = $nome_arq;
 			}
 		
 		}else if ($op == "teste"){
