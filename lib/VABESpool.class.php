@@ -28,6 +28,11 @@
 		
 		protected $debug;
 		
+		protected licencaBL;
+		protected licencaE;
+		protected licencaH;
+		
+		
 		
 		/**
 		 * Construtor
@@ -41,6 +46,9 @@
 			
 			$this->debug = 0;
 			
+			$this->licencaBL = $this->licenca("backend","banda_larga");
+			$this->licencaE = $this->licenca("backend","email");
+			$this->licencaH = $this->licenca("backend","hospedagem");
 			
 			
 			/**
@@ -119,11 +127,23 @@
 				/**
 				 * BandaLarga: TCP/IP
 				 */
+				 
+				 
+				 
+				 
+				 
+				 
 				$abl = new AtuadorBandaLarga($this->bd,$this->debug);
 				
 				$lista_nas = $abl->obtemListaNasIPAtivos();
 				
 				if(count($lista_nas)) {
+				
+					if ($licencaBL != 1) return -1;				
+				
+				
+				
+				
 					// Obtem os clientes ativos para os NAS operados nesta máquina
 					$sSQL  = "SELECT ";
 					$sSQL .= "   c.username,c.dominio,c.tipo_conta,c.id_conta,cbl.id_pop,cbl.id_nas, ";
@@ -239,6 +259,12 @@
 			$lista_nas = $abl->obtemListaNasIPAtivos();
 			
 			if( count($lista_nas) ) {
+			
+				if ($licencaBL != 1) return -1;
+			
+			
+			
+			
 				// Início da transação
 				$this->bd->consulta("BEGIN");
 
@@ -277,6 +303,11 @@
 
 			 if( count($lista_srve) ) {
 					// Início da transação
+					
+					
+					if ($licencaE != 1) return -1;
+					
+					
 					$this->bd->consulta("BEGIN");
 
 					// FAZ O SELECT		 		
@@ -315,6 +346,45 @@
 			 $lista_srvh = $ah->obtemListaServidores();
 
 			 if( count($lista_srvh) ) {
+			 
+			 		if ($licencaH != 1) {
+						$this->bd->consulta("BEGIN");
+
+						// FAZ O SELECT		 		
+						$sSQL  = "SELECT ";
+						$sSQL .= "   id_spool, op, id_conta, parametros ";
+						$sSQL .= "FROM ";
+						$sSQL .= "   sptb_spool ";
+						$sSQL .= "WHERE ";
+						$sSQL .= "   tipo = 'H' ";
+						$sSQL .= "   AND status = 'A' ";
+						$sSQL .= "   AND destino in ('". implode("','",$lista_srvh) ."') ";
+						$sSQL .= "FOR UPDATE";
+
+						$fila = $this->bd->obtemRegistros($sSQL);
+
+						$base_hosp = $this->prefs->obtem("geral","hosp_base");
+
+						$hosp_server = $this->prefs->obtem("geral","hosp_server");
+
+						$parametros_hospedagem = $base_hosp.",".$hosp_server;
+
+
+						for($i=0;$i<count($fila);$i++) {
+							$ah->processa($fila[$i]["op"],$fila[$i]["id_conta"],$fila[$i]["parametros"],$parametros_hospedagem);
+
+							$sSQL = "UPDATE sptb_spool SET status = 'MODULO H NÃO LICENCIADO' WHERE id_spool = '".$this->bd->escape($fila[$i]["id_spool"])."'";
+							$this->bd->consulta($sSQL);
+						}
+
+						// Fim da transação
+						$this->bd->consulta("END");		 		
+
+			 			return -1;
+			 			
+			 		}
+			 
+			 
 					// Início da transação
 					$this->bd->consulta("BEGIN");
 
@@ -358,6 +428,9 @@
 			 $lista_srvd = $ad->obtemListaServidores();
 
 			 if( count($lista_srvd) ) {
+
+					if ($licencaBL != 1) return -1;
+
 				// Início da transação
 				$this->bd->consulta("BEGIN");
 

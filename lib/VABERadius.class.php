@@ -56,7 +56,8 @@
 		protected $ip_addr;
 		protected $tempo;
 		protected $terminate_cause;
-		
+		protected $licencaBL;
+		protected $licencaD;
 		
 		/**
 		 * Construtor
@@ -64,6 +65,11 @@
 		public function __construct() {
 			parent::__construct();
 			$this->initVars();
+			
+			
+			$this->licencaBL = $this->licenca("backend","banda_larga");
+			$this->licencaD  = $this->licenca("backend","discado");
+			
 			
 			// Configura o getopt e chama as opções para processamento posterior
 			$this->_shortopts = "RUDACu:w:f:ESs:I:O:n:i:t:c:";
@@ -341,6 +347,13 @@
 				if( $this->tipo_conta == "BL" ) {
 					// BANDA LARGA
 					
+					if ($licencaBL != 1) {
+						$this->log("BL",$this->username,"MODULO DE BANDA LARGA NÃO LICENCIADO",$this->foneinfo,$this->nas);
+						return -1;
+					}
+					
+					
+					
 					$this->foneinfo = $this->mac($this->foneinfo);
 					
 					/**
@@ -392,6 +405,14 @@
 					 
 				} else {
 					// DISCADO
+					
+					if ($licencaD != 1) return -1;
+					
+					if ($licencaBL != 1) {
+						$this->log("D",$this->username,"MODULO DE DISCADO NÃO LICENCIADO",$this->foneinfo,$this->nas);
+						return -1;
+					}
+
 					
 					/**
 					 * Validação do número de telefone
