@@ -1734,7 +1734,7 @@ class VACobranca extends VirtexAdmin {
 					$sSQL .= "bl.username = '".$contrato["username"]."' AND bl.tipo_conta = '$tipo_produto' AND bl.dominio = '".$contrato["dominio"]."' AND ";
 					$sSQL .= "bl.username = cn.username AND bl.tipo_conta = cn.tipo_conta AND bl.dominio = cn.dominio ";
 					$bl = $this->bd->obtemUnicoRegistro($sSQL);
-			//		//echo"SPOOL BL: $sSQL <br>";
+					echo"SPOOL BL: $sSQL <br>";
 					
 					$sSQL  = "SELECT ip FROM cftb_nas WHERE id_nas = '".$bl["id_nas"]."' ";
 					$nas = $this->bd->obtemUnicoRegistro($sSQL);
@@ -1767,7 +1767,8 @@ class VACobranca extends VirtexAdmin {
 				$this->bd->consulta($sSQL);
 			//	//echo"UPDATE CANCELAR2: $sSQL <br>";
 				
-				$sSQL = "UPDATE cntb_conta SET status = 'C' where username = '".$contrato["username"]."' AND tipo_conta = '".$contrato["tipo_produto"]."' AND dominio = '".$contrato["dominio"]."' ";
+				//$sSQL = "UPDATE cntb_conta SET status = 'C' where username = '".$contrato["username"]."' AND tipo_conta = '".$contrato["tipo_produto"]."' AND dominio = '".$contrato["dominio"]."' ";
+				$sSQL = "UPDATE cntb_conta SET status = 'C' where id_cliente_produto = $id_cliente_produto ";
 				$this->bd->consulta($sSQL);
 			//	//echo"UPDATE CANCELAR3: $sSQL <br>";
 			
@@ -1790,9 +1791,15 @@ class VACobranca extends VirtexAdmin {
 						 
 						 }
 						 
-				$sSQL .= "SET status = 'C' where username = '".$contrato["username"]."' AND tipo_conta = '".$contrato["tipo_produto"]."' AND dominio = '".$contrato["dominio"]."' ";
+				//$sSQL .= "SET status = 'C' where username = '".$contrato["username"]."' AND tipo_conta = '".$contrato["tipo_produto"]."' AND dominio = '".$contrato["dominio"]."' ";
+				$sSQL .= "SET status = 'C' where id_cliente_produto = $id_cliente_produto' ";
 				$this->bd->consulta($sSQL);
 			//	//echo"UPDATE CANCELAR4: $sSQL <br>";
+			
+			
+				// SETA ID_CLIENTE_PRODUTO COMO EXCLUIDO
+				$sSQL = "UPDATE cbtb_cliente_produto set excluido = TRUE where id_cliente_produto = $id_cliente_produto";
+				$this->bd->consulta($sSQL);
 				
 				$msg_final = "CONTRATOS CANCELADOS COM SUCESSO!<BR>FATURAS CANCELADAS COM SUCESSO!<BR>CONTAS CANCELADAS COM SUCESSO!<br>CARNE CANCELADO COM SUCESSO!";
 				$this->tpl->atribui("mensagem",$msg_final);
