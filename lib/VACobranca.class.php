@@ -1731,10 +1731,11 @@ class VACobranca extends VirtexAdmin {
 					$sSQL .= "	cn.username, cn.dominio, cn.tipo_conta, cn.id_conta ";
 					$sSQL .= "FROM cntb_conta_bandalarga bl, cntb_conta cn ";
 					$sSQL .= "WHERE ";
+					$sSQL .= "cn.conta_mestre is true AND ";
 					$sSQL .= "bl.username = '".$contrato["username"]."' AND bl.tipo_conta = '$tipo_produto' AND bl.dominio = '".$contrato["dominio"]."' AND ";
 					$sSQL .= "bl.username = cn.username AND bl.tipo_conta = cn.tipo_conta AND bl.dominio = cn.dominio ";
 					$bl = $this->bd->obtemUnicoRegistro($sSQL);
-					echo"SPOOL BL: $sSQL <br>";
+					//echo"SPOOL BL: $sSQL <br>";
 					
 					$sSQL  = "SELECT ip FROM cftb_nas WHERE id_nas = '".$bl["id_nas"]."' ";
 					$nas = $this->bd->obtemUnicoRegistro($sSQL);
