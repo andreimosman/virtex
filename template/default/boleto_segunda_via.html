@@ -1,0 +1,475 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+{literal}
+<script language="JavaScript">ready = "yes";</script> <script language="JavaScript">
+<!--
+var estado=false;
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_showHideLayers() { //v6.0
+  var i,p,v,obj,args=MM_showHideLayers.arguments;
+  for (i=0; i<(args.length-2); i+=3) if ((obj=MM_findObj(args[i]))!=null) { v=args[i+2];
+    if (obj.style) { obj=obj.style; v=(v=='show')?'visible':(v=='hide')?'hidden':v; }
+    obj.visibility=v; }
+}
+var da = (document.all) ? 1 : 0;
+var pr = (window.print) ? 1 : 0;
+var mac = (navigator.userAgent.indexOf("Mac") != -1);
+
+function printPage() {
+  if (pr) // NS4, IE5
+    window.print()
+  else if (da && !mac) // IE4 (Windows)
+       vbPrintPage()
+  else // other browsers
+    alert("Desculpe seu browser não suporta esta função. Por favor utilize a barra de trabalho para imprimir a página.");
+}
+
+if (da && !pr && !mac) with (document) {
+  writeln('<OBJECT ID="WB" WIDTH="0" HEIGHT="0" CLASSID="clsid:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>');
+  writeln('<' + 'SCRIPT LANGUAGE="VBScript">');
+  writeln('Sub window_onunload');
+  writeln('  On Error Resume Next');
+  writeln('  Set WB = nothing');
+  writeln('End Sub');
+  writeln('Sub vbPrintPage');
+  writeln('  OLECMDID_PRINT = 6');
+  writeln('  OLECMDEXECOPT_DONTPROMPTUSER = 1');
+  writeln('  OLECMDEXECOPT_PROMPTUSER = 1');
+  writeln('  On Error Resume Next');
+  writeln('  WB.ExecWB OLECMDID_PRINT, OLECMDEXECOPT_DONTPROMPTUSER');
+  writeln('End Sub');
+  writeln('<' + '/SCRIPT>');
+}
+//-->
+</script>
+<style>
+@media print {
+	#geral1 {
+		border-top-width: 0px;
+		border-right-width: 0px;
+		border-bottom-width: 1px;
+		border-left-width: 0px;
+		border-top-style: none;
+		border-right-style: none;
+		border-bottom-style: dotted;
+		border-left-style: none;
+		border-top-color: #000000;
+		border-right-color: #000000;
+		border-bottom-color: #000000;
+		border-left-color: #000000;
+	}
+	#logo_esquerdo {
+		border-top-width: 1px;
+		border-right-width: 0px;
+		border-bottom-width: 0px;
+		border-left-width: 0px;
+		border-top-style: solid;
+		border-right-style: none;
+		border-bottom-style: none;
+		border-left-style: none;
+		border-top-color: #000000;
+		border-right-color: #000000;
+		border-bottom-color: #000000;
+		border-left-color: #000000;
+	}
+	#venc1 {
+		border-top-width: 0px;
+		border-right-width: 0px;
+		border-bottom-width: 0px;
+		border-left-width: 1px;
+		border-top-style: none;
+		border-right-style: none;
+		border-bottom-style: none;
+		border-left-style: solid;
+		border-top-color: #000000;
+		border-right-color: #000000;
+		border-bottom-color: #000000;
+		border-left-color: #000000;
+	}
+	#top {
+		border-top-width: 1px;
+		border-right-width: 0px;
+		border-bottom-width: 0px;
+		border-left-width: 0px;
+		border-top-style: solid;
+		border-right-style: none;
+		border-bottom-style: none;
+		border-left-style: none;
+		border-top-color: #000000;
+		border-right-color: #000000;
+		border-bottom-color: #000000;
+		border-left-color: #000000;
+	}
+	#left1 {
+		border-top-width: 1px;
+		border-right-width: 1px;
+		border-bottom-width: 0px;
+		border-left-width: 0px;
+		border-top-style: solid;
+		border-right-style: solid;
+		border-bottom-style: none;
+		border-left-style: none;
+		border-top-color: #000000;
+		border-right-color: #000000;
+		border-bottom-color: #000000;
+		border-left-color: #000000;
+	}
+	#left2 {
+		border-top-width: 0px;
+		border-right-width: 1px;
+		border-bottom-width: 0px;
+		border-left-width: 0px;
+		border-top-style: none;
+		border-right-style: solid;
+		border-bottom-style: none;
+		border-left-style: none;
+		border-top-color: #000000;
+		border-right-color: #000000;
+		border-bottom-color: #000000;
+		border-left-color: #000000;
+	}
+	#geral2 {
+		border-top-width: 0px;
+		border-right-width: 0px;
+		border-bottom-width: 0px;
+		border-left-width: 1px;
+		border-top-style: none;
+		border-right-style: none;
+		border-bottom-style: none;
+		border-left-style: dotted;
+		border-top-color: #000000;
+		border-right-color: #000000;
+		border-bottom-color: #000000;
+		border-left-color: #000000;
+	}
+	#titulo_dir {
+		border-top-width: 0px;
+		border-right-width: 0px;
+		border-bottom-width: 0px;
+		border-left-width: 1px;
+		border-top-style: none;
+		border-right-style: none;
+		border-bottom-style: none;
+		border-left-style: solid;
+		border-top-color: #000000;
+		border-right-color: #000000;
+		border-bottom-color: #000000;
+		border-left-color: #000000;
+	}
+	#dir {
+		border-top-width: 0px;
+		border-right-width: 1px;
+		border-bottom-width: 0px;
+		border-left-width: 0px;
+		border-top-style: none;
+		border-right-style: solid;
+		border-bottom-style: none;
+		border-left-style: none;
+		border-top-color: #000000;
+		border-right-color: #000000;
+		border-bottom-color: #000000;
+		border-left-color: #000000;
+	}
+
+	hr {
+		page-break-after: always;
+		height: 0px;color: #FFFFFF;
+	}
+	.titulo{
+		font:helvetica;
+		font-size:10px;
+	}
+	.geral{
+		font:helvetica;
+		font-size:9px;
+	}
+	.menor{
+		font:helvetica;
+		font-size:8px;
+	}
+	.pontilhado{
+		background-image: url(imagens/pontilhado.gif);
+	}
+	.pontilhadoh{
+		background-image: url(imagens/pontilhado_h.gif);
+	}
+
+	.separador{
+		background-color: #000000;
+	}
+
+	#imprimir {
+		visibility:hidden;
+	}
+
+}
+
+@media screen {
+	#imprimir {
+		position:absolute;
+		left:8px;
+		top:8px;
+		font-family:arial,helvetica;
+		text-decoration: none;
+		font-size:12px;
+		font-color: #ffffff;
+		align: center;
+		vertical-align: bottom;
+		background-color:#CACAFF;
+		width:70px;
+		height:10px;
+		border-top-width: 1px;
+		border-right-width: 1px;
+		border-bottom-width: 1px;
+		border-left-width: 1px;
+		border-top-style: solid;
+		border-right-style: solid;
+		border-bottom-style: solid;
+		border-left-style: solid;
+
+
+	}
+	#geral1 {
+		border-top-width: 0px;
+		border-right-width: 0px;
+		border-bottom-width: 1px;
+		border-left-width: 0px;
+		border-top-style: none;
+		border-right-style: none;
+		border-bottom-style: dotted;
+		border-left-style: none;
+		border-top-color: #000000;
+		border-right-color: #000000;
+		border-bottom-color: #000000;
+		border-left-color: #000000;
+	}
+	#logo_esquerdo {
+		border-top-width: 1px;
+		border-right-width: 0px;
+		border-bottom-width: 0px;
+		border-left-width: 0px;
+		border-top-style: solid;
+		border-right-style: none;
+		border-bottom-style: none;
+		border-left-style: none;
+		border-top-color: #000000;
+		border-right-color: #000000;
+		border-bottom-color: #000000;
+		border-left-color: #000000;
+	}
+	#venc1 {
+		border-top-width: 0px;
+		border-right-width: 0px;
+		border-bottom-width: 0px;
+		border-left-width: 1px;
+		border-top-style: none;
+		border-right-style: none;
+		border-bottom-style: none;
+		border-left-style: solid;
+		border-top-color: #000000;
+		border-right-color: #000000;
+		border-bottom-color: #000000;
+		border-left-color: #000000;
+	}
+	#top {
+		border-top-width: 1px;
+		border-right-width: 0px;
+		border-bottom-width: 0px;
+		border-left-width: 0px;
+		border-top-style: solid;
+		border-right-style: none;
+		border-bottom-style: none;
+		border-left-style: none;
+		border-top-color: #000000;
+		border-right-color: #000000;
+		border-bottom-color: #000000;
+		border-left-color: #000000;
+	}
+	#left1 {
+		border-top-width: 1px;
+		border-right-width: 1px;
+		border-bottom-width: 0px;
+		border-left-width: 0px;
+		border-top-style: solid;
+		border-right-style: solid;
+		border-bottom-style: none;
+		border-left-style: none;
+		border-top-color: #000000;
+		border-right-color: #000000;
+		border-bottom-color: #000000;
+		border-left-color: #000000;
+	}
+	#left2 {
+		border-top-width: 0px;
+		border-right-width: 1px;
+		border-bottom-width: 0px;
+		border-left-width: 0px;
+		border-top-style: none;
+		border-right-style: solid;
+		border-bottom-style: none;
+		border-left-style: none;
+		border-top-color: #000000;
+		border-right-color: #000000;
+		border-bottom-color: #000000;
+		border-left-color: #000000;
+	}
+	#geral2 {
+		border-top-width: 0px;
+		border-right-width: 0px;
+		border-bottom-width: 0px;
+		border-left-width: 1px;
+		border-top-style: none;
+		border-right-style: none;
+		border-bottom-style: none;
+		border-left-style: dotted;
+		border-top-color: #000000;
+		border-right-color: #000000;
+		border-bottom-color: #000000;
+		border-left-color: #000000;
+	}
+	#titulo_dir {
+		border-top-width: 0px;
+		border-right-width: 0px;
+		border-bottom-width: 0px;
+		border-left-width: 1px;
+		border-top-style: none;
+		border-right-style: none;
+		border-bottom-style: none;
+		border-left-style: solid;
+		border-top-color: #000000;
+		border-right-color: #000000;
+		border-bottom-color: #000000;
+		border-left-color: #000000;
+	}
+	#dir {
+		border-top-width: 0px;
+		border-right-width: 1px;
+		border-bottom-width: 0px;
+		border-left-width: 0px;
+		border-top-style: none;
+		border-right-style: solid;
+		border-bottom-style: none;
+		border-left-style: none;
+		border-top-color: #000000;
+		border-right-color: #000000;
+		border-bottom-color: #000000;
+		border-left-color: #000000;
+	}
+	.titulo{
+		font-family:Arial,Helvetica;
+		font-size:11px;
+	}
+	.geral{
+		font-family:Arial,Helvetica;
+		font-size:10px;
+	}
+	.menor{
+		font-family:Arial,Helvetica;
+		font-size:9px;
+	}
+	.pontilhado{
+		background-image: url(imagens/pontilhado.gif);
+	}
+	.pontilhadoh{
+		background-image: url(imagens/pontilhado_h.gif);
+	}
+
+	.separador{
+		background-color: #000000;
+	}
+}
+.menor1 {		font:helvetica;
+		font-size:9px;
+}
+.menor1 {		font-family:Arial,Helvetica;
+		font-size:9px;
+}
+.separador1 {		background-color: #000000;
+}
+.separador1 {		background-color: #000000;
+}
+.titulo1 {		font:helvetica;
+		font-size:11px;
+}
+.titulo1 {		font-family:Arial,Helvetica;
+		font-size:11px;
+}
+</style>
+{/literal}
+<title>BOLETO</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+{foreach item=f from=$faturas}
+   {$f.fatura_html}
+   {if $f.pagebreak }
+   <hr>
+   {/if}
+{/foreach}
+<div id="imprimir" align="center" width="100%">
+<table align="center" width="665"><tr><td><a href="javascript:;" onClick="return printPage();"><img alt="IMPRIMIR CARNÊS" src="{$imagens}/print.gif" border="0"></a></td>
+    <td> <div align="LEFT"><font face="Arial, Helvetica, sans-serif" size="2" color="#000000"><b>Instrução para Impressão</b><li>Imprima 
+      em impressora jato de tinta (ink jet) ou laser em qualidade normal ou alta.<br>
+      <li>Não use modo econômico.<br>
+      <li>Utilize folha A4 (210 x 297mm) e margens mínimas à esquerda e à direita 
+      do formulário.</font><br>
+      </div></td>
+  </tr></table>
+</div>
+<script language="JavaScript">
+{literal}
+var verticalpos="fromtop"
+function JSFX_FloatTopDiv()
+{
+	var startX = 8,
+	startY = 8;
+	var ns = (navigator.appName.indexOf("Netscape") != -1);
+	var d = document;
+	function ml(id)
+	{
+		var el=d.getElementById?d.getElementById(id):d.all?d.all[id]:d.layers[id];
+		if(d.layers)el.style=el;
+		el.sP=function(x,y){this.style.left=x;this.style.top=y;};
+		el.x = startX;
+		if (verticalpos=="fromtop")
+		el.y = startY;
+		else{
+		el.y = ns ? pageYOffset + innerHeight : document.body.scrollTop + document.body.clientHeight;
+		el.y -= startY;
+		}
+		return el;
+	}
+	window.stayTopLeft=function()
+	{
+		if (verticalpos=="fromtop"){
+		//if (verticalpos=="frombottom"){
+		var pY = ns ? pageYOffset : document.body.scrollTop;
+		ftlObj.y += (pY + startY - ftlObj.y)/2;
+		}
+		else{
+		var pY = ns ? pageYOffset + innerHeight : document.body.scrollTop + document.body.clientHeight;
+		ftlObj.y += (pY - startY - ftlObj.y)/2;
+		}
+		ftlObj.sP(ftlObj.x, ftlObj.y);
+		setTimeout("stayTopLeft()", 5);
+	}
+	ftlObj = ml("imprimir");
+	stayTopLeft();
+}
+JSFX_FloatTopDiv();
+
+{/literal}
+window.focus();
+</script>
+</body>
+</html>

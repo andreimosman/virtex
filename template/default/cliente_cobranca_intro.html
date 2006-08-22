@@ -104,4 +104,10 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 			</table></td>
 	  </tr>
 <p>{/if} </table> </p>
-<p align="center">{if $primeira}<a href="javascript:;"><img alt="EMITIR CARNE PARA IMPRESSÃO" src="template/default/images/carne_impressao.gif" width="217" height="90" onclick="MM_openBrWindow('clientes.php?op=segunda_via&id_cliente={$id_cliente}&id_cliente_produto={$id_cliente_produto}&data={$data}&id_carne={$id_carne}','carne','scrollbars=yes,width=700,height=600')" border="0"></a>{/if}</p>
+<p align="center">{if $primeira}<br />
+{if $id_cobranca == "2"}
+  <a href="javascript:;"><img alt="EMITIR CARNE PARA IMPRESSÃO" src="template/default/images/carne_impressao.gif" width="217" height="90" onclick="MM_openBrWindow('clientes.php?op=segunda_via&id_cliente={$id_cliente}&id_cliente_produto={$id_cliente_produto}&data={$data}&id_carne={$id_carne}','carne','scrollbars=yes,width=700,height=600')" border="0"></a><br />
+{elseif $id_cobranca == "1"}
+<a href="javascript:;" ><img src="template/default/images/boletos_impressao.gif" width="217" height="90" onclick="MM_openBrWindow('clientes.php?op=segunda_via_boleto&id_cliente={$id_cliente}&id_cliente_produto={$id_cliente_produto}&data={$data}&id_carne={$id_carne}','boleto','scrollbars=yes,width=700,height=800')" border="0" /></a> <br />
+{/if}
+{/if}</p>
