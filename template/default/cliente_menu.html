@@ -9,17 +9,17 @@
     <!-- PRODUTOS -->
     {if $lic_discado=="sim"}{if $prod_contr.d}
     <td> {if ($op == "produto" || $op == "conta") && $tipo == "D"} <a href="{$smarty.server.PHP_SELF}?op=produto&tipo=D&id_cliente={$id_cliente}"><img src="template/default/images/bt_discado.gif" border=0 alt="Acesso Discado"></a>
-      {else } {if $id_cliente}<a href="{$smarty.server.PHP_SELF}?op=produto&tipo=D&id_cliente={$id_cliente}">{/if}<img src="template/default/images/bt_discado_inativo.gif" border=0 alt="Acesso Discado"></a>
+      {else } {if $id_cliente}<a href="clientes.php?op=produto&tipo=D&id_cliente={$id_cliente}">{/if}<img src="template/default/images/bt_discado_inativo.gif" border=0 alt="Acesso Discado"></a>
       {/if} </td>
     {/if}{/if}
 	{if $lic_bandalarga=="sim"}{if $prod_contr.bl}
     <td> {if ($op == "produto" || $op == "conta") && $tipo == "BL"} <a href="{$smarty.server.PHP_SELF}?op=produto&tipo=BL&id_cliente={$id_cliente}&msg="><img src="template/default/images/bt_bandalarga.gif" border=0 alt="Acesso Banda Larga"></a>
-      {else } {if $id_cliente}<a href="{$smarty.server.PHP_SELF}?op=produto&tipo=BL&id_cliente={$id_cliente}&msg=">{/if}<img src="template/default/images/bt_bandalarga_inativo.gif" border=0 alt="Acesso Banda Larga"></a>
+      {else } {if $id_cliente}<a href="clientes.php?op=produto&tipo=BL&id_cliente={$id_cliente}&msg=">{/if}<img src="template/default/images/bt_bandalarga_inativo.gif" border=0 alt="Acesso Banda Larga"></a>
       {/if} </td>
     {/if}{/if}
 	{if $lic_hospedagem=="sim"} {if $prod_contr.h}
     <td> {if ($op == "produto" || $op == "conta") && $tipo == "H"} <a href="{$smarty.server.PHP_SELF}?op=produto&tipo=H&id_cliente={$id_cliente}"><img src="template/default/images/bt_hospedagem.gif" border=0 alt="Hospedagem"></a>{else
-      } {if $id_cliente}<a href="{$smarty.server.PHP_SELF}?op=produto&tipo=H&id_cliente={$id_cliente}">{/if}<img src="template/default/images/bt_hospedagem_inativo.gif" border=0 alt="Cobranca"></a>
+      } {if $id_cliente}<a href="clientes.php?op=produto&tipo=H&id_cliente={$id_cliente}">{/if}<img src="template/default/images/bt_hospedagem_inativo.gif" border=0 alt="Cobranca"></a>
       {/if} </td>
     {/if}{/if}
     <!-- COBRANCA -->
@@ -30,8 +30,7 @@
   </tr>
   {if $id_cliente} {/if}
 </table>
-<br>
-<table align="CENTER" width="500" border="0" cellspacing="0" cellpadding="0">
+<table align="CENTER" width="639" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td bgcolor="#779977"><div align="CENTER"><font face="arial" size=+1><b><font color="#FFFFFF">{$cliente.nome_razao}</font></b></font></div></td>
   </tr>

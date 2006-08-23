@@ -60,391 +60,351 @@ function CampoBranco(campo){
 
 </script>
 { /literal }
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" { if $prod }onLoad="document.form1.nome.focus();"{/if}>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" {if $prod}onLoad="document.form1.nome.focus();"{/if}>
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
           <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-              <tr>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td align="center" valign="middle">
-                  <table width="300" border="0" cellspacing="2" cellpadding="2">
-				  { if !$prod }
-					<!-- 				  INICIO tabela dos produtos  -->
-                   <tr align="center" valign="middle">
-                      {if $lic_bandalarga == "sim" }<td><a href="cobranca.php?op=cadastro&prod=BL"><img src="template/default/images/bt_bandalarga.gif" alt="Cadastrar Banda Larga" border="0"></a></td>{/if}
-                      {if $lic_discado == "sim" }<td><a href="cobranca.php?op=cadastro&prod=D"><img src="template/default/images/bt_discado.gif" alt="Cadastrar Discado" border="0"></a></td>{/if}
-                      {if $lic_hospedagem=="sim"}<td><a href="cobranca.php?op=cadastro&prod=H"><img src="template/default/images/bt_hospedagem.gif" alt="Cadastrar Hospedagem" border="0"></a></td>{/if}
-                    </tr>
-					<!-- 				  INICIO tabela dos produtos  -->
-					{ /if }
-					{if $lic_bandalarga == "sim" }
-					{ if $prod && $prod == "BL" }
-					<!-- 				  INICIO tabela dos produtos  -->
-                   <tr align="center" valign="middle">
-                      {if $lic_bandalarga == "sim" }<td><img src="template/default/images/bt_bandalarga.gif" alt="Cadastramento de Banda Larga" border="0"></td>{/if}
-                      {if $lic_discado == "sim" }<td><img src="template/default/images/bt_discado_inativo.gif" border="0"></td>{/if}
-                      {if $lic_hospedagem=="sim"}<td><img src="template/default/images/bt_hospedagem_inativo.gif" border="0"></td>{/if}
-                    </tr>
-					<!-- 				  INICIO tabela dos produtos  -->
-					{ /if }{/if}
-					{if $lic_discado=="sim"}
-					{ if $prod && $prod == "D" }
-					<!-- 				  INICIO tabela dos produtos  -->
-                   <tr align="center" valign="middle">
-                      {if $lic_bandalarga == "sim" }<td><img src="template/default/images/bt_bandalarga_inativo.gif" border="0"></td>{/if}
-                      {if $lic_discado == "sim" }<td><img src="template/default/images/bt_discado.gif" alt="Cadastramento de Discado" border="0"></td>{/if}
-                      {if $lic_hospedagem=="sim"}<td><img src="template/default/images/bt_hospedagem_inativo.gif" border="0"></td>{/if}
-                    </tr>
-					<!-- 				  INICIO tabela dos produtos  -->
-					{ /if }{/if}
-					{if $lic_hospedagem=="sim"}
-					{ if $prod && $prod == "H" }
-					<!-- 				  INICIO tabela dos produtos  -->
-                   <tr align="center" valign="middle">
-                      {if $lic_bandalarga=="sim"}<td><img src="template/default/images/bt_bandalarga_inativo.gif"border="0"></td>{/if}
-                      {if $lic_discado == "sim" }<td><img src="template/default/images/bt_discado_inativo.gif" border="0"></td>{/if}
-                      {if $lic_hospedagem=="sim"}<td><img src="template/default/images/bt_hospedagem.gif" alt="Cadastramento de Hospedagem" border="0"></td>{/if}
-                    </tr>
-					<!-- 				  INICIO tabela dos produtos  -->
-					{ /if }{/if}
+
+              <tr> 
+                <td align="center" valign="middle"> <table width="300" border="0" cellspacing="2" cellpadding="2">
+                    { if !$prod } 
+                    <!-- 				  INICIO tabela dos produtos  -->
+                    <tr align="center" valign="middle"> {if $lic_bandalarga == 
+                      "sim" }
+                      <td><a href="cobranca.php?op=cadastro&prod=BL"><img src="template/default/images/bt_bandalarga.gif" alt="Cadastrar Banda Larga" border="0"></a></td>
+                      {/if} {if $lic_discado == "sim" }
+                      <td><a href="cobranca.php?op=cadastro&prod=D"><img src="template/default/images/bt_discado.gif" alt="Cadastrar Discado" border="0"></a></td>
+                      {/if} {if $lic_hospedagem=="sim"}
+                      <td><a href="cobranca.php?op=cadastro&prod=H"><img src="template/default/images/bt_hospedagem.gif" alt="Cadastrar Hospedagem" border="0"></a></td>
+                      {/if} </tr>
+                    <!-- 				  INICIO tabela dos produtos  -->
+                    { /if } {if $lic_bandalarga == "sim" } { if $prod && $prod 
+                    == "BL" } 
+                    <!-- 				  INICIO tabela dos produtos  -->
+                    <tr align="center" valign="middle"> {if $lic_bandalarga == 
+                      "sim" }
+                      <td><img src="template/default/images/bt_bandalarga.gif" alt="Cadastramento de Banda Larga" border="0"></td>
+                      {/if} {if $lic_discado == "sim" }
+                      <td><img src="template/default/images/bt_discado_inativo.gif" border="0"></td>
+                      {/if} {if $lic_hospedagem=="sim"}
+                      <td><img src="template/default/images/bt_hospedagem_inativo.gif" border="0"></td>
+                      {/if} </tr>
+                    <!-- 				  INICIO tabela dos produtos  -->
+                    { /if }{/if} {if $lic_discado=="sim"} { if $prod && $prod 
+                    == "D" } 
+                    <!-- 				  INICIO tabela dos produtos  -->
+                    <tr align="center" valign="middle"> {if $lic_bandalarga == 
+                      "sim" }
+                      <td><img src="template/default/images/bt_bandalarga_inativo.gif" border="0"></td>
+                      {/if} {if $lic_discado == "sim" }
+                      <td><img src="template/default/images/bt_discado.gif" alt="Cadastramento de Discado" border="0"></td>
+                      {/if} {if $lic_hospedagem=="sim"}
+                      <td><img src="template/default/images/bt_hospedagem_inativo.gif" border="0"></td>
+                      {/if} </tr>
+                    <!-- 				  INICIO tabela dos produtos  -->
+                    { /if }{/if} {if $lic_hospedagem=="sim"} { if $prod && $prod 
+                    == "H" } 
+                    <!-- 				  INICIO tabela dos produtos  -->
+                    <tr align="center" valign="middle"> {if $lic_bandalarga=="sim"}
+                      <td><img src="template/default/images/bt_bandalarga_inativo.gif"border="0"></td>
+                      {/if} {if $lic_discado == "sim" }
+                      <td><img src="template/default/images/bt_discado_inativo.gif" border="0"></td>
+                      {/if} {if $lic_hospedagem=="sim"}
+                      <td><img src="template/default/images/bt_hospedagem.gif" alt="Cadastramento de Hospedagem" border="0"></td>
+                      {/if} </tr>
+                    <!-- 				  INICIO tabela dos produtos  -->
+                    { /if }{/if} 
                   </table>
-
-<p>
-
-
-
-
-</p>{if $prod }
+                  <p> </p>
+                  {if $prod } 
                   <form name="form1" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return submit_page(this);">
-
-                    
-                  <table width="500" border="0" id="tabform">
-                    <tr> 
-                      <td align="center"> <h1>{$titulo} de Produto {if $prod == 
-                        "BL"} Banda Larga{/if}{ if $prod == "D"} Discado {/if}{if 
-                        $prod == "H"} Hospedagem { /if} 
-                        <input name="op" type="hidden" id="op" value="{$op}">
-                        <input name="acao" type="hidden" id="acao" value="{$acao}">
-                        <input name="prod" type="hidden" id="prod" value="{$prod}">
-                        <input name="id_produto" type="hidden" id="id_produto" value="{$id_produto}">
-                        <input name="tipo" type="hidden" id="tipo" value="{$tipo}">
-                        </h1></td>
-                    </tr>
-                    <tr> 
-                      <td><table width="100%" border="0" cellpadding="0" cellspacing="0" id="tbl_produto">
-                          <tr> 
-                            <td align="center" valign="top"> <table width="100%" border="0" cellspacing="2" cellpadding="0">
-                                <tr> 
-                                  <td><p>Nome</p></td>
-                                </tr>
-                                <tr> 
-                                  <td><input  name="nome" value="{$nome}" type="text" id="nome" size="30"></td>
-                                </tr>
-                                <tr> 
-                                  <td><p>Pre&ccedil;o</p></td>
-                                </tr>
-                                <tr> 
-                                  <td><input name="valor" type="text" id="valor" value="{$valor}"></td>
-                                </tr>
-                                <tr> 
-                                  <td><p>Disponivel para contrata&ccedil;&atilde;o:</p></td>
-                                </tr>
-                                <tr> 
-                                  <td> <SELECT name='disponivel'>
+				  <table align="center" border="0" width="100%">
+                            <tr align="center" valign="top"> 
+                              <td align="center"> <div align="center"> <strong> 
+                                  <font size="+1" face="Arial, Helvetica, sans-serif"> 
+                                  {$titulo} de Produto {if $prod == "BL"} Banda 
+                                  Larga{/if}{ if $prod == "D"} Discado {/if}{if 
+                                  $prod == "H"} Hospedagem { /if} </font></strong> 
+                                </div></td>
+                            </tr>
+                          </table>
+                    <table width="728" border="0" id="tabform" align="center">
+                      <tr> 
+                        <td align="center" colspan="6"> <input name="op" type="hidden" id="op2" value="{$op}"> 
+                          <input name="acao" type="hidden" id="acao2" value="{$acao}"> 
+                          <input name="prod" type="hidden" id="prod2" value="{$prod}"> 
+                          <input name="id_produto" type="hidden" id="id_produto2" value="{$id_produto}"> 
+                          <input name="tipo" type="hidden" id="tipo2" value="{$tipo}"> 
+                        </td>
+                      </tr>
+                      <tr valign="top"> 
+                        <td width="170" valign="top" ><table width="100%" border="0" cellpadding="0" cellspacing="0" id="tbl_produto">
+                            <tr> 
+                              <td align="center" valign="top"> <table width="100%" border="0" cellpadding="0" cellspacing="2">
+                                  <tr> 
+                                    <td><p>Nome</p></td>
+                                  </tr>
+                                  <tr> 
+                                    <td><input  name="nome" value="{$nome}" type="text" id="nome2" size="25"></td>
+                                  </tr>
+                                  <tr> 
+                                    <td><p>Pre&ccedil;o 
+                                        <input name="valor" type="text" id="valor3" value="{$valor}" size="25">
+                                      </p></td>
+                                  </tr>
+                                  <tr> 
+                                    <td><p>Disponivel para contrata&ccedil;&atilde;o: 
+                                        <select name='disponivel'>
 									{ foreach key=id item=nome from=$ls_disponivel }
-									  <option value='{$id}'{if $id == $disponivel}SELECTED{/if}>{$nome}</option>
+									      <option value='{$id}'{if $id == $disponivel}selected{/if}>{$nome}</option>
 									{ /foreach }
                                        
-                                    </SELECT></td>
-                                </tr>
-                                <tr> 
-                                  <td><p>Numero de Contas</p></td>
-                                </tr>
-                                <tr> 
-                                  <td><input name="numero_contas" type="text" id="numero_contas" value="{$numero_contas}" size=4 maxlenght=4></td>
-                                </tr>
-                                <tr> 
-                                  <td><p><strong>Promo&ccedil;&atilde;o:</strong></p></td>
-                                </tr>
-                                <tr> 
-                                  <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                      <tr> 
-                                        <td width="81%"><p>Isen&ccedil;&atilde;o 
-                                            de Instala&ccedil;&atilde;o</p></td>
-                                        <td width="19%"><input type="checkbox" name="checkbox" value="checkbox" class="checkbox"></td>
-                                      </tr>
-                                      <tr> 
-                                        <td><p>Desconto</p></td>
-                                        <td><input name="desconto" type="checkbox" value="1" id="desconto" class="checkbox"></td>
-                                      </tr>
-                                    </table></td>
-                                </tr>
-                                <tr> 
-                                  <td><DIV ID="desconto">
-										  <table width="100%" border="0" cellspacing="2" cellpadding="0" dwcopytype="CopyTableCell">
-                                <tr> 
-                                  <td><p>de 
-                                      <input name="textfield" type="text" size="5">
-                                      reais </p></td>
-                                </tr>
-                                <tr> 
-                                  <td><p>no periodo de 
-                                      <input name="textfield2" type="text" size="5">
-                                      meses </p></td>
-                                </tr>
-                              </table>
-								  
-					
-								  </DIV></td>
-                                </tr>
-                              </table></td>
-                            <td align="center" valign="top"> <table width="100%" border="0" cellspacing="2" cellpadding="0">
-                                <tr> 
-                                  <td><p>Descri&ccedil;&atilde;o</p></td>
-                                </tr>
-                                <tr> 
-                                  <td><textarea name="descricao" cols="45" rows=8 id="descricao">{$descricao}</textarea></td>
-                                </tr>
-                              </table></td>
-                          </tr>
-                        </table></td>
-                    </tr>
-                    <tr> 
-                      <td> <table width="100%" border="0" cellpadding="0" cellspacing="2" id="tform_BL">
-                          <tr> 
-                            <td colspan="2"><hr size="1"></td>
-                          </tr>
-                          <tr>
-                            <td><p>Comodato: 
-                                <input name="comodato" type="checkbox" value="t" class="checkbox">
-                                Valor: 
-                                <input name="valor_comodato" type="text" size="10">
-                              </p></td>
-                            <td>&nbsp;</td>
-                          </tr>
-                          <tr> 
-                            <td width="50%"> <p>Download</p></td>
-                            <td width="50%"> <p>Upload</p></td>
-                          </tr>
-                          <tr> 
-                            <td><p> 
-                                <SELECT name='banda_download_kbps' >
+                                        </select>
+                                      </p></td>
+                                  </tr>
+                                  <tr> 
+                                    <td><p>Numero de Contas 
+                                        <input name="numero_contas" type="text" id="numero_contas5" value="{$numero_contas}" size=3 maxlenght=4>
+                                      </p></td>
+                                  </tr>
+                                  <tr> 
+                                    <td><p><strong>Promo&ccedil;&atilde;o:</strong></p></td>
+                                  </tr>
+                                  <tr> 
+                                    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tr> 
+                                          <td width="81%"><p>Isen&ccedil;&atilde;o 
+                                              de Instala&ccedil;&atilde;o</p></td>
+                                          <td width="19%"><input type="checkbox" name="checkbox" value="checkbox" class="checkbox"></td>
+                                        </tr>
+                                        <tr> 
+                                          <td><p>Desconto</p></td>
+                                          <td><input name="desconto" type="checkbox" value="1" id="desconto5" class="checkbox"></td>
+                                        </tr>
+                                      </table></td>
+                                  </tr>
+                                  <tr> 
+                                    <td><div id="desconto"> 
+                                        <table width="100%" border="0" cellspacing="2" cellpadding="0" dwcopytype="CopyTableCell">
+                                          <tr> 
+                                            <td><p>de 
+                                                <input name="textfield" type="text" size="5">
+                                                reais </p></td>
+                                          </tr>
+                                          <tr> 
+                                            <td><p>no periodo de 
+                                                <input name="textfield2" type="text" size="5">
+                                                meses </p></td>
+                                          </tr>
+                                        </table>
+                                      </div></td>
+                                  </tr>
+                                </table></td>
+                            </tr>
+                          </table></td>
+                        <td width="15"   style="border-left: dashed 2px #e1e1e1;">&nbsp;</td>
+                        <td width="296" style="border-right: dashed 2px #e1e1e1;" > 
+                          <div align="center">
+                            <table width="100%" border="0" cellpadding="0" cellspacing="2" id="tform_BL">
+                              <tr> 
+                                <td width="50%"> <p>Download</p></td>
+                                <td width="50%"> <p>Upload</p></td>
+                              </tr>
+                              <tr> 
+                                <td><p> 
+                                    <select name='banda_download_kbps' >
   									{ foreach key=id item=nome from=$ls_banda_download_kbps }
 									
-                                 <option value='{$id}'{if $id == $banda_download_kbps}SELECTED{/if}>{$nome}</option>
+                                      <option value='{$id}'{if $id == $banda_download_kbps}selected{/if}>{$nome}</option>
 									{ /foreach }
                                   
-                                </SELECT>
-                                kbps </p></td>
-                            <td><p> 
-                                <SELECT name='banda_upload_kbps' >
+                                    </select>
+                                    kbps </p></td>
+                                <td><p> 
+                                    <select name='banda_upload_kbps' >
   									{ foreach key=id item=nome from=$ls_banda_upload_kbps }
 									
-                                  <option value='{$id}'{if $id == $banda_upload_kbps}SELECTED{/if}>{$nome}</option>
+                                      <option value='{$id}'{if $id == $banda_upload_kbps}selected{/if}>{$nome}</option>
 									{ /foreach }
                                   
-                                </SELECT>
-                                kbps</p></td>
-                          </tr>
-                          <tr> 
-                            <td><p>Franquia Tráfego Mensal (GB)</p></td>
-                            <td><p>Valor GB adicional</p></td>
-                          </tr>
-                          <tr> 
-                            <td><p> 
-                                <input type="text" name="franquia_trafego_mensal_gb" value="{$franquia_trafego_mensal_gb}">
-                              </p></td>
-                            <td><p> 
-                                <input name="valor_trafego_adicional_gb" type="text" value="{$valor_trafego_adicional_gb}">
-                              </p></td>
-                          </tr>
-                          <tr> 
-                            <td colspan="2"><hr size="1"></td>
-                          </tr>
-                        </table>
-                        <table width="100%" border="0" cellpadding="0" cellspacing="2" id="tform_D">
-                          <tr> 
-                            <td colspan="2"><hr size="1"></td>
-                          </tr>
-                          <tr> 
-                            <td width="50%"> <p>Franquia em Horas</p></td>
-                            <td width="50%"> <p>Permitir Duplicidade?</p></td>
-                          </tr>
-                          <tr> 
-                            <td><p> 
-                                <input name="franquia_horas" type="text" id="franquia_horas" value="{$franquia_horas}">
-                              </p></td>
-                            <td><p> 
-                                <SELECT name='permitir_duplicidade' >
+                                    </select>
+                                    kbps</p></td>
+                              </tr>
+                              <tr> 
+                                <td height="42"> <p>Franquia Tráfego Mensal (GB)</p></td>
+                                <td><p>Valor GB adicional</p></td>
+                              </tr>
+                              <tr> 
+                                <td><p> 
+                                    <input name="franquia_trafego_mensal_gb" type="text" value="{$franquia_trafego_mensal_gb}" size="16">
+                                  </p></td>
+                                <td><p> 
+                                    <input name="valor_trafego_adicional_gb" type="text" value="{$valor_trafego_adicional_gb}" size="16">
+                                  </p></td>
+                              </tr>
+                              <tr> 
+                                <td ><p align="right">Comodato: 
+                                    <input name="comodato" type="checkbox" value="t" class="checkbox">
+                                    &nbsp;Valor: </td><td>
+                                    <input name="valor_comodato" type="text" size="16">
+                                </td>
+                              </tr>
+                            </table>
+                            <table width="100%" border="0" cellpadding="0" cellspacing="2" id="tform_D">
+                              <tr> 
+                                <td width="50%"> <p>Franquia em Horas</p></td>
+                                <td width="50%"> <p>Permitir Duplicidade?</p></td>
+                              </tr>
+                              <tr> 
+                                <td><p> 
+                                    <input name="franquia_horas" type="text" id="franquia_horas2" value="{$franquia_horas}">
+                                  </p></td>
+                                <td><p> 
+                                    <select name='permitir_duplicidade' >
   									{ foreach key=id item=nome from=$ls_permitir_duplicidade }
 									
-                                  <option value='{$id}'{if $id == $permitir_duplicidade}SELECTED{/if}>{$nome}</option>
+                                      <option value='{$id}'{if $id == $permitir_duplicidade}selected{/if}>{$nome}</option>
 									{ /foreach }
                                   
-                                </SELECT>
-                              </p></td>
-                          </tr>
-                          <tr> 
-                            <td><p><font color="#FF0000">0 = Ilimitado</font></p></td>
-                            <td>&nbsp;</td>
-                          </tr>
-                          <tr> 
-                            <td><p>Valor em Horas Adicional</p></td>
-                            <td><p>&nbsp;</p></td>
-                          </tr>
-                          <tr> 
-                            <td><p> 
-                                <input name="valor_hora_adicional" type="text" id="valor_hora_adicional" value="{$valor_hora_adicional}">
-                              </p></td>
-                            <td><p>&nbsp;</p></td>
-                          </tr>
-                          <tr> 
-                            <td colspan="2"><hr size="2"></td>
-                          </tr>
-                        </table>
-                        <table width="100%" border="0" cellpadding="0" cellspacing="2" id="tform_H">
-                          <tr> 
-                            <td colspan="2"><hr size="1"></td>
-                          </tr>
-                          <tr> 
-                            <td width="50%"> <p>Dominio</p></td>
-                            <td width="50%"> <p>Franquia em Mb</p></td>
-                          </tr>
-                          <tr> 
-                            <td><p> 
-                                <select name="dominio">
+                                    </select>
+                                  </p></td>
+                              </tr>
+                              <tr> 
+                                <td><p><font color="#FF0000">0 = Ilimitado</font></p></td>
+                                <td>&nbsp;</td>
+                              </tr>
+                              <tr> 
+                                <td colspan="2"><p>Valor em Horas Adicional</p></td>
+                              </tr>
+                              <tr> 
+                                <td><p> 
+                                    <input name="valor_hora_adicional" type="text" id="valor_hora_adicional2" value="{$valor_hora_adicional}">
+                                  </p></td>
+                                <td><p>&nbsp;</p></td>
+                              </tr>
+                            </table>
+                            <table width="95%" border="0" cellpadding="0" cellspacing="2" id="tform_H">
+                              <tr> 
+                                <td width="50%"> <p>Dominio</p></td>
+                                <td width="50%"> <p>Franquia em Mb</p></td>
+                              </tr>
+                              <tr> 
+                                <td><p> 
+                                    <select name="dominio">
   									{ foreach key=id item=nome from=$ls_dominio }
 									
-                                  <option value='{$id}'{if $id == $dominio}SELECTED{/if}>{$nome}</option>
+                                      <option value='{$id}'{if $id == $dominio}selected{/if}>{$nome}</option>
 									{ /foreach }
                                   
-                                </select>
-                              </p></td>
-                            <td><p> 
-                                <input name="franquia_em_mb" type="text" id="franquia_em_mb" value="{$franquia_em_mb}">
-                              </p></td>
-                          </tr>
-                          <tr> 
-                            <td><p>Valor do Mb Adicional</p></td>
-                            <td><p><font color="#FF0000">0 = Ilimitado</font></p></td>
-                          </tr>
-                          <tr> 
-                            <td><p> 
-                                <input name="valor_mb_adicional" type="text" id="valor_mb_adicional" value="{$valor_mb_adicional}">
-                              </p></td>
-                            <td><p>&nbsp;</p></td>
-                          </tr>
-                          <tr> 
-                            <td colspan="2"><hr size="1"></td>
-                          </tr>
-                        </table></td>
-                    </tr>
-                    <tr> 
-                      <td><table width="100%" border="0" cellpadding="0" cellspacing="2" id="tbl_email">
-                          {if $lic_email=="sim"}<tr> 
-                            <td width="50%"> <p>N&ordm; de E-Mails</p></td>
-                            <td width="50%"> <p>Quota por conta de e-mail</p></td>
-                          </tr>
-                          <tr> 
-                            <td><p> 
-                                <input name="num_emails" type="text" id="num_emails2" value="{$num_emails}">
-                              </p></td>
-                            <td><p> 
-                                <input name="quota_por_conta"type="text" id="quota_por_conta" value="{$quota_por_conta}">
-                                bytes </p></td>
-                          </tr>
-                          <tr> 
-                            <td><p>Email Adicional (R$)<br>
-                              </p></td>
-                            <td><p>Permitir outros dominios?</p></td>
-                          </tr>
-                          <tr> 
-                            <td><p> 
-                                <input name="vl_email_adicional"type="text" id="vl_email_adicional" value="{$vl_email_adicional}">
-                              </p></td>
-                            <td><p> 
-                                <SELECT name='permitir_outros_dominios' id="permitir_outros_dominios" >
+                                    </select>
+                                  </p></td>
+                                <td><p> 
+                                    <input name="franquia_em_mb" type="text" id="franquia_em_mb2" value="{$franquia_em_mb}">
+                                  </p></td>
+                              </tr>
+                              <tr> 
+                                <td><p>Valor do Mb Adicional</p></td>
+                                <td><p><font color="#FF0000">0 = Ilimitado</font></p></td>
+                              </tr>
+                              <tr> 
+                                <td><p> 
+                                    <input name="valor_mb_adicional" type="text" id="valor_mb_adicional2" value="{$valor_mb_adicional}">
+                                  </p></td>
+                                <td><p>&nbsp;</p></td>
+                              </tr>
+                            </table>
+                            <table width="100%" border="0">
+                              <tr> 
+                                <td width="275"><p>Descrição</p></td>
+                              </tr>
+                              <tr> 
+                                <td><textarea name="descricao" cols="44" rows=8 id="textarea3">{$descricao}</textarea></td>
+                              </tr>
+                            </table>
+                          </div></td>
+                        <td width="13">&nbsp;</td>
+                        <td width="215" colspan="2"><table width="100%" border="0" cellpadding="0" cellspacing="2" id="tbl_email">
+                            {if $lic_email=="sim"} 
+                            <tr> 
+                              <td width="50%"> <p>N&ordm; de E-Mails</p></td>
+                              <td width="50%"> <p>Quota por conta de e-mail</p></td>
+                            </tr>
+                            <tr> 
+                              <td valign="top"><p> 
+                                  <input name="num_emails" type="text" id="num_emails" value="{$num_emails}" size="16">
+                                </p></td>
+                              <td><p> 
+                                  <input name="quota_por_conta"type="text" id="quota_por_conta2" value="{$quota_por_conta}" size="16">
+                                  bytes </p></td>
+                            </tr>
+                            <tr> 
+                              <td><p>Email Adicional (R$)<br>
+                                </p></td>
+                              <td><p>Permitir outros dominios?</p></td>
+                            </tr>
+                            <tr> 
+                              <td><p> 
+                                  <input name="vl_email_adicional"type="text" id="vl_email_adicional2" value="{$vl_email_adicional}" size="16">
+                                </p></td>
+                              <td><p> 
+                                  <select name='permitir_outros_dominios' id="select" >
   									{ foreach key=id item=nome from=$ls_permitir_outros_dominios }
 									
-                                  <option value='{$id}'{if $id == $permitir_outros_dominios}SELECTED{/if}>{$nome}</option>
+                                    <option value='{$id}'{if $id == $permitir_outros_dominios}selected{/if}>{$nome}</option>
 									{ /foreach }
                                   
-                                </SELECT>
-                              </p></td>
-                          </tr>{/if}
-                          <!--
+                                  </select>
+                                </p></td>
+                            </tr>
+                            {/if} 
+                            <!--
                             <tr>
                               <td><p>Email Anexado?<br>
                                 </p></td>
                               <td><p>&nbsp;</p></td>
                             </tr> -->
-                          <tr> 
-                            <td><p> 
-                                <!-- <SELECT name='email_anexado'>
+                            <tr> 
+                              <td><p> 
+                                  <!-- <SELECT name='email_anexado'>
   									{ foreach key=id item=nome from=$ls_email_anexado }
 									<option value='{$id}'{if $id == $email_anexado}SELECTED{/if}>{$nome}</option>
 									{ /foreach }
                                   </SELECT> -->
-                              </p></td>
-                            <td align="right"> <p> 
-                                <input name="submit" type="submit" id="submit2"  style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;" value="{$titulo}">
-                              </p></td>
-                          </tr>
-                        </table></td>
-                    </tr>
-                    <tr>
-                      <td><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                          </tr>
-                          <tr>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                          </tr>
-                        </table></td>
-                    </tr>
-                    <tr> 
-                      <td><p>Campos n&atilde;o obrigat&oacute;rios que n&atilde;o 
-                          forem preenchidos ser&atilde;o considerados como 0 no 
-                          cadastro.</p></td>
-                    </tr>
-                  </table>
+                                </p></td>
+                            </tr>
+                            <tr valign="bottom"> 
+                              <td align="right"> <p>&nbsp; </p></td>
+                            </tr>
+                          </table></td>
+                      </tr>
+                      <tr valign="bottom"> 
+                        <td valign="bottom" colspan="125" align="center" style="border-top: dashed 2px #e1e1e1;"> 
+                          <table width="75%" border="0">
+                            <tr> 
+                              <td><div align="center"> 
+                                  <input name="submit" type="submit" id="submit4"  style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;" value="{$titulo}">
+                                </div></td>
+                            </tr>
+                          </table></td>
+                      </tr>
+                      <tr> 
+                        <td colspan="6"><p align="center">Campos n&atilde;o obrigat&oacute;rios 
+                            que n&atilde;o forem preenchidos ser&atilde;o considerados 
+                            como 0 no cadastro.</p></td>
+                      </tr>
+                    </table>
                   </form>
-
-
-
-                  {else}<br>
-                    <Br>
-                    <Br>
-                    <h2>ESCOLHA O TIPO DO PRODUTO QUE VOCÊ QUER CADASTRAR.</h2> <BR>
-                    <BR>
-                    <BR>
-                    <BR>
-                    {/if} {if $id_produto || !$prod}
-                  <a href="cobranca.php?op=lista">
-                  <p>&laquo; voltar</p>
-                  </a> {else} <a href="cobranca.php?op=cadastro">
-<p>&laquo; voltar</p></a>
-{/if}
-
-
-                  <p>&nbsp;</p>
-                  <p></p><br>
-                  <p></p>
-                  <p>&nbsp;</p></td>
+                  {else} <br> <h2>ESCOLHA O TIPO DO PRODUTO QUE VOCÊ QUER 
+                    CADASTRAR.</h2>
+                  <br>
+                  {/if} {if $id_produto || !$prod}<p> <a href="cobranca.php?op=lista"> 
+                  &laquo; voltar
+                  </a> </p>{else} <p><a href="cobranca.php?op=cadastro"> 
+                  &laquo; voltar
+                  </a> </p>{/if} 
+              </td>
               </tr>
             </table></td>
         </tr>

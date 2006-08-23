@@ -118,29 +118,37 @@
 
 
 </div>
-<table><tr><td>
-{if $privilegio_gravar_cliente == "sim" }
-<a href="clientes.php?op=cadastro"><img src="template/default/images/bt_usuario_novo_barra.gif" width="77" height="73" border="0"></a></td></tr>
-{/if}
-<tr>
-<td>
-{if $privilegio_radius == "sim"}
-<a href="suporte.php?op=log"><img src="template/default/images/bt_log_radius.gif" width="77" height="73" border="0"></a>
-{/if}
-</td>
-</tr>
-<tr><td>
-{if $privilegio_cobranca == "sim"}
-<a href="cobranca.php?op=gerar_boletos"><img src="template/default/images/bt_emitir_faturas.gif" width="77" height="73" border="0"></a></td></tr>
-{/if}
-<tr><td>
-{if $privilegio_config == "sim"}
-<a href="configuracao.php?op=resumo"><img src="template/default/images/bt_preferencias.gif" width="77" height="73" border="0"></a></td></tr>
-{/if}
-<tr><td>
-{if $privilegio_radius == "sim"}
-<a href="suporte.php?op=graf"><img src="template/default/images/bt_graficos.gif" width="77" height="73" border="0"></a></td></tr>
-{/if}
+<table height="50%">
+	<tr>
+	{if $privilegio_gravar_cliente == "sim" }
+		          <td> <a href="clientes.php?op=cadastro"><img src="template/default/images/bt_usuario_novo_barra.gif" border="0"></a> 
+                  </td>
+	{/if}
+	</tr>
+	<tr>
+	{if $privilegio_radius == "sim"}
+		          <td> <a href="suporte.php?op=log"><img src="template/default/images/bt_log_radius.gif" border="0"></a> 
+                  </td>
+	{/if}	
+	</tr>
+	<tr>
+	{if $privilegio_cobranca == "sim"}
+		          <td> <a href="cobranca.php?op=gerar_boletos"><img src="template/default/images/bt_emitir_faturas.gif" border="0"></a> 
+                  </td>
+	{/if}
+	</tr>
+	<tr>
+	{if $privilegio_config == "sim"}
+		          <td> <a href="configuracao.php?op=resumo"><img src="template/default/images/bt_preferencias.gif" border="0"></a> 
+                  </td>
+	{/if}
+	</tr>
+	<tr>
+	{if $privilegio_radius == "sim"} 
+    	          <td> <a href="suporte.php?op=graf"><img src="template/default/images/bt_graficos.gif" border="0"></a> 
+                  </td>
+    {/if}
+	</tr>
 </table>
 </form>
 </td></tr>
