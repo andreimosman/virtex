@@ -232,156 +232,151 @@ function check(){
                             </tr>
 
                             <tr>
-                              <td align="center" valign="middle">
+                              <td align="center" valign="middle"><table width="600" border="0">
+            <tr>
+                <td width="350" valign="top"><table width="300" border=0 bgcolor="#F1F1F1">
+                  <tr> 
+                      <td widht="150" colspan="3"><h2><font color="#000000">Dados do Usuário</font></h2></td>
+					
+                      <td width="118" valign="top"><div align="right"> 
+                          <p>[<a href="suporte.php?op=extrato&valor_pesquisa={$username}&tipo_conta={$tipo_conta}">extrato 
+                            de acesso</a>]<br>
+                            <strong><font color="#CCCCCC">(m&ecirc;s atual)</font></strong></p>
+                        </div></td>
+                    </tr>
+                    <tr> 
+                      <td bgcolor="#FFFFFF" align="right"  width="77" valign="top"> 
+                        <p>Username:</p></td>
+                      <td bgcolor="#FFFFFF" colspan="3"><input type="text" maxlength="30" name="username2"  disabled="true" value="{$username}"></td>
 
-									<table width="450" border=0 bgcolor="#F1F1F1">
-              <tr> 
-                <td ><h2><font color="#000000">Dados do Usuário</font></h2></td>
-                <td><div align="right"> 
-                    <p>[<a href="suporte.php?op=extrato&valor_pesquisa={$username}&tipo_conta={$tipo_conta}">extrato 
-                      de acesso</a>]<br>
-                      <strong><font color="#CCCCCC">(m&ecirc;s atual)</font></strong></p>
-                    </div></td>
-              </tr>
-              <tr> 
-                <td bgcolor="#FFFFFF" align="right" width="50" valign="top"> <p>Username:</p></td>
-                <td bgcolor="#FFFFFF" colspan=2><input type="text" maxlength="30" name="username"  disabled="true" value="{$username}"></td>
-              </tr>
-              <tr> 
-                <td bgcolor="#FFFFFF" align="right" width="50" valign="top"> <p>Senha:</p></td>
-                <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="senha" id="senha" > 
-                </td>
-              </tr>
-              <tr> 
-                <td bgcolor="#FFFFFF" align="right" width="50" valign="top"> <p>Confirme:</p></td>
-                <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="conf_senha" id="conf_senha" > 
-                </td>
-              </tr>
-              <tr> 
-                <td width="50" align="right" valign="top" bgcolor="#FFFFFF"> <p>Status:</p></td>
-                <td bgcolor="#FFFFFF" colspan=2> <SELECT name='status'>
+                    </tr>
+                    <tr> 
+                      <td bgcolor="#FFFFFF" align="right"  width="77" valign="top"> 
+                        <p>Senha:</p></td>
+                      <td bgcolor="#FFFFFF" colspan="3"> <input type="password" maxlength="32" name="senha" id="senha" > 
+                      </td> 
+                    </tr>
+                    <tr> 
+                      <td bgcolor="#FFFFFF" align="right"  width="77" valign="top"> 
+                        <p>Confirme:</p></td>
+                      <td bgcolor="#FFFFFF" colspan="3"> <input type="password" maxlength="32" name="conf_senha" id="conf_senha" > 
+                      </td> 
+                    </tr>
+                    <tr> 
+                      <td  width="77" align="right" valign="top" bgcolor="#FFFFFF"> 
+                        <p>Status:</p></td>
+                      <td bgcolor="#FFFFFF" colspan="3"> <SELECT name='status'>
 					{foreach key=id item=nome from=$lista_status}
-					<OPTION VALUE='{$id}'  {if $id == $status}SELECTED{/if} >{$nome}</OPTION>
+					      <OPTION VALUE='{$id}'  {if $id == $status}SELECTED{/if} >{$nome}</OPTION>
 					{/foreach}
-					 </SELECT> </td>
-              </tr>
-              <tr> 
-                <td width="50" align="right" valign="top" bgcolor="#FFFFFF"><p>Tipo:</p></td>
-                <td bgcolor="#FFFFFF" colspan="3"><p> 
-                    <select name='conta_mestre' >
-                      <option></option>
-                      <option value='t' {if $conta_mestre_val=="t"}SELECTED{/if}>Conta 
-                      Mestre</option>
-                      <option value='f' {if $conta_mestre_val=="f"}SELECTED{/if}>Normal</option>
-                    </select>
-                  </p></td>
-              </tr>
-            </table>
-
-							  </td>
-                            </tr>
-
-                            <tr>
-                              <td align="center" valign="middle" id="tdados">&nbsp;
-
-								<table width="450" border=0 bgcolor="#F1F1F1" id="disc">
-            <tr>
-              <td colspan=2><p><strong>Dados da Conexão</strong></p></td>
-            </tr>
-            <tr>
-              <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>POP:</p></td>
-              <td bgcolor="#FFFFFF"> <SELECT name='id_pop' >
+					    </SELECT> </td> 
+                    </tr>
+                    <tr> 
+                      <td  width="77" align="right" valign="top" bgcolor="#FFFFFF"><p>Tipo:</p></td>
+                      <td bgcolor="#FFFFFF" colspan="3"><p> 
+                          <select name='conta_mestre' >
+                            <option></option>
+                            <option value='t' {if $conta_mestre_val=="t"}SELECTED{/if}>Conta 
+                            Mestre</option>
+                            <option value='f' {if $conta_mestre_val=="f"}SELECTED{/if}>Normal</option>
+                          </select>
+                        </p></td> 
+                    </tr>
+                  </table></td>
+                <td width="450" valign="top"><table width="300" border=0 bgcolor="#F1F1F1" id="disc">
+                  <tr> 
+                      <td colspan=2><p><strong>Dados da Conexão</strong></p></td>
+                    </tr>
+                    <tr> 
+                      <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>POP:</p></td>
+                      <td bgcolor="#FFFFFF"> <SELECT name='id_pop' >
 										{foreach item=v from=$lista_pops}
 
-                  <OPTION value="{$v.id_pop}" {if $v.id_pop == $id_pop}SELECTED{/if}>{$v.nome}</OPTION>
+                          <OPTION value="{$v.id_pop}" {if $v.id_pop == $id_pop}SELECTED{/if}>{$v.nome}</OPTION>
 										{/foreach}
 
-                </SELECT> </td>
-              <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>NAS:</p></td>
-              <td bgcolor="#FFFFFF"> <SELECT name='id_nas' onChange="javascript:alteraNas();">
+                        </SELECT> </td>
+                      
+                    </tr>
+                    <tr> 
+                      <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p> 
+                          <input type="checkbox" name="altera_rede" value="1" class="checkbox" {if $altera_rede}CHECKED{/if} onClick="javascript:alteraNovaSelecao();" onChange="javascript:alteraNovaSelecao();">
+                          Nova Seleção de Rede/IP:</p></td>
+                      <td bgcolor="#FFFFFF"><select name='selecao_ip' onchange='javascript:alteraSelecaoIP();'>
+                          <option value='A' >Automática</option>
+                          <option value='M' >Manual</option>
+                        </select> <br> <input type="text" name="endereco_ip" id="endereco_ip2" value="{$endereco_ip}"></td>
+						</tr><tr>
+						<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>NAS:</p></td>
+                      <td bgcolor="#FFFFFF"> <SELECT name='id_nas' onChange="javascript:alteraNas();">
 										{foreach item=v from=$lista_nas}
 
-                  <OPTION value="{$v.id_nas}" {if $v.id_nas == $id_nas}SELECTED{/if}>{$v.tp}:
-                  {$v.nome}</OPTION>
+                          <OPTION value="{$v.id_nas}" {if $v.id_nas == $id_nas}SELECTED{/if}>{$v.tp}: 
+                          {$v.nome}</OPTION>
 										{/foreach}
 
-                </SELECT> </td>
-            </tr>
-            <tr>
-              <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>
-                  <input type="checkbox" name="altera_rede" value="1" class="checkbox" {if $altera_rede}CHECKED{/if} onClick="javascript:alteraNovaSelecao();" onChange="javascript:alteraNovaSelecao();">
-                  Nova Seleção de Rede/IP:</p></td>
-              <td bgcolor="#FFFFFF"><select name='selecao_ip' onchange='javascript:alteraSelecaoIP();'>
-                  <option value='A' >Automática</option>
-                  <option value='M' >Manual</option>
-                </select> <br> <input type="text" name="endereco_ip" id="endereco_ip" value="{$endereco_ip}"></td>
-              <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>MAC:</p></td>
-              <td bgcolor="#FFFFFF" valign="top"><input type="text" name="mac" value="{$mac}" maxlength="17" size=17></td>
-              {literal} <script>
+                        </SELECT> </td>
+						</tr>
+						
+                      <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>MAC:</p></td>
+                      <td bgcolor="#FFFFFF" valign="top"><input type="text" name="mac" value="{$mac}" maxlength="17" size=17></td>
+                      {literal} 
+                      <script>
 									//verificaTipoRede();
-									</script> {/literal} </tr>
-            <tr valign="MIDDLE">
-              <td bgcolor="#FFFFFF" align="right">
-                <p>Redirecionar:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3">
-                <p>
-                  <input name="redirecionar" type="checkbox" value="true" id="redirecionar" class="checkbox" {if $ip_externo}checked{/if}>
-                  {if $ip_externo}IP: {$ip_externo}{/if}</p></td>
-            </tr>
-          </table>
-
-                              </td>
-                            </tr>
-
-
-
-                            <tr>
-                              <td align="center" valign="middle">
-                                <input type="hidden" name="op" value="conta">
-                                <input type="hidden" name="id_cliente" value="{$id_cliente}">
-                                <input type="hidden" name="username" value="{$username}">
-                                <input type="hidden" name="dominio" value="{$dominio}">
-                                <input type="hidden" name="tipo_conta" value="{$tipo_conta}">
-                                <input type="hidden" name="nas_orig" value="{$nas_orig}">
-
-
-                                <input type="hidden" name="acao" value="cad">
-          <input name="ip_externo" type="hidden" value="{$ip_externo}" id="ip_externo"> </td>
-                            </tr>
-							<tr>
-
-          <td height="10" bcolor="#F1F1F1"><div align="center"><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Banda</font></strong></div></td>
-							</tr>
-							<tr>
-          <td align="center" valign="top">
-            <table width="300" border="0" cellpadding="0" cellspacing="0">
-              <tr>
-                <td width="46%"> <p>Banda Upload kbps</p> </td>
-                <td width="54%"> <p>Banda Download kbps </p></td>
+									</script>
+                      {/literal} </tr>
+                    <tr valign="MIDDLE"> 
+                      <td bgcolor="#FFFFFF" align="right" width="70"> <p>Redirecionar:</p></td>
+                      <td bgcolor="#FFFFFF" > <p> 
+                          <input name="redirecionar" type="checkbox" value="true" id="redirecionar2" class="checkbox" {if $ip_externo}checked{/if}>
+                          {if $ip_externo}IP: {$ip_externo}{/if}</p></td>
+                    </tr>
+                  </table></td>
               </tr>
               <tr>
-                <td> <SELECT name='upload_kbps' >
+                <td colspan="2"> <p align="center"><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Banda 
+
+                  <input name="op" type="hidden" id="op" value="conta">
+                  <input name="id_cliente" type="hidden" id="id_cliente" value="{$id_cliente}">
+                  <input name="username" type="hidden" id="username" value="{$username}">
+                  <input name="dominio" type="hidden" id="dominio" value="{$dominio}">
+                  <input name="tipo_conta" type="hidden" id="tipo_conta" value="{$tipo_conta}">
+                  <input type="hidden" name="nas_orig" value="{$nas_orig}">
+                  <input name="acao" type="hidden" id="acao" value="cad">
+                  <input name="ip_externo" type="hidden" value="{$ip_externo}" id="ip_externo2">
+                  </font></strong> </p>
+                <div align="center">
+                  <table width="300" border="0" cellpadding="0" cellspacing="3">
+                    <tr> 
+                      <td width="46%"> <p align="right">Banda Upload kbps</p></td>
+                      <td width="54%"> <p>Banda Download kbps </p></td>
+                    </tr>
+                    <tr> 
+                      <td> <div align="right"> 
+                          <SELECT name='upload_kbps' >
                 	{foreach key=id item=nome from=$lista_upload}
-                    <OPTION VALUE='{$id}' {if $id == $upload_kbps}SELECTED{/if} >{$nome}</OPTION>
+                            <OPTION VALUE='{$id}' {if $id == $upload_kbps}SELECTED{/if} >{$nome}</OPTION>
                     {/foreach}
-                  </SELECT> </td>
-                <td> <SELECT name='download_kbps' >
+                          </SELECT>
+                          &nbsp;&nbsp; </div></td>
+                      <td>&nbsp;&nbsp; <SELECT name='download_kbps' >
 					{foreach key=id item=nome from=$lista_download}
-                    <OPTION VALUE='{$id}' {if $id == $download_kbps}SELECTED{/if} >{$nome}</OPTION>
+                            
+                          <OPTION VALUE='{$id}' {if $id == $download_kbps}SELECTED{/if} >{$nome}</OPTION>
                     {/foreach}
-                  </SELECT> </td>
+                          
+                        </SELECT> </td>
+                    </tr>
+                  </table>
+                  </div></td>
+                
               </tr>
-            </table>
-
-
-
-							  </td>
-
-							</tr>
-
-                            <tr>
-                              <td align="center" valign="middle"><input name="submit" type="submit" class=input2 id="submit3" value="Alterar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;"></td>
-                            </tr>
+              <tr>
+                <td colspan="2"><div align="center">
+                    <input name="submit" type="submit" class=input2 id="submit" value="Alterar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
+                  </div></td>
+         
+              </tr>
                           </table>
 
 
@@ -660,12 +655,11 @@ function check(){
 						                </tr>
             			  </table>
 
-    <p><br>
-      {/if}</p>
-    <p>&nbsp; </p></form>
+
+      {/if}</form>
 </body>  
 
-<br>
+
 						<p align="center"><a href="{$smarty.server.PHP_SELF}?op=produto&tipo={$tipo}&id_cliente={$id_cliente}">voltar</a></p>
 
 
