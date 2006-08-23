@@ -402,51 +402,95 @@ class VASuporte extends VirtexAdmin {
 			}		
 						
 			
-			
-			$opcoes_bd = @$_REQUEST["opcoes_bd"];
-			$opcoes_vtx = @$_REQUEST["opcoes_vtx"];
-			$opcoes_so = @$_REQUEST["opcoes_so"];
-			$opcoes_outros = @$_REQUEST["opcoes_outros"];
-			
+			$configuracao = @$_REQUEST["configuracao"];
+			$bd = @$_REQUEST["bd"];
+			$sistema = @$_REQUEST["sistema"];
+			$hoje = DATE("d-m-Y_H:i:s");
+			//ECHO $hoje ."<br>";
 			$acao = @$_REQUEST["acao"];
 			$op = @$_REQUEST["op"];
+			$sop = @$_REQUEST["sop"];
+			$msg = "";
+			
+			
+			//echo "acao: $acao<br>op: $op<br>sop: $sop<br>";
+			
 			
 			if ($acao == "backup") {
 			
-				if($opcoes_bd){
+				//echo "acao <br>";
+			
+				if ($sop == "ok"){
 				
-//				system('pg_dump -U virtex > /mosman/virtex/backup/bd_'.$hoje'.sql', $retval);
-				
-				
+				//echo "ok<br>";
+					if($bd){
+					//echo "banco<br>";
+
+						system('pg_dump --disable-triggers -U virtex > /mosman/backup/bd/bd_'.$hoje.'.sql', $retvalbd);
+						
+						if ($retvalbd != 0){
+						
+							$msg .= "BANCO DE DADOS: <B>ERRO</B><BR>";
+						
+						}else{
+						
+							$msg .= "BANCO DE DADOS: <B>OK</B><BR>";
+							
+						}
+						
+						
+						//$msg .= $retvalbd."<br>";
+
+
+					}
+					if($configuracao){
+					
+						@system('tar -czvf etc_'.$hoje.'.tgz /mosman/virtex/etc',$retvalconf1);
+						@system('tar -czvf appetc_'.$hoje.'.tgz /mosman/virtex/app/etc',$retvalconf2);
+						@copy("/mosman/virtex/app/etc_".$hoje.".tgz","/mosman/backup/etc/etc_".$hoje.".tgz");
+						@copy("/mosman/virtex/app/appetc_".$hoje.".tgz","/mosman/backup/etc/appetc_".$hoje.".tgz");
+						//$msg .= $retvalconf1."<br>";
+						//$msg .= $retvalconf2."<br>";
+						
+						if ($retvalconf1 != 0 || $retvalconf2 != 0){
+							$msg .= "ARQ. DE CONFIGURAÇÕES: <B>ERRO</B><BR>";
+						}else{
+							$msg .= "ARQ. DE CONFIGURAÇÕES: <B>OK</B><BR>";
+						}
+						
+						
+					}
+					if($sistema){
+					
+						@system('tar -czvf virtex_'.$hoje.'.tgz /mosman/virtex',$retvalsystem);
+						@copy("/mosman/virtex/app/virtex_".$hoje.".tgz","/mosman/backup/sys/virtex_".$hoje.".tgz");
+						//$msg .= $retvalsystem."<br>";
+						if ($retvalsystem != 0){
+						
+							$msg .="ARQ. DO SISTEMA: <B>ERRO</B><BR>";
+						
+						}else{
+						
+							$msg .= "ARQ. DO SISTEMA: <B>OK</B><BR>";
+						
+						}
+					}
+					
+					$mensagem = "BACKUP EFETUADO COM SUCESSO!!<BR>".$msg;
+					$this->tpl->atribui("mensagem",$mensagem);
+					$this->tpl->atribui("url","home.php");
+					$this->tpl->atribui("targ","_top");
+					$this->arquivoTemplate = "msgredirect.html";
+					return;
+			
 				}
 			
 			
-				//Diretórios para a criação do backup
-				$bkp_dir = "/tmp/virtexbkp/";
-				$bkp_dir_bd = $bkp_dir . "bd/";
-				$bkp_dir_so = $bkp_dir . "so/";
-				$bkp_dir_vtx = $bkp_dir . "vtx/";
-				$bkp_dir_utl = $bkp_dir . "utl/";
 
-				//
-				$arquivos_bkp = "";
 				
-				//Verifica se já existe um diretório de bkp previamente criado
-				if(is_dir($bkp_dir)) {
-					$info = `rmdir -rf $bkp_dir`;
-				}
-				
-				//Configuração dos arquivos a serem usados no backup
-				$arquivos_bkp_so = array(
-										"/etc/rc.conf",
-										"/etc/rc.firewall"
-									);
-
-				$arquivos_bkp_vtx = array(
-									);									
-				$arquivos_bkp_utl = array(
-									);
-				
+			
+			
+			
 			}
 			
 			
