@@ -135,6 +135,7 @@ function alteraTipo() {
 	var t = document.getElementById("tdados");
 	frm.username.disabled=false;
 	frm.senha.disabled=false;
+
 	frm.conf_senha.disabled=false;
 	change("username","enabled");
 	change("senha","enabled");
@@ -677,68 +678,71 @@ function Tecla(e)
 <form name="frmContratacao" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return validaForm();">
 <!-- DADOS DO frmContratacao: INI -->
 <div id="formBL">
-<table width="450" border=0 bgcolor="#F1F1F1" id="disc">
-  <tr>
-    <td colspan=4><p><strong>Dados da Conexão</strong></p></td>
-  </tr>
-  <tr>
-    <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>POP:</p></td>
-    <td width="152" bgcolor="#FFFFFF"> <SELECT name='id_pop' >
-			{foreach item=v from=$lista_pops}
-
-
-
-        <OPTION value="{$v.id_pop}" {if $v.id_pop == $id_pop}SELECTED{/if}>{$v.nome}</OPTION>
-			{/foreach}
-
-             </SELECT> </td>
-    <td bgcolor="#FFFFFF" align="right" width="71" valign="top"><p>NAS:</p></td>
-    <td width="139" bgcolor="#FFFFFF"> <SELECT name='id_nas' >
+    <table width="320" border=0 bgcolor="#F1F1F1" id="disc">
+      <tr> 
+        <td colspan=4><p><strong>Dados da Conexão</strong></p></td>
+      </tr>
+      <tr> 
+        <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p align="right">POP:</p></td>
+        <td width="152" bgcolor="#FFFFFF">
+          <SELECT name='id_pop' >
+		{foreach item=v from=$lista_pops}
+			<OPTION value="{$v.id_pop}" {if $v.id_pop == $id_pop}SELECTED{/if}>{$v.nome}</OPTION>
+		{/foreach}
+   
+          </SELECT>
+        </td>
+      </tr>
+      <tr> 
+        <td bgcolor="#FFFFFF" align="right" width="71" valign="top"><p align="right">NAS:</p></td>
+        <td width="139" bgcolor="#FFFFFF">
+		<SELECT name='id_nas'>
 			{foreach item=v from=$lista_nas}
-
-
-
-        <OPTION value="{$v.id_nas}" {if $v.id_nas == $id_nas}SELECTED{/if}>{$v.tp}:
-        {$v.nome}</OPTION>
+				<OPTION value="{$v.id_nas}" {if $v.id_nas == $id_nas}SELECTED{/if}>{$v.tp}:{$v.nome}</OPTION>
 			{/foreach}
-
-             </SELECT> </td>
-  </tr>
-  <tr>
-    <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Seleção de
-        Rede/IP:</p></td>
-    <td bgcolor="#FFFFFF"><SELECT name='selecao_ip' onChange='javascript:verificaTipoRede();'>
-        <OPTION VALUE='A' >Automática</OPTION>
-        <OPTION VALUE='M' >Manual</OPTION>
-      </SELECT> <br> <input type="text" name="endereco_ip" id="endereco_ip" value="{$endereco_ip}"></td>
-    <td bgcolor="#FFFFFF" align="right" width="71" valign="top"><p>MAC:</p></td>
-    <td bgcolor="#FFFFFF" valign="top"><input type="text" name="mac" value="{$mac}" maxlength="17" size=17>
-    </td>
-    {literal} <script>
-		verificaTipoRede();
-		</script> {/literal} </tr>
-  <tr>
-    <td bgcolor="#FFFFFF" align="right" valign="MIDDLE">
-<p>Redirecionar:</p></td>
-    <td bgcolor="#FFFFFF" colspan="3" valign="MIDDLE">
-<input name="redirecionar" type="checkbox" value="true" id="redirecionar" class="checkbox" {if $ip_externo}checked{/if}>
-      IP: {$ip_externo}</td>
-  </tr>
-</table>
+		</SELECT>
+	</td>
+      </tr>
+      <tr> 
+        <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p align="right">Seleção de Rede/IP:</p></td>
+        <td bgcolor="#FFFFFF"><SELECT name='selecao_ip' onChange='javascript:verificaTipoRede();'>
+            <OPTION VALUE='A' >Automática</OPTION>
+            <OPTION VALUE='M' >Manual</OPTION>
+          </SELECT> <br> <input type="text" name="endereco_ip" id="endereco_ip" value="{$endereco_ip}"></td>
+      </tr>
+      <tr> 
+        <td bgcolor="#FFFFFF" align="right" width="71" valign="top"><p align="right">MAC:</p></td>
+        <td bgcolor="#FFFFFF" valign="top"><input type="text" name="mac" value="{$mac}" maxlength="17" size=17> 
+        </td>
+		{literal} 
+			<script>
+				verificaTipoRede();
+			</script>
+		{/literal}
+        </tr>
+      <tr> 
+        <td bgcolor="#FFFFFF" align="right" valign="MIDDLE" width="71"> <p align="right">Redirecionar:</p></td>
+        <td bgcolor="#FFFFFF" colspan="3" valign="MIDDLE"> <p> 
+            <input name="redirecionar" type="checkbox" value="true" id="redirecionar" class="checkbox" {if $ip_externo}checked{/if}>
+            IP: {$ip_externo}</p></td>
+      </tr>
+    </table>
     </div>
     <div id="formH">
-      <table width="450" border="0" cellpadding="0" cellspacing="1" id="hosp">
-        <tr>
-          <td align="center" valign="middle"><table border=0 width="449" bgcolor="#F1F1F1">
-              <tr>
+    <table width="320" border="0" cellpadding="0" cellspacing="1" id="hosp">
+      <tr>
+          <td align="center" valign="middle"><table border=0 width="320" bgcolor="#F1F1F1">
+            <tr>
                 <td colspan=2><p><strong>Dados da Hospedagem</strong></p></td>
               </tr>
               <tr>
-                <td bgcolor="#FFFFFF" align="right" width="70"> <p>Tipo: </p></td>
-                <td bgcolor="#FFFFFF" width="369"> <SELECT name='tipo_hospedagem' onChange='javascript:verificaTipoHosp();' onFocusOut='javascript:verificaTipoHosp();' onClick='javascript:verificaTipoHosp();'>
-                   <OPTION VALUE='D'>www.dominio.com.br/</OPTION>
-                   <OPTION VALUE='U'>www.PROVEDOR.com.br/usuario/username</OPTION>
-                  </SELECT> </td>
+                <td bgcolor="#FFFFFF" align="right" width="70"><p> Tipo: </p></td>
+                <td bgcolor="#FFFFFF" width="369">
+                	<SELECT name='tipo_hospedagem' onChange='javascript:verificaTipoHosp();' onFocusOut='javascript:verificaTipoHosp();' onClick='javascript:verificaTipoHosp();'>
+                   		<OPTION VALUE='D'>www.dominio.com.br/</OPTION>
+                   		<OPTION VALUE='U'>www.PROVEDOR.com.br/usuario/username</OPTION>
+                  	</SELECT>
+                </td>
               </tr>
               <tr>
                 <td colspan=2><p><strong>Dados do Dominio</strong></p></td>
@@ -754,8 +758,9 @@ function Tecla(e)
       </table>
     </div>
     <div id="formD">
-      <table width="450" border=0 bgcolor="#F1F1F1" id="disc">
-        <tr>
+      
+    <table width="320" border=0 bgcolor="#F1F1F1" id="disc">
+      <tr>
           <td colspan=2><p><strong>Dados do Acesso</strong></p></td>
         </tr>
         <tr>
@@ -768,260 +773,256 @@ function Tecla(e)
 
 <!-- DADOS DO frmContratacao: FIM -->
 
-
-
-
-
-
-
-
-
-
-
                  <table width="100" border="0" cellspacing="0" cellpadding="0" align="center">
                     <tr>
                       <td>
-                          <table width="500" border="0" cellspacing="2" cellpadding="2">
-                            <tr>
-                              <td>
-                              	{if count($erros)}
-									{foreach item=erro from=$erros}
-										<p align="center"><font color="#FF0000" face=arial size=-1><b>{$erro}</b></font></p>
-									{/foreach}
-                              	{/if}
-                              </td>
-                            </tr>
-                            <tr>
-
-                              <td align="center" valign="middle">
-                                                         <table width="300">
-              <tr>
+                          <table width="300" border="0" align="center" cellpadding="2" cellspacing="2">
+        <tr> 
+          <td>{if count($erros)} {foreach item=erro from=$erros}<font color="#FF0000" face=arial size=-1><b>{$erro}</b></font>{/foreach} 
+            {/if} </td>
+        </tr>
+        <tr> 
+          <td height="66" align="center" valign="middle"> <table width="300">
+              <tr> 
                 <td align="center"> <strong><font size="+2" face="Arial, Helvetica, sans-serif">Cobrança</font></strong></td>
               </tr>
-              <tr>
+              <tr> 
                 <td><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                  <tr align="center">
-                    <td><a href="clientes.php?op=cobranca&rotina=resumo&id_cliente={$id_cliente}">Resumo</a></td>
-                  </tr>
-                </table></td>
+                    <tr align="center"> 
+                      <td><a href="clientes.php?op=cobranca&rotina=resumo&id_cliente={$id_cliente}">Resumo</a></td>
+                    </tr>
+                  </table></td>
               </tr>
-            </table>
-                              	<table width="450" border=0 bgcolor="#F1F1F1" id="cob">
-
-              <tr>
-                <td colspan><font color="#000000" face="arial" size="+1"><b>Contrato</b></font>
-                </td>
-                <td colspan="3"> <select name="tipo" onChange="javascript:alteraTipo();">
-                    <option value=""></option>
-                    {if $lic_bandalarga=="sim"}<option value="BL" {if $tipo=="BL"}SELECTED{/if}>Banda Larga</option>{/if}
-                    {if $lic_discado=="sim"}<option value="D" {if $tipo=="D"}SELECTED{/if}>Discado</option>{/if}
-                    {if $lic_hospedagem=="sim"}<option value="H" {if $tipo=="H"}SELECTED{/if}>Hospedagem</option>{/if}
-                  </select>
-              </td>
-              </tr>
-              <tr>
-                <td width="89" height="26" align="right" bgcolor="#FFFFFF">
-<p>Produto:</p></td>
-                <td width="65" bgcolor="#FFFFFF"> <SELECT name=id_produto onChange="javascript:alteraProduto();" >
-                  </SELECT> </td>
-                <td width="255" align="right" bgcolor="#FFFFFF">
-<p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Criar usuario de
-                    e-mail com os mesmos dados?</font></p></td>
-                <td width="23" align="center" bgcolor="#FFFFFF"><input name="email_igual" type="checkbox" id="email_igual" value="1" class="checkbox" {if $lic_email=="nao"}disabled{/if}></td>
-              </tr>
-            </table>
-                              </td>
-                            </tr>
-
-                            <tr>
-
-        <td align="center" valign="middle">
-          <table border=0 width="450" bgcolor="#F1F1F1">
-            <tr>
-              <td bgcolor="#FFFFFF" align="right" width="98"><p>Dt Contrato:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p>
-                  <input type="text" size=11 maxlength="10" name="data_contratacao" OnKeyPress="formatar(this, '##/##/####')" value="{$hoje}" onfocusout="javascript:processaDataContrato();"  onchange="javascript:processaDataContrato();">
-                </p></td>
-            </tr>
-            <tr>
-              <td bgcolor="#FFFFFF" align="right" width="98"><p>Vigência:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p>
-                  <input type="text" size=2 maxlength="2" name="vigencia" value="12" onchange="javascript:processaVigencia();" onfocusout="javascrpt:processaVigencia();">
-                  meses</p></td>
-            </tr>
-            <tr>
-              <td bgcolor="#FFFFFF" align="right" width="98"><p>Status:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p>
-                  <select name='status' >
-                    <option value='A'  selected >Ativo</option>
-                    <option value='S' >Suspenso</option>
-                    <option value='C' >Cancelado</option>
-                  </select>
-                </p></td>
-            </tr>
-            <tr>
-              <td bgcolor="#FFFFFF" align="right" width="98"><p>Dia Vencimento:</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"> <p>
-                  <input type="text" id="dia_vencimento" name="dia_vencimento" value="{$dia_venc}" size=2 maxlength=2 onfocusout="javascript:processaDataContrato();"  onchange="javascript:processaDataContrato();">
-                  Carência:
-                  <input type="text" id="carencia_pagamento" name="carencia_pagamento" value="{$carencia}" size=2 maxlength=2>
-                  dias </p></td>
-            </tr>
-            <tr>
-              <td bgcolor="#FFFFFF" align="right"><p>Data 1&ordm; Vencimento</p></td>
-              <td bgcolor="#FFFFFF"><input name="pri_venc" type="text" size="," id="pri_venc" maxlength="10" OnKeyPress="formatar(this, '##/##/####')" onblur="return datavenc();"></td>
-              <td bgcolor="#FFFFFF"><input type="button" name="hoje" value="Hoje" onClick="javascript:priVenc();" &gt;&gt;""
-              style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;"></td>
-              <td bgcolor="#FFFFFF">&nbsp;</td>
-            </tr>
-            <tr>
-              <td bgcolor="#FFFFFF" align="right" width="98"><p>Desconto</p></td>
-              <td bgcolor="#FFFFFF"><p>
-                  <input name="desconto_promo" type="text" value="0.00" size=7 maxlength="7" id="desconto_promo">
-                  reais</p></td>
-              <td bgcolor="#FFFFFF"><p>Periodo</p></td>
-              <td bgcolor="#FFFFFF"><p>
-                  <input type="text" id="periodo_desconto" name="periodo_desconto" value="" size=2 maxlength=2>
-                  meses</p></td>
-            </tr>
-            <tr>
-              <td bgcolor="#FFFFFF" align="right"><p>Taxa Inst.</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><p>
-                  <input name="tx_instalacao" type="text" value="0.00" size=7 maxlength="7" id="tx_instalacao">
-                  reais</p></td>
-            </tr>
-            <tr>
-              <td bgcolor="#FFFFFF" align="right"><p>Comodato</p></td>
-              <td bgcolor="#FFFFFF" width="137"><p>
-                  <input name="comodato" type="checkbox" value="true" id="comodato" onClick="javascript:Comodato()" class="checkbox" {if $comodato == true}CHECKED{/if}>
-                </p></td>
-              <td bgcolor="#FFFFFF" width="76"><p>Valor:</p></td>
-              <td bgcolor="#FFFFFF" width="121"><p>
-                  <input name="valor_comodato" type="text" value="0.00" size=7 maxlength="7" id="vl_comodato">
-                  reais</p></td>
-            </tr>
-            <tr>
-              <td colspan=4><h2><font color="#000000">Cobrança</font></h2></td>
-            </tr>
-            <tr>
-              <td bgcolor="#FFFFFF" align="right"><p>Pro-Rata</p></td>
-              <td bgcolor="#FFFFFF" colspan="3"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                  <tr>
-                    <td width="8%"><input name="prorata" type="checkbox" value="true" id="prorata3" class="checkbox" ></td>
-                    <td width="92%"></td>
-                  </tr>
-                </table></td>
-            </tr>
-            <tr>
-              <td bgcolor="#FFFFFF" align="right" width="98"><p>Forma de Pagamento:</p></td>
-              <td bgcolor="#FFFFFF"> <select name='tipo_cobranca' id="tipo_cobranca" onChange="javascript:checaFormaCobranca();">
+            </table></td>
+        </tr>
+        <tr> 
+          <td align="center" valign="middle"> <table width="400" height="363" border="0">
+              <tr> 
+                <td width="401" height="84" valign="top"> <table width="350" border=0 bgcolor="#F1F1F1" id="cob">
+                    <tr> 
+                      <td colspan><font color="#000000" face="arial" size="+1"><b>Contrato</b></font> 
+                      </td>
+                      <td colspan="3"> <select name="tipo" onChange="javascript:alteraTipo();">
+                          <option value=""></option>
+                    {if $lic_bandalarga=="sim"}
+                          <option value="BL" {if $tipo=="BL"}SELECTED{/if}>Banda 
+                          Larga</option>{/if}
+                    {if $lic_discado=="sim"}
+                          <option value="D" {if $tipo=="D"}SELECTED{/if}>Discado</option>{/if}
+                    {if $lic_hospedagem=="sim"}
+                          <option value="H" {if $tipo=="H"}SELECTED{/if}>Hospedagem</option>{/if}
+                        </select> </td>
+                    </tr>
+                    <tr> 
+                      <td width="89" height="26" align="right" bgcolor="#FFFFFF"> 
+                        <p>Produto:</p></td>
+                      <td width="65" bgcolor="#FFFFFF" colspan="3"> <SELECT name=id_produto onChange="javascript:alteraProduto();" style="width: 250px;">
+                        </SELECT> </td>
+                    </tr>
+                  </table>
+                  <table width="350" border="0">
+                    <tr> 
+                      <td><table width="100%" border=0 bgcolor="#F1F1F1" dwcopytype="CopyTableRow">
+                          <tr> 
+                            <td bgcolor="#FFFFFF" align="right" width="72"><p>Dt 
+                                Contrato:</p></td>
+                            <td bgcolor="#FFFFFF" ><p> 
+                                <input type="text" size=11 maxlength="10" name="data_contratacao" onKeyPress="formatar(this, '##/##/####')" value="{$hoje}" onfocusout="javascript:processaDataContrato();"  onChange="javascript:processaDataContrato();">
+                              </p></td>
+                            <td bgcolor="#FFFFFF"><p> Vigência:</p></td>
+                            <td bgcolor="#FFFFFF"> <p> 
+                                <input type="text" size=2 maxlength="2" name="vigencia" value="12" onChange="javascript:processaVigencia();" onfocusout="javascrpt:processaVigencia();">
+                                meses </p></td>
+                          </tr>
+                          <tr> 
+                            <td bgcolor="#FFFFFF" align="right" width="72"><p>Status:</p></td>
+                            <td bgcolor="#FFFFFF" ><p> 
+                                <select name='status' >
+                                  <option value='A'  selected >Ativo</option>
+                                  <option value='S' >Suspenso</option>
+                                  <option value='C' >Cancelado</option>
+                                </select>
+                              </p></td>
+                            <td bgcolor="#FFFFFF" ><p>Dia Vencimento:</p></td>
+                            <td bgcolor="#FFFFFF" ><p> 
+                                <input type="text" id="dia_vencimento" name="dia_vencimento" value="{$dia_venc}" size=2 maxlength=2 onfocusout="javascript:processaDataContrato();"  onChange="javascript:processaDataContrato();">
+                              </p></td>
+                          </tr>
+                          <tr> 
+                            <td  align="right" bgcolor="#FFFFFF"> <p>Data 1&ordm; 
+                                Vencimento</p></td>
+                            <td bgcolor="#FFFFFF" ><p> 
+                                <input name="pri_venc" type="text" size="13" id="pri_venc" maxlength="10" onKeyPress="formatar(this, '##/##/####')" onBlur="return datavenc();">
+                                <input type="button" name="hoje" value="Hoje" onClick="javascript:priVenc();" &gt;&gt;""
+              style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
+                              </p></td>
+                            <td bgcolor="FFFFFF"><p>Carência:</p></td>
+                            <td bgcolor="FFFFFF"> <p> 
+                                <input type="text" id="carencia_pagamento" name="carencia_pagamento" value="{$carencia}" size=2 maxlength=2>
+                                dias </p></td>
+                          </tr>
+                          <tr> 
+                            <td bgcolor="#FFFFFF" align="right" width="72"><p>Desconto</p></td>
+                            <td bgcolor="#FFFFFF"><p> 
+                                <input name="desconto_promo" type="text" value="0.00" size=7 maxlength="7" id="desconto_promo">
+                                reais</p></td>
+                            <td bgcolor="#FFFFFF"><p>Periodo:</p></td>
+                            <td bgcolor="#FFFFFF"><p> 
+                                <input type="text" id="periodo_desconto" name="periodo_desconto" value="" size=2 maxlength=2>
+                                meses</p></td>
+                          </tr>
+                          <tr> 
+                            <td bgcolor="#FFFFFF" align="right"><p>Taxa Inst.</p></td>
+                            <td bgcolor="#FFFFFF" colspan="3"><p> 
+                                <input name="tx_instalacao" type="text" value="0.00" size=7 maxlength="7" id="tx_instalacao">
+                                reais</p></td>
+                          </tr>
+                          <tr> 
+                            <td bgcolor="#FFFFFF" align="right"><p>Comodato</p></td>
+                            <td bgcolor="#FFFFFF" width="121"><p> 
+                                <input name="comodato" type="checkbox" value="true" id="comodato" onClick="javascript:Comodato()" class="checkbox" {if $comodato == true}checked{/if}>
+                              </p></td>
+                            <td bgcolor="#FFFFFF" width="80"><p>Valor:</p></td>
+                            <td bgcolor="#FFFFFF" width="53"><p> 
+                                <input name="valor_comodato" type="text" value="0.00" size=7 maxlength="7" id="valor_comodato ">
+                                reais</p></td>
+                          </tr>
+                          </table>
+                          </td>
+                    </tr>
+                  </table></td>
+                <td width="68" valign="top"> <table border=0 width="350" bgcolor="#F1F1F1">
+                    <tr> 
+                      <td colspan=4><font color="#000000" face="Arial, Helvetica, sans-serif"><strong>Cobrança</strong></font></td>
+                    </tr>
+                    <tr> 
+                      <td bgcolor="#FFFFFF" align="right"><p>Pro-Rata</p></td>
+                      <td bgcolor="#FFFFFF" colspan="3"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr> 
+                            <td width="8%"><input name="prorata" type="checkbox" value="true" id="prorata" class="checkbox" ></td>
+                            <td width="92%"></td>
+                          </tr>
+                        </table></td>
+                    </tr>
+                    <tr> 
+                      <td bgcolor="#FFFFFF" align="right" width="77"><p>Forma 
+                          de Pagamento:</p></td>
+                      <td width="144" bgcolor="#FFFFFF"> <select name="tipo_cobranca" id="tipo_cobranca" onChange="javascript:checaFormaCobranca();">		
 				  { foreach item=a from=$tipo_cobranca }
 
-                  <option value='{$a.id_cobranca}' >{$a.nome_cobranca}</option>
+                          <option value="{$a.id_cobranca}" >{$a.nome_cobranca}</option>
 					{ /foreach }
 
-                </select> </td>
-              <td bgcolor="#FFFFFF"><p>Pagamento:</p></td>
-              <td bgcolor="#FFFFFF">
+                        </select> </td>
+                      <td width="149" bgcolor="#FFFFFF"><p>Pagamento:</p></td>
+                      <td width="62" bgcolor="#FFFFFF"> 
 			  <select name="forma_pagamento">
-                {foreach key=id item=nome from=$forma_pagamento}
+				{foreach key=id item=nome from=$forma_pagamento}
 				  <option value="{$id}" { if $id == $pagamento }SELECTED{ /if }>{$nome}</option>
 				{/foreach}
-                </select></td>
-            </tr>
-            <tr>
-              <td bgcolor="#FFFFFF" align="right" height="1">&nbsp;</td>
-              <td bgcolor="#FFFFFF" colspan="3" height="1"> <div id="formaPag" style="visible: hidden"  >
-                <table width="100%" border="0" cellspacing="3" cellpadding="0">
-                  <tr>
-                    <td><p>de
-                        <input type="text" name="ini_carne" value="" size=11 maxlength=10 OnKeyPress="formatar(this, '##/##/####')">
-                        até
-                        <input type="text" name="data_carne" value="" size=11 maxlength=10 OnKeyPress="formatar(this, '##/##/####')">
-                      </p></td>
-                  </tr>
-                  <tr>
-                    <td><p><strong><font color="#CC0000">O sistema de carn&ecirc;
-                        n&atilde;o suporta cobran&ccedil;as adicionais. Caso o
-                        contrato seja firmado os valores excedentes existentes
-                        ser&atilde;o desconsiderados, tanto no contrato quanto
-                        na fatura aaa</font></strong></p></td>
-                  </tr>
-                </table>
-                </div>
-                <!-- Inicio DDS -->
-                <div id="formaPagBanco" style="visibility: hidden;">
-                <table width="100%" border="0" cellspacing="3" cellpadding="0">
-                  <tr>
-                    <td><p>Banco
-                        <input type="text" name="db_banco" value="" size=7 maxlength=10>
-                        Agência
-                        <input type="text" name="db_agencia" value="" size=7 maxlength=10>
-                        Conta
-                        <input type="text" name="db_conta" value="" size=7 maxlength=10>
-                      </p></td>
-                  </tr>
-                  <tr>
-                    <td><p><strong></strong></p></td>
-                  </tr>
-                </table>
-                </div><div id="formaPagCartao" style="visibility: hidden;">
-                <table width="100%" border="0" cellspacing="3" cellpadding="0">
-                  <tr>
-                    <td><p>Vencimento
-                        <input type="text" name="cc_vencimento" value="" size=6 maxlength=5>
-                        Numero
-                        <input type="text" name="cc_numero" value="" size=11 maxlength=25>
-                        <br>
-                        Operadora
-                        <select name="cc_operadora">
-									{foreach key=id item=nome from=$cc_operadoras}
+			  </select>
+		      </td>
+                    </tr>
+                    <tr> 
+                      <td bgcolor="#FFFFFF" align="right" height="1">&nbsp;</td>
+                      <td bgcolor="#FFFFFF" colspan="3" height="1"> <div id="formaPag" style="visible: hidden"  > 
+                          <table width="100%" border="0" cellspacing="3" cellpadding="0">
+			    <tr>
+			      <td><p>de
+				  <input type="text" name="ini_carne" value="" size=11 maxlength=10 OnKeyPress="formatar(this, '##/##/####')">
+				  até
+				  <input type="text" name="data_carne" value="" size=11 maxlength=10 OnKeyPress="formatar(this, '##/##/####')">
+				</p></td>
+			    </tr>
+			    <tr>
+			      <td><p><strong><font color="#CC0000">O sistema de carn&ecirc;
+				  n&atilde;o suporta cobran&ccedil;as adicionais. Caso o
+				  contrato seja firmado os valores excedentes existentes
+				  ser&atilde;o desconsiderados, tanto no contrato quanto
+				  na fatura aaa</font></strong></p>
+			      </td>
+			    </tr>
+               		  </table>
 
-                          <option value="{$id}"> {$nome}</option>
-									{/foreach}
-
-                        </select>
-                      </p></td>
-                  </tr>
-                  <tr>
-                    <td><p><strong></strong></p></td>
-                  </tr>
-                </table>
-                </div>
-                <!-- Fim DDS -->
-              </td>
-            </tr>
-            {literal} <script language="JavaScript">
-calculaDataCarne();
-</script> {/literal}
-          </table>
-          <br>
-          <table width="450" border=0 bgcolor="#F1F1F1">
-            <tr>
-              <td colspan=2><h2><font color="#000000">Dados do Usuário</font></h2></td>
-            </tr>
-            <tr>
-              <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Username:</p></td>
-              <td bgcolor="#FFFFFF" colspan=2><input type="text" maxlength="30" name="username" disabled="true" value="{$username}" onKeyPress="return Tecla(event);" ></td>
-            </tr>
-            <tr>
-              <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Senha:</p></td>
-              <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="senha" disabled="true">
-              </td>
-            </tr>
-            <tr>
-              <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Confirme:</p></td>
-              <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="conf_senha" disabled="true">
-              </td>
-            </tr>
-          </table>
-
-        </td>
+                        </div>
+                        <!-- Inicio DDS -->
+                        <div id="formaPagBanco" style="visibility: hidden;"> 
+                          <table width="100%" border="0" cellspacing="3" cellpadding="0">
+                            <tr> 
+                              <td><p>Banco 
+                                  <input type="text" name="db_banco" value="" size=7 maxlength=10>
+                                  Agência 
+                                  <input type="text" name="db_agencia" value="" size=7 maxlength=10>
+                                  <br>
+                                  Conta 
+                                  <input type="text" name="db_conta" value="" size=7 maxlength=10>
+                                </p></td>
                             </tr>
+                          </table>
+                        </div>
+                        <div id="formaPagCartao" style="visibility: hidden;"> 
+                          <table width="100%" border="0" cellspacing="3" cellpadding="0">
+                            <tr> 
+                              <td><p>Vencimento 
+                                  <input type="text" name="cc_vencimento" value="" size=6 maxlength=5>
+                                  Numero 
+                                  <input type="text" name="cc_numero" value="" size=11 maxlength=25>
+                                  <br>
+                                  Operadora 
+                                  <select name="cc_operadora">
+					{foreach key=id item=nome from=$cc_operadoras}
+					    <option value="{$id}">{$nome}</option>
+					{/foreach}
+                                  </select>
+                                </p></td>
+                            </tr>
+                          </table>
+                        </div>
+			<!-- Fim DDS -->
+		      </td>
+		    </tr>
+		  	{literal}
+				<script language="JavaScript">
+					calculaDataCarne();
+				</script>
+		  	{/literal}
+	    </table></td>
+              </tr>
+              <tr> 
+                <td valign="top"> 
+                  <table width="350" border=0 bgcolor="#F1F1F1">
+                    <tr> 
+                      <td colspan=2><h2><font color="#000000">Dados do Usuário</font></h2></td>
+                    </tr>
+                    <tr> 
+                      <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Username:</p></td>
+                      <td bgcolor="#FFFFFF" colspan=2><input type="text" maxlength="30" name="username" disabled="true" value="{$username}" onKeyPress="return Tecla(event);" ></td>
+                    </tr>
+                    <tr> 
+                      <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Senha:</p></td>
+                      <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="senha" disabled="true"> 
+                      </td>
+                    </tr>
+                    <tr> 
+                      <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Confirme:</p></td>
+                      <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="conf_senha" disabled="true"> 
+                      </td>
+                    </tr>
+		{if $lic_email == "sim"}
+                    <tr bgcolor="FFFFFF"> 
+                      <td> <div align="right"> 
+                          <input name="email_igual" type="checkbox" id="email_igual4" value="1" class="checkbox" {if $lic_email=="nao"}disabled{/if}>
+                        </div></td>
+                      <td colspan="2"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Criar 
+                        usuario de e-mail com os mesmos dados?</font> </td>
+                    </tr>
+              	{/if}
+                  </table></td>
+                <td valign="top">
+				<table width="336" border="0" align="center" cellpadding="2" cellspacing="2" dwcopytype="CopyTableCell">
+                    <tr>
 
-                            <tr>
-
-        <td align="center" valign="middle" id="tdados">&nbsp;</td>
+        <td width="328" align="center" valign="middle" id="tdados">&nbsp;</td>
                             </tr>
                             <tr>
                               <td align="center" valign="middle">
@@ -1034,19 +1035,26 @@ calculaDataCarne();
                                 <input type="hidden" name="tipo_dominio" value="{$dominio}">
                                 </td>
                             </tr>
-                            <tr>
-                              <td align="center" valign="middle"><input name="botao_enviar2" type="submit" class=input2 id="botao_enviar23" value="Cadastrar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;"></td>
-                            </tr>
                           </table>
+				</td>
+              </tr>
+              <tr> 
+                <td colspan="2"><div align="center"> 
+                    <input name="botao_enviar" type="submit" class=input2 id="botao_enviar" value="Cadastrar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
+                  </div></td>
+              </tr>
+            </table>
+			</td>
+        </tr>
+      </table>
                         </form>
-
 
 
 { literal }
 <script language="JavaScript">
 
 init();
-checaFormaCobranca();
+checaFormaCobranca(); 
 
 </script>
 { /literal }
