@@ -68,10 +68,11 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "FROM cbtb_cliente_produto cp, prtb_produto pr ";
 		$sSQL .= "WHERE cp.id_cliente = '$id_cliente' ";
 		$sSQL .= "AND cp.id_produto = pr.id_produto ";
+		$sSQL .= "AND cp.excluido = false ";
 		$sSQL .= "GROUP BY pr.tipo";
 									
 		$prcliente = $this->bd->obtemRegistros($sSQL);
-		//////////echo "QUERY: $sSQL<br> ";
+		/////////echo "QUERY: $sSQL<br> ";
 									
 		$prod_contr = array();
 									
@@ -926,7 +927,7 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "FROM ";																	  
 		$sSQL .= "	cbtb_contrato ct, cbtb_cliente_produto cl, prtb_produto pr  ";
 		$sSQL .= "WHERE ";
-		$sSQL .= "	cl.id_cliente_produto = ct.id_cliente_produto  AND cl.id_cliente = '$id_cliente' AND ct.id_produto = pr.id_produto AND ct.status = 'A' ";
+		$sSQL .= "	cl.id_cliente_produto = ct.id_cliente_produto  AND cl.id_cliente = '$id_cliente' AND ct.id_produto = pr.id_produto ";
 		$sSQL .= " ORDER BY ct.data_contratacao DESC ";
 
 		$lista_contrato = $this->bd->obtemRegistros($sSQL);
@@ -3421,7 +3422,7 @@ class VAClientes extends VirtexAdmin {
 					$sSQL .= "   AND dominio = '".$this->bd->escape($dominio)."' ";
 					$sSQL .= "   AND tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
 					
-					//////////echo "SQL: $sSQL <BR>";
+					////////echo "SQL: $sSQL <BR>";
 					
 					$dsc = $this->bd->obtemUnicoRegistro($sSQL);					
 					$conta = array_merge($conta,$dsc);
@@ -3447,9 +3448,10 @@ class VAClientes extends VirtexAdmin {
 					$sSQL .= "";
 					$sSQL .= "";
 
-					 //////echo "$sSQL;<br>\n";
+					 /////////echo "$sSQL;<br>\n";
 
 					$cbl = $this->bd->obtemUnicoRegistro($sSQL);
+					/////////////echo $cbl["tipo_bandalarga"];
 
 					$conta = array_merge($conta,$cbl);
 

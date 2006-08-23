@@ -544,7 +544,7 @@ class VASuporte extends VirtexAdmin {
 				$sSQL .= " AND EXTRACT('month' FROM login) = '$mes' ";
 				$sSQL .= " AND EXTRACT('year' FROM login) = '$ano' ";
 				
-				echo $sSQL;
+				//////////echo $sSQL;
 
 				if ($tipo_conta ==	"D" ){
 
@@ -605,7 +605,7 @@ class VASuporte extends VirtexAdmin {
 			}
 
 
-			$sSQL .= " ORDER BY inicio DESC " ; echo $sSQL;
+			$sSQL .= " ORDER BY inicio DESC " ; ///echo $sSQL;
 
 			$extrato = $this->bd->obtemRegistros($sSQL);
 

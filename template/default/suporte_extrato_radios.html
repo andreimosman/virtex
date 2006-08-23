@@ -95,17 +95,17 @@
     <tr bgcolor="#EAF4FF" onMouseOver="style.background='#DAEBFF'; " onMouseout="style.background='#EAF4FF';">
       <td align="LEFT" ><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.username}</a></font></td>
       <td align="LEFT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.origem}</a></font></td>
-      <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.inicio|date_format:"%d/%m/%Y %H:%M:%S "}</a></font></td>
-      <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.fim|date_format:"%d/%m/%Y %H:%M:%S "}</a></font></td>
-      <td align="RIGHT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.tempo|date_format:"%H:%M:%S"}</a></font></td>
+      <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.inicio}</a></font></td>
+      <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.fim}</a></font></td>
+      <td align="RIGHT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.tempo}</a></font></td>
       <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.bytes_in}/{$a.bytes_out}</a></font></td>
     </tr>{/foreach}
     {/foreach}
   </table>
 
   {/if}
-    <p> {if !$extrato && $valor_pesquisa} <strong><font color="#FF0000">Nao Há 
-      Registro de acessos desse usuário com os par&acirc;metros escolhidos.</font> 
+    <p> {if !$extrato && $valor_pesquisa} <strong><font color="#FF0000">Nao Há
+      Registro de acessos desse usuário com os par&acirc;metros escolhidos.</font>
       </strong> {/if} </p>
 {if ($extrato && $valor_pesquisa)}
   <table>
