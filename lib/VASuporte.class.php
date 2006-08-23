@@ -445,10 +445,10 @@ class VASuporte extends VirtexAdmin {
 					}
 					if($configuracao){
 					
-						@system('tar -czvf etc_'.$hoje.'.tgz /mosman/virtex/etc',$retvalconf1);
-						@system('tar -czvf appetc_'.$hoje.'.tgz /mosman/virtex/app/etc',$retvalconf2);
-						@copy("/mosman/virtex/app/etc_".$hoje.".tgz","/mosman/backup/etc/etc_".$hoje.".tgz");
-						@copy("/mosman/virtex/app/appetc_".$hoje.".tgz","/mosman/backup/etc/appetc_".$hoje.".tgz");
+						system('tar -czvf etc_'.$hoje.'.tgz /mosman/virtex/etc',$retvalconf1);
+						system('tar -czvf appetc_'.$hoje.'.tgz /mosman/virtex/app/etc',$retvalconf2);
+						copy("/mosman/virtex/app/etc_".$hoje.".tgz","/mosman/backup/etc/etc_".$hoje.".tgz");
+						copy("/mosman/virtex/app/appetc_".$hoje.".tgz","/mosman/backup/etc/appetc_".$hoje.".tgz");
 						//$msg .= $retvalconf1."<br>";
 						//$msg .= $retvalconf2."<br>";
 						
@@ -462,8 +462,8 @@ class VASuporte extends VirtexAdmin {
 					}
 					if($sistema){
 					
-						@system('tar -czvf virtex_'.$hoje.'.tgz /mosman/virtex',$retvalsystem);
-						@copy("/mosman/virtex/app/virtex_".$hoje.".tgz","/mosman/backup/sys/virtex_".$hoje.".tgz");
+						system('tar -czvf virtex_'.$hoje.'.tgz /mosman/virtex',$retvalsystem);
+						copy("/mosman/virtex/app/virtex_".$hoje.".tgz","/mosman/backup/sys/virtex_".$hoje.".tgz");
 						//$msg .= $retvalsystem."<br>";
 						if ($retvalsystem != 0){
 						
