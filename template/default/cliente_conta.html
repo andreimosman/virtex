@@ -631,7 +631,7 @@ function check(){
 						                <td bgcolor="#FFFFFF" colspan=2>
 						                	<SELECT name='status'>
 											{foreach key=id item=nome from=$lista_status}
-											<OPTION VALUE='{$id}'  {if $id == $status}SELECTED{/if} >{$nome}</OPTION>
+											<OPTION VALUE='{$id}'  {if $id == $status}SELECTED{/if} {if $id == "S"}DISABLED{/if}>{$nome}</OPTION>
 											{/foreach}
 											</SELECT>
 
