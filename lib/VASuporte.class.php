@@ -220,13 +220,13 @@ class VASuporte extends VirtexAdmin {
 				else if ($tipo == "I") $relat[$i]["tipo_ng"] = "#D8E8F3";
 				else $relat[$i]["tipo_ng"] = "#D1F2C6";
 				
-				$username = $relat[$i]["usuario"];
+				$username_id = $relat[$i]["usuario"];
 				
 				$dSQL  =" SELECT ";
 				$dSQL .=" id_cliente FROM ";
 				$dSQL .=" cntb_conta ";
 				$dSQL .=" WHERE ";
-				$dSQL .=" username = '$username' ";
+				$dSQL .=" username = '$username_id' ";
 				$dSQL .=" AND tipo_conta not ilike 'E' ";
 
 				$id_cliente = $this->bd->obtemRegistros($dSQL);
@@ -543,6 +543,8 @@ class VASuporte extends VirtexAdmin {
 				$sSQL .= " AND session_id not ilike '%:%' ";
 				$sSQL .= " AND EXTRACT('month' FROM login) = '$mes' ";
 				$sSQL .= " AND EXTRACT('year' FROM login) = '$ano' ";
+				
+				echo $sSQL;
 
 				if ($tipo_conta ==	"D" ){
 
@@ -603,7 +605,7 @@ class VASuporte extends VirtexAdmin {
 			}
 
 
-			$sSQL .= " ORDER BY inicio DESC " ; ////echo $sSQL;
+			$sSQL .= " ORDER BY inicio DESC " ; echo $sSQL;
 
 			$extrato = $this->bd->obtemRegistros($sSQL);
 
@@ -624,13 +626,13 @@ class VASuporte extends VirtexAdmin {
 				for($i=0;$i<count(@$extrato);$i++){
 							
 							
-					$username = $extrato[$i]["username"];
+					$username_id = $extrato[$i]["username"];
 
 					$dSQL  =" SELECT ";
 					$dSQL .=" id_cliente FROM ";
 					$dSQL .=" cntb_conta ";
 					$dSQL .=" WHERE ";
-					$dSQL .=" username = '$username' ";
+					$dSQL .=" username = '$username_id' ";
 					$dSQL .=" AND tipo_conta not ilike 'E' ";
 
 					$id_cliente = $this->bd->obtemRegistros($dSQL);
@@ -679,13 +681,13 @@ class VASuporte extends VirtexAdmin {
 			for($i=0;$i<count($relacao_users);$i++){
 
 
-					$username = $relacao_users[$i]["username"];
+					$username_id = $relacao_users[$i]["username"];
 
 					$dSQL  =" SELECT ";
 					$dSQL .=" id_cliente FROM ";
 					$dSQL .=" cntb_conta ";
 					$dSQL .=" WHERE ";
-					$dSQL .=" username = '$username' ";
+					$dSQL .=" username = '$username_id' ";
 					$dSQL .=" AND tipo_conta not ilike 'E' ";
 
 					$id_cliente = $this->bd->obtemRegistros($dSQL);
