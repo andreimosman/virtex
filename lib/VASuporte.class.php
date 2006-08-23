@@ -599,7 +599,7 @@ class VASuporte extends VirtexAdmin {
 			///echo $sSQL;
 
 			$this->tpl->atribui("relacao_users",$relacao_users);
-			$this->arquivoTemplate="surporte_radius_online.html";
+			$this->arquivoTemplate="suporte_radius_online.html";
 		
 		
 		}

@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>Virtex Admin - Área de Gerenciamento </title>
+<meta http-equiv="refresh" content="5">
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+</head>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" >
+<div align="center">
+<form name="forme">
+  <h1><strong> Usuários Online </strong></h1>
+  {if $relacao_users}
+    <table>
+      <tr bgcolor="#D7E1DB"> 
+        <td width="100" align="LEFT"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Usuário</font></td>
+        <td width="100" align="LEFT"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Origem</font></td>
+        <td width="145" align="CENTER" ><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Início</font></td>
+        <td width="135" align="CENTER"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">NAS</font></td>
+        <td width="50" align="RIGHT"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Tempo</font></td>
+        <td width="130" align="CENTER"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Bytes</font></td>
+    </tr>
+    {foreach item=a from=$relacao_users}
+    <tr bgcolor="#F0FFF0" onMouseOver="style.background='#DEFFDE'; " onMouseout="style.background='#F0FFF0';">
+      <td align="LEFT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.username}</font></td>
+      <td align="LEFT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.origem}</font></td>
+      <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.inicio|date_format:"%d/%m/%Y %H:%M:%S "}</font></td>
+      <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.nas}</font></td>
+      <td align="RIGHT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.tempo|date_format:"%H:%M:%S"}</font>
+	  </td>
+      <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.bytes_in}/{$a.bytes_out}</font></td>
+    </tr>
+    {/foreach}
+  </table>
+  <p> {if !$relacao_users} <strong><font color="#FF0000">Nao Há Registro de entradas de usuários online.</font> </strong>{/if} </p>
+   {/if}
+
+
+  <table>
+  	<tr>
+		<td  style="position: relative; top: 20px;"  ><input type="button" value=" « Voltar" onClick="javascript:history.back();" /> 
+        </td>
+	</tr>
+  </table>
+  </form>
+</div>
+</body>
+</html>

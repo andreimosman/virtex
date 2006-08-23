@@ -35,11 +35,11 @@ var agree = confirm("Você tem certeza que quer MIGRAR este contrato????");
           <td width="350"><strong><font face="Arial, Helvetica, sans-serif" size="3">Novo
                 Contrato</font></strong></td>
         </tr>
-        <tr align="CENTER" valign="MIDDLE">
+        <tr align="CENTER" valign="MIDDLE" >
           <td width="350"><table width="350" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td width="128"><p><strong>Nome:</strong></p></td>
-                <td width="222"><p>{$id_cliente}{$contrato.nome_razao}</p></td>
+                <td width="222"><p>{$id_cliente} - {$contrato.nome_razao}</p></td>
               </tr>
               <tr>
                 <td><p><strong>Username:</strong></p></td>
@@ -238,7 +238,6 @@ var agree = confirm("Você tem certeza que quer MIGRAR este contrato????");
               <input type="hidden" name="bl_valor_trafego_adicional_gb" value="{$bl_valor_trafego_adicional_gb}">
               {/if}
               <!--Fun&ccedil;&otilde;es de opera&ccedil;&atilde;o de formul&aacute;rio -->
-              :
               <input type="hidden" name="op" value="contratos">
               <input type="hidden" name="acao" value="migrar">
               <input type="hidden" name="rotina" value="modificar">
