@@ -663,22 +663,26 @@ class VACobranca extends VirtexAdmin {
 					
 					$id_bloqueio = array();
 					$id_bloqueio = @$_REQUEST["id_bloqueio_box"];
-					////echo"id_bloqueio: $id_bloqueio <br><br>";
+					echo"id_bloqueio: $id_bloqueio <br><br>";
 					$n_bloqueio = count($id_bloqueio);
 					////echo"NUMERO BLOQUEIOS: $n_bloqueio <br>";
-					$tipo_bloqueio = "B";
-					
+					$tipo_bloqueio = "S";
+					echo "NUMERO DE BLOQUEIOS: ".$n_bloqueio."<br>";
 					
 					if ($n_bloqueio && $n_bloqueio > 0) {
 					
 						$admin = $this->admLogin->obtemAdmin();
 						
-						for ($i=1; $i<=$n_bloqueio; $i++) {
-							
+						//for ($i=0; $i<$n_bloqueio; $i++) {
+						while(list($id,$valor)=each($_REQUEST['id_bloqueio_box'])){	
 							$id_processo = $this->bd->proximoID("lgsq_id_processo");
-							list($id_cli_produto, $tipo) = explode("-", $id_bloqueio[$i]);
-							////echo"ID_CLI_PRODUTO: $id_cli_produto <br>";
-							////echo"TIPO CONTA: $tipo <br>";
+							//list($id_cli_produto, $tipo) = explode("-", $id_bloqueio[$i]);
+							$id_cli_produto = $id;
+							$tipo = $valor;
+							//ECHO "ID_BLOQUEIO: ".$id_bloqueio[$i]."<br>";
+							//echo "emissao: $i <br>";
+							echo"ID_CLI_PRODUTO: $id_cli_produto <br>";
+							echo"TIPO CONTA: $tipo <br>";
 							
 							$tipo = trim($tipo);
 							
@@ -3091,7 +3095,6 @@ class VACobranca extends VirtexAdmin {
 	$data = @$_REQUEST["data"];
 	
 	
-		
 	$sSQL  = "SELECT cl.nome_razao, cl.endereco, cl.id_cidade, cl.estado, cl.cep, cl.cpf_cnpj, cd.cidade as nome_cidade, cd.id_cidade  ";
 	$sSQL .= "FROM ";
 	$sSQL .= "cltb_cliente cl, cftb_cidade cd ";
@@ -3196,9 +3199,152 @@ class VACobranca extends VirtexAdmin {
 	$template .= $this->tpl->obtemPagina("../boletos/layout-pc.html");
 	
 	
-	//echo($template);
+	echo($template);
+	
+	}else if ($op == "boleto_bb"){
+// BOLETO BANCO DO BRASIL	
+	
+				if( ! $this->privPodeGravar("_COBRANCA") ) {
+							$this->privMSG();
+							return;
+				}		
+	
+	$id_cliente = @$_REQUEST["id_cliente"];
+	$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
+	$data = @$_REQUEST["data"];
 	
 	
+	$sSQL  = "SELECT cl.nome_razao, cl.endereco, cl.id_cidade, cl.estado, cl.cep, cl.cpf_cnpj, cd.cidade as nome_cidade, cd.id_cidade  ";
+	$sSQL .= "FROM ";
+	$sSQL .= "cltb_cliente cl, cftb_cidade cd ";
+	$sSQL .= "WHERE ";
+	$sSQL .= "cl.id_cliente = '$id_cliente' AND ";
+	$sSQL .= "cd.id_cidade = cl.id_cidade";
+
+	$cliente = $this->bd->obtemUnicoRegistro($sSQL);
+	////echo"CLIENTE: $sSQL  <br>";
+
+
+	$sSQL  = "SELECT valor, id_cobranca,to_char(data, 'DD/mm/YYYY') as data, cod_barra, descricao, status, observacoes, cod_barra, id_carne, nosso_numero, linha_digitavel FROM ";
+	$sSQL .= "cbtb_faturas ";
+	$sSQL .= "WHERE ";
+	$sSQL .= "id_cliente_produto = '$id_cliente_produto' AND ";
+	$sSQL .= "data = '$data' ";
+
+
+	$fatura = $this->bd->obtemUnicoRegistro($sSQL);
+	////echo"fatura: $sSQL<br>";
+
+
+	// PEGANDO INFORMAÇÕES DAS PREFERENCIAS
+	//$provedor = $this->prefs->obtem("total");
+	$provedor = $this->prefs->obtem("total");
+
+	$sSQL = "SELECT ct.id_produto, pd.nome from cbtb_contrato ct, prtb_produto pd WHERE ct.id_cliente_produto = '$id_cliente_produto' and ct.id_produto = pd.id_produto";
+	$produto = $this->bd->obtemUnicoRegistro($sSQL);
+		
+	
+	
+	//$nosso_numero = $nn['nosso_numero'];
+	$data_venc = $fatura["data"];
+	
+	@list($dia,$mes,$ano) = explode("/",$fatura["data"]);
+	$vencimento = $ano.$mes.$dia;
+	
+	$mes_array = array("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
+	
+	$referente = $mes_array[(int)$mes-1]."/".$ano;
+
+	
+	$valor = $fatura["valor"];
+	$id_cobranca = $fatura["id_cobranca"];
+	$nome_cliente = $cliente["nome_razao"];
+	$cpf_cliente = $cliente["cpf_cnpj"];
+	$id_empresa = $provedor["cnpj"];
+	//$nosso_numero = 1;
+	$nome_cedente = $provedor['nome'];
+	$cendereco = $provedor['endereco'];
+	$clocalidade = $provedor['localidade'];
+	$observacoes = $provedor['observacoes'];
+	$nome_produto = $produto["nome"];
+	
+	
+	
+	
+	$ph = new MUtils;
+	
+	$_path = MUtils::getPwd();
+	
+	$images = $_path."/template/boletos/imagens";
+
+	$sSQL = "SELECT nextval('blsq_carne_nossonumero') as nosso_numero ";
+	$nn = $this->bd->obtemUnicoRegistro($sSQL);
+
+	//$nosso_numero = $nn['nosso_numero'];
+	$nosso_numero = $fatura["nosso_numero"];
+	$codigo_barras = $fatura["cod_barra"];
+	$linha_digitavel = $fatura["linha_digitavel"];
+	$preto = "template/boletos/imagens/preto.gif";
+	$branco = "template/boletos/imagens/branco.gif";
+	
+	$cb = MBoleto::htmlBarCode($codigo_barras,$preto,$branco);
+
+	
+	//$codigo_barras = MArrecadacao::codigoBarrasPagContas($valor,$id_empresa,$nosso_numero,$vencimento);
+	
+	//$codigo_barras = $fatura["cod_barra"];
+	//$linha_digitavel = MArrecadacao::linhaDigitavel($codigo_barras);
+	$hoje = date("d/m/Y");
+
+	$this->tpl->atribui("codigo_barras",$codigo_barras);
+	
+	$carteira = $provedor["carteira_boleto"];
+	$conta = $provedor["conta_boleto"];
+	$agencia = $provedor["agencia_boleto"];
+	$convenio = $provedor["convenio_boleto"];
+	
+	//echo "carteira: $carteira<br>agencia: $agencia<br>conta: $conta<br>convenio:$convenio";
+
+	//copy("/mosman/virtex/dados/carnes/codigos/".$codigo_barras.".png","codigos/".$codigo_barras.".png");
+
+
+	$this->tpl->atribui("carteira",$carteira);
+	$this->tpl->atribui("conta",$conta);
+	$this->tpl->atribui("agencia",$agencia);
+	$this->tpl->atribui("convenio",$convenio);
+	$this->tpl->atribui("linha_digitavel",$linha_digitavel);
+	$this->tpl->atribui("valor",$valor);
+	$this->tpl->atribui("imagens",$images);
+	$this->tpl->atribui("vencimento", $data_venc);
+	$this->tpl->atribui("hoje",$hoje);
+	$this->tpl->atribui("nosso_numero",$nosso_numero);
+	$this->tpl->atribui("sacado",$nome_cliente);
+	$this->tpl->atribui("sendereco",$cliente['endereco']);
+	$this->tpl->atribui("scidade",$cliente['nome_cidade']);
+	$this->tpl->atribui("suf",$cliente['estado']);
+	$this->tpl->atribui("scep",$cliente['cep']);
+	$this->tpl->atribui("juros",$provedor['tx_juros']);
+	$this->tpl->atribui("multa",$provedor['multa']);
+	$this->tpl->atribui("nome_cedente",$provedor['nome']);
+	$this->tpl->atribui("cendereco",$cendereco);
+	$this->tpl->atribui("clocalidade",$clocalidade);
+	$this->tpl->atribui("observacoes",$observacoes);
+	$this->tpl->atribui("produto",$nome_produto);
+	$this->tpl->atribui("path",$_path);
+	$this->tpl->atribui("cod_barra",$cb);
+	$this->tpl->atribui("referente",$referente);
+	
+	
+	$template  = $this->tpl->obtemPagina("../boletos/pc-estilo.html");
+	$template .= $this->tpl->obtemPagina("../boletos/layout_bb.html");
+	
+	
+	echo($template);
+
+
+
+	
+// FINAL - BOLETO BANCO DO BRASIL	
 	}else if($op == "renovacao"){
 	
 		$acao = @$_REQUEST["acao"];
