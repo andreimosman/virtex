@@ -220,6 +220,19 @@ class VASuporte extends VirtexAdmin {
 				else if ($tipo == "I") $relat[$i]["tipo_ng"] = "#D8E8F3";
 				else $relat[$i]["tipo_ng"] = "#D1F2C6";
 				
+				$username = $relat[$i]["usuario"];
+				
+				$dSQL  =" SELECT ";
+				$dSQL .=" id_cliente FROM ";
+				$dSQL .=" cntb_conta ";
+				$dSQL .=" WHERE ";
+				$dSQL .=" username = '$username' ";
+				$dSQL .=" AND tipo_conta not ilike 'E' ";
+
+				$id_cliente = $this->bd->obtemRegistros($dSQL);
+
+				$relat[$i]["id_cliente"] = $id_cliente;
+				
 			}
 			
 						
@@ -503,6 +516,8 @@ class VASuporte extends VirtexAdmin {
 				$sSQL .= " ORDER BY inicio DESC " ; 
 
 				$extrato = $this->bd->obtemRegistros($sSQL);
+				
+
 
 				//////////echo $sSQL ; 
 				///echo $acao;
@@ -561,6 +576,24 @@ class VASuporte extends VirtexAdmin {
 				$tipo_conta = 'discado';
 
 			}
+			
+				for($i=0;$i<count(@$extrato);$i++){
+							
+							
+					$username = $extrato[$i]["username"];
+
+					$dSQL  =" SELECT ";
+					$dSQL .=" id_cliente FROM ";
+					$dSQL .=" cntb_conta ";
+					$dSQL .=" WHERE ";
+					$dSQL .=" username = '$username' ";
+					$dSQL .=" AND tipo_conta not ilike 'E' ";
+
+					$id_cliente = $this->bd->obtemRegistros($dSQL);
+
+					$extrato[$i]["id_cliente"] = $id_cliente;
+						/////////echo $dSQL . "<hr><br>\n" ;		
+				}
 
 			@$this->tpl->atribui("extrato",$extrato);
 			$this->tpl->atribui("valor_pesquisa",$valor_pesquisa);
@@ -598,9 +631,30 @@ class VASuporte extends VirtexAdmin {
 
 			///echo $sSQL;
 
+
+			for($i=0;$i<count($relacao_users);$i++){
+
+
+					$username = $relacao_users[$i]["username"];
+
+					$dSQL  =" SELECT ";
+					$dSQL .=" id_cliente FROM ";
+					$dSQL .=" cntb_conta ";
+					$dSQL .=" WHERE ";
+					$dSQL .=" username = '$username' ";
+					$dSQL .=" AND tipo_conta not ilike 'E' ";
+
+					$id_cliente = $this->bd->obtemRegistros($dSQL);
+
+					$relacao_users[$i]["id_cliente"] = $id_cliente;
+					
+					///////echo $dSQL . "<hr><br>\n" ;
+
+			}
+	
 			$this->tpl->atribui("relacao_users",$relacao_users);
 			$this->arquivoTemplate="suporte_radius_online.html";
-		
+				
 		
 		}
 	}

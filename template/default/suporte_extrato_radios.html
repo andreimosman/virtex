@@ -11,6 +11,13 @@
 
 		username = document.pesquisa.valor_pesquisa.value;
 		mes = document.pesquisa.periodo.value;
+		opcao = document.pesquisa.tipo_conta.value;
+		
+		if (opcao != "pppoe" && opcao != "discado"){
+			alert("Escolha o tipo da conta para que a pesquisa seja efetuada!");
+			return false;
+		
+		}
 
 			if (username ==""){
 
@@ -89,15 +96,15 @@
         <td width="50" align="RIGHT"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Tempo</font></td>
         <td width="130" align="CENTER"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Bytes</font></td>
     </tr>
-    {foreach item=a from=$extrato}
+    {foreach item=a from=$extrato}{foreach item=b from=$a.id_cliente}
     <tr bgcolor="#EAF4FF" onMouseOver="style.background='#DAEBFF'; " onMouseout="style.background='#EAF4FF';">
-      <td align="LEFT" ><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.username}</font></td>
-      <td align="LEFT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.origem}</font></td>
-      <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.inicio|date_format:"%d/%m/%Y %H:%M:%S "}</font></td>
-      <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.fim|date_format:"%d/%m/%Y %H:%M:%S "}</font></td>
-      <td align="RIGHT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.tempo|date_format:"%H:%M:%S"}</font></td>
-      <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.bytes_in}/{$a.bytes_out}</font></td>
-    </tr>
+      <td align="LEFT" ><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.username}</a></font></td>
+      <td align="LEFT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.origem}</a></font></td>
+      <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.inicio|date_format:"%d/%m/%Y %H:%M:%S "}</a></font></td>
+      <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.fim|date_format:"%d/%m/%Y %H:%M:%S "}</a></font></td>
+      <td align="RIGHT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.tempo|date_format:"%H:%M:%S"}</a></font></td>
+      <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.bytes_in}/{$a.bytes_out}</a></font></td>
+    </tr>{/foreach}
     {/foreach}
   </table>
 
