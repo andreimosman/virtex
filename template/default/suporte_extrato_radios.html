@@ -12,12 +12,7 @@
 		username = document.pesquisa.valor_pesquisa.value;
 		mes = document.pesquisa.periodo.value;
 		opcao = document.pesquisa.tipo_conta.value;
-		
-		if (opcao != "pppoe" && opcao != "discado"){
-			alert("Escolha o tipo da conta para que a pesquisa seja efetuada!");
-			return false;
-		
-		}
+
 
 			if (username ==""){
 
@@ -53,14 +48,14 @@
       </tr>
       <tr>
         <td height="28" align="center" colspan="2"><p>Consultar do usuário&nbsp;
-            <input  type="text" name="valor_pesquisa" id="valor_pesquisa" value="{$valor_pesquisa}" />
+            <input  type="text" name="valor_pesquisa" id="valor_pesquisa" value="{$valor_pesquisa}" tabindex="1"/>
           </p></td>
         <input type="hidden" name="acao" value="pesquisar" />
       </tr>
       <tr>
         <td colspan="2"><p align="right">&nbsp;&nbsp; &nbsp; &nbsp; nos últimos&nbsp;&nbsp; &nbsp;&nbsp;
             &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
-            <select name="periodo">
+            <select name="periodo" tabindex="2">
               <option value=""></option>
               <option value="{$mes}/{$ano}" {if $mes_pesq == $mes && $ano_pesq == $ano} selected {/if} >Neste Mês</option>
 			  {assign var=mes value=$mes-1}
@@ -74,15 +69,15 @@
 			  {assign var=mes value=$mes-1}{assign var=ano value=$ano-1}{/if} </option>
 			  {/foreach}
             </select>
-            <input  type="submit" name="submit" id="submit2" value="Ok"/>
+            <input  type="submit" name="submit" id="submit2" value="Ok" tabindex="5"/>
           </p></td>
       </tr>
       <tr>
         <td><p align="right">
-            <input type="radio" name="tipo_conta" value="discado" class="checkbox" {if $tipo_conta == "discado"} checked {/if} >
+            <input type="radio" name="tipo_conta" value="discado" class="checkbox" {if $tipo_conta == "discado"} checked {/if}tabindex="3" >
             Discado</p></td>
         <td><p align="left">
-            <input type="radio" name="tipo_conta" value="pppoe" class="checkbox" {if $tipo_conta == "pppoe"} checked {/if} >
+            <input type="radio" name="tipo_conta" value="pppoe" class="checkbox" {if $tipo_conta == "pppoe"} checked {/if} tabindex="4">
             PPPoE</p></td>
       </tr>
     </table>
