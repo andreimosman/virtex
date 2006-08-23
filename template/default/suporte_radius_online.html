@@ -18,16 +18,16 @@
         <td width="50" align="RIGHT"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Tempo</font></td>
         <td width="130" align="CENTER"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Bytes</font></td>
     </tr>
-    {foreach item=a from=$relacao_users}
+    {foreach item=a from=$relacao_users}{foreach item=b from=$a.id_cliente}
     <tr bgcolor="#F0FFF0" onMouseOver="style.background='#DEFFDE'; " onMouseout="style.background='#F0FFF0';">
-      <td align="LEFT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.username}</font></td>
-      <td align="LEFT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.origem}</font></td>
-      <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.inicio|date_format:"%d/%m/%Y %H:%M:%S "}</font></td>
-      <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.nas}</font></td>
-      <td align="RIGHT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.tempo|date_format:"%H:%M:%S"}</font>
+      <td align="LEFT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.username}</a></font></td>
+      <td align="LEFT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.origem}</a></font></td>
+      <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.inicio|date_format:"%d/%m/%Y %H:%M:%S "}</a></font></td>
+      <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.nas}</a></font></td>
+      <td align="RIGHT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.tempo|date_format:"%H:%M:%S"}</a></font>
 	  </td>
       <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.bytes_in}/{$a.bytes_out}</font></td>
-    </tr>
+    </tr>{/foreach}
     {/foreach}
   </table>
   <p> {if !$relacao_users} <strong><font color="#FF0000">Nao Há Registro de entradas de usuários online.</font> </strong>{/if} </p>
