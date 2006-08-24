@@ -196,6 +196,9 @@ class VABackup extends VirtexAdmin {
 					readfile($arq_down);
 				
 					fclose($arq_down);
+
+					echo $arq_down;
+					return;
 				
 				}
 
