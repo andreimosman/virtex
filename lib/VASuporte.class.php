@@ -445,7 +445,7 @@ class VASuporte extends VirtexAdmin {
 					}
 					if($configuracao){
 					
-						$pathbackup = " /mosman/backup/etc";
+						$pathbackup = " /mosman/backup/etc/";
 					
 						$nome1 = "etc_$hoje.tgz";
 						$nome2 = "appetc_$hoje.tgz";
