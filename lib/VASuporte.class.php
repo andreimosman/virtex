@@ -453,8 +453,10 @@ class VASuporte extends VirtexAdmin {
 						$caminho1 = "/mosman/virtex/etc";
 						$caminho2 = "/mosman/virtex/app/etc";
 						
-						$comando1 = "tar -czvf $pathbackup.$nome1 $caminho1";
-						$comando2 = "tar -czvf $pathbackup.$nome2 $caminho2";
+						$comando1 = "tar -czvf $pathbackup.$nome1  $caminho1";
+						$comando2 = "tar -czvf $pathbackup.$nome2  $caminho2";
+						
+						
 						
 						ECHO "comando1: $comando1<br>";						
 						ECHO "comando2: $comando2<br>";
