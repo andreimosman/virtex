@@ -178,7 +178,9 @@ class VABackup extends VirtexAdmin {
 					$this->arquivoTemplate = "backup_final.html";
 					return;
 			
-				}else if ($sop == "download"){
+				}
+
+			} else if ($acao == "download"){
 				
 					$id_backup = @$_REQUEST["id_backup"];
 					
@@ -202,8 +204,6 @@ class VABackup extends VirtexAdmin {
 					$this->arquivoTemplate = "msgredirect.html";
 				
 				}
-
-			}
 		
 		
 			$this->arquivoTemplate = "backup_efetua.html";
