@@ -445,24 +445,26 @@ class VASuporte extends VirtexAdmin {
 					}
 					if($configuracao){
 					
+						$pathbackup = "/mosman/backup/etc";
+					
 						$nome1 = "etc_$hoje.tgz";
 						$nome2 = "appetc_$hoje.tgz";
 						
 						$caminho1 = "/mosman/virtex/etc";
 						$caminho2 = "/mosman/virtex/app/etc";
 						
-						$comando1 = "tar -czvf $nome1 $caminho1";
-						$comando2 = "tar -czvf $nome2 $caminho2";
+						$comando1 = "tar -czvf $pathbackup.$nome1 $caminho1";
+						$comando2 = "tar -czvf $pathbackup.$nome2 $caminho2";
 						
-						$pathbackup = "/mosman/backup/etc";
+						
 					
 						system($comando1,$retvalconf1);
 						system($comando2,$retvalconf2);
 						//system('tar -czvf etc_'.$hoje.'.tgz /mosman/virtex/etc',$retvalconf1);
 						//system('tar -czvf appetc_'.$hoje.'.tgz /mosman/virtex/app/etc',$retvalconf2);
 						
-						copy($caminho1.$nome1,$pathbackup.$nome1);
-						copy($caminho2.$nome2,$pathbackup.$nome2);
+						//copy($caminho1.$nome1,$pathbackup.$nome1);
+						//copy($caminho2.$nome2,$pathbackup.$nome2);
 						
 						//copy("/mosman/virtex/app/etc_".$hoje.".tgz","/mosman/backup/etc/etc_".$hoje.".tgz");
 						//copy("/mosman/virtex/app/appetc_".$hoje.".tgz","/mosman/backup/etc/appetc_".$hoje.".tgz");
