@@ -20,7 +20,16 @@ class VABackup extends VirtexAdmin {
 			$sSQL = "SELECT b.id_backup,b.data_backup,b.arquivo_backup,b.tipo_backup,b.status_backup,b.admin as id_admin,a.admin FROM bktb_backup b,adtb_admin a WHERE b.admin = a.id_admin ORDER BY id_backup,arquivo_backup DESC LIMIT 10";
 			$lista = $this->bd->obtemRegistros($sSQL);
 			
-			$this->tpl->atribui("lista_backups",$lista);
+			
+			for ($i=0;$i<count($lista);$i++){
+									
+				$arquivo = "/mosman/backup/".$lista[$i]["arquivo_backup"];
+				$tamanho = filesize($arquivo);
+				$lista[$i]["tamanho"] = $tamanho;
+			}
+			
+			
+			$this->tpl->atribui("lista",$lista);
 			$this->arquivoTemplate = "backup_inicio.html";
 			
 		
@@ -174,6 +183,15 @@ class VABackup extends VirtexAdmin {
 					$sSQL = "SELECT b.data_backup,b.arquivo_backup,b.tipo_backup,b.status_backup,b.admin as id_admin,b.operador_backup, a.admin FROM bktb_backup WHERE b.admin = a.id_admin AND data_backup = '$hoje' ORDER BY id_backup,arquivo_backup ";
 					$lista = $this->bd->obtemRegistros($sSQL);
 					
+					for ($i=0;$i<count($lista);$i++){
+						
+						$arquivo = "/mosman/backup/".$lista[$i]["arquivo_backup"];
+						$tamanho = filesize($arquivo);
+						$lista[$i]["tamanho"] = $tamanho;
+					}
+					
+					
+					
 					$this->tpl->atribui("lista",$lista);
 					$this->arquivoTemplate = "backup_final.html";
 					return;
@@ -197,7 +215,7 @@ class VABackup extends VirtexAdmin {
 					header('Content-type: application/force-download');
 					//header("Content-type: application/octet-stream ");
 					header('Content-Disposition: attachment; filename="'.basename($arquivo).'"');
-					header('Content-Length: ' . filesize($arquivo));
+					//header('Content-Length: ' . filesize($arquivo));
 					readfile($arquivo);
 				
 					fclose($arq_down);
