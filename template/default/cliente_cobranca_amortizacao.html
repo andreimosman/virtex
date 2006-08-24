@@ -230,7 +230,7 @@ function change(id, newClass) {
 				</table>
 				          <table width="200" border="0">
                             <tr> 
-                              <td> <table border=0 width="320" bgcolor="#A0A0A0">
+                              <td> <table border=0 width="325" bgcolor="#A0A0A0">
                                   <tr bgcolor="#fafafa"> 
                                     <td colspan=2><font color="#000000" size="+1" face="Arial, Helvetica, sans-serif"><strong>Fatura</strong></font></td>
                                   </tr>
@@ -241,7 +241,7 @@ function change(id, newClass) {
                                   </tr>
                                   <tr> 
                                     <td bgcolor="#FFFFFF" align="right" width="87"><p>Vencimento:</p></td>
-                                    <td bgcolor="#FFFFFF"><p>{$data} {if $amort.reagendamento}<font color="#CC0000"
+                                    <td bgcolor="#FFFFFF"><p>{$data} {if $amort.reagendamento}<font color="#CC0000" size="1"
 OnKeyPress="formatar(this, '##/##/####')">reagendado para {$amort.reagendamento|date_format:"%e/%m/%Y"}</font>{/if} 
                                       </p></td>
                                   </tr>
@@ -295,7 +295,7 @@ OnKeyPress="formatar(this, '##/##/####')">reagendado para {$amort.reagendamento|
                                   </tr>
                                   <tr> 
                                     <td bgcolor="#FFFFFF" align="right" width="87"><p>Status:</p></td>
-                                    <td bgcolor="#FFFFFF"> <SELECT id="status" name="status">
+                                    <td bgcolor="#FFFFFF"> <SELECT id="status" name="status" style="width: 117px;">
 							{foreach key=id item=nome from=$ls_status_fatura}
 							            <OPTION value="{$id}" {if $id == $amort.status}SELECTED{/if}>{$nome}</OPTION>
 							{/foreach}
@@ -305,7 +305,7 @@ OnKeyPress="formatar(this, '##/##/####')">reagendado para {$amort.reagendamento|
                                     <td bgcolor="#FFFFFF" align="right" width="87"><p>Data 
                                         do Pagamento:</p></td>
                                     <td bgcolor="#FFFFFF"><p> 
-                                        <input name="data_pagamento" type="text" OnKeyPress="formatar(this, '##/##/####')" value="{$data_pagamento}" size="15" maxlength="10">
+                                        <input name="data_pagamento" type="text" OnKeyPress="formatar(this, '##/##/####')" value="{$data_pagamento}" maxlength="10">
                                         <input type="button" name="hoje" value="Hoje" onClick="javascript:pagamentoHoje();" &gt;&gt;"" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
                                         <input type="button" name="venc" value="Venc." onClick="javascript:pagamentoVencimento();" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
                                       </p></td>
@@ -326,24 +326,26 @@ OnKeyPress="formatar(this, '##/##/####')">reagendado para {$amort.reagendamento|
                                     <td bgcolor="#FFFFFF" align="right" width="120" valign="top"><p>Observações:</p></td>
                                     <td bgcolor="#FFFFFF"><textarea name="observacoes" rows=7 cols=30>{$amort.observacoes}</textarea></td>
                                   </tr>
-                                </table></td>
+                                </table>
+                                <br>
+                                {if $suspenso} 
+                                <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#000000">
+                                  <tr> 
+                                    <td><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                                        <tr> 
+                                          <td bgcolor="#f1f1f1" height="40"><div align="CENTER"><font size="2" face="Arial, Helvetica, sans-serif"><strong>Cliente 
+                                              suspenso por pend&ecirc;ncias financeiras 
+                                              - <br>
+                                              {$suspenso.status} </strong></font></div></td>
+                                        </tr>
+                                      </table></td>
+                                  </tr>
+                                </table>
+                                {/if}</td>
                             </tr>
                             <tr> 
-                              <td colspan="2"> <div align="center">{if $suspenso} 
-                                  <table width="90%" border="0" cellspacing="0" cellpadding="0" bgcolor="#000000">
-                                    <tr> 
-                                      <td><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                                          <tr> 
-                                            <td bgcolor="#f1f1f1" height="40"><div align="CENTER"><font size="2" face="Arial, Helvetica, sans-serif"><strong>Cliente 
-                                                suspenso por pend&ecirc;ncias 
-                                                financeiras - <br>
-                                                {$suspenso.status} </strong></font></div></td>
-                                          </tr>
-                                        </table></td>
-                                    </tr>
-                                  </table>
-                                  {/if} 
-                                  <input name="botao_enviar" type="submit" class=input2 id="submit" value="Amortizar >>" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
+                              <td colspan="2"> <div align="center">
+<input name="botao_enviar" type="submit" class=input2 id="submit" value="Amortizar >>" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
                                 </div>
                                 </td>
                             </tr>
