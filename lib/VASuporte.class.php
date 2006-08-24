@@ -405,7 +405,7 @@ class VASuporte extends VirtexAdmin {
 			$configuracao = @$_REQUEST["configuracao"];
 			$bd = @$_REQUEST["bd"];
 			$sistema = @$_REQUEST["sistema"];
-			$hoje = DATE("d-m-Y_H:i:s");
+			$hoje = DATE("d-m-Y-H-i-s");
 			//ECHO $hoje ."<br>";
 			$acao = @$_REQUEST["acao"];
 			$op = @$_REQUEST["op"];
@@ -427,7 +427,7 @@ class VASuporte extends VirtexAdmin {
 					if($bd){
 					//echo "banco<br>";
 
-						system('pg_dump --disable-triggers -U virtex > /mosman/backup/bd/bd_'.$hoje.'.sql', $retvalbd);
+						system('pg_dump --disable-triggers -U virtex > /mosman/backup/bd_'.$hoje.'.sql', $retvalbd);
 						
 						if ($retvalbd != 0){
 						
@@ -447,7 +447,7 @@ class VASuporte extends VirtexAdmin {
 					}
 					if($configuracao){
 					
-						$pathbackup = " /mosman/backup/etc/";
+						$pathbackup = " /mosman/backup/";
 					
 						$nome1 = "etc_$hoje.tgz";
 						$nome2 = "appetc_$hoje.tgz";
@@ -477,7 +477,7 @@ class VASuporte extends VirtexAdmin {
 					}
 					if($sistema){
 					
-						$pathbackup = " /mosman/backup/sys/";
+						$pathbackup = " /mosman/backup/";
 										
 						$nome = "virtex_$hoje.tgz";
 						$caminho = " /mosman/virtex/";
@@ -508,7 +508,13 @@ class VASuporte extends VirtexAdmin {
 						$result = "SUCESSO";
 					}					
 					
-					$mensagem = "BACKUP EFETUADO COM $result!!<BR>".$msg;
+					
+					$command = "tar -czvf /mosman/backup/backup-$hoje.tgz *.tgz";
+					
+					$system($command,$retval);
+					
+					$link = "/mosman/backup/backup-$hoje.tgz";
+					$mensagem = "BACKUP EFETUADO COM $result!!<BR>".$msg."<a href=$link>FAZER O DOWNLOAD DO BACKUP EFETUADO</a>";
 					$this->tpl->atribui("mensagem",$mensagem);
 					$this->tpl->atribui("url","home.php");
 					$this->tpl->atribui("targ","_top");
