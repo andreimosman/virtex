@@ -431,6 +431,7 @@ class VASuporte extends VirtexAdmin {
 						if ($retvalbd != 0){
 						
 							$msg .= "BANCO DE DADOS: <B>ERRO</B><BR>";
+							$erro = 1;
 						
 						}else{
 						
@@ -458,24 +459,15 @@ class VASuporte extends VirtexAdmin {
 						
 						
 						
-						ECHO "comando1: $comando1<br>";						
-						ECHO "comando2: $comando2<br>";
+						//ECHO "comando1: $comando1<br>";						
+						//ECHO "comando2: $comando2<br>";
 					
 						system($comando1,$retvalconf1);
 						system($comando2,$retvalconf2);
-						//system('tar -czvf etc_'.$hoje.'.tgz /mosman/virtex/etc',$retvalconf1);
-						//system('tar -czvf appetc_'.$hoje.'.tgz /mosman/virtex/app/etc',$retvalconf2);
-						
-						//copy($caminho1.$nome1,$pathbackup.$nome1);
-						//copy($caminho2.$nome2,$pathbackup.$nome2);
-						
-						//copy("/mosman/virtex/app/etc_".$hoje.".tgz","/mosman/backup/etc/etc_".$hoje.".tgz");
-						//copy("/mosman/virtex/app/appetc_".$hoje.".tgz","/mosman/backup/etc/appetc_".$hoje.".tgz");
-						//$msg .= $retvalconf1."<br>";
-						//$msg .= $retvalconf2."<br>";
 						
 						if ($retvalconf1 != 0 || $retvalconf2 != 0){
 							$msg .= "ARQ. DE CONFIGURAÇÕES: <B>ERRO</B><BR>";
+							$erro = 1;
 						}else{
 							$msg .= "ARQ. DE CONFIGURAÇÕES: <B>OK</B><BR>";
 						}
@@ -484,12 +476,23 @@ class VASuporte extends VirtexAdmin {
 					}
 					if($sistema){
 					
-						system('tar -czvf virtex_'.$hoje.'.tgz /mosman/virtex',$retvalsystem);
-						copy("/mosman/virtex/app/virtex_".$hoje.".tgz","/mosman/backup/sys/virtex_".$hoje.".tgz");
+						$pathbackup = " /mosman/backup/sys/";
+										
+						$nome = "virtex_$hoje.tgz";
+						$caminho = " /mosman/virtex/";
+					
+						$comando = "tar -czvf $pathbackup$nome  $caminho";
+					
+						system($comando,$retvalsystem);
+						
+						echo "comando: $comando<br>";
+						
+						//copy("/mosman/virtex/app/virtex_".$hoje.".tgz","/mosman/backup/sys/virtex_".$hoje.".tgz");
 						//$msg .= $retvalsystem."<br>";
 						if ($retvalsystem != 0){
 						
 							$msg .="ARQ. DO SISTEMA: <B>ERRO</B><BR>";
+							$erro = 1;
 						
 						}else{
 						
@@ -498,7 +501,10 @@ class VASuporte extends VirtexAdmin {
 						}
 					}
 					
-					$mensagem = "BACKUP EFETUADO COM SUCESSO!!<BR>".$msg;
+					if ($erros = 1) ? $result = "ERROS" : $result = "SUCESSO";
+					
+					
+					$mensagem = "BACKUP EFETUADO COM $result!!<BR>".$msg;
 					$this->tpl->atribui("mensagem",$mensagem);
 					$this->tpl->atribui("url","home.php");
 					$this->tpl->atribui("targ","_top");
