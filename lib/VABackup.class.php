@@ -183,7 +183,7 @@ class VABackup extends VirtexAdmin {
 					$sSQL = "SELECT b.data_backup,b.arquivo_backup,b.tipo_backup,b.status_backup,b.admin as id_admin,b.operador_backup, a.admin FROM bktb_backup WHERE b.admin = a.id_admin AND data_backup = '$hoje' ORDER BY id_backup,arquivo_backup ";
 					$lista = $this->bd->obtemRegistros($sSQL);
 					
-					for ($i=0;$i<count($lista);$i++){
+					for ($i=1;$i<count($lista);$i++){
 						
 						$arquivo = "/mosman/backup/".$lista[$i]["arquivo_backup"];
 						$tamanho = filesize($arquivo);

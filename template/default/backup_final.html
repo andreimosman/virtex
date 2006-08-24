@@ -13,7 +13,7 @@
   <tr bgcolor="#666666"> 
     <td width="150"><strong><font color="#FFFFFF" size="1" face="Verdana, Arial, Helvetica, sans-serif">Data</font></strong></td>
     <td width="250"><strong><font color="#FFFFFF" size="1" face="Verdana, Arial, Helvetica, sans-serif">Arquivo</font></strong></td>
-    <td width="50"><strong><font size="1" color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif">Tamanho</font></strong></td>
+    <td width="50"><strong><font size="1" color="#FFFFFF" face="Verdana, Arial, Helvetica, sans-serif">Bytes</font></strong></td>
     <td width="78" align="CENTER"><strong><font color="#FFFFFF" size="1" face="Verdana, Arial, Helvetica, sans-serif">Tipo</font></strong></td>
     <td width="59" align="CENTER"><strong><font color="#FFFFFF" size="1" face="Verdana, Arial, Helvetica, sans-serif">Status</font></strong></td>
     <td width="80" align="CENTER"><strong><font color="#FFFFFF" size="1" face="Verdana, Arial, Helvetica, sans-serif">Admin</font></strong></td>
@@ -21,7 +21,7 @@
   {foreach item=a from=$lista} 
   <tr bgcolor="{cycle values="#ffffff,#f1f1f1"}"> 
     <td><p><a href="backup.php?op=backup&acao=download&id_backup={$a.id_backup}">{$a.data_backup}</a></p></td>
-    <td>{$a.arquivo_backup}</td>
+    <td><p>{$a.arquivo_backup}</p></td>
     <td width="50"> <p>{$a.tamanho}</p></td>
     <td><p>{$a.tipo_backup}</p></td>
     <td align="CENTER"> <p>{$a.status_backup}</p></td>
