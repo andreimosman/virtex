@@ -199,7 +199,7 @@ class VABackup extends VirtexAdmin {
 
 					echo $arq_down;
 					
-					$this->arquivoTemplate = "msgredirect.html"
+					$this->arquivoTemplate = "msgredirect.html";
 				
 				}
 
