@@ -419,6 +419,7 @@ class VASuporte extends VirtexAdmin {
 			if ($acao == "backup") {
 			
 				//echo "acao <br>";
+				$erro = 0;
 			
 				if ($sop == "ok"){
 				
@@ -501,7 +502,7 @@ class VASuporte extends VirtexAdmin {
 						}
 					}
 					
-					if ($erros = 1) ? $result = "ERROS" : $result = "SUCESSO";
+					if ($erros = 1) ? $result = "ERROS" : $result = "SUCESSO"
 					
 					
 					$mensagem = "BACKUP EFETUADO COM $result!!<BR>".$msg;
