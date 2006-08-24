@@ -121,7 +121,7 @@ class UserLogin extends VirtexAdmin {
 	 */
 	function estaLogado() {
 		return($this->logado);
-		echo "ae!";
+
 	}
 	
 	
