@@ -189,19 +189,19 @@ class VABackup extends VirtexAdmin {
 					
 					$arquivo = "/mosman/backup/".$bkp["arquivo_backup"];
 					$arq_down = fopen($arquivo,"r");
-					$arq = fread($arq_down,filesize($arquivo));
+					//$arq = fread($arq_down,filesize($arquivo));
 				
 					header('Pragma: public');
 					header('Expires: 0');
 					header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 					header("Content-type: application/octet-stream ");
-					header('Content-Disposition: attachment; filename="'.$arq.'"');
+					header('Content-Disposition: attachment; filename="'.$arq_down.'"');
 					readfile($arq_down);
 				
 					fclose($arq_down);
 
-					echo $arq_down;
-					
+					//echo $arq_down;
+					return;
 					$this->arquivoTemplate = "msgredirect.html";
 				
 				}
