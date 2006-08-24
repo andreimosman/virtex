@@ -66,17 +66,15 @@ if (da && !pr && !mac) with (document) {
               </tr>
               <tr>
                 <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio</h1><h2 align="center"><font size="2">
-                	{if $acao == "geral"}
-                		Bloqueios e Desbloqueios
-                	{else}
+                		{if $acao == "geral"}
+                			Bloqueios e Desbloqueios
+						{/if}
                 		{if $acao == "sub_geral"}
                 			Bloqueados e Desbloqueados no período de {$meses_ano[$mes]}/{$ano}
-                		{else}
-                			{if $acao == "sub_blo"}
-                				{if $tipo == "D"}Desbloqueados{else}{if $tipo=="B"}Bloqueados{/if}{/if} no período de {$meses_ano[$mes]}/{$ano}
-                			{/if}
+						{/if}
+                		{if $acao == "sub_blo"}
+                				{if $tipo == "D"}Desbloqueados{/if}{if $tipo=="B"}Bloqueados{/if} no período de {$meses_ano[$mes]}/{$ano}
                 		{/if}
-                	{/if}
                 </font></h2>
 
                 	{if $acao == "geral"}
@@ -100,9 +98,8 @@ if (da && !pr && !mac) with (document) {
 
 						  	<td><p><input type="submit" value="OK"></p></td>
 						  </tr>
-						<table> </form> 
-                  <p>{if !$relat }<strong>N&atilde;o existem Bloqueios ou Desbloqueios 
-                    no periodo</strong>{/if}<br>
+						</table> </form> 
+                  <p>{if !$relat }<strong>N&atilde;o existem Bloqueios ou Desbloqueios no periodo</strong>{/if}<br>
                     {if $relat}<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico">{/if}<br>
                     {if $relat} </p>
 					  <table width="450" border="0" cellspacing="0" cellpadding="0">
@@ -126,7 +123,6 @@ if (da && !pr && !mac) with (document) {
 										<td width="200" align="LEFT"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><p><a href="{$smarty.server.PHP_SELF}?op={$op}&acao=sub_geral&mes={$a.mes}&ano={$a.ano}">{$meses_ano[$a.mes]}/{$a.ano}</a></p></font></td>
 										<td width="125" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p><a href="{$smarty.server.PHP_SELF}?op={$op}&acao=sub_blo&mes={$a.mes}&ano={$a.ano}&tipo=D">{if $a.bloqueados}{$a.bloqueados}{else}0{/if}</a></p></font></td>
 										<td  align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p><a href="{$smarty.server.PHP_SELF}?op={$op}&acao=sub_blo&mes={$a.mes}&ano={$a.ano}&tipo=B">{if $a.desbloqueados}{$a.desbloqueados}{else}0{/if}</a></p></font></td>
-
 									  </tr>
 									  <tr bgcolor="#999999">
 										<td colspan="5" height="1"></td>
@@ -139,13 +135,11 @@ if (da && !pr && !mac) with (document) {
 							  </table></td>
 						  </tr>
                   	  </table>
-
-					{/if}
-
-
-
-					{if $acao == "sub_geral"}
-					  <table width="700" border="0" cellspacing="0" cellpadding="0">
+				
+                  {/if} {/if}
+				  {if $acao == "sub_geral"} 
+				  
+                  <table width="700" border="0" cellspacing="0" cellpadding="0">
 						  <tr>
 							<td><table width="700" border="0" cellspacing="0" cellpadding="0">
 								<tr>
@@ -169,7 +163,7 @@ if (da && !pr && !mac) with (document) {
 									  <tr>
 										<td width="100" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p>{$a.dia}-{$a.mes}-{$a.ano}</p></font></td>
 										<td width="200" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.nome_razao}</a></p></font></td>
-										<td width="75" align="LEFT"><p>{if $a.tipo == "B"}Bloqueio{else}{if $a.tipo == "D"}Desbloqueio{/if}{/if}</p></font></td>
+										<td width="75" align="LEFT"><p>{if $a.tipo == "B"}Bloqueio{/if}{if $a.tipo == "D"}Desbloqueio{/if}</p></font></td>
 										<td width="100" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p>{$a.username}</p></font></td>
 										<td width="150" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p>{$a.nome}</p></font></td>
 										<td width="75" align="LEFT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p>{$a.admin}</p></font></td>
@@ -188,9 +182,6 @@ if (da && !pr && !mac) with (document) {
                   	  </table>
                   	  <p><a href="#" onClick="javascript:history.back()">Voltar</a></p>
 					{/if}
-
-
-
 					{if $acao == "sub_blo"}
 					  <table width="600" border="0" cellspacing="0" cellpadding="0">
 						  <tr>
@@ -231,9 +222,8 @@ if (da && !pr && !mac) with (document) {
 						  </tr>
 						  </table>
                   	  <p><a href="#" onClick="javascript:history.back()">Voltar</a></p>
-					{/if} {/if} 
+					{/if} 
                   <p id="imprimir" align="center"><a href="javascript:;" onClick="return printPage();">IMPRIMIR</a></p>
-                  <P align="center">&nbsp;</P>
 				</td>
               </tr>
             </table></td>
