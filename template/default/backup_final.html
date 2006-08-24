@@ -19,7 +19,7 @@
   </tr>
   {foreach item=a from=$lista}
   <tr bgcolor="{cycle values="#ffffff,#f1f1f1"}"> 
-    <td><p><a href="backup.php?op=backup&sop=download&id_backup={$a.id_backup}">{$a.data_backup}</a></p></td>
+    <td><p><a href="backup.php?op=backup&acao=download&id_backup={$a.id_backup}">{$a.data_backup}</a></p></td>
     <td><p>{$a.arquivo_backup}</p></td>
     <td><p>{$a.tipo_backup}</p></td>
     <td align="CENTER">
