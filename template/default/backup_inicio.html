@@ -1,0 +1,48 @@
+<!-- BACKUP_INICIO.HTML -->
+<html>
+<head>
+<title>backup</title>
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+
+</head>
+<body><div align="CENTER"><h1>BACKUP &amp; RECUPERA&Ccedil;&Atilde;O</h1>
+<table width="390" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td bgcolor="#000000"><table width="390" border="0" cellspacing="1" cellpadding="0">
+        <tr bgcolor="#F1F1F1" align="CENTER" valign="MIDDLE"> 
+          <td height="40"><a href="backup.php?op=backup">Fazer Backup</a></td>
+          <td height="40"><a href="backup.php?op=restore">Recuperar Backup</a></td>
+          <td height="40"><a href="backup.php?op=historico">Hist&oacute;rico</a></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+  {if $lista_backups and $lista_backups != "255"}
+  
+<p><strong><font size="2" face="Arial, Helvetica, sans-serif">Ultimos backups 
+  efetuados<br>
+  </font></strong></p>
+
+<table width="600" border="0" cellspacing="1" cellpadding="2">
+  <tr bgcolor="#666666"> 
+    <td width="108"><strong><font color="#FFFFFF" size="1" face="Verdana, Arial, Helvetica, sans-serif">Data</font></strong></td>
+    <td width="228"><strong><font color="#FFFFFF" size="1" face="Verdana, Arial, Helvetica, sans-serif">Arquivo</font></strong></td>
+    <td width="78" align="CENTER"><strong><font color="#FFFFFF" size="1" face="Verdana, Arial, Helvetica, sans-serif">Tipo</font></strong></td>
+    <td width="59" align="CENTER"><strong><font color="#FFFFFF" size="1" face="Verdana, Arial, Helvetica, sans-serif">Status</font></strong></td>
+    <td width="111" align="CENTER"><strong><font color="#FFFFFF" size="1" face="Verdana, Arial, Helvetica, sans-serif">Admin</font></strong></td>
+  </tr>
+  {foreach item=a from=$lista_backups}
+  <tr bgcolor="{cycle values="#ffffff,#f1f1f1"}"> 
+    <td><p>{$a.data_backup}</p></td>
+    <td><p>{$a.arquivo_backup}</p></td>
+    <td><p>{$a.tipo_backup}</p></td>
+    <td><p>{$a.status_backup}</p></td>
+    <td><p>{$a.admin}</p></td>
+  </tr>
+  {/foreach}
+</table>
+{/if}
+<p><strong><font size="2" face="Arial, Helvetica, sans-serif"> </font></strong></p>
+</div></body>
+</html>
