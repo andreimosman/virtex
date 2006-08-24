@@ -109,6 +109,8 @@ class VABackup extends VirtexAdmin {
 						$sSQL .= "('$hoje','$nome1','Configurações','$status','$admin','GU') ";
 						$this->bd->consulta($sSQL);
 
+						echo "GRAVAÇÃO DE BKP: $sSQL <br>";
+
 						system($comando2,$retvalconf2);
 						
 						
@@ -129,7 +131,7 @@ class VABackup extends VirtexAdmin {
 						$sSQL .= "('$hoje','$nome2','Configurações','$status','$admin','GU') ";
 						$this->bd->consulta($sSQL);		
 						
-						
+						echo "GRAVAÇÃO DE BKP: $sSQL <br>";
 						
 					}
 					if($sistema){
@@ -163,7 +165,7 @@ class VABackup extends VirtexAdmin {
 						$sSQL .= "('$hoje','$nome','Sistema','$status','$admin','GU') ";
 						$this->bd->consulta($sSQL);		
 						
-						
+						echo "GRAVAÇÃO DE BKP: $sSQL <br>";						
 						
 						
 					}
