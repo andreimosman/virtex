@@ -179,10 +179,14 @@ class VABackup extends VirtexAdmin {
 						
 					}
 					
+
+					list($d,$m,$a,$h,$i,$s) = explode("-",$hoje);
+					$dt = "$d-$m-$a";
 					
-					$sSQL = "SELECT b.data_backup,b.arquivo_backup,b.tipo_backup,b.status_backup,b.admin as id_admin,b.operador_backup, a.admin FROM bktb_backup WHERE b.admin = a.id_admin AND data_backup = '$hoje' ORDER BY id_backup,arquivo_backup ";
+					$sSQL = "SELECT b.data_backup,b.arquivo_backup,b.tipo_backup,b.status_backup,b.admin as id_admin,b.operador_backup, a.admin FROM bktb_backup WHERE b.admin = a.id_admin AND data_backup ilike '$dt%' ORDER BY id_backup,arquivo_backup ";
 					$lista = $this->bd->obtemRegistros($sSQL);
 					
+					echo $sSQL."<br>";
 
 					
 					$this->tpl->atribui("lista",$lista);
