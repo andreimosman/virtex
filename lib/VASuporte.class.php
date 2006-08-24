@@ -511,7 +511,7 @@ class VASuporte extends VirtexAdmin {
 					
 					$command = "tar -czvf /mosman/backup/backup-$hoje.tgz *.tgz";
 					
-					$system($command,$retval);
+					system($command,$retval);
 					
 					$link = "/mosman/backup/backup-$hoje.tgz";
 					$mensagem = "BACKUP EFETUADO COM $result!!<BR>".$msg."<a href=$link>FAZER O DOWNLOAD DO BACKUP EFETUADO</a>";
