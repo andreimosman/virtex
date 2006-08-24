@@ -486,7 +486,7 @@ class VASuporte extends VirtexAdmin {
 					
 						system($comando,$retvalsystem);
 						
-						echo "comando: $comando<br>";
+						//echo "comando: $comando<br>";
 						
 						//copy("/mosman/virtex/app/virtex_".$hoje.".tgz","/mosman/backup/sys/virtex_".$hoje.".tgz");
 						//$msg .= $retvalsystem."<br>";
@@ -502,7 +502,7 @@ class VASuporte extends VirtexAdmin {
 						}
 					}
 					
-					if ($erro = 1) {
+					if ($erro == 1) {
 						$result = "ERROS";
 					}else{
 						$result = "SUCESSO";
