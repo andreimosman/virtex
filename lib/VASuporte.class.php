@@ -502,8 +502,11 @@ class VASuporte extends VirtexAdmin {
 						}
 					}
 					
-					if ($erros = 1) ? $result = "ERROS" : $result = "SUCESSO"
-					
+					if ($erro = 1) {
+						$result = "ERROS";
+					}else{
+						$result = "SUCESSO";
+					}					
 					
 					$mensagem = "BACKUP EFETUADO COM $result!!<BR>".$msg;
 					$this->tpl->atribui("mensagem",$mensagem);
