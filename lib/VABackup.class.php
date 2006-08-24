@@ -17,7 +17,7 @@ class VABackup extends VirtexAdmin {
 	
 		if ($op == "inicio"){
 		
-			$sSQL = "SELECT b.id_backup,b.data_backup,b.arquivo_backup,b.tipo_backup,b.status_backup,b.admin,a.admin FROM bktb_backup b,adtb_admin a WHERE b.id_admin = a.id_admin ORDER BY id_backup,arquivo_backup DESC LIMIT 10";
+			$sSQL = "SELECT b.id_backup,b.data_backup,b.arquivo_backup,b.tipo_backup,b.status_backup,b.admin as id_admin,a.admin FROM bktb_backup b,adtb_admin a WHERE b.admin = a.id_admin ORDER BY id_backup,arquivo_backup DESC LIMIT 10";
 			$lista = $this->bd->obtemRegistros($sSQL);
 			
 			$this->tpl->atribui("lista_backups",$lista);
