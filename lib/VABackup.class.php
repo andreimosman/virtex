@@ -185,7 +185,7 @@ class VABackup extends VirtexAdmin {
 					$id_backup = @$_REQUEST["id_backup"];
 					
 					$sSQL = "SELECT * FROM bxtb_backup where id_backup = $id_backup";
-					$bkp = $this->obtemUnicoRegistro($sSQL);
+					$bkp = $this->bd->obtemUnicoRegistro($sSQL);
 					
 					$arquivo = "/mosman/backup/".$bkp["arquivo_backup"];
 					$arq_down = fopen($arquivo,"r");
