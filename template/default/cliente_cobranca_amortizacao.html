@@ -210,8 +210,7 @@ function change(id, newClass) {
           <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td align="CENTER" valign="MIDDLE"> <form name=formulario method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return validaForm()" >
-                  <h1>Amortiza&ccedil;&atilde;o</h1>
-                  <p>
+                    <font size="+2" face="Arial, Helvetica, sans-serif"><strong>Amortiza&ccedil;&atilde;o</strong></font>
                     <input type="hidden" name="acao" value="alt">
                     <input type="hidden" name="op" value="amortizacao">
                     <input type="hidden" name="id_cliente" value="{$id_cliente}">
@@ -223,126 +222,134 @@ function change(id, newClass) {
                     <input type="hidden" name="vp" value="{$vp}">
                     <input type="hidden" name="status_fatura" value="">
                     <input type="hidden" name="popup" value="{$amort.popup}">
-                  </p>
-                  <table border=0  _bgcolor="#000000" cellspacing=1 cellpadding=1>
+                    <table border=0  _bgcolor="#000000" cellspacing=1 cellpadding=1>
 		<tr>
 			<td align="center">
 				<table border=0 width=390 cellspacing=0 cellpadding=0>
 				   <tr><td><font color="#FF0000"><b>{$sErro}</b></font></td></tr>
 				</table>
-				        <table border=0 width="390" bgcolor="#A0A0A0">
-                          <tr bgcolor="#fafafa">
-                            <td colspan=2><h2><font color="#000000">Fatura</font></h2></td>
-                          </tr>
-                          <tr>
-                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Referente
-                                à:</p></td>
-                            <td bgcolor="#FFFFFF"><p>{$amort.descricao}</p></td>
-                          </tr>
-                          <tr>
-                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Vencimento:</p></td>
-                            <td bgcolor="#FFFFFF"><p>{$data} {if $amort.reagendamento}<font color="#CC0000"
-OnKeyPress="formatar(this, '##/##/####')">reagendado para {$amort.reagendamento|date_format:"%e/%m/%Y"}</font>{/if} </p></td>
-                          </tr>
-                          <tr>
-                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Valor
-                                Total:</p></td>
-                            <td bgcolor="#FFFFFF"><p>
-                                <input type="text" name="valor_total" value="{$amort.valor}" disabled="true">
-                              </p></td>
-                          </tr>
-                          <tr>
-                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Valor
-                                já pago(-):</p></td>
-                            <td bgcolor="#FFFFFF"><p>
-                                <input type="text" name="valor_pago" value="{$amort.valor_pago}" disabled="1">
-                              </p></td>
-                          </tr>
-                          <tr>
-                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Desconto(-):</p></td>
-                            <td bgcolor="#FFFFFF"><p>
-                                <!--<input type="text" name="desconto" value="{$amort.desconto}" onChange="javascript:calculaValores();" onFocusOut="javascript:calculaValores();"> -->
-								<input type="text" name="desconto" value="{$amort.desconto}" onChange="javascript:calculaValores();" onFocusOut="javascript:calculaValores();">
-                              </p></td>
-                          </tr>
-                          <tr>
-                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Acrescimo(+):</p></td>
-                            <td bgcolor="#FFFFFF"><p>
-                                <input type="text" name="acrescimo" value="{$amort.acrescimo}" onChange="javascript:calculaValores();" onFocusOut="javascript:calculaValores();">
-                              </p></td>
-                          </tr>
-                          <tr>
-                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Valor
-                                a ser pago(=):</p></td>
-                            <td bgcolor="#FFFFFF"><p>
-                                <input type="text" name="valor_restante" value="{$amort.valor_restante}" disabled=1>
-                              </p></td>
-                          </tr>
-                          <tr>
-                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Amortizar(-):</p></td>
-                            <td bgcolor="#FFFFFF"><p>
-                                <input type="text" name="amortizar" value="{$amort.amortizar}" onChange="javascript:calculaValores();" onFocusOut="javascript:calculaValores();">
-                                <input type="button" name="hoje" value="Tudo" onClick="javascript:amortizarTudo();" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
-                              </p></td>
-                          </tr>
-                          <tr>
-                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Valor
-                                Pendente(=):</p></td>
-                            <td bgcolor="#FFFFFF"><p>
-                                <input type="text" name="valor_pendente" value="{$amort.valor_pendente}" disabled=1>
-                              </p></td>
-                          </tr>
-                          <tr>
-                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Status:</p></td>
-                            <td bgcolor="#FFFFFF">
-							<SELECT id="status" name="status">
+				          <table width="200" border="0">
+                            <tr> 
+                              <td> <table border=0 width="320" bgcolor="#A0A0A0">
+                                  <tr bgcolor="#fafafa"> 
+                                    <td colspan=2><font color="#000000" size="+1" face="Arial, Helvetica, sans-serif"><strong>Fatura</strong></font></td>
+                                  </tr>
+                                  <tr> 
+                                    <td bgcolor="#FFFFFF" align="right" width="87"><p>Referente 
+                                        à:</p></td>
+                                    <td width="376" bgcolor="#FFFFFF"><p>{$amort.descricao}</p></td>
+                                  </tr>
+                                  <tr> 
+                                    <td bgcolor="#FFFFFF" align="right" width="87"><p>Vencimento:</p></td>
+                                    <td bgcolor="#FFFFFF"><p>{$data} {if $amort.reagendamento}<font color="#CC0000"
+OnKeyPress="formatar(this, '##/##/####')">reagendado para {$amort.reagendamento|date_format:"%e/%m/%Y"}</font>{/if} 
+                                      </p></td>
+                                  </tr>
+                                  <tr> 
+                                    <td bgcolor="#FFFFFF" align="right" width="87"><p>Valor 
+                                        Total:</p></td>
+                                    <td bgcolor="#FFFFFF"><p> 
+                                        <input type="text" name="valor_total" value="{$amort.valor}" disabled="true">
+                                      </p></td>
+                                  </tr>
+                                  <tr> 
+                                    <td bgcolor="#FFFFFF" align="right" width="87"><p>Valor 
+                                        já pago(-):</p></td>
+                                    <td bgcolor="#FFFFFF"><p> 
+                                        <input type="text" name="valor_pago" value="{$amort.valor_pago}" disabled="1">
+                                      </p></td>
+                                  </tr>
+                                  <tr> 
+                                    <td bgcolor="#FFFFFF" align="right" width="87"><p>Desconto(-):</p></td>
+                                    <td bgcolor="#FFFFFF"><p> 
+                                        <!--<input type="text" name="desconto" value="{$amort.desconto}" onChange="javascript:calculaValores();" onFocusOut="javascript:calculaValores();"> -->
+                                        <input type="text" name="desconto" value="{$amort.desconto}" onChange="javascript:calculaValores();" onFocusOut="javascript:calculaValores();">
+                                      </p></td>
+                                  </tr>
+                                  <tr> 
+                                    <td bgcolor="#FFFFFF" align="right" width="87"><p>Acrescimo(+):</p></td>
+                                    <td bgcolor="#FFFFFF"><p> 
+                                        <input type="text" name="acrescimo" value="{$amort.acrescimo}" onChange="javascript:calculaValores();" onFocusOut="javascript:calculaValores();">
+                                      </p></td>
+                                  </tr>
+                                  <tr> 
+                                    <td bgcolor="#FFFFFF" align="right" width="87"><p>Valor 
+                                        a ser pago(=):</p></td>
+                                    <td bgcolor="#FFFFFF"><p> 
+                                        <input type="text" name="valor_restante" value="{$amort.valor_restante}" disabled=1>
+                                      </p></td>
+                                  </tr>
+                                  <tr> 
+                                    <td bgcolor="#FFFFFF" align="right" width="87"><p>Amortizar(-):</p></td>
+                                    <td bgcolor="#FFFFFF"><p> 
+                                        <input type="text" name="amortizar" value="{$amort.amortizar}" onChange="javascript:calculaValores();" onFocusOut="javascript:calculaValores();">
+                                        <input type="button" name="hoje" value="Tudo" onClick="javascript:amortizarTudo();" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
+                                      </p></td>
+                                  </tr>
+                                  <tr> 
+                                    <td bgcolor="#FFFFFF" align="right" width="87"><p>Valor 
+                                        Pendente(=):</p></td>
+                                    <td bgcolor="#FFFFFF"><p> 
+                                        <input type="text" name="valor_pendente" value="{$amort.valor_pendente}" disabled=1>
+                                      </p></td>
+                                  </tr>
+                                  <tr> 
+                                    <td bgcolor="#FFFFFF" align="right" width="87"><p>Status:</p></td>
+                                    <td bgcolor="#FFFFFF"> <SELECT id="status" name="status">
 							{foreach key=id item=nome from=$ls_status_fatura}
-							<OPTION value="{$id}" {if $id == $amort.status}SELECTED{/if}>{$nome}</OPTION>
+							            <OPTION value="{$id}" {if $id == $amort.status}SELECTED{/if}>{$nome}</OPTION>
 							{/foreach}
-							</SELECT>
-							</td>
-                          </tr>
-                          <tr>
-                            <td bgcolor="#FFFFFF" align="right" width="120"><p>Data
-                                do Pagamento:</p></td>
-                            <td bgcolor="#FFFFFF"><p>
-                                <input type="text" name="data_pagamento" value="{$data_pagamento}" maxlength="10" OnKeyPress="formatar(this, '##/##/####')">
-                                <input type="button" name="hoje" value="Hoje" onClick="javascript:pagamentoHoje();" &gt;&gt;"" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
-                                <input type="button" name="venc" value="Venc." onClick="javascript:pagamentoVencimento();" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
-                              </p></td>
-                          </tr>
-                          <tr bgcolor="#fafafa">
-                            <td colspan=2><h2><font color="#000000">Opções</font></h2></td>
-                          </tr>
-                          <tr>
-                            <td bgcolor="#FFFFFF" align="right" width="120"> <p>
-                                <input type="checkbox" name="reagendar" value="1"  class="checkbox" onClick="javascript:verificaReagendamento();" onChange="javascript:verificaReagendamento();" {$reagendamento_checked}>
-                                re-agendar cobrança para dia: </p></td>
-                            <td bgcolor="#FFFFFF"><input name="reagendamento" type="text" value="{$amort.reagendamento|date_format:"%e/%m/%Y"}" maxlength=10 id="reagendamento"></td>
-                          </tr>
-                          <tr>
-                            <td bgcolor="#FFFFFF" align="right" width="120" valign="top"><p>Observações:</p></td>
-                            <td bgcolor="#FFFFFF"><textarea name="observacoes" rows=5 cols=29>{$amort.observacoes}</textarea></td>
-                          </tr>
-                        </table>
-				        <hr size=1>
-						{if $suspenso}
-						<table width="90%" border="0" cellspacing="0" cellpadding="0" bgcolor="#000000">
-                          <tr>
-                            <td><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                                <tr>
-                                  <td bgcolor="#f1f1f1" height="40"><div align="CENTER"><font size="2" face="Arial, Helvetica, sans-serif"><strong>Cliente
-                                    suspenso por pend&ecirc;ncias financeiras
-                                    - <br>
-                                    {$suspenso.status} </strong></font></div></td>
-                                </tr>
-                              </table></td>
-                          </tr>
-                        </table>
-						{/if}
-                        <p>
-                          <input name="botao_enviar" type="submit" class=input2 id="submit" value="Amortizar >>" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
-                        </p></td>
+							          </SELECT> </td>
+                                  </tr>
+                                  <tr> 
+                                    <td bgcolor="#FFFFFF" align="right" width="87"><p>Data 
+                                        do Pagamento:</p></td>
+                                    <td bgcolor="#FFFFFF"><p> 
+                                        <input name="data_pagamento" type="text" OnKeyPress="formatar(this, '##/##/####')" value="{$data_pagamento}" size="15" maxlength="10">
+                                        <input type="button" name="hoje" value="Hoje" onClick="javascript:pagamentoHoje();" &gt;&gt;"" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
+                                        <input type="button" name="venc" value="Venc." onClick="javascript:pagamentoVencimento();" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
+                                      </p></td>
+                                  </tr>
+                                </table></td>
+                              <td valign="top"> <table width="320" border=0 bgcolor="#A0A0A0" dwcopytype="CopyTableRow">
+                                  <tr bgcolor="#fafafa"> 
+                                    <td colspan=2><font color="#000000" size="+1" face="Arial, Helvetica, sans-serif"><strong>Opções</strong></font></td>
+                                  </tr>
+                                  <tr> 
+                                    <td bgcolor="#FFFFFF" align="right"  width="150"> 
+                                      <p> 
+                                        <input type="checkbox" name="reagendar" value="1"  class="checkbox" onClick="javascript:verificaReagendamento();" onChange="javascript:verificaReagendamento();" {$reagendamento_checked}>
+                                        re-agendar cobrança para dia: </p></td>
+                                    <td width="346" bgcolor="#FFFFFF"><input name="reagendamento" type="text" value="{$amort.reagendamento|date_format:"%e/%m/%Y"}" maxlength=10 id="reagendamento"></td>
+                                  </tr>
+                                  <tr> 
+                                    <td bgcolor="#FFFFFF" align="right" width="120" valign="top"><p>Observações:</p></td>
+                                    <td bgcolor="#FFFFFF"><textarea name="observacoes" rows=7 cols=30>{$amort.observacoes}</textarea></td>
+                                  </tr>
+                                </table></td>
+                            </tr>
+                            <tr> 
+                              <td colspan="2"> <div align="center">{if $suspenso} 
+                                  <table width="90%" border="0" cellspacing="0" cellpadding="0" bgcolor="#000000">
+                                    <tr> 
+                                      <td><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                                          <tr> 
+                                            <td bgcolor="#f1f1f1" height="40"><div align="CENTER"><font size="2" face="Arial, Helvetica, sans-serif"><strong>Cliente 
+                                                suspenso por pend&ecirc;ncias 
+                                                financeiras - <br>
+                                                {$suspenso.status} </strong></font></div></td>
+                                          </tr>
+                                        </table></td>
+                                    </tr>
+                                  </table>
+                                  {/if} 
+                                  <input name="botao_enviar" type="submit" class=input2 id="submit" value="Amortizar >>" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
+                                </div>
+                                </td>
+                            </tr>
+                          </table>
+                          
+                        </td>
 		</tr>
 	</table>
 	</form>
