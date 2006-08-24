@@ -37,6 +37,7 @@ require_once(PATH_LIB . '/VARelatorio.class.php');
 require_once(PATH_LIB . '/VAInterface_cliente.class.php');
 require_once(PATH_LIB . '/VAInterface_cliente_home.class.php');
 require_once(PATH_LIB . '/spool_hospedagem.class.php');
+require_once(PATH_LIB . '/VABackup.class.php');
 
 
 //function __autoload($class_name) {
