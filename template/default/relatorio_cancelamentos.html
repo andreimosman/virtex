@@ -66,8 +66,8 @@ if (da && !pr && !mac) with (document) {
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio</h1><h2 align="center"><font size="2">Cancelamentos-{$acao}</font></h2>{if 
-                  $acao == "geral"} <form action="{$smarty.server.PHP_SELF}" method="GET"> 
+                <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio</h1><h2 align="center"><font size="2">Cancelamentos-{$acao}</font></h2>{if
+                  $acao == "geral"} <form action="{$smarty.server.PHP_SELF}" method="GET">
                   <input type="HIDDEN" name="acao" value="{$acao}">
                 		<input type="HIDDEN" name="op" value="{$op}">
 
@@ -75,29 +75,30 @@ if (da && !pr && !mac) with (document) {
 
 						  <tr height="60">
 						  	<td align="center"><p><strong>Per&iacute;odo</strong></a></td>
-						  	<td>
-								<select name="periodo">
+						  	
+                        <td> <select name="periodo">
 									{foreach key=id item=nome from=$tpconsulta}
-										<option value="{$id}" {if $id==$periodo} SELECTED {/if}>{$nome}</option>
+										
+                            <option value="{$id}" {if $id==$periodo} selected {/if}>{$nome}</option>
 									{/foreach}
 
-								</select>
-							</td>
+								
+                          </select></td>
 
 						  	<td><p><input type="submit" value="OK"></p></td>
 						  </tr>
 						</table> </form>{if !$relat}
-<p><strong>Não 
-                    Existe Cancelamentos no periodo</strong></p>{/if}<br>
+					<p><strong>Não Existe Cancelamentos no periodo</strong></p>{/if}<br>
                   {if $relat }<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico"><br>
-                  
+
 							<table width="503" border="0" cellspacing="0" cellpadding="0" align="CENTER">
-								<tr> 
-								   <td width="503"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                          <tr> 
+								<tr>
+								   <td width="503">
+								   	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                         			  <tr>
 										<td width="118" align="CENTER"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Per&iacute;odo</font></td>
-										<td width="80" align="right"><p>Banda Larga</p></td>
-										<td width="55" align="right"><p>Discado</p></td>
+										<td width="81" align="right"><p>Banda Larga</p></td>
+										<td width="54" align="right"><p>Discado</p></td>
 										<td width="92" align="right"><p>Hospedagem</p></td>
 										<td width="158" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Cancelamentos</font></td>
 									  </tr>
@@ -109,15 +110,18 @@ if (da && !pr && !mac) with (document) {
 										<td align="right"><p>{$a.H} &nbsp; &nbsp; </p></td>
 										<td align="CENTER"><p><a href="relatorio.php?op={$op}&acao=sub_ade&ano={$a.ano}&mes={$a.mes}">{$a.num_contratos}</a></p></td>
 									  </tr>
+								
 									  <tr bgcolor="#999999">
 										<td colspan="5" height="1"></td>
 									  </tr>
-								 {/foreach}
+									 {/foreach}
+									 </table>
 								  </td>
 								</tr>
 							  </table>
-					{/if} {if $acao == "sub_ade"}BOSTA 
-                  <table width="500" border="0" cellspacing="0" cellpadding="0">
+					{/if}{/if} {if $acao == "sub_ade"}
+					{if !$relat}<strong><p>Não existem cancelamentos nesse período</p></strong><br>{else}
+					    <table width="500" border="0" cellspacing="0" cellpadding="0">
 						  <tr>
 							<td><table width="500" border="0" cellspacing="0" cellpadding="0">
 								<tr>
@@ -154,16 +158,10 @@ if (da && !pr && !mac) with (document) {
 								</tr>
 							  </table></td>
 						  </tr>
-                  	  </table>
+                  	  </table>{/if}
                   	  <p><a href="#" onClick="javascript:history.back()">Voltar</a></p>
 					{/if}
-
-
-
-
-
-                  {/if}
-					<p id="imprimir" align="center"><a href="javascript:;" onClick="return printPage();">IMPRIMIR</a></p>
+                  <p id="imprimir" align="center"><a href="javascript:;" onClick="return printPage();">IMPRIMIR</a></p>
                     <P align="center">&nbsp;</P>
 				</td>
               </tr>

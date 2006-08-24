@@ -1182,6 +1182,7 @@ class VARelatorio extends VirtexAdmin {
 		$this->tpl->atribui("acao", $acao);
 		$this->tpl->atribui("op", $op);
 		$this->tpl->atribui("relat",$relat);
+		
 		$this->arquivoTemplate = "relatorio_cancelamentos.html";
 			
 		
@@ -2195,13 +2196,16 @@ class VARelatorio extends VirtexAdmin {
 						$sSQL .= "FROM ";
 						$sSQL .= "	cbtb_contrato ";
 						$sSQL .= "WHERE ";
-						$sSQL .= "	 data_contratacao between (now() - INTERVAL '1 months') - INTERVAL '$periodo months' AND now() ";
+						$sSQL .= "	 data_contratacao between (now() - INTERVAL '-1 month') - INTERVAL '$periodo months' AND now() ";
 						$sSQL .= "GROUP BY ano, mes ";
-						$sSQL .= "ORDER BY ano DESC, mes  DESC";	
+						$sSQL .= "ORDER BY ano DESC, mes  DESC ";
 							
-						 /////echo $sSQL;
-
+						///echo $sSQL;
+						
+						
+						if ($periodo=="12"){
 						$relatorio = $this->bd->obtemRegistros($sSQL);
+						
 						$relat = array();
 
 
@@ -2227,11 +2231,13 @@ class VARelatorio extends VirtexAdmin {
 							}
 
 
-						}
-
-
-
-						 
+						}				 
+						
+					}else{
+					
+						$relat = $this->bd->obtemRegistros($sSQL);
+					
+					}
 
 					} else if($acao == "sub_ade") {
 
@@ -2251,7 +2257,7 @@ class VARelatorio extends VirtexAdmin {
 						$sSQL .= "	prd.id_produto = cp.id_produto AND clt.id_cliente = cp.id_cliente ";
 						$sSQL .= "ORDER BY cnt.data_contratacao, clt.nome_razao ASC ";
 						
-						//echo "QUERY: $sSQL<br>";
+						////echo "QUERY: $sSQL<br>";
 
 						$relat = $this->bd->obtemRegistros($sSQL);
 
@@ -2307,7 +2313,7 @@ class VARelatorio extends VirtexAdmin {
 
 					}
 					return($relat);
-    
+    		$this->tpl->atribui("periodo",$periodo);
     
     }
     
@@ -2390,6 +2396,9 @@ class VARelatorio extends VirtexAdmin {
     	
     	}else if ($acao == "sub_ade"){
     	
+    			$ano = @$_REQUEST["ano"];
+    			$mes = @$_REQUEST["mes"];
+    	
 				$data_inicial = date("Y-m-d", mktime(0,0,0,$mes, 1, $ano));
 				$data_final = date("Y-m-d",mktime(0,0,0,$mes+1, 1, $ano));
 
@@ -2401,12 +2410,15 @@ class VARelatorio extends VirtexAdmin {
 				$sSQL .= "FROM ";
 				$sSQL .= "	prtb_produto prd, cbtb_contrato cnt, cbtb_cliente_produto cp, cltb_cliente clt ";
 				$sSQL .= "WHERE  ";
-				$sSQL .= "	cnt.data_contratacao >= '$data_inicial' AND cnt.data_contratacao < '$data_final' AND ";
+				$sSQL .= "	EXTRACT('month' FROM cnt.data_alt_status) = '$mes' ";
+				$sSQL .= " AND	EXTRACT('year' FROM cnt.data_alt_status) = '$ano' AND ";
 				$sSQL .= "	cp.id_cliente_produto = cnt.id_cliente_produto AND ";
+				$sSQL .= "  cnt.status = 'C' AND ";
 				$sSQL .= "	prd.id_produto = cp.id_produto AND clt.id_cliente = cp.id_cliente ";
 				$sSQL .= "ORDER BY cnt.data_contratacao, clt.nome_razao ASC ";
 
 				$relat = $this->bd->obtemRegistros($sSQL);
+				////echo $sSQL ;
     	
     	}
     	//echo "QUERY: $sSQL<br>";
@@ -2427,7 +2439,7 @@ class VARelatorio extends VirtexAdmin {
 
 
 
-							if( (int)$relat[$i]["num_contratos"] ) {
+							if( (int)@$relat[$i]["num_contratos"] ) {
 
 								$dSQL  = "SELECT ";
 								$dSQL .= "	tipo_produto, count(*) as num_contratos,  ";

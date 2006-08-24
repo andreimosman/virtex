@@ -87,11 +87,8 @@ if (da && !pr && !mac) with (document) {
 {/if}
 <p align="center">{if $acao == geral}<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico">{/if}</p>
 <BR>
-<p>
-{if $acao == "geral"}
-	{if $relat}
-<!-- 	COMEÇO DO acao = geral -->
-						  
+<p> {if $acao == "geral"} {if $relat} 
+  <!-- 	COMEÇO DO acao = geral -->
 <table width="450" border="0" cellspacing="0" cellpadding="0" align="CENTER">
   <tr> 
     <td><table width="450" border="0" cellspacing="0" cellpadding="0">
@@ -113,13 +110,14 @@ if (da && !pr && !mac) with (document) {
         <tr bgcolor="#999999"> 
           <td colspan="11" height="1"></td>
         </tr>
-        {/foreach} </table></td>
+       {/foreach}</table></td>
   </tr>
 </table>
 <!-- 	FIM DO acao = geral -->
 {else} <font face="verdana" size="2" color="black"><b>N&atilde;o Existem Ades&otilde;es 
-para o periodo especificado</b></font> {/if} {elseif $acao == "sub_ade"} <br>
-<p align="center"><a href="relatorio.php?op=adesao">voltar para relatorio geral de Adesões</a></p><br>
+para o periodo especificado</b></font> {/if} {elseif $acao == "sub_ade"}
+{if !$relat}<strong><p align="center">Não existem adesões na data escolhida.</p>
+</strong>{else} 
 <table width="500" border="0" cellspacing="0" cellpadding="0" ALIGN="center">
   <tr> 
     <td><table width="500" border="0" cellspacing="0" cellpadding="0">
@@ -134,7 +132,8 @@ para o periodo especificado</b></font> {/if} {elseif $acao == "sub_ade"} <br>
             </table></td>
         </tr>
         <tr> 
-          <td> {foreach item=a from=$relat} 
+          <td>
+		   {foreach item=a from=$relat} 
             <table width="500" border="0" cellspacing="2" cellpadding="0">
               <tr> 
                 <td width="80" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">
@@ -154,12 +153,13 @@ para o periodo especificado</b></font> {/if} {elseif $acao == "sub_ade"} <br>
                 <td colspan="5" height="1"></td>
               </tr>
             </table>
-            {/foreach} </td>
+            {/foreach}</td>
         </tr>
-      </table></td>
+      </table>{/if}</td>
   </tr>
-</table>
+</table><br>
+<p align="center"><a href="relatorio.php?op=adesao">voltar para relatorio geral de Adesões</a></p><br>
 {/if} </p>
- <p id="imprimir" align="center"><a href="javascript:;" onClick="return printPage();">IMPRIMIR</a></p>
+<p id="imprimir" align="center"><a href="javascript:;" onClick="return printPage();">IMPRIMIR</a></p>
 </body>
 </html>
