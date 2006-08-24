@@ -456,7 +456,8 @@ class VASuporte extends VirtexAdmin {
 						$comando1 = "tar -czvf $pathbackup.$nome1 $caminho1";
 						$comando2 = "tar -czvf $pathbackup.$nome2 $caminho2";
 						
-						
+						ECHO "comando1: $comando1<br>";						
+						ECHO "comando2: $comando2<br>";
 					
 						system($comando1,$retvalconf1);
 						system($comando2,$retvalconf2);
