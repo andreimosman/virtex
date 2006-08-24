@@ -109,7 +109,7 @@ class VABackup extends VirtexAdmin {
 						$sSQL .= "('$hoje','$nome1','Configurações','$status','$admin','GU') ";
 						$this->bd->consulta($sSQL);
 
-						echo "GRAVAÇÃO DE BKP: $sSQL <br>";
+						//echo "GRAVAÇÃO DE BKP: $sSQL <br>";
 
 						system($comando2,$retvalconf2);
 						
@@ -131,7 +131,7 @@ class VABackup extends VirtexAdmin {
 						$sSQL .= "('$hoje','$nome2','Configurações','$status','$admin','GU') ";
 						$this->bd->consulta($sSQL);		
 						
-						echo "GRAVAÇÃO DE BKP: $sSQL <br>";
+						//echo "GRAVAÇÃO DE BKP: $sSQL <br>";
 						
 					}
 					if($sistema){
@@ -165,13 +165,13 @@ class VABackup extends VirtexAdmin {
 						$sSQL .= "('$hoje','$nome','Sistema','$status','$admin','GU') ";
 						$this->bd->consulta($sSQL);		
 						
-						echo "GRAVAÇÃO DE BKP: $sSQL <br>";						
+						//echo "GRAVAÇÃO DE BKP: $sSQL <br>";						
 						
 						
 					}
 					
 					
-					$sSQL = "SELECT * FROM bktb_backup WHERE data_backup = '$hoje' ORDER BY id_backup,arquivo_backup ";
+					$sSQL = "SELECT b.data_backup,b.arquivo_backup,b.tipo_backup,b.status_backup,b.admin as id_admin,b.operador_backup, a.admin FROM bktb_backup WHERE b.admin = a.id_admin AND data_backup = '$hoje' ORDER BY id_backup,arquivo_backup ";
 					$lista = $this->bd->obtemRegistros($sSQL);
 					
 					$this->tpl->atribui("lista",$lista);
