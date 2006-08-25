@@ -313,7 +313,8 @@ class VABackup extends VirtexAdmin {
 					$this->tpl->atribui("lista",$lista);
 					$this->arquivoTemplate = "backup_inicio.html";
 				
-				
+					return;
+					
 				}
 		
 		
