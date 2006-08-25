@@ -218,14 +218,14 @@ class VABackup extends VirtexAdmin {
 						$status2 = "OK";
 					}
 					
-					$sSQL = "UPDATE bktb_backup SET status = '$status2' WHERE id_backup = '$id_backup'";
+					$sSQL = "UPDATE bktb_backup SET status = '$status2' WHERE id_backup = (select max(id_backup) FROM bktb_backup)";
 					$this->bd->consulta($sSQL);
 					ECHO "UPDATE: $sSQL <br>";
 					
 					//list($d,$m,$a,$h,$i,$s) = explode("-",$hoje);
 					//$dt = "$d-$m-$a";
 					
-					$sSQL  = "SELECT ";
+					/*$sSQL  = "SELECT ";
 					$sSQL .= "b.id_backup, b.data_backup, b.status_backup, b.admin as id_admin, b.operador_backup, ";
 					$sSQL .= "ba.arquivo_backup, ba.status_backup as status_arq, ";
 					$sSQL .= "a.admin ";
@@ -235,7 +235,9 @@ class VABackup extends VirtexAdmin {
 					$sSQL .= "b.id_backup = ba.id_backup ";
 					$sSQL .= "AND b.admin = a.id_admin ";
 					$sSQL .= "AND b.data_backup = '$hoje' ";
-					$sSQL .= "ORDER BY b.data_backup DESC ";
+					$sSQL .= "ORDER BY b.data_backup DESC ";*/
+					
+					$sSQL = "SELECT * FROM bktb_arquivos where data_backup = '$hoje' ORDER BY arquivo_backup";
 
 					
 					

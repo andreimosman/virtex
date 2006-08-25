@@ -9,25 +9,21 @@
 <p><strong><font size="2" face="Arial, Helvetica, sans-serif">Os seguintes backups foram efetuados 
   </font></strong></p>
 
-<table width="600" border="0" cellspacing="1" cellpadding="2">
+<table width="558" border="0" cellspacing="1" cellpadding="2">
   <tr bgcolor="#666666"> 
     <td width="150"><strong><font color="#FFFFFF" size="1" face="Verdana, Arial, Helvetica, sans-serif">Data</font></strong></td>
     <td width="250"><strong><font color="#FFFFFF" size="1" face="Verdana, Arial, Helvetica, sans-serif">Arquivo</font></strong></td>
     <td width="78" align="CENTER"><strong><font color="#FFFFFF" size="1" face="Verdana, Arial, Helvetica, sans-serif">Tipo</font></strong></td>
     <td width="59" align="CENTER"><strong><font color="#FFFFFF" size="1" face="Verdana, Arial, Helvetica, sans-serif">Status</font></strong></td>
-    <td width="80" align="CENTER"><strong><font color="#FFFFFF" size="1" face="Verdana, Arial, Helvetica, sans-serif">Admin</font></strong></td>
   </tr>
-  {foreach item=a from=$lista}
+  {foreach item=a from=$lista} 
   <tr bgcolor="{cycle values="#ffffff,#f1f1f1"}"> 
     <td><p><a href="backup.php?op=backup&acao=download&id_backup={$a.id_backup}&arquivo={$a.arquivo_backup}">{$a.data_backup}</a></p></td>
     <td><p>{$a.arquivo_backup}</p></td>
     <td><p>{$a.tipo_backup}</p></td>
-    <td align="CENTER">
-<p>{$a.status_backup}</p></td>
-    <td align="CENTER">
-<p>{$a.admin}</p></td>
+    <td align="CENTER"> <p>{$a.status_backup}</p></td>
   </tr>
-  {/foreach}
+  {/foreach} 
 </table>
 <p><strong><font size="2" face="Arial, Helvetica, sans-serif"> </font></strong></p>
 </div></body>
