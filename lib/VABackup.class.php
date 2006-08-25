@@ -217,7 +217,7 @@ class VABackup extends VirtexAdmin {
 					}
 					
 					if ($erro == 1){
-						$status2 = "ERRO"
+						$status2 = "ERRO";
 					}else{
 						$status2 = "OK";
 					}
