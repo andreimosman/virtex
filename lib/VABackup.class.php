@@ -288,12 +288,12 @@ class VABackup extends VirtexAdmin {
 		
 		
 				$id_backup = @$_REQUEST["id_backup"];
-				$sSQL = "SELECT * FROM bktb_backup WHERE id_backup = '$id_backup'";
+				$sSQL = "SELECT * FROM bktb_arquivos WHERE id_backup = '$id_backup'";
 				$detalhe = $this->bd->obtemRegistros($sSQL);
 				
+				echo "DETALHE: $detalhe<br>";
 				$this->tpl->atribui("detalhe",$detalhe);
 				$this->arquivoTemplate = "backup_inicio.html";
-				echo "BOSTA";
 				
 				return;
 				
