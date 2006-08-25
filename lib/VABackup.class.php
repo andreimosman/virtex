@@ -286,7 +286,7 @@ class VABackup extends VirtexAdmin {
 				
 				}else if ($acao == "detalhes"){
 		
-				$sSQL = "SELECT * FROM bktb_backup WHERE id_backup = '$id_backup'"
+				$sSQL = "SELECT * FROM bktb_backup WHERE id_backup = '$id_backup'";
 				$detalhe = $this->bd->obtemRegistros($sSQL);
 				
 				$this->tpl->atribui("detalhe",$detalhe);
