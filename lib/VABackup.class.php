@@ -76,7 +76,8 @@ class VABackup extends VirtexAdmin {
 				
 				
 						$sSQL = "select max(id_backup) as id_backup FROM bktb_backup";
-						$id = $this->bd->obtemUnicoRegistro($sSQL);
+						$id = $this->bd->obtemRegistros($sSQL);
+						
 						
 						$id_backup = $id["id_backup;"];
 				
