@@ -290,7 +290,7 @@ class VABackup extends VirtexAdmin {
 				$detalhe = $this->bd->obtemRegistros($sSQL);
 				
 				$this->tpl->atribui("detalhe",$detalhe);
-				$this->arquivoTemplate = "backup_efetua.html";
+				$this->arquivoTemplate = "backup_inicio.html";
 				
 				
 				
