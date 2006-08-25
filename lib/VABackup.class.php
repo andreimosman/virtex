@@ -95,8 +95,8 @@ class VABackup extends VirtexAdmin {
 					if($bd){
 					//echo "banco<br>";
 						
-						$arquivo = "bd_$DATA2.sql";
-						system('pg_dump --disable-triggers -U virtex > /mosman/backup/'.$arquivo, $retvalbd);
+						$arquivo = "bd_$DATA2.gz";
+						system('pg_dump --clean --disable-triggers --compress=9 -U virtex > /mosman/backup/'.$arquivo, $retvalbd);
 						
 						if ($retvalbd != 0){
 						
@@ -300,7 +300,7 @@ class VABackup extends VirtexAdmin {
 				
 				
 				
-				}else if ($acao == "historico"){
+				}else if ($acao == "hist"){
 				
 					$mensagem = "Histórico de Backups";
 				
