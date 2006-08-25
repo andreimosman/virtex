@@ -30,7 +30,7 @@
   </tr>
   {foreach item=a from=$lista} 
   <tr bgcolor="{cycle values="#ffffff,#f1f1f1"}"> 
-    <td><p><a href="backup.php?op=backup&acao=detalhes&id_backup={$a.id_backup}">{$a.data_backup|date_format:"%d/%m/%Y"}</a></p></td>
+    <td><p><a href="backup.php?op=backup&acao=detalhes&id_backup={$a.id_backup}">{$a.data|date_format:"%d/%m/%Y %H:%M:%S"}</a></p></td>
     <td align="CENTER"> <p>{$a.status_backup}</p></td>
     <td align="CENTER"> <p>{$a.admin}</p></td>
   </tr>
@@ -46,7 +46,7 @@
   </tr>
   {foreach item=a from=$detalhe} 
   <tr bgcolor="{cycle values="#ffffff,#f1f1f1"}"> 
-    <td><p><a href="backup.php?op=backup&acao=download&id_backup={$a.id_backup}&arquivo={$a.arquivo_backup}">{$a.data_backup|date_format:"%d/%m/%Y"}</a></p></td>
+    <td><p><a href="backup.php?op=backup&acao=download&id_backup={$a.id_backup}&arquivo={$a.arquivo_backup}">{$a.data|date_format:"%d/%m/%Y %H:%M:%S"}</a></p></td>
     <td><p>{$a.arquivo_backup}</p></td>
     <td><p>{$a.tipo_backup}</p></td>
     <td align="CENTER"> <p>{$a.status_backup}</p></td>

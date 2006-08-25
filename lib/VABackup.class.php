@@ -18,7 +18,7 @@ class VABackup extends VirtexAdmin {
 		if ($op == "inicio"){
 		
 			
-			$sSQL = "SELECT b.id_backup,b.data_backup,b.status_backup,b.admin as id_admin, a.id_admin, a.admin FROM bktb_backup b,adtb_admin a WHERE b.admin = a.id_admin ORDER BY b.data DESC LIMIT 10";
+			$sSQL = "SELECT b.id_backup,b.data_backup,b.status_backup,b.admin as id_admin,b.data, a.id_admin, a.admin FROM bktb_backup b,adtb_admin a WHERE b.admin = a.id_admin ORDER BY b.data DESC LIMIT 10";
 			
 			$lista = $this->bd->obtemRegistros($sSQL);
 			
@@ -270,7 +270,7 @@ class VABackup extends VirtexAdmin {
 				
 					$mensagem = "Histórico de Backups";
 				
-					$sSQL = "SELECT b.id_backup,b.data_backup,b.status_backup,b.admin as id_admin, a.id_admin, a.admin FROM bktb_backup b,adtb_admin a WHERE b.admin = a.id_admin ORDER BY b.data DESC";
+					$sSQL = "SELECT b.id_backup,b.data_backup,b.status_backup,b.admin as id_admin,b.data, a.id_admin, a.admin FROM bktb_backup b,adtb_admin a WHERE b.admin = a.id_admin ORDER BY b.data DESC";
 							
 					$lista = $this->bd->obtemRegistros($sSQL);
 							
