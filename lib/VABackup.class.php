@@ -304,7 +304,7 @@ class VABackup extends VirtexAdmin {
 				
 					$mensagem = "Histórico de Backups";
 				
-					$sSQL = "SELECT * FROM bktb_backup ORDER BY data_backup DESC";
+					$sSQL = "SELECT b.id_backup,b.data_backup,b.status_backup,b.admin as id_admin, a.id_admin, a.admin FROM bktb_backup b,adtb_admin a WHERE b.admin = a.id_admin ORDER BY b.data DESC";
 							
 					$lista = $this->bd->obtemRegistros($sSQL);
 							
