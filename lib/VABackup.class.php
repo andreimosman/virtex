@@ -35,7 +35,7 @@ class VABackup extends VirtexAdmin {
 			
 			$lista = $this->bd->obtemRegistros($sSQL);
 			
-			echo "LISTA INICIO: $sSQL <br>";
+			//echo "LISTA INICIO: $sSQL <br>";
 			
 			$this->tpl->atribui("lista",$lista);
 			$this->arquivoTemplate = "backup_inicio.html";
@@ -49,6 +49,11 @@ class VABackup extends VirtexAdmin {
 			$bd = @$_REQUEST["bd"];
 			$sistema = @$_REQUEST["sistema"];
 			$hoje = DATE("Y-m-d");
+			$DATA = date("Y-m-d H:i:s");
+			
+			
+			$DATA2 = str_replace(" ","_",$DATA);
+			$DATA2 = str_replace(":","-",$DATA2);
 			
 			//ECHO $hoje ."<br>";
 			$acao = @$_REQUEST["acao"];
@@ -67,12 +72,12 @@ class VABackup extends VirtexAdmin {
 				if ($sop == "ok"){
 				
 						$sSQL  = "INSERT INTO bktb_backup ";
-						$sSQL .= "(data_backup,admin,operador_backup) ";
+						$sSQL .= "(data_backup,admin,operador_backup,data) ";
 						$sSQL .= "VALUES ";
-						$sSQL .= "('$hoje','$admin','GU') ";
+						$sSQL .= "('$hoje','$admin','GU','$DATA') ";
 						$this->bd->consulta($sSQL);
 				
-						echo "GRAVAÇÃO DE BKP1: $sSQL<br>";
+						//echo "GRAVAÇÃO DE BKP1: $sSQL<br>";
 				
 				
 						$sSQL = "select max(id_backup) FROM bktb_backup";
@@ -80,7 +85,7 @@ class VABackup extends VirtexAdmin {
 						
 						
 						$id_backup = $id["id_backup;"];
-						echo "ID: $id_backup - ".$id["id_backup;"];
+						//echo "ID: $id_backup - ".$id["id_backup;"];
 				
 				
 				
@@ -88,7 +93,7 @@ class VABackup extends VirtexAdmin {
 					if($bd){
 					//echo "banco<br>";
 						
-						$arquivo = "bd_$hoje.sql";
+						$arquivo = "bd_$DATA2.sql";
 						system('pg_dump --disable-triggers -U virtex > /mosman/backup/'.$arquivo, $retvalbd);
 						
 						if ($retvalbd != 0){
@@ -109,7 +114,7 @@ class VABackup extends VirtexAdmin {
 						$sSQL .= "VALUES ";
 						$sSQL .= "((select max(id_backup) FROM bktb_backup),'$arquivo', 'Banco de Dados','$status', '$hoje' )";
 						$this->bd->consulta($sSQL);
-						ECHO "GRAVAÇÃO DE BKP´: $sSQL<br>";
+						//ECHO "GRAVAÇÃO DE BKP´: $sSQL<br>";
 
 
 					}
@@ -117,8 +122,8 @@ class VABackup extends VirtexAdmin {
 					
 						$pathbackup = " /mosman/backup/";
 					
-						$nome1 = "etc_$hoje.tgz";
-						$nome2 = "appetc_$hoje.tgz";
+						$nome1 = "etc_$DATA2.tgz";
+						$nome2 = "appetc_$DATA2.tgz";
 						
 						$caminho1 = " /mosman/virtex/etc/";
 						$caminho2 = " /mosman/virtex/app/etc/";
@@ -148,7 +153,7 @@ class VABackup extends VirtexAdmin {
 						
 						$this->bd->consulta($sSQL);
 
-						echo "GRAVAÇÃO DE BKP: $sSQL <br>";
+						//echo "GRAVAÇÃO DE BKP: $sSQL <br>";
 
 						system($comando2,$retvalconf2);
 						
@@ -171,14 +176,14 @@ class VABackup extends VirtexAdmin {
 						$sSQL .= "((select max(id_backup) FROM bktb_backup),'$nome2', 'Configurações','$status', '$hoje' )";
 						$this->bd->consulta($sSQL);		
 						
-						echo "GRAVAÇÃO DE BKP: $sSQL <br>";
+						//echo "GRAVAÇÃO DE BKP: $sSQL <br>";
 						
 					}
 					if($sistema){
 					
 						$pathbackup = " /mosman/backup/";
 										
-						$nome = "virtex_$hoje.tgz";
+						$nome = "virtex_$DATA2.tgz";
 						$caminho = " /mosman/virtex/";
 					
 						$comando = "tar -czvf $pathbackup$nome  $caminho";
@@ -207,7 +212,7 @@ class VABackup extends VirtexAdmin {
 
 						$this->bd->consulta($sSQL);		
 						
-						echo "GRAVAÇÃO DE BKP: $sSQL <br>";						
+						//echo "GRAVAÇÃO DE BKP: $sSQL <br>";						
 						
 						
 					}
@@ -220,7 +225,7 @@ class VABackup extends VirtexAdmin {
 					
 					$sSQL = "UPDATE bktb_backup SET status_backup = '$status2' WHERE id_backup = (select max(id_backup) FROM bktb_backup)";
 					$this->bd->consulta($sSQL);
-					ECHO "UPDATE: $sSQL <br>";
+					//ECHO "UPDATE: $sSQL <br>";
 					
 					//list($d,$m,$a,$h,$i,$s) = explode("-",$hoje);
 					//$dt = "$d-$m-$a";
@@ -244,7 +249,7 @@ class VABackup extends VirtexAdmin {
 					//$sSQL = "SELECT b.id_backup,b.data_backup,b.arquivo_backup,b.tipo_backup,b.status_backup,b.admin as id_admin,b.operador_backup, a.admin FROM bktb_backup b,adtb_admin a WHERE b.admin = a.id_admin AND data_backup = '$hoje' ORDER BY id_backup,arquivo_backup ";
 					$lista = $this->bd->obtemRegistros($sSQL);
 					
-					echo "LISTA: $sSQL<br>";
+					//echo "LISTA: $sSQL<br>";
 
 					
 					$this->tpl->atribui("lista",$lista);
@@ -279,7 +284,19 @@ class VABackup extends VirtexAdmin {
 					//echo $arq_down;
 					return;
 				
+				}else if ($acao == "detalhes"){
+		
+				$sSQL = "SELECT * FROM bktb_backup WHERE id_backup = '$id_backup'"
+				$detalhe = $this->bd->obtemRegistros($sSQL);
+				
+				$this->tpl->atribui("detalhe",$detalhe);
+				$this->arquivoTemplate = "backup_efetua.html";
+				
+				
+				
+				
 				}
+		
 		
 		
 			$this->arquivoTemplate = "backup_efetua.html";
