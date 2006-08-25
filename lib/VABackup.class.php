@@ -17,21 +17,8 @@ class VABackup extends VirtexAdmin {
 	
 		if ($op == "inicio"){
 		
-			//$sSQL = "SELECT b.id_backup,b.data_backup,b.arquivo_backup,b.tipo_backup,b.status_backup,b.admin as id_admin,a.admin FROM bktb_backup b,adtb_admin a WHERE b.admin = a.id_admin ORDER BY id_backup,arquivo_backup DESC LIMIT 10";
 			
-			
-			/*$sSQL  = "SELECT ";
-			$sSQL .= "b.id_backup, b.data_backup, b.status_backup, b.admin as id_admin, b.operador_backup, ";
-			$sSQL .= "ba.arquivo_backup, ba.status_backup as status_arq, ";
-			$sSQL .= "a.admin ";
-			$sSQL .= "FROM ";
-			$sSQL .= "bktb_backup b, bktb_arquivos ba, adtb_admin a ";
-			$sSQL .= "WHERE ";
-			$sSQL .= "b.id_backup = ba.id_backup ";
-			$sSQL .= "AND b.admin = a.id_admin ";
-			$sSQL .= "ORDER BY b.data_backup DESC ";*/
-			
-			$sSQL = "SELECT * FROM bktb_backup ORDER BY data_backup LIMIT 10";
+			$sSQL = "SELECT b.id_backup,b.data_backup,b.status_backup,b.admin as id_admin, a.id_admin, a.admin FROM bktb_backup b,adtb_admin a WHERE b.admin = a.id_admin ORDER BY b.data DESC LIMIT 10";
 			
 			$lista = $this->bd->obtemRegistros($sSQL);
 			
@@ -192,10 +179,6 @@ class VABackup extends VirtexAdmin {
 					
 						system($comando,$retvalsystem);
 						
-						//echo "comando: $comando<br>";
-						
-						//copy("/mosman/virtex/app/virtex_".$hoje.".tgz","/mosman/backup/sys/virtex_".$hoje.".tgz");
-						//$msg .= $retvalsystem."<br>";
 						if ($retvalsystem != 0){
 						
 							$status = "ERRO";
@@ -229,20 +212,6 @@ class VABackup extends VirtexAdmin {
 					$this->bd->consulta($sSQL);
 					//ECHO "UPDATE: $sSQL <br>";
 					
-					//list($d,$m,$a,$h,$i,$s) = explode("-",$hoje);
-					//$dt = "$d-$m-$a";
-					
-					/*$sSQL  = "SELECT ";
-					$sSQL .= "b.id_backup, b.data_backup, b.status_backup, b.admin as id_admin, b.operador_backup, ";
-					$sSQL .= "ba.arquivo_backup, ba.status_backup as status_arq, ";
-					$sSQL .= "a.admin ";
-					$sSQL .= "FROM ";
-					$sSQL .= "bktb_backup b, bktb_arquivos ba, adtb_admin a ";
-					$sSQL .= "WHERE ";
-					$sSQL .= "b.id_backup = ba.id_backup ";
-					$sSQL .= "AND b.admin = a.id_admin ";
-					$sSQL .= "AND b.data_backup = '$hoje' ";
-					$sSQL .= "ORDER BY b.data_backup DESC ";*/
 					
 					$sSQL = "SELECT * FROM bktb_arquivos where id_backup = (select max(id_backup) FROM bktb_backup) ORDER BY arquivo_backup";
 
@@ -276,14 +245,11 @@ class VABackup extends VirtexAdmin {
 					header('Expires: 0');
 					header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 					header('Content-type: application/force-download');
-					//header("Content-type: application/octet-stream ");
 					header('Content-Disposition: attachment; filename="'.basename($arquivo).'"');
-					//header('Content-Length: ' . filesize($arquivo));
 					readfile($arquivo);
 				
 					fclose($arq_down);
 
-					//echo $arq_down;
 					return;
 				
 				}else if ($acao == "detalhes"){
