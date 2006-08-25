@@ -145,7 +145,7 @@ class VABackup extends VirtexAdmin {
 						$sSQL .= "VALUES ";
 						$sSQL .= "($id_backup,'$nome1', 'Configurações','$status', '$hoje' )";
 						
-						this->bd->consulta($sSQL);
+						$this->bd->consulta($sSQL);
 
 						//echo "GRAVAÇÃO DE BKP: $sSQL <br>";
 
