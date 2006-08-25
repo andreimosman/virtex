@@ -1098,9 +1098,16 @@ class VAConfiguracao extends VirtexAdmin {
 					$sSQL  = "SELECT id_cobranca, nome_cobranca, disponivel FROM cftb_forma_pagamento ORDER BY id_cobranca asc";
 					$frm_pagamento = $this->bd->obtemRegistros($sSQL);
 
-					for($i=0;$i<count($frm_pagamento);$i++){
+					$sSQL = "SELECT * FROM cftb_forma_pagamento where disponivel = true";
+					$frm = $this->bd->obtemRegistros($sSQL);
 					
-						
+					$disponivel = array();
+					
+					for($i=0;$i<count($frm);$i++){
+					
+						if($frm[$i]["disponivel"] = "true") {
+							$disponivel[$frm[$i]["id_cobranca"]] = "true";
+						}
 					
 					
 					
@@ -1131,7 +1138,7 @@ class VAConfiguracao extends VirtexAdmin {
 						$sSQL .= "  convenio_boleto = '".@$_REQUEST["convenio_boleto"]."' ";
 
 						$this->bd->consulta($sSQL);
-						echo "update cobrança: $sSQL <br>";
+						//echo "update cobrança: $sSQL <br>";
 
 
 						$sSQL = "UPDATE cftb_forma_pagamento SET disponivel = 'f'";
@@ -1167,7 +1174,11 @@ class VAConfiguracao extends VirtexAdmin {
 						return;
 
 					}
-
+					
+					$this->tpl->atribui("disponivel",$disponivel);
+					$this->tpl->atribui("disponivel_1",@$disponivel[1]);
+					$this->tpl->atribui("disponivel_2",@$disponivel[2]);
+					$this->tpl->atribui("disponivel_3",@$disponivel[3]);
 					$this->tpl->atribui("op",$op);
 					$this->tpl->atribui("acao",$acao);
 					$this->tpl->atribui("prefs",$prefs);

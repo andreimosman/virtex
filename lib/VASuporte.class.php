@@ -509,7 +509,7 @@ class VASuporte extends VirtexAdmin {
 					}					
 					
 					
-					$command = "tar -czvf /mosman/backup/backup-$hoje.tgz *.tgz";
+					$command = "tar -czvf /mosman/virtex/app/backup-$hoje.tgz *.tgz";
 					
 					system($command,$retval);
 					

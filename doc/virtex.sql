@@ -1,6 +1,6 @@
 /*
 Created		22/2/2006
-Modified		27/6/2006
+Modified		19/8/2006
 Project		
 Model		
 Company		
@@ -52,9 +52,9 @@ Create table  cltb_cliente
 	data_cadastro Date NULL ,
 	nome_razao Varchar(50) NULL ,
 	tipo_pessoa Char(1) NULL ,
-	rg_inscr Char(20) NULL ,
+	rg_inscr Varchar(20) NULL ,
 	rg_expedicao Varchar(20) NULL ,
-	cpf_cnpj Char(25) NULL ,
+	cpf_cnpj Varchar(25) NULL ,
 	email Varchar(255) NULL ,
 	endereco Varchar(50) NULL ,
 	complemento Varchar(50) NULL ,
@@ -254,8 +254,8 @@ Create table  cntb_conta_hospedagem
 	dominio Varchar(255) NOT NULL,
 	tipo_hospedagem Char(1) NULL ,
 	senha_cript Varchar(64) NULL ,
-	uid Smallint NULL ,
-	gid Smallint NULL ,
+	uid integer NULL ,
+	gid integer NULL ,
 	home Varchar(255) NULL ,
 	shell Varchar(255) NULL ,
 	dominio_hospedagem Varchar(255) NULL ,
@@ -427,14 +427,19 @@ Create table  pftb_preferencia_cobranca
 	multa Smallint NULL ,
 	dia_venc Smallint NULL ,
 	carencia Smallint NULL ,
-	cod_banco Smallint NULL ,
+	cod_banco integer NULL ,
 	carteira Varchar(10) NULL ,
-	agencia Smallint NULL ,
-	num_conta Smallint NULL ,
-	convenio Smallint NULL ,
+	agencia integer NULL ,
+	num_conta integer NULL ,
+	convenio integer NULL ,
 	observacoes Text NULL ,
 	pagamento Char(3) NULL ,
 	path_contrato Varchar(255) NULL ,
+	cod_banco_boleto integer NULL ,
+	carteira_boleto Varchar(10) NULL ,
+	agencia_boleto integer NULL ,
+	conta_boleto integer NULL ,
+	convenio_boleto integer NULL ,
  primary key (id_provedor)
 );
 
@@ -456,6 +461,7 @@ Create table  pftb_preferencia_geral
 	smtp_host Varchar(255) NULL ,
 	hosp_base Varchar(255) NULL ,
 	agrupar Smallint NULL ,
+	email_base Varchar(255) NULL ,
  primary key (id_provedor)
 );
 
@@ -466,6 +472,7 @@ Create table  pftb_preferencia_provedor
 	localidade Varchar(255) NULL ,
 	cep Varchar(20) NULL ,
 	cnpj Char(25) NULL ,
+	fone Varchar(30) NULL ,
  primary key (id_provedor)
 );
 
@@ -565,7 +572,7 @@ Create table  lgtb_retorno_faturas
 	data_credito Date NULL ,
 	valor_recebido Numeric(7,2) NULL ,
 	codigo_barras Varchar(50) NULL ,
-	valor_tarifa Smallint NULL ,
+	valor_tarifa Numeric(7,2) NULL ,
 	status Char(2) NULL ,
 	id_arquivo integer NOT NULL,
 	motivo Varchar(100) NULL 
@@ -612,6 +619,52 @@ Create table  lgtb_contas_excluidas
 	data_exclusao Date NULL  Default now(),
  primary key (id_excluida)
 );
+
+Create table  lgtb_renovacao
+(
+	id_cliente_produto Smallint NOT NULL,
+	data_renovacao Date NULL ,
+	data_proxima_renovacao Date NULL ,
+	historico Text NULL ,
+	id_renovacao Serial NOT NULL,
+ primary key (id_renovacao)
+);
+
+Create table  lgtb_administradores
+(
+	id_admin Smallint NOT NULL,
+	data Timestamp NULL  Default now(),
+	operacao Varchar(255) NULL ,
+	valor_original Varchar(100) NULL ,
+	valor_alterado Varchar(100) NULL ,
+	username Varchar(100) NULL ,
+	id_fatura Smallint NULL ,
+	tipo_conta Varchar(2) NULL ,
+	ip Inet NULL 
+);
+
+Create table  bktb_backup
+(
+	id_backup Serial NOT NULL,
+	data_backup Timestamp NULL ,
+	arquivo_backup Varchar(150) NULL ,
+	tipo_backup Varchar(2) NULL ,
+	status_backup Varchar(2) NULL ,
+	admin Smallint NULL ,
+ primary key (id_backup)
+);
+
+Create table  cftb_backup
+(
+	path_backup Varchar(150) NULL ,
+	ftp Varchar(255) NULL ,
+	usuario Varchar(100) NULL ,
+	senha Varchar(150) NULL 
+);
+
+
+
+
 
 
 
@@ -675,6 +728,7 @@ Alter table cbtb_faturas add  foreign key (id_cliente_produto) references cbtb_c
 Alter table cntb_conta add  foreign key (dominio) references dominio (dominio)  on update cascade  on delete restrict ;
 Alter table cbtb_contrato add  foreign key (id_cobranca) references cftb_forma_pagamento (id_cobranca)  on update restrict  on delete restrict ;
 Alter table adtb_usuario_privilegio add  foreign key (id_admin) references adtb_admin (id_admin)  on update restrict  on delete restrict ;
+Alter table lgtb_administradores add  foreign key (id_admin) references adtb_admin (id_admin)  on update restrict  on delete restrict ;
 Alter table adtb_usuario_privilegio add  foreign key (id_priv) references adtb_privilegio (id_priv)  on update restrict  on delete restrict ;
 Alter table cntb_conta_email add  foreign key (username,dominio,tipo_conta) references cntb_conta (username,dominio,tipo_conta)  on update cascade  on delete restrict ;
 Alter table cntb_conta_discado add  foreign key (username,dominio,tipo_conta) references cntb_conta (username,dominio,tipo_conta)  on update cascade  on delete restrict ;
@@ -693,6 +747,8 @@ Alter table cbtb_faturas add  foreign key (id_carne) references cbtb_carne (id_c
 Alter table cntb_conta_bandalarga add  foreign key (ip_externo) references cftb_ip_externo (ip_externo)  on update restrict  on delete restrict ;
 Alter table lgtb_retorno_faturas add  foreign key (id_arquivo) references lgtb_retorno (id_arquivo)  on update restrict  on delete restrict ;
 
+
+-- CRIANDO SEQUENCES
 
 CREATE SEQUENCE adsq_id_admin;
 CREATE SEQUENCE adsq_id_priv;
@@ -713,11 +769,17 @@ CREATE SEQUENCE rdtb_log_id_log;
 CREATE SEQUENCE rdsq_id_accounting;
 CREATE SEQUENCE cbsq_id_carne;
 CREATE SEQUENCE blsq_carne_nossonumero;
+CREATE SEQUENCE cnsq_id_conta;
+
+
+-- POPULANDO A TABELA DE FORMAS DE PAGAMENTO
 INSERT INTO cftb_forma_pagamento (id_cobranca,nome_cobranca,disponivel) VALUES ('1','Boleto Bancário',false);
 INSERT INTO cftb_forma_pagamento (id_cobranca,nome_cobranca,disponivel) VALUES ('2','Carnê',false);
-INSERT INTO cftb_forma_pagamento (id_cobranca,nome_cobranca,disponivel) VALUES ('3','Fatura Avulsa',false);
-INSERT INTO cftb_forma_pagamento (id_cobranca,nome_cobranca,disponivel) VALUES ('4','Cartão de Crédito',false);
-INSERT INTO cftb_forma_pagamento (id_cobranca,nome_cobranca,disponivel) VALUES ('5','Depósito Bancário',false);
+INSERT INTO cftb_forma_pagamento (id_cobranca,nome_cobranca,disponivel) VALUES ('3','Outras Formas',false);
+
+
+
+-- POPULANDO A TABELA DE BANDAS
 INSERT INTO cftb_banda (banda) VALUES ('0');
 INSERT INTO cftb_banda (banda) VALUES ('32');
 INSERT INTO cftb_banda (banda) VALUES ('64');
@@ -729,5 +791,109 @@ INSERT INTO cftb_banda (banda) VALUES ('384');
 INSERT INTO cftb_banda (banda) VALUES ('512');
 INSERT INTO cftb_banda (banda) VALUES ('768');
 INSERT INTO cftb_banda (banda) VALUES ('1024');
+
+
+-- POPULANDO A TABELA DE PRIVILEGIOS
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (1, '_ADMIN', 'administradores');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (2, '_CLIENTES', 'clientes');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (3, '_CLIENTES_FICHA', 'clientes::ficha');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (4, '_CLIENTES_BANDALARGA', 'clientes::contas::banda larga');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (5, '_CLIENTES_DISCADO', 'clientes::contas::discado');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (6, '_CLIENTES_EMAIL', 'clientes::contas::email');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (7, '_CLIENTES_HOSPEDAGEM', 'clientes::contas::hospedagem');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (8, '_CLIENTES_COBRANCA', 'clientes::contas::cobrança');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (9, '_COBRANCA', 'cobrança');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (10, '_SUPORTE', 'suporte');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (12, '_CONFIG_MONITORAMENTO', 'configurações::monitoramento');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (13, '_CLIENTES_COBRANCA_ELIMINAR_CONTRATO', 'configurações::cobranca::eliminar contrato');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (14, '_ELIMINAR_CLIENTE', 'clientes:eliminar cliente');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (15, '_RELATORIOS_CLIENTE', 'cliente::relatorios');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (16, '_COBRANCA_BLOQUEIOS', 'cobranca::bloqueios');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (17, '_COBRANCA_PRODUTOS', 'cobranca:: cadastrar produtos');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (19, '_COBRANCA_RETORNOS', 'cobranca::processar retornos');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (20, '_RELATORIOS_COBRANCA', 'cobranca::relatorios');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (21, '_CONFIG_EQUIPAMENTOS', 'configuracao::equipamentos');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (22, '_CONFIG_PREFERENCIAS', 'configuracao:preferencias');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (23, '_SUPORTE_BACKUP', 'suporte::backup');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (11, '_CONFIG', 'configurações::relatorios');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (24, '_CONFIG_REGISTRO', 'configurações::registro do sistema');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (25, '_RELATORIO_CONFIG', 'configurações::relatorios');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (26, '_RELATORIO_OUTROS', 'relatorios gerais');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (27, '_FATURAMENTO', 'faturamento');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (18, '_COBRANCA_FATURAS', 'cobranca::emitir faturas');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (28, '_ADMIN_LOG', 'administradores::log de acesso');
+INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (29, '_ADMIN_PRIV', 'administradores::privilegios');
+
+
+-- CRIANDO O USUARIO ADMIN
+INSERT INTO adtb_admin(id_admin,admin,senha,status,nome,email,primeiro_login) VALUES (1, 'admin', md5('admin123'), 'A','Administrador','admin@mosman.com.br',true);
+
+
+-- DANDO TODOS OS PRIVILEGIOS PARA ADMIN
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 1, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 28, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 29, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 15, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 2, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 4, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 8, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 5, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 6, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 7, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 14, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 3, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 9, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 16, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 17, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 18, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 19, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 20, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 21, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 22, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 13, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 12, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 24, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 11, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 25, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 27, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 26, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 10, true);
+INSERT INTO adtb_usuario_privilegio (id_admin, id_priv, pode_gravar) VALUES (1, 23, true);
+
+
+-- POPULANDO A TABELA DE ESTADOS
+INSERT INTO cftb_uf VALUES ('AC', 'Acre');
+INSERT INTO cftb_uf VALUES ('AL', 'Alagoas');
+INSERT INTO cftb_uf VALUES ('AM', 'Amazonas');
+INSERT INTO cftb_uf VALUES ('AP', 'Amapá');
+INSERT INTO cftb_uf VALUES ('BA', 'Bahia');
+INSERT INTO cftb_uf VALUES ('CE', 'Ceará');
+INSERT INTO cftb_uf VALUES ('DF', 'Distrito Federal');
+INSERT INTO cftb_uf VALUES ('ES', 'Espírito Santo');
+INSERT INTO cftb_uf VALUES ('GO', 'Goiás');
+INSERT INTO cftb_uf VALUES ('MA', 'Maranhão');
+INSERT INTO cftb_uf VALUES ('MG', 'Minas Gerais');
+INSERT INTO cftb_uf VALUES ('MS', 'Mato Grosso do Sul');
+INSERT INTO cftb_uf VALUES ('MT', 'Mato Grosso');
+INSERT INTO cftb_uf VALUES ('PA', 'Pará');
+INSERT INTO cftb_uf VALUES ('PB', 'Paraíba');
+INSERT INTO cftb_uf VALUES ('PE', 'Pernambuco');
+INSERT INTO cftb_uf VALUES ('PI', 'Piauí');
+INSERT INTO cftb_uf VALUES ('PR', 'Paraná');
+INSERT INTO cftb_uf VALUES ('RJ', 'Rio de Janeiro');
+INSERT INTO cftb_uf VALUES ('RN', 'Rio Grande do Norte');
+INSERT INTO cftb_uf VALUES ('RO', 'Rondônia');
+INSERT INTO cftb_uf VALUES ('RR', 'Roraima');
+INSERT INTO cftb_uf VALUES ('RS', 'Rio Grande do Sul');
+INSERT INTO cftb_uf VALUES ('SC', 'Santa Catarina');
+INSERT INTO cftb_uf VALUES ('SE', 'Sergipe');
+INSERT INTO cftb_uf VALUES ('SP', 'São Paulo');
+INSERT INTO cftb_uf VALUES ('TO', 'Tocantins');
+
+
+
+-- SETANDO AS SEQUENCES DO SISTEMA
+SELECT setval('adsq_id_admin',(select max(id_admin) from adtb_admin));
+SELECT setval('adsq_id_priv',(select max(id_priv) from adtb_privilegio));
 
 

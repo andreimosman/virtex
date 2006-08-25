@@ -969,7 +969,7 @@ class VAClientes extends VirtexAdmin {
 		$sSQL  = "SELECT ";
 		$sSQL .= "f.id_cliente_produto, to_char(f.data, 'DD/mm/YYYY') as data_conv,f.data, f.valor, f.observacoes,f.descricao, to_char(f.reagendamento, 'DD/mm/YYYY') as reagendamento, f.pagto_parcial, ";
 		$sSQL .= "to_char(f.data_pagamento, 'DD/mm/YYYY') as data_pagamento, f.desconto, f.acrescimo, f.valor_pago, ";
-		$sSQL .= "c.id_cliente_produto, c.id_cliente, ";
+		$sSQL .= "c.id_cliente_produto, c.id_cliente, ct.id_cobranca, ";
 		$sSQL .= "CASE WHEN (f.data < CAST(now() as date) AND f.status='A') OR (f.reagendamento < CAST(now() as date) AND f.status='R') ";
 		$sSQL .= "THEN 'S' ELSE ";
 		$sSQL .= "CASE WHEN f.reagendamento is not null AND f.status != 'P' ";
@@ -977,11 +977,12 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "END ";
 		$sSQL .= "END as extstatus ";
 		$sSQL .= "FROM ";
-		$sSQL .= "cbtb_faturas f, cbtb_cliente_produto c ";
+		$sSQL .= "cbtb_faturas f, cbtb_cliente_produto c, cbtb_contrato ct ";
 		$sSQL .= "WHERE ";
 		$sSQL .= "id_cliente = '$id_cliente' ";
 		$sSQL .= "AND ";
 		$sSQL .= "f.id_cliente_produto = c.id_cliente_produto ";
+		$sSQL .= "AND ct.id_cliente_produto = f.id_cliente_produto ";
 		$sSQL .= "AND (f.status = 'A' OR f.status = 'R') ";
 		$sSQL .= "AND f.data < now() + interval '10 day' ";
 		$sSQL .= "ORDER BY f.data ASC ";
@@ -1137,7 +1138,7 @@ class VAClientes extends VirtexAdmin {
 						//////echo "cliente_produto: $sSQL <br>\n";
 						//}
 						
-						$username = @$_REQUEST["username"];
+						$username = @str_replace(" ","",$_REQUEST["username"]);
 						$dominio = @str_replace("/","",$_REQUEST["dominio"]);
 						$tipo_conta = @$_REQUEST["tipo_conta"];
 						$dominio_hospedagem = @str_replace("/","",$_REQUEST["dominio_hospedagem"]);
@@ -1157,7 +1158,7 @@ class VAClientes extends VirtexAdmin {
 						$sSQL .= "      id_conta, username, dominio, tipo_conta, senha, id_cliente, id_cliente_produto, senha_cript, status) ";
 						$sSQL .= "   VALUES (";
 						$sSQL .= "			'".$id_conta."', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["username"]) . "', ";
+						$sSQL .= "     '" . $username . "', ";
 						$sSQL .= "     '" . $dominioPadrao . "', ";
 						$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["tipo"])) . "', ";
 						$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["senha"])) . "', "; 						
@@ -1186,7 +1187,7 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= "      id_conta, username, dominio, tipo_conta, senha, id_cliente, id_cliente_produto, senha_cript, status) ";
 							$sSQL .= "   VALUES (";
 							$sSQL .= "			'". $id_conta. "', ";
-							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["username"]) . "', ";
+							$sSQL .= "     '" . $username . "', ";
 							$sSQL .= "     '" . $dominioPadrao . "', ";
 							$sSQL .= "     'E', ";
 							$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["senha"])) . "', "; 						
@@ -1220,11 +1221,11 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= "	cntb_conta_email( ";
 							$sSQL .= "		username, tipo_conta, dominio, quota, email) ";
 							$sSQL .= "VALUES (";
-							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["username"]) . "', ";
+							$sSQL .= "     '" . $username . "', ";
 							$sSQL .= "     'E', ";
 							$sSQL .= "     '" . $dominioPadrao . "', ";
 							$sSQL .= "     '$quota', ";
-							$sSQL .= "     '". $this->bd->escape(@$_REQUEST["username"])."@". $dominioPadrao ."' ";
+							$sSQL .= "     '". $username."@". $dominioPadrao ."' ";
 							$sSQL .= " )";
 							
 							$this->bd->consulta($sSQL);
@@ -1235,7 +1236,7 @@ class VAClientes extends VirtexAdmin {
 
 							$server = $this->prefs->obtem("geral","mail_server");
 
-							$this->spool->adicionarEmail($server, $id_conta, $this->bd->escape(@$_REQUEST["username"]), $dominioPadrao);
+							$this->spool->adicionarEmail($server, $id_conta, $username, $dominioPadrao);
 						
 						}
 						
@@ -1252,7 +1253,7 @@ class VAClientes extends VirtexAdmin {
 						switch($tipo) {
 							case 'D':
 								
-								$username = @$_REQUEST["username"];
+								$username = @str_replace(" ","",$_REQUEST["username"]);
 								$tipo_conta = @$_REQUEST["tipo"];
 								$dominio = $prefs["geral"]["dominio_padrao"];
 								$foneinfo = @$_REQUEST["foneinfo"];
@@ -1387,7 +1388,7 @@ class VAClientes extends VirtexAdmin {
 									
 									}
 									
-									$username = @$_REQUEST["username"];
+									$username = @str_replace(" ","",$_REQUEST["username"]);
 									$tipo_conta = @$_REQUEST["tipo"];
 									//$dominio = $prefs["geral"]["dominio_padrao"];
 									//$dom = $prefs["total"];
@@ -1468,7 +1469,7 @@ class VAClientes extends VirtexAdmin {
 								$sSQL .= "		ip_externo ";
 								$sSQL .= ") ";
 								$sSQL .= "   VALUES (";
-								$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["username"])  . "', ";
+								$sSQL .= "     '" . $username  . "', ";
 								$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["tipo"])). "', ";
 								$sSQL .= "     '" . $dominioPadrao . "', ";
 								$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["id_pop"])) . "', ";
@@ -1501,7 +1502,7 @@ class VAClientes extends VirtexAdmin {
 								$prefs = $this->prefs->obtem("total");								
 								//$prefs = $this->prefs->obtem();
 						
-								$username = @$_REQUEST["username"];
+								$username = @str_replace(" ","",$_REQUEST["username"]);
 								$tipo_dominio = @$_REQUEST["tipo_dominio"];
 								$tipo_conta = @$_REQUEST["tipo"];
 								$dominio = $prefs["dominio_padrao"];
@@ -1604,7 +1605,7 @@ class VAClientes extends VirtexAdmin {
 								$destino = $nas['id_nas'];
 
 								
-								$username = @$_REQUEST["username"];
+								$username = @str_replace(" ","",$_REQUEST["username"]);
 								$this->spool->bandalargaAdicionaRede($destino,$id_conta,$rede,$mac,$banda_upload_kbps,$banda_download_kbps,$username);
 
 
@@ -1626,7 +1627,7 @@ class VAClientes extends VirtexAdmin {
 						if ($tipo == "BL"){
 						
 						$prefs = $this->prefs->obtem("total");
-						$sSQL = "SELECT ip_externo FROM cntb_conta_bandalarga WHERE username = '".@$_REQUEST["username"]."' AND tipo_conta = 'BL' and dominio = '".$prefs["dominio_padrao"]."' ";
+						$sSQL = "SELECT ip_externo FROM cntb_conta_bandalarga WHERE username = '".@str_replace(" ","",$_REQUEST["username"])."' AND tipo_conta = 'BL' and dominio = '".$prefs["dominio_padrao"]."' ";
 						$externo = $this->bd->obtemUnicoRegistro($sSQL);
 						
 						
@@ -1638,7 +1639,7 @@ class VAClientes extends VirtexAdmin {
 
 						
 						// Joga a mensagem de produto contratado com sucesso.
-						$this->tpl->atribui("username",@$_REQUEST["username"]);
+						$this->tpl->atribui("username",@str_replace(" ","",$_REQUEST["username"]));
 						//$this->tpl->atribui("tipo_produto",$tipo_produto);
 						$this->tpl->atribui("pop",@$lista_pops["nome"]);
 						$this->tpl->atribui("nas",@$nas["nome"]);
@@ -1654,10 +1655,11 @@ class VAClientes extends VirtexAdmin {
 						//////echo "data: $data <br>";*/
 						
 						$this->tpl->atribui("id_cliente",$id_cliente);
-						$this->tpl->atribui("id_clçiente_produto",$id_cliente_produto);
+						$this->tpl->atribui("id_cliente_produto",$id_cliente_produto);
 						$this->tpl->atribui("id_carne",$id_carne);
 						$this->tpl->atribui("data",$data);
 						$this->tpl->atribui("primeira",true);
+						$this->tpl->atribui("id_cobranca",$id_cobranca);
 						
 						
 						$this->obtemPR($id_cliente);
@@ -1821,7 +1823,7 @@ class VAClientes extends VirtexAdmin {
 					
 					$this->tpl->atribui("msg",@$_REQUEST["msg"]);
 					$this->tpl->atribui("tipo",$tipo);
-					$this->tpl->atribui("username",@$_REQUEST["username"]);
+					$this->tpl->atribui("username",@str_replace(" ","",$_REQUEST["username"]));
 					$this->tpl->atribui("dominio",@$_REQUEST["dominio"]);
 					$this->tpl->atribui("id_pop",@$_REQUEST["id_pop"]);
 					$this->tpl->atribui("id_nas",@$_REQUEST["id_nas"]);
@@ -1927,7 +1929,7 @@ class VAClientes extends VirtexAdmin {
 				$id_carne = @$_REQUEST["id_carne"];
 				$p = @$_REQUEST["p"];
 				
-				$sSQL = "SELECT id_carne,id_cliente_produto,valor,status,vigencia,to_char(data_geracao,'DD/mm/YYYY') as data_geracao, data_geracao as dtg  FROM cbtb_carne where id_cliente = '$id_cliente'";
+				$sSQL = "SELECT c.id_carne,c.id_cliente_produto,c.valor,c.status,c.vigencia,to_char(c.data_geracao,'DD/mm/YYYY') as data_geracao, c.data_geracao as dtg, ct.id_cobranca  FROM cbtb_carne c, cbtb_contrato ct where id_cliente = '$id_cliente' AND ct.id_cliente_produto = c.id_cliente_produto";
 						
 				$carnes = $this->bd->obtemRegistros($sSQL);
 				$this->obtemPR($id_cliente);
@@ -2184,7 +2186,7 @@ class VAClientes extends VirtexAdmin {
 		
 			$id_cliente = @$_REQUEST["id_cliente"];
 			$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
-			$username = @$_REQUEST["username"];
+			$username = @str_replace(" ","",$_REQUEST["username"]);
 			$dominio  = @str_replace("/","",$_REQUEST["dominio"]);
 			$tipo_conta = @$_REQUEST["tipo_conta"];
 			$sop = @$_REQUEST["sop"];
@@ -2292,7 +2294,7 @@ class VAClientes extends VirtexAdmin {
 				global $_LS_ST_CONTA;
 				$this->tpl->atribui("lista_status",$_LS_ST_CONTA);
 				
-				$_username = @$_REQUEST["_username"];
+				$_username = @str_replace(" ","",$_REQUEST["_username"]);
 				$_dominio = @$_REQUEST["_dominio"];
 				$_tipo_conta = @$_REQUEST["_tipo_conta"];
 				
@@ -2306,7 +2308,7 @@ class VAClientes extends VirtexAdmin {
 
 
 				
-					$_username = @$_REQUEST["_username"];
+					$_username = @str_replace(" ","",$_REQUEST["_username"]);
 					$dominio = @str_replace("/","",$_REQUEST["dominio"]);
 					$tipo_conta = @trim($_REQUEST["tipo_conta"]);
 					$id_cliente = @$_REQUEST["id_cliente"];
@@ -2417,7 +2419,7 @@ class VAClientes extends VirtexAdmin {
 					$sSQL .= "FROM ";
 					$sSQL .= "   cntb_conta ";
 					$sSQL .= "WHERE ";
-					$sSQL .= "   username = '".@$_REQUEST["username"]."' ";
+					$sSQL .= "   username = '".@str_replace(" ","",$_REQUEST["username"])."' ";
 					$sSQL .= "   and tipo_conta = '".@$_REQUEST["tipo_conta"] ."' ";
 					$sSQL .= "   and dominio = '$dominio' ";
 					$sSQL .= "ORDER BY ";
@@ -2461,7 +2463,7 @@ class VAClientes extends VirtexAdmin {
 						$sSQL .= "      id_conta, username, dominio, tipo_conta, senha, id_cliente, id_cliente_produto, senha_cript, conta_mestre,status ) ";
 						$sSQL .= "   VALUES (";
 						$sSQL .= "			'".$id_conta."', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["username"]) . "', ";
+						$sSQL .= "     '" . @str_replace(" ","",$_REQUEST["username"]) . "', ";
 						
 						//if(trim(@$_REQUEST["tipo_conta"]) == "E"){
 
@@ -2495,7 +2497,7 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= "      id_conta, username, dominio, tipo_conta, senha, id_cliente, id_cliente_produto, senha_cript,conta_mestre, status) ";
 							$sSQL .= "   VALUES (";
 							$sSQL .= "			'". $id_conta. "', ";
-							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["username"]) . "', ";
+							$sSQL .= "     '" . str_replace(" ","",$_REQUEST["username"]) . "', ";
 							$sSQL .= "     '" . $dominio . "', ";
 							$sSQL .= "     'E', ";
 							$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["senha"])) . "', "; 						
@@ -2523,18 +2525,18 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= "	cntb_conta_email( ";
 							$sSQL .= "		username, tipo_conta, dominio, quota, email) ";
 							$sSQL .= "VALUES (";
-							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["username"]) . "', ";
+							$sSQL .= "     '" . @str_replace(" ","",$_REQUEST["username"]) . "', ";
 							$sSQL .= "     'E', ";
 							$sSQL .= "     '" . $dominio . "', ";
 							$sSQL .= "     '$quota', ";
-							$sSQL .= "     '". $this->bd->escape(@$_REQUEST["username"])."@". $dominio ."' ";
+							$sSQL .= "     '". @str_replace(" ","",$_REQUEST["username"])."@". $dominio ."' ";
 							$sSQL .= " )";
 
 							$this->bd->consulta($sSQL);
 							//////echo "E-MAIL: $sSQL <br>";
 							
 							$server = $this->prefs->obtem("geral","mail_server");
-							$this->spool->adicionarEmail($server, $id_conta, $this->bd->escape(@$_REQUEST["username"]), $dominioPadrao);
+							$this->spool->adicionarEmail($server, $id_conta, @str_replace(" ","",$_REQUEST["username"]), $dominioPadrao);
 
 						}
 	
@@ -2545,7 +2547,7 @@ class VAClientes extends VirtexAdmin {
 						switch($tipo_conta) {
 							case 'D':
 
-								$username = @$_REQUEST["username"];
+								$username = @str_replace(" ","",$_REQUEST["username"]);
 								$tipo_conta = @$_REQUEST["tipo_conta"];
 								$dominio = $prefs["geral"]["dominio_padrao"];
 								$foneinfo = @$_REQUEST["foneinfo"];
@@ -2683,7 +2685,7 @@ class VAClientes extends VirtexAdmin {
 																
 																}
 																
-																$username = @$_REQUEST["username"];
+																$username = @str_replace(" ","",$_REQUEST["username"]);
 																$tipo_conta = @$_REQUEST["tipo"];
 																//$dominio = $prefs["geral"]["dominio_padrao"];
 																//$dom = $prefs["total"];
@@ -2771,7 +2773,7 @@ class VAClientes extends VirtexAdmin {
 															$sSQL .= "		ip_externo ";
 															$sSQL .= ") ";
 															$sSQL .= "   VALUES (";
-															$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["username"])  . "', ";
+															$sSQL .= "     '" . str_replace(" ","",$_REQUEST["username"])  . "', ";
 															$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["tipo_conta"])). "', ";
 															$sSQL .= "     '" . $dominioPadrao . "', ";
 															$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["id_pop"])) . "', ";
@@ -3011,7 +3013,7 @@ class VAClientes extends VirtexAdmin {
 								$prefs = $this->prefs->obtem("total");								
 								//$prefs = $this->prefs->obtem();
 
-								$username = @$_REQUEST["username"];
+								$username = @str_replace(" ","",$_REQUEST["username"]);
 								$tipo_conta = @$_REQUEST["tipo"];
 								$dominio = $prefs["dominio_padrao"];
 								$tipo_hospedagem = @$_REQUEST["tipo_hospedagem"];
@@ -3058,12 +3060,12 @@ class VAClientes extends VirtexAdmin {
 									$sSQL .= "	cntb_conta_email( ";
 									$sSQL .= "		username, tipo_conta, dominio, quota, email) ";
 									$sSQL .= "VALUES (";
-									$sSQL .= "     '" . @$_REQUEST["username"] . "', ";
+									$sSQL .= "     '" . @str_replace(" ","",$_REQUEST["username"]) . "', ";
 									$sSQL .= "     'E', ";
 									$sSQL .= " '$dominio' , ";
 									//$sSQL .= "     '" . $dominioPadrao . "', ";
 									$sSQL .= "     '".(int)@$_REQUEST["quota"]."', ";
-									$sSQL .= "     '". @$_REQUEST["username"]."@". $dominio ."' ";
+									$sSQL .= "     '". @str_replace(" ","",$_REQUEST["username"])."@". $dominio ."' ";
 									$sSQL .= " )";
 
 									$this->bd->consulta($sSQL);
@@ -3071,7 +3073,7 @@ class VAClientes extends VirtexAdmin {
 								
 								$server = $this->prefs->obtem("geral","mail_server");
 								
-								$this->spool->adicionarEmail($server, $id_conta, $this->bd->escape(@$_REQUEST["username"]), $dominio);
+								$this->spool->adicionarEmail($server, $id_conta, str_replace(" ","",$_REQUEST["username"]), $dominio);
 								
 								break;
 						}						
@@ -3118,7 +3120,7 @@ class VAClientes extends VirtexAdmin {
 															$destino = $nas['id_nas'];
 							
 															
-															$username = @$_REQUEST["username"];
+															$username = @str_replace(" ","",$_REQUEST["username"]);
 															$this->spool->bandalargaAdicionaRede($destino,$id_conta,$rede,$mac,$banda_upload_kbps,$banda_download_kbps,$username);
 							
 							
@@ -3227,7 +3229,7 @@ class VAClientes extends VirtexAdmin {
 						}
 			
 						// Joga a mensagem de conta adicionada com sucesso.
-						$this->tpl->atribui("username",@$_REQUEST["username"]);
+						$this->tpl->atribui("username",@str_replace(" ","",$_REQUEST["username"]));
 						$this->tpl->atribui("pop",@$lista_pops["nome"]);
 						$this->tpl->atribui("nas",@$nas["nome"]);
 						$this->tpl->atribui("mac",@$_MAC);
@@ -3469,7 +3471,7 @@ class VAClientes extends VirtexAdmin {
 					  		
 							$id_cliente = @$_REQUEST["id_cliente"];
 							$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
-							$username = @$_REQUEST["username"];
+							$username = @str_replace(" ","",$_REQUEST["username"]);
 							$dominio  = @str_replace("/","",$_REQUEST["dominio"]);
 							$tipo_conta = @$_REQUEST["tipo_conta"];
 							$sop = @$_REQUEST["sop"];
@@ -4300,7 +4302,61 @@ class VAClientes extends VirtexAdmin {
 			$this->tpl->atribui("faturas",$faturas);
 			$this->arquivoTemplate = "carne_segunda_via.html";
 		
+		}else if ($op=="segunda_via_boleto"){
+		
+		  $id_carne = @$_REQUEST["id_carne"];
+		  $faturas = array();
+
+			$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
+			$id_cliente = @$_REQUEST["id_cliente"];
+			$data = @$_REQUEST["data"];
+			
+			$forma_pagamento = "PRE";
+		  
+		  if( !$id_carne ) {
+				// Se não tiver o id_carne é pq é pra exibir uma única fatura.
 				
+		  	
+		  	$fatura_html = $this->boleto($id_cliente_produto,$data,$id_cliente,$forma_pagamento,true);   
+		  	
+		  	$faturas[] = array( "fatura_html" => $fatura_html, "pagebrake" => false );
+		     
+		     
+		  } else {
+					// Exibe TODAS as faturas em ABERTO		  	
+
+
+				$sSQL  = "SELECT ";
+				$sSQL .= "   id_cliente_produto, data, id_carne ";
+				$sSQL .= "FROM ";		
+				$sSQL .= "   cbtb_faturas ";
+				$sSQL .= "WHERE ";
+	//			$sSQL .= "id_cliente_produto = '".$REQUEST["id_cliente_produto"]."' AND ";
+				$sSQL .= "id_carne = '".$_REQUEST["id_carne"]."' AND ";
+				$sSQL .= "status = 'A' ";
+				
+				$fat = $this->bd->obtemRegistros($sSQL);
+
+				for($i=0;$i<count($fat);$i++) {
+						// Se nãoi passar o último parametro como true o sistema fica gerando o "Nosso Numero"
+					 $fatura_html = $this->boleto($fat[$i]["id_cliente_produto"],$fat[$i]["data"],$id_cliente,$forma_pagamento,true);
+					 
+					 $pagebrake=false;
+
+					 // blablabla do pagebrake
+					 if( $i>0 && ($i+1) != count($fat) && ($i+1) % 1 == 0 ) {
+						$pagebrake = true;
+					 }
+
+					 $faturas[] = array( "fatura_html" => $fatura_html,
+															 "pagebreak" => $pagebrake );
+
+				}// for
+				
+			}
+
+			$this->tpl->atribui("faturas",$faturas);
+			$this->arquivoTemplate = "boleto_segunda_via.html";		
 		
 		
 		} else if ($op =="altera_contrato"){
@@ -5281,7 +5337,248 @@ public function testePDF(){
 
 }
 
+public function boleto($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$segunda_via=false){
 
+
+	////////echo "DATA ENVIADA: $data <BR>\n";
+
+	
+	$sSQL  = "SELECT cl.nome_razao, cl.endereco, cl.complemento, cl.id_cidade, cl.estado, cl.cep, cl.cpf_cnpj,cl.bairro, cd.cidade as nome_cidade, cd.id_cidade  ";
+	$sSQL .= "FROM ";
+	$sSQL .= "cltb_cliente cl, cftb_cidade cd ";
+	$sSQL .= "WHERE ";
+	$sSQL .= "cl.id_cliente = '$id_cliente' AND ";
+	$sSQL .= "cd.id_cidade = cl.id_cidade";
+
+	$cliente = $this->bd->obtemUnicoRegistro($sSQL);
+	////////echo "CLIENTE: $sSQL  <br>";
+	
+	if( strstr($data,"/") && $segunda_via) {
+	   list($d,$m,$y) = explode("/",$data);
+	   $data = "$y-$m-$d";
+	}
+
+
+	$sSQL  = "SELECT valor, id_cobranca,to_char(data, 'DD/mm/YYYY') as data, nosso_numero, linha_digitavel, cod_barra  FROM ";
+	$sSQL .= "cbtb_faturas ";
+	$sSQL .= "WHERE ";
+	$sSQL .= "id_cliente_produto = '$id_cliente_produto' AND ";
+	$sSQL .= "data = '$data' ";
+
+	$fatura = $this->bd->obtemUnicoRegistro($sSQL);
+	
+	////////echo "fatura: $sSQL<br>";
+	
+	//$data_cadastrada = $fatura["data"];
+	////////echo "DATA: $data_cadastrada <br>";
+	////////echo "SHIT: " . $fatura["data"] . "<br>\n";
+	
+	list ($dia,$mes,$ano) = explode("/",$fatura["data"]);
+	
+	
+	$mes_array = array("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
+	
+	if ($forma_pagamento == "PRE"){
+	
+		$referente = $mes_array[(int)$mes-1]."/".$ano;
+	
+	}else if ($forma_pagamento == "POS"){
+	
+		//$mes_ref = mktime(0, 0, 0, $mes-1);
+		////////echo "MES: $mes <br>\n";
+		////////echo "MES REF: $mes_ref <br>\n";
+		$referente = $mes_array[(int)$mes-1]."/".$ano;
+	
+	}
+	
+	//echo "referente: $referente<br>";
+
+	// PEGANDO INFORMAÇÕES DAS PREFERENCIAS
+	$provedor = $this->prefs->obtem("total");
+	//$provedor = $this->prefs->obtem();
+
+	$sSQL = "SELECT ct.id_produto, pd.nome from cbtb_contrato ct, prtb_produto pd WHERE ct.id_cliente_produto = '$id_cliente_produto' and ct.id_produto = pd.id_produto";
+	$produto = $this->bd->obtemUnicoRegistro($sSQL);
+	//////////echo "PRODUTO: $sSQL <br>";
+
+	//$codigo = @$_REQUEST["codigo"];
+	//$data_venc = "30/04/2006";
+	
+	if (!$segunda_via){
+	
+		$sSQL = "SELECT nextval('blsq_carne_nossonumero') as nosso_numero ";
+		$nn = $this->bd->obtemUnicoRegistro($sSQL);
+
+		$nosso_numero = $nn['nosso_numero'];
+		
+	}else {
+	
+		$nosso_numero = $fatura["nosso_numero"];
+		
+	}
+
+	$data_venc = $fatura["data"];
+	@list($dia,$mes,$ano) = explode("/",$fatura["data"]);
+	//$vencimento = $ano.$mes.$dia;
+	//////////echo $codigo;
+	$valor = $fatura["valor"];
+	$id_cobranca = $fatura["id_cobranca"];
+	$nome_cliente = $cliente["nome_razao"];
+	$cpf_cliente = $cliente["cpf_cnpj"];
+	$id_empresa = $provedor["cnpj"];
+	//$nosso_numero = 1;
+	$nome_cedente = $provedor["nome"];
+	$cendereco = $provedor['endereco'];
+	$clocalidade = $provedor['localidade'];
+	$observacoes = $provedor['observacoes'];
+	$nome_produto = $produto["nome"];
+	$complemento = $cliente["complemento"];
+	$hoje = Date("d/m/Y");
+	$empresa_cnpj = $this->prefs->obtem("provedor","cnpj");
+	
+	$banco   	= $this->prefs->obtem("cobranca","cod_banco_boleto");
+	$agencia 	= $this->prefs->obtem("cobranca","agencia_boleto");		// Sem o DV
+	$conta   	= $this->prefs->obtem("cobranca","conta_boleto");		// Sem o DV
+	$carteira	= $this->prefs->obtem("cobranca","carteira_boleto");
+	$convenio   = $this->prefs->obtem("cobranca","convenio_boleto");
+	$vencimento = $fatura["data"];
+	//$vencimento = '18/08/2006';	// Formato brasileiro
+	//$valor		= '10,00';		// Tanto faz ponto ou virgula
+	$id = $nosso_numero;///			= '9999999999';
+	$preto = "template/boletos/imagens/preto.gif";
+	$branco = "template/boletos/imagens/branco.gif";
+	
+	
+	//$informacoes = $provedor["observacoes"];
+
+  if( $segunda_via ) {
+
+     $hoje = $fatura["data"];
+     $codigo_barras = $fatura["cod_barra"];
+     $linha_digitavel = $fatura["linha_digitavel"];
+     
+     $cb = MBoleto::htmlBarCode($codigo_barras,$preto,$branco);
+     
+  } else {
+  
+  
+  	/*echo "BANCO: $banco<br>";
+  	echo "AGENCIA: $agencia<br>";
+  	echo "CONTA: $conta<br>";
+  	echo "CARTEIRA: $carteira<br>";
+  	echo "CONVENIO: $convenio<br>";
+  	echo "VENCIMENTO: $vencimento<br>";
+  	echo "VALOR: $valor<br>";
+  	ECHO "ID: $id<br>";*/
+		$blt = new MBoleto($banco,$agencia,$conta,$carteira,$convenio,$vencimento,$valor,$id);
+	
+		$linha_digitavel = $blt->obtemLinhaDigitavel();  
+  	$codigo_barras = $blt->obtemCodigoBoleto();
+  	$cb = MBoleto::htmlBarCode($blt->obtemCodigoBoleto(),$preto,$branco);
+  	//$cb = $blt->htmlBarCode($blt->obtemCodigoBoleto(),"preto.gif","branco.gif");
+  	
+  	
+  	
+  	
+  /*
+   	$codigo_barras = MArrecadacao::codigoBarrasPagContas($valor,$id_empresa,$nosso_numero,$vencimento);
+   	$hoje = date("d/m/Y");
+   	$linha_digitavel = MArrecadacao::linhaDigitavel($codigo_barras);
+	*/
+   	$sSQL  = "UPDATE ";
+		$sSQL .= "cbtb_faturas SET ";
+		$sSQL .= "nosso_numero = '$nosso_numero', ";
+		$sSQL .= "linha_digitavel = '$linha_digitavel', ";
+		$sSQL .= "cod_barra = '$codigo_barras' ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "id_cliente_produto = '$id_cliente_produto' AND ";
+		$sSQL .= "data = '$data' ";
+	
+		$this->bd->consulta($sSQL);
+	}
+	
+   	
+	////////echo "FATURA: $sSQL <br>";
+	
+	$target = "/mosman/virtex/dados/carnes/codigos";
+	//$target = "carnes/codigos";
+	
+	//$boleto->obtemCodigoBoleto();
+	
+	//MArrecadacao::barCode($codigo_barras,"$target/$codigo_barras.png");
+		
+	//	$codigo = MArrecadacao::pagConta(...);
+		
+	//copy ("/mosman/virtex/dados/carnes/codigos/".$codigo_barras.".png","/home/hugo/public_html/virtex/codigos/".$codigo_barras.".png");
+		
+
+	//$barra = MArrecadacao::barCode($codigo_barras);
+	
+	$ph = new MUtils;
+	
+	$_path = MUtils::getPwd();
+	
+	
+	$images = $_path."/template/boletos/imagens";	
+	
+	$this->tpl->atribui("codigo_barras",$codigo_barras);
+	$this->tpl->atribui("cod_barra",$cb);
+	$this->tpl->atribui("agencia",$agencia);
+	$this->tpl->atribui("conta",$conta);
+	$this->tpl->atribui("carteira",$carteira);
+	$this->tpl->atribui("empresa_cnpj",$empresa_cnpj);
+
+	$this->tpl->atribui("linha_digitavel",$linha_digitavel);
+	$this->tpl->atribui("valor",$valor);
+	$this->tpl->atribui("imagens",$images);
+	$this->tpl->atribui("vencimento", $data_venc);
+	$this->tpl->atribui("hoje",$hoje);
+	$this->tpl->atribui("nosso_numero",$nosso_numero);
+	$this->tpl->atribui("sacado",$nome_cliente);
+	$this->tpl->atribui("sendereco",$cliente['endereco']);
+	$this->tpl->atribui("complemento",$complemento);
+	$this->tpl->atribui("scidade",$cliente['nome_cidade']);
+	$this->tpl->atribui("suf",$cliente['estado']);
+	$this->tpl->atribui("scep",$cliente['cep']);
+	$this->tpl->atribui("juros",$provedor['tx_juros']);
+	$this->tpl->atribui("multa",$provedor['multa']);
+	$this->tpl->atribui("nome_cedente",$provedor['nome']);
+	$this->tpl->atribui("cendereco",$cendereco);
+	$this->tpl->atribui("clocalidade",$clocalidade);
+	$this->tpl->atribui("observacoes",$observacoes);
+	$this->tpl->atribui("produto",$nome_produto);
+	$this->tpl->atribui("path",$_path);
+	$this->tpl->atribui("referente",$referente);
+	$this->tpl->atribui("cpf_cnpj",$cliente["cpf_cnpj"]);
+	$this->tpl->atribui("bairro",$cliente["bairro"]);
+	//$this->tpl->atribui("barra",$barra);
+	
+	//return($carne_emitido);
+	
+	if ( $segunda_via == true ){
+	
+	
+		$this->tpl->atribui("imprimir",true);
+		$estilo = $this->tpl->obtemPagina("../boletos/pc-estilo.html");
+		$fatura = $this->tpl->obtemPagina("../boletos/layout_bb.html");
+		
+		return($estilo.$fatura);
+	
+	}else{
+	
+		$fatura = $this->tpl->obtemPagina("../boletos/layout_bb.html");
+		return($fatura);
+	
+	}
+	
+	
+
+
+
+
+
+
+}
 	
 	
 
