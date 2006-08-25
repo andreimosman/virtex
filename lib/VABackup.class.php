@@ -75,11 +75,12 @@ class VABackup extends VirtexAdmin {
 						echo "GRAVAÇÃO DE BKP1: $sSQL<br>";
 				
 				
-						$sSQL = "select max(id_backup) as id_backup FROM bktb_backup";
+						$sSQL = "select max(id_backup) FROM bktb_backup";
 						$id = $this->bd->obtemRegistros($sSQL);
 						
 						
 						$id_backup = $id["id_backup;"];
+						echo "ID: $id_backup - ".$id["id_backup;"];
 				
 				
 				
@@ -106,7 +107,7 @@ class VABackup extends VirtexAdmin {
 						$sSQL  = "INSERT INTO bktb_arquivos ";
 						$sSQL .= "(id_backup,arquivo_backup, tipo_backup, status_backup, data_backup) ";
 						$sSQL .= "VALUES ";
-						$sSQL .= "($id_backup,'$arquivo', 'Banco de Dados','$status', '$hoje' )";
+						$sSQL .= "((select max(id_backup) FROM bktb_backup),'$arquivo', 'Banco de Dados','$status', '$hoje' )";
 						$this->bd->consulta($sSQL);
 						ECHO "GRAVAÇÃO DE BKP´: $sSQL<br>";
 
@@ -143,7 +144,7 @@ class VABackup extends VirtexAdmin {
 						$sSQL  = "INSERT INTO bktb_arquivos ";
 						$sSQL .= "(id_backup,arquivo_backup, tipo_backup, status_backup, data_backup) ";
 						$sSQL .= "VALUES ";
-						$sSQL .= "($id_backup,'$nome1', 'Configurações','$status', '$hoje' )";
+						$sSQL .= "((select max(id_backup) FROM bktb_backup),'$nome1', 'Configurações','$status', '$hoje' )";
 						
 						$this->bd->consulta($sSQL);
 
@@ -167,7 +168,7 @@ class VABackup extends VirtexAdmin {
 						$sSQL  = "INSERT INTO bktb_arquivos ";
 						$sSQL .= "(id_backup,arquivo_backup, tipo_backup, status_backup, data_backup) ";
 						$sSQL .= "VALUES ";
-						$sSQL .= "($id_backup,'$nome2', 'Configurações','$status', '$hoje' )";
+						$sSQL .= "((select max(id_backup) FROM bktb_backup),'$nome2', 'Configurações','$status', '$hoje' )";
 						$this->bd->consulta($sSQL);		
 						
 						echo "GRAVAÇÃO DE BKP: $sSQL <br>";
@@ -202,7 +203,7 @@ class VABackup extends VirtexAdmin {
 						$sSQL  = "INSERT INTO bktb_arquivos ";
 						$sSQL .= "(id_backup,arquivo_backup, tipo_backup, status_backup, data_backup) ";
 						$sSQL .= "VALUES ";
-						$sSQL .= "($id_backup,'$nome', 'Sistema','$status', '$hoje' )";
+						$sSQL .= "((select max(id_backup) FROM bktb_backup),'$nome', 'Sistema','$status', '$hoje' )";
 
 						$this->bd->consulta($sSQL);		
 						

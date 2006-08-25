@@ -30,7 +30,7 @@
   </tr>
   {foreach item=a from=$lista} 
   <tr bgcolor="{cycle values="#ffffff,#f1f1f1"}"> 
-    <td><p><a href="backup.php?op=backup&acao=download&id_backup={$a.id_backup}">{$a.data_backup|date_format:"%d/%m/%Y"}</a></p></td>
+    <td><p>{$a.data_backup|date_format:"%d/%m/%Y"}</p></td>
     <td align="CENTER"> <p>{$a.status_backup}</p></td>
     <td align="CENTER"> <p>{$a.admin}</p></td>
   </tr>
