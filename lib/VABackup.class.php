@@ -20,7 +20,7 @@ class VABackup extends VirtexAdmin {
 			//$sSQL = "SELECT b.id_backup,b.data_backup,b.arquivo_backup,b.tipo_backup,b.status_backup,b.admin as id_admin,a.admin FROM bktb_backup b,adtb_admin a WHERE b.admin = a.id_admin ORDER BY id_backup,arquivo_backup DESC LIMIT 10";
 			
 			
-			$sSQL  = "SELECT ";
+			/*$sSQL  = "SELECT ";
 			$sSQL .= "b.id_backup, b.data_backup, b.status_backup, b.admin as id_admin, b.operador_backup, ";
 			$sSQL .= "ba.arquivo_backup, ba.status_backup as status_arq, ";
 			$sSQL .= "a.admin ";
@@ -29,11 +29,13 @@ class VABackup extends VirtexAdmin {
 			$sSQL .= "WHERE ";
 			$sSQL .= "b.id_backup = ba.id_backup ";
 			$sSQL .= "AND b.admin = a.id_admin ";
-			$sSQL .= "ORDER BY b.data_backup DESC ";
+			$sSQL .= "ORDER BY b.data_backup DESC ";*/
+			
+			$sSQL = "SELECT * FROM bktb_backup ORDER BY data_backup LIMIT 10";
 			
 			$lista = $this->bd->obtemRegistros($sSQL);
 			
-			echo "LISTA: $sSQL <br>";
+			echo "LISTA INICIO: $sSQL <br>";
 			
 			$this->tpl->atribui("lista",$lista);
 			$this->arquivoTemplate = "backup_inicio.html";
