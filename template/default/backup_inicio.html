@@ -9,7 +9,8 @@
 <table width="390" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td bgcolor="#000000"><table width="390" border="0" cellspacing="1" cellpadding="0">
-        <tr bgcolor="#F1F1F1" align="CENTER" valign="MIDDLE"> 
+        <tr bgcolor="#F1F1F1" align="CENTER" valign="MIDDLE">
+          <td width="70"><a href="backup.php?op=inicio">In&iacute;cio</a></td>
           <td height="40"><a href="backup.php?op=backup">Fazer Backup</a></td>
           <td height="40"><a href="backup.php?op=restore">Recuperar Backup</a></td>
           <td height="40"><a href="backup.php?op=backup&acao=hist">Hist&oacute;rico</a></td>
@@ -31,12 +32,14 @@
   {foreach item=a from=$lista} 
   <tr bgcolor="{cycle values="#ffffff,#f1f1f1"}"> 
     <td><p><a href="backup.php?op=backup&acao=detalhes&id_backup={$a.id_backup}">{$a.data|date_format:"%d/%m/%Y %H:%M:%S"}</a></p></td>
-    <td align="CENTER"> <p>{$a.status_backup}</p></td>
-    <td align="CENTER"> <p>{$a.admin}</p></td>
+    <td align="CENTER"> <p><a href="backup.php?op=backup&acao=detalhes&id_backup={$a.id_backup}">{$a.status_backup}</a></p></td>
+    <td align="CENTER"> <p><a href="backup.php?op=backup&acao=detalhes&id_backup={$a.id_backup}">{$a.admin}</a></p></td>
   </tr>
   {/foreach} 
 </table>
-{else}
+<br>
+<a href="backup.php?op=inicio">voltar</a><br>
+{else} 
 <table width="558" border="0" cellspacing="1" cellpadding="2">
   <tr bgcolor="#666666"> 
     <td width="150"><strong><font color="#FFFFFF" size="1" face="Verdana, Arial, Helvetica, sans-serif">Data</font></strong></td>
@@ -47,9 +50,9 @@
   {foreach item=a from=$detalhe} 
   <tr bgcolor="{cycle values="#ffffff,#f1f1f1"}"> 
     <td><p><a href="backup.php?op=backup&acao=download&id_backup={$a.id_backup}&arquivo={$a.arquivo_backup}">{$a.data|date_format:"%d/%m/%Y %H:%M:%S"}</a></p></td>
-    <td><p>{$a.arquivo_backup}</p></td>
-    <td><p>{$a.tipo_backup}</p></td>
-    <td align="CENTER"> <p>{$a.status_backup}</p></td>
+    <td><p><a href="backup.php?op=backup&acao=download&id_backup={$a.id_backup}&arquivo={$a.arquivo_backup}">{$a.arquivo_backup}</a></p></td>
+    <td><p><a href="backup.php?op=backup&acao=download&id_backup={$a.id_backup}&arquivo={$a.arquivo_backup}">{$a.tipo_backup}</a></p></td>
+    <td align="CENTER"> <p><a href="backup.php?op=backup&acao=download&id_backup={$a.id_backup}&arquivo={$a.arquivo_backup}">{$a.status_backup}</a></p></td>
   </tr>
   {/foreach} 
 </table>
