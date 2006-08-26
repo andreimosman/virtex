@@ -293,6 +293,29 @@ class VABackup extends VirtexAdmin {
 		
 		
 		
+		}else if ($op == "restore"){
+		
+			$id_backup = @$_REQUEST["id_backup"];
+			$arquivo = @$_FILE_["arquivo"];
+			
+			$acao = @$_REQUEST["acao"];
+			
+			
+			$sSQL = "SELECT b.data, b.id_backup from bktb_backup ORDER BY b.data DESC";
+			$data = $this->bd->obtemRegistros($sSQL);
+			
+			$this->tpl->atribui("data",$data);
+			$this->arquivoTemplate = "restore_inicio.html";
+			
+			
+		
+		
+		
+		
+		
+		
+		
+		
 		}
 	
 	
