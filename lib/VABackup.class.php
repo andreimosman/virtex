@@ -353,9 +353,9 @@ class VABackup extends VirtexAdmin {
 					
 					echo "acao: $acao<br>";
 					ECHO "confirma>br>";
-					$this->arquivoTemplate = "restore_confirma.html";
+					
 
-					if ($acao == "ok"){
+					if ($acao){
 					
 						$arq = $_REQUEST["arquivo"];
 						
@@ -421,15 +421,16 @@ class VABackup extends VirtexAdmin {
 					
 					}
 					
-
+					$this->arquivoTemplate = "restore_confirma.html";
 
 
 
 
 				}
 			}else{
-		
+					
 					$this->arquivoTemplate = "restore_inicio.html";
+					
 			}
 		
 		
