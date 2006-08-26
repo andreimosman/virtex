@@ -329,7 +329,7 @@ class VABackup extends VirtexAdmin {
 				if ($upload){
 
 
-
+					
 
 
 
@@ -387,23 +387,19 @@ class VABackup extends VirtexAdmin {
 						$sSQL .= "((select max(id_backup) FROM bktb_backup),'$arquivo', 'Banco de Dados','$status', '$hoje' )";
 						$this->bd->consulta($sSQL);
 						//ECHO "GRAVAÇÃO DE BKP´: $sSQL<br>";
-						
-						
-						
-						
+
 						//FAZ O RESTORE
 						
 						//$comando = "pg_restore --file /mosman/backup/$arq -U virtex";
 						$comando = "zcat /mosman/backup/$arq |psql -U pgsql virtex 2>&1 >/mosman/backup/log/imp.log";
 					
 						system("$comando 2>&1",$retval);
-						echo "RETVAL: ".$retval."<br>";
+						//echo "RETVAL: ".$retval."<br>";
 						
 						if ($retval > 0){
 						
 							$msg = "ERRO";
 						
-							
 						
 						}else{
 							
@@ -424,9 +420,6 @@ class VABackup extends VirtexAdmin {
 					}
 					
 					$this->arquivoTemplate = "restore_confirma.html";
-
-
-
 
 				}
 			}else{
