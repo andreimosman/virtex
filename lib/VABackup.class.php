@@ -375,9 +375,9 @@ class VABackup extends VirtexAdmin {
 						}
 												
 						$sSQL  = "INSERT INTO bktb_backup ";
-						$sSQL .= "(data_backup,admin,operador_backup,data) ";
+						$sSQL .= "(data_backup,admin,operador_backup,data,status_backup) ";
 						$sSQL .= "VALUES ";
-						$sSQL .= "('$hoje','$admin','GS','$DATA') ";
+						$sSQL .= "('$hoje','$admin','GS','$DATA','$status') ";
 						$this->bd->consulta($sSQL);
 
 												
@@ -416,7 +416,7 @@ class VABackup extends VirtexAdmin {
 						$sSQL .= "('$arq','$DATA', '$admin', '$msg') ";
 						$this->bd->consulta($sSQL);
 						
-						$this->tpl->atribui("mensagem",$msg);
+						$this->tpl->atribui("msg",$msg);
 						$this->arquivoTemplate = "restore_final.html";
 						return;
 
