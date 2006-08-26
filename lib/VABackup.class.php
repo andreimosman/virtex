@@ -297,7 +297,7 @@ class VABackup extends VirtexAdmin {
 		
 			$id_backup = @$_REQUEST["id_backup"];
 			$arquivo = @$_FILE_["arquivo"];
-			$upload = @$_REQUEST["upload"]
+			$upload = @$_REQUEST["upload"];
 			$sop = @$_REQUEST["sop"];
 			
 			$acao = @$_REQUEST["acao"];
