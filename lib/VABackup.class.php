@@ -352,6 +352,7 @@ class VABackup extends VirtexAdmin {
 					$this->tpl->atribui("arq",$arq);
 					
 					echo "acao: $acao<br>";
+					ECHO "confirma>br>";
 					$this->arquivoTemplate = "restore_confirma.html";
 
 					if ($acao == "ok"){

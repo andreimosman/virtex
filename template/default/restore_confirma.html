@@ -50,14 +50,16 @@ function checa(){
     </tr>
     <tr>
       <td colspan="2" align="center"><form name="form1" method="post" action="backup.php" onSubmit="return confirm('VOCê TEM CERTEZA QUE QUER SUBSTITUIR O BANCO DE DADOS ATUAL PELO ARQUIVO DE BACKUP ESCOLHIDO?');">
-        <input type="submit" name="Submit" value="CONFIRMAR">
-            <br>
-            <input name="op" type="hidden" id="op" value="restore">
-            <input name="acao" type="hidden" id="acao" value="ok">
-            <input name="id_backup" type="hidden" id="id_backup" value="{$arq.id_backup}">
-            <input name="arquivo" type="hidden" id="arquivo" value="{$arq.arquivo_backup}">
-            <br>
-          <a href="backup.php?op=restore">VOLTAR</a>
+        <p>
+          <input type="submit" name="Submit" value="CONFIRMAR">
+          <br>
+          <input name="op" type="hidden" id="op" value="restore">
+          <input name="acao" type="hidden" id="acao" value="ok">
+          <input name="id_backup" type="hidden" id="id_backup" value="{$arq.id_backup}">
+          <input name="arquivo" type="hidden" id="arquivo" value="{$arq.arquivo_backup}">
+          <br>
+            <a href="backup.php?op=restore">VOLTAR</a>        </p>
+        <p>&nbsp;  </p>
       </form>      </td>
     </tr>
   </table>
