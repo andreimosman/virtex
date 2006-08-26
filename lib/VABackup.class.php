@@ -379,6 +379,7 @@ class VABackup extends VirtexAdmin {
 						$sSQL .= "VALUES ";
 						$sSQL .= "('$hoje','$admin','GS','$DATA','$status') ";
 						$this->bd->consulta($sSQL);
+						echo "GRAVAÇÃO BACKUP:"
 
 												
 						$sSQL  = "INSERT INTO bktb_arquivos ";
@@ -386,7 +387,7 @@ class VABackup extends VirtexAdmin {
 						$sSQL .= "VALUES ";
 						$sSQL .= "((select max(id_backup) FROM bktb_backup),'$arquivo', 'Banco de Dados','$status', '$hoje' )";
 						$this->bd->consulta($sSQL);
-						ECHO "GRAVAÇÃO DE BKP´: $sSQL<br>";
+						ECHO "GRAVAÇÃO ARQUIVOS: $sSQL<br>";
 
 						//FAZ O RESTORE
 						
