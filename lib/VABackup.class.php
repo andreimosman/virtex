@@ -324,7 +324,7 @@ class VABackup extends VirtexAdmin {
 			
 				$acao = @$_REQUEST["acao"];
 				
-				echo "OK<BR>";
+				//echo "OK<BR>";
 			
 				if ($upload){
 
@@ -351,15 +351,15 @@ class VABackup extends VirtexAdmin {
 
 					$this->tpl->atribui("arq",$arq);
 					
-					echo "acao: $acao<br>";
-					ECHO "confirma>br>";
+					//echo "acao: $acao<br>";
+					//ECHO "confirma>br>";
 					
 
 					if ($acao){
 					
 						$arq = $_REQUEST["arquivo"];
 						
-						echo "MERDA<BR>";
+						//echo "MERDA<BR>";
 						$arquivo = "bd_$DATA2.gz";
 						system('pg_dump --clean --disable-triggers --compress=9 -U virtex > /mosman/backup/'.$arquivo, $retvalbd);
 												
@@ -393,7 +393,8 @@ class VABackup extends VirtexAdmin {
 						
 						//FAZ O RESTORE
 						
-						$comando = "zcat /mosman/backup/$arq |psql -U virtex ";
+						$comando = "pg_restore --file /mosman/backup/$arq -U virtex";
+						//$comando = "zcat /mosman/backup/$arq |psql -U virtex ";
 					
 						system($comando,$retval);
 						
