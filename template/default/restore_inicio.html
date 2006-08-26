@@ -8,9 +8,9 @@ function checa(){
 	if (frm.upload.checked == true){
 		frm.arquivo.disabled = false;
 		frm.id_backup.disabled = true;
-		window.alert('escolhe');
+		//window.alert('upload');
 	}else if (frm.upload.checked == false ){
-		window.alert('upload');
+		//window.alert('escolhe');
 		frm.arquivo.disabled = true;
 		frm.id_backup.disabled = false;
 	}
@@ -67,7 +67,7 @@ function checa(){
     <td width="138"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Escolha 
       a data do backup:</font></td>
     <td width="259"><select name="id_backup" id="id_backup">
-        <option value=" "> </option>
+        <option value=" ">&nbsp; </option>
 		{foreach item=a from=$datas}
 		<option value="{$a.id_backup}">{$a.data|date_format:"%d/%m/%Y %H:%M:%S"}</option>
 		{/foreach}

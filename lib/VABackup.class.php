@@ -303,6 +303,7 @@ class VABackup extends VirtexAdmin {
 			
 			$sSQL = "SELECT b.data, b.id_backup from bktb_backup b ORDER BY b.data DESC";
 			$data = $this->bd->obtemRegistros($sSQL);
+			echo "datas: $sSQL<br>";
 			
 			$this->tpl->atribui("datas",$data);
 			$this->arquivoTemplate = "restore_inicio.html";
