@@ -323,11 +323,12 @@ class VABackup extends VirtexAdmin {
 
 				}else{
 
-					$sSQL  = "SELECT b.id_backup, b.data_backup, a.status_backup, b.operador_backup, b.data, a.arquivo_backup, a.tipo_backup ";
+					$sSQL  = "SELECT b.id_backup, b.data_backup, a.status_backup, b.operador_backup, b.data, a.arquivo_backup, a.tipo_backup, b.admin as id_admin, ad.admin ";
 					$sSQL .= "FROM ";
-					$sSQL .= "bktb_backup b, bktb_arquivos a ";
+					$sSQL .= "bktb_backup b, bktb_arquivos a, adtb_admin ad ";
 					$sSQL .= "WHERE ";
 					$sSQL .= "b.id_backup = $id_backup AND ";
+					$sSQL .= "b.admin = ad.id_admin AND ";
 					$sSQL .= "b.id_backup = a.id_backup AND ";
 					$sSQL .= "a.tipo_backup = 'Banco de Dados' ";
 					$arq = $this->bd->obtemUnicoRegistro($sSQL);
