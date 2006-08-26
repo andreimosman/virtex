@@ -393,12 +393,12 @@ class VABackup extends VirtexAdmin {
 						
 						//FAZ O RESTORE
 						
-						$comando = "pg_restore --file /mosman/backup/$arq -U virtex";
-						//$comando = "zcat /mosman/backup/$arq |psql -U virtex ";
+						//$comando = "pg_restore --file /mosman/backup/$arq -U virtex";
+						$comando = "zcat /mosman/backup/$arq |psql -U virtex 2>&1 >/mosman/backup/log/imp.log";
 					
 						system($comando,$retval);
 						
-						if ($retval == 1){
+						if ($retval !=0){
 						
 							$msg = "ERRO";
 						
@@ -416,7 +416,7 @@ class VABackup extends VirtexAdmin {
 						$this->bd->consulta($sSQL);
 						
 						$this->tpl->atribui("mensagem",$msg);
-						$this->ArquivoTemplate = "restore_final.html";
+						$this->arquivoTemplate = "restore_final.html";
 						return;
 
 					
