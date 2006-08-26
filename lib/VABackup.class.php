@@ -379,7 +379,7 @@ class VABackup extends VirtexAdmin {
 						$sSQL .= "VALUES ";
 						$sSQL .= "('$hoje','$admin','GS','$DATA','$status') ";
 						$this->bd->consulta($sSQL);
-						echo "GRAVAÇÃO BACKUP: $sSQL<br>";
+						echo "GRAVAÇÃO BACKUP: $sSQL<br> ";
 
 												
 						$sSQL  = "INSERT INTO bktb_arquivos ";
