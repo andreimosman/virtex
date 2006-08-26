@@ -321,6 +321,11 @@ class VABackup extends VirtexAdmin {
 			$this->arquivoTemplate = "restore_inicio.html";
 			
 			if($sop == "ok"){
+			
+				$acao = @$_REQUEST["acao"];
+				
+				
+			
 				if ($upload){
 
 
