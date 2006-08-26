@@ -242,10 +242,11 @@ function check(){
                   <tr> 
                       <td widht="150" colspan="3"><h2><font color="#000000">Dados do Usuário</font></h2></td>
 					
-                      <td width="118" valign="top"><div align="right"> 
+                      
+                    <td width="118" valign="top">{if $tipo_bandalarga=="P"} 
+                      <div align="right"> 
                           <p>[<a href="suporte.php?op=extrato&valor_pesquisa={$username}&tipo_conta={$tipo_conta}">extrato 
-                            de acesso</a>]<br>
-                            <strong><font color="#CCCCCC">(m&ecirc;s atual)</font></strong></p>
+                            de acesso</a>]<br>{/if}</p>
                         </div></td>
                     </tr>
                     <tr> 
@@ -269,11 +270,14 @@ function check(){
                     <tr> 
                       <td  width="77" align="right" valign="top" bgcolor="#FFFFFF"> 
                         <p>Status:</p></td>
-                      <td bgcolor="#FFFFFF" colspan="3"> <SELECT name='status'>
+                      
+                    <td bgcolor="#FFFFFF" colspan="3"> <p>{if $status == "S"}<font color="#999999"><strong><input type="text" name="status" value="Suspenso"  style="border: #000000" disabled></strong></font>{else} 
+                        <SELECT name='status' >
 					{foreach key=id item=nome from=$lista_status}
 					      <OPTION VALUE='{$id}'  {if $id == $status}SELECTED{/if} >{$nome}</OPTION>
 					{/foreach}
-					    </SELECT> </td> 
+					    </SELECT>
+                        {/if} </p></td> 
                     </tr>
                     <tr> 
                       <td  width="77" align="right" valign="top" bgcolor="#FFFFFF"><p>Tipo:</p></td>
@@ -602,9 +606,8 @@ function check(){
 								 	         <td height="33" width="225"><h2><font color="#000000">Dados 
               da Conta</font></h2></td>
 								 	         <td height="33"><div align="right">
-              <p>[<a href="suporte.php?op=extrato&valor_pesquisa={$username}&tipo_conta={$tipo_conta}">extrato 
-                de acesso</a>]<br>
-                <font color="#CCCCCC">(m&ecirc;s atual)</font></p>
+                  <p>[<a href="suporte.php?op=extrato&valor_pesquisa={$username}&tipo_conta={$tipo_conta}">extrato 
+                    de acesso</a>]</p>
             </div></td>
 						                </tr>
 						                <tr>
@@ -628,14 +631,15 @@ function check(){
 						                  <td width="50" align="right" valign="top" bgcolor="#FFFFFF">
 						  					<p>Status:</p></td>
 
-						                <td bgcolor="#FFFFFF" colspan=2>
-						                	<SELECT name='status'>
+						                
+              <td bgcolor="#FFFFFF" colspan=2>{if $status == "S"} <p><font color="#999999"><strong><input type="text" name="status" value="Suspenso"  style="border: #000000" disabled></strong></font> </p>{else}
+                  <SELECT name='status'>
 											{foreach key=id item=nome from=$lista_status}
 											<OPTION VALUE='{$id}'  {if $id == $status}SELECTED{/if} {if $id == "S"}DISABLED{/if}>{$nome}</OPTION>
 											{/foreach}
-											</SELECT>
-
-						                </td>
+											 
+                  </SELECT>
+                  {/if}</td>
 						                </tr>
 										<tr>
 											 <td width="50" align="right" valign="top" bgcolor="#FFFFFF"><p>Tipo:</p></td>

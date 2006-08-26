@@ -291,7 +291,7 @@ function confirmacao(){
 			<tr>
 				<td width=320>
           <table width="100%" border="0" cellpadding="0" cellspacing="0">
-          <tr> 
+          <tr valign="bottom"> 
             <td> 
               <p align="justify"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Endere&ccedil;o</font></p></td>
           </tr>
@@ -302,7 +302,7 @@ function confirmacao(){
 				</td>
 				<td width=320><table width="100%" border="0" cellspacing="0" cellpadding="0" >
           <tr> 
-            <td rowspan="2"> <p align="justify"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Status 
+            <td rowspan="2"> <p align="left"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Status 
                 do Contrato<br>
                 <select name="ativo" tabindex="17">
 				{foreach key=id item=nome from=$lista_ativo}
@@ -315,7 +315,7 @@ function confirmacao(){
                   
                 </select>
                 </font></p></td>
-            <td> <p align="justify"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
+            <td> <p align="left"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
                 de Pagamento<br>
                 <select name='dia_pagamento' tabindex="19">
 				{foreach key=id item=nome from=$lista_dia_pagamento}
@@ -328,7 +328,16 @@ function confirmacao(){
                   
                 </select>
                 </font></p></td>
-          </tr>
+            <td> <table>
+                <tr> 
+                  <td colspan="2"> <p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Deseja 
+                      publicar informações de cobrança na Interface do Cliente?</font></td>
+                </tr>
+                <tr> 
+                  <td><input type="radio" name="info_cobranca" value="false" class="checkbox" {if !$info_cobranca || $info_cobranca == 'f' }checked{/if}/><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Não</font></td>
+				  <td><input type="radio" name="info_cobranca" value="true" class="checkbox" {if $info_cobranca == 't' } checked {/if}/><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Sim</font></td>
+                </tr>
+              </table></td>
         </table></td>
 			</tr>
 			<tr>
