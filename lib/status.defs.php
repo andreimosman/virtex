@@ -119,8 +119,8 @@ $_LS_PRIVILEGIO = array(
 
 $_LS_ST_CONTA = array(
         "A" => "Ativo",
-        "B" => "Bloqueado",
-				"S" => "Suspenso"
+        "B" => "Bloqueado"
+				///"S" => "Suspenso"
 				//"C" => "Cancelada"
         ); 
         
