@@ -324,7 +324,7 @@ class VABackup extends VirtexAdmin {
 			
 				$acao = @$_REQUEST["acao"];
 				
-				
+				echo "OK<BR>";
 			
 				if ($upload){
 
