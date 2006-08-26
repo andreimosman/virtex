@@ -346,7 +346,7 @@ class VABackup extends VirtexAdmin {
 
 					$this->tpl->atribui("arq",$arq);
 					
-					
+					echo "acao: $acao<br>";
 
 					if ($acao == "ok"){
 					
