@@ -318,7 +318,7 @@ class VABackup extends VirtexAdmin {
 			//echo "datas: $sSQL<br>";
 			
 			$this->tpl->atribui("datas",$data);
-			$this->arquivoTemplate = "restore_inicio.html";
+			//$this->arquivoTemplate = "restore_inicio.html";
 			
 			if($sop == "ok"){
 			
