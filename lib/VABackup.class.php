@@ -397,8 +397,9 @@ class VABackup extends VirtexAdmin {
 						$comando = "zcat /mosman/backup/$arq |psql -U virtex 2>&1 >/mosman/backup/log/imp.log";
 					
 						system($comando,$retval);
+						echo "RETVAL: ".$retval."<br>";
 						
-						if ($retval !=0){
+						if ($retval > 0){
 						
 							$msg = "ERRO";
 						
