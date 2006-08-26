@@ -1,0 +1,96 @@
+<!-- BACKUP_INICIO.HTML -->
+<html>
+<head>
+{literal}
+<script>
+function checa(){
+	frm = document.form1;
+	if (frm.upload.checked == true){
+		frm.arquivo.disabled = false;
+		frm.id_backup.disabled = true;
+		window.alert('escolhe');
+	}else if (frm.upload.checked == false ){
+		window.alert('upload');
+		frm.arquivo.disabled = true;
+		frm.id_backup.disabled = false;
+	}
+	return;
+}
+</script>
+{/literal}
+<title>backup</title>
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+<div align="CENTER"><h1>BACKUP &amp; RECUPERA&Ccedil;&Atilde;O</h1>
+<table width="450" border="0" cellspacing="0" cellpadding="0" bgcolor="#000000">
+  <tr>
+    <td><table width="450" border="0" cellspacing="1" cellpadding="0">
+        <tr>
+          <td bgcolor="#f1f1f1" height="100" align="CENTER" valign="MIDDLE"><strong><font size="2" face="Arial, Helvetica, sans-serif">AVISO</font></strong><font size="2" face="Arial, Helvetica, sans-serif"><br>
+            &Eacute; possivel somente o restore de backups de Banco de Dados.<br>
+            Para restore de backups de outros tipos como Configura&ccedil;&atilde;o 
+            e Sistema, acione o suporte.</font></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p><strong><font size="2" face="Arial, Helvetica, sans-serif">Recupera&ccedil;&atilde;o 
+  de Banco de Dados</font></strong></p>
+<form name="form1" method="post" action="backup.php" enctype="multipart/form-data"> 
+<table width="300" border="0" cellspacing="1" cellpadding="0">
+  <tr>
+    <td width="152"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Fazer Upload do Arquivo?</font></td>
+    <td width="145">
+	<!--
+	<table width="150">
+        <tr> 
+          <td align="RIGHT"><label> 
+            <input type="radio" id="upload" name="upload" value="1" class="checkbox" onClick="javascript:checa();">
+            </label></td>
+          <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Sim</font></td>
+          <td align="RIGHT"> <font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+            <input name="upload" id="upload" type="radio" value="0" class="checkbox" onClick="javascript:checa();" checked >
+            </font></td>
+          <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Não</font></td>
+        </tr>
+      </table>
+	  -->
+	  <input type="checkbox" name="upload" value="true" id="upload" class="checkbox" onClick="javascript:checa();"></td>
+  </tr>
+</table>
+<br>
+<table width="400" border="0" cellspacing="1" cellpadding="0">
+  <tr> 
+    <td width="138"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Escolha 
+      a data do backup:</font></td>
+    <td width="259"><select name="id_backup" id="id_backup">
+        <option value=" "> </option>
+		{foreach item=a from=$datas}
+		<option value="{$a.id_backup}">{$a.data|date_format:"%d/%m/%Y %H:%M:%S"}</option>
+		{/foreach}
+      </select></td>
+  </tr>
+  <tr> 
+    <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Upload do 
+      Arquivo:</font></td>
+    <td><input name="arquivo" type="file" size="30" id="arquivo"></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td><input type="submit" name="Submit" value="Enviar">
+      <input name="op" type="hidden" value="restore" id="op">
+      <input name="acao" type="hidden" value="ok" id="acao"></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+</form>
+{literal}
+<script>checa();</script>
+{/literal}
+<p><strong><font size="2" face="Arial, Helvetica, sans-serif"> </font></strong></p>
+  
+</div></body>
+</html>
