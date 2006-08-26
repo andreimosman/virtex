@@ -352,6 +352,7 @@ class VABackup extends VirtexAdmin {
 					$this->tpl->atribui("arq",$arq);
 					
 					echo "acao: $acao<br>";
+					$this->arquivoTemplate = "restore_confirma.html";
 
 					if ($acao == "ok"){
 					
@@ -418,7 +419,7 @@ class VABackup extends VirtexAdmin {
 
 					
 					}
-					$this->arquivoTemplate = "restore_confirma.html";
+					
 
 
 
