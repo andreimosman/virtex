@@ -345,14 +345,14 @@ class VABackup extends VirtexAdmin {
 
 
 					$this->tpl->atribui("arq",$arq);
-					$this->arquivoTemplate = "restore_confirma.html";
-					return;
+					
+					
 
 					if ($acao == "ok"){
 					
 						$arq = $_REQUEST["arquivo"];
 						
-						
+						echo "MERDA<BR>";
 						$arquivo = "bd_$DATA2.gz";
 						system('pg_dump --clean --disable-triggers --compress=9 -U virtex > /mosman/backup/'.$arquivo, $retvalbd);
 												
@@ -413,7 +413,7 @@ class VABackup extends VirtexAdmin {
 
 					
 					}
-
+					$this->arquivoTemplate = "restore_confirma.html";
 
 
 
