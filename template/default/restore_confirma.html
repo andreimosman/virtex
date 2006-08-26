@@ -1,0 +1,61 @@
+<!-- BACKUP_INICIO.HTML -->
+<html>
+<head>
+{literal}
+<script>
+function checa(){
+	frm = document.form1;
+	if (frm.upload.checked == true){
+		frm.arquivo.disabled = false;
+		frm.id_backup.disabled = true;
+		//window.alert('upload');
+	}else if (frm.upload.checked == false ){
+		//window.alert('escolhe');
+		frm.arquivo.disabled = true;
+		frm.id_backup.disabled = false;
+	}
+	return;
+}
+</script>
+{/literal}
+<title>backup</title>
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+<div align="CENTER"><h1>BACKUP &amp; RECUPERA&Ccedil;&Atilde;O</h1>
+  <table width="450" border="0" cellspacing="2" cellpadding="0">
+    <tr>
+      <td width="132" align="right"><p>Arquivo:</p></td>
+      <td width="312"><p>{$arq.arquivo_backup}</p></td>
+    </tr>
+    <tr>
+      <td align="right"><p>Data do Backup:</p></td>
+      <td><p>{$arq.data|date_format:"%d/%m/%Y %H:%M:%S"}</p></td>
+    </tr>
+    <tr>
+      <td align="right"><p>Feito por: </p></td>
+      <td><p>{if $arq.operador_backup == "GU"}Usu&aacute;rio - {$arq.admin}{else}Sistema{/if}</p></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="2" align="center"><form name="form1" method="post" action="">
+        <input type="submit" name="Submit" value="CONFIRMAR">
+            <br>
+            <input name="op" type="hidden" id="op" value="restore">
+            <input name="acao" type="hidden" id="acao" value="ok">
+            <input name="id_backup" type="hidden" id="id_backup" value="{$arq.id_backup}">
+            <input name="arquivo" type="hidden" id="arquivo" value="{$arq.arquivo_backup}">
+            <br>
+            <a href="backup.php?op=restore">VOLTAR</a>
+      </form>
+      </td>
+    </tr>
+  </table>
+  <p>&nbsp;</p>
+  
+</div></body>
+</html>

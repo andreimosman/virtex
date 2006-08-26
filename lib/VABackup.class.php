@@ -297,22 +297,58 @@ class VABackup extends VirtexAdmin {
 		
 			$id_backup = @$_REQUEST["id_backup"];
 			$arquivo = @$_FILE_["arquivo"];
+			$upload = @$_REQUEST["upload"]
+			$sop = @$_REQUEST["sop"];
 			
 			$acao = @$_REQUEST["acao"];
 			
 			
 			$sSQL = "SELECT b.data, b.id_backup from bktb_backup b ORDER BY b.data DESC";
 			$data = $this->bd->obtemRegistros($sSQL);
-			echo "datas: $sSQL<br>";
+			//echo "datas: $sSQL<br>";
 			
 			$this->tpl->atribui("datas",$data);
 			$this->arquivoTemplate = "restore_inicio.html";
 			
-			
+			if($sop == "ok"){
+				if ($upload){
+
+
+
+
+
+
+
+
+
+				}else{
+
+					$sSQL  = "SELECT b.id_backup, b.data_backup, a.status_backup, b.operador_backup, b.data, a.arquivo_backup, a.tipo_backup ";
+					$sSQL .= "FROM ";
+					$sSQL .= "bktb_backup b, bktb_arquivos a ";
+					$sSQL .= "WHERE ";
+					$sSQL .= "b.id_backup = $id_backup AND ";
+					$sSQL .= "b.id_backup = a.id_backup AND ";
+					$sSQL .= "a.tipo_backup = 'Banco de Dados' ";
+					$arq = $this->bd->obtemUnicoRegistro($sSQL);
+
+
+					$this->tpl->atribui("arq",$arq);
+					$this->arquivoTemplate = "restore_confirma.html";
+					return;
+
+
+
+
+
+
+
+
+				}
+			}
 		
-		
-		
-		
+					$this->arquivoTemplate = "restore_inicio.html";
+
 		
 		
 		
