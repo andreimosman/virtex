@@ -313,7 +313,7 @@ class VABackup extends VirtexAdmin {
 			$admin = $this->admLogin->obtemId();			
 			
 			
-			$sSQL = "SELECT b.data, b.id_backup from bktb_backup b, bktb_arquivo a WHERE b.id_backup = a.id_backup AND a.tipo_backup = 'Banco de Dados' ORDER BY b.data DESC";
+			$sSQL = "SELECT b.data, b.id_backup from bktb_backup b, bktb_arquivos a WHERE b.id_backup = a.id_backup AND a.tipo_backup = 'Banco de Dados' ORDER BY b.data DESC";
 			$data = $this->bd->obtemRegistros($sSQL);
 			//echo "datas: $sSQL<br>";
 			
