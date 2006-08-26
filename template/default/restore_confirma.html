@@ -26,16 +26,19 @@ function checa(){
 <div align="CENTER"><h1>BACKUP &amp; RECUPERA&Ccedil;&Atilde;O</h1>
   <table width="450" border="0" cellspacing="2" cellpadding="0">
     <tr>
+      <td colspan="2" align="center"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>Recupera&ccedil;&atilde;o do Banco de Dados</b></font> <br></td>
+    </tr>
+    <tr>
       <td width="132" align="right"><p>Arquivo:</p></td>
-      <td width="312"><p>{$arq.arquivo_backup}</p></td>
+      <td width="312"><p><strong>{$arq.arquivo_backup}</strong></p></td>
     </tr>
     <tr>
       <td align="right"><p>Data do Backup:</p></td>
-      <td><p>{$arq.data|date_format:"%d/%m/%Y %H:%M:%S"}</p></td>
+      <td><p><strong>{$arq.data|date_format:"%d/%m/%Y %H:%M:%S"}</strong></p></td>
     </tr>
     <tr>
       <td align="right"><p>Feito por: </p></td>
-      <td><p>{if $arq.operador_backup == "GU"}Usu&aacute;rio - {$arq.admin}{else}Sistema{/if}</p></td>
+      <td><p><strong>{if $arq.operador_backup == "GU"}Usu&aacute;rio - {$arq.admin}{else}Sistema{/if}</strong></p></td>
     </tr>
     <tr>
       <td>&nbsp;</td>
@@ -50,9 +53,8 @@ function checa(){
             <input name="id_backup" type="hidden" id="id_backup" value="{$arq.id_backup}">
             <input name="arquivo" type="hidden" id="arquivo" value="{$arq.arquivo_backup}">
             <br>
-            <a href="backup.php?op=restore">VOLTAR</a>
-      </form>
-      </td>
+          <a href="backup.php?op=restore">VOLTAR</a>
+      </form>      </td>
     </tr>
   </table>
   <p>&nbsp;</p>
