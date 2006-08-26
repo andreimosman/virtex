@@ -429,7 +429,7 @@ class VABackup extends VirtexAdmin {
 				}
 			}
 		
-					$this->arquivoTemplate = "restore_inicio.html";
+					//$this->arquivoTemplate = "restore_inicio.html";
 
 		
 		
