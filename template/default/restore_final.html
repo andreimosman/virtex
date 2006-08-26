@@ -1,0 +1,32 @@
+<!-- BACKUP_INICIO.HTML -->
+<html>
+<head>
+{literal}
+<script>
+function checa(){
+	frm = document.form1;
+	if (frm.upload.checked == true){
+		frm.arquivo.disabled = false;
+		frm.id_backup.disabled = true;
+		//window.alert('upload');
+	}else if (frm.upload.checked == false ){
+		//window.alert('escolhe');
+		frm.arquivo.disabled = true;
+		frm.id_backup.disabled = false;
+	}
+	return;
+}
+</script>
+{/literal}
+<title>backup</title>
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+<div align="CENTER"><h1>BACKUP &amp; RECUPERA&Ccedil;&Atilde;O</h1>
+  <p><strong>Restore efetuado com {$msg}</strong>
+  </p>
+  <p>&nbsp;</p>
+  
+</div></body>
+</html>
