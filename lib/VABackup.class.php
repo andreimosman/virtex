@@ -332,7 +332,7 @@ class VABackup extends VirtexAdmin {
 					$nome_arquivo = $arquivo['name'];
 					//echo "NOME: $nome_arquivo<br>";
 					
-					list($tipo,$data) = explode("_",$nome_arquivo);
+					list($tipo,$data,$hora) = explode("_",$nome_arquivo);
 					
 					if($tipo != "bd"){
 					
