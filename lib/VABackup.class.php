@@ -586,7 +586,7 @@ class VABackup extends VirtexAdmin {
 
 		$this->tpl->atribui("msg",$msg);	
 	
-		return;
+		return($msg);
 	
 	
 	
