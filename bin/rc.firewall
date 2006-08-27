@@ -1,0 +1,59 @@
+#!/bin/sh
+###################################
+# Firewall Inicial
+# VirtexAdmin
+################################
+
+
+# Zera as regras
+ipfw -f flush
+
+#
+# WORMS, EXPLOITS E AFINS
+#####################################################
+
+# TFTP
+/sbin/ipfw add 100 deny udp from any to any 69
+/sbin/ipfw add 100 deny udp from any 69 to any
+/sbin/ipfw add 100 deny tcp from any to any 69
+/sbin/ipfw add 100 deny tcp from any 69 to any
+
+# Blaster/Welshia
+/sbin/ipfw add 101 deny udp from any to any 135
+/sbin/ipfw add 101 deny udp from any 135 to any
+/sbin/ipfw add 101 deny tcp from any to any 135
+/sbin/ipfw add 101 deny tcp from any 135 to any
+
+/sbin/ipfw add 101 deny tcp from any to any 4444
+/sbin/ipfw add 101 deny tcp from any 4444 to any
+/sbin/ipfw add 101 deny tcp from any to any 4444
+/sbin/ipfw add 101 deny tcp from any 4444 to any
+
+# Sasser/Korgo
+/sbin/ipfw add 103 deny udp from any to any 445
+/sbin/ipfw add 103 deny udp from any 445 to any
+/sbin/ipfw add 103 deny tcp from any to any 445
+/sbin/ipfw add 103 deny tcp from any 445 to any
+
+#
+# PERMITIR TRAFEGO NESTA MAQUINA
+#####################################################
+/sbin/ipfw add 200 permit ip from me to any
+/sbin/ipfw add 200 permit ip from any to me
+
+#
+# ninguem se enxergar
+# Solicitações entre as redes de ips falsos são negadas
+######################################################
+
+ipfw add 9000 deny ip from 10.0.0.0/8 to 10.0.0.0/8
+ipfw add 9000 deny ip from 10.0.0.0/8 to 172.16.0.0/12
+ipfw add 9000 deny ip from 10.0.0.0/8 to 192.168.0.0/16
+
+ipfw add 9000 deny ip from 172.16.0.0/12 to 10.0.0.0/8
+ipfw add 9000 deny ip from 172.16.0.0/12 to 172.16.0.0/12
+ipfw add 9000 deny ip from 172.16.0.0/12 to 192.168.0.0/16
+
+ipfw add 9000 deny ip from 192.168.0.0/16 to 10.0.0.0/8
+ipfw add 9000 deny ip from 192.168.0.0/16 to 172.16.0.0/12
+ipfw add 9000 deny ip from 192.168.0.0/16 to 192.168.0.0/16

@@ -226,7 +226,7 @@
 			
 			for ($i=0;$i<count($interfaces);$i++){
 				$comando_start = "/usr/libexec/pppoed -d -P /var/run/pppoe.pid -p '*' -l pppoe-in ".$interfaces[$i];
-				SOFreeBSD::executa($comando_start);
+				 SOFreeBSD::executa("echo \"$comando_start\"|/bin/sh\n");
 			}
 			
 		}

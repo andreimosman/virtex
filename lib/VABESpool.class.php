@@ -41,15 +41,16 @@
 			// Chama construtor da superclasse
 			parent::__construct();
 			
+			
 			$this->boot   = 0;
 			$this->daemon = 0;
 			
 			$this->debug = 0;
-			
+
+
 			$this->licencaBL = $this->licenca("backend","banda_larga");
 			$this->licencaE = $this->licenca("backend","email");
 			$this->licencaH = $this->licenca("backend","hospedagem");
-			
 			
 			/**
 			 * GETOPT SHORT OPTIONS
@@ -75,6 +76,8 @@
 		public function executa() {
 			// Execuções inicias
 			parent::executa();
+			
+			
 			
 			
 			/**
@@ -117,10 +120,14 @@
 			 * Executa os procedimentos de boot
 			 */
 			if( $this->boot ) {
-				// TODO: VERIFICAR LICENÇA
+			
+				// Atuador BandaLarga é usado inclusive para a configuração de rede
+				$abl = new AtuadorBandaLarga($this->bd,$this->debug);
+				
 				/**
 				 * Configurações de rede
 				 */
+				 $abl->networkUP();
 				
 				
 				
@@ -128,44 +135,36 @@
 				 * BandaLarga: TCP/IP
 				 */
 				 
-				 
-				 
-				 
-				 
-				 
-				$abl = new AtuadorBandaLarga($this->bd,$this->debug);
+				
 				
 				$lista_nas = $abl->obtemListaNasIPAtivos();
 				
 				if(count($lista_nas)) {
 				
-					if ($licencaBL != 1) return -1;				
+					if ($this->licencaBL == 1) { 
 				
-				
-				
-				
-					// Obtem os clientes ativos para os NAS operados nesta máquina
-					$sSQL  = "SELECT ";
-					$sSQL .= "   c.username,c.dominio,c.tipo_conta,c.id_conta,cbl.id_pop,cbl.id_nas, ";
-					$sSQL .= "   cbl.rede,cbl.upload_kbps,cbl.download_kbps,c.status,cbl.mac,";
-					$sSQL .= "   cbl.ip_externo ";
-					$sSQL .= "FROM ";
-					$sSQL .= "   cntb_conta c INNER JOIN cntb_conta_bandalarga cbl USING(username,dominio,tipo_conta) ";
-					$sSQL .= "WHERE";
-					$sSQL .= "   id_nas IN (".implode(",",$lista_nas).")";
-					$sSQL .= "   AND c.status = 'A' ";
+						// Obtem os clientes ativos para os NAS operados nesta máquina
+						$sSQL  = "SELECT ";
+						$sSQL .= "   c.username,c.dominio,c.tipo_conta,c.id_conta,cbl.id_pop,cbl.id_nas, ";
+						$sSQL .= "   cbl.rede,cbl.upload_kbps,cbl.download_kbps,c.status,cbl.mac,";
+						$sSQL .= "   cbl.ip_externo ";
+						$sSQL .= "FROM ";
+						$sSQL .= "   cntb_conta c INNER JOIN cntb_conta_bandalarga cbl USING(username,dominio,tipo_conta) ";
+						$sSQL .= "WHERE";
+						$sSQL .= "   id_nas IN (".implode(",",$lista_nas).")";
+						$sSQL .= "   AND c.status = 'A' ";
 
-					$contas = $this->bd->obtemRegistros($sSQL);
-					
-					
-					for($i=0;$i<count($contas);$i++) {
-						$parametros = $contas[$i]["rede"] . "," . $contas[$i]["mac"] . "," . 
-										$contas[$i]["upload_kbps"] . "," . $contas[$i]["download_kbps"] . "," . $contas[$i]["username"];
-					
-						$abl->processa("a",$contas[$i]["id_conta"],$parametros);
-					
+						$contas = $this->bd->obtemRegistros($sSQL);
+
+
+						for($i=0;$i<count($contas);$i++) {
+							$parametros = $contas[$i]["rede"] . "," . $contas[$i]["mac"] . "," . 
+											$contas[$i]["upload_kbps"] . "," . $contas[$i]["download_kbps"] . "," . $contas[$i]["username"];
+
+							$abl->processa("a",$contas[$i]["id_conta"],$parametros);
+
+						}
 					}
-					
 				}
 				
 				
@@ -205,7 +204,7 @@
 			 */
 			if( $this->daemon ) {
 				$this->daemonize();
-				exit;
+				exit(0);
 			}
 			
 			$this->spool();
@@ -260,7 +259,7 @@
 			
 			if( count($lista_nas) ) {
 			
-				if ($licencaBL != 1) return -1 ;
+				if ($this->licencaBL != 1) return -1 ;
 			
 			
 			
@@ -305,7 +304,7 @@
 					// Início da transação
 					
 					
-					if ($licencaE != 1) return -1;
+					if ($this->licencaE != 1) return -1;
 					
 					
 					$this->bd->consulta("BEGIN");
@@ -347,7 +346,7 @@
 
 			 if( count($lista_srvh) ) {
 			 
-			 		if ($licencaH != 1) {
+			 		if ($this->licencaH != 1) {
 						$this->bd->consulta("BEGIN");
 
 						// FAZ O SELECT		 		
@@ -429,7 +428,7 @@
 
 			 if( count($lista_srvd) ) {
 
-					if ($licencaBL != 1) return -1;
+					if ($this->licencaBL != 1) return -1;
 
 				// Início da transação
 				$this->bd->consulta("BEGIN");

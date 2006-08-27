@@ -1,19 +1,41 @@
 #!/bin/sh
 
-#
-# RC
-##########################
+#####################################
+# RC                                #
+#       Script de inicialização     #
+#                                   #
+# Este script deverá ser linkado no #
+# /usr/local/etc/rc.d com o nome de #
+# 011.virtexadmin.sh                #
+#                                   #
+# TODO: start/stop                  #
+####################################
+
 VTXHOME=/mosman/virtex
 APPHOME={$VTXHOME}/app
-BIN=${APPHOME}/bin
+VTXBIN=${APPHOME}/bin
 ETC=${APPHOME}/etc
 PHP=/usr/local/bin/php
+FIRSTSCRIPT=/mosman/virtex/install/firstboot.sh
 
+# Se tiver o script executa e renomeia
+####
+if [ ! -z "${FIRSTSCRIPT}" ] ; then
+	if [ -f "${FIRSTSCRIPT}" ] ; then
+		/bin/sh ${FIRSTSCRIPT}
+		mv "${FIRSTSCRIPT}" "${FIRSTSCRIPT}.$$.bak"
+	fi
+fi
+
+
+# Starta o Radiusd
 ${VTXHOME}/radius/sbin/radiusd -y
 
-#. ${VTXHOME}/etc/rc.firewall
-
+# Carrega configurações de rede e dos usuários
 ${PHP} ${VTXBIN}/vtx-spool.php -b
+
+# Carrega servidores PPPoE (caso configurado)
 ${PHP} ${VTXBIN}/vtx-pppoe.php -RU
 
-
+# Carrega servidor do sistema de informações
+${PHP} ${VTXBIN}/vtx-info-server.php

@@ -384,8 +384,8 @@ class VirtexAdmin extends MWebApp {
 	}
 	
 	public function licenca($tipo,$modulo){
-	
-		$licenca = (int)@$this->lic[$tipo][$modulo];
+		$lic = $this->lic->obtemLicenca();
+		$licenca = (int)@$lic[$tipo][$modulo];
 		return($licenca);
 	
 	

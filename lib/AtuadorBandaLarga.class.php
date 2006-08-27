@@ -79,17 +79,42 @@
 					return($iface);
 				}
 			}
+			
+			return("");
 		}
 		
-		
+		/**
+		 * Utilizado no Boot
+		 */
+		public function networkUP() {
+			//$this->so->ifConfig($int_if,$ip_interface,$mascara);
+			
+			$n = $this->net_cfg;
+			
+			while( list($iface,$dados) = each($n) ) {
+				if( @$dados["status"] == "up" ) {
+					
+					// Se não tiver ip e máscara dá só um "ifconfig $iface up"
+					$this->so->ifConfig($iface,@$dados["ipaddr"],@$dados["netmask"]);
+					
+					// Somente interfaces do tipo "external" podem ter gateway configurado.
+					if(@$dados["type"] == "external" && @$dados["gateway"]) {
+						$this->so->routeAdd("default",$dados["gateway"]);
+					}
+
+				}
+
+			}
+
+		}
 		
 		protected function loadInfo($tipo="TCPIP") {
 			$n = $tipo == "PPPoE" ? $this->pppoe_cfg : $this->tcpip_cfg;
 			
 			while( list($iface,$dados) = each($n) ) {
 				if( $dados["enabled"] ) {
-					$this->fator[ trim($dados["nas_id"]) ] = $dados["fator"];
-					$this->debug("loadInfo: I/[$iface] N/[" . $dados["nas_id"] . "] F/[" . $dados["fator"] . "] " );
+					$this->fator[ trim($dados["nas_id"]) ] = (@$dados["fator"] ? $dados["fator"] : 1);
+					$this->debug("loadInfo: I/[$iface] N/[" . $dados["nas_id"] . "] F/[" . (@$dados["fator"] ? $dados["fator"] : 1) . "] " );
 					if( $tipo == "PPPoE" ) {
 						$this->pppoe_lista_nas[] = $dados["nas_id"];
 						$this->pppoe_nas_list[ $dados["nas_id"] ] = $iface;

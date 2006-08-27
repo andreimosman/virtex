@@ -1,5 +1,9 @@
 <?
 
+if(!defined('_DEFS_PHP')) {
+	define('_DEFS_PHP',true);
+
+
 /**
  * Path para os aplicativos
  */
@@ -44,6 +48,8 @@ require_once(PATH_LIB . '/VABackup.class.php');
 //   require_once PATH_LIB . "/" . $class_name . '.class.php';
 //}
 
-session_start();
+//session_start();
+
+}
 
 ?>
