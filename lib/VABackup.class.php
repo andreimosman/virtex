@@ -367,7 +367,7 @@ class VABackup extends VirtexAdmin {
 						$conf = $this->bd->obtemUnicoRegistro($sSQL);
 						
 						$this->tpl->atribui("arq",$arquivo['name']);
-						$this->tpl->atribui("arqtmp",$arquivo['arqtmp'];);
+						$this->tpl->atribui("arqtmp",$arquivo['arqtmp']);
 						
 						if (!count($conf)){
 							
