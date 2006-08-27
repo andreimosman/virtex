@@ -336,9 +336,9 @@ class VABackup extends VirtexAdmin {
 					
 					if($tipo || $tipo != "bd"){
 						
-						//echo "tipo = $tipo<br>";
-						//echo "data: $data<br>";
-						//echo "hora: $hora<br>";
+						echo "tipo = $tipo<br>";
+						echo "data: $data<br>";
+						echo "hora: $hora<br>";
 						
 						$mensagem = "ARQUIVO INVÁLIDO";
 						$this->tpl->atribui("mensagem",$mensagem);
