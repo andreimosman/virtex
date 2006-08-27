@@ -453,7 +453,7 @@ class VABackup extends VirtexAdmin {
 							return;						
 						
 						}
-						$this->arquivoTemplate = "retorno_upload_confirma.html";
+						$this->arquivoTemplate = "restore_upload_confirma.html";
 						
 						
 					
