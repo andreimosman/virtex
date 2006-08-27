@@ -40,27 +40,15 @@ function checa(){
 <p><strong><font size="2" face="Arial, Helvetica, sans-serif">Recupera&ccedil;&atilde;o 
   de Banco de Dados</font></strong></p>
 <form name="form1" method="post" action="backup.php" enctype="multipart/form-data"> 
+<!--
 <table width="300" border="0" cellspacing="1" cellpadding="0">
   <tr>
     <td width="152"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Fazer Upload do Arquivo?</font></td>
     <td width="145">
-	<!--
-	<table width="150">
-        <tr> 
-          <td align="RIGHT"><label> 
-            <input type="radio" id="upload" name="upload" value="1" class="checkbox" onClick="javascript:checa();">
-            </label></td>
-          <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Sim</font></td>
-          <td align="RIGHT"> <font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
-            <input name="upload" id="upload" type="radio" value="0" class="checkbox" onClick="javascript:checa();" checked >
-            </font></td>
-          <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Não</font></td>
-        </tr>
-      </table>
-	  -->
 	  <input type="checkbox" name="upload" value="true" id="upload" class="checkbox" onClick="javascript:checa();"></td>
   </tr>
 </table>
+-->
 <br>
 <table width="400" border="0" cellspacing="1" cellpadding="0">
   <tr> 
@@ -73,11 +61,13 @@ function checa(){
 		{/foreach}
       </select></td>
   </tr>
+  <!--
   <tr> 
     <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Upload do 
       Arquivo:</font></td>
     <td><input name="arquivo" type="file" size="30" id="arquivo"></td>
   </tr>
+  -->
   <tr>
     <td>&nbsp;</td>
     <td><input type="submit" name="Submit" value="Enviar">

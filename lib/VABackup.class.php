@@ -349,7 +349,7 @@ class VABackup extends VirtexAdmin {
 
 					}else {
 					
-						copy('/tmp/'.$arqtmp,'/mosman/backup/'.$arq);
+						copy($arqtmp,'/mosman/backup/'.$arq);
 						
 						$this->restoreUpload($arq);
 
