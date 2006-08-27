@@ -343,7 +343,7 @@ class VABackup extends VirtexAdmin {
 					
 					}else{
 					
-						move_uploaded_file($arquivo['tmpname'],'/mosman/backup/'$arquivo['name']);
+						copy('/tmp/'.$arquivo['tmpname'],'/mosman/backup/'.$arquivo['name']);
 						
 						$mensagem = "UPLOAD COM SUCESSO";
 						$this->tpl->atribui("mensagem",$mensagem);
