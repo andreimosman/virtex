@@ -296,7 +296,7 @@ class VABackup extends VirtexAdmin {
 		}else if ($op == "restore"){
 		
 			$id_backup = @$_REQUEST["id_backup"];
-			$arquivo = @$_FILE_["arquivo"];
+			$arquivo = @$_FILES['arquivo'];
 			$upload = @$_REQUEST["upload"];
 			$sop = @$_REQUEST["sop"];
 			
@@ -329,9 +329,37 @@ class VABackup extends VirtexAdmin {
 				if ($upload){
 
 
+					$nome_arquivo = $arquivo['name'];
+					echo "NOME: $nome_arquivo<br>";
 					
-
-
+					list($tipo,$data) = explode("_",$nome_arquivo);
+					
+					if($tipo != "bd"){
+					
+						$mensagem = "ARQUIVO INVÁLIDO";
+						$this->tpl->atribui("mensagem",$mensagem);
+						$this->arquivoTemplate = "restore_upload_final.html";
+						return;
+					
+					}else{
+					
+						move_uploaded_file($arquivo['tmpname'],'/mosman/backup/'$arquivo['name']);
+						
+						$mensagem = "UPLOAD COM SUCESSO";
+						$this->tpl->atribui("mensagem",$mensagem);
+						$this->arquivoTemplate = "restore_upload_final.html";
+						return;
+					
+					
+					
+					}
+					
+					
+					
+					
+					
+					
+					
 
 
 
