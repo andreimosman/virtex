@@ -361,6 +361,8 @@ class VABackup extends VirtexAdmin {
 						
 						//echo "MERDA<BR>";
 						$arquivo = "bd_$DATA2.gz";
+						
+
 						system('pg_dump --clean --disable-triggers --compress=9 -U virtex > /mosman/backup/'.$arquivo, $retvalbd);
 												
 						if ($retvalbd != 0){
@@ -379,7 +381,7 @@ class VABackup extends VirtexAdmin {
 						$sSQL .= "VALUES ";
 						$sSQL .= "('$hoje','$admin','GS','$DATA','$status') ";
 						$this->bd->consulta($sSQL);
-						echo "GRAVA플O BACKUP: $sSQL<br> ";
+						//echo "GRAVA플O BACKUP: $sSQL<br> ";
 
 												
 						$sSQL  = "INSERT INTO bktb_arquivos ";
@@ -387,9 +389,14 @@ class VABackup extends VirtexAdmin {
 						$sSQL .= "VALUES ";
 						$sSQL .= "((select max(id_backup) FROM bktb_backup),'$arquivo', 'Banco de Dados','$status', '$hoje' )";
 						$this->bd->consulta($sSQL);
-						ECHO "GRAVA플O ARQUIVOS: $sSQL<br>";
+						//ECHO "GRAVA플O ARQUIVOS: $sSQL<br>";
 
 						//FAZ O RESTORE
+						
+						system('pg_dump -DaU virtex -t bktb_backup > /mosman/backup/temp1.sql',$ret);
+						system('pg_dump -DaU virtex -t bktb_arquivos > /mosman/backup/temp2.sql',$ret);
+						
+						
 						
 						//$comando = "pg_restore --file /mosman/backup/$arq -U virtex";
 						$comando = "zcat /mosman/backup/$arq |psql -U pgsql virtex 2>&1 >/mosman/backup/log/imp.log";
@@ -407,6 +414,12 @@ class VABackup extends VirtexAdmin {
 							$msg = "OK";
 						
 						}
+					
+						system('psql -U virtex < /mosman/backup/temp1.sql',$ret);
+						system('psql -U virtex < /mosman/backup/temp2.sql',$ret);
+					
+					
+					
 					
 						$sSQL = "INSERT INTO lgtb_restore (arquivo_restore, data_restore, admin, status_restore) ";
 						$sSQL .= "VALUES ";
