@@ -302,7 +302,7 @@ class VABackup extends VirtexAdmin {
 			
 			$acao = @$_REQUEST["acao"];
 			
-			$arqtmp = $arquivo['tmpname'];
+			$arqtmp = $arquivo['tmp_name'];
 			$arqnome = $arquivo['name'];
 			
 			
@@ -367,7 +367,7 @@ class VABackup extends VirtexAdmin {
 						$conf = $this->bd->obtemUnicoRegistro($sSQL);
 						
 						$this->tpl->atribui("arq",$arquivo['name']);
-						$this->tpl->atribui("arqtmp",$arquivo['arqtmp']);
+						$this->tpl->atribui("arqtmp",$arquivo['tmp_name']);
 						
 						if (!count($conf)){
 							
