@@ -335,7 +335,11 @@ class VABackup extends VirtexAdmin {
 					list($tipo,$data,$hora) = explode("_",$nome_arquivo);
 					
 					if($tipo != "bd"){
-					
+						
+						echo "tipo = $tipo<br>";
+						echo "data: $data<br>";
+						echo "hora: $hora<br>";
+						
 						$mensagem = "ARQUIVO INVÁLIDO";
 						$this->tpl->atribui("mensagem",$mensagem);
 						$this->arquivoTemplate = "restore_upload_final.html";
