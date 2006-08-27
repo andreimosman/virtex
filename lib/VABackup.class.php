@@ -302,6 +302,11 @@ class VABackup extends VirtexAdmin {
 			
 			$acao = @$_REQUEST["acao"];
 			
+			$arqtmp = $arquivo['tmpname'];
+			$arqnome = $arquivo['name'];
+			
+			
+			
 			$hoje = DATE("Y-m-d");
 			$DATA = date("Y-m-d H:i:s");
 
@@ -350,12 +355,19 @@ class VABackup extends VirtexAdmin {
 					
 					}else{
 					
-						copy('/tmp/'.$arquivo['tmpname'],'/mosman/backup/'.$arquivo['name']);
+						$arqtmp = $_REQUEST["arqtmp"];
+						$arq = $_REQUEST["arq"];
+						
+						
+						copy('/tmp'.$arqtmp,'/mosman/backup/'.$arq);
+						
+						//copy('/tmp/'.$arquivo['tmpname'],'/mosman/backup/'.$arquivo['name']);
 						
 						$sSQL = "SELECT * FROM bktb_arquivos WHERE arquivo_backup = '$nome_arquivo' ";
 						$conf = $this->bd->obtemUnicoRegistro($sSQL);
 						
 						$this->tpl->atribui("arq",$arquivo['name']);
+						$this->tpl->atribui("arqtmp",$arquivo['arqtmp'];);
 						
 						if (!count($conf)){
 							
