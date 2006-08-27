@@ -18,7 +18,7 @@ class VABackup extends VirtexAdmin {
 		if ($op == "inicio"){
 		
 			
-			$sSQL = "SELECT b.id_backup,b.data_backup,b.status_backup,b.admin as id_admin,b.data, a.id_admin, a.admin FROM bktb_backup b,adtb_admin a WHERE b.admin = a.id_admin ORDER BY b.data DESC LIMIT 10";
+			$sSQL = "SELECT b.id_backup,b.data_backup,b.status_backup,b.admin as id_admin,b.data, a.id_admin, a.admin, b.operador_backup FROM bktb_backup b,adtb_admin a WHERE b.admin = a.id_admin ORDER BY b.data DESC LIMIT 10";
 			
 			$lista = $this->bd->obtemRegistros($sSQL);
 			
@@ -256,7 +256,7 @@ class VABackup extends VirtexAdmin {
 		
 		
 				$id_backup = @$_REQUEST["id_backup"];
-				$sSQL = "SELECT a.id_backup,a.data_backup,a.arquivo_backup,a.tipo_backup,a.status_backup,b.data FROM bktb_arquivos a, bktb_backup b where a.id_backup = $id_backup AND a.id_backup = b.id_backup ORDER BY a.arquivo_backup";
+				$sSQL = "SELECT a.id_backup,a.data_backup,a.arquivo_backup,a.tipo_backup,a.status_backup,b.data,b.operador_backup FROM bktb_arquivos a, bktb_backup b where a.id_backup = $id_backup AND a.id_backup = b.id_backup ORDER BY a.arquivo_backup";
 				//$sSQL = "SELECT * FROM bktb_arquivos WHERE id_backup = '$id_backup'";
 				$detalhe = $this->bd->obtemRegistros($sSQL);
 				
@@ -271,7 +271,7 @@ class VABackup extends VirtexAdmin {
 				
 					$mensagem = "Histórico de Backups";
 				
-					$sSQL = "SELECT b.id_backup,b.data_backup,b.status_backup,b.admin as id_admin,b.data, a.id_admin, a.admin FROM bktb_backup b,adtb_admin a WHERE b.admin = a.id_admin ORDER BY b.data DESC";
+					$sSQL = "SELECT b.id_backup,b.data_backup,b.status_backup,b.admin as id_admin,b.data, a.id_admin, a.admin, b.operador_backup FROM bktb_backup b,adtb_admin a WHERE b.admin = a.id_admin ORDER BY b.data DESC";
 							
 					$lista = $this->bd->obtemRegistros($sSQL);
 							
