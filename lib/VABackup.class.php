@@ -345,6 +345,34 @@ class VABackup extends VirtexAdmin {
 					
 						copy('/tmp/'.$arquivo['tmpname'],'/mosman/backup/'.$arquivo['name']);
 						
+						$sSQL = "SELECT * FROM bktb_arquivos WHERE arquivo_backup = '$nome_arquivo' ";
+						$conf = $this->bd->obtemUnicoRegistro($sSQL);
+						
+						$this->tpl->atribui("arq",$arquivo['name']);
+						
+						if (!count($conf)){
+							
+							$mensagem = "Não existe correpondente deste arquivo no banco de dados do sistema.";
+							$this->tpl->atribui("mensagem",$mensagem);
+							
+							$this->arquivoTemplate = "retorno_upload_confirma.html";
+							return;
+							
+							
+						}else{
+						
+						$mensagem = "Arquivo Enviado";
+						$this->tpl->atribui("conf",$conf);
+						$this->tpl->atribui("mensagem",$mensagem);
+						$this->arquivoTemplate = "retorno_confirma.html";
+						return;
+						
+						
+						
+						}
+						
+						
+						
 						$mensagem = "UPLOAD COM SUCESSO";
 						$this->tpl->atribui("mensagem",$mensagem);
 						$this->arquivoTemplate = "restore_upload_final.html";
