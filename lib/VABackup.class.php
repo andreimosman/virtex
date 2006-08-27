@@ -354,7 +354,7 @@ class VABackup extends VirtexAdmin {
 						$this->restoreUpload($arq);
 
 													
-						$mensagem = "UPLOAD COM SUCESSO";
+						$mensagem = "Restore efetuado com SUCESSO<br>".$msg;
 						$this->tpl->atribui("mensagem",$mensagem);
 						$this->arquivoTemplate = "restore_upload_final.html";
 						return;
