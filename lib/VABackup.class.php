@@ -322,18 +322,21 @@ class VABackup extends VirtexAdmin {
 			
 			if($sop == "ok"){
 			
+				
 				$acao = @$_REQUEST["acao"];
 				
 				//echo "OK<BR>";
 			
 				if ($upload){
 
+					if ($arquivo){
+						$nome_arquivo = $arquivo['name'];
+						list($tipo,$data,$hora) = explode("_",$nome_arquivo);
+					}else{
+					
+						$tipo = @$_REQUEST["tipo"];
+					}
 
-					$nome_arquivo = $arquivo['name'];
-					//echo "NOME: $nome_arquivo<br>";
-					
-					list($tipo,$data,$hora) = explode("_",$nome_arquivo);
-					
 					if($tipo && $tipo != "bd"){
 						
 						echo "tipo = $tipo<br>";
