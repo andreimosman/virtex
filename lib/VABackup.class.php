@@ -330,7 +330,7 @@ class VABackup extends VirtexAdmin {
 
 
 					$nome_arquivo = $arquivo['name'];
-					echo "NOME: $nome_arquivo<br>";
+					//echo "NOME: $nome_arquivo<br>";
 					
 					list($tipo,$data) = explode("_",$nome_arquivo);
 					
@@ -355,17 +355,17 @@ class VABackup extends VirtexAdmin {
 							$mensagem = "Não existe correpondente deste arquivo no banco de dados do sistema.";
 							$this->tpl->atribui("mensagem",$mensagem);
 							
-							$this->arquivoTemplate = "retorno_upload_confirma.html";
-							return;
+							
+							
 							
 							
 						}else{
 						
-						$mensagem = "Arquivo Enviado";
-						$this->tpl->atribui("conf",$conf);
-						$this->tpl->atribui("mensagem",$mensagem);
-						$this->arquivoTemplate = "retorno_confirma.html";
-						return;
+							$mensagem = "Arquivo Enviado";
+							$this->tpl->atribui("conf",$conf);
+							$this->tpl->atribui("mensagem",$mensagem);
+							//$this->arquivoTemplate = "retorno_upload_confirma.html";
+
 						
 						
 						
@@ -373,10 +373,89 @@ class VABackup extends VirtexAdmin {
 						
 						
 						
-						$mensagem = "UPLOAD COM SUCESSO";
-						$this->tpl->atribui("mensagem",$mensagem);
-						$this->arquivoTemplate = "restore_upload_final.html";
-						return;
+						if ($acao == "ok"){
+							$arq = @$_REQUEST["arq"];
+
+							//echo "MERDA<BR>";
+							$arquivo = "bd_$DATA2.gz";
+
+
+							system('pg_dump --clean --disable-triggers --compress=9 -U virtex > /mosman/backup/'.$arquivo, $retvalbd);
+
+							if ($retvalbd != 0){
+
+								$status = "ERRO";
+								$erro = 1;
+
+							}else{
+
+								$status = "OK";
+
+							}
+
+							$sSQL  = "INSERT INTO bktb_backup ";
+							$sSQL .= "(data_backup,admin,operador_backup,data,status_backup) ";
+							$sSQL .= "VALUES ";
+							$sSQL .= "('$hoje','$admin','GS','$DATA','$status') ";
+							$this->bd->consulta($sSQL);
+							//echo "GRAVAÇÃO BACKUP: $sSQL<br> ";
+
+
+							$sSQL  = "INSERT INTO bktb_arquivos ";
+							$sSQL .= "(id_backup,arquivo_backup, tipo_backup, status_backup, data_backup) ";
+							$sSQL .= "VALUES ";
+							$sSQL .= "((select max(id_backup) FROM bktb_backup),'$arquivo', 'Banco de Dados','$status', '$hoje' )";
+							$this->bd->consulta($sSQL);
+							//ECHO "GRAVAÇÃO ARQUIVOS: $sSQL<br>";
+
+							//FAZ O RESTORE
+
+							system('pg_dump -U virtex --clean -t bktb_backup > /mosman/backup/temp1.sql',$ret);
+							system('pg_dump -U virtex --clean -t bktb_arquivos > /mosman/backup/temp2.sql',$ret);
+
+
+
+							//$comando = "pg_restore --file /mosman/backup/$arq -U virtex";
+							$comando = "zcat /mosman/backup/$arq |psql -U pgsql virtex 2>&1 >/mosman/backup/log/imp.log";
+
+							system("$comando 2>&1",$retval);
+							//echo "RETVAL: ".$retval."<br>";
+
+							if ($retval > 0){
+
+								$msg = "ERRO";
+
+
+							}else{
+
+								$msg = "OK";
+
+							}
+
+							system('psql -U virtex < /mosman/backup/temp1.sql 2>&1 >/mosman/backup/log/t.log',$ret);
+							system('psql -U virtex < /mosman/backup/temp2.sql 2>&1 >/mosman/backup/log/t.log',$ret);
+
+
+
+
+							$sSQL = "INSERT INTO lgtb_restore (arquivo_restore, data_restore, admin, status_restore) ";
+							$sSQL .= "VALUES ";
+							$sSQL .= "('$arq','$DATA', '$admin', '$msg') ";
+							$this->bd->consulta($sSQL);
+
+							$this->tpl->atribui("msg",$msg);
+							//$this->arquivoTemplate = "restore_final.html";
+							//return;
+							
+							$mensagem = "UPLOAD COM SUCESSO";
+							$this->tpl->atribui("mensagem",$mensagem);
+							$this->arquivoTemplate = "restore_upload_final.html";
+							return;						
+						
+						}
+						$this->arquivoTemplate = "retorno_upload_confirma.html";
+						
+						
 					
 					
 					
