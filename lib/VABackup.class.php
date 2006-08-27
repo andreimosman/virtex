@@ -415,8 +415,8 @@ class VABackup extends VirtexAdmin {
 						
 						}
 					
-						system('psql -U virtex < /mosman/backup/temp1.sql 2>&1',$ret);
-						system('psql -U virtex < /mosman/backup/temp2.sql 2>&1',$ret);
+						system('psql -U virtex < /mosman/backup/temp1.sql 2>&1 >/mosman/backup/log/t.log',$ret);
+						system('psql -U virtex < /mosman/backup/temp2.sql 2>&1 >/mosman/backup/log/t.log',$ret);
 					
 					
 					
