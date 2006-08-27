@@ -393,8 +393,8 @@ class VABackup extends VirtexAdmin {
 
 						//FAZ O RESTORE
 						
-						system('pg_dump -DaU virtex -t bktb_backup > /mosman/backup/temp1.sql',$ret);
-						system('pg_dump -DaU virtex -t bktb_arquivos > /mosman/backup/temp2.sql',$ret);
+						system('pg_dump -U virtex --clean -t bktb_backup > /mosman/backup/temp1.sql',$ret);
+						system('pg_dump -U virtex --clean -t bktb_arquivos > /mosman/backup/temp2.sql',$ret);
 						
 						
 						
@@ -415,8 +415,8 @@ class VABackup extends VirtexAdmin {
 						
 						}
 					
-						system('psql -U virtex < /mosman/backup/temp1.sql',$ret);
-						system('psql -U virtex < /mosman/backup/temp2.sql',$ret);
+						system('psql -U virtex < /mosman/backup/temp1.sql 2>&1',$ret);
+						system('psql -U virtex < /mosman/backup/temp2.sql 2>&1',$ret);
 					
 					
 					
