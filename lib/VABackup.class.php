@@ -334,7 +334,7 @@ class VABackup extends VirtexAdmin {
 					
 					list($tipo,$data,$hora) = explode("_",$nome_arquivo);
 					
-					if($tipo || $tipo != "bd"){
+					if($tipo && $tipo != "bd"){
 						
 						echo "tipo = $tipo<br>";
 						echo "data: $data<br>";
