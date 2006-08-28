@@ -382,7 +382,10 @@ class VABackup extends VirtexAdmin {
 					$arq_down = fopen($arquivo,"r");
 					$arq = fread($arq_down,filesize($arquivo));
 				
-					header('Pragma: public');
+					
+					header('Pragma: private');
+					//header('Cache-control: private, must-revalidate');
+					//header('Pragma: public');
 					header('Expires: 0');
 					header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 					header('Content-type: application/force-download');
@@ -761,7 +764,7 @@ class VABackup extends VirtexAdmin {
 		$sSQL .= "('$arq','$DATA', '$admin', '$msg') ";
 		$this->bd->consulta($sSQL);
 
-		$this->tpl->atribui("msg",$msg);	
+		$this->tpl->atribui("msg",$msg);
 	
 		return($msg);
 	
