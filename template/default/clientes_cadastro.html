@@ -334,8 +334,8 @@ function confirmacao(){
                       publicar informações de cobrança na Interface do Cliente?</font></td>
                 </tr>
                 <tr> 
-                  <td><input type="radio" name="info_cobranca" value="false" class="checkbox" {if !$info_cobranca || $info_cobranca == 'f' }checked{/if}/><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Não</font></td>
-				  <td><input type="radio" name="info_cobranca" value="true" class="checkbox" {if $info_cobranca == 't' } checked {/if}/><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Sim</font></td>
+                  <td><input type="radio" tabindex="20" name="info_cobranca" value="false" class="checkbox" {if !$info_cobranca || $info_cobranca == 'f' }checked{/if}/><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Não</font></td>
+				  <td><input type="radio" tabindex="20" name="info_cobranca" value="true" class="checkbox" {if $info_cobranca == 't' } checked {/if}/><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Sim</font></td>
                 </tr>
               </table></td>
         </table></td>
@@ -371,7 +371,7 @@ function confirmacao(){
 				</td>
 				
       <td rowspan=4 width=320><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Observações 
-        </font> <textarea name="obs" tabindex="20" cols="58" rows="10" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">{$obs}</textarea></td>
+        </font> <textarea name="obs" tabindex="21" cols="58" rows="10" onFocus="this.style.backgroundColor='#F7F9F7'" onBlur="this.style.backgroundColor='#FFFFFF'">{$obs}</textarea></td>
 			</tr>
 			<tr>
 				<td width=320>
