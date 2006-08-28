@@ -84,7 +84,7 @@ class VABackup extends VirtexAdmin {
 						
 						$arquivo = "bd_$DATA2.gz";
 						//exec('pg_dump --clean --disable-triggers --compress=9 -U virtex > /mosman/backup/'.$arquivo);
-						$comando = "pg_dump --clean --disable-triggers --compress=9 -U virtex > /mosman/backup/$arquivo";
+						$comando = "/usr/local/bin/pg_dump --clean --disable-triggers --compress=9 -U virtex > /mosman/backup/$arquivo";
 						system($comando, $retvalbd);
 						//system('pg_dump --clean --disable-triggers --compress=9 -U virtex > /mosman/backup/'.$arquivo, $retvalbd);
 						echo "comando: $comando<br>";
