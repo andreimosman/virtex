@@ -379,8 +379,8 @@ class VABackup extends VirtexAdmin {
 					$bkp = $this->bd->obtemUnicoRegistro($sSQL);
 					
 					$arquivo = "/mosman/backup/".$bkp["arquivo_backup"];
-					$arq_down = fopen($arquivo,"r");
-					$arq = fread($arq_down,filesize($arquivo));
+					//$arq_down = fopen($arquivo,"rb");
+					//$arq = fread($arq_down,filesize($arquivo));
 				
 					
 					header('Pragma: private');
@@ -390,10 +390,26 @@ class VABackup extends VirtexAdmin {
 					header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 					header('Content-type: application/force-download');
 					header('Content-Disposition: attachment; filename="'.basename($arquivo).'"');
-					header('Content-length: '.filesize($arquivo));
-					readfile($arquivo);
+					header('Content-length: '.(string)(filesize($arquivo)) );
+					header("Content-Transfer-Encoding: binary\n");
+					//readfile($arquivo);
+
+
+					$arq_down = fopen($arquivo,"rb");
+					$arq = fread($arq_down,filesize($arquivo));
+					fclose ($fp);
+					                  
+					print $arq;
+
+
+
 				
 					fclose($arq_down);
+
+
+
+
+
 
 					return;
 				
