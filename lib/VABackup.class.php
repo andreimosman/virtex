@@ -268,7 +268,7 @@ class VABackup extends VirtexAdmin {
 				$detalhe = $this->bd->obtemRegistros($sSQL);
 				
 				
-				for ($i=0;count($detalhe);$i++){
+				/*for ($i=0;count($detalhe);$i++){
 							
 					$arq = "/mosman/backup/".$detalhe[$i]["arquivo_backup"];
 					$tamanho = filesize($arq);
@@ -278,7 +278,7 @@ class VABackup extends VirtexAdmin {
 							
 							
 							
-				}
+				}*/
 			
 				
 				
