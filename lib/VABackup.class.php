@@ -23,6 +23,7 @@ class VABackup extends VirtexAdmin {
 			$lista = $this->bd->obtemRegistros($sSQL);
 			
 			//echo "LISTA INICIO: $sSQL <br>";
+			
 			$mensagem = "Últimos Backups Realizados";
 			
 			$this->tpl->atribui("mensagem",$mensagem);
@@ -265,6 +266,23 @@ class VABackup extends VirtexAdmin {
 				$sSQL = "SELECT a.id_backup,a.data_backup,a.arquivo_backup,a.tipo_backup,a.status_backup,b.data,b.operador_backup FROM bktb_arquivos a, bktb_backup b where a.id_backup = $id_backup AND a.id_backup = b.id_backup ORDER BY a.arquivo_backup";
 				//$sSQL = "SELECT * FROM bktb_arquivos WHERE id_backup = '$id_backup'";
 				$detalhe = $this->bd->obtemRegistros($sSQL);
+				
+				
+				for ($i=0;$count($detalhe);$i++){
+							
+					$arq = "/mosman/backup/".$detalhe[$i]["arquivo_backup"];
+					$tamanho = filesize($arq);
+					$kb = $tamanho/1024;
+					
+					$detalhe[$i]["kb"] = $kb;
+							
+							
+							
+				}
+			
+				
+				
+				
 				
 				$this->tpl->atribui("detalhe",$detalhe);
 				$this->arquivoTemplate = "backup_inicio.html";
