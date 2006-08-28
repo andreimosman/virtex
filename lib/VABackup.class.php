@@ -381,17 +381,28 @@ class VABackup extends VirtexAdmin {
 					$arquivo = "/mosman/backup/".$bkp["arquivo_backup"];
 					//$arq_down = fopen($arquivo,"rb");
 					//$arq = fread($arq_down,filesize($arquivo));
-				
+					list($nome,$ext) = explode(".",$arquivo);
+					
+					if ($ext == "gz"){
+					
+						$mime = "application/x-gzip";
+					
+					
+					}else if ($ext == "tgz"){
+					
+						$mime = "application/x-compressed";
+					
+					}
 					
 					header('Pragma: cache');
 					//header('Cache-control: private, must-revalidate');
 					//header('Pragma: public');
-					//header('Expires: 0');
+					header('Expires: 0');
 					header("Cache-Control: store, cache");
 					//header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-					header('Content-type: application/force-download');
+					header('Content-type: $mime');
 					header('Content-Disposition: attachment; filename="'.basename($arquivo).'"');
-					header('Content-length: '.(string)(filesize($arquivo)) );
+					header('Content-length: '.filesize($arquivo) );
 					header("Content-Transfer-Encoding: binary\n");
 					//readfile($arquivo);
 
