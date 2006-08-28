@@ -279,6 +279,7 @@ class VABackup extends VirtexAdmin {
 					header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 					header('Content-type: application/force-download');
 					header('Content-Disposition: attachment; filename="'.basename($arquivo).'"');
+					header('Content-length: '.filesize($arquivo));
 					readfile($arquivo);
 				
 					fclose($arq_down);
