@@ -173,7 +173,7 @@ class VABackup extends VirtexAdmin {
 						$pathbackup = " /mosman/backup/";
 										
 						$nome = "virtex_$DATA2.tgz";
-						$caminho = " /mosman/virtex/";
+						$caminho = " /mosman/virtex/app/";
 					
 						$comando = "tar -czvf $pathbackup$nome  $caminho";
 					
