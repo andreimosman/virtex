@@ -228,7 +228,33 @@ class VABackup extends VirtexAdmin {
 					$lista = $this->bd->obtemRegistros($sSQL);
 					
 					//echo "LISTA: $sSQL<br>";
+				if (count($lista) <= 1){
+				
+					$arq = "/mosman/backup/".$lista[0]["arquivo_backup"];
+					$tamanho = filesize($arq);
+					$kb = $tamanho/1024;
+					$kb = number_format($kb, 2, ',', '.');
+									
+					$lista[0]["kb"] = $kb;
+					
+				}else{
+				
+					for ($i=0;$i<count($lista);$i++){
 
+						$arq = "/mosman/backup/".$lista[$i]["arquivo_backup"];
+						$tamanho = filesize($arq);
+						$kb = $tamanho/1024;
+						$kb = number_format($kb, 2, ',', '.');
+						$lista[$i]["kb"] = $kb;
+
+
+
+					}				
+				
+				
+				
+				
+				}
 					
 					$this->tpl->atribui("lista",$lista);
 					$this->arquivoTemplate = "backup_final.html";
