@@ -400,7 +400,7 @@ class VABackup extends VirtexAdmin {
 					$arq = fread($arq_down,filesize($arquivo));
 					fclose ($fp);
 					                  
-					printf $arq;
+					print $arq;
 
 
 
