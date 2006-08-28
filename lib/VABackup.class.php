@@ -391,7 +391,7 @@ class VABackup extends VirtexAdmin {
 					header('Content-type: application/force-download');
 					header('Content-Disposition: attachment; filename="'.basename($arquivo).'"');
 					header('Content-length: '.(string)(filesize($arquivo)) );
-					header("Content-Transfer-Encoding: binary\n");
+					//header("Content-Transfer-Encoding: binary\n");
 					//readfile($arquivo);
 
 
