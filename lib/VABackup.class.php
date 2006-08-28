@@ -38,6 +38,9 @@ class VABackup extends VirtexAdmin {
 			$configuracao = @$_REQUEST["configuracao"];
 			$bd = @$_REQUEST["bd"];
 			$sistema = @$_REQUEST["sistema"];
+			$estatisticas = @$_REQUEST["estatisticas"];
+			$emails = @$_REQUEST["emails"];
+			$hospedagem = @$_REQUEST["hospedagem"];
 			$hoje = DATE("Y-m-d");
 			$DATA = date("Y-m-d H:i:s");
 			
@@ -206,6 +209,113 @@ class VABackup extends VirtexAdmin {
 						
 						
 					}
+					
+					if($hospedagem){
+
+						$pathbackup = " /mosman/backup/";
+
+						$nome = "hosp_$DATA2.tgz";
+						$caminho = " /mosman/virtex/dados/hospedagem";
+
+						$comando = "tar -czvf $pathbackup$nome  $caminho";
+
+						system($comando,$retvalsystem);
+
+						if ($retvalsystem != 0){
+
+							$status = "ERRO";
+							$erro = 1;
+
+						}else{
+
+							$status = "OK";
+
+						}
+
+						$sSQL  = "INSERT INTO bktb_arquivos ";
+						$sSQL .= "(id_backup,arquivo_backup, tipo_backup, status_backup, data_backup) ";
+						$sSQL .= "VALUES ";
+						$sSQL .= "((select max(id_backup) FROM bktb_backup),'$nome', 'Dados','$status', '$hoje' )";
+
+						$this->bd->consulta($sSQL);		
+
+						//echo "GRAVAÇÃO DE BKP: $sSQL <br>";						
+											
+											
+					}
+					
+					
+					if($emails){
+
+						$pathbackup = " /mosman/backup/";
+
+						$nome = "emails_$DATA2.tgz";
+						$caminho = " /mosman/virtex/dados/emails";
+
+						$comando = "tar -czvf $pathbackup$nome  $caminho";
+
+						system($comando,$retvalsystem);
+
+						if ($retvalsystem != 0){
+
+							$status = "ERRO";
+							$erro = 1;
+
+						}else{
+
+							$status = "OK";
+
+						}
+
+						$sSQL  = "INSERT INTO bktb_arquivos ";
+						$sSQL .= "(id_backup,arquivo_backup, tipo_backup, status_backup, data_backup) ";
+						$sSQL .= "VALUES ";
+						$sSQL .= "((select max(id_backup) FROM bktb_backup),'$nome', 'Dados','$status', '$hoje' )";
+
+						$this->bd->consulta($sSQL);		
+
+						//echo "GRAVAÇÃO DE BKP: $sSQL <br>";						
+											
+											
+					}
+					
+					if($estatisticas){
+
+						$pathbackup = " /mosman/backup/";
+
+						$nome = "emails_$DATA2.tgz";
+						$caminho = " /mosman/virtex/dados/estatisticas/*.rrd";
+
+						$comando = "tar -czvf $pathbackup$nome  $caminho";
+
+						system($comando,$retvalsystem);
+
+						if ($retvalsystem != 0){
+
+							$status = "ERRO";
+							$erro = 1;
+
+						}else{
+
+							$status = "OK";
+
+						}
+
+						$sSQL  = "INSERT INTO bktb_arquivos ";
+						$sSQL .= "(id_backup,arquivo_backup, tipo_backup, status_backup, data_backup) ";
+						$sSQL .= "VALUES ";
+						$sSQL .= "((select max(id_backup) FROM bktb_backup),'$nome', 'Dados','$status', '$hoje' )";
+
+						$this->bd->consulta($sSQL);		
+
+						//echo "GRAVAÇÃO DE BKP: $sSQL <br>";						
+											
+											
+					}					
+					
+					
+					
+					
 					
 					if ($erro == 1){
 						$status2 = "ERRO";
