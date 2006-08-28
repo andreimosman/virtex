@@ -145,6 +145,8 @@ $_LS_OPERADORAS_CC = array(
 		
 $_LS_FORMATOS_PAG = array(
 		"PC" => "PagContas",
+		"BB" => "Banco do Brasil"
+		
 		);
 		
 $_LS_TIPO_CONTRATO = array(
