@@ -272,14 +272,14 @@ class VABackup extends VirtexAdmin {
 				
 				if (count($detalhe) <= 1){
 				
-					$arq = "/mosman/backup/".$detalhe["arquivo_backup"];
+					$arq = "/mosman/backup/".$detalhe[0]["arquivo_backup"];
 					$tamanho = filesize($arq);
 					$kb = $tamanho/1024;
 									
-					$detalhe["kb"] = $kb;
+					$detalhe[0]["kb"] = $kb;
 				}else{
 				
-					for ($i=0;count($detalhe);$i++){
+					for ($i=1;count($detalhe);$i++){
 
 						$arq = "/mosman/backup/".$detalhe[$i]["arquivo_backup"];
 						$tamanho = filesize($arq);
