@@ -1,6 +1,6 @@
 /*
 Created		22/2/2006
-Modified		19/8/2006
+Modified		27/8/2006
 Project		
 Model		
 Company		
@@ -402,9 +402,10 @@ Create table  cbtb_faturas
 	id_cobranca Serial NOT NULL,
 	cod_barra Varchar(50) NULL  UNIQUE ,
 	anterior Boolean NULL  Default false,
-	id_carne Smallint NOT NULL,
+	id_carne Smallint NULL ,
 	nosso_numero Varchar(100) NULL ,
 	linha_digitavel Varchar(150) NULL ,
+	nosso_numero_banco integer NULL ,
  primary key (id_cliente_produto,data)
 );
 
@@ -562,6 +563,14 @@ Create table  lgtb_retorno
 	NRSC Char(2) NULL ,
 	NRPE Char(2) NULL ,
 	admin Varchar(20) NULL ,
+	tipo_retorno Varchar(20) NULL ,
+	agencia integer NULL ,
+	dv_agencia integer NULL ,
+	cedente integer NULL ,
+	dv_cedente integer NULL ,
+	convenente integer NULL ,
+	nome_empresa Varchar(255) NULL ,
+	seq_retorno integer NULL ,
  primary key (id_arquivo)
 );
 
@@ -575,7 +584,14 @@ Create table  lgtb_retorno_faturas
 	valor_tarifa Numeric(7,2) NULL ,
 	status Char(2) NULL ,
 	id_arquivo integer NOT NULL,
-	motivo Varchar(100) NULL 
+	motivo Varchar(100) NULL ,
+	agencia integer NULL ,
+	dv_agencia integer NULL ,
+	cedente integer NULL ,
+	dv_cedente integer NULL ,
+	convenente integer NULL ,
+	nome_empresa Varchar(20) NULL ,
+	seq_retorno integer NULL 
 );
 
 Create table  cftb_banda
@@ -646,11 +662,11 @@ Create table  lgtb_administradores
 Create table  bktb_backup
 (
 	id_backup Serial NOT NULL,
-	data_backup Timestamp NULL ,
-	arquivo_backup Varchar(150) NULL ,
-	tipo_backup Varchar(2) NULL ,
-	status_backup Varchar(2) NULL ,
+	data_backup Date NULL ,
+	status_backup Varchar(4) NULL ,
 	admin Smallint NULL ,
+	operador_backup Varchar(2) NULL ,
+	data Timestamp NULL  Default now(),
  primary key (id_backup)
 );
 
@@ -661,6 +677,27 @@ Create table  cftb_backup
 	usuario Varchar(100) NULL ,
 	senha Varchar(150) NULL 
 );
+
+Create table  bktb_arquivos
+(
+	id_backup integer NOT NULL,
+	data_backup Date NULL ,
+	tipo_backup Varchar(50) NULL ,
+	arquivo_backup Varchar(150) NULL ,
+	status_backup Varchar(4) NULL 
+);
+
+Create table  lgtb_restore
+(
+	id_restore Serial NOT NULL,
+	arquivo_restore Varchar(255) NULL ,
+	data_restore Timestamp NULL ,
+	admin Varchar(50) NULL ,
+	status_restore Varchar(4) NULL ,
+ primary key (id_restore)
+);
+
+
 
 
 
@@ -746,6 +783,7 @@ Alter table lgtb_reagendamento add  foreign key (id_cliente_produto,data) refere
 Alter table cbtb_faturas add  foreign key (id_carne) references cbtb_carne (id_carne)  on update restrict  on delete restrict ;
 Alter table cntb_conta_bandalarga add  foreign key (ip_externo) references cftb_ip_externo (ip_externo)  on update restrict  on delete restrict ;
 Alter table lgtb_retorno_faturas add  foreign key (id_arquivo) references lgtb_retorno (id_arquivo)  on update restrict  on delete restrict ;
+Alter table bktb_arquivos add  foreign key (id_backup) references bktb_backup (id_backup)  on update restrict  on delete restrict ;
 
 
 -- CRIANDO SEQUENCES
