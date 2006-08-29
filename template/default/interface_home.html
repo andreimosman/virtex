@@ -3,7 +3,7 @@
 <head>
 <title>::.. Virtex Admin - Interface Cliente ..::</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link href="template/default/estilos1.css" rel="stylesheet" type="text/css"></head><body  leftmargin="160" topmargin="60">
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css"></head><body   topmargin="30">
 {literal}
 <script language="JavaScript" type="text/javascript" >
 <!--
@@ -26,16 +26,58 @@
 				}
 
 	}
+	
+	function valida_acc(form){
+	
+	
+			conta = document.select_acc.produto_conta.value;
+			
+			if (conta=="#"){
+			
+				alert("Selecione uma conta válida!")
+				return false;
+			
+			}
+			
+			return true;
+			
+		}
+		
+	function valida_ficha(form){
+		
+		senha = document.ficha_email.senha.value;
+		senha_conf = document.ficha_email.conf_senha.value;
+		
+		if ((senha != senha_conf)||((senha == "")&&(senha_conf ==""))){
+		
+			alert("Campos senha e confirmação devem conter o mesmo conteúdo!");
+			return false;
+		
+		}
+		
+		return true;	
+	
+	}
+	
+	
 //-->
 </script>
 {/literal}
-
+<script language="JavaScript" type="text/JavaScript">
+{literal}
+<!--
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+  window.open(theURL,winName,features);
+}
+//-->
+{/literal}
+</script>
 
 
 
 <div align="center">
-<table  width="92%" height="345" border="0" cellpadding="0" cellspacing="0" background="template/default/images/top_pixel.gif">
-  <tr>
+  <table  width="700" height="345" border="0" align="center" cellpadding="0" cellspacing="0" background="template/default/images/top_pixel.gif">
+    <tr>
     <td width="170" height="55" ><img src="template/default/images/logo_top_interface.gif">
     <td width="450" align="center" valign="middle">
 	 <div align="right">
@@ -46,21 +88,23 @@
   </tr>
   <tr bgcolor="#BACEBF">
     <td height="0" colspan="4">
-      <table width="800" bgcolor="#BACEBF">
+      <table width="800" bgcolor="#BACEBF" border="0">
         <tr>
           <td width="47" height="21" >
             <p align="left"><strong><a href="index_home.php?op=home">Home</a></strong></p></td>
           <td width="105"><p align="left"><strong><a href="index_home.php?op=alterar_senha&id_conta={$id_conta}">Altera&ccedil;&atilde;o
               de Senha</a></strong></p></td>
-          <td width="207" ><p align="left"><strong><a href="index_home.php?op=contas">{if $conta_mestre=='t'}Contas{/if}</a></strong></p></td>
+          <td width="80" ><p align="center"><strong><a href="index_home.php?op=contas">{if $conta_mestre=='t'}Contas{/if}</a></strong></p></td>
+		  {if $conta_mestre=='t' && $info_cobranca =='t'}<td width="110" ><p align="left"><strong><a href="index_home.php?op=cobranca">Dados de Cobran&ccedil;a</a></strong></p></td>{/if}
+		  <td width="237" ><p align="left"><strong><a href="index_home.php?op=criar_email">{if $conta_mestre=='t'}Criar Email Adicional{/if}</a></strong></p></td>
           <td width="228" > <div align="right">
               <p><strong><font size="-3">username:</font></strong> <strong>{$username_conf}{if $tipo_conta_fix=="E"}@{$dominio}{/if}</strong></p>
             </div></td>
         </tr>
-      </table>
+      </table> 
   <tr  bgcolor="#F9F9F9">
     <td height="380" colspan="4"><p align="center"><font color="#BACEBF">{if !$alterar_senhas
-        && !$contas && !$dados}<strong>Bem Vindo à Central do Assinante.</strong></font></p>
+        && !$contas && !$dados && !$faturas_segunda_via && !$cobranca && !$criar_email}<strong>Bem Vindo à Central do Assinante.</strong></font></p>
       <p align="center"><font color="#BACEBF"><strong><img src="template/default/images/interface_background.gif" alt="VirtexAdmin  - Central do Assinante" width="152" height="51">{/if}</strong></font></p>
       <div align="center">
 <form action="{$smarty.server.PHP_SELF}" name=ic method="post" onSubmit="return valida(this.value);">
@@ -106,31 +150,180 @@
 </form>
         <form  action="{$smarty.server.PHP_SELF}" name="dados" method="post">
           <p>{if $dados}</p>
-          <table width="75%" border="0" align="center">
-            <tr bgcolor="F1F1F1">
-              <td><div align="center">
-                  <p><strong><font color="#99B7A0">Username</font></strong></p>
-                </div></td>
-              <td><div align="center">
-                  <p><strong><font color="#99B7A0">Tipo da conta</font></strong></p>
-                </div></td>
-              <td><div align="center">
-                  <p><font color="#99B7A0"><strong>Dom&iacute;nio</strong></font></p>
-                </div></td>
-            </tr>
-            <tr>
-              <td><div align="center">
-                  <p><strong>{$username}</strong></p>
-                </div></td>
-              <td><div align="center">
-                  <p><strong>{if $tipo_conta== "BL"}Banda Larga{/if}{if $tipo_conta=="E"}E-mail{/if}{if $tipo_conta=="H"}Hospedagem{/if}{if $tipo_conta=="D"}Discado{/if}</strong></p>
-                </div></td>
-              <td><div align="center">
-                  <p><strong>{$dominio}</strong></p>
-                </div></td>
-            </tr>
-          </table>
-          <p>
+          <table width="100" border="0" cellspacing="0" cellpadding="0" align="center">
+              <tr> 
+                <td> {if $tipo_conta == "BL"} 
+				  <div align="center"><strong><font color="#99B7A0" size="+1" face="Arial, Helvetica, sans-serif">Banda Larga</font></strong><br>
+                  </div>
+                  <table width="500" border="0" cellspacing="2" cellpadding="2">
+                    <tr> 
+                      <td align="center" valign="middle"> </td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="middle">
+                        <table width="450" border=0 bgcolor="#F1F1F1">
+                          <tr> 
+                            <td colspan=2> <table width="100%" border="0" cellspacing="2" cellpadding="0">
+                                <tr> 
+                                  <td width="84%"><font face=arial color="#99B7A0"><b>Ficha 
+                                    técnica</b></font> </td>
+                                  <td width="16%" align="center">&nbsp;</td>
+                                </tr>
+                              </table></td>
+                          </tr>
+                          <tr> 
+                            <td width="50" align="right" valign="middle" bgcolor="#FFFFFF"> 
+                              <p>Username:</p></td>
+                            <td width="400" colspan=2 bgcolor="#FFFFFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>{$bandalarga.username}</b></font></td>
+                          </tr>
+                          <tr> 
+                            <td width="50" align="right" valign="middle" bgcolor="#FFFFFF"> 
+                              <p>Domínio:</p></td>
+                            <td bgcolor="#FFFFFF" colspan=2 width="400"> <font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>{$bandalarga.dominio}</b> 
+                              </font></td>
+                          </tr>
+                        </table></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="middle" id="tdados">&nbsp; {if $bandalarga.tipo_bandlarga == "I"} <table width="450" border=0 bgcolor="#F1F1F1" id="disc">
+                          <tr> 
+                            <td colspan=2><p><strong><font color="#99B7A0">Dados 
+                                da Conexão</font></strong></p></td>
+                          </tr>
+						  
+                          <tr>
+                            <td bgcolor="#FFFFFF" align="right" width="81" valign="middle"> 
+                              <p>IP:</p></td>
+                            <td bgcolor="#FFFFFF" align="left" width="115" valign="middle"> 
+                              <p>{$bandalarga.ip_cliente}</p></td>
+                            <td bgcolor="#FFFFFF" align="right" width="64" valign="middle"> 
+                              <p>Máscara:</p></td>
+                            <td bgcolor="#FFFFFF" align="left" width="172" valign="middle"> 
+                              <p>{$bandalarga.mascara}</p></td>
+                          </tr>
+						
+                          <tr> 
+                            <td bgcolor="#FFFFFF" align="right" width="81" valign="middle"> 
+                              <p>Gateway:</p></td>
+                            <td align="left" valign="middle" bgcolor="#FFFFFF"> 
+                              <p>{$bandalarga.gateway}</p></td>
+                            <td bgcolor="#FFFFFF" align="right" width="64" valign="middle"> 
+                              <p>MAC:</p></td>
+                            <td align="left" valign="middle" bgcolor="#FFFFFF"> 
+                              <p>{$bandalarga.mac}</p></td>
+                          </tr>
+						 </table>  {/if}</td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="top"> <table width="450" border=0 bgcolor="#F1F1F1" id="disc">
+                          <tr> 
+                            <td colspan=4><p><strong><font color="#99B7A0">Banda</font></strong></p></td>
+                          </tr>
+                          <tr> 
+                            <td width="75" bgcolor="#FFFFFF" align="right"> <p>Upload:</p></td>
+                            <td width="150" bgcolor="#FFFFFF"> <p>{$bandalarga.upload_kbps} 
+                                kbps</p></td>
+                            <td width="75" bgcolor="#FFFFFF" align="right"> <p>Download:</p></td>
+                            <td width="150" bgcolor="#FFFFFF"> <p>{$bandalarga.download_kbps} 
+                                kbps</p></td>
+                          </tr>
+                        </table></td>
+                    </tr>
+                    <tr> 
+                      <td align="center" valign="middle"><a href="javascript: history.back();">voltar</a></td>
+                    </tr>
+                  </table>
+                 {/if} { if $tipo_conta|trim == "E" } 
+				  <div align="center"><strong><font color="#99B7A0" size="+1" face="Arial, Helvetica, sans-serif">E-Mail</font></strong><br>
+                  </div>
+                  <table width="450" border=0 bgcolor="#F1F1F1">
+                    <tr> 
+                      <td colspan=2> <table width="100%" border="0" cellspacing="2" cellpadding="0">
+                          <tr> 
+                            <td width="84%"><font face=arial color="#99B7A0"><b>Ficha 
+                              técnica</b></font> </td>
+                            <td width="16%" align="center">&nbsp;</td>
+                          </tr>
+                        </table></td>
+                    </tr>
+                    <tr> 
+                      <td width="100" align="right" valign="middle" bgcolor="#FFFFFF"> 
+                        <p>Username:</p></td>
+                      <td width="400" colspan=2 bgcolor="#FFFFFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>{$email.username}</b></font></td>
+                    </tr>
+                    <tr> 
+                      <td width="100" align="right" valign="middle" bgcolor="#FFFFFF"> 
+                        <p>Dominio:</p></td>
+                      <td bgcolor="#FFFFFF" colspan=2 width="400"> <font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>{$email.dominio}</b> 
+                        </font></td>
+                    </tr>
+                    <tr> 
+                      <td width="100" align="right" valign="middle" bgcolor="#FFFFFF"><p>Quota:</p></td>
+                      <td bgcolor="#FFFFFF" colspan=2><p>{$email.quota}</p></td>
+                    </tr>
+                  </table>
+                  <p align="center"><a href="javascript: history.back();">voltar</a></p>
+                  {/if} { if $tipo_conta|trim == "H"} 
+				  <div align="center"><strong><font color="#99B7A0" size="+1" face="Arial, Helvetica, sans-serif">Hospedagem</font></strong><br>
+                  </div>
+                  <table width="450" border=0 bgcolor="#F1F1F1">
+                    <tr> 
+                      <td colspan=2> <table width="100%" border="0" cellspacing="2" cellpadding="0">
+                          <tr> 
+                            <td width="84%"><font face=arial color="#99B7A0"><b>Ficha 
+                              técnica</b></font> </td>
+                            <td width="16%" align="center">&nbsp;</td>
+                          </tr>
+                        </table></td>
+                    </tr>
+                    <tr> 
+                      <td width="100" align="right" valign="middle" bgcolor="#FFFFFF"> 
+                        <p>Username:</p></td>
+                      <td width="400" colspan=2 bgcolor="#FFFFFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>{$hosp.username}</b></font></td>
+                    </tr>
+                    <tr> 
+                      <td width="100" align="right" valign="middle" bgcolor="#FFFFFF"> 
+                        <p>Dominio:</p></td>
+                      <td bgcolor="#FFFFFF" colspan=2 width="400"> <font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>{if 
+                        $hosp.tipo_hospedagem == "D"}www.{$hosp.dominio_hospedagem}{/if}{if 
+                        $hosp.tipo_hospedagem != "D"}www.{$hosp.dominio}/{$hosp.username}{/if}</b> 
+                        </font></td>
+                    </tr>
+                    <tr> 
+                      <td width="100" align="right" valign="middle" bgcolor="#FFFFFF"><p>FTP:</p></td>
+                      <td bgcolor="#FFFFFF" colspan=2><p>{if $hosp.tipo_hospedagem 
+                          == "D"}ftp.{$hosp.dominio_hospedagem}{/if}{if $hosp.tipo_hospedagem 
+                          != "D"}{$hosp.dominio}/{$hosp.username}{/if}</p></td>
+                    </tr>
+                  </table>
+				   <p align="center"><a href="javascript: history.back();">voltar</a></p>
+                  {/if} { if $tipo_conta|trim == "D"} 
+				  <div align="center"><strong><font color="#99B7A0" size="+1" face="Arial, Helvetica, sans-serif">Discado</font></strong><br>
+                  </div>
+                  <table width="450" border=0 bgcolor="#F1F1F1">
+                    <tr> 
+                      <td colspan=2> <table width="100%" border="0" cellspacing="2" cellpadding="0">
+                          <tr> 
+                            <td width="84%"><font face=arial color="#99B7A0"><b>Ficha 
+                              técnica</b></font> </td>
+                            <td width="16%" align="center">&nbsp;</td>
+                          </tr>
+                        </table></td>
+                    </tr>
+                    <tr> 
+                      <td width="100" align="right" valign="middle" bgcolor="#FFFFFF"><p>Username:</p></td>
+                      <td width="400" colspan=2 bgcolor="#FFFFFF"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>{$discado.username}</b></font></td>
+                    </tr>
+                    <tr> 
+                      <td width="100" align="right" valign="middle" bgcolor="#FFFFFF"><p>Foneinfo:</p></td>
+                      <td bgcolor="#FFFFFF" colspan=2 width="400"> <font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>{$discado.foneinfo}</b></font></td>
+                    </tr>
+                  </table>
+				   <p align="center"><a href="javascript: history.back();">voltar</a></p>
+                  {/if} </td>
+              </tr>
+            </table>
+            <p>
             <input type="submit" name="Submit" value="Alterar senha &gt;&gt;">
             <input type="hidden" name="username" value="{$username}">
             <input type="hidden" name="tipo_conta" value="{$tipo_conta}">
@@ -140,31 +333,242 @@
             </font> {/if} </p>
           </form>
         {if $contas} </div>
-      <table width="471" align="center">
-        <tr>
+        <table width="600" align="center">
+          <tr>
           <td width="161" bgcolor="f1f1f1"> <p align="left"><font color="#99B7A0"><strong>Username</strong></font></p></td>
           <td width="179" bgcolor="f1f1f1"> <p align="center"><font color="#99B7A0"><strong>Tipo</strong></font></p></td>
+		  <td  bgcolor="f1f1f1"> <p align="center"><font color="#99B7A0"><strong></strong></font></p></td>
         </tr>
         {foreach item=c from=$contas}
         <tr>
           <td><p align="left"><strong>{$c.username}{if $c.tipo_conta=="E"}@{$c.dominio}{/if}</strong></p></td>
           <td> <p><strong>{if $c.tipo_conta=="E"}E-MAIL{else}{$c.nome}{/if}</strong></p></td>
-          <td width="115" ><a href="index_home.php?op=dados&username={$c.username}&tipo_conta={$c.tipo_conta}&dominio={$c.dominio}">[Dados da conta]</a> </td>
+          <td><a href="index_home.php?op=dados&username={$c.username}&tipo_conta={$c.tipo_conta}&dominio={$c.dominio}">[Dados da conta]</a> </td>
         </tr>
         <!--{foreach item=e from=$c.conta}<tr>
           <td><p align="left"><strong>{$e.email}</strong></p></td>
           <td> <p><strong>E-mail</strong></p></td>
           <td width="115" ><a href="index_home.php?op=dados&username={$e.username}&dominio={$e.dominio}&tipo_conta={$e.tipo_conta}">[Dados da conta]</a> </td>
         </tr>{/foreach}-->
-
+		<tr bgcolor="#CCCCCC">
+			<td colspan="9" align="center" height="1"></td>
+		</tr>
         {/foreach}
+
       </table>
-      <p>{/if} </p></td>
-  </tr>
+        {/if} {if $cobranca} {if $lista_contrato} 
+        <table width="500" border="0" align="center" cellpadding="0" cellspacing="1">
+          <tr> 
+            <td>&nbsp;</td>
+          </tr>
+          <tr> 
+            <td align="CENTER" valign="MIDDLE"><table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#999999">
+                <tr> 
+                  <td><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                      <tr> 
+                        <td bgcolor="#FFFFFF">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr> 
+                              <td bgcolor="#F1F1F1"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+                                  <tr bgcolor="#CDCDCD"> 
+                                    <td colspan="8" align="center" height="20"><strong><font color="#739B7C" size="2" face="Verdana, Arial, Helvetica, sans-serif">CONTRATOS</font></strong></td>
+                                  </tr>
+                                  <tr> 
+                                    <td width="80" align="center"> <p><strong><font color="#99B7A0">Dt. 
+                                        Contrato</font></strong></p></td>
+                                    <td width="75" align="center"> <p><strong><font color="#99B7A0">Vig&ecirc;ncia</font></strong></p></td>
+                                    <td width="205" align="center"> <p><strong><font color="#99B7A0">Produto</font></strong></p></td>
+                                    <td width="30" align="center"> <p><strong>&nbsp;&nbsp;&nbsp;<font color="#99B7A0">&nbsp;Tipo</font></strong></p></td>
+                                    <td width="75" align="RIGHT"> <p><strong><font color="#99B7A0">Valor</font></strong></p></td>
+                                    <td width="75" align="center"> <p><strong><font color="#99B7A0">Status</font></strong></p></td>
+                                    <td width="30" align="center">&nbsp;</td>
+                                    <td width="30" align="center">&nbsp;</td>
+                                  </tr>
+                                </table></td>
+                            </tr>
+                            <tr> 
+                              <td>
+                                <table width="100%" border="0" cellspacing="1" cellpadding="0">
+								{foreach item=a from=$lista_contrato} 
+                                  <tr> 
+                                    <td width="75" align="center" height="15"> 
+                                      <p>{$a.data_contratacao|date_format:"%d/%m/%Y"}</p></td>
+                                    <td width="100" align="center" height="15"> 
+                                      <p>{$a.vigencia}</p></td>
+                                    <td width="215" align="LEFT" height="15"> 
+                                      <p>{$a.nome} 
+                                        - {foreach item=u from=$a.conta}<br>
+                                        {$u.username}{/foreach}</p></td>
+                                    <td width="30" align="center" height="15"> 
+                                      <p>{$a.tipo_produto}</p></td>
+                                    <td width="75" align="RIGHT" height="15"> 
+                                      <p>{$a.valor_contrato}</p></td>
+                                    <td width="75" align="center" height="15"> <p>{if $a.status|trim != "M"}{/if}{$a.status}{if 
+                                        $a.status|trim != "M"}{/if}</p></td>
+									<td>	
+									<table width="100%" border="0" cellpadding="3" cellspacing="2" dwcopytype="CopyTableCell">
+                          			<tr>
+                          			  <td width="15" align="center"><a href="javascript:;" onclick="MM_openBrWindow('index_home.php?op=imprime_contrato&id_cliente_produto={$a.id_cliente_produto}&$id_cliente={$a.id_cliente}','contrato','scrollbars=yes,width=500,height=600')"><img src="template/default/images/viewer.gif" alt="Ver Contrato" width="15" height="15" border="0"></a></td>
+                           			 <td width="15" align="center"><a href="index_home.php?op=faturas&id_cliente_produto={$a.id_cliente_produto}"><img alt="Ver Faturas" src="template/default/images/boleto.gif" width="15" height="16"  border="0"></a></td>
+                         			 </tr>
+                       				 </table>
+									</td>
+                                  </tr>
+                                  <tr bgcolor="#CCCCCC"> 
+                                    <td colspan="7" align="center" height="1"></td>
+                                  </tr>{/foreach}
+                                </table>
+                                </td>
+                            </tr>
+                          </table></td>
+                      </tr>
+                    </table></td>
+                </tr>
+              </table>
+              
+            </td>
+          </tr>
+          <tr> 
+            <td>&nbsp; </td>
+          </tr>
+        </table>
+        {else} 
+        <p align="center"><b><font color="#666666"> Não existem contratos vigentes.</font></b></p>
+		<div align="center">
+          <p><a href="javascript: history.back();">Voltar </a></p>
+          <p>{/if} {/if}{if $faturas_segunda_via} {if !$lista_faturas} </p>
+        </div>
+        <div align="center">
+          <p><font color="#666666"><strong>Não Existem Faturas pendentes. </strong></font></p>
+        </div>
+		{else}
+        <table width="300" border="0" align="center">
+          <tr>
+            <td><div align="center"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+              <tr>
+                <td bgcolor="#FFFFFF"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td bgcolor="#F1F1F1"><table width="400" border="0" cellspacing="1" cellpadding="0">
+                            <tr bgcolor="#CDCDCD"> 
+                              <td colspan="8" align="center" height="20"><strong><font color="#739B7C" size="2" face="Verdana, Arial, Helvetica, sans-serif">FATURAS</font></strong></td>
+                            </tr>
+                            <tr> 
+                              <td width="108" align="center"> <p><strong><font color="#99B7A0">Vencimento</font></strong></p></td>
+                              <td width="120" align="center"> <p align="left"><strong><font color="#99B7A0">Descri&ccedil;&atilde;o</font></strong></p></td>
+                              <td width="89"> <p><font color="#99B7A0"><strong>Valor</strong></font></p></td>
+                              <td width="78" align="center"> <p align="left"><font color="#99B7A0"><strong>&nbsp;&nbsp;&nbsp;&nbsp;Status</strong></font></p></td>
+                            </tr>
+                            {foreach item=a from=$lista_faturas} 
+                            <tr> 
+                              <td width="108" align="center"> <p><a href="javascript:;" onclick="MM_openBrWindow('index_home.php?op=segunda_via&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}','boleto','scrollbars=yes,width=700,height=400')" border="0">{$a.data_conv}</a></p></td>
+                              <td width="120" align="LEFT"> <p><a href="javascript:;" onclick="MM_openBrWindow('index_home.php?op=segunda_via&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}','boleto','scrollbars=yes,width=700,height=400')" border="0">{$a.descricao}</a></p></td>
+                              <td width="89" > <p><a href="javascript:;" onclick="MM_openBrWindow('index_home.php?op=segunda_via&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}','boleto','scrollbars=yes,width=700,height=400')" border="0">{$a.valor}</a></p></td>
+                              <td width="78" align="center"> <p align="left"><a href="javascript:;" onclick="MM_openBrWindow('index_home.php?op=segunda_via&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}','boleto','scrollbars=yes,width=700,height=400')" border="0"><img src="template/default/images/{$a.extstatus}.gif" width="68" height="20" border="0"></a></p></td>
+                            </tr>
+                            <tr bgcolor="#CCCCCC"> 
+                              <td colspan="9" align="center" height="1"></td>
+                            </tr>
+                            {/foreach} </table>
+                      </td>
+                    </tr>
+					</table>
+					 </td>
+				 </tr>
+				
+				 </table>
+				 </td>
+				 </tr>
+				 </table>
+  				{/if}
+	    <p align="center"><a href="javascript: history.back();">Voltar </a></p>{/if}
+{if $criar_email && !$mostrar}	
+        <form name="select_acc" method="post" action="" onSubmit="return valida_acc(this);">
+          <table border="0" align="center">
+            <tr> 
+              <td width="202"><p><strong><font color="#99B7A0">Criar email adicional 
+                  na conta:</font></strong></p></td>
+			  </tr>
+			  <tr>
+              <td width="317">
+			   <select name="produto_conta" >
+			   		<option value="#"></option>
+					{assign var=total value="0"}
+			   		{foreach item=a from=$num_email}{foreach item=b from=$a.user}
+						{assign var=total value=$a.num_emails-$a.emails_cliente}
+							<option  value="{$a.id_produto}/{$total}" >{$a.produto} - {$b.username}</option>
+					{/foreach}
+					{/foreach}		   
+			   </select>
+                <input type="submit" name="Submit2" value="Ok"> </td>
+            </tr>
+          </table>
+		  <input type="hidden" name="acao" value="ficha" />
+        </form>
+	</tr>
+{/if} 
+{if $criar_email && $mostrar}
+<form name="ficha_email"  method="post" action="" onSubmit="return valida_ficha(this);">
+	<table align="center">
+		<tr>
+			<td align="center" valign="middle"><strong><font face="arial" size="4" color="#739B7C">E-Mail na conta de {$nome}</font></strong></td>
+		</tr>
+			<tr>
+				<td align="center"><strong><p><font color="#CAD9CD">você tem direito a mais {$total_emails} {if $total_emails=="1"}email adicional{else}emails adicionais{/if} nessa conta.</font></p>
+            </strong>&nbsp;</td>
+			</tr>
+	</table>
+    <table width="450" border=0 bgcolor="#F1F1F1" align="center">
+		<tr>
+			<td colspan=2><h2><font color="#99B7A0">Dados da Conta
+			  <input name="_dominio2" type="hidden" value="{$dominio}" id="_dominio2">
+			  <input name="_username2" type="hidden" value="{$username}" id="_username2">
+			  <input name="id_cliente_produto" type="hidden" value="{$id_cliente_produto}" id="id_cliente_produto">
+			  <input type="hidden" name="id_cliente" value="{$id_cliente}" />
+			  <input type="hidden" name="acao" value="papocar" />
+			  </font></h2>
+			</td>
+		</tr>
+		<tr>
+			<td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+				<p>Username:</p></td>
+			<td bgcolor="#FFFFFF" colspan=2 width="300"><p>
+				<input type="text" maxlength="30" name="username" value="{$username}">
+				@
+				<select name="dominio" id="dominio">
+				  {foreach item=a from=$dominios_provedor}
+				  {if $a.dominio !=""}<option value="{$a.dominio}" {if $a.dominio == $dominio}SELECTED{/if}>{$a.dominio}</option>{/if}
+				  {/foreach}
+				</select></p>
+			</td>
+		</tr>
+		<tr>
+			<td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+				<p>Senha:</p></td>
+			<td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="senha" id="senha" >
+			</td>
+		</tr>
+		<tr>
+			<td bgcolor="#FFFFFF" align="right" width="50" valign="top">
+				<p>Confirme:</p></td>
+			<td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="conf_senha" id="conf_senha" >
+			</td>
+		</tr>
+		<tr>
+			<td width="50" align="right" valign="top" bgcolor="#FFFFFF">
+				<p>Quota:</p></td>
+			<td bgcolor="#FFFFFF" colspan=2> <input name="quota" type="text" id="quota" value="{$quota_por_conta}"></td>
+		</tr>
+		<tr>
+			<td colspan=2 align="center"><input type="submit" name="Submit" value="Alterar >>"></td>
+		</tr>
+     </table>
+	 </form>
+{/if}
+
   <tr>
 
     <td height="20" colspan="4">
-      <div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy;
+<div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy;
         Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
         </tr>
 </table>
