@@ -88,7 +88,7 @@ function check(){
 {/literal}
 </script>
 {/if}
-<body {if $tipo_conta|trim == "H"}onLoad="document.frmConta.user.focus();"{else}onLoad="document.frmConta.username.focus();"{/if}>
+<body >
 <form name="frmConta" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="javascript:return check(this);">
 
 				{if $tipo_conta == "BL"}
@@ -301,7 +301,7 @@ function check(){
 						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
 						  					<p>Username:</p></td>
 						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p>
-            <input type="text" maxlength="30" name="username" value="{$username}">
+            <input type="text" maxlength="30" name="username" value="{$username}" id="username">
             @
             <select name="dominio" id="dominio">
               {foreach item=a from=$dominios_provedor}
