@@ -4352,9 +4352,13 @@ class VACobranca extends VirtexAdmin {
 		$sSQL .= "	status = '".@$_REQUEST["status_fatura"]."', ";
 		$sSQL .= "	observacoes = '".@$_REQUEST["observacoes"]."', ";
 
-		if ($reagendar && $reagendamento)
+		if ($reagendar && $reagendamento){
 			$sSQL .= "	reagendamento = '$reagendamento', ";
-
+			$sSQL .= "	status = 'G', ";
+		}else{
+			$sSQL .= "	status = '".@$_REQUEST["status_fatura"]."', ";
+		
+		}
 		$sSQL .= "	pagto_parcial = pagto_parcial + '".$amortizar."', ";
 		$sSQL .= "	data_pagamento = '".$data_pagamento."', ";
 		$sSQL .= "	desconto = '".$desconto."', ";
