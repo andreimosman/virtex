@@ -1790,6 +1790,24 @@ class VARelatorio extends VirtexAdmin {
 			
 			//echo "QUERY: $sSQL <br>";
 		
+		}else if ($tipo == "TODOS"){
+			
+			$sSQL  = "SELECT ";
+			$sSQL .= "cc.id_cliente_produto, cc.id_cliente, cc.username, cc.dominio, cc.tipo_conta, cc.id_conta, ";
+			$sSQL .= "cb.username, cb.dominio, cb.tipo_conta, cb.ipaddr, cb.id_nas, cb.id_pop, cb.rede, ";
+			$sSQL .= "cl.id_cliente, cl.nome_razao, cl.endereco,cl.id_cidade, ";
+			$sSQL .= "cd.cidade,cd.uf,";
+			$sSQL .= "pop.tipo ";
+			$sSQL .= "FROM ";
+			$sSQL .= "cntb_conta cc, cntb_conta_bandalarga cb, cltb_cliente cl, cftb_pop pop ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "cl.id_cidade = cd.id_cidade ";
+			//$sSQL .= "cb.id_pop = '$id' AND ";
+			$sSQL .= "cb.id_pop = pop.id_pop AND ";
+			$sSQL .= "cc.username = cb.username AND ";
+			$sSQL .= "cc.id_cliente = cl.id_cliente AND ";
+			$sSQL .= "cc.tipo_conta = 'BL' AND ";
+			$sSQL .= "pop.tipo = 'AP' ";
 		}
 		
 		$lista = $this->bd->obtemRegistros($sSQL);
@@ -1834,8 +1852,11 @@ class VARelatorio extends VirtexAdmin {
 		$this->tpl->atribui("tipo",$tipo);
 		$this->tpl->atribui("lista",$lista);
 		
-		$this->arquivoTemplate = "relatorio_config_cliente.html";
-	
+		if ($tipo == "TODOS"){
+			$this->arquivoTemplate = "lista_aps.html";
+		}else{
+			$this->arquivoTemplate = "relatorio_config_cliente.html";
+		}
 	}else if ($op == "lista_banda"){
 
 						if( ! $this->privPodeLer("_RELATORIOS_CLIENTE") ) {
@@ -2025,6 +2046,37 @@ class VARelatorio extends VirtexAdmin {
 		$this->arquivoTemplate = "relatorio_cidades_produtos.html";
 
 	
+	
+	
+	
+	}else if ($op == "anatel"){
+	
+		$sSQL = "SELECT nome,id_pop FROM cftb_pop WHERE tipo = 'AP' and status = 'A'";
+		$aps = $this->bd->obtemRegistros($sSQL);
+		echo "APS: $sSQL<br>";
+		
+		for ($i=0;$i<count($aps);$i++){
+		
+			$sSQL  = "SELECT cn.username,cl.nome_razao,cl.endereco, cl.id_cidade,cd.cidade,cd.uf,cbl.ipaddr,cbl.rede ";
+			$sSQL .= "FROM cntb_conta cn, cltb_cliente cl, cftb_cidade cd, cntb_conta_bandalarga cbl ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "cbl.id_pop = '".$aps[$i]["id_pop"]."' AND ";
+			$sSQL .= "cn.tipo_conta = 'BL' AND ";
+			$sSQL .= "cn.id_cliente = cl.id_cliente AND ";
+			$sSQL .= "cn.username = cbl.username and cn.dominio = cbl.dominio and ";
+			$sSQL .= "cl.id_cidade = cd.id_cidade ";
+			$cli = $this->bd->obtemRegistros($sSQL);
+			
+			echo "CLI$i: $sSQL<br>";
+			$aps[$i]["cli"] = $cli;
+			
+			
+		
+		
+		}
+		
+		$this->tpl->atribui("aps",$aps);
+		$this->arquivoTemplate = "relatorio_anatel.html";
 	
 	
 	
