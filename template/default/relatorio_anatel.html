@@ -74,7 +74,7 @@ if (da && !pr && !mac) with (document) {
                       <td bgcolor="#999999"><strong><font face="Arial, Helvetica, sans-serif" size="2" color="#FFFFFF">Username</font></strong></td>
                       <td bgcolor="#999999"><strong><font face="Arial, Helvetica, sans-serif" size="2" color="#FFFFFF">IP</font></strong></td>
                     </tr>
-                    {foreach item=b from=$a.cli} 
+                    {foreach item=b name=cliente from=$a.cli} 
                     <tr bgcolor="#f1f1f1"> 
                       <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>{$b.nome_razao}</strong></font></td>
                       <td><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{$b.username}</font></td>
@@ -86,8 +86,13 @@ if (da && !pr && !mac) with (document) {
                         {$b.endereco} - {$b.cidade} {$b.uf}</font></td>
                     </tr>
                     {/foreach} 
+                    <tr> 
+                      <td align="RIGHT"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Total:</font></td>
+                      <td colspan="2"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{$smarty.foreach.cliente.total}</font></td>
+                    </tr>
                   </table>
-				 <BR><BR>
+				  <BR>
+                  <BR>
                   <p>{/foreach} </p>
                   <p id="imprimir" align="center"><a href="javascript:;" onClick="return printPage();">IMPRIMIR</a></p></td>
               </tr>

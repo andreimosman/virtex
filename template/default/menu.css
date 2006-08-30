@@ -955,7 +955,12 @@ td img {
 	top:40px;
 	_top:36;
 }
-
+#MMMenu0205175531_3_3_Item_3 {
+/* Unique ID for item 2 of menu MMMenu0205175531_3_3 so we can set its position */
+	left:0px;
+	top:60px;
+	_top:54;
+}
 .MMMenuItemSpanMMMenu0205175531_3 {
 /* The span class definition so we can make sure that arrows and menu text in menu MMMenu0205175531_3 look correct */
 	float:left;
@@ -1068,6 +1073,12 @@ td img {
 	left:0px;
 	top:60px;
 	_top:54px;
+}
+#MMMenu0205175615_4_Item_4 {
+/* Unique ID for item 2 of menu MMMenu0205175615_4 so we can set its position */
+	left:0px;
+	top:80px;
+	_top:72px;
 }
 #MMMenuContainer0205175615_4 img {
 /* needed for Mozilla/Camino/Netscape */
