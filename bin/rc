@@ -12,7 +12,7 @@
 ####################################
 
 VTXHOME=/mosman/virtex
-APPHOME={$VTXHOME}/app
+APPHOME=${VTXHOME}/app
 VTXBIN=${APPHOME}/bin
 ETC=${APPHOME}/etc
 PHP=/usr/local/bin/php
