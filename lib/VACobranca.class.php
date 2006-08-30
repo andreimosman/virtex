@@ -4349,7 +4349,7 @@ class VACobranca extends VirtexAdmin {
 		$sSQL  = "UPDATE ";
 		$sSQL .= "	cbtb_faturas ";
 		$sSQL .= "SET ";
-		$sSQL .= "	status = '".@$_REQUEST["status_fatura"]."', ";
+//		$sSQL .= "	status = '".@$_REQUEST["status_fatura"]."', ";
 		$sSQL .= "	observacoes = '".@$_REQUEST["observacoes"]."', ";
 
 		if ($reagendar && $reagendamento){
