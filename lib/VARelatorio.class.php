@@ -2053,7 +2053,7 @@ class VARelatorio extends VirtexAdmin {
 	
 		$sSQL = "SELECT nome,id_pop FROM cftb_pop WHERE tipo = 'AP' and status = 'A'";
 		$aps = $this->bd->obtemRegistros($sSQL);
-		echo "APS: $sSQL<br>";
+		//echo "APS: $sSQL<br>";
 		
 		for ($i=0;$i<count($aps);$i++){
 		
@@ -2067,7 +2067,7 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "cl.id_cidade = cd.id_cidade ";
 			$cli = $this->bd->obtemRegistros($sSQL);
 			
-			echo "CLI$i: $sSQL<br>";
+			//echo "CLI$i: $sSQL<br>";
 			$aps[$i]["cli"] = $cli;
 			
 			
