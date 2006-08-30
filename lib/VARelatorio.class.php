@@ -2051,7 +2051,7 @@ class VARelatorio extends VirtexAdmin {
 	
 	}else if ($op == "anatel"){
 	
-		$sSQL = "SELECT nome,id_pop FROM cftb_pop WHERE tipo = 'AP' and status = 'A'";
+		$sSQL = "SELECT nome,id_pop FROM cftb_pop WHERE tipo = 'AP' and status = 'A' ORDER BY nome";
 		$aps = $this->bd->obtemRegistros($sSQL);
 		//echo "APS: $sSQL<br>";
 		
@@ -2065,6 +2065,7 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "cn.id_cliente = cl.id_cliente AND ";
 			$sSQL .= "cn.username = cbl.username and cn.dominio = cbl.dominio and ";
 			$sSQL .= "cl.id_cidade = cd.id_cidade ";
+			$sSQL .= "ORDER BY cl.nome_razao ASC ";
 			$cli = $this->bd->obtemRegistros($sSQL);
 			
 			//echo "CLI$i: $sSQL<br>";
