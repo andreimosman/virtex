@@ -41,10 +41,11 @@
                     <tr>
                       <td><select name="formato">
 
-								  {foreach key=id item=nome from=$ls_formatos}
 
-                        <option value="{$id}" >{$nome}</option>
-
+								  {foreach item=a from=$forma}
+									{if $a.id_cobranca == "2" OR $a.id_cobranca == "1"}
+                        <option value="{$a.id_cobranca}">{if $a.nome_cobranca == "Carnê"}PagContas{elseif $a.nome_cobranca == "Boleto Bancário"}Banco do Brasil{/if}</option>
+									{/if}
 								  {/foreach}
 
                       </select></td>
