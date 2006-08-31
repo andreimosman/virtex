@@ -138,7 +138,7 @@ class VirtexAdmin extends MWebApp {
 			/**
 			 * Se a licença não for valida ou congelou
 			 */
-			if( !$this->lic->isValid() || $this->lic->congelou() ) {
+			if( !$veriPrimeiroLogin && (!$this->lic->isValid() || $this->lic->congelou()) ) {
 			
 				$tmp = explode('/',$_SERVER["PHP_SELF"]);
 				$arquivoPHP = $tmp[ count($tmp)-1 ];
