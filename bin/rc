@@ -39,3 +39,8 @@ ${PHP} ${VTXBIN}/vtx-pppoe.php -RU
 
 # Carrega servidor do sistema de informações
 ${PHP} ${VTXBIN}/vtx-info-server.php
+
+# Smarty Stuff
+install -d /tmp/template_c
+chown nobody:nobody /tmp/templates_c/
+

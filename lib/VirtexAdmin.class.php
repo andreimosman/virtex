@@ -143,6 +143,9 @@ class VirtexAdmin extends MWebApp {
 				$tmp = explode('/',$_SERVER["PHP_SELF"]);
 				$arquivoPHP = $tmp[ count($tmp)-1 ];
 				
+				// Se a licenca nao for valida nao considera primeiro login (pra nao entrar em loop)
+				$veriPrimeiroLogin = false;
+				
 				if( $arquivoPHP != "configuracao.php" || @$_REQUEST["op"] != "registro" ) {
 					// Joga pra tela que o cara têm que atualizar a licença.
 					$url      = 'configuracao.php?op=registro&x=fullscreen';
