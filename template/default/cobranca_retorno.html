@@ -1,4 +1,4 @@
-<!-- COBRANCA_RETORNO.HTML -->
+<!-- COBRANCA_RETORNO.HTML (antigo)-->
 <html>
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
@@ -41,11 +41,10 @@
                     <tr>
                       <td><select name="formato">
 
+								  {foreach key=id item=nome from=$ls_formatos}
 
-								  {foreach item=a from=$forma}
-									{if $a.id_cobranca == "2" OR $a.id_cobranca == "1"}
-                        <option value="{$a.id_cobranca}">{if $a.nome_cobranca == "Carnê"}PagContas{elseif $a.nome_cobranca == "Boleto Bancário"}Banco do Brasil{/if}</option>
-									{/if}
+                        <option value="{$id}" >{$nome}</option>
+
 								  {/foreach}
 
                       </select></td>
@@ -62,8 +61,8 @@
                 </table></td>
               </tr>
             </table>
-            
-          <p><font face="Arial, Helvetica, sans-serif" size="3"><strong>Ultimos 
+
+          <p><font face="Arial, Helvetica, sans-serif" size="3"><strong>Ultimos
             arquivos de retorno processados</strong></font></p>
             <table width="550" border="0" cellspacing="1" cellpadding="0">
               <tr bgcolor="#f1f1f1" align="CENTER">
