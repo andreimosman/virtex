@@ -550,7 +550,7 @@ class VABackup extends VirtexAdmin {
 					$arq = $_file_["name"];
 
 					$tipo = $_file_["type"];
-					echo $tipo;
+					///echo $tipo;
 					$arqtmp = $arquivo['tmp_name'];
 					
 					if ($tipo !="application/x-gzip-compressed"){
