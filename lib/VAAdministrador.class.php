@@ -244,6 +244,7 @@ class VAAdministrador extends VirtexAdmin {
 			
 			$nome = $this->admLogin->obtemNome();
 			$adm = $this->admLogin->obtemAdmin();
+			$primeiro_login = $this->admLogin->primeiroLogin();
 			$id_admin = $this->admLogin->obtemId();
 			
 
@@ -253,6 +254,9 @@ class VAAdministrador extends VirtexAdmin {
 
 					$this->tpl->atribui("nome",$nome);
 					$this->tpl->atribui("admin",$adm);	
+					$this->tpl->atribui("admin",$adm);	
+					$this->tpl->atribui("primeiro_login",$primeiro_login);	
+					//echo $primeiro_login;
 					//echo "acao: ". $acao;
 					//echo "bosta";
 				$this->arquivoTemplate = "administrador_alterarsenha.html";

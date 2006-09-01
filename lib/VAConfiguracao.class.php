@@ -1095,7 +1095,7 @@ class VAConfiguracao extends VirtexAdmin {
 					$prefs = $this->prefs->obtem("cobranca");
 
 
-					$sSQL  = "SELECT id_cobranca, nome_cobranca, disponivel FROM cftb_forma_pagamento ORDER BY id_cobranca asc";
+					$sSQL  = "SELECT id_cobranca, nome_cobranca, disponivel FROM cftb_forma_pagamento WHERE disponivel = 'true' ORDER BY id_cobranca asc";
 					$frm_pagamento = $this->bd->obtemRegistros($sSQL);
 
 					$sSQL = "SELECT * FROM cftb_forma_pagamento where disponivel = true";
@@ -1134,11 +1134,11 @@ class VAConfiguracao extends VirtexAdmin {
 						$sSQL .= "  cod_banco_boleto = '".@$_REQUEST["cod_banco_boleto"]."', ";
 						$sSQL .= "  carteira_boleto = '".@$_REQUEST["carteira_boleto"]."', ";
 						$sSQL .= "  agencia_boleto = '".@$_REQUEST["agencia_boleto"]."', ";
-						$sSQL .= "  conta_boleto = '".@$_REQUEST["num_conta_boleto"]."', ";
+						$sSQL .= "  conta_boleto = '".@$_REQUEST["conta_boleto"]."', ";
 						$sSQL .= "  convenio_boleto = '".@$_REQUEST["convenio_boleto"]."' ";
 
 						$this->bd->consulta($sSQL);
-						//echo "update cobrança: $sSQL <br>";
+						////////echo "update cobrança: $sSQL <br>";
 
 
 						$sSQL = "UPDATE cftb_forma_pagamento SET disponivel = 'f'";
