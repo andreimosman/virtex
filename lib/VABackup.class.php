@@ -520,8 +520,9 @@ class VABackup extends VirtexAdmin {
 
 
 			$DATA2 = str_replace(" ","_",$DATA);
-			$DATA2 = str_replace(":","-",$DATA2);
 			
+			$DATA2 = str_replace(":","-",$DATA2);
+			//echo $DATA2;
 			$msg = "";
 			$admin = $this->admLogin->obtemId();			
 			
@@ -541,9 +542,15 @@ class VABackup extends VirtexAdmin {
 				//echo "OK<BR>";
 			
 				if ($upload){
+				
+					$documento = @$_REQUEST["arquivo"];
+					$_file_ = @$_FILES["arquivo"];
+					
+					
 
+					$arq = $_file_["name"];
 
-					$arq = $arquivo['name'];
+					
 					$arqtmp = $arquivo['tmp_name'];
 					
 					list($tp,$dt,$hr) = explode("_",$arq);
