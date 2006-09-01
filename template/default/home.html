@@ -8,7 +8,7 @@
 <title>Virtex Admin - Área de Gerenciamento </title>
 </head>
 <base target="CONTEUDO">
-<body topmargin=0 leftmargin=0 onLoad="document.form_pesquisa.texto_pesquisa.focus();">
+<body topmargin=0 leftmargin=0 {if $privilegio_cliente == "sim"}onLoad="document.form_pesquisa.texto_pesquisa.focus();"{/if}>
 <!-- INICIO DO MENU -->
 <table width="100%" height="100%" cellspacing=0 cellpadding=0 border=0>
  <tr>
@@ -181,8 +181,10 @@
 		</table>
 	</td>
  </tr>
- <tr>
-  <td colspan=2 bgcolor="#BCD3C4" height='20'><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy; Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
+  <tr bgcolor="#BCD3C4"> 
+    <td colspan=2 height='20'>
+<div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy; 
+        Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
  </tr>
 </table>
 </body>

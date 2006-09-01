@@ -19,76 +19,134 @@
                 <td align="center" valign="middle"> <h1 align="center">Cadastro
                     de Prefer&ecirc;ncias de Cobran&ccedil;a</h1>
                   <form name="form1" method="post" action="">
-                    <table width="618" border="0">
-                      <tr>
-                        <td width="146"><p><strong>Taxa de Juros</strong></p></td>
-                        <td width="182"><strong>
-                          <input name="tx_juros" type="text" id="tx_juros" value="{$prefs.tx_juros}" size="10">
-                          </strong>%</td>
-                        <td width="95"><p><strong>Multa</strong></p></td>
-                        <td width="177"><strong>
-                          <input name="multa" type="text" id="multa3" value="{$prefs.multa}" size="10">
-                          </strong>%</td>
-                      </tr>
-                      <tr>
-                        <td><p><strong>Dia de Vencimento</strong></p></td>
-                        <td><strong>
-                          <input name="dia_venc" type="text" id="dia_venc3" value="{$prefs.dia_venc}" size="2">
-                          </strong></td>
-                        <td><p><strong>Car&ecirc;ncia</strong></p></td>
-                        <td><strong>
-                          <input name="carencia" type="text" id="carencia4" value="{$prefs.carencia}" size="2">
-                          </strong>dias </td>
-                      </tr>
-                      <tr>
-                        <td><p><strong>Cod. Banco:</strong></p></td>
-                        <td><strong>
-                          <input name="cod_banco" type="text" value="{$prefs.cod_banco}" size="5" id="cod_banco3">
-                          </strong></td>
-                        <td><p><strong>Carteira:</strong></p></td>
-                        <td><input name="carteira" type="text" value="{$prefs.carteira}" size="12" id="carteira4"></td>
-                      </tr>
-                      <tr>
-                        <td><p><strong>Ag&ecirc;ncia:</strong></p></td>
-                        <td><input name="agencia" type="text" value="{$prefs.agencia}" size="12" id="agencia3"></td>
-                        <td><p><strong>Num. Conta:</strong></p></td>
-                        <td><strong>
-                          <input name="num_conta" type="text" value="{$prefs.num_conta}" size="12" id="num_conta4">
-                          </strong></td>
-                      </tr>
-                      <tr>
-                        <td><p><strong>Conv&ecirc;nio:</strong></p></td>
-                        <td><input name="convenio" type="text" value="{$prefs.convenio}" id="convenio3"></td>
-                        <td><p><strong>Pagamento:</strong></p></td>
-                        <td><select name="pagamento">
-                            <option value="PRE" {if $prefs.pagamento == "pre"}selected{/if}>Pr&eacute;-Pago</option>
-                            <option value="POS" {if $prefs.pagamento == "pos"}selected{/if}>P&oacute;s-Pago</option>
-                          </select></td>
-                      </tr>
-                      <tr>
-                        <td><p><strong>Formas de Pagamento:</strong></p></td>
-                        <td colspan="3"><table width="100%" border="0" cellspacing="3" cellpadding="0">
-                            {foreach item=a from=$frm_pagamento}
-                            <tr>
-                              <td width="9%"><input type="checkbox" name="disponivel[{$a.id_cobranca}]" value="t" class="checkbox" {if $a.disponivel == "t"}CHECKED{/if}></td>
-                              <td width="91%"><p>{$a.nome_cobranca}</p></td>
+                    <table  border="0" style="border: 1px solid #F2F2F2;">
+					  <tr>
+						
+                        <td>
+<table border="0" dwcopytype="CopyTableRow" >
+						
+                            <tr valign="top"> 
+                              <td valign="top" style="border: 1px solid #F2F2F2;"  width="200"><table  border="0" >
+							  <tr>
+							  	<td>&nbsp;</td>
+							  </tr>
+                                  <tr> 
+                                    <td width="98"><p><strong>Taxa de Juros</strong></p></td>
+                                    <td width="96"><p><strong> 
+                                        <input name="tx_juros" type="text" id="tx_juros3" value="{$prefs.tx_juros}" size="10">
+                                        </strong>%</p></td>
+                                    <td width="71"><p><strong>Multa</strong></p></td>
+                                    <td width="131"><p><strong> 
+                                        <input name="multa" type="text" id="multa2" value="{$prefs.multa}" size="10">
+                                        </strong>%</p></td>
+                                  </tr>
+                                  <tr> 
+                                    <td><p><strong>Dia de Vencimento</strong></p></td>
+                                    <td><strong> 
+                                      <input name="dia_venc" type="text" id="dia_venc2" value="{$prefs.dia_venc}" size="10">
+                                      </strong></td>
+                                    <td><p><strong>Car&ecirc;ncia</strong></p></td>
+                                    <td><p><strong> 
+                                        <input name="carencia" type="text" id="carencia2" value="{$prefs.carencia}" size="10">
+                                        </strong>dias </p></td>
+                                  </tr>
+                                  <tr> 
+                                    <td><p><strong>Pagamento</strong></p></td>
+                                    <td><select name="pagamento">
+                                        <option value="PRE" {if $prefs.pagamento == "PRE"}selected{/if}>Pr&eacute;-Pago</option>
+                                        <option value="POS" {if $prefs.pagamento == "POS"}selected{/if}>P&oacute;s-Pago</option>
+                                      </select></td>
+                                    <td><p>&nbsp;</p></td>
+                                    <td>&nbsp;</td>
+                                  </tr>
+								  <tr>
+								  	<Td>&nbsp;</Td>
+								  </tr>
+                                  <tr valign="top"><td  colspan="4"><table>
+                                    <td valign="top"><p><strong>Observa&ccedil;&otilde;es 
+                                        <input name="op" type="hidden" id="op2" value="{$op}">
+                                        <input name="id_preferencia" type="hidden" id="id_preferencia2" value="{$prefs.id_preferencia}">
+                                        <input name="acao" type="hidden" id="acao2" value="alt">
+                                        </strong></p></td>
+                                    <td colspan="3"> <strong> 
+                                      <textarea name="observacoes" id="textarea3" cols="45" rows="5">{$prefs.observacoes}</textarea>
+                                      </strong></td>
+                                  </tr>
+                                  <tr> 
+                                    <td><p><strong>Path Contrato</strong></p></td>
+                                    <td colspan="3"><input name="path_contrato" type="text" value="{$prefs.path_contrato}" size="46" id="path_contrato3"></td>
+                                  </tr></table></td></tr>
+                                </table></td>
+                              <td align="center" style="border: 1px solid #F2F2F2;"><table width="100%" border="0" cellspacing="3" cellpadding="0">
+                                  <tr> 
+                                    <td colspan="2"><p><strong>Formas de Pagamento</strong></p></td>
+                                  </tr>
+                                  {foreach item=a from=$frm_pagamento} 
+                                  <tr> 
+                                    <td width="3%" height="19" valign="top"> <input type="checkbox" name="disponivel[{$a.id_cobranca}]" value="t" class="checkbox" {if $a.disponivel == "t"}checked{/if}></td>
+                                    <td width="91%" valign="bottom"   style="border-top: 4px solid #FFFFFF"><p>{if $a.nome_cobranca=="Fatura Avulsa"}Outras Formas{else}{$a.nome_cobranca}{/if}{if 
+                                        $a.nome_cobranca=="Carnê"}
+                                      <table style="border: 1px solid #000000;">
+                                        <tr> 
+                                          <td><font style="font-size:10px;" face="Verdana, Arial, Helvetica, sans-serif">Opções 
+                                            de Carnê</font> <table width="" border="0" dwcopytype="CopyTableRow">
+                                              <tr> 
+                                                <td><p><strong>Cod. Banco:</strong></p></td>
+                                                <td><strong> 
+                                                  <input name="cod_banco" type="text" value="{$prefs.cod_banco}" size="12" id="cod_banco">
+                                                  </strong></td>
+                                                <td><p><strong>Carteira:</strong></p></td>
+                                                <td><input name="carteira" type="text" value="{$prefs.carteira}" size="12" id="carteira"></td>
+                                              </tr>
+                                              <tr> 
+                                                <td><p><strong>Ag&ecirc;ncia:</strong></p></td>
+                                                <td><input name="agencia" type="text" value="{$prefs.agencia}" size="12" id="agencia"></td>
+                                                <td><p><strong>Num. Conta:</strong></p></td>
+                                                <td><strong> 
+                                                  <input name="num_conta" type="text" value="{$prefs.num_conta}" size="12" id="num_conta">
+                                                  </strong></td>
+                                              </tr>
+                                              <tr> 
+                                                <td><p><strong>Conv&ecirc;nio:</strong></p></td>
+                                                <td><input name="convenio" type="text" id="convenio" value="{$prefs.convenio}" size="12"></td>
+                                              </tr>
+                                            </table></td>
+                                        </tr>
+                                      </table>
+                                      {/if}{if $a.nome_cobranca=="Boleto Bancário"}<br> 
+                                      <table style="border: 1px solid #000000;">
+                                        <tr> 
+                                          <td><font style="font-size:10px;" face="Verdana, Arial, Helvetica, sans-serif">Opções 
+                                            de Boleto</font> <table width="" border="0" dwcopytype="CopyTableRow">
+                                              <tr> 
+                                                <td><p><strong>Cod. Banco:</strong></p></td>
+                                                <td><strong> 
+                                                  <input name="cod_banco_boleto" type="text" value="{$prefs.cod_banco_boleto}" size="12" id="cod_banco_boleto">
+                                                  </strong></td>
+                                                <td><p><strong>Carteira:</strong></p></td>
+                                                <td><input name="carteira_boleto" type="text" value="{$prefs.carteira_boleto}" size="12" id="carteira_boleto"></td>
+                                              </tr>
+                                              <tr> 
+                                                <td><p><strong>Ag&ecirc;ncia:</strong></p></td>
+                                                <td><input name="agencia_boleto" type="text" value="{$prefs.agencia_boleto}" size="12" id="agencia_boleto"></td>
+                                                <td><p><strong>Num. Conta:</strong></p></td>
+                                                <td><strong> 
+                                                  <input name="conta_boleto" type="text" value="{$prefs.conta_boleto}" size="12" id="conta_boleto">
+                                                  </strong></td>
+                                              </tr>
+                                              <tr> 
+                                                <td ><p><strong>Conv&ecirc;nio:</strong></p></td>
+                                                <td ><input name="convenio_boleto" type="text" id="convenio_boleto" value="{$prefs.convenio_boleto}" size="12"></td>
+                                              </tr>
+                                            </table></td>
+                                        </tr>
+                                      </table>
+                                      {/if} 
+                                      <p></p></td>
+                                  </tr>
+                                  {/foreach} </table></td>
                             </tr>
-                            {/foreach} </table></td>
-                      </tr>
-                      <tr>
-                        <td><p><strong>Observa&ccedil;&otilde;es
-                            <input name="op" type="hidden" id="op6" value="{$op}">
-                            <input name="id_preferencia" type="hidden" id="id_preferencia6" value="{$prefs.id_preferencia}">
-                            <input name="acao" type="hidden" id="acao6" value="alt">
-                            </strong></p></td>
-                        <td colspan="3"> <strong>
-                          <textarea name="observacoes" id="textarea" cols="40" rows="5">{$prefs.observacoes}</textarea>
-                          </strong></td>
-                      </tr>
-                      <tr>
-                        <td><p><strong>Path Contrato</strong></p></td>
-                        <td colspan="3"><input name="path_contrato" type="text" value="{$prefs.path_contrato}" size="45" id="path_contrato2"></td>
-
+                          </table></td>
                       </tr>
                     </table>
                     <table width="128" align="center">
