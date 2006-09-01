@@ -1196,11 +1196,11 @@ class VACobranca extends VirtexAdmin {
 				$suspenso = $this->bd->obtemRegistros($sSQL);
 				////echo$sSQL ."<BR>";
 				
-				echo $suspenso."<br>";
+				//echo $suspenso."<br>";
 				if (!$suspenso){
-					echo "libera<br>";
+					//echo "libera<br>";
 					$sSQL = "UPDATE cntb_conta SET status = 'A' WHERE id_cliente_produto = '$id_cliente_produto' AND status = 'S' ";
-					echo$sSQL ."<BR>";
+					//echo$sSQL ."<BR>";
 					$this->bd->consulta($sSQL);
 					
 					
