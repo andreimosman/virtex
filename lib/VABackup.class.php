@@ -553,14 +553,17 @@ class VABackup extends VirtexAdmin {
 					///echo $tipo;
 					$arqtmp = $arquivo['tmp_name'];
 					
-					/*if ($tipo !="application/x-gzip-compressed"){
+					list($nome,$ext) = explode(".",$arq);
+					echo $ext;
+					
+					if ($ext != "gz" ){
 					
 							$mensagem = "ARQUIVO INVÁLIDO, SELECIONE UM ARQUIVO DE EXTENSÃO *.gz ";
 							$this->tpl->atribui("mensagem",$mensagem);
 							$this->arquivoTemplate = "restore_upload_final.html";
 							return;
 					
-					}*/
+					}
 					
 					list($tp,$dt,$hr) = explode("_",$arq);
 					
