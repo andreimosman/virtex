@@ -554,7 +554,7 @@ class VABackup extends VirtexAdmin {
 					$arqtmp = $arquivo['tmp_name'];
 					
 					list($nome,$ext) = explode(".",$arq);
-					echo $ext;
+					//echo $ext;
 					
 					if ($ext != "gz" ){
 					
