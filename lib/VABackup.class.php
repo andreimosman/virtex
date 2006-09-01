@@ -546,12 +546,21 @@ class VABackup extends VirtexAdmin {
 					$documento = @$_REQUEST["arquivo"];
 					$_file_ = @$_FILES["arquivo"];
 					
-					
 
 					$arq = $_file_["name"];
 
-					
+					$tipo = $_file_["type"];
+					echo $tipo;
 					$arqtmp = $arquivo['tmp_name'];
+					
+					if ($tipo !="application/x-gzip-compressed"){
+					
+							$mensagem = "ARQUIVO INVÁLIDO, SELECIONE UM ARQUIVO DE EXTENSÃO *.gz ";
+							$this->tpl->atribui("mensagem",$mensagem);
+							$this->arquivoTemplate = "restore_upload_final.html";
+							return;
+					
+					}
 					
 					list($tp,$dt,$hr) = explode("_",$arq);
 					
@@ -732,6 +741,16 @@ class VABackup extends VirtexAdmin {
 	
 	public function restoreUpload($arq){
 	
+	$admin = $this->admLogin->obtemId();			
+	
+			$hoje = DATE("Y-m-d");
+			$DATA = date("Y-m-d H:i:s");
+
+
+			$DATA2 = str_replace(" ","_",$DATA);
+
+			$DATA2 = str_replace(":","-",$DATA2);
+
 
 		$arquivo = "bd_$DATA2.gz";
 
