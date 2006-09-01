@@ -439,7 +439,7 @@ class VABackup extends VirtexAdmin {
 				if (count($detalhe) <= 1){
 				
 					$arq = "/mosman/backup/".$detalhe[0]["arquivo_backup"];
-					$tamanho = filesize($arq);
+					@$tamanho = filesize($arq);
 					$kb = $tamanho/1024;
 					$kb = number_format($kb, 2, ',', '.');
 									
