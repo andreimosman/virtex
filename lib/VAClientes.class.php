@@ -92,17 +92,19 @@ class VAClientes extends VirtexAdmin {
 	
 	private function obtemCliente($id_cliente) {
 
+
 		$sSQL  = "SELECT ";
 		$sSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
 		$sSQL .= "   rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
 		$sSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
 		$sSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
-		$sSQL .= "   ativo, obs, excluido ";
+		$sSQL .= "   ativo, obs, excluido , info_cobranca ";
 		$sSQL .= "FROM ";
 		$sSQL .= "   cltb_cliente ";
 		$sSQL .= "WHERE ";
 		$sSQL .= "   id_cliente = '$id_cliente' AND excluido = 'f'";
 		
+		///////echo $sSQL ;
    
 		return( $this->bd->obtemUnicoRegistro($sSQL) );
 
@@ -340,7 +342,7 @@ class VAClientes extends VirtexAdmin {
 					$tSQL .= "   rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
 					$tSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
 					$tSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, excluido ";
-					$tSQL .= "   ativo,obs ";
+					$tSQL .= "   ativo,obs, info_cobranca ";
 					$tSQL .= "FROM ";
 					$tSQL .= "   cltb_cliente ";
 					$tSQL .= "WHERE ";
@@ -402,7 +404,7 @@ class VAClientes extends VirtexAdmin {
 						$sSQL .= "      rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
 						$sSQL .= "      cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
 						$sSQL .= "      fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
-						$sSQL .= "      ativo,obs ) ";
+						$sSQL .= "      ativo,obs, info_cobranca ) ";
 						$sSQL .= "   VALUES (";
 						$sSQL .= "     '" . $this->bd->escape($id_cliente) . "', ";
 						$sSQL .= "     now(), ";
@@ -428,7 +430,8 @@ class VAClientes extends VirtexAdmin {
 						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["agencia"]) . "', ";
 						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["dia_pagamento"]) . "', ";
 						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["ativo"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["obs"]) . "' ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["obs"]) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["info_cobranca"]) . "' ";
 						$sSQL .= "     )";
 					
 					
@@ -463,7 +466,8 @@ class VAClientes extends VirtexAdmin {
 						$sSQL .= "   agencia = '" . $this->bd->escape(@$_REQUEST["agencia"]) . "', ";
 						$sSQL .= "   dia_pagamento = '" . $this->bd->escape(@$_REQUEST["dia_pagamento"]) . "', ";
 						$sSQL .= "   ativo = '" . $this->bd->escape(@$_REQUEST["ativo"]) . "', ";
-						$sSQL .= "   obs = '" . $this->bd->escape(@$_REQUEST["obs"]) . "' ";
+						$sSQL .= "   obs = '" . $this->bd->escape(@$_REQUEST["obs"]) . "', ";
+						$sSQL .= "   info_cobranca = '" . $this->bd->escape(@$_REQUEST["info_cobranca"]) . "' ";
 						$sSQL .= "WHERE ";
 						$sSQL .= "   id_cliente = '" . $this->bd->escape(@$_REQUEST["id_cliente"]) . "' ";  // se idcliente for =  ao passado.
 						
@@ -570,6 +574,7 @@ class VAClientes extends VirtexAdmin {
 		        $this->tpl->atribui("dia_pagamento",@$reg["dia_pagamento"]);			
 		        $this->tpl->atribui("ativo",@$reg["ativo"]);			
 		        $this->tpl->atribui("obs",@$reg["obs"]);
+		        $this->tpl->atribui("info_cobranca",@$reg["info_cobranca"]);
 		        
 		        $this->tpl->atribui("titulo",@$titulo);// para que no clientes_cadastro.html a variavel do smart titulo consiga pegar o que foi definido no $titulo.
 
@@ -621,7 +626,7 @@ class VAClientes extends VirtexAdmin {
 					$aSQL .= "   rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
 					$aSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
 					$aSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
-					$aSQL .= "   ativo,obs ";
+					$aSQL .= "   ativo,obs, info_cobranca  ";
 					$aSQL .= "FROM cltb_cliente ";
 					$aSQL .= "WHERE excluido = 'f' ";
 					$aSQL .= "ORDER BY id_cliente DESC LIMIT (10)";		
@@ -638,7 +643,7 @@ class VAClientes extends VirtexAdmin {
 						$sSQL .= "   rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
 						$sSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
 						$sSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
-						$sSQL .= "   ativo,obs ";
+						$sSQL .= "   ativo,obs, info_cobranca ";
 						$sSQL .= "FROM cltb_cliente ";
 						//$sSQL .= "WHERE $campo = '$campo_pesquisa' ";
 						$sSQL .= "WHERE ";
@@ -894,8 +899,8 @@ class VAClientes extends VirtexAdmin {
 
 
 		$lista_faturas = $this->bd->obtemRegistros($sSQL);
-		//////////echo "Lista: $sSQL <br>";
-		
+		//////echo "Lista: $sSQL <br>";
+			
 		
 				$this->obtemPR($id_cliente);
 
@@ -988,7 +993,7 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "ORDER BY f.data ASC ";
 		
 		$lista_faturas = $this->bd->obtemRegistros($sSQL);
-		//////////echo "Lista: $sSQL <br>";
+		///////////////////	echo "Lista: $sSQL <br>";
 		
 		$sSQL = "SELECT nome_razao FROM cltb_cliente WHERE id_cliente = '$id_cliente'";
 		$cliente = $this->bd->obtemUnicoRegistro($sSQL);
@@ -1027,7 +1032,7 @@ class VAClientes extends VirtexAdmin {
 		}	
 
 			
-		//////////echo "lista: $sSQL <br>";
+		///////echo "lista: $sSQL <br>";
 			$this->tpl->atribui("conta",@$contas);
 			$this->tpl->atribui("lista_contrato",$lista_contrato);
 			$this->tpl->atribui("cliente",$cliente);
@@ -3807,12 +3812,24 @@ class VAClientes extends VirtexAdmin {
 				
 				}
 				
-				
+
 					switch($tipo_conta) {
-						case 'D':
-						
+					
+
+
+
+						case 'D':						
 							
 							$senha_cript = $this->criptSenha($senha);
+							
+							$_status = @$_REQUEST["status"];
+							$status = @$_REQUEST["status"];
+
+							if ($_status==""){
+
+								$status = 'S' ;
+
+							}
 													
 														
 							$sSQL  = "UPDATE ";
@@ -3821,14 +3838,14 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= "	foneinfo = '".@$_REQUEST['foneinfo']."' ";
 							$sSQL .= "WHERE ";
 							$sSQL .= "	username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta'";
-							//////////echo "SQL: $sSQL <br>";
+							///////////echo "SQL: $sSQL <br><hr>";
 													
 							$this->bd->consulta($sSQL);
 							
 							$sSQL  = "UPDATE ";
 							$sSQL .= "   cntb_conta ";
 							$sSQL .= "SET ";
-							$sSQL .= "   status = '".$this->bd->escape($status)."',  ";
+							$sSQL .= "   status = '$status',  ";
 							$sSQL .= "   conta_mestre = '$conta_mestre' ";
 							if( $senha ) {
 								$sSQL .= "   , senha = '".$this->bd->escape($senha)."' ";
@@ -3841,12 +3858,15 @@ class VAClientes extends VirtexAdmin {
 							$sSQL .= "   AND tipo_conta = '".$this->bd->escape($tipo_conta)."' ";
 													
 							$this->bd->consulta($sSQL);
-
+							
+							//////////echo $sSQL ."<br>\n<hr>" ;
 						
 							break;
 					
 						case 'BL':
 						//////////echo "TESTE";
+						
+
 						
 							$aSQL = "SELECT * from cntb_conta_bandalarga where username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta' ";
 							$bandalarga = $this->bd->obtemUnicoRegistro($aSQL);
@@ -3898,7 +3918,7 @@ class VAClientes extends VirtexAdmin {
 							$sSQL  = "UPDATE ";
 							$sSQL .= "   cntb_conta ";
 							$sSQL .= "SET ";
-							$sSQL .= "   status = '".$this->bd->escape($status)."', ";
+							$sSQL .= "   status = '$status', ";
 							$sSQL .= "   conta_mestre = '$conta_mestre' ";
 							if( $senha ) {
 								$sSQL .= "   , senha = '".$this->bd->escape($senha)."' ";
@@ -3924,6 +3944,9 @@ class VAClientes extends VirtexAdmin {
 							$uSQL .= "   id_pop = '".$this->bd->escape($id_pop)."', ";
 							$uSQL .= "   upload_kbps = '".$this->bd->escape($upload_kbps)."', ";
 							$uSQL .= "   download_kbps = '".$this->bd->escape($download_kbps)."', ";
+							
+							/////////////echo $uSQL . "<br>\n<hr>" ;
+							///////////////echo $sSQL . "<br>\n<hr>" ;
 							
 							if ( !$mac || $mac == "" ){
 							$uSQL .= "   mac = NULL ";
@@ -4406,7 +4429,7 @@ class VAClientes extends VirtexAdmin {
 					$sSQL .= "   rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
 					$sSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
 					$sSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
-					$sSQL .= "   ativo, obs, excluido ";
+					$sSQL .= "   ativo, obs, excluido, info_cobranca  ";
 					$sSQL .= "FROM ";
 					$sSQL .= "   cltb_cliente ";
 					$sSQL .= "WHERE ";
@@ -5208,7 +5231,7 @@ public function contratoHTML($id_cliente,$id_cliente_produto,$tipo_produto){
 	
 	$sSQL  = "SELECT cl.id_cliente, cl.data_cadastro, cl.nome_razao, cl.tipo_pessoa, cl.rg_inscr, cl.rg_expedicao, cl.cpf_cnpj, cl.email, cl.endereco, ";
 	$sSQL .= "  cl.complemento, cl.id_cidade, cl.cep, cl.bairro, cl.fone_comercial, cl.fone_residencial, cl.fone_celular, cl.contato, cl.banco, cl.conta_corrente, ";
-	$sSQL .= "  cl.agencia, cl.dia_pagamento, cl.ativo, cl.obs, cl.provedor, cl.excluido, ";
+	$sSQL .= "  cl.agencia, cl.dia_pagamento, cl.ativo, cl.obs, cl.provedor, cl.excluido, cl.info_cobranca, ";
 	$sSQL .= "  cd.id_cidade, cd.cidade, cd.uf as estado ";
 	$sSQL .= "FROM cltb_cliente cl, cftb_cidade cd ";
 	$sSQL .= "WHERE cl.id_cliente = '$id_cliente' AND ";
