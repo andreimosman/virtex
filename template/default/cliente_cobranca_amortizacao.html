@@ -139,7 +139,7 @@ function calculaValores() {
 }
 function pago(){
 	//alert(formulario.status.value);
-	if (formulario.status.value == "P" || status_fatura != "A"){
+	if (formulario.status.value == "P" || status_fatura == "C" || status_fatura == "E"){
 		//alert(formulario.status.value);
 		formulario.valor_pago.disabled=true;
 		formulario.desconto.disabled=true;
