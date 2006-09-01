@@ -794,9 +794,9 @@ class VABackup extends VirtexAdmin {
 
 
 		//$comando = "pg_restore --file /mosman/backup/$arq -U virtex";
-		//$comando = "zcat /mosman/backup/$arq |psql -U pgsql virtex 2>&1 >/mosman/backup/log/imp.log";
-		  $comando = "zcat /mosman/backup/$arq |psql -U pgsql virtex";
-		system($comando,$retval);
+		$comando = "zcat /mosman/backup/$arq |psql -U pgsql virtex 2>&1 >/mosman/backup/log/imp.log";
+
+		system("$comando 2>&1",$retval);
 		//echo "RETVAL: ".$retval."<br>";
 
 		if ($retval > 0){
