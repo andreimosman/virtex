@@ -1197,7 +1197,7 @@ class VACobranca extends VirtexAdmin {
 				//echo "CARENCIA: $carencia <br>";
 				$sSQL = "SELECT f.id_cliente_produto FROM cbtb_faturas f, cntb_conta c WHERE f.id_cliente_produto = '$id_cliente_produto' AND f.reagendamento is null AND c.status = 'S' AND f.status = 'A' AND f.data <= now() - interval '".$carencia." day' and f.id_cliente_produto = c.id_cliente_produto";
 				$suspenso = $this->bd->obtemRegistros($sSQL);
-				echo $sSQL ."<BR>";
+				//echo $sSQL ."<BR>";
 				
 				//echo $suspenso."<br>";
 				if (!$suspenso){
