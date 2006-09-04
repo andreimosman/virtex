@@ -632,7 +632,7 @@ class VAClientes extends VirtexAdmin {
 					$aSQL .= "ORDER BY id_cliente DESC LIMIT (10)";		
 					
 					$clientes = $this->bd->obtemRegistros($aSQL);
-					
+					//echo "cliente: $aSQL<br>";
 				
 				}else{
 				

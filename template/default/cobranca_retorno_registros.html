@@ -112,6 +112,7 @@
                                   <td align="CENTER"> {if !$erro } 
                                     <input type="submit" name="submit2" value="Processar">{/if}
                                     <input name="acao" type="hidden" value="amortiza" id="acao">
+									<input name="formato" type="hidden" value="{$formato}" id="formato">
                                     <input name="total" type="hidden" value="{$smarty.foreach.regs.total}" id="total"> </td>
                                 </tr>
                               </table></td>
