@@ -46,11 +46,8 @@
 			$this->daemon = 0;
 			
 			$this->debug = 0;
-
-
-			$this->licencaBL = $this->licenca("backend","banda_larga");
-			$this->licencaE = $this->licenca("backend","email");
-			$this->licencaH = $this->licenca("backend","hospedagem");
+			
+			$this->carregaLicenca();
 			
 			/**
 			 * GETOPT SHORT OPTIONS
@@ -63,6 +60,12 @@
 			
 			$this->getopt();
 
+		}
+		
+		protected function carregaLicenca() {
+			$this->licencaBL = $this->licenca("backend","banda_larga");
+			$this->licencaE = $this->licenca("backend","email");
+			$this->licencaH = $this->licenca("backend","hospedagem");		
 		}
 		
 		public function usage() {
@@ -120,7 +123,11 @@
 			 * Executa os procedimentos de boot
 			 */
 			if( $this->boot ) {
-			
+				// No caso de boot atualiza a data/hora do servidor e carrega a licenca novamente
+				SOFreeBSD::ntpDate();
+				$this->carregaLicenca();
+				
+				
 				// Atuador BandaLarga é usado inclusive para a configuração de rede
 				$abl = new AtuadorBandaLarga($this->bd,$this->debug);
 				

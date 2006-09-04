@@ -100,6 +100,11 @@
 					// Somente interfaces do tipo "external" podem ter gateway configurado.
 					if(@$dados["type"] == "external" && @$dados["gateway"]) {
 						$this->so->routeAdd("default",$dados["gateway"]);
+						
+						if((int)@$dados["nat"] == 1) {
+							// TODO: NAT
+							$this->so->setNAT($iface);
+						}
 					}
 
 				}
