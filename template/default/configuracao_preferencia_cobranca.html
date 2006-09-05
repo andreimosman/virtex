@@ -3,10 +3,81 @@
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
 
+{literal}
+
+
+<script>
+	function habilita(){
+	
+	
+	var
+	disponivel_boleto = document.getElementById("check_boleto_bancario");
+	disponivel_carne = document.getElementById("check_carne");
+	frm = document.form1;
+	
+	if (!disponivel_boleto.checked){
+
+		frm.convenio_boleto.disabled=true;
+		frm.conta_boleto.disabled=true;
+		frm.cod_banco_boleto.disabled=true;
+		frm.carteira_boleto.disabled=true;
+		frm.agencia_boleto.disabled=true;
+			
+		frm.convenio_boleto.value= "";
+		frm.conta_boleto.value= "";
+		frm.cod_banco_boleto.value= "";
+		frm.carteira_boleto.value= "";
+		frm.agencia_boleto.value= "";
+				
+	
+	}else{
+	
+		frm.convenio_boleto.disabled=false;
+		frm.conta_boleto.disabled=false;
+		frm.cod_banco_boleto.disabled=false;
+		frm.carteira_boleto.disabled=false;
+		frm.agencia_boleto.disabled=false;
+		
+	
+	}
+	if (!disponivel_carne.checked){
+
+		frm.num_conta.disabled=true;
+		frm.convenio.disabled=true;
+		frm.cod_banco.disabled=true;
+		frm.agencia.disabled=true;
+		frm.carteira.disabled=true;
+		
+		frm.num_conta.value="";
+		frm.convenio.value="";
+		frm.cod_banco.value="";
+		frm.agencia.value="";
+		frm.carteira.value="";
+		
+	}else{
+	
+		frm.num_conta.disabled=false;
+		frm.convenio.disabled=false;
+		frm.cod_banco.disabled=false;
+		frm.agencia.disabled=false;
+		frm.carteira.disabled=false;
+		
+	
+	}
+	
+}
+
+
+</script>
+
+
+
+{/literal}
+
+
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
 </head>
-
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="document.form1.tx_juros.focus();">
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="document.form1.tx_juros.focus(); habilita();">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -18,7 +89,7 @@
               <tr>
                 <td align="center" valign="middle"> <h1 align="center">Cadastro
                     de Prefer&ecirc;ncias de Cobran&ccedil;a</h1>
-                  <form name="form1" method="post" action="">
+                  <form name="form1" method="post" action="" >
                     <table  border="0" style="border: 1px solid #F2F2F2;">
 					  <tr>
 						
@@ -33,21 +104,21 @@
                                   <tr> 
                                     <td width="98"><p><strong>Taxa de Juros</strong></p></td>
                                     <td width="96"><p><strong> 
-                                        <input name="tx_juros" type="text" id="tx_juros3" value="{$prefs.tx_juros}" size="10">
+                                        <input name="tx_juros" type="text" id="tx_juros" value="{$prefs.tx_juros}" size="10">
                                         </strong>%</p></td>
                                     <td width="71"><p><strong>Multa</strong></p></td>
                                     <td width="131"><p><strong> 
-                                        <input name="multa" type="text" id="multa2" value="{$prefs.multa}" size="10">
+                                        <input name="multa" type="text" id="multa" value="{$prefs.multa}" size="10">
                                         </strong>%</p></td>
                                   </tr>
                                   <tr> 
                                     <td><p><strong>Dia de Vencimento</strong></p></td>
                                     <td><strong> 
-                                      <input name="dia_venc" type="text" id="dia_venc2" value="{$prefs.dia_venc}" size="10">
+                                      <input name="dia_venc" type="text" id="dia_venc" value="{$prefs.dia_venc}" size="10">
                                       </strong></td>
                                     <td><p><strong>Car&ecirc;ncia</strong></p></td>
                                     <td><p><strong> 
-                                        <input name="carencia" type="text" id="carencia2" value="{$prefs.carencia}" size="10">
+                                        <input name="carencia" type="text" id="carencia" value="{$prefs.carencia}" size="10">
                                         </strong>dias </p></td>
                                   </tr>
                                   <tr> 
@@ -64,17 +135,17 @@
 								  </tr>
                                   <tr valign="top"><td  colspan="4"><table>
                                     <td valign="top"><p><strong>Observa&ccedil;&otilde;es 
-                                        <input name="op" type="hidden" id="op2" value="{$op}">
-                                        <input name="id_preferencia" type="hidden" id="id_preferencia2" value="{$prefs.id_preferencia}">
-                                        <input name="acao" type="hidden" id="acao2" value="alt">
+                                        <input name="op" type="hidden" id="op" value="{$op}">
+                                        <input name="id_preferencia" type="hidden" id="id_preferencia" value="{$prefs.id_preferencia}">
+                                        <input name="acao" type="hidden" id="acao" value="alt">
                                         </strong></p></td>
                                     <td colspan="3"> <strong> 
-                                      <textarea name="observacoes" id="textarea3" cols="45" rows="5">{$prefs.observacoes}</textarea>
+                                      <textarea name="observacoes" id="textarea" cols="45" rows="5">{$prefs.observacoes}</textarea>
                                       </strong></td>
                                   </tr>
                                   <tr> 
                                     <td><p><strong>Path Contrato</strong></p></td>
-                                    <td colspan="3"><input name="path_contrato" type="text" value="{$prefs.path_contrato}" size="46" id="path_contrato3"></td>
+                                    <td colspan="3"><input name="path_contrato" type="text" value="{$prefs.path_contrato}" size="46" id="path_contrato"></td>
                                   </tr></table></td></tr>
                                 </table></td>
                               <td align="center" style="border: 1px solid #F2F2F2;"><table width="100%" border="0" cellspacing="3" cellpadding="0">
@@ -83,9 +154,8 @@
                                   </tr>
                                   {foreach item=a from=$frm_pagamento} 
                                   <tr> 
-                                    <td width="3%" height="19" valign="top"> <input type="checkbox" name="disponivel[{$a.id_cobranca}]" value="t" class="checkbox" {if $a.disponivel == "t"}checked{/if}></td>
-                                    <td width="91%" valign="bottom"   style="border-top: 4px solid #FFFFFF"><p>{if $a.nome_cobranca=="Fatura Avulsa"}Outras Formas{else}{$a.nome_cobranca}{/if}{if 
-                                        $a.nome_cobranca=="Carnê"}
+                                    <td width="3%" height="19" valign="top"> <input type="checkbox" name="disponivel[{$a.id_cobranca}]" value="t" class="checkbox" {if $a.disponivel == "t"}checked{/if} id="check_{$a.nome_cobranca|lower|strip:"_"|replace:"á":"a"|replace:"ê":"e"}" onClick="habilita();"></td>
+                                    <td width="91%" valign="bottom"   style="border-top: 4px solid #FFFFFF"><p>{if $a.nome_cobranca=="Fatura Avulsa"}Outras Formas{else}{$a.nome_cobranca}{/if}{if $a.nome_cobranca=="Carnê"}
                                       <table style="border: 1px solid #000000;">
                                         <tr> 
                                           <td><font style="font-size:10px;" face="Verdana, Arial, Helvetica, sans-serif">Opções 
@@ -141,8 +211,7 @@
                                             </table></td>
                                         </tr>
                                       </table>
-                                      {/if} 
-                                      <p></p></td>
+                                      {/if}</td>
                                   </tr>
                                   {/foreach} </table></td>
                             </tr>

@@ -130,7 +130,7 @@ class VAConfiguracao extends VirtexAdmin {
 			   // Se ele recebeu o campo ação é pq veio de um submit
 			   $enviando = true;
 			} else {
-				// Se não recebe o campo ação e tem id_pop é alteração, caso contrário é cadastro.
+				// Se não recebe o campo ação e tem id_pop, é alteração, caso contrário é cadastro.
 				if( $id_pop ) {
 					// SELECT
 					$sSQL  = "SELECT ";
@@ -1095,7 +1095,7 @@ class VAConfiguracao extends VirtexAdmin {
 					$prefs = $this->prefs->obtem("cobranca");
 
 
-					$sSQL  = "SELECT id_cobranca, nome_cobranca, disponivel FROM cftb_forma_pagamento WHERE disponivel = 'true' ORDER BY id_cobranca asc";
+					$sSQL  = "SELECT id_cobranca, nome_cobranca, disponivel FROM cftb_forma_pagamento ORDER BY id_cobranca asc";
 					$frm_pagamento = $this->bd->obtemRegistros($sSQL);
 
 					$sSQL = "SELECT * FROM cftb_forma_pagamento where disponivel = true";
@@ -1115,30 +1115,94 @@ class VAConfiguracao extends VirtexAdmin {
 
 
 					if ($acao == "alt"){
+					
+					$carencia = @$_REQUEST["carencia"];
+					$tx_juros = @$_REQUEST["tx_juros"];
+					$multa = @$_REQUEST["multa"];
+					$dia_venc = @$_REQUEST["dia_venc"];
+					$cod_banco = @$_REQUEST["cod_banco"];
+					$carteira = @$_REQUEST["carteira"];
+					$agencia = @$_REQUEST["agencia"];
+					$num_conta = @$_REQUEST["num_conta"];
+					$convenio = @$_REQUEST["convenio"];
+					$pagamento = @$_REQUEST["pagamento"];
+					$observacoes = @$_REQUEST["observacoes"];
+					$path_contrato = @$_REQUEST["path_contrato"];
+					$cod_banco_boleto = @$_REQUEST["cod_banco_boleto"];
+					$carteira_boleto = @$_REQUEST["carteira_boleto"];
+					$agencia_boleto = @$_REQUEST["agencia_boleto"];
+					$conta_boleto = @$_REQUEST["conta_boleto"];
+					$convenio_boleto = @$_REQUEST["convenio_boleto"];	
+					
+					if ($carencia == ""){
+					
+						$carencia = " 0";
+					}
+					if ($num_conta == ""){
+
+						$num_conta = " 0";
+					}
+					if ($convenio == ""){
+
+						$convenio = " 0";
+					}
+					if ($pagamento == ""){
+
+						$pagamento = " 0";
+					}
+					if ($observacoes == ""){
+
+						$observacoes = " 0";
+					}
+					if ($path_contrato == ""){
+
+						$path_contrato = " 0";
+					}
+					if ($cod_banco_boleto == ""){
+
+						$cod_banco_boleto = " 0";
+					}
+					if ($carteira_boleto == ""){
+
+						$carteira_boleto = "0 ";
+					}
+					if ($agencia_boleto == ""){
+
+						$agencia_boleto = " 0";
+					}
+					if ($conta_boleto == ""){
+
+						$conta_boleto = " 0";
+					}
+					if ($convenio_boleto == ""){
+
+						$convenio_boleto = " 0";
+					}
+
 
 						$sSQL  = "UPDATE ";
 						$sSQL .= "	pftb_preferencia_cobranca ";
 						$sSQL .= "SET ";
-						$sSQL .= "  carencia = '".@$_REQUEST["carencia"]."', ";
-						$sSQL .= "  tx_juros = '".@$_REQUEST["tx_juros"]."', ";
-						$sSQL .= "  multa = '".@$_REQUEST["multa"]."', ";
-						$sSQL .= "  dia_venc = '".@$_REQUEST["dia_venc"]."', ";
-						$sSQL .= "  cod_banco = '".@$_REQUEST["cod_banco"]."', ";
-						$sSQL .= "  carteira = '".@$_REQUEST["carteira"]."', ";
-						$sSQL .= "  agencia = '".@$_REQUEST["agencia"]."', ";
-						$sSQL .= "  num_conta = '".@$_REQUEST["num_conta"]."', ";
-						$sSQL .= "  convenio = '".@$_REQUEST["convenio"]."', ";
-						$sSQL .= "	pagamento = '".@$_REQUEST["pagamento"]."', ";
-						$sSQL .= "	observacoes = '".@$_REQUEST["observacoes"]."', ";
-						$sSQL .= "  path_contrato = '".@$_REQUEST["path_contrato"]."', ";
-						$sSQL .= "  cod_banco_boleto = '".@$_REQUEST["cod_banco_boleto"]."', ";
-						$sSQL .= "  carteira_boleto = '".@$_REQUEST["carteira_boleto"]."', ";
-						$sSQL .= "  agencia_boleto = '".@$_REQUEST["agencia_boleto"]."', ";
-						$sSQL .= "  conta_boleto = '".@$_REQUEST["conta_boleto"]."', ";
-						$sSQL .= "  convenio_boleto = '".@$_REQUEST["convenio_boleto"]."' ";
+						$sSQL .= "  carencia = '$carencia', ";
+						$sSQL .= "  tx_juros = '$tx_juros', ";
+						$sSQL .= "  multa = '$multa', ";
+						$sSQL .= "  dia_venc = '$dia_venc', ";
+						$sSQL .= "  cod_banco = '$cod_banco', ";
+						$sSQL .= "  carteira = '$carteira', ";
+						$sSQL .= "  agencia = '$agencia', ";
+						$sSQL .= "  num_conta = '$num_conta', ";
+						$sSQL .= "  convenio = '$convenio', ";
+						$sSQL .= "	pagamento = '$pagamento', ";
+						$sSQL .= "	observacoes = '$observacoes', ";
+						$sSQL .= "  path_contrato = '$path_contrato', ";
+						$sSQL .= "  cod_banco_boleto = '$cod_banco_boleto', ";
+						$sSQL .= "  carteira_boleto = '$carteira_boleto', ";
+						$sSQL .= "  agencia_boleto = '$agencia_boleto', ";
+						$sSQL .= "  conta_boleto = '$conta_boleto', ";
+						$sSQL .= "  convenio_boleto = '$convenio_boleto' ";
 
 						$this->bd->consulta($sSQL);
-						////////echo "update cobrança: $sSQL <br>";
+						//////echo "update cobrança: $sSQL <br>";
 
 
 						$sSQL = "UPDATE cftb_forma_pagamento SET disponivel = 'f'";
@@ -1418,7 +1482,7 @@ class VAConfiguracao extends VirtexAdmin {
 
 						$diretorio = "./etc";
 
-						$nome_aceitavel = "VIRTEX.zl";
+						$nome_aceitavel = "VIRTEX.lic";
 						$_file_ = $_FILES["arquivo_registro"];
 
 						$arquivo = $diretorio."/".$nome_aceitavel;
@@ -1448,7 +1512,7 @@ class VAConfiguracao extends VirtexAdmin {
 
 						if (file_exists($arquivo)) {
 							//copy($_tmp_name,$diretorio."/_".$nome_aceitavel);
-							rename($diretorio."/VIRTEX.zl", $diretorio."/_VIRTEX.zl");
+							rename($diretorio."/VIRTEX.lic", $diretorio."/_VIRTEX.lic");
 						}
 
 						copy($_tmp_name_,$diretorio . "/" . $nome_aceitavel);

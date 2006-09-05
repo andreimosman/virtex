@@ -17,7 +17,6 @@
 {/literal}
 
 
-
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
 </head>
 
@@ -42,15 +41,15 @@
 			{if $a.contas}
             <tr bgcolor="#FFFFFF">
               <td width="20"><input type="checkbox" class="checkbox" value="{$a.tipo}" name="id_bloqueio_box[{$a.id_cliente_produto}]" CHECKED></td>
-              <td width="200"align="LEFT"><p>{$a.nome_razao}- {$a.username}</p></td>
-              <td width="150"align="LEFT"><p>{$a.produto}</p></td>
+              <td width="200"align="LEFT"><p><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.nome_razao}- {$a.username}</a></p></td>
+              <td width="150"align="LEFT"><p><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.produto}</a></p></td>
               <td width="150"align="LEFT">
               {foreach item=conta from=$a.contas}
-              <p>{$conta}</p>
+              <p><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$conta}</a></p>
               {/foreach}
               </td>
-              <td width="100"align="CENTER"><p>{$a.num_faturas_atrazadas}</p></td>
-              <td align="RIGHT"><p>{$a.valor_total}</p></td>
+              <td width="100"align="CENTER"><p><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.num_faturas_atrazadas}</a></p></td>
+              <td align="RIGHT"><p><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.valor_total}</a></p></td>
             </tr>
 			
             <tr bgcolor="#999999">

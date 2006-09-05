@@ -1486,6 +1486,8 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "   tipo = 'B'	 ";		
 			$sSQL .= "   GROUP BY mes,ano	 ";		
 			$sSQL .= "  ) blq USING(mes,ano) ";
+			//echo $sSQL ;
+			
 	
 		} else if ($acao == "sub_geral") {
 		
@@ -1499,7 +1501,7 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL  = "SELECT ";
 			$sSQL .= "	clt.id_cliente, clt.nome_razao, ";
 			$sSQL .= "	cnt.username, prd.nome, cp.id_cliente_produto, ";
-			$sSQL .= "	lba.data_hora, lba.admin, lba.data_hora, lba.tipo, ";
+			$sSQL .= "	lba.data_hora, lba.admin, lba.tipo, ";
 			$sSQL .= "	EXTRACT(day from data_hora) as dia, ";
 			$sSQL .= "	EXTRACT(month from data_hora) as mes, ";
 			$sSQL .= "	EXTRACT(year from data_hora) as ano ";
@@ -1509,9 +1511,12 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "	prtb_produto as prd ";
 			$sSQL .= "WHERE ";
 			$sSQL .= "  prd.id_produto = cp.id_produto ";
+			$sSQL .= "  AND cnt.tipo_conta <> 'E' ";
 			$sSQL .= "	AND data_hora < CAST('$ano-$mes-01' as date) + INTERVAL '1 month' ";
 			$sSQL .= "	AND data_hora >= CAST('$ano-$mes-01' as date) ";
 			$sSQL .= "ORDER BY ano, mes, dia, clt.nome_razao ";
+			
+			////////echo $sSQL ;
 			
 			
 		}else if ($acao == "sub_blo") {
