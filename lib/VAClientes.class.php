@@ -3798,6 +3798,13 @@ class VAClientes extends VirtexAdmin {
 				$status = @$_REQUEST["status"];		
 				//$agora = DATE("Y-m-d h:i:s");
 				
+				if (!$status){
+				
+					$status = "S";
+				
+				}
+
+
 				$sSQL = "SELECT status,conta_mestre,senha,senha_cript,username,dominio,tipo_conta,id_cliente_produto FROM cntb_conta WHERE username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta' ";
 				$CONTA = $this->bd->obtemUnicoRegistro($sSQL);
 				
@@ -4039,7 +4046,7 @@ class VAClientes extends VirtexAdmin {
 							$sSQL  = "UPDATE ";
 							$sSQL .= "   cntb_conta ";
 							$sSQL .= "SET ";
-							$sSQL .= "   status = 'A' ";
+							$sSQL .= "   status = '$status' ";
 							if( $senha ) {
 								$sSQL .= "   , senha = '".$this->bd->escape($senha)."' ";
 								$sSQL .= "   , senha_cript = '".$this->criptSenha($senha)."' ";
@@ -4085,7 +4092,7 @@ class VAClientes extends VirtexAdmin {
 							$sSQL  = "UPDATE ";
 							$sSQL .= "   cntb_conta ";
 							$sSQL .= "SET ";
-							$sSQL .= "   status = 'A' , ";
+							$sSQL .= "   status = '$status' , ";
 							$sSQL .= "   conta_mestre = '$conta_mestre' ";
 							if( $senha ) {
 								$sSQL .= "   , senha = '".$this->bd->escape($senha)."' ";
