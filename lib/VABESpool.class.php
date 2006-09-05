@@ -28,9 +28,9 @@
 		
 		protected $debug;
 		
-		protected $licencaBL;
-		protected $licencaE;
-		protected $licencaH;
+		//protected $licencaBL;
+		//protected $licencaE;
+		//protected $licencaH;
 		
 		
 		
@@ -62,11 +62,11 @@
 
 		}
 		
-		protected function carregaLicenca() {
-			$this->licencaBL = $this->licenca("backend","banda_larga");
-			$this->licencaE = $this->licenca("backend","email");
-			$this->licencaH = $this->licenca("backend","hospedagem");		
-		}
+		//protected function carregaLicenca() {
+		//	$this->licencaBL = $this->licenca("backend","banda_larga");
+		//	$this->licencaE = $this->licenca("backend","email");
+		//	$this->licencaH = $this->licenca("backend","hospedagem");		
+		//}
 		
 		public function usage() {
 		
@@ -148,7 +148,7 @@
 				
 				if(count($lista_nas)) {
 				
-					if ($this->licencaBL == 1) { 
+					//if ($this->licencaBL == 1) { 
 				
 						// Obtem os clientes ativos para os NAS operados nesta máquina
 						$sSQL  = "SELECT ";
@@ -171,7 +171,7 @@
 							$abl->processa("a",$contas[$i]["id_conta"],$parametros);
 
 						}
-					}
+					//}
 				}
 				
 				
@@ -266,7 +266,7 @@
 			
 			if( count($lista_nas) ) {
 			
-				if ($this->licencaBL != 1) return -1 ;
+				//if ($this->licencaBL != 1) return -1 ;
 			
 			
 			
@@ -311,7 +311,7 @@
 					// Início da transação
 					
 					
-					if ($this->licencaE != 1) return -1;
+					//if ($this->licencaE != 1) return -1;
 					
 					
 					$this->bd->consulta("BEGIN");
@@ -353,7 +353,7 @@
 
 			 if( count($lista_srvh) ) {
 			 
-			 		if ($this->licencaH != 1) {
+			 		//if ($this->licencaH != 1) {
 						$this->bd->consulta("BEGIN");
 
 						// FAZ O SELECT		 		
@@ -386,9 +386,9 @@
 						// Fim da transação
 						$this->bd->consulta("END");		 		
 
-			 			return -1;
+			 			//return -1;
 			 			
-			 		}
+			 		//}
 			 
 			 
 					// Início da transação
@@ -435,7 +435,7 @@
 
 			 if( count($lista_srvd) ) {
 
-					if ($this->licencaBL != 1) return -1;
+					//if ($this->licencaBL != 1) return -1;
 
 				// Início da transação
 				$this->bd->consulta("BEGIN");
