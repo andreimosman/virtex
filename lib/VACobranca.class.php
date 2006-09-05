@@ -4857,7 +4857,7 @@ public function extenso($valor=0, $maiusculas=false) {
 
 	
 		$sSQL  = "SELECT ";
-		$sSQL .= "   cl.nome_razao, p.nome as produto, p.tipo, cp.id_cliente_produto, count(f.id_cliente_produto) as num_faturas_atrazadas, sum(f.valor) as valor_total ";
+		$sSQL .= "   cl.nome_razao,p.nome as produto, p.tipo, cp.id_cliente_produto, count(f.id_cliente_produto) as num_faturas_atrazadas, sum(f.valor) as valor_total, cl.id_cliente ";
 		$sSQL .= "FROM ";
 		$sSQL .= "   cltb_cliente cl, prtb_produto p, cbtb_faturas f,cntb_conta cn, ";
 		$sSQL .= "   cbtb_cliente_produto cp, cbtb_contrato ctt ";
@@ -4881,12 +4881,13 @@ public function extenso($valor=0, $maiusculas=false) {
 		$sSQL .= "   AND f.status not in ('P','E','C') ";
 		$sSQL .= "   AND ctt.status = 'A' ";
 		$sSQL .= "GROUP BY ";
-		$sSQL .= "   cl.nome_razao, p.nome, p.tipo, cp.id_cliente_produto ";
+		$sSQL .= "   cl.nome_razao, p.nome, p.tipo, cp.id_cliente_produto, cl.id_cliente ";
 		$sSQL .= "ORDER BY ";
 		$sSQL .= "   cl.nome_razao, p.nome ";
 		
+		
 		$r = $this->bd->obtemRegistros($sSQL);
-		//echo "REGISTROS: $sSQL <br>";
+		//////////echo "REGISTROS: $sSQL <br>";
 		
 		for( $i=0;$i<count($r);$i++ ) {
 		
