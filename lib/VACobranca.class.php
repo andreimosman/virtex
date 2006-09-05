@@ -1339,7 +1339,7 @@ class VACobranca extends VirtexAdmin {
 							$sSQL = "INSERT INTO lgtb_retorno (nome_arquivo,tamanho,data,admin,tipo_retorno) VALUES ('$nome','$tamanho',now(),'$admin','$formato')";
 							$this->bd->consulta($sSQL);
 						
-							echo"RETORNO: $sSQL <br>";
+							//echo"RETORNO: $sSQL <br>";
 
 						}else{
 
@@ -1421,7 +1421,7 @@ class VACobranca extends VirtexAdmin {
 						  $sSQL .= ")";
 						  $this->bd->consulta($sSQL);
 						  
-						  echo"FATURAS: $sSQL <br>";
+						  //echo"FATURAS: $sSQL <br>";
 						  
 						  
 						  
@@ -1434,8 +1434,8 @@ class VACobranca extends VirtexAdmin {
 					   $qtde_validos = $qtde;
 					   $qtde_sem = $i - $qtde_validos;
 					   
-					   echo"QTDE VALIDOS: $qtde_validos<br>";
-					   echo"QTDE INVALIDOS: $qtde_sem<br>";
+					   //echo"QTDE VALIDOS: $qtde_validos<br>";
+					   //echo"QTDE INVALIDOS: $qtde_sem<br>";
 					   
 					   if ($i == $qtde){
 					   	$status = "S";
@@ -1447,7 +1447,7 @@ class VACobranca extends VirtexAdmin {
 					   $sSQL  = "UPDATE lgtb_retorno SET qtde_registros = '$i', NRA='$i', NRSC='$qtde_sem', NRPE='$qtde_validos', status = '$status' WHERE id_arquivo = currval('lgtb_retorno_id_arquivo_seq')";
 					   $this->bd->consulta($sSQL);
 					   
-					   echo $sSQL ."<br>";
+					   //echo $sSQL ."<br>";
 					
 						
 						$this->tpl->atribui("formato",$formato);
@@ -1518,7 +1518,7 @@ class VACobranca extends VirtexAdmin {
 								$sSQL .= " cn.id_cliente = cl.id_cliente ";
 								$_faturas = $this->bd->obtemUnicoRegistro($sSQL);
 
-								echo "SELEÇÃO: $sSQL <br>";
+								//echo "SELEÇÃO: $sSQL <br>";
 
 								if ($_faturas && $_faturas["nome_razao"] != ""){
 									////echo$_faturas["nome_razao"]."<br>";
