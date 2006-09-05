@@ -67,9 +67,8 @@
 			$this->initVars();
 			
 			
-			$this->licencaBL = $this->licenca("backend","banda_larga");
-			$this->licencaD  = $this->licenca("backend","discado");
-			
+			$this->licencaBL = ((int)$this->licenca("backend","banda_larga"));
+			$this->licencaD  = ((int)$this->licenca("backend","discado"));
 			
 			// Configura o getopt e chama as opções para processamento posterior
 			$this->_shortopts = "RUDACu:w:f:ESs:I:O:n:i:t:c:";
@@ -347,7 +346,7 @@
 				if( $this->tipo_conta == "BL" ) {
 					// BANDA LARGA
 					
-					if ($this->licencaBL != 1) {
+					if ( $this->licencaBL != 1) {
 						$this->log("BL",$this->username,"MODULO DE BANDA LARGA NÃO LICENCIADO",$this->foneinfo,$this->nas);
 						return -1;
 					}
@@ -406,9 +405,9 @@
 				} else {
 					// DISCADO
 					
-					if ($this->licencaD != 1) return -1;
+					//if ($this->licencaD != 1) return -1;
 					
-					if ($this->licencaBL != 1) {
+					if ($this->licencaD != 1) {
 						$this->log("D",$this->username,"MODULO DE DISCADO NÃO LICENCIADO",$this->foneinfo,$this->nas);
 						return -1;
 					}
