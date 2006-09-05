@@ -271,13 +271,17 @@ function check(){
                       <td  width="77" align="right" valign="top" bgcolor="#FFFFFF"> 
                         <p>Status:</p></td>
                       
-                    <td bgcolor="#FFFFFF" colspan="3"> <p>{if $status == "S"}<font color="#999999"><strong><input type="text" name="status" value="Suspenso"  style="border: #000000" disabled></strong></font>{else} 
-                        <SELECT name='status' >
+                      <td bgcolor="#FFFFFF" colspan="3"> <p>{if $status == "S"}<font color="#999999"><strong>
+                          <input type="text" name="status" value="Suspenso"  style="border: #000000" disabled>
+                          </strong></font>
+                          <input name="_status" type="hidden" value="S" id="_status">
+                          {else} 
+                          <SELECT name='status' >
 					{foreach key=id item=nome from=$lista_status}
-					      <OPTION VALUE='{$id}'  {if $id == $status}SELECTED{/if} >{$nome}</OPTION>
+					        <OPTION VALUE='{$id}'  {if $id == $status}SELECTED{/if} >{$nome}</OPTION>
 					{/foreach}
-					    </SELECT>
-                        {/if} </p></td> 
+					      </SELECT>
+                          {/if} </p></td> 
                     </tr>
                     <tr> 
                       <td  width="77" align="right" valign="top" bgcolor="#FFFFFF"><p>Tipo:</p></td>
