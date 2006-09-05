@@ -5606,24 +5606,5 @@ public function boleto($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$s
 	
 
 }
-	
-
-				
-				
-
-			
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ?>

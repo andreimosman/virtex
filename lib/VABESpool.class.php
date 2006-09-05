@@ -47,7 +47,7 @@
 			
 			$this->debug = 0;
 			
-			$this->carregaLicenca();
+			//$this->carregaLicenca();
 			
 			/**
 			 * GETOPT SHORT OPTIONS
@@ -125,7 +125,7 @@
 			if( $this->boot ) {
 				// No caso de boot atualiza a data/hora do servidor e carrega a licenca novamente
 				SOFreeBSD::ntpDate();
-				$this->carregaLicenca();
+				//$this->carregaLicenca();
 				
 				
 				// Atuador BandaLarga é usado inclusive para a configuração de rede
