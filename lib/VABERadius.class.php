@@ -347,7 +347,7 @@
 				if( $this->tipo_conta == "BL" ) {
 					// BANDA LARGA
 					
-					if ($licencaBL != 1) {
+					if ($this->licencaBL != 1) {
 						$this->log("BL",$this->username,"MODULO DE BANDA LARGA NÃO LICENCIADO",$this->foneinfo,$this->nas);
 						return -1;
 					}
@@ -406,9 +406,9 @@
 				} else {
 					// DISCADO
 					
-					if ($licencaD != 1) return -1;
+					if ($this->licencaD != 1) return -1;
 					
-					if ($licencaBL != 1) {
+					if ($this->licencaBL != 1) {
 						$this->log("D",$this->username,"MODULO DE DISCADO NÃO LICENCIADO",$this->foneinfo,$this->nas);
 						return -1;
 					}
