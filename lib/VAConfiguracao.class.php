@@ -1446,7 +1446,7 @@ class VAConfiguracao extends VirtexAdmin {
 
 						$this->tpl->atribui("status",$status);
 					   $this->tpl->atribui("licenca",$this->lic->obtemLicenca());
-					   $this->tpl->atribui("local_id_info",MLicenca::obtemInfoLocalID());
+					   $this->tpl->atribui("local_id_info",$this->lic->obtemInfoLocalID());
 					   $this->arquivoTemplate = "licenca.html";
 
 
@@ -1463,7 +1463,7 @@ class VAConfiguracao extends VirtexAdmin {
 						 * Informações sobre os possíveis ID locais
 						 */
 						
-						$this->tpl->atribui("local_id_info",MLicenca::obtemInfoLocalID());
+						$this->tpl->atribui("local_id_info",$this->lic->obtemInfoLocalID());
 						
 
 					   //echo "registrado: $registrado<br>";

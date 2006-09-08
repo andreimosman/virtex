@@ -2,12 +2,14 @@
 
 require_once("MLicenca.class.php");
 
+if(!defined("VA_SALT")) define("VA_SALT","VA0200");
+
 class VirtexAdminLicenca extends MLicenca {
 
 
 
 	function VirtexAdminLicenca() {
-		parent::MLicenca("etc/virtex.lic");
+		parent::MLicenca("etc/virtex.lic",VA_SALT);
 		
 	}
 	
@@ -37,16 +39,6 @@ class VirtexAdminLicenca extends MLicenca {
 		return($this->verificaExpiracao(@$this->lic["geral"]["congela_em"]));
 	}
 	
-	
-
-
-
-
-
 }
-
-
-
-
 
 ?>

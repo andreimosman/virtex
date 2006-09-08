@@ -27,7 +27,7 @@
 			$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_ECB);
 			$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
 
-			return(mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $chave, $texto, MCRYPT_MODE_ECB, $iv));
+			return(mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $chave, $texto, MCRYPT_MODE_ECB, $iv));
 		}
 
 		function decriptografa($texto,$chave) {
@@ -35,7 +35,7 @@
 			$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_ECB);
 			$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
 
-			return(mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $chave, $texto, MCRYPT_MODE_ECB, $iv));
+			return(mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $chave, $texto, MCRYPT_MODE_ECB, $iv));
 		}
 		
 		
