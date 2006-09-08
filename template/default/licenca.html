@@ -5,10 +5,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
 </head>
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0"> 
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%">
   {if $barra}
-  <tr> 
+  <tr>
     <td align="CENTER" valign="MIDDLE">
 	<table width="100%" border="0" cellpadding="0" cellspacing="0" background="template/default/images/top_pixel.gif">
         <tr background="images/pixel_top.gif">
@@ -19,164 +19,164 @@
 	</td>
   </tr>
   {/if}
-  <tr> 
-    <td align="CENTER" valign="MIDDLE"> <h2 align="CENTER">&nbsp;</h2><h2 align="CENTER"><font size="3">Registrado 
-      para :</font></h2><div align="CENTER"> 
+  <tr>
+    <td align="CENTER" valign="MIDDLE"> <h2 align="CENTER">&nbsp;</h2><h2 align="CENTER"><font size="3">Registrado
+      para :</font></h2><div align="CENTER">
       <table width="400" border="0">
-        <tr> 
-          <td width="150" bgcolor="#E6ECE9"> 
-            <p align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#006600"><strong>Nome 
+        <tr>
+          <td width="150" bgcolor="#E6ECE9">
+            <p align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#006600"><strong>Nome
               Empresa<br>
               </strong></font></p></td>
           <td width="300"> <p><strong>{$licenca.empresa.nome}</strong></p></td>
         </tr>
-        <tr> 
-          <td width="150" bgcolor="#E6ECE9"> 
+        <tr>
+          <td width="150" bgcolor="#E6ECE9">
             <p align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#006600"><strong>Endereco<br>
               </strong></font></p></td>
           <td width="300"> <p><strong>{$licenca.empresa.endereco}</strong></p></td>
         </tr>
-        <tr> 
-          <td width="150" bgcolor="#E6ECE9"> 
+        <tr>
+          <td width="150" bgcolor="#E6ECE9">
             <p align="left"><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#006600"><strong>Cidade<br>
               </strong></font></p></td>
           <td width="300"> <p><strong>{$licenca.empresa.cidade}</strong></p></td>
         </tr>
       </table>
       </div><div align="CENTER"><font size="3"><br>
-      <strong><font face="Arial, Helvetica, sans-serif"> Modulos</font></strong></font> 
+      <strong><font face="Arial, Helvetica, sans-serif"> Módulos</font></strong></font>
       <table width="400" border="0" cellspacing="2" cellpadding="0">
-        <tr bgcolor="#E6ECE9" align="CENTER"> 
+        <tr bgcolor="#E6ECE9" align="CENTER">
           <td width="50%"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#006600">Frontend</font></strong></td>
           <td width="50%"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#006600">Backend</font></strong></td>
         </tr>
-        <tr> 
+        <tr>
           <td align="CENTER" valign="TOP"> <table width="20" border="0" cellspacing="1">
-              <tr> 
+              <tr>
                 <td width="87"> <p align="left"><b>Discado</b></p></td>
                 <td width="240"><p><strong>{if $licenca.frontend.discado == 1}<img src="template/default/images/checksim.gif">{else}<img src="template/default/images/checknao.gif">{/if}</strong></p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td><p align="left"><strong>Banda Larga <br>
                     </strong></p></td>
                 <td><p><strong>{if $licenca.frontend.banda_larga == 1}<img src="template/default/images/checksim.gif">{else}<img src="template/default/images/checknao.gif">{/if}</strong></p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td><p align="left"><strong>Hospedagem<br>
                     </strong></p></td>
                 <td><p><strong>{if $licenca.frontend.hospedagem == 1}<img src="template/default/images/checksim.gif">{else}<img src="template/default/images/checknao.gif">{/if}</strong></p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td><p align="left"><strong>Email </strong></p></td>
                 <td><p><strong>{if $licenca.frontend.email == 1}<img src="template/default/images/checksim.gif">{else}<img src="template/default/images/checknao.gif">{/if}</strong></p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td><p><strong>Interface</strong></p></td>
                 <td><strong>{if $licenca.frontend.interface == 1}<img src="template/default/images/checksim.gif">{else}<img src="template/default/images/checknao.gif">{/if}</strong></td>
               </tr>
             </table></td>
           <td align="CENTER" valign="TOP"> <table width="20" border="0" cellspacing="1">
-              <tr> 
+              <tr>
                 <td> <p align="left"><b>Discado</b></p></td>
                 <td><p><strong>{if $licenca.backend.discado}<img src="template/default/images/checksim.gif">{else}<img src="template/default/images/checknao.gif">{/if}</strong></p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td><p align="left"><strong>Banda Larga <br>
                     </strong></p></td>
                 <td><p><strong>{if $licenca.backend.banda_larga}<img src="template/default/images/checksim.gif">{else}<img src="template/default/images/checknao.gif">{/if}</strong></p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td><p align="left"><strong>Hospedagem<br>
                     </strong></p></td>
                 <td><p><strong>{if $licenca.backend.hospedagem}<img src="template/default/images/checksim.gif">{else}<img src="template/default/images/checknao.gif">{/if}</strong></p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td><p align="left"><strong>Email </strong></p></td>
                 <td><p><strong>{if $licenca.backend.email}<img src="template/default/images/checksim.gif">{else}<img src="template/default/images/checknao.gif">{/if}</strong></p></td>
               </tr>
             </table></td>
         </tr>
       </table>
-      </div><h2 align="CENTER"><font size="3">Informa&ccedil;&otilde;es de Registro: 
-      {assign var=hoje value=$smarty.now|date_format:"%Y-%m-%d"}</font></h2><div align="CENTER"> 
+      </div><h2 align="CENTER"><font size="3">Informa&ccedil;&otilde;es de Registro:
+      {assign var=hoje value=$smarty.now|date_format:"%Y-%m-%d"}</font></h2><div align="CENTER">
       <table width="500" border="0">
-        <tr> 
+        <tr>
           <td align="CENTER" colspan="2"><strong></strong></td>
         </tr>
-        <tr> 
+        <tr>
           <td align="RIGHT" width="29%"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif" color="#666666">Chave:</font></strong></td>
-          <td align="LEFT" width="71%" valign="MIDDLE"><strong><font size="2" color="#990000" face="Verdana, Arial, Helvetica, sans-serif"> 
-            {$licenca.licenca.chave} </font> <font face=verdana size=2> {if $licenca.geral.expira_em 
-            < $hoje AND $licenca.geral.congela_em > $hoje} <font color="#FF9900"><B> 
-            - Expirada</B></font> {/if} {if $licenca.geral.congela_em < $hoje}<font color ="red"><b> 
-            - Congelada</b> </font> {/if} {if $licenca.geral.congela_em > $smarty.now 
-            AND $licenca.geral.expira_em > $smarty.now} <font color = "#009900"><b> 
+          <td align="LEFT" width="71%" valign="MIDDLE"><strong><font size="2" color="#990000" face="Verdana, Arial, Helvetica, sans-serif">
+            {$licenca.licenca.chave} </font> <font face=verdana size=2> {if $licenca.geral.expira_em
+            < $hoje AND $licenca.geral.congela_em > $hoje} <font color="#FF9900"><B>
+            - Expirada</B></font> {/if} {if $licenca.geral.congela_em < $hoje}<font color ="red"><b>
+            - Congelada</b> </font> {/if} {if $licenca.geral.congela_em > $smarty.now
+            AND $licenca.geral.expira_em > $smarty.now} <font color = "#009900"><b>
             - Ativa</b></font> {/if}</font> </strong> </td>
         </tr>
-        <tr> 
+        <tr>
           <td align="RIGHT" bgcolor="#E6ECE9"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#006600">Gera&ccedil;&atilde;o:</font></strong></td>
           <td align="LEFT" valign="MIDDLE"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{$licenca.geral.emitida_em|date_format:"%d/%m/%Y"}</font></td>
         </tr>
-        <tr> 
+        <tr>
           <td align="RIGHT" bgcolor="#E6ECE9"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#006600">Expira&ccedil;&atilde;o:</font></strong></td>
           <td align="LEFT" valign="MIDDLE"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{$licenca.geral.expira_em|date_format:"%d/%m/%Y"}</font></td>
         </tr>
-        <tr> 
-          <td align="RIGHT" bgcolor="#E6ECE9"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#006600"> 
+        <tr>
+          <td align="RIGHT" bgcolor="#E6ECE9"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#006600">
             Congelamento:</font></strong></td>
           <td align="LEFT" valign="MIDDLE"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">{$licenca.geral.congela_em|date_format:"%d/%m/%Y"}</font></td>
         </tr>
       </table>
       <br>
       <table width="500" border="0" cellspacing="1" cellpadding="0">
-        <tr align="CENTER" valign="MIDDLE"> 
-          <td bgcolor="#FFFFFF"> <p><font face="Arial, Helvetica, sans-serif" size="5" color="#666666"><strong><font size="3"> 
+        <tr align="CENTER" valign="MIDDLE">
+          <td bgcolor="#FFFFFF"> <p><font face="Arial, Helvetica, sans-serif" size="5" color="#666666"><strong><font size="3">
               <!--M:ZSXL4-5GS2Z-35BAB-EP9HV-->
               </font></strong></font></p>
-            <p><span class="style2">Para solicitar um novo registro é necessário 
+            <p><span class="style2">Para solicitar um novo registro é necessário
               informar <br>
               somente um dos códigos da tabela abaixo:<br />
               </span></p>
             <p></p>
             <table width="400" align="center" border=1 cellspacing=0 cellpadding=1>
-              <tr bgcolor="#E6ECE9"> 
+              <tr bgcolor="#E6ECE9">
                 <td width="60"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Interface</font></td>
                 <td width="140"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">MAC</font></td>
                 <td width="140"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">IP</font></td>
                 <td><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><b>CODIGO</b></font></td>
               </tr>
-              {foreach item=lid from=$local_id_info} 
-              <tr> 
+              {foreach item=lid from=$local_id_info}
+              <tr>
                 <td><font face="Verdana, Arial, Helvetica, sans-serif" size="1" color="#006600">{$lid.interface}</font></td>
                 <td><font face="Verdana, Arial, Helvetica, sans-serif" size="1" color="#006600">{$lid.mac}</font></td>
                 <td><font face="Verdana, Arial, Helvetica, sans-serif" size="1" color="#006600">{$lid.ip}</font></td>
                 <td><font face="Verdana, Arial, Helvetica, sans-serif" size="1" color="#006600"><b>{$lid.local_id}</b></font></td>
               </tr>
-              {/foreach} 
+              {/foreach}
             </table>
-            <p><span class="style2">***Escolha o par adaptador/ip com menor probabilidade 
+            <p><span class="style2">***Escolha o par adaptador/ip com menor probabilidade
               de alteração.<br/>
               Quaisquer alterações nas configurações de rede ou troca de placa<br>
               poderá invalidar a licença.</span></p>
-            <p><span class="style2">Se voc&ecirc; j&aacute; recebeu o arquivo 
+            <p><span class="style2">Se voc&ecirc; j&aacute; recebeu o arquivo
               de licen&ccedil;a<br />
               atualize o registro utilizando-se do formul&aacute;rio abaixo: </span></p>
-            <form name="form1" method="post" action="{$smarty.server.PHP_SELF}" enctype="multipart/form-data"> 
+            <form name="form1" method="post" action="{$smarty.server.PHP_SELF}" enctype="multipart/form-data">
             <table width="100%" border="0" cellspacing="2" cellpadding="0">
-              <tr> 
+              <tr>
                 <td width="31%" align="RIGHT"> <p>Encontre o arquivo: </p></td>
-                <td width="49%"> <input name="arquivo_registro" type="file" id="arquivo_registro"> 
+                <td width="49%"> <input name="arquivo_registro" type="file" id="arquivo_registro">
                 </td>
-                <td width="20%"> <input type="submit" name="Submit" value="atualizar"> 
-                  <input name="op" type="hidden" id="op" value="registro"> <input name="acao" type="hidden" id="acao" value="upload"> 
+                <td width="20%"> <input type="submit" name="Submit" value="atualizar">
+                  <input name="op" type="hidden" id="op" value="registro"> <input name="acao" type="hidden" id="acao" value="upload">
                 </td>
               </tr>
             </table>
             </form></td>
         </tr>
       </table>
-      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Mosman Consultoria 
-        - <a href="http://www.mosman.com.br" target="_blank">www.mosman.com.br</a> 
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Mosman Consultoria
+        - <a href="http://www.mosman.com.br" target="_blank">www.mosman.com.br</a>
         - <a href="mailto:consultoria@mosman.com.br">consultoria@mosman.com.br</a><br>
         Telefone:<strong> (19) 3481.4892</strong></font></p>
       <p>&nbsp;</p>
@@ -185,8 +185,8 @@
   {if $barra}
   <tr>
     <td align="CENTER" valign="MIDDLE" height="30" bgcolor="#E6ECE9"><table width="400" border="0" cellspacing="0" cellpadding="0">
-        <tr> 
-          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy; 
+        <tr>
+          <td><div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy;
             Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
         </tr>
       </table></td>
