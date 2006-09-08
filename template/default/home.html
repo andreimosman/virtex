@@ -6,6 +6,37 @@
 	@import url("template/default/menu.css");
 </style>
 <title>Virtex Admin - Área de Gerenciamento </title>
+
+{literal}
+<script>
+function Tecla(e)
+{
+
+	frm = document.form_pesquisa;
+
+	if (document.all) // Internet Explorer
+		var tecla = event.keyCode;
+	else if(document.layers) // Nestcape
+		var tecla = e.which;
+		if (tecla != 13 ){
+			return true;}
+		else
+			{
+			//alert("Clique no botão 'Pesquisar'");
+				if( pesquisaUsuario() ) {
+					frm.submit();
+				}
+
+				if (tecla != 8) // backspace
+					event.keyCode = 0;
+					//return false;
+				else
+					return true;
+			}
+}
+</script>
+{/literal}
+
 </head>
 <base target="CONTEUDO">
 <body topmargin=0 leftmargin=0 {if $privilegio_cliente == "sim"}onLoad="document.form_pesquisa.texto_pesquisa.focus();"{/if}>
@@ -43,7 +74,7 @@
 <div name="box_pesquisa" id="box_pesquisa">
 	<table width="120" border="0" cellspacing="1" cellpadding="1" >
 		<tr align="left">
-			<td><font face="arial" size="-1"><b> Procurar Cliente</b><br><input name="texto_pesquisa" id="texto_pesquisa" value="" type="text" size="15" class="campos" onFocus="this.style.backgroundColor='#E7EFEA'" onBlur="this.style.backgroundColor='#FFFFFF'"> </td>
+			<td><font face="arial" size="-1"><b> Procurar Cliente</b><br><input name="texto_pesquisa" id="texto_pesquisa" value="" type="text" onKeyPress="return Tecla(event);" size="15" class="campos" onFocus="this.style.backgroundColor='#E7EFEA'" onBlur="this.style.backgroundColor='#FFFFFF'"> </td>
 		</tr>
 		<tr>
 			<td>
@@ -121,31 +152,31 @@
 <table height="50%">
 	<tr>
 	{if $privilegio_gravar_cliente == "sim" }
-		          <td> <a href="clientes.php?op=cadastro"><img src="template/default/images/bt_usuario_novo_barra.gif" border="0"></a> 
+		          <td> <a href="clientes.php?op=cadastro"><img src="template/default/images/bt_usuario_novo_barra.gif" border="0"></a>
                   </td>
 	{/if}
 	</tr>
 	<tr>
 	{if $privilegio_radius == "sim"}
-		          <td> <a href="suporte.php?op=log"><img src="template/default/images/bt_log_radius.gif" border="0"></a> 
+		          <td> <a href="suporte.php?op=log"><img src="template/default/images/bt_log_radius.gif" border="0"></a>
                   </td>
-	{/if}	
+	{/if}
 	</tr>
 	<tr>
 	{if $privilegio_cobranca == "sim"}
-		          <td> <a href="cobranca.php?op=gerar_boletos"><img src="template/default/images/bt_emitir_faturas.gif" border="0"></a> 
+		          <td> <a href="cobranca.php?op=gerar_boletos"><img src="template/default/images/bt_emitir_faturas.gif" border="0"></a>
                   </td>
 	{/if}
 	</tr>
 	<tr>
 	{if $privilegio_config == "sim"}
-		          <td> <a href="configuracao.php?op=resumo"><img src="template/default/images/bt_preferencias.gif" border="0"></a> 
+		          <td> <a href="configuracao.php?op=resumo"><img src="template/default/images/bt_preferencias.gif" border="0"></a>
                   </td>
 	{/if}
 	</tr>
 	<tr>
-	{if $privilegio_radius == "sim"} 
-    	          <td> <a href="suporte.php?op=graf"><img src="template/default/images/bt_graficos.gif" border="0"></a> 
+	{if $privilegio_radius == "sim"}
+    	          <td> <a href="suporte.php?op=graf"><img src="template/default/images/bt_graficos.gif" border="0"></a>
                   </td>
     {/if}
 	</tr>
@@ -181,9 +212,9 @@
 		</table>
 	</td>
  </tr>
-  <tr bgcolor="#BCD3C4"> 
+  <tr bgcolor="#BCD3C4">
     <td colspan=2 height='20'>
-<div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy; 
+<div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy;
         Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
  </tr>
 </table>

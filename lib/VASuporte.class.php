@@ -288,6 +288,13 @@ class VASuporte extends VirtexAdmin {
 		} else if ($op == "arp"){
 			$this->arquivoTemplate = "suporte_arp.html";
 			
+			$host_info = new ICHostInfo();
+			$hosts = $host_info->obtemListaServidores();
+			//echo $hosts;
+
+			$this->tpl->atribui("hosts",$hosts);
+
+			$host = @$_REQUEST["host"];
 			$ip = @$_REQUEST["ip"];
 			
 			$arp=array();
@@ -298,9 +305,11 @@ class VASuporte extends VirtexAdmin {
 				
 				$hosts = $ich->obtemListaServidores();
 				
-				$arp = array();
+				$arp = array();  
 				
 				for($i=0;$i<count($hosts);$i++) {
+					if( $host && $host != $hosts[$i] ) continue;
+					
 					$info = $ich->obtemInfoServidor($hosts[$i]);
 					
 					if(!$icc->open($info["host"],$info["port"],$info["chave"],$info["username"],$info["password"])) {
@@ -317,6 +326,7 @@ class VASuporte extends VirtexAdmin {
 			$this->tpl->atribui("ip",$ip);
 			$this->tpl->atribui("arp",$arp);
 			$this->tpl->atribui("op",$op);
+			$this->tpl->atribui("host",$host);
 			
 			
 		}else if ($op == "help_desk"){
@@ -329,7 +339,7 @@ class VASuporte extends VirtexAdmin {
 			$ping_limite = 20;
 			$ping_max_pkg = 1400;
 			
-			
+				
 			$erros = array();
 			
 			
