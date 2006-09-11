@@ -1482,11 +1482,11 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "  FROM  ";
 			$sSQL .= "   lgtb_bloqueio_automatizado  ";
 			$sSQL .= "  WHERE ";			
-			$sSQL .= " 	  data_hora > (CAST(EXTRACT(year FROM now()) || '-' || EXTRACT(month from now()) || '-01' as date)) + INTERVAL '1 month' - INTERVAL '$periodo months' AND ";
+			$sSQL .= " 	  data_hora > (CAST(EXTRACT(year FROM now()) || '-' || EXTRACT(month from now()) || '-01' as date)) - INTERVAL '1 month' - INTERVAL '$periodo months' AND ";
 			$sSQL .= "   tipo = 'B'	 ";		
 			$sSQL .= "   GROUP BY mes,ano	 ";		
 			$sSQL .= "  ) blq USING(mes,ano) ";
-			//echo $sSQL ;
+			//////////echo $sSQL ;
 			
 	
 		} else if ($acao == "sub_geral") {
@@ -1501,22 +1501,21 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL  = "SELECT ";
 			$sSQL .= "	clt.id_cliente, clt.nome_razao, ";
 			$sSQL .= "	cnt.username, prd.nome, cp.id_cliente_produto, ";
-			$sSQL .= "	lba.data_hora, lba.admin, lba.tipo, ";
+			$sSQL .= "	lba.data_hora, lba.admin, lba.data_hora, lba.tipo, ";
 			$sSQL .= "	EXTRACT(day from data_hora) as dia, ";
 			$sSQL .= "	EXTRACT(month from data_hora) as mes, ";
 			$sSQL .= "	EXTRACT(year from data_hora) as ano ";
 			$sSQL .= "FROM ";
-			//$sSQL .= "	(cltb_cliente clt INNER JOIN cbtb_cliente_produto USING(id_cliente)) INNER JOIN lgtb_bloqueio_automatizado lba USING(id_cliente_produto) ";
-			$sSQL .= "	(cltb_cliente clt INNER JOIN cbtb_cliente_produto cp USING(id_cliente)) INNER JOIN lgtb_bloqueio_automatizado lba USING(id_cliente_produto) INNER JOIN cntb_conta cnt USING(id_cliente_produto), ";
+			$sSQL .= "	(cltb_cliente clt INNER JOIN cbtb_cliente_produto cp USING(id_cliente)) INNER JOIN lgtb_bloqueio_automatizado lba USING(id_cliente_produto) INNER JOIN cntb_conta cnt USING(id_cliente_produto),  ";
 			$sSQL .= "	prtb_produto as prd ";
 			$sSQL .= "WHERE ";
 			$sSQL .= "  prd.id_produto = cp.id_produto ";
-			$sSQL .= "  AND cnt.tipo_conta <> 'E' ";
+			$sSQL .= "	AND data_hora < CAST('$ano-$mes-01' as date) + INTERVAL '1 month' ";
 			$sSQL .= "	AND data_hora < CAST('$ano-$mes-01' as date) + INTERVAL '1 month' ";
 			$sSQL .= "	AND data_hora >= CAST('$ano-$mes-01' as date) ";
 			$sSQL .= "ORDER BY ano, mes, dia, clt.nome_razao ";
 			
-			////////echo $sSQL ;
+			///echo $sSQL ;
 			
 			
 		}else if ($acao == "sub_blo") {
@@ -1545,7 +1544,10 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "	AND data_hora < CAST('$ano-$mes-01' as date) + INTERVAL '1 month' ";
 			$sSQL .= "	AND data_hora >= CAST('$ano-$mes-01' as date) ";
 			$sSQL .= "  AND lba.tipo = '$tipo'";
+			$sSQL .= "  AND cnt.tipo_conta <> 'E' ";
 			$sSQL .= "ORDER BY ano, mes, dia, clt.nome_razao ";
+			
+			////////echo ($sSQL);
 			
 		}
 		
