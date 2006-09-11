@@ -55,9 +55,12 @@ include ("defs.php");
 			SOFreeBSD::installDir($dir3);
 			
 			$path = $email_base."/".$dominio."/".$username."/Maildir";
-			$comando = "chown -R nobody:nobody ".$path;
+			$comando  = "/usr/sbin/chown -R nobody ".$path;
+			$comando2 = "/usr/sbin/chgrp -R nobody ".$path;
 			
 			SistemaOperacional::executa($comando);
+			SistemaOperacional::executa($comando2);
+			
 			
 			
 		}
