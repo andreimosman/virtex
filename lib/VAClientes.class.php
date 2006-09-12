@@ -873,9 +873,9 @@ class VAClientes extends VirtexAdmin {
 	if ($tipo_lista == 'tudo'){
 	
 		$sSQL  = "SELECT ";
-		$sSQL .= "f.id_cliente_produto, to_char(f.data, 'DD/mm/YYYY') as data_conv,f.data, f.valor, f.observacoes,f.descricao,to_char(f.reagendamento, 'DD/mm/YYYY') as reagendamento, f.pagto_parcial, ";
+		$sSQL .= "f.id_cliente_produto, to_char(f.data, 'DD/mm/YYYY') as data_conv,f.data, f.valor, f.observacoes,f.descricao, to_char(f.reagendamento, 'DD/mm/YYYY') as reagendamento, f.pagto_parcial, ";
 		$sSQL .= "to_char(f.data_pagamento, 'DD/mm/YYYY') as data_pagamento, f.desconto, f.acrescimo, f.valor_pago, ";
-		$sSQL .= "c.id_cliente_produto, c.id_cliente, ";
+		$sSQL .= "c.id_cliente_produto, c.id_cliente, ct.id_cobranca, ";
 		$sSQL .= "CASE WHEN (f.data < CAST(now() as date) AND f.status='A') OR (f.reagendamento < CAST(now() as date) AND f.status='R') ";
 		$sSQL .= "THEN 'S' ELSE ";
 		$sSQL .= "CASE WHEN f.reagendamento is not null AND f.status != 'P' ";
@@ -883,17 +883,23 @@ class VAClientes extends VirtexAdmin {
 		$sSQL .= "END ";
 		$sSQL .= "END as extstatus ";
 		$sSQL .= "FROM ";
-		$sSQL .= "cbtb_faturas f, cbtb_cliente_produto c ";
+		$sSQL .= "cbtb_faturas f, cbtb_cliente_produto c, cbtb_contrato ct ";
 		$sSQL .= "WHERE ";
 		$sSQL .= "id_cliente = '$id_cliente' ";
 		$sSQL .= "AND ";
 		$sSQL .= "f.id_cliente_produto = c.id_cliente_produto ";
+		$sSQL .= "AND ct.id_cliente_produto = f.id_cliente_produto ";
 		//$sSQL .= "AND (f.status = 'A' OR f.status = 'R') ";
 		//$sSQL .= "AND f.data < now() + interval '10 day' ";
 		$sSQL .= "ORDER BY f.data ASC ";
 
 
+				
+				$largura = "700";
+				$altura = "400";
 
+				$this->tpl->atribui("largura",$largura);
+				$this->tpl->atribui("altura",$altura);
 
 
 
