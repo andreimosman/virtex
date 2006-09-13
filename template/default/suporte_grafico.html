@@ -29,9 +29,9 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
               <tr>
                 <td align="center" valign="middle"><p><br>
                   <h1>Gráficos</h1>
-				  <div align="center"> 
+				  <div align="center">
                     <table>
-                      <tr> 
+                      <tr>
                         <td colspan="2"><p><strong>Escolha o tipo do gráfico</strong></p></td>
                       </tr>
                     </table>
@@ -39,25 +39,26 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                       <tr>
                         <td width="256" bgcolor="#d1d1d1">
 							<table width="268" height="108" border="0" cellpadding="0" cellspacing="1">
-                            <tr> 
+                            <tr>
                               <td width="266" bgcolor="#F8F8F8">
-							  	<form name="form1" method="post" action="">
+							  	<form name="form1" method="get" action="">
                                   <table width="200" border="0" align="center" cellpadding="0" cellspacing="2">
-                                    <tr> 
+                                    <tr>
                                       <td align="CENTER"><br> <p><strong>Escolha o POP</strong></p></td>
                                     </tr>
-                                    <tr> 
+                                    <tr>
                                       <td align="CENTER">
 									  	<select name="pesquisa" id="select">
                                           <option value=""></option>
                                           <option value="todos" {if $pesquisa=="todos" && $tipo_pesquisa=="pop"} selected {/if}>TODOS</option>
 		                                	{foreach item=a from=$pops}
                                           <option value="{$a.id_pop}" {if $a.id_pop == $pesquisa && $tipo_pesquisa=="pop"}SELECTED{/if}>{$a.nome}</option>
-											{/foreach} 
-                                      	</select> <input type="hidden" name="tipo_pesquisa" value="pop"> 
+											{/foreach}
+                                      	</select> <input type="hidden" name="tipo_pesquisa" value="pop">
+										<input type="hidden" value="graf" name="op" />
                                       </td>
                                     </tr>
-                                    <tr> 
+                                    <tr>
                                       <td height="27" align="center" bgcolor="#F8F8F8"><input type="submit" name="Submit" value="OK"></td>
                                     </tr>
                                   </table>
@@ -68,25 +69,25 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                         </td>
                         <td width="272" bgcolor="#d1d1d1">
 						 <table width="267" height="108" border="0" cellpadding="0" cellspacing="1">
-                            <tr> 
-                              <td width="265" bgcolor="#F8F8F8"> 
-                                <form name="form1" method="post" action="">
+                            <tr>
+                              <td width="265" bgcolor="#F8F8F8">
+                                <form name="form1" method="get" action=""><input type="hidden" value="graf" name="op" />
                                   <table width="200" border="0" align="center" cellpadding="0" cellspacing="2" bordercolor="#000000">
-                                    <tr> 
+                                    <tr>
                                       <td align="CENTER" bgcolor="#F8F8F8"><br><p><strong>Escolha o NAS</strong></p></td>
                                     </tr>
-                                    <tr> 
-                                      <td align="CENTER" bgcolor="#F8F8F8"> 
+                                    <tr>
+                                      <td align="CENTER" bgcolor="#F8F8F8">
                                         <select name="pesquisa" id="select">
 										  <option value=""></option>
 										  <option value="todos" {if $pesquisa=="todos" && $tipo_pesquisa=="nas"} selected {/if}>TODOS</option>
                                         {foreach item=a from=$nas}
 							              <option value="{$a.id_nas}" {if $a.id_nas == $pesquisa && $tipo_pesquisa=="nas"}SELECTED{/if}>{$a.nome}</option>
 										{/foreach}
-                                       </select> <input type="hidden" name="tipo_pesquisa" value="nas">  
+                                       </select> <input type="hidden" name="tipo_pesquisa" value="nas">
                                       </td>
                                     </tr>
-                                    <tr> 
+                                    <tr>
                                       <td height="27" align="center" bgcolor="#F8F8F8"><input type="submit" name="Submit" value="OK"></td>
                                     </tr>
                                   </table>
@@ -105,11 +106,11 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 					  <br><br>
 					  {if $cli || $cli != ""}
 					      <table width="550" border="0" cellspacing="1" cellpadding="0">
-                            <tr bgcolor="#f1f1f1"> 
+                            <tr bgcolor="#f1f1f1">
                               <td width="231" bgcolor="#f1f1f1"><p><strong>Usu&aacute;rio</strong></p></td>
                               <td width="231" bgcolor="#f1f1f1" colspan="2"><p align="right">&nbsp;</p></td>
                             </tr>
-                            <tr bgcolor="#f1f1f1" "#f1f1f1"> 
+                            <tr bgcolor="#f1f1f1" "#f1f1f1">
                               <td width="200"><p><strong>Download/Upload</strong></p></td>
                               <td width="150" bgcolor="#f1f1f1"><p align="center"><strong>MAC</strong></p></td>
                               <td width="200"><p align="center"><strong>IP/Rede</strong></p></td>
@@ -121,36 +122,36 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                     <tr>
                       <td>
 					  {foreach item=a from=$cli}
-					
+
 					      <table width="550" border="0" cellspacing="1" cellpadding="0" onMouseOver="style.background='#99CCFF';" onMouseOut="style.background='white';">
                             <!--tr>
                             <td width="150"><a href="javascript:;" onClick="MM_openBrWindow('suporte.php?op=graf&rotina=mostra','graf','scrollbars=yes,width=550,height=500')"><font color="#000066">{$a.username}</font></a></td>
                             <td width="150"><a href="javascript:;" onClick="MM_openBrWindow('suporte.php?op=graf&rotina=mostra','graf','scrollbars=yes,width=550,height=500')">{$a.mac}</a></td>
                           </tr-->
-                            <tr > 
+                            <tr >
                               <td width="313"><a href="javascript:;" onClick="MM_openBrWindow('/virtex-cgi/stats/{$a.username}.html','graf','scrollbars=yes,width=550,height=500')"><font color="#000066">{$a.username}</font></a></td>
 							  <td  colspan="2"></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td width="313">
 							  	  <p><a href="javascript:;" onClick="MM_openBrWindow('/virtex-cgi/stats/{$a.username}.html','graf','scrollbars=yes,width=550,height=500')">
-								  <font color="#000066">Download </font>{$a.download_kbps}<font color="#000066">kbps</font> 
+								  <font color="#000066">Download </font>{$a.download_kbps}<font color="#000066">kbps</font>
                                   <font color="#CCCCCC"><strong>{if $a.download_kbps=="0"}(ilimitado){/if}</strong></font>
 								  <font color="#000066">Upload </font>
 								  {$a.upload_kbps}<font color="#000066"> kbps</font>
 								  </a></p>
 							  </td>
-                              <td width="139" ><div align="left"> 
+                              <td width="139" ><div align="left">
                                   <p align="center"><a href="javascript:;" onClick="MM_openBrWindow('/virtex-cgi/stats/{$a.username}.html','graf','scrollbars=yes,width=550,height=500')">{$a.mac}</a> </div>
 							  </td>
                               <td width="211">
 							 	  <p align="center"><a href="javascript:;" onClick="MM_openBrWindow('/virtex-cgi/stats/{$a.username}.html','graf','scrollbars=yes,width=550,height=500')">{$a.ipaddr}{$a.rede}</a></p>
 							  </td>
                             </tr>
-                            <tr bgcolor="#CCCCCC"> 
+                            <tr bgcolor="#CCCCCC">
                               <td colspan="3" height="1"></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td colspan="3"><div align="CENTER"><img src="/virtex-cgi/stats/{$a.username}-day.png" width="497" height="154"></div></td>
                             </tr>
                           </table>
@@ -160,15 +161,15 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 						{if $num_todos}
 					  {foreach item=a from=$num_todos}
 					  <table width="550" border="0" cellspacing="1" cellpadding="0">
-                            <tr bgcolor="#f1f1f1"> 
+                            <tr bgcolor="#f1f1f1">
                               <td width="231" bgcolor="#f1f1f1"><p><strong>{$a.nome} id - {$a.id_nas}{$a.id_pop}</strong></p></td>
                               <td width="231" bgcolor="#f1f1f1" colspan="2"><p align="right">&nbsp;</p></td>
                             </tr>
-							<tr bgcolor="#f1f1f1"> 
+							<tr bgcolor="#f1f1f1">
                               <td width="231" bgcolor="#f1f1f1"><p><strong>Usu&aacute;rio</strong></p></td>
                               <td width="231" bgcolor="#f1f1f1" colspan="2"><p align="right">&nbsp;</p></td>
                             </tr>
-                            <tr bgcolor="#f1f1f1" "#f1f1f1"> 
+                            <tr bgcolor="#f1f1f1" "#f1f1f1">
                               <td width="200"><p><strong>Download/Upload</strong></p></td>
                               <td width="150" bgcolor="#f1f1f1"><p align="center"><strong>MAC</strong></p></td>
                               <td width="200"><p align="center"><strong>IP/Rede</strong></p></td>
@@ -181,39 +182,39 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                             <td width="150"><a href="javascript:;" onClick="MM_openBrWindow('suporte.php?op=graf&rotina=mostra','graf','scrollbars=yes,width=550,height=500')"><font color="#000066">{$a.username}</font></a></td>
                             <td width="150"><a href="javascript:;" onClick="MM_openBrWindow('suporte.php?op=graf&rotina=mostra','graf','scrollbars=yes,width=550,height=500')">{$a.mac}</a></td>
                           </tr-->
-                            <tr > 
+                            <tr >
                               <td width="313"><a href="javascript:;" onClick="MM_openBrWindow('/virtex-cgi/stats/{$b.username}.html','graf','scrollbars=yes,width=550,height=500')"><font color="#000066">{$b.username}</font></a></td>
 							  <td colspan="2"></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td width="313">
 							  	  <p><a href="javascript:;" onClick="MM_openBrWindow('/virtex-cgi/stats/{$b.username}.html','graf','scrollbars=yes,width=550,height=500')">
 							  	  <font color="#000066">Download </font>
-								  {$b.download_kbps}<font color="#000066">kbps</font> 
+								  {$b.download_kbps}<font color="#000066">kbps</font>
                                   <font color="#CCCCCC"><strong>{if $b.download_kbps=="0"}(ilimitado){/if}</strong></font>
 								  <font color="#000066">Upload </font>{$b.upload_kbps}<font color="#000066"> kbps</font>
 								  </a></p>
 							  </td>
                               <td width="139" >
-							  	  <div align="left"> 
-								  <a href="javascript:;" onClick="MM_openBrWindow('/virtex-cgi/stats/{$b.username}.html','graf','scrollbars=yes,width=550,height=500')">{$b.mac}</a> 
+							  	  <div align="left">
+								  <a href="javascript:;" onClick="MM_openBrWindow('/virtex-cgi/stats/{$b.username}.html','graf','scrollbars=yes,width=550,height=500')">{$b.mac}</a>
 								  </div>
 							  </td>
                               <td width="211"><p align="center"><a href="javascript:;" onClick="MM_openBrWindow('/virtex-cgi/stats/{$b.username}.html','graf','scrollbars=yes,width=550,height=500')">{$b.ipaddr}{$b.rede}</a></p></td>
                             </tr>
-                            <tr bgcolor="#CCCCCC"> 
+                            <tr bgcolor="#CCCCCC">
                               <td colspan="3" height="1"></td>
                             </tr>
-                            <tr> 
+                            <tr>
                               <td colspan="3"><div align="CENTER"><img src="/virtex-cgi/stats/{$b.username}-day.png" width="497" height="154"></div></td>
                             </tr>
                           </table>
                           <br>
-                            {/foreach} 
+                            {/foreach}
 							{if !$a.usuarios}
 								<p><strong><font color="#FF0000">Não Há Usuários Atualmente.</font></strong></p>
 								<br><br>
-							{/if} 
+							{/if}
                             {/foreach}
 						</td>
                     </tr>
