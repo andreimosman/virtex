@@ -1,6 +1,6 @@
 /*
 Created		22/2/2006
-Modified		27/8/2006
+Modified		13/9/2006
 Project		
 Model		
 Company		
@@ -75,6 +75,7 @@ Create table  cltb_cliente
 	obs Text NULL ,
 	provedor Boolean NULL  Default 'f',
 	excluido Boolean NULL  Default false,
+	info_cobranca Boolean NULL  Default false,
  primary key (id_cliente)
 );
 
@@ -168,10 +169,10 @@ Create table  cbtb_contrato
 	bl_franquia_trafego_mensal_gb Smallint NULL ,
 	bl_valor_trafego_adicional_gb Numeric(7,2) NULL ,
 	cod_banco Smallint NULL ,
-	carteira Smallint NULL ,
-	agencia Smallint NULL ,
-	num_conta Smallint NULL ,
-	convenio Smallint NULL ,
+	carteira Varchar(100) NULL ,
+	agencia integer NULL ,
+	num_conta integer NULL ,
+	convenio integer NULL ,
 	cc_vencimento Varchar(5) NULL ,
 	cc_numero Varchar(25) NULL ,
 	cc_operadora Char(2) NULL ,
@@ -405,7 +406,7 @@ Create table  cbtb_faturas
 	id_carne Smallint NULL ,
 	nosso_numero Varchar(100) NULL ,
 	linha_digitavel Varchar(150) NULL ,
-	nosso_numero_banco integer NULL ,
+	nosso_numero_banco Numeric(17,0) NULL ,
  primary key (id_cliente_produto,data)
 );
 
@@ -697,6 +698,19 @@ Create table  lgtb_restore
  primary key (id_restore)
 );
 
+Create table  lgtb_remessas
+(
+	id_remessa Smallint NOT NULL,
+	id_cliente_produto Smallint NULL ,
+	data_remessa Timestamp NULL ,
+	data_vencimento Date NULL ,
+	valor Numeric(7,2) NULL ,
+	periodo Smallint NULL ,
+	mes Smallint NULL ,
+	ano Smallint NULL 
+);
+
+
 
 
 
@@ -808,6 +822,8 @@ CREATE SEQUENCE rdsq_id_accounting;
 CREATE SEQUENCE cbsq_id_carne;
 CREATE SEQUENCE blsq_carne_nossonumero;
 CREATE SEQUENCE cnsq_id_conta;
+CREATE SEQUENCE blsq_nosso_numero_banco;
+CREATE SEQUENCE lgsq_id_remessa;
 
 
 -- POPULANDO A TABELA DE FORMAS DE PAGAMENTO
@@ -864,7 +880,7 @@ INSERT INTO adtb_privilegio (id_priv, cod_priv, nome) VALUES (29, '_ADMIN_PRIV',
 
 
 -- CRIANDO O USUARIO ADMIN
-INSERT INTO adtb_admin(id_admin,admin,senha,status,nome,email,primeiro_login) VALUES (1, 'admin', md5('admin123'), 'A','Administrador','admin@mosman.com.br',true);
+INSERT INTO adtb_admin(id_admin,admin,senha,status,nome,email,primeiro_login) VALUES (1, 'admin', md5('admin123'), 'A','Administrador','web@mosman.com.br',true);
 
 
 -- DANDO TODOS OS PRIVILEGIOS PARA ADMIN
