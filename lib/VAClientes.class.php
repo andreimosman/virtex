@@ -1574,7 +1574,8 @@ class VAClientes extends VirtexAdmin {
 						}
 						
 						
-						require_once( PATH_LIB . "/dede.php" );						
+						//require_once( PATH_LIB . "/dede.php" );						
+						require_once( PATH_LIB . "/gera_faturas.php" );						
 
 						if ($tipo && $tipo == "BL"){
 						
