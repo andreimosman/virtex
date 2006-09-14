@@ -158,7 +158,7 @@ class Spool {
 		$sSQL .= "	sptb_spool (";
 		$sSQL .= "		registro, destino, tipo, op, id_conta, parametros, status ";
 		$sSQL .= ") VALUES (";
-		$sSQL .= "		now(), '$server', 'x', '$id_conta', '$parametros', ''";
+		$sSQL .= "		now(), '$server','H', 'x', '$id_conta', '$parametros', 'A'";
 		
 	}
 	

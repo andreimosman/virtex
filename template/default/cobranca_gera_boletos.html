@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+
+</head>
+<body><h1 align="CENTER">Gera&ccedil;&atilde;o de Boletos Banc&aacute;rios </h1><form name="form1" method="post" action="">
+<table align="CENTER" width="400" border="0" cellspacing="2" cellpadding="0">
+  <tr> 
+    <td bgcolor="efefef"><div align="CENTER"><strong><font size="2" face="Arial, Helvetica, sans-serif">Periodo 
+      de Emiss&atilde;o</font></strong></div></td>
+  </tr>
+  <tr> 
+    <td><table align="CENTER" width="80%">
+        <tr> 
+          <td><p><label> 
+              <input name="periodo" type="radio" class="checkbox" value="15" {if $periodo == "15"}checked{/if}>
+              </label></p></td>
+          <td> <p>de 1 a 15</p></td>
+          <td><p> 
+              <input type="radio" name="periodo" class="checkbox" value="30" {if $periodo == "30"}checked{/if}>
+            </p></td>
+          <td> <p>de 16 a 30</p></td>
+          <td><p> 
+              <input name="periodo" type="radio" value="01" class="checkbox" {if $periodo == "01"}checked{elseif !$periodo}checked{/if}>
+            </p></td>
+          <td><p>mês todo</p></td>
+        </tr>
+        <tr> 
+          <td colspan="6"><table align="CENTER" width="200" border="0" cellspacing="1" cellpadding="0">
+              <tr> 
+                <td width="49%" valign="MIDDLE" align="RIGHT"> 
+                  <p>M&ecirc;s</p></td>
+                <td width="51%" valign="MIDDLE">
+<p> 
+                    <select name="mes" id="mes">
+                      <option value="01"{if $mes == "01"}selected{/if}>Jan</option>
+                      <option value="02"{if $mes == "02"}selected{/if}>Fev</option>
+                      <option value="03"{if $mes == "03"}selected{/if}>Mar</option>
+                      <option value="04"{if $mes == "04"}selected{/if}>Abr</option>
+                      <option value="05"{if $mes == "05"}selected{/if}>Mai</option>
+                      <option value="06"{if $mes == "06"}selected{/if}>Jun</option>
+                      <option value="07"{if $mes == "07"}selected{/if}>Jul</option>
+                      <option value="08"{if $mes == "08"}selected{/if}>Ago</option>
+                      <option value="09"{if $mes == "09"}selected{/if}>Set</option>
+                      <option value="10"{if $mes == "10"}selected{/if}>Out</option>
+                      <option value="11"{if $mes == "11"}selected{/if}>Nov</option>
+                      <option value="12"{if $mes == "12"}selected{/if}>Dez</option>
+                    </select>
+                  </p></td>
+                <td width="51%" valign="MIDDLE" align="RIGHT"> 
+                  <p>Ano</p></td>
+                <td width="51%" valign="MIDDLE">
+<p> 
+                    <select name="ano" id="ano">
+                      <option value="2006" {if $ano == "2006"}selected{/if}>2006</option>
+                      <option value="2007" {if $ano == "2007"}selected{/if}>2007</option>
+                      <option value="2008" {if $ano == "2008"}selected{/if}>2008</option>
+                      <option value="2009" {if $ano == "2009"}selected{/if}>2009</option>
+                      <option value="2010" {if $ano == "2010"}selected{/if}>2010</option>
+                    </select>
+                  </p></td>
+              </tr>
+            </table> </td>
+        </tr>
+        <tr> 
+          <td colspan="6"></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr align="CENTER"> 
+    <td><input type="submit" name="Submit" value="Emitir Boletos no Periodo"></td>
+  </tr>
+</table>
+</form>
+<p align="CENTER">&nbsp;</p>
+{if $boletos and $boletos != ""}
+<p align="CENTER"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Ser&atilde;o 
+  gerados os seguintes boletos:</strong></font></p>
+<form name="form2" method="post" action="">
+<table align="CENTER" width="600" border="0" cellspacing="1" cellpadding="0">
+  <tr> 
+    <td width="50" bgcolor="#D7D7D7"> <p><strong>ID</strong></p></td>
+    <td width="200" bgcolor="#D7D7D7"> <p><strong>Nome</strong></p></td>
+    <td width="200" bgcolor="#D7D7D7"> <p><strong>Produto</strong></p></td>
+    <td width="100" bgcolor="#D7D7D7"> <p><strong>Vencimento</strong></p></td>
+    <td width="100" bgcolor="#D7D7D7"> <p><strong>Valor</strong></p></td>
+  </tr>
+  {foreach item=a name=boleto from=$boletos} 
+  <tr> 
+    <td><p>{$a.id_cliente}</p>
+    </td>
+    <td><p>{$a.nome_razao}</p></td>
+    <td><p>{$a.nome}</p></td>
+    <td><p>{$a.data_vencimento|date_format:"%d/%m/%Y"}</p></td>
+    <td><p>{$a.valor}</p></td>
+  </tr>
+  {/foreach} 
+  <tr align="CENTER"> 
+    <td colspan=5> <input type="submit" name="Submit2" value="Confirma Geração">
+      <input name="op" type="hidden" value="mensal" id="op3"> 
+      <input name="acao" type="hidden" value="gerar" id="acao3">
+      <input name="periodo" type="hidden" value="{$periodo}" id="periodo">
+      <input name="mes" type="hidden" value="{$mes}" id="mes">
+      <input name="ano" type="hidden" value="{$ano}" id="ano"></td>
+  </tr>
+</table>
+</form>{elseif !$boletos and $periodo} 
+<p align="center">Não existem faturas a gerar neste periodo</p>
+<p>{else}</p>
+<div align="CENTER"><font color="#000000" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Ultimas Remessas Processadas</strong></font><br>
+</div>
+<table align="CENTER" width="400" border="0" cellspacing="1" cellpadding="0">
+  <tr> 
+    <td bgcolor="#CCCCCC" width="200" height="20"> 
+      <p><strong>Data</strong></p></td>
+    <td bgcolor="#CCCCCC" width="100" height="20"> 
+      <p align="right"><strong>Valor</strong></p></td>
+    <td bgcolor="#CCCCCC" width="100" height="20"><div align="CENTER"> 
+      <p><strong>Quant. Boletos</strong></p>
+      </div></td>
+  </tr>
+  {foreach item=a from=$remessa} 
+  <tr bgcolor="{cycle values="#ffffff,#efefef"}"> 
+    <td height="20">
+<p><a href="cobranca.php?op=mensal&acao=lista_remessa&id_remessa={$a.id_remessa}&data={$a.data_remessa}">{$a.data_remessa|date_format:"%d/%m/%Y 
+        %H:%M:%S"}</a></p></td>
+    <td height="20">
+<p align="right">{$a.soma}</p></td>
+    <td height="20"><div align="CENTER"> 
+      <p>{$a.quant}</p>
+      </div></td>
+  </tr>
+  {/foreach} 
+</table>
+<p>{/if} </p>
+<p align="CENTER">&nbsp;</p>
+</body>
+</html>

@@ -284,7 +284,7 @@
 								
 								} else if ($id_cobranca == 1){ // caso a cobrança seja boleto	
 								
-										require_once("inc_boleto_pop.php");								
+										require_once("inc_boleto_pos.php");								
 									
 								} else { //Caso a cobrança não seja do tipo carnê nem boleto (carne = 2 e boleto = 1).
 

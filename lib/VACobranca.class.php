@@ -4309,6 +4309,241 @@ class VACobranca extends VirtexAdmin {
 
 	
 	
+	}else if ($op=="mensal"){
+	
+		$periodo = @$_REQUEST["periodo"];
+		$mes = @$_REQUEST["mes"];
+		$hoje = date("Y-m-d H:i:s");
+		$ano = @$_REQUEST["ano"];
+		$acao = @$_REQUEST["acao"];
+		$data_hoje = date("d-m-Y");
+		
+		list($d_hoje,$m_hoje,$a_hoje) = explode("-",$data_hoje);
+		
+		$this->tpl->atribui("mes",$m_hoje);
+		$this->tpl->atribui("ano",$d_hoje);
+		
+		
+		
+				
+		if ($periodo){
+
+			$data_inicio = $ano."-".$mes."-01";
+
+			list($_a,$_m,$_d) = explode("-",$data_inicio);
+
+			$data_final = date("Y-m-d", mktime(0, 0, 0, $_m+1, $_d, $_a));	
+
+
+
+			if ($periodo == "01"){
+
+				$dia_inicio = "01";
+				$dia_final  = "30";
+
+			}else if ($periodo == "15"){
+
+				$dia_inicio = "01";
+				$dia_final  = "15";
+
+			}else if ($periodo == "30"){
+
+				$dia_inicio = "16";
+				$dia_final  = "30";
+
+			}
+
+
+			$sSQL  = "SELECT ";
+			$sSQL .= "   cl.id_cliente,cl.nome_razao,ct.status, ct.id_cobranca, ct.id_cliente_produto, ct.vencimento,ct.valor_produto as valor,ct.tipo_produto,ct.vencimento,p.nome,fat.data,fat.id_carne ";
+			$sSQL .= "FROM ";
+			$sSQL .= "   cltb_cliente cl INNER JOIN cbtb_cliente_produto cp USING (id_cliente) ";
+			$sSQL .= "   INNER JOIN cbtb_contrato ct USING (id_cliente_produto) ";
+			$sSQL .= "   LEFT OUTER JOIN ";
+			$sSQL .= "						(SELECT * FROM cbtb_faturas WHERE data >= '$data_inicio' AND data < '$data_final' ";
+			$sSQL .= "							AND id_cliente_produto IN ( SELECT id_cliente_produto FROM cbtb_contrato WHERE id_cobranca = 1 AND status = 'A' ) ";
+			$sSQL .= "						) fat USING (id_cliente_produto), ";
+			$sSQL .= "	 prtb_produto p ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "ct.id_cobranca = 1 ";
+			$sSQL .= "AND p.id_produto = cp.id_produto ";
+			$sSQL .= "AND fat.data is null ";
+			$sSQL .= "AND ct.status = 'A' ";
+			$sSQL .= "AND (ct.vencimento >= '$dia_inicio' AND ct.vencimento <= '$dia_final') ";
+			$sSQL .= "ORDER BY cl.nome_razao,p.nome ";
+			$boletos = $this->bd->obtemRegistros($sSQL);
+			
+			//echo "BOLETOS: $sSQL <br>";
+
+			for ($i=0;$i<count($boletos);$i++){
+
+				$data_vencimento = $ano."-".$mes."-".$boletos[$i]["vencimento"];
+
+				$boletos[$i]["data_vencimento"] = $data_vencimento;
+
+
+			}
+
+			if ($acao == "gerar"){
+			
+				$id_remessa = $this->bd->proximoID('lgsq_id_remessa');
+
+				for ($i=0;$i<count($boletos);$i++){
+							
+							
+							$id_cliente_produto = $boletos[$i]["id_cliente_produto"];
+							$fatura_dt_vencimento = $boletos[$i]["data_vencimento"];
+							$fatura_desc = $boletos[$i]["nome"];
+							$fatura_valor = $boletos[$i]["valor"];
+							$fatura_status = "A";
+							$fatura_obs = "";
+							$id_cliente = $boletos[$i]["id_cliente"];
+							$forma_pagamento = "POS";
+							
+							$sSQL = "SELECT id_carne FROM cbtb_faturas where id_cliente_produto = $id_cliente_produto";
+							$_ic = $this->bd->obtemUnicoRegistro($sSQL);
+							
+							//echo "CARNE: $sSQL <br>";
+							
+							$idc = $_ic['id_carne'];
+							//echo "ID_CARNE: $idc<br>";
+				
+							$sSQL =  "INSERT INTO cbtb_faturas(";
+							$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
+							$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
+							$sSQL .= "	acrescimo, valor_pago, id_carne ";
+							$sSQL .= ") VALUES (";
+							$sSQL .= "	$id_cliente_produto, '$fatura_dt_vencimento', '$fatura_desc', $fatura_valor, '$fatura_status', '$fatura_obs', ";
+							$sSQL .= "	NULL, NULL, NULL, NULL, ";
+							$sSQL .= "	NULL, NULL, $idc ";
+							$sSQL .= ")";
+					
+							//echo "Fatura:  $sSQL<br>\n";
+							$this->bd->consulta($sSQL);
+							
+							$data = $fatura_dt_vencimento;
+							$fatura = $this->boleto($id_cliente_produto,$data,$id_cliente,$forma_pagamento);
+
+							$sSQL = "INSERT INTO lgtb_remessas (id_remessa, id_cliente_produto, data_remessa, data_vencimento, valor) VALUES	($id_remessa, $id_cliente_produto, '$hoje','$data', '$fatura_valor' )";
+							$this->bd->consulta($sSQL);
+							
+							
+				
+				
+				
+				}
+				
+				$this->tpl->atribui("id_remessa",$id_remessa);
+				$this->tpl->atribui("boleto",$boletos);
+				$this->arquivoTemplate = "cobranca_boletos_gerados.html";
+				return;
+				
+			
+			
+			
+			
+			
+			
+			
+			}
+
+
+
+			$this->tpl->atribui("periodo",$periodo);
+			$this->tpl->atribui("mes",$mes);
+			$this->tpl->atribui("ano",$ano);
+			$this->tpl->atribui("boletos",$boletos);
+
+			$this->arquivoTemplate = "cobranca_gera_boletos.html";
+
+		}else{
+		
+			$sSQL = "SELECT distinct data_remessa, id_remessa, sum(valor) as soma, count(valor) as quant FROM lgtb_remessas GROUP BY id_remessa, data_remessa ORDER BY data_remessa DESC";
+			$remessa = $this->bd->obtemRegistros($sSQL);
+			
+			$this->tpl->atribui("remessa",$remessa);
+			
+			if ($acao == "lista_remessa"){
+			
+				$sSQL  = "SELECT r.id_remessa, r.data_remessa as dt, r.valor, r.data_vencimento, r.id_cliente_produto, ";
+				$sSQL .= "cl.nome_razao, pr.nome,cl.id_cliente ";
+				$sSQL .= "FROM lgtb_remessas r, cbtb_cliente_produto cp, cltb_cliente cl, prtb_produto pr ";
+				$sSQL .= "WHERE ";
+				$sSQL .= " r.id_remessa = '".@$_REQUEST["id_remessa"]."' ";
+				$sSQL .= "AND r.id_cliente_produto = cp.id_cliente_produto ";
+				$sSQL .= "AND cp.id_cliente = cl.id_cliente ";
+				$sSQL .= "AND cp.id_produto = pr.id_produto ";
+				$sSQL .= "ORDER BY cl.nome_razao, pr.nome ";
+				$remessas = $this->bd->obtemRegistros($sSQL);
+				
+				$this->tpl->atribui("remessas",$remessas);
+				$this->tpl->atribui("id_remessa",@$_REQUEST["id_remessa"]);
+				$this->tpl->atribui("data_remessa",@$_REQUEST["data"]);
+				$this->arquivoTemplate = "cobranca_remessas_detalhes.html";
+				return;
+			
+			
+			}
+			
+			
+		
+		}
+		
+
+		
+	
+		$this->arquivoTemplate = "cobranca_gera_boletos.html";
+	
+	
+	}else if ($op == "imprimir_boletos"){
+	
+		$id_remessa = @$_REQUEST["id_remessa"];
+		$faturas = array();
+
+		//$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
+		//$id_cliente = @$_REQUEST["id_cliente"];
+		//$data = @$_REQUEST["data"];
+
+		$forma_pagamento = "PRE";
+
+
+			// Exibe TODAS as faturas em ABERTO		  	
+
+		$sSQL  = "SELECT r.id_remessa,r.data_vencimento,r.id_cliente_produto, ";
+		$sSQL .= "      f.id_cliente_produto, f.data, f.id_carne, cb.id_cliente ";
+		$sSQL .= "FROM lgtb_remessas r, cbtb_faturas f, cbtb_cliente_produto cb ";
+		$sSQL .= "WHERE r.id_remessa = $id_remessa ";
+		$sSQL .= "AND cb.id_cliente_produto = f.id_cliente_produto ";
+		$sSQL .= "AND f.id_cliente_produto = r.id_cliente_produto ";
+		$sSQL .= "AND f.data = r.data_vencimento ";
+		$fat = $this->bd->obtemRegistros($sSQL);
+		
+
+
+
+		for($i=0;$i<count($fat);$i++) {
+				// Se nãoi passar o último parametro como true o sistema fica gerando o "Nosso Numero"
+			 $fatura_html = $this->boleto($fat[$i]["id_cliente_produto"],$fat[$i]["data"],$fat[$i]["id_cliente"],$forma_pagamento,true);
+
+			 $pagebrake=false;
+
+			 // blablabla do pagebrake
+			 if( $i>0 && ($i+1) != count($fat) && ($i+1) % 1 == 0 ) {
+				$pagebrake = true;
+			 }
+
+			 $faturas[] = array( "fatura_html" => $fatura_html,
+													 "pagebreak" => $pagebrake );
+
+		}// for
+
+
+
+		$this->tpl->atribui("faturas",$faturas);
+		$this->arquivoTemplate = "boleto_segunda_via.html";		
+
+	
+	
 	}
 	
 	
@@ -4973,7 +5208,248 @@ public function extenso($valor=0, $maiusculas=false) {
 	public function __destruct() {
 			parent::__destruct();
 	}
+public function boleto($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$segunda_via=false){
 
+
+	////////echo "DATA ENVIADA: $data <BR>\n";
+
+	
+	$sSQL  = "SELECT cl.nome_razao, cl.endereco, cl.complemento, cl.id_cidade, cl.estado, cl.cep, cl.cpf_cnpj,cl.bairro, cd.cidade as nome_cidade, cd.id_cidade  ";
+	$sSQL .= "FROM ";
+	$sSQL .= "cltb_cliente cl, cftb_cidade cd ";
+	$sSQL .= "WHERE ";
+	$sSQL .= "cl.id_cliente = '$id_cliente' AND ";
+	$sSQL .= "cd.id_cidade = cl.id_cidade";
+
+	$cliente = $this->bd->obtemUnicoRegistro($sSQL);
+	////////echo "CLIENTE: $sSQL  <br>";
+	
+	if( strstr($data,"/") && $segunda_via) {
+	   list($d,$m,$y) = explode("/",$data);
+	   $data = "$y-$m-$d";
+	}
+
+
+	$sSQL  = "SELECT valor, id_cobranca,to_char(data, 'DD/mm/YYYY') as data, nosso_numero, linha_digitavel, cod_barra  FROM ";
+	$sSQL .= "cbtb_faturas ";
+	$sSQL .= "WHERE ";
+	$sSQL .= "id_cliente_produto = '$id_cliente_produto' AND ";
+	$sSQL .= "data = '$data' ";
+
+	$fatura = $this->bd->obtemUnicoRegistro($sSQL);
+	
+	////////echo "fatura: $sSQL<br>";
+	
+	//$data_cadastrada = $fatura["data"];
+	////////echo "DATA: $data_cadastrada <br>";
+	////////echo "SHIT: " . $fatura["data"] . "<br>\n";
+	
+	list ($dia,$mes,$ano) = explode("/",$fatura["data"]);
+	
+	
+	$mes_array = array("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
+	
+	if ($forma_pagamento == "PRE"){
+	
+		$referente = $mes_array[(int)$mes-1]."/".$ano;
+	
+	}else if ($forma_pagamento == "POS"){
+	
+		//$mes_ref = mktime(0, 0, 0, $mes-1);
+		////////echo "MES: $mes <br>\n";
+		////////echo "MES REF: $mes_ref <br>\n";
+		$referente = $mes_array[(int)$mes-1]."/".$ano;
+	
+	}
+	
+	//echo "referente: $referente<br>";
+
+	// PEGANDO INFORMAÇÕES DAS PREFERENCIAS
+	$provedor = $this->prefs->obtem("total");
+	//$provedor = $this->prefs->obtem();
+
+	$sSQL = "SELECT ct.id_produto, pd.nome from cbtb_contrato ct, prtb_produto pd WHERE ct.id_cliente_produto = '$id_cliente_produto' and ct.id_produto = pd.id_produto";
+	$produto = $this->bd->obtemUnicoRegistro($sSQL);
+	//////////echo "PRODUTO: $sSQL <br>";
+
+	//$codigo = @$_REQUEST["codigo"];
+	//$data_venc = "30/04/2006";
+	
+	if (!$segunda_via){
+	
+		$sSQL = "SELECT nextval('blsq_carne_nossonumero') as nosso_numero ";
+		$nn = $this->bd->obtemUnicoRegistro($sSQL);
+
+		$nosso_numero = $nn['nosso_numero'];
+		
+	}else {
+	
+		$nosso_numero = $fatura["nosso_numero"];
+		
+	}
+
+	$data_venc = $fatura["data"];
+	@list($dia,$mes,$ano) = explode("/",$fatura["data"]);
+	//$vencimento = $ano.$mes.$dia;
+	//////////echo $codigo;
+	$valor = $fatura["valor"];
+	$id_cobranca = $fatura["id_cobranca"];
+	$nome_cliente = $cliente["nome_razao"];
+	$cpf_cliente = $cliente["cpf_cnpj"];
+	$id_empresa = $provedor["cnpj"];
+	//$nosso_numero = 1;
+	$nome_cedente = $provedor["nome"];
+	$cendereco = $provedor['endereco'];
+	$clocalidade = $provedor['localidade'];
+	$observacoes = $provedor['observacoes'];
+	$nome_produto = $produto["nome"];
+	$complemento = $cliente["complemento"];
+	$hoje = Date("d/m/Y");
+	$empresa_cnpj = $this->prefs->obtem("provedor","cnpj");
+	
+	$banco   	= $this->prefs->obtem("cobranca","cod_banco_boleto");
+	$agencia 	= $this->prefs->obtem("cobranca","agencia_boleto");		// Sem o DV
+	$conta   	= $this->prefs->obtem("cobranca","conta_boleto");		// Sem o DV
+	$carteira	= $this->prefs->obtem("cobranca","carteira_boleto");
+	$convenio   = $this->prefs->obtem("cobranca","convenio_boleto");
+	$vencimento = $fatura["data"];
+	//$vencimento = '18/08/2006';	// Formato brasileiro
+	//$valor		= '10,00';		// Tanto faz ponto ou virgula
+	$id = $nosso_numero;///			= '9999999999';
+	$preto = "template/boletos/imagens/preto.gif";
+	$branco = "template/boletos/imagens/branco.gif";
+	
+	
+	//$informacoes = $provedor["observacoes"];
+
+  if( $segunda_via ) {
+
+     $hoje = $fatura["data"];
+     $codigo_barras = $fatura["cod_barra"];
+     $linha_digitavel = $fatura["linha_digitavel"];
+     
+     $cb = MBoleto::htmlBarCode($codigo_barras,$preto,$branco);
+     
+  } else {
+  
+  
+  	/*echo "BANCO: $banco<br>";
+  	echo "AGENCIA: $agencia<br>";
+  	echo "CONTA: $conta<br>";
+  	echo "CARTEIRA: $carteira<br>";
+  	echo "CONVENIO: $convenio<br>";
+  	echo "VENCIMENTO: $vencimento<br>";
+  	echo "VALOR: $valor<br>";
+  	ECHO "ID: $id<br>";*/
+		$blt = new MBoleto($banco,$agencia,$conta,$carteira,$convenio,$vencimento,$valor,$id);
+	
+		$linha_digitavel = $blt->obtemLinhaDigitavel();  
+  	$codigo_barras = $blt->obtemCodigoBoleto();
+  	$cb = MBoleto::htmlBarCode($blt->obtemCodigoBoleto(),$preto,$branco);
+  	//$cb = $blt->htmlBarCode($blt->obtemCodigoBoleto(),"preto.gif","branco.gif");
+  	
+  	
+  	
+  	
+  /*
+   	$codigo_barras = MArrecadacao::codigoBarrasPagContas($valor,$id_empresa,$nosso_numero,$vencimento);
+   	$hoje = date("d/m/Y");
+   	$linha_digitavel = MArrecadacao::linhaDigitavel($codigo_barras);
+	*/
+   	$sSQL  = "UPDATE ";
+		$sSQL .= "cbtb_faturas SET ";
+		$sSQL .= "nosso_numero = '$nosso_numero', ";
+		$sSQL .= "linha_digitavel = '$linha_digitavel', ";
+		$sSQL .= "cod_barra = '$codigo_barras' ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "id_cliente_produto = '$id_cliente_produto' AND ";
+		$sSQL .= "data = '$data' ";
+	
+		$this->bd->consulta($sSQL);
+	}
+	
+   	
+	////////echo "FATURA: $sSQL <br>";
+	
+	$target = "/mosman/virtex/dados/carnes/codigos";
+	//$target = "carnes/codigos";
+	
+	//$boleto->obtemCodigoBoleto();
+	
+	//MArrecadacao::barCode($codigo_barras,"$target/$codigo_barras.png");
+		
+	//	$codigo = MArrecadacao::pagConta(...);
+		
+	//copy ("/mosman/virtex/dados/carnes/codigos/".$codigo_barras.".png","/home/hugo/public_html/virtex/codigos/".$codigo_barras.".png");
+		
+
+	//$barra = MArrecadacao::barCode($codigo_barras);
+	
+	$ph = new MUtils;
+	
+	$_path = MUtils::getPwd();
+	
+	
+	$images = $_path."/template/boletos/imagens";	
+	
+	$this->tpl->atribui("codigo_barras",$codigo_barras);
+	$this->tpl->atribui("cod_barra",$cb);
+	$this->tpl->atribui("agencia",$agencia);
+	$this->tpl->atribui("conta",$conta);
+	$this->tpl->atribui("carteira",$carteira);
+	$this->tpl->atribui("empresa_cnpj",$empresa_cnpj);
+
+	$this->tpl->atribui("linha_digitavel",$linha_digitavel);
+	$this->tpl->atribui("valor",$valor);
+	$this->tpl->atribui("imagens",$images);
+	$this->tpl->atribui("vencimento", $data_venc);
+	$this->tpl->atribui("hoje",$hoje);
+	$this->tpl->atribui("nosso_numero",$nosso_numero);
+	$this->tpl->atribui("sacado",$nome_cliente);
+	$this->tpl->atribui("sendereco",$cliente['endereco']);
+	$this->tpl->atribui("complemento",$complemento);
+	$this->tpl->atribui("scidade",$cliente['nome_cidade']);
+	$this->tpl->atribui("suf",$cliente['estado']);
+	$this->tpl->atribui("scep",$cliente['cep']);
+	$this->tpl->atribui("juros",$provedor['tx_juros']);
+	$this->tpl->atribui("multa",$provedor['multa']);
+	$this->tpl->atribui("nome_cedente",$provedor['nome']);
+	$this->tpl->atribui("cendereco",$cendereco);
+	$this->tpl->atribui("clocalidade",$clocalidade);
+	$this->tpl->atribui("observacoes",$observacoes);
+	$this->tpl->atribui("produto",$nome_produto);
+	$this->tpl->atribui("path",$_path);
+	$this->tpl->atribui("referente",$referente);
+	$this->tpl->atribui("cpf_cnpj",$cliente["cpf_cnpj"]);
+	$this->tpl->atribui("bairro",$cliente["bairro"]);
+	//$this->tpl->atribui("barra",$barra);
+	
+	//return($carne_emitido);
+	
+	if ( $segunda_via == true ){
+	
+	
+		$this->tpl->atribui("imprimir",true);
+		$estilo = $this->tpl->obtemPagina("../boletos/pc-estilo.html");
+		$fatura = $this->tpl->obtemPagina("../boletos/layout_bb.html");
+		
+		return($estilo.$fatura);
+	
+	}else{
+	
+		$fatura = $this->tpl->obtemPagina("../boletos/layout_bb.html");
+		return($fatura);
+	
+	}
+	
+	
+
+
+
+
+
+
+}
 
 }
 ?>
