@@ -163,9 +163,10 @@ function Tecla(e)
 	{/if}
 	</tr>
 	<tr>
-	{if $privilegio_cobranca == "sim"}
-		          <td> <a href="cobranca.php?op=gerar_boletos"><img src="template/default/images/bt_emitir_faturas.gif" border="0"></a>
-                  </td>
+	{if $privilegio_cobranca == "sim" and $boleto}
+		          
+                <td> <a href="cobranca.php?op=mensal"><img src="template/default/images/bt_emitir_faturas.gif" border="0"></a> 
+                </td>
 	{/if}
 	</tr>
 	<tr>

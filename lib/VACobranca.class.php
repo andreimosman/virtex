@@ -4424,7 +4424,7 @@ class VACobranca extends VirtexAdmin {
 							$data = $fatura_dt_vencimento;
 							$fatura = $this->boleto($id_cliente_produto,$data,$id_cliente,$forma_pagamento);
 
-							$sSQL = "INSERT INTO lgtb_remessas (id_remessa, id_cliente_produto, data_remessa, data_vencimento, valor) VALUES	($id_remessa, $id_cliente_produto, '$hoje','$data', '$fatura_valor' )";
+							$sSQL = "INSERT INTO lgtb_remessas (id_remessa, id_cliente_produto, data_remessa, data_vencimento, valor, periodo, mes, ano) VALUES	($id_remessa, $id_cliente_produto, '$hoje','$data', '$fatura_valor', $periodo, $mes, $ano )";
 							$this->bd->consulta($sSQL);
 							
 							
@@ -4458,14 +4458,31 @@ class VACobranca extends VirtexAdmin {
 
 		}else{
 		
-			$sSQL = "SELECT distinct data_remessa, id_remessa, sum(valor) as soma, count(valor) as quant FROM lgtb_remessas GROUP BY id_remessa, data_remessa ORDER BY data_remessa DESC";
+			$sSQL = "SELECT distinct data_remessa, id_remessa, sum(valor) as soma, count(valor) as quant, periodo, mes, ano FROM lgtb_remessas GROUP BY id_remessa, data_remessa, periodo, mes, ano ORDER BY data_remessa DESC";
 			$remessa = $this->bd->obtemRegistros($sSQL);
 			
+			
+			for ($i=0;$i<count($remessa);$i++){
+				if ($remessa[$i]["periodo"] == "1"){
+					$ref = "01 a 30/";
+				}else if ($remessa[$i]["periodo"] == "15"){
+					$ref = "01 a 15";
+				}else if ($remessa[$i]["periodo"] == "30"){
+					$ref = "16 a 30";
+				}
+
+				$ref.= $remessa[$i]["mes"]."/".$remessa[$i]["ano"];
+
+					$remessa[$i]["referente"] = $ref;
+			}	
+			//$this->tpl->atribui("periodo",$remessa[0]["periodo"]);
+			//$this->tpl->atribui("mes",$remessa[0]["mes"]);
+			//$this->tpl->atribui("ano",$remessa[0]["ano"]);
 			$this->tpl->atribui("remessa",$remessa);
 			
 			if ($acao == "lista_remessa"){
 			
-				$sSQL  = "SELECT r.id_remessa, r.data_remessa as dt, r.valor, r.data_vencimento, r.id_cliente_produto, ";
+				$sSQL  = "SELECT r.id_remessa, r.data_remessa as dt, r.valor, r.data_vencimento, r.id_cliente_produto, r,periodo, r.mes, r.ano, ";
 				$sSQL .= "cl.nome_razao, pr.nome,cl.id_cliente ";
 				$sSQL .= "FROM lgtb_remessas r, cbtb_cliente_produto cp, cltb_cliente cl, prtb_produto pr ";
 				$sSQL .= "WHERE ";
@@ -4476,6 +4493,19 @@ class VACobranca extends VirtexAdmin {
 				$sSQL .= "ORDER BY cl.nome_razao, pr.nome ";
 				$remessas = $this->bd->obtemRegistros($sSQL);
 				
+				//echo "PERIODO: ".$remessas[0]["periodo"]."<br>";
+				$referente = "";
+				if ($remessas[0]["periodo"] == "1"){
+					$referente = "emissão do dia 01 ao dia 30";
+				}else if ($remessas[0]["periodo"] == "15"){
+					$referente = "emissão do dia 01 ao dia 15";
+				}else if ($remessas[0]["periodo"] == "30"){
+					$referente = "emissão do dia 16 ao dia 30";
+				}
+				
+				$referente .= " do mes ".$remessas[0]["mes"]." de ".$remessas[0]["ano"];
+				
+				$this->tpl->atribui("referente",$referente);
 				$this->tpl->atribui("remessas",$remessas);
 				$this->tpl->atribui("id_remessa",@$_REQUEST["id_remessa"]);
 				$this->tpl->atribui("data_remessa",@$_REQUEST["data"]);

@@ -2225,11 +2225,12 @@ class VAClientes extends VirtexAdmin {
 			$sSQL .= "   id_pop, nome ";
 			$sSQL .= "FROM ";
 			$sSQL .= "   cftb_pop ";
+			$sSQL .= "WHERE status = 'A' ";
 			$sSQL .= "ORDER BY ";
 			$sSQL .= "   nome";
 
 
-			//////////echo "POPs: $sSQL <br>";
+			//echo "POPs: $sSQL <br>";
 			$lista_pops = $this->bd->obtemRegistros($sSQL);
 			$this->tpl->atribui("lista_pops",$lista_pops);
 
@@ -3348,6 +3349,7 @@ class VAClientes extends VirtexAdmin {
 			$sSQL .= "   id_pop, nome ";
 			$sSQL .= "FROM ";
 			$sSQL .= "   cftb_pop ";
+			$sSQL .= "WHERE status = 'A' ";
 			$sSQL .= "ORDER BY ";
 			$sSQL .= "   nome";
 

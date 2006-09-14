@@ -76,8 +76,13 @@ class VAHome extends VirtexAdmin {
 					$lic_interface = 'sim';
 
 				}
-
-
+				
+				
+				$sSQL = "SELECT * from cftb_forma_pagamento where id_cobranca = 1 and disponivel is true";
+				$boleto_existe = $this->bd->obtemUnicoRegistro($sSQL);
+				
+				
+				$this->tpl->atribui("boleto",$boleto_existe);
 				$this->tpl->atribui("lic_discado",$lic_discado);
 				$this->tpl->atribui("lic_email",$lic_email);
 				$this->tpl->atribui("lic_hospedagem",$lic_hospedagem);
