@@ -28,11 +28,11 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
   </tr>
   {foreach item=a name=boleto from=$boleto} 
   <tr> 
-    <td><p>{$a.id_cliente}</p></td>
-    <td><p>{$a.nome_razao}</p></td>
-    <td><p>{$a.nome}</p></td>
-    <td><p>{$a.data_vencimento|date_format:"%d/%m/%Y"}</p></td>
-    <td><p>{$a.valor}</p></td>
+    <td><p><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.id_cliente}</a></p></td>
+    <td><p><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.nome_razao}</a></p></td>
+    <td><p><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.nome}</a></p></td>
+    <td><p><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.data_vencimento|date_format:"%d/%m/%Y"}</a></p></td>
+    <td><p><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.valor}</a></p></td>
     <td><a href="javascript:;"><img src="template/default/images/boleto.gif" width="15" height="16" onclick="MM_openBrWindow('cobranca.php?op=boleto_bb&id_cliente_produto={$a.id_cliente_produto}&data={$a.data_vencimento}&id_cliente={$a.id_cliente}','boleto','scrollbars=yes,width=700,height=800')" border="0"></a></td>
   </tr>
   {/foreach} 

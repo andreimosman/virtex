@@ -4400,13 +4400,28 @@ class VACobranca extends VirtexAdmin {
 							$id_cliente = $boletos[$i]["id_cliente"];
 							$forma_pagamento = "POS";
 							
-							$sSQL = "SELECT id_carne FROM cbtb_faturas where id_cliente_produto = $id_cliente_produto";
+							$sSQL = "SELECT id_carne FROM cbtb_carne where id_cliente_produto = $id_cliente_produto";
 							$_ic = $this->bd->obtemUnicoRegistro($sSQL);
 							
 							//echo "CARNE: $sSQL <br>";
-							
-							$idc = $_ic['id_carne'];
+							if ($_ic){
+								$idc = $_ic['id_carne'];
 							//echo "ID_CARNE: $idc<br>";
+							}else{
+								$idc = $this->bd->proximoID("cbsq_id_carne");
+								
+								$sSQL = "SELECT * from cbtb_contrato where id_cliente_produto = $id_cliente_produto";
+								$vig = $this->bd->obtemUnicoRegistro($sSQL);
+								
+								$vigencia = $vig["vigencia"];
+								
+								
+								$sSQL  = "INSERT INTO cbtb_carne (id_carne, data_geracao, status, id_cliente_produto, valor, vigencia, id_cliente ) ";
+								$sSQL .= "VALUES ($idc, now(),'A',$id_cliente_produto,'$fatura_valor','$vigencia',$id_cliente ) ";
+								$this->bd->consulta($sSQL);
+								//echo "CARNE: $sSQL <br>";
+							}
+							
 				
 							$sSQL =  "INSERT INTO cbtb_faturas(";
 							$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
@@ -5268,7 +5283,7 @@ public function boleto($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$s
 
 	$fatura = $this->bd->obtemUnicoRegistro($sSQL);
 	
-	////////echo "fatura: $sSQL<br>";
+	//echo "fatura: $sSQL<br>";
 	
 	//$data_cadastrada = $fatura["data"];
 	////////echo "DATA: $data_cadastrada <br>";
@@ -5279,18 +5294,11 @@ public function boleto($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$s
 	
 	$mes_array = array("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
 	
-	if ($forma_pagamento == "PRE"){
+
 	
 		$referente = $mes_array[(int)$mes-1]."/".$ano;
 	
-	}else if ($forma_pagamento == "POS"){
-	
-		//$mes_ref = mktime(0, 0, 0, $mes-1);
-		////////echo "MES: $mes <br>\n";
-		////////echo "MES REF: $mes_ref <br>\n";
-		$referente = $mes_array[(int)$mes-1]."/".$ano;
-	
-	}
+
 	
 	//echo "referente: $referente<br>";
 

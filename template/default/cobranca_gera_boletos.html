@@ -91,12 +91,12 @@
   </tr>
   {foreach item=a name=boleto from=$boletos} 
   <tr> 
-    <td><p>{$a.id_cliente}</p>
+    <td><p><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.id_cliente}</a></p>
     </td>
-    <td><p>{$a.nome_razao}</p></td>
-    <td><p>{$a.nome}</p></td>
-    <td><p>{$a.data_vencimento|date_format:"%d/%m/%Y"}</p></td>
-    <td><p>{$a.valor}</p></td>
+    <td><p><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.nome_razao}</a></p></td>
+    <td><p><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.nome}</a></p></td>
+    <td><p><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.data_vencimento|date_format:"%d/%m/%Y"}</a></p></td>
+    <td><p><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.valor}</a></p></td>
   </tr>
   {/foreach} 
   <tr align="CENTER"> 
@@ -128,14 +128,13 @@
   <tr bgcolor="{cycle values="#ffffff,#efefef"}"> 
     <td height="20"> <p><a href="cobranca.php?op=mensal&acao=lista_remessa&id_remessa={$a.id_remessa}&data={$a.data_remessa}">{$a.data_remessa|date_format:"%d/%m/%Y 
         %H:%M:%S"}</a></p></td>
-    <td height="20"><p>
-	{if $a.periodo}
-		{if $a.periodo == 1} de 01 a 30/{$a.mes}/{$a.ano}{elseif $a.periodo == 15} de 01 a 15/{$a.mes}/{$a.ano}{elseif $a.periodo == 30}de 16 a 30/{$a.mes}/{$a.ano}{/if}
-	{/if}
-	</p></td>
-    <td height="20"> <p align="right">{$a.soma}</p></td>
+    <td height="20"><p> {if $a.periodo} {if $a.periodo == 1} <a href="cobranca.php?op=mensal&acao=lista_remessa&id_remessa={$a.id_remessa}&data={$a.data_remessa}">de 
+        01 a 30/{$a.mes}/{$a.ano}</a>{elseif $a.periodo == 15} <a href="cobranca.php?op=mensal&acao=lista_remessa&id_remessa={$a.id_remessa}&data={$a.data_remessa}">de 
+        01 a 15/{$a.mes}/{$a.ano}</a>{elseif $a.periodo == 30}<a href="cobranca.php?op=mensal&acao=lista_remessa&id_remessa={$a.id_remessa}&data={$a.data_remessa}">de 
+        16 a 30/{$a.mes}/{$a.ano}</a>{/if} {/if} </p></td>
+    <td height="20"> <p align="right"><a href="cobranca.php?op=mensal&acao=lista_remessa&id_remessa={$a.id_remessa}&data={$a.data_remessa}">{$a.soma}</a></p></td>
     <td height="20"><div align="CENTER"> 
-      <p>{$a.quant}</p>
+      <p><a href="cobranca.php?op=mensal&acao=lista_remessa&id_remessa={$a.id_remessa}&data={$a.data_remessa}">{$a.quant}</a></p>
       </div></td>
   </tr>
   {/foreach} 

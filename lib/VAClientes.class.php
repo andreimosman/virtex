@@ -1669,7 +1669,7 @@ class VAClientes extends VirtexAdmin {
 						$this->tpl->atribui("id_cliente",$id_cliente);
 						$this->tpl->atribui("id_cliente_produto",$id_cliente_produto);
 						$this->tpl->atribui("id_carne",$id_carne);
-						$this->tpl->atribui("data",$data);
+						//$this->tpl->atribui("data",$data);
 						$this->tpl->atribui("primeira",true);
 						$this->tpl->atribui("id_cobranca",$id_cobranca);
 						
@@ -1957,7 +1957,7 @@ class VAClientes extends VirtexAdmin {
 				if ($p == "faturas"){
 					
 					
-					$sSQL = "select id_carne,id_cliente_produto, to_char(data,'DD/mm/YYYY') as data, descricao, valor, status from cbtb_faturas where id_carne = '$id_carne'";
+					$sSQL = "select id_carne,id_cliente_produto, to_char(data,'DD/mm/YYYY') as data, descricao, valor, status from cbtb_faturas where id_carne = '$id_carne' order by data ";
 					$faturas = $this->bd->obtemRegistros($sSQL);
 					
 					$this->tpl->atribui("faturas",$faturas);
