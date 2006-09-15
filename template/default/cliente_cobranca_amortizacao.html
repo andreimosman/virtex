@@ -184,8 +184,27 @@ function change(id, newClass) {
 	}
 		//formulario.status.value = status;
 	formulario.status_fatura.value = status;
+
 }*/
 
+
+function Tecla(e)
+{
+	if (document.all) // Internet Explorer
+		var tecla = event.keyCode;
+	else if(document.layers) // Nestcape
+		var tecla = e.which;
+		if (tecla != 92 && tecla != 47 && tecla != 45)
+			return true;
+		else
+			{
+				if (tecla != 8) // backspace
+					event.keyCode = 0;
+					//return false;
+				else
+					return true;
+			}
+}
 
 
 </script>
@@ -242,7 +261,7 @@ function change(id, newClass) {
                                   <tr>
                                     <td bgcolor="#FFFFFF" align="right" width="87"><p>Vencimento:</p></td>
                                     <td bgcolor="#FFFFFF"><p>{$data} {if $amort.reagendamento}<font color="#CC0000" size="1"
-OnKeyPress="formatar(this, '##/##/####')">reagendado para {$amort.reagendamento|date_format:"%e/%m/%Y"}</font>{/if}
+OnKeyPress="formatar(this, '##/##/####'); return Tecla(event);">reagendado para {$amort.reagendamento|date_format:"%e/%m/%Y"}</font>{/if}
                                       </p></td>
                                   </tr>
                                   <tr>
@@ -305,7 +324,7 @@ OnKeyPress="formatar(this, '##/##/####')">reagendado para {$amort.reagendamento|
                                     <td bgcolor="#FFFFFF" align="right" width="87"><p>Data
                                         do Pagamento:</p></td>
                                     <td bgcolor="#FFFFFF"><p>
-                                        <input name="data_pagamento" type="text" OnKeyPress="formatar(this, '##/##/####')" value="{$data_pagamento}" maxlength="10">
+                                        <input name="data_pagamento" type="text" OnKeyPress="formatar(this, '##/##/####'); return Tecla(event);" value="{$data_pagamento}" maxlength="10">
                                         <input type="button" name="hoje" value="Hoje" onClick="javascript:pagamentoHoje();" &gt;&gt;"" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
                                         <input type="button" name="venc" value="Venc." onClick="javascript:pagamentoVencimento();" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
                                       </p></td>
@@ -320,7 +339,7 @@ OnKeyPress="formatar(this, '##/##/####')">reagendado para {$amort.reagendamento|
                                       <p>
                                         <input type="checkbox" name="reagendar" value="1"  class="checkbox" onClick="javascript:verificaReagendamento();" onChange="javascript:verificaReagendamento();" {$reagendamento_checked}>
                                         re-agendar cobrança para dia: </p></td>
-                                    <td width="346" bgcolor="#FFFFFF"><input name="reagendamento" type="text" value="{$amort.reagendamento|date_format:'%e/%m/%Y'}" OnKeyPress="formatar(this, '##/##/####')" maxlength=10 id="reagendamento"></td>
+                                    <td width="346" bgcolor="#FFFFFF"><input name="reagendamento" type="text" value="{$amort.reagendamento|date_format:'%e/%m/%Y'}" OnKeyPress="formatar(this, '##/##/####'); return Tecla(event);" maxlength=10 id="reagendamento"></td>
                                   </tr>
                                   <tr>
                                     <td bgcolor="#FFFFFF" align="right" width="120" valign="top"><p>Observações:</p></td>
