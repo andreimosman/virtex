@@ -415,7 +415,7 @@ class VAInterface_cliente_home extends VirtexAdmin {
 					$sSQL = "SELECT * FROM dominio WHERE dominio_provedor is true";
 					$dominios_provedor = $this->bd->obtemRegistros($sSQL);
 
-					/*$sSQL  = "SELECT h.dominio_hospedagem as dominio FROM cntb_conta c, cntb_conta_hospedagem h WHERE ";
+					$sSQL  = "SELECT h.dominio_hospedagem as dominio FROM cntb_conta c, cntb_conta_hospedagem h WHERE ";
 					$sSQL .= "c.username = h.username AND ";
 					$sSQL .= "c.tipo_conta = h.tipo_conta AND ";
 					$sSQL .= "c.dominio = h.dominio AND ";
@@ -426,7 +426,7 @@ class VAInterface_cliente_home extends VirtexAdmin {
 
 						$dominios_provedor = array_merge($dominios_provedor, $hospeda);
 
-					}*/
+					}
 					
 			///	SELECT ACABA AQUI
 
