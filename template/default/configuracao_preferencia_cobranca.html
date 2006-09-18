@@ -7,6 +7,162 @@
 
 
 <script>
+
+	function valida_campos(form){
+	
+	
+	var
+	disponivel_boleto = document.getElementById("check_boleto_bancario");
+	disponivel_carne = document.getElementById("check_carne");
+	frm = document.form1;
+	
+	cod_banco_boleto = document.form1.cod_banco_boleto.value;
+	conta_boleto = document.form1.conta_boleto.value;
+	convenio_boleto = document.form1.convenio_boleto.value;
+	carteira_boleto = document.form1.carteira_boleto.value;
+	agencia_boleto = document.form1.agencia_boleto.value;
+	
+	cod_banco = document.form1.cod_banco.value;
+	num_conta = document.form1.num_conta.value;
+	convenio = document.form1.convenio.value;
+	carteira = document.form1.carteira.value;
+	agencia = document.form1.agencia.value;
+
+	
+	if (disponivel_boleto.checked){
+			
+		msg="";
+		erro=0;
+			
+		if  ((convenio_boleto=="")&&
+			(conta_boleto=="")&&
+			(cod_banco_boleto=="")&&
+			(carteira_boleto=="")&&
+			(agencia_boleto=="")){
+			
+
+		
+		alert("Voce Precisa preencher os campos referentes ao boleto");
+		return false;
+		
+		}
+		
+		else{
+		
+		if (convenio_boleto==""){
+		
+			
+		
+			msg= msg + "O campo convênio/boleto está vazio!\n";
+			erro = 1;
+		
+		}
+		
+		if	(conta_boleto==""){
+		
+			msg= msg + "O campo conta/boleto está vazio!\n";
+			erro = 1;
+		
+		}
+		
+		if	(cod_banco_boleto==""){
+		
+			msg= msg + "O campo código banco/boleto está vazio!\n";
+			erro = 1;
+		
+		}
+		
+		if	(carteira_boleto==""){
+		
+			msg= msg + "O campo carteira/boleto está vazio!\n";
+			erro = 1;
+		
+		}
+		
+		if	(agencia_boleto==""){
+		
+			msg= msg + "O campo agência/boleto está vazio!\n";
+			erro = 1;		
+		
+		}
+		if (erro == 1){
+			alert(msg);
+			return false;
+		}	
+	
+	  }
+
+	}
+	
+	if (disponivel_carne.checked){
+			
+		msg="";
+		erro=0;
+			
+		if  ((convenio=="")&&
+			(num_conta=="")&&
+			(cod_banco=="")&&
+			(carteira=="")&&
+			(agencia=="")){
+			
+
+		
+		alert("Voce Precisa preencher os campos referentes ao carnê!");
+		return false;
+		
+		}
+		
+		else{
+		
+		if (convenio==""){
+		
+			
+		
+			msg= msg + "O campo convênio/carnê está vazio!\n";
+			erro = 1;
+		
+		}
+		
+		if	(num_conta==""){
+		
+			msg= msg + "O campo conta/carnê está vazio!\n";
+			erro = 1;
+		
+		}
+		
+		if	(cod_banco==""){
+		
+			msg= msg + "O campo código banco/carnê está vazio!\n";
+			erro = 1;
+		
+		}
+		
+		if	(carteira==""){
+		
+			msg= msg + "O campo carteira/carnê está vazio!\n";
+			erro = 1;
+		
+		}
+		
+		if	(agencia==""){
+		
+			msg= msg + "O campo agência/carnê está vazio!\n";
+			erro = 1;		
+		
+		}
+		if (erro == 1){
+			alert(msg);
+			return false;
+		}	
+	
+	  }
+	
+	}
+	
+	
+}
+
+
 	function habilita(){
 
 
@@ -28,16 +184,19 @@
 		frm.cod_banco_boleto.value= "";
 		frm.carteira_boleto.value= "";
 		frm.agencia_boleto.value= "";
+		
+		
 
-
-	}else{
+	}else{	
 
 		frm.convenio_boleto.disabled=false;
 		frm.conta_boleto.disabled=false;
 		frm.cod_banco_boleto.disabled=false;
 		frm.carteira_boleto.disabled=false;
 		frm.agencia_boleto.disabled=false;
+		
 
+		
 
 	}
 	if (!disponivel_carne.checked){
@@ -69,9 +228,6 @@
 
 
 </script>
-
-
-
 {/literal}
 
 
@@ -89,7 +245,7 @@
               <tr>
                 <td align="center" valign="middle"> <h1 align="center">Cadastro
                     de Prefer&ecirc;ncias de Cobran&ccedil;a</h1>
-                  <form name="form1" method="post" action="" >
+                  <form name="form1" method="post" action="" onSubmit="return valida_campos(this);">
                     <table  border="0" style="border: 1px solid #F2F2F2;">
 					  <tr>
 
@@ -154,7 +310,7 @@
                                   </tr>
                                   {foreach item=a from=$frm_pagamento}
                                   <tr>
-                                    <td width="3%" height="19" valign="top"> <input type="checkbox" name="disponivel[{$a.id_cobranca}]" value="t" class="checkbox" {if $a.disponivel == "t"}checked{/if} id="check_{$a.nome_cobranca|lower|strip:"_"|replace:"á":"a"|replace:"ê":"e"}" onClick="habilita();"></td>
+                                    <td width="3%" height="19" valign="top"> <input type="checkbox" name="disponivel[{$a.id_cobranca}]" value="t" class="checkbox" {if $a.disponivel == "t"}checked{/if} id="check_{$a.nome_cobranca|lower|strip:"_"|replace:"á":"a"|replace:"ê":"e"}" onClick="habilita();" /></td>
                                     <td width="91%" valign="bottom"   style="border-top: 4px solid #FFFFFF"><p>{if $a.id_cobranca=="3"}Outras Formas{else}{$a.nome_cobranca}{/if}{if $a.id_cobranca=="2"}
                                       <table style="border: 1px solid #000000;">
                                         <tr>
@@ -189,17 +345,17 @@
                                           <td><font style="font-size:10px;" face="Verdana, Arial, Helvetica, sans-serif">Opções
                                             de Boleto</font> <table width="" border="0" dwcopytype="CopyTableRow">
                                               <tr>
-                                                <td><p><strong>Cod. Banco:</strong></p></td>
+                                                <td><p><strong>Cod. Banco: {$prefs.cod_banco_boleto}</strong></p></td>
                                                 <td><strong>
                                                   <input name="cod_banco_boleto" type="text" value="{$prefs.cod_banco_boleto}" size="12" id="cod_banco_boleto">
                                                   </strong></td>
-                                                <td><p><strong>Carteira:</strong></p></td>
+                                                <td><p><strong>Carteira: {$prefs.carteira_boleto}</strong></p></td>
                                                 <td><input name="carteira_boleto" type="text" value="{$prefs.carteira_boleto}" size="12" id="carteira_boleto"></td>
                                               </tr>
                                               <tr>
-                                                <td><p><strong>Ag&ecirc;ncia:</strong></p></td>
+                                                <td><p><strong>Ag&ecirc;ncia: {$prefs.agencia_boleto}</strong></p></td>
                                                 <td><input name="agencia_boleto" type="text" value="{$prefs.agencia_boleto}" size="12" id="agencia_boleto"></td>
-                                                <td><p><strong>Num. Conta:</strong></p></td>
+                                                <td><p><strong>Num. Conta: {$prefs.conta_boleto}</strong></p></td>
                                                 <td><strong>
                                                   <input name="conta_boleto" type="text" value="{$prefs.conta_boleto}" size="12" id="conta_boleto">
                                                   </strong></td>

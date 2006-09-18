@@ -1036,7 +1036,7 @@ class VAConfiguracao extends VirtexAdmin {
 
 
 
-						}
+						}					
 
 						$sSQL  = "UPDATE ";
 						$sSQL .= "  pftb_preferencia_geral ";
@@ -1058,7 +1058,7 @@ class VAConfiguracao extends VirtexAdmin {
 						$sSQL .= "  agrupar = '".@$_REQUEST["agrupar"]."', ";
 						$sSQL .= "  email_base = '".@$_REQUEST["email_base"]."' ";
 
-						//echo "SQL UPDATE: $sSQL <br>";
+						///////echo "SQL UPDATE: $sSQL <br>";
 						$this->bd->consulta($sSQL);
 
 
@@ -1134,49 +1134,67 @@ class VAConfiguracao extends VirtexAdmin {
 					$conta_boleto = @$_REQUEST["conta_boleto"];
 					$convenio_boleto = @$_REQUEST["convenio_boleto"];	
 					
+					if ($carteira == ""){
+										
+						$carteira = 'NULL';
+					}
+
+					if ($cod_banco == ""){
+										
+						$cod_banco = 'NULL';
+					}
+
+					
+					if ($agencia == ""){
+										
+						$agencia = 'NULL';
+					}
+
+					
 					if ($carencia == ""){
 					
-						$carencia = " 0";
+						$carencia = 'NULL';
 					}
+					
 					if ($num_conta == ""){
 
-						$num_conta = " 0";
+						$num_conta = 'NULL';
 					}
 					if ($convenio == ""){
 
-						$convenio = " 0";
+						$convenio = 'NULL';
 					}
 					if ($pagamento == ""){
 
-						$pagamento = " 0";
+						$pagamento = 'NULL';
 					}
 					if ($observacoes == ""){
 
-						$observacoes = " 0";
+						$observacoes = 'NULL';
 					}
 					if ($path_contrato == ""){
 
-						$path_contrato = " 0";
+						$path_contrato = 'NULL';
 					}
 					if ($cod_banco_boleto == ""){
 
-						$cod_banco_boleto = " 0";
+						$cod_banco_boleto = 'NULL';
 					}
 					if ($carteira_boleto == ""){
 
-						$carteira_boleto = "0 ";
+						$carteira_boleto = 'NULL';
 					}
 					if ($agencia_boleto == ""){
 
-						$agencia_boleto = " 0";
+						$agencia_boleto = 'NULL';
 					}
 					if ($conta_boleto == ""){
 
-						$conta_boleto = " 0";
+						$conta_boleto = 'NULL';
 					}
 					if ($convenio_boleto == ""){
 
-						$convenio_boleto = " 0";
+						$convenio_boleto = 'NULL';
 					}
 
 
@@ -1187,22 +1205,22 @@ class VAConfiguracao extends VirtexAdmin {
 						$sSQL .= "  tx_juros = '$tx_juros', ";
 						$sSQL .= "  multa = '$multa', ";
 						$sSQL .= "  dia_venc = '$dia_venc', ";
-						$sSQL .= "  cod_banco = '$cod_banco', ";
-						$sSQL .= "  carteira = '$carteira', ";
-						$sSQL .= "  agencia = '$agencia', ";
-						$sSQL .= "  num_conta = '$num_conta', ";
-						$sSQL .= "  convenio = '$convenio', ";
+						$sSQL .= "  cod_banco = $cod_banco, ";
+						$sSQL .= "  carteira = $carteira, ";
+						$sSQL .= "  agencia = $agencia, ";
+						$sSQL .= "  num_conta = $num_conta, ";
+						$sSQL .= "  convenio = $convenio, ";
 						$sSQL .= "	pagamento = '$pagamento', ";
 						$sSQL .= "	observacoes = '$observacoes', ";
 						$sSQL .= "  path_contrato = '$path_contrato', ";
-						$sSQL .= "  cod_banco_boleto = '$cod_banco_boleto', ";
-						$sSQL .= "  carteira_boleto = '$carteira_boleto', ";
-						$sSQL .= "  agencia_boleto = '$agencia_boleto', ";
-						$sSQL .= "  conta_boleto = '$conta_boleto', ";
-						$sSQL .= "  convenio_boleto = '$convenio_boleto' ";
+						$sSQL .= "  cod_banco_boleto = $cod_banco_boleto, ";
+						$sSQL .= "  carteira_boleto = $carteira_boleto, ";
+						$sSQL .= "  agencia_boleto = $agencia_boleto, ";
+						$sSQL .= "  conta_boleto = $conta_boleto, ";
+						$sSQL .= "  convenio_boleto = $convenio_boleto ";
 
 						$this->bd->consulta($sSQL);
-						//////echo "update cobrança: $sSQL <br>";
+						 //echo "update cobrança: $sSQL <br>";
 
 
 						$sSQL = "UPDATE cftb_forma_pagamento SET disponivel = 'f'";
@@ -1482,7 +1500,7 @@ class VAConfiguracao extends VirtexAdmin {
 
 						$diretorio = "./etc";
 
-						$nome_aceitavel = "VIRTEX.lic";
+						$nome_aceitavel = "virtex.lic";
 						$_file_ = $_FILES["arquivo_registro"];
 
 						$arquivo = $diretorio."/".$nome_aceitavel;
@@ -1512,7 +1530,7 @@ class VAConfiguracao extends VirtexAdmin {
 
 						if (file_exists($arquivo)) {
 							//copy($_tmp_name,$diretorio."/_".$nome_aceitavel);
-							rename($diretorio."/VIRTEX.lic", $diretorio."/_VIRTEX.lic");
+							rename($diretorio."/virtex.lic", $diretorio."/_virtex.lic");
 						}
 
 						copy($_tmp_name_,$diretorio . "/" . $nome_aceitavel);
