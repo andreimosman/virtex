@@ -1201,12 +1201,22 @@ class VACobranca extends VirtexAdmin {
 				
 				//echo $suspenso."<br>";
 				if (!$suspenso){
-					//echo "libera<br>";
+					echo "libera<br>";
 					$sSQL = "UPDATE cntb_conta SET status = 'A' WHERE id_cliente_produto = '$id_cliente_produto' AND status = 'S' ";
-					//echo $sSQL ."<BR>";
+					echo $sSQL ."<BR>";
 					$this->bd->consulta($sSQL);
 					
+					$sSQL = "SELECT cn.username, cn.tipo_conta, cn.dominio, cbl.tipo_bandalarga, cbl.id_nas, cbl.mac, cbl.upload_kbps, cbl.rede, cbl.download_kbps, cn.id_conta FROM cntb_conta cn, cntb_conta_bandalarga cbl WHERE cn.id_cliente_produto = $id_cliente_produto and cn.username = cbl.username and cn.dominio = cbl.dominio and cn.tipo_conta = 'BL' ";
+					$tbl = $this->bd->obtemUnicoRegistro($sSQL);
 					
+					echo "TBL: $sSQL <br>";
+					
+					if ($tbl["tipo_bandalarga"] == "I"){
+						echo "teste<br>";
+						$this->spool->bandalargaAdicionaRede($tbl["id_nas"],$tbl["id_conta"],$tbl["rede"],$tbl["mac"],$tbl["upload_kbps"],$tbl["download_kbps"],$tbl["username"]);
+					
+					
+					}
 					
 					
 					$msg_final = "Amortização/Pagamento efetuado com sucesso!";
