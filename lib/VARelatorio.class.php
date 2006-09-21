@@ -705,8 +705,10 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= " COUNT(cp.tipo_produto) as num_contratos, ";
 			$sSQL .= " cp.tipo_produto as tipo ";
 			$sSQL .= "FROM cbtb_contrato as cp ";
+			$sSQL .= " WHERE cp.status = 'A'   ";
 			$sSQL .= "GROUP BY cp.tipo_produto ";
 			$sSQL .= "ORDER BY cp.tipo_produto ";
+			
 		
 		} else if ($acao == "sub_tprd") {
 		
