@@ -19,6 +19,33 @@ function valida(){
 
 }
 
+function valida_email(){
+
+		email = document.form1.texto_pesquisa.value;
+
+			msg="";
+			erro=0;
+
+
+				if (email != ""){
+					parte1 = email.indexOf("@");
+					parte2 = email.indexOf(".");
+					parte3 = email.length;
+					if (!(parte1 >= 3 && parte2 >= 6 && parte3 >= 9)) {
+							msg= msg + "O campo email deve conter um endereco eletrônico!\n";
+							erro = 1;
+					}
+				}
+
+				if (erro == 1){
+					alert(msg);
+					document.form1.texto_pesquisa.focus();
+					document.form1.texto_pesquisa.select();
+					return false;
+				}
+			}
+
+
 {/literal}
 </script>
 <html>
@@ -57,7 +84,7 @@ function valida(){
                       {if $lic_email=="sim"}
                       <td><p>
                           <label>
-                          <input type="radio" name="tipo_pesquisa" value="EMAIL" class="checkbox" {if $tipo_pesquisa=="EMAIL"}CHECKED{/if}>
+                          <input type="radio" name="tipo_pesquisa" value="EMAIL" class="checkbox" {if $tipo_pesquisa=="EMAIL"}CHECKED{/if} onClick="return valida_email();">
                             E-Mail</label>
                       </p></td>
 					  {/if}

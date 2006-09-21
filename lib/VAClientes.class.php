@@ -723,7 +723,7 @@ class VAClientes extends VirtexAdmin {
 							switch($tp) {
 
 								case 'EMAIL':
-									$whereFiltro .= "	cn.dominio = '$dom'  ";
+									$whereFiltro .= "	cn.dominio = '$dom' AND ";
 
 								case 'CONTA':
 
@@ -754,6 +754,7 @@ class VAClientes extends VirtexAdmin {
 							}
 
 							$clientes = $this->bd->obtemRegistros("SELECT $campos_cliente FROM $from WHERE $whereJoin AND $whereFiltro GROUP BY $campos_cliente " );
+							///echo "SELECT $campos_cliente FROM $from WHERE $whereJoin AND $whereFiltro GROUP BY $campos_cliente ";
 
 							// Pega as contas
 							for( $i=0;$i<count($clientes);$i++ ) {
