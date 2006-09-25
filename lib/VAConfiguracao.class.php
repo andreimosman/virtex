@@ -1540,7 +1540,7 @@ class VAConfiguracao extends VirtexAdmin {
 
 						$this->tpl->atribui("mensagem",$mensagem);
 
-						$this->tpl->atribui("url","configuracao.php?op=registro");
+						$this->tpl->atribui("url","home.php");
 						$this->tpl->atribui("target","_self");
 
 						$this->arquivoTemplate = "msgredirect.html";
