@@ -1008,15 +1008,16 @@ function Tecla(e)
                       <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="conf_senha" disabled="true">
                       </td>
                     </tr>
-		{if $lic_email == "sim"}
+		{if $lic_email == "nao"}
                     <tr bgcolor="FFFFFF">
                       <td> <div align="right">
-                          <input name="email_igual" type="checkbox" id="email_igual4" value="1" class="checkbox" {if $lic_email=="nao"}disabled{/if}>
+                          <input name="email_igual" type="checkbox" id="email_igual" value="1" class="checkbox" {if $lic_email=="nao"}disabled{/if}>
                         </div></td>
                       <td colspan="2"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Criar
                         usuario de e-mail com os mesmos dados?</font> </td>
                     </tr>
               	{/if}
+				{if $lic_email=='sim'}<input type="hidden" value="checked" checked="no" name="email_igual" />{/if}
                   </table></td>
                 <td valign="top">
 				<table width="336" border="0" align="center" cellpadding="2" cellspacing="2" dwcopytype="CopyTableCell">
