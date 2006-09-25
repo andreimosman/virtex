@@ -1760,6 +1760,7 @@ class VARelatorio extends VirtexAdmin {
 		$sSQL .= "cc.username = cb.username AND ";
 		$sSQL .= "cc.id_cliente = cl.id_cliente AND ";
 		$sSQL .= "cc.tipo_conta = 'BL' ";
+		$sSQL .= "	AND cb.status = 'A' ";
 	
 	
 	
@@ -1778,7 +1779,7 @@ class VARelatorio extends VirtexAdmin {
 		$sSQL .= " ORDER BY cc.username ASC";
 		
 		
-		
+		//echo $sSQL;
 		
 		} else if($tipo == "AP"){
 		
@@ -1797,7 +1798,7 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "cc.tipo_conta = 'BL' AND ";
 			$sSQL .= "pop.tipo = 'AP' ";
 			
-			//echo "QUERY: $sSQL <br>";
+			//echo $sSQL;
 		
 		}else if ($tipo == "TODOS"){
 			
@@ -2152,14 +2153,19 @@ class VARelatorio extends VirtexAdmin {
 				$sSQL .= "     ) pop ";
 				$sSQL .= "  WHERE ";
 				$sSQL .= "     cbl.id_pop = pop.id_pop ";
+				$sSQL .= "	AND cbl.status = 'A' ";
 				$sSQL .= "  GROUP BY ";
 				$sSQL .= "     pop.id_ap ";
 				$sSQL .= "   ) cli_pop ON( p.id_pop = cli_pop.id_ap)  ";
 				$sSQL .= "WHERE ";
-				$sSQL .= "   p.tipo = 'AP' AND p.status != 'D'";
+				$sSQL .= "   p.tipo = 'AP' AND p.status = 'A'";
 				$sSQL .= "ORDER BY ";
 				$sSQL .= "   p.nome ";
+				
+				///echo $sSQL;
+				
 				break;
+				
 
 			case 'pop':
 				$sSQL  = "SELECT ";
@@ -2182,6 +2188,7 @@ class VARelatorio extends VirtexAdmin {
 				$sSQL .= "     cftb_pop pop ";
 				$sSQL .= "  WHERE ";
 				$sSQL .= "     cbl.id_pop = pop.id_pop ";
+				$sSQL .= " 	AND cbl.status= 'A' ";
 				$sSQL .= "  GROUP BY ";
 				$sSQL .= "     pop.id_pop ";
 				$sSQL .= "   ) cli_pop ON( p.id_pop = cli_pop.id_pop)  ";
@@ -2189,6 +2196,8 @@ class VARelatorio extends VirtexAdmin {
 				$sSQL .= "   p.status != 'D'  ";
 				$sSQL .= "ORDER BY ";
 				$sSQL .= "   p.nome ";
+				
+				//echo $sSQL;	
 
 				break;
 				
@@ -2213,13 +2222,17 @@ class VARelatorio extends VirtexAdmin {
 				$sSQL .= "     cftb_nas nas ";
 				$sSQL .= "  WHERE ";
 				$sSQL .= "     cbl.id_nas = nas.id_nas ";
+				$sSQL .= " 	AND cbl.status = 'A' ";
 				$sSQL .= "  GROUP BY ";
 				$sSQL .= "     nas.id_nas ";
 				$sSQL .= "   ) cli_nas ON( nas.id_nas = cli_nas.id_nas) ";
 				$sSQL .= "ORDER BY ";
 				$sSQL .= "   nas.nome ";
-			
+
+				///echo $sSQL;	
+
 				break;
+				
 				
 		}
 		

@@ -53,7 +53,7 @@ class VAConfiguracao extends VirtexAdmin {
 			
 			$erros = array();
 
-
+	
 			$rotina = @$_REQUEST["rotina"];
 			$acao = @$_REQUEST["acao"];
 			$id_pop = @$_REQUEST["id_pop"];
@@ -1661,7 +1661,36 @@ class VAConfiguracao extends VirtexAdmin {
 					if( ! $this->privPodeLer("_CONFIG_PREFERENCIAS") ) {
 						$this->privMSG();
 						return;
-					}												
+					}	
+					
+					$sSQL  =" SELECT id_cobranca,nome_cobranca, disponivel FROM cftb_forma_pagamento ";
+					
+ 					$forma_pag = $this->bd->obtemRegistros($sSQL);
+
+
+						/*
+						 for($i=0;$i<count($forma_pag);$i++){
+
+							$id_cob = $forma_pag[$i]['id_cobranca'];
+
+							$dSQL  = " SELECT ";
+							$dSQL .= " nome_cobranca, id_cobranca, disponivel ";
+							$dSQL .= " FROM cftb_forma_pagamento ";
+							$dSQL .= " WHERE ";
+							$dSQL .= " id_cobranca = '$id_cob' ";
+
+							echo $dSQL . "<br><Hr><br>" ;
+
+							$formas = $this->bd->obtemRegistros($sSQL);
+
+							$forma_pag[$i]["formas"] = $formas;
+
+
+						 }*/
+					
+					
+					$this->tpl->atribui("forma_pag",$forma_pag);
+					
 
 					$geral = $this->prefs->obtem("geral");
 					$cobranca = $this->prefs->obtem("cobranca");
