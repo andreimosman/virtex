@@ -8,6 +8,9 @@
 # Zera as regras
 ipfw -f flush
 
+# Permite pacotes layer2 (ex: arp e pppoe)
+/sbin/ipfw add 1 allow layer2 not mac-type ip
+
 #
 # WORMS, EXPLOITS E AFINS
 #####################################################
