@@ -17,10 +17,12 @@
               </tr>
               <tr>
                 <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio</h1><h2 align="center"><font size="2"> 
-                  {if $mes}Atrasados de {$meses_ano[$mes]} de {$ano}{else}Atrasos{/if}</font></h2>{if 
-                  $acao == "geral"} <form action="{$smarty.server.PHP_SELF}" method="GET"> 
+                  {if $mes}Atrasados de {$meses_ano[$mes]} de {$ano}{else}Atrasos{/if}</font></h2>
+				  {if $acao == "geral"} 
+				  <form action="{$smarty.server.PHP_SELF}" method="GET"> 
                   <input type="HIDDEN" name="acao" value="{$acao}">
                 		<input type="HIDDEN" name="op" value="{$op}">
+						</form>
 
                 		<table width="200" border="0" cellspacing="0" cellpadding="0">
 
@@ -39,9 +41,10 @@
 						  </tr>
 						<table>
                 	</form>
+					
 
-							{if !$relat} <p align="center"><b>Não existem clientes nesta condição</b></p> 
-						<p>{else}
+							
+						<p>{if $relat}
 						<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico"></p>
 					  <table width="450" border="0" cellspacing="0" cellpadding="0">
 						  <tr>
@@ -60,7 +63,7 @@
 								{foreach item=a from=$relat}
 								  <table width="450" border="0" cellspacing="2" cellpadding="0">
 									  <tr>
-										<td width="225" align="LEFT"><p><a href="relatorio.php?op={$op}&acao=sub_ina&ano={$a.ano}&mes={$a.mes}">{$meses_ano[$a.mes]}/{$a.ano}</a></p></td>
+										<td width="225" align="LEFT"><p><a href="relatorio.php?op={$op}&acao=sub_ina&ano={$a.ano}&mes={$a.mes}">{ $meses_ano[$a.mes]}/{$a.ano}</a></p></td>
 										<td align="RIGHT"><p><a href="relatorio.php?op={$op}&acao=sub_ina&ano={$a.ano}&mes={$a.mes}">{$a.num_contratos}</a></p></td>
 
 									  </tr>
@@ -76,9 +79,8 @@
 						  </tr>
                   	  </table>
 
+					{else} <p align="center"><b>Não existem clientes nesta condição</b></p> {/if}
 					{/if}
-
-
 
 					{if $acao == "sub_ina"}
 					  <table width="750" border="0" cellspacing="0" cellpadding="0">
@@ -124,8 +126,6 @@
 
 
 
-
-                {/if}
                   					<script language="JavaScript">ready = "yes";</script>
 <script>
 {literal}

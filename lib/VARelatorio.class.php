@@ -1353,6 +1353,7 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "	END ";
 
 			$sSQL .= "	AND (f.status != 'E' AND f.status != 'C') AND ctt.status = 'A' ";
+			$sSQL .= "	AND EXTRACT(month from f.data) = '$mes' AND EXTRACT(year from f.data) = '$ano' ";
 			$sSQL .= "ORDER BY ano, mes, dia, nome_razao ";	
 		
 		}
@@ -1391,7 +1392,7 @@ class VARelatorio extends VirtexAdmin {
 			header("Content-type: Image/png");
 
 			//$pontos = array("9", "16", "20");
-			$grafico = new Graph(450,200,"png");
+			$grafico = new Graph(450,250,"png");
 
 
 			$grafico->SetScale("textlin"); 
@@ -1419,6 +1420,8 @@ class VARelatorio extends VirtexAdmin {
 
 			// título das barras
 			$grafico->xaxis->SetTickLabels($legendas);
+			//$grafico->xaxis->title->SetFont(FF_FONT1,FS_ITALIC, 2);
+
 
 			// adicionar mostrage de barras ao gráfico 
 			$grafico->Add($gBarras); 
