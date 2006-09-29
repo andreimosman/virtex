@@ -1284,7 +1284,7 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "   		f.reagendamento IS NOT NULL ";
 			$sSQL .= "   	THEN ";
 			$sSQL .= "   		f.reagendamento >= CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '$periodo months' AND ";
-			$sSQL .= "   		f.reagendamento < CAST( EXTRACT(year from now()) || '-' ||EXTRACT(month from now()) ||'-01' as date) ";
+			$sSQL .= "   		f.reagendamento <  CAST( EXTRACT(year from now()) || '-' ||EXTRACT(month from now()) ||'-01' as date) ";
 			$sSQL .= "   	ELSE ";
 			$sSQL .= "   		f.data >= CAST( EXTRACT(year from now() + INTERVAL '1 month') || '-' ||EXTRACT(month from now() + INTERVAL '1 month') ||'-01' as date) - INTERVAL '$periodo months' AND ";
 			$sSQL .= "  		f.data < CAST( EXTRACT(year from now()) || '-' ||EXTRACT(month from now()) ||'-01' as date) ";
@@ -1381,7 +1381,7 @@ class VARelatorio extends VirtexAdmin {
 
 			for($i=0;$i<count($relat);$i++) {
 			   $mes_corrente = $_LS_MESES_ANO[$relat[$i]["mes"]];
-			   $legendas[] =  $mes_corrente . "/" . $relat[$i]["ano"];
+			   $legendas[] =  $mes_corrente . "\n" . $relat[$i]["ano"]; 
 			   $pontos[] = $relat[$i]["num_contratos"];			   
 			}
 
@@ -1411,7 +1411,7 @@ class VARelatorio extends VirtexAdmin {
 
 			// ajuste de cores 
 			//$gBarras->SetFillColor("#ff0000");
-			$gBarras->SetFillGradient("#aa0000","red",GRAD_VER);;
+			$gBarras->SetFillGradient("#aa0000","red",GRAD_VER);
 			$gBarras->SetColor("#aa0000");
 
 			//$gBarras->SetShadow("darkblue"); 
@@ -1420,7 +1420,8 @@ class VARelatorio extends VirtexAdmin {
 
 			// título das barras
 			$grafico->xaxis->SetTickLabels($legendas);
-			//$grafico->xaxis->title->SetFont(FF_FONT1,FS_ITALIC, 2);
+			//$grafico->xaxis->SetLabelAngle(90);
+			$grafico->xaxis->title->SetFont(FF_FONT2,FS_NORMAL,1);
 
 
 			// adicionar mostrage de barras ao gráfico 
@@ -1465,8 +1466,9 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "WHERE ";
 			$sSQL .= "	data_hora > (CAST(EXTRACT(year from now()) || '-' || EXTRACT(month from now()) || '-01' as date) + INTERVAL '1 month') - INTERVAL '12 months' ";
 			$sSQL .= "GROUP BY tipo, ano, mes ";
-			$sSQL .= "ORDER BY ano, mes, tipo ";*/
+			$sSQL .= "ORDER BY ano, mes, tipo ";
 			
+		*/			
 						
 			
 			$sSQL  = "SELECT ";
