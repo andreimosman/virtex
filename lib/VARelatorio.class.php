@@ -2276,11 +2276,11 @@ class VARelatorio extends VirtexAdmin {
 						$sSQL .= "FROM ";
 						$sSQL .= "	cbtb_contrato ";
 						$sSQL .= "WHERE ";
-						$sSQL .= "	 data_contratacao between (now() - INTERVAL '-1 month') - INTERVAL '$periodo months' AND now() ";
+						$sSQL .= "	 data_contratacao between (now()) - INTERVAL '$periodo months' AND now() ";
 						$sSQL .= "GROUP BY ano, mes ";
 						$sSQL .= "ORDER BY ano DESC, mes  DESC ";
 							
-						///echo $sSQL;
+						/////////////////////echo $sSQL;
 						
 						
 						if ($periodo=="12"){
