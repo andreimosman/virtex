@@ -712,7 +712,10 @@ class VASuporte extends VirtexAdmin {
 			$sSQL  = "SELECT ";
 			$sSQL .= "username , ";
 			$sSQL .= "login as inicio, "; 
-			$sSQL .= " CAST (now() -login as time) as tempo,  ";
+			$sSQL .= " date_part('month' , age(login))as mes,  ";
+			$sSQL .= " date_part('day' , age(login))as dias,  ";
+			$sSQL .= " date_part('hour' , age(login))as horas,  ";
+			$sSQL .= " date_part('minutes' , age(login))as minutos,  ";	
 			$sSQL .= " caller_id as origem, session_id, nas,  ";
 			$sSQL .= "terminate_cause as mensagem, bytes_in, bytes_out ";
 			$sSQL .= "FROM ";

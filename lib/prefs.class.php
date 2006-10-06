@@ -56,13 +56,13 @@ class Preferencias {
          }else if ( $classe == "cobranca" ){
         	// Preferencias de Cobranca
 			$sSQL = "SELECT ";
-			$sSQL .= "tx_juros, multa, dia_venc, carencia, cod_banco, carteira, agencia, num_conta, convenio, observacoes, pagamento, path_contrato, cod_banco_boleto, carteira_boleto, agencia_boleto, conta_boleto, convenio_boleto ";
+			$sSQL .= "tx_juros, multa, dia_venc, carencia, cod_banco, carteira, agencia, num_conta, convenio, observacoes, pagamento, path_contrato, cod_banco_boleto, carteira_boleto, agencia_boleto, conta_boleto, convenio_boleto, enviar_email, mensagem_email ";
 			$sSQL .= "FROM pftb_preferencia_cobranca ";
 			
          }else if ($classe == "total" ){
         	//Preferencias Totais
 			$sSQL  = "SELECT ";
-			$sSQL .= " pc.tx_juros, pc.multa, pc.dia_venc, pc.carencia, pc.cod_banco, pc.carteira, pc.agencia, pc.num_conta, pc.convenio, pc.observacoes, pc.pagamento, pc.path_contrato,cod_banco_boleto, carteira_boleto, agencia_boleto, conta_boleto, convenio_boleto, ";
+			$sSQL .= " pc.tx_juros, pc.multa, pc.dia_venc, pc.carencia, pc.cod_banco, pc.carteira, pc.agencia, pc.num_conta, pc.convenio, pc.observacoes, pc.pagamento, pc.path_contrato,cod_banco_boleto, carteira_boleto, agencia_boleto, conta_boleto, convenio_boleto, pc.enviar_email, pc.mensagem_email ";
 			$sSQL .= " pg.dominio_padrao, pg.nome, pg.radius_server, pg.hosp_server, pg.hosp_ns1, pg.hosp_ns2, pg.hosp_uid, pg.hosp_gid, pg.mail_server, pg.mail_uid, pg.mail_gid, pg.pop_host, pg.smtp_host, pg.hosp_base,pg.email_base, ";
 			$sSQL .= " pp.endereco, pp.localidade, pp.cep, pp.cnpj, pp.fone ";
 			$sSQL .= "FROM ";

@@ -81,6 +81,15 @@ h2 {
 	color: #000000;
 	text-decoration: none;
 }
+.box_fechada {
+	visibility: hidden;
+	display:none;
+}
+
+.box_aberta {
+	visibility: visible;
+	display:block;
+}
 
 @media screen {
 	#imprimir {

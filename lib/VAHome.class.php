@@ -89,16 +89,170 @@ class VAHome extends VirtexAdmin {
 				$this->tpl->atribui("lic_email",$lic_email);
 				$this->tpl->atribui("lic_interface",$lic_interface);
 				$this->tpl->atribui("lic_bandalarga",$lic_bandalarga);
-
-
-
+				
+				
+		
 		$this->arquivoTemplate = "home.html";
 	
+	}
+    
+	public function enviaEmail(){
+
+			$aSQL  = " SELECT enviar_email FROM pftb_preferencia_cobranca ";
+			$email = $this->bd->obtemUnicoRegistro($aSQL);
+			
+			if ($email['enviar_email'] == 't'){
+			
+				$carencia = (int)$this->prefs->obtem("cobranca","carencia");
+				$carencia_total = $carencia - 5 ;
+				///////echo $carencia_total."<Br>";
+
+				$sSQL  = "SELECT ";
+				$sSQL .= "   cl.nome_razao, p.tipo, cp.id_cliente_produto, cl.id_cliente, f.nosso_numero, f.cod_barra, f.data, cl.email ";
+				$sSQL .= "FROM ";
+				$sSQL .= "   cltb_cliente cl, prtb_produto p, cbtb_faturas f,cntb_conta cn, ";
+				$sSQL .= "   cbtb_cliente_produto cp, cbtb_contrato ctt ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "	 f.valor > '0.00' AND ";
+				$sSQL .= "	 cn.status != 'S' AND ";
+				$sSQL .= "	 cn.tipo_conta = p.tipo AND ";
+				$sSQL .= "	 cn.id_cliente_produto = cp.id_cliente_produto AND ";
+				$sSQL .= "   cl.id_cliente = cp.id_cliente ";
+				$sSQL .= "   AND p.id_produto = cp.id_produto ";
+				$sSQL .= "   AND ctt.id_cliente_produto = cp.id_cliente_produto ";		
+				$sSQL .= "   AND f.id_cliente_produto = cp.id_cliente_produto ";
+				$sSQL .= "   AND ";
+				$sSQL .= "   CASE WHEN ";
+				$sSQL .= "      f.reagendamento is not null ";
+				$sSQL .= "   THEN ";
+				$sSQL .= "      f.reagendamento < CAST(now() as date)  ";
+				$sSQL .= "   ELSE ";
+				$sSQL .= "      f.data < CAST(now() as date) - INTERVAL '$carencia_total days' ";
+				$sSQL .= "   END  ";
+				$sSQL .= "   AND f.status not in ('P','E','C') ";
+				$sSQL .= "   AND ctt.status = 'A' ";
+				$sSQL .= "GROUP BY ";
+				$sSQL .= "   cl.nome_razao, p.nome, p.tipo, cp.id_cliente_produto, cl.id_cliente, f.data, f.nosso_numero, f.cod_barra, cl.email ";
+				$sSQL .= "ORDER BY ";
+				$sSQL .= "   cl.nome_razao, p.nome ";
+				
+				///echo $sSQL ;
+
+
+					$rel_clientes = $this->bd->obtemRegistros($sSQL);
+
+					$aSQL  = " SELECT mensagem_email FROM pftb_preferencia_cobranca ";
+
+					$mensagem = $this->bd->obtemUnicoRegistro($aSQL);
+					
+					
+					
+					$empresa = $this->prefs->obtem("geral","nome");
+					$dominio = $this->prefs->obtem("geral","dominio_padrao");
+					
+					$email = list($nome_dominio , $com ,$br) = explode (".",$dominio);
+					
+					$html = "<div align='center'>
+					<br>
+					<html>
+					<head>
+					<title>Licença VirtexAdmin</title>
+					<style type='text/css'>
+					<!--
+					.style3 {
+						color: #FF3300;
+						font-family: Verdana, Arial, Helvetica, sans-serif;
+						font-size: 14;
+					}
+					.style5 {font-family: Verdana, Arial, Helvetica, sans-serif}
+					.style8 {font-family: Verdana, Arial, Helvetica, sans-serif; font-weight: bold; font-size: 12px; }
+					.style10 {color: #6D9179; font-weight: bold; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; }
+					.style12 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; }
+					.style17 {color: #6D9179; font-weight: bold; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14; }
+					.style19 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14; }
+					.style20 {font-size: 14}
+					-->
+					</style>
+					</head>
+					
+					<body bottommargin='0' topmargin='0' marginheight='0' marginwidth='0'>
+						<table width='700' border='0' cellpadding='0' cellspacing='0' style='border:1px solid #CCCCCC;'>
+						  <tr>
+						  	<td width='700'><img src='http://www.mosman.com.br/logo_top_email_virtex.png'></td>
+						  </tr>
+						  <tr>
+						  	<td><Br><Br>
+						  </tr>
+						  <tr>
+						  	<td><span class='style17'>&nbsp;&nbsp;&nbsp;Prezado Cliente, </span></td>
+						  </tr>						  
+						  <tr>
+						  	<td height='200px' align='center'>
+							<table>
+							 <tr>
+							  <td width='650'>
+								<span class='style17'>" . $mensagem['mensagem_email'] . "</span></td>
+							 </tr>
+							</table>
+							</td>
+						  </tr>
+						  <tr>
+						  	<td align='right'><span class='style17'>Atenciosamente,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <Br>" . $empresa . ".&nbsp;&nbsp;&nbsp;</span></td>
+						  </tr>
+						  <tr>
+						  	<td height='10px'>&nbsp;</td>
+						  </tr>
+					    </table>
+					   <br>
+					</body>
+					</html>
+					</div>
+					";
+					$headers = "Content-type: text/html; charset=iso-8859-1\r\n"; 
+					$headers .= "From: $empresa <$nome_dominio@$dominio>\r\n" ;
+					
+
+				for ( $i=0; $i <count($rel_clientes); $i++){
+
+					$email_cliente = $rel_clientes[$i]["email"];
+					$cod_barra = $rel_clientes[$i]["cod_barra"];
+					$nosso_numero = $rel_clientes[$i]["nosso_numero"];
+					$id_cliente_produto = $rel_clientes[$i]["id_cliente_produto"];
+
+
+					$sSQL  = " SELECT email_aviso FROM cbtb_faturas WHERE id_cliente_produto = '$id_cliente_produto' AND cod_barra = '$cod_barra' AND nosso_numero = '$nosso_numero' ";
+
+					$email_aviso = $this->bd->obtemUnicoRegistro($sSQL);
+					
+					///echo $email_cliente . '<br><hr><br>';
+
+
+					if ($email_aviso['email_aviso'] == 'f' && $email_cliente != "" ){
+
+						if(mail($email_cliente, "Problemas na Sua Conta" ,  $html, $headers)){
+
+						$sSQL  = "UPDATE cbtb_faturas SET email_aviso = 't' WHERE cod_barra = '$cod_barra' AND nosso_numero = '$nosso_numero' AND id_cliente_produto = '$id_cliente_produto' ";
+						$this->bd->consulta($sSQL);
+						///echo $sSQL;
+						}
+
+					}
+
+
+				}
+				
+				$this->tpl->atribui("mensagem",$mensagem['mensagem_email']);
+				$this->tpl->atribui("empresa",$empresa);
+
+			}
+			
 	}
     
 	
 	
 	public function processa($op=null) {
+	
+	$this->enviaEmail();
 	
 		if( $op == "home" ) {
 
@@ -145,6 +299,28 @@ class VAHome extends VirtexAdmin {
 	   $this->arquivoTemplate = "home_principal.html";
 		   
 		}
+		
+		if ($op == "mostra_email"){
+					
+			$empresa = $this->prefs->obtem("geral","nome");
+			
+			
+			
+			$mensagem = @$_REQUEST['mensagem'];
+			
+			
+		 	if ($mensagem != ""){
+			
+				$this->tpl->atribui("mensagem",$mensagem);
+			
+			}
+			$this->tpl->atribui("empresa",$empresa);
+			
+			$this->arquivoTemplate = 'exemplo_email.html';
+		
+		
+		}
+		
 		if ($op == "renovacao_contrato"){
 
 				if( ! $this->privPodeGravar("_COBRANCA") ) {

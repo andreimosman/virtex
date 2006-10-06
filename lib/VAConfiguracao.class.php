@@ -1036,29 +1036,36 @@ class VAConfiguracao extends VirtexAdmin {
 
 
 
-						}					
-
-						$sSQL  = "UPDATE ";
-						$sSQL .= "  pftb_preferencia_geral ";
-						$sSQL .= "SET ";
-						$sSQL .= "  dominio_padrao = '".@$_REQUEST["dominio_padrao"]."', ";
-						$sSQL .= "  nome = '".@$_REQUEST["nome"]."', ";
-						$sSQL .= "  radius_server = '".@$_REQUEST["radius_server"]."', ";
-						$sSQL .= "  hosp_server = '".@$_REQUEST["hosp_server"]."', ";
-						$sSQL .= "  hosp_ns1 = '".@$_REQUEST["hosp_ns1"]."', ";
-						$sSQL .= "  hosp_ns2 = '".@$_REQUEST["hosp_ns2"]."', ";
-						$sSQL .= "  hosp_uid = '".@$_REQUEST["hosp_uid"]."', ";
-						$sSQL .= "  hosp_gid = '".@$_REQUEST["hosp_gid"]."', ";
-						$sSQL .= "  mail_server = '".@$_REQUEST["mail_server"]."', ";
-						$sSQL .= "  mail_uid = '".@$_REQUEST["mail_uid"]."', ";
-						$sSQL .= "  mail_gid = '".@$_REQUEST["mail_gid"]."', ";
-						$sSQL .= "  pop_host = '".@$_REQUEST["pop_host"]."', ";
-						$sSQL .= "  smtp_host = '".@$_REQUEST["smtp_host"]."', ";
-						$sSQL .= "  hosp_base = '".@$_REQUEST["hosp_base"]."', ";
-						$sSQL .= "  agrupar = '".@$_REQUEST["agrupar"]."', ";
-						$sSQL .= "  email_base = '".@$_REQUEST["email_base"]."' ";
-
-						///////echo "SQL UPDATE: $sSQL <br>";
+						}
+						
+						$sSQL  = " BEGIN; ";
+						$sSQL .= " DELETE FROM pftb_preferencia_geral where id_provedor = '1'; ";
+						$sSQL .= " INSERT INTO pftb_preferencia_geral ";
+						$sSQL .= " (id_provedor, dominio_padrao , nome, radius_server, hosp_server, hosp_ns1, ";
+						$sSQL .= " hosp_ns2, hosp_uid, hosp_gid, mail_server, mail_uid, mail_gid, pop_host, ";
+						$sSQL .= " smtp_host, hosp_base, agrupar, email_base) ";
+						$sSQL .= " VALUES ( ";
+						$sSQL .= " '1', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["dominio_padrao"]) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["radius_server"]) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["hosp_server"]) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["hosp_ns1"]) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["hosp_ns2"]) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["hosp_uid"]) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["hosp_gid"]) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["mail_server"]) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["mail_uid"]) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["mail_gid"]) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["pop_host"]) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["smtp_host"]) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["hosp_base"]) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["agrupar"]) . "', ";
+						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["email_base"]) . "' ";
+						$sSQL .= " ); ";
+						$sSQL .= " COMMIT; ";
+						
+						/////echo "SQL UPDATE: $sSQL <br>";
 						$this->bd->consulta($sSQL);
 
 
@@ -1133,6 +1140,15 @@ class VAConfiguracao extends VirtexAdmin {
 					$agencia_boleto = @$_REQUEST["agencia_boleto"];
 					$conta_boleto = @$_REQUEST["conta_boleto"];
 					$convenio_boleto = @$_REQUEST["convenio_boleto"];	
+					$enviar_email = @$_REQUEST["enviar_email"];
+					$mensagem_email = nl2br(@$_REQUEST["mensagem_email"]);
+					
+					if ($enviar_email == ""){
+					
+						$enviar_email = 'f';
+						$mensagem_email = "";
+				
+					}
 					
 					if ($carteira == ""){
 										
@@ -1196,31 +1212,25 @@ class VAConfiguracao extends VirtexAdmin {
 
 						$convenio_boleto = 'NULL';
 					}
-
-
-						$sSQL  = "UPDATE ";
-						$sSQL .= "	pftb_preferencia_cobranca ";
-						$sSQL .= "SET ";
-						$sSQL .= "  carencia = '$carencia', ";
-						$sSQL .= "  tx_juros = '$tx_juros', ";
-						$sSQL .= "  multa = '$multa', ";
-						$sSQL .= "  dia_venc = '$dia_venc', ";
-						$sSQL .= "  cod_banco = $cod_banco, ";
-						$sSQL .= "  carteira = $carteira, ";
-						$sSQL .= "  agencia = $agencia, ";
-						$sSQL .= "  num_conta = $num_conta, ";
-						$sSQL .= "  convenio = $convenio, ";
-						$sSQL .= "	pagamento = '$pagamento', ";
-						$sSQL .= "	observacoes = '$observacoes', ";
-						$sSQL .= "  path_contrato = '$path_contrato', ";
-						$sSQL .= "  cod_banco_boleto = $cod_banco_boleto, ";
-						$sSQL .= "  carteira_boleto = $carteira_boleto, ";
-						$sSQL .= "  agencia_boleto = $agencia_boleto, ";
-						$sSQL .= "  conta_boleto = $conta_boleto, ";
-						$sSQL .= "  convenio_boleto = $convenio_boleto ";
-
+					
+					
+						
+						$sSQL  = " BEGIN ;";
+						$sSQL .= " DELETE FROM pftb_preferencia_cobranca where id_provedor = '1';";
+						$sSQL .= " INSERT INTO ";
+						$sSQL .= " pftb_preferencia_cobranca ";
+						$sSQL .= " (id_provedor, carencia, tx_juros, multa, dia_venc, cod_banco, carteira, ";
+						$sSQL .= " agencia, num_conta, convenio, pagamento, observacoes, path_contrato, cod_banco_boleto, ";
+						$sSQL .= " carteira_boleto, agencia_boleto, conta_boleto, convenio_boleto, enviar_email, mensagem_email) ";
+						$sSQL .= " VALUES ( '1', '$carencia', '$tx_juros', '$multa', '$dia_venc', $cod_banco, $carteira, ";
+						$sSQL .= "			$agencia, $num_conta, $convenio, '$pagamento', '$observacoes', '$path_contrato', $cod_banco_boleto, ";
+						$sSQL .= "			$carteira_boleto, $agencia_boleto, $conta_boleto, $convenio_boleto, '$enviar_email', '$mensagem_email'); ";
+						$sSQL .= " COMMIT ; ";
+						
+						
 						$this->bd->consulta($sSQL);
-						 //echo "update cobrança: $sSQL <br>";
+						//echo "update cobrança: $sSQL <br>";
+						
 
 
 						$sSQL = "UPDATE cftb_forma_pagamento SET disponivel = 'f'";
@@ -1281,17 +1291,26 @@ class VAConfiguracao extends VirtexAdmin {
 					$prefs = $this->prefs->obtem("provedor");
 
 						if ($acao == "alt"){
-
-							$sSQL  = "UPDATE ";
-							$sSQL .= "pftb_preferencia_provedor ";
-							$sSQL .= "SET ";
-							$sSQL .= "	endereco = '".$_REQUEST["endereco"]."', ";
-							$sSQL .= "	localidade = '".$_REQUEST["localidade"]."', ";
-							$sSQL .= "	cep = '".$_REQUEST["cep"]."', ";
-							$sSQL .= "	cnpj = '".$_REQUEST["cnpj"]."', ";
-							$sSQL .= "	fone = '".$_REQUEST["fone"]."' ";
+						
+							$sSQL  = " BEGIN; ";
+							$sSQL .= " DELETE FROM pftb_preferencia_provedor WHERE id_provedor = '1'; ";
+							$sSQL .= " INSERT INTO ";
+							$sSQL .= " pftb_preferencia_provedor ";
+							$sSQL .= " (id_provedor,endereco, localidade, cep , cnpj, fone ) ";
+							$sSQL .= " VALUES ( ";
+							$sSQL .= " '1', ";
+							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["endereco"]) . "', ";
+							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["localidade"]) . "', ";
+							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["cep"]) . "', ";
+							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["cnpj"]) . "', ";
+							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["fone"]) . "' ";
+							$sSQL .= " ) ;";
+							$sSQL .= " COMMIT; ";
+							
 
 							$this->bd->consulta($sSQL);
+							
+							///////echo $sSQL;
 
 							$this->tpl->atribui("mensagem","PREFERENCIAS GRAVADAS COM SUCESSO! "); 
 							$this->tpl->atribui("url","configuracao.php?op=resumo");

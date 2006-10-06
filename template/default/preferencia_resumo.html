@@ -7,8 +7,8 @@
 
 </head>
 
-<body><form name=prefs method="post" action="{$smarty.server.PHP_SELF}">
-<form name="form1" method="post" action="">
+<body>
+<form name=prefs method="post" action="{$smarty.server.PHP_SELF}">
   <input type="hidden" name="op" id="op" value="resumo">
 </form>
 <div align="center">
@@ -16,10 +16,10 @@
 <br>
   <table width="710" border="0" align="center" cellpadding="0" cellspacing="1" style="border:1px solid #DDDDDD;">
     <tr bgcolor="#CDCDCD">
-		<td colspan="6" align="center" height="20"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Preferência Geral</font></strong></td>
+		<td colspan="6" align="center" height="20"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Prefer&ecirc;ncia Geral</font></strong></td>
 	</tr>
 	<tr bgcolor="#EFEFEF">
-      <td width="155" align="center"><p><strong>Dominio Padrão</strong></p>
+      <td width="155" align="center"><p><strong>Dominio Padr&atilde;o</strong></p></td>
       <td width="94" align="center"><p><strong>Nome</strong></p></td>
       <td width="137" align="center"><p><strong>Radius Server</strong></p></td>
       <td width="130" align="center"><p><strong>Servidor de Hospedagem</strong></p></td>
@@ -38,12 +38,12 @@
   <br>
   <table width="710" border="0" align="center" cellpadding="0" cellspacing="1" style="border:1px solid #DDDDDD;">
    <tr bgcolor="#CDCDCD">
-		<td colspan="6" align="center" height="20"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Preferência do Provedor</font></strong></td>
+		<td colspan="6" align="center" height="20"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Prefer&ecirc;ncia do Provedor</font></strong></td>
 	</tr>
     <tr bgcolor="#EFEFEF"> 
-      <td width="100" align="center"><p><strong>Endereço</strong></p></td>
+      <td width="100" align="center"><p><strong>Endere&ccedil;o</strong></p></td>
       <td width="100" align="center"><p><strong>Localidade</strong></p></td>
-      <td width="80" align="center"><p><strong>CEP</strong></p></td>
+      <td width="080" align="center"><p><strong>CEP</strong></p></td>
       <td width="100" align="center"><p><strong>Cnpj</strong></p></td>
 	  <td width="100" align="center"><p><strong>Fone</strong></p></td>
 	  <td align="center">&nbsp;</td>
@@ -60,23 +60,25 @@
   <br>
   <table width="710" border="0" align="center" cellpadding="0" cellspacing="1" style="border:1px solid #DDDDDD;">
   <tr bgcolor="#CDCDCD">
-		<td colspan="8" align="center" height="20"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Preferência de Cobrança</font></strong></td>
+		<td colspan="8" align="center" height="20"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Prefer&ecirc;ncia de Cobran&ccedil;a</font></strong></td>
 	</tr>
     <tr bgcolor="#EFEFEF"> 
-      <td width="135" align="center"><p><strong>Dia de Vencimento</strong></p></td>
-      <td width="135" align="center"><p><strong>Carência</strong></p></td>
-      <td width="135" align="center"><p><strong>Taxa de Juros</strong></p></td>
-      <td width="135" align="center"><p><strong>Multa</strong></p></td>
-      <td width="140" align="center"><p align="center"><strong>Pagamento</strong></p></td>
+      <td width="115" align="center"><p><strong>Dia de Vencimento</strong></p></td>
+      <td width="115" align="center"><p><strong>Car&ecirc;ncia</strong></p></td>
+	  <td width="115" ><p><strong>Enviar E-Mail </strong></p></td>
+      <td width="115" align="center"><p><strong>Taxa de Juros</strong></p></td>
+      <td width="115" align="center"><p><strong>Multa</strong></p></td>
+      <td width="115" align="center"><p align="center"><strong>Pagamento</strong></p></td>
 	  <td align="center">&nbsp;</td>
     </tr>
     <tr> 
       <td align="center"><p><a href="configuracao.php?op=preferencia_cobranca">{$cobranca.dia_venc}</a></p></td>
-      <td align="center"><p><a href="configuracao.php?op=preferencia_cobranca">{$cobranca.carencia}</a></p></td>
-      <td align="center"><p><a href="configuracao.php?op=preferencia_cobranca">{$cobranca.tx_juros}</a></p></td>
-      <td align="center"><p><a href="configuracao.php?op=preferencia_cobranca">{$cobranca.multa}</a></p></td>
-      <td align="center"><p><a href="configuracao.php?op=preferencia_cobranca">{$cobranca.pagamento}</a></p></td>
-	  <td  width="27" align="center"><a href="configuracao.php?op=preferencia_cobranca"><img src="template/default/images/gif_alterar.gif" width="16" height="16" border="0"></a></td>
+      <td align="center"><p><a href="configuracao.php?op=preferencia_cobranca">{$cobranca.carencia} dias </a></p></td>
+	  <td align="center"><p><a href="configuracao.php?op=preferencia_cobranca">{if $cobranca.enviar_email == 't'}Sim{else}Não{/if} </a></p>
+	  <td align="center"><p><a href="configuracao.php?op=preferencia_cobranca">{$cobranca.tx_juros} % </a></p></td>
+      <td align="center"><p><a href="configuracao.php?op=preferencia_cobranca">{$cobranca.multa} % </a></p></td>
+      <td align="center"><p><a href="configuracao.php?op=preferencia_cobranca">{if $cobranca.pagamento=="PRE"}Pr&eacute;-Pago{elseif $cobranca.pagamento=="POS"}P&oacute;s-Pago{/if}</a></p></td>
+	  <td  width="24" align="center"><a href="configuracao.php?op=preferencia_cobranca"><img src="template/default/images/gif_alterar.gif" width="16" height="16" border="0" ></a></td>
     </tr>
     <tr>
       <td align="center" colspan="8"><table width="100%" border="0" cellpadding="0" cellspacing="0"  style="border:1px solid #EEEEEE;" >
@@ -104,14 +106,45 @@
 								{/foreach}	
           <td><table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
             <tr>
-              <td bgcolor="#F7F9F9"><p><strong><a href="configuracao.php?op=preferencia_cobranca">Carn&ecirc;</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {if $carne=='f'}<font color="#999999">(não disponivel)</font>{/if}</strong></p></td>
+              <td bgcolor="#F7F9F9"><p><strong><a href="configuracao.php?op=preferencia_cobranca">Carn&ecirc;</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {if $carne=='f'}<font color="#999999">(n&atilde;o disponivel)</font>{/if}</strong></p></td>
             </tr>
             <tr>
               <td><table width="250" height="100%" align="center">
                   <tr>
                     <td>{if $carne=='t'}<font style="font-size:10px;" face="Verdana, Arial, Helvetica, sans-serif"><a href="configuracao.php?op=preferencia_cobranca">Op&ccedil;&otilde;es
                       de Carn&ecirc;</a></font>							
-                      <table width="" border="0" dwcopytype="CopyTableRow">
+                     <table width="260" dwcopytype="CopyTableRow">
+                          <tr>
+                            <td><a href="configuracao.php?op=preferencia_cobranca"><p><strong>Cod. Banco: </strong></p></a></td>
+                            <td><a href="configuracao.php?op=preferencia_cobranca"><p>{$cobranca.cod_banco}</p></a></td>
+                            <td><a href="configuracao.php?op=preferencia_cobranca"><p><strong>Carteira: </strong></p></a></td>
+                            <td><a href="configuracao.php?op=preferencia_cobranca"><p>{$cobranca.carteira}</p></a></td>
+                          </tr>
+                          <tr>
+                            <td><a href="configuracao.php?op=preferencia_cobranca"><p><strong>Ag&ecirc;ncia: </strong></p></a></td>
+                            <td><a href="configuracao.php?op=preferencia_cobranca"><p>{$cobranca.agencia}</p></a></td>
+                            <td><a href="configuracao.php?op=preferencia_cobranca"><p><strong>Num. Conta: </strong></p></a></td>
+                            <td><a href="configuracao.php?op=preferencia_cobranca"><p>{$cobranca.num_conta}</p></a></td>
+                          </tr>
+                          <tr>
+                            <td><a href="configuracao.php?op=preferencia_cobranca"><p><strong>Conv&ecirc;nio:</strong></p></a></td>
+                            <td><a href="configuracao.php?op=preferencia_cobranca"><p>{$cobranca.convenio}</p></a></td>
+                          </tr>
+                      </table>{/if}</td>
+                  </tr>
+              </table></td>
+            </tr>
+          </table></td>
+          <td><table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td bgcolor="#F7F9F9"><p><strong><a href="configuracao.php?op=preferencia_cobranca">Boleto</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {if $boleto=='f'}<font color="#999999">(n&atilde;o disponivel)</font>{/if}</strong></p></td>
+            </tr>
+            <tr>
+              <td><table width="250" height="100%" align="center">
+                  <tr>
+                    <td>{if $boleto=='t'}<font style="font-size:10px;" face="Verdana, Arial, Helvetica, sans-serif"><a href="configuracao.php?op=preferencia_cobranca">Op&ccedil;&otilde;es
+                      de Boleto</a></font>
+					   <table width="" border="0" dwcopytype="CopyTableRow">
                           <tr>
 					  
                             <td><a href="configuracao.php?op=preferencia_cobranca"><p><strong>Cod. Banco: </strong></p></a></td>
@@ -131,38 +164,8 @@
 							<td>
 							</td>
                           </tr>
-                      </table>{/if}</td>
-                  </tr>
-              </table></td>
-            </tr>
-          </table></td>
-          <td><table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
-            <tr>
-              <td bgcolor="#F7F9F9"><p><strong><a href="configuracao.php?op=preferencia_cobranca">Boleto</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {if $boleto=='f'}<font color="#999999">(não disponivel)</font>{/if}</strong></p></td>
-            </tr>
-            <tr>
-              <td><table width="250" height="100%" align="center">
-                  <tr>
-                    <td>{if $boleto=='t'}<font style="font-size:10px;" face="Verdana, Arial, Helvetica, sans-serif"><a href="configuracao.php?op=preferencia_cobranca">Op&ccedil;&otilde;es
-                      de Boleto</a></font>
-                        <table width="" border="0" dwcopytype="CopyTableRow">
-                          <tr>
-                            <td><a href="configuracao.php?op=preferencia_cobranca"><p><strong>Cod. Banco: </strong></p></a></td>
-                            <td><a href="configuracao.php?op=preferencia_cobranca"><p>{$cobranca.cod_banco}</p></a></td>
-                            <td><a href="configuracao.php?op=preferencia_cobranca"><p><strong>Carteira: </strong></p></a></td>
-                            <td><a href="configuracao.php?op=preferencia_cobranca"><p>{$cobranca.carteira}</p></a></td>
-                          </tr>
-                          <tr>
-                            <td><a href="configuracao.php?op=preferencia_cobranca"><p><strong>Ag&ecirc;ncia: </strong></p></a></td>
-                            <td><a href="configuracao.php?op=preferencia_cobranca"><p>{$cobranca.agencia}</p></a></td>
-                            <td><a href="configuracao.php?op=preferencia_cobranca"><p><strong>Num. Conta: </strong></p></a></td>
-                            <td><a href="configuracao.php?op=preferencia_cobranca"><p>{$cobranca.num_conta}</p></a></td>
-                          </tr>
-                          <tr>
-                            <td ><p><strong>Conv&ecirc;nio:</strong></p></td>
-                            <td ><p>{$cobranca.convenio}</p></td>
-                          </tr>
-                      </table>{/if}</td>
+                      </table>
+                        {/if}</td>
                   </tr>
               </table></td>
             </tr>
@@ -172,7 +175,11 @@
               <td bgcolor="#F7F9F9"><p><strong><a href="configuracao.php?op=preferencia_cobranca">Outras Formas</a> </strong></p></td>
             </tr>
             <tr>
-              <td valign="top" >{if $outros=='f'}<p><strong><font color="#999999">(não disponivel)</font></strong></p>{/if}</td>
+              <td valign="top" >
+			  	{if $outros=='f'}
+			  		<p><strong><font color="#999999">(n&atilde;o disponivel)</font></strong></p>
+				{/if}
+			  </td>
             </tr>
           </table></td>
         </tr>

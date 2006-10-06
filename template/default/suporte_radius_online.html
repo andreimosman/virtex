@@ -14,8 +14,7 @@
         <td width="100" align="LEFT"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Origem</font></td>
         <td width="145" align="CENTER" ><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Início</font></td>
         <td width="135" align="CENTER"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">NAS</font></td>
-        <td width="50" align="RIGHT"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Tempo</font></td>
-        <td width="130" align="CENTER"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Bytes</font></td>
+        <td width="50" align="CENTER"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Tempo</font></td>
     </tr>
     {foreach item=a from=$relacao_users}{foreach item=b from=$a.id_cliente}
     <tr bgcolor="#F0FFF0" onMouseOver="style.background='#DEFFDE'; " onMouseout="style.background='#F0FFF0';">
@@ -23,9 +22,8 @@
       <td align="LEFT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.origem}</a></font></td>
       <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.inicio|date_format:"%d/%m/%Y %H:%M:%S "}</a></font></td>
       <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.nas}</a></font></td>
-      <td align="RIGHT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.tempo|date_format:"%H:%M:%S"}</a></font>
+      <td align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{if $a.mes}{$a.mes} { if $a.mes == '1'}mês{else}meses{/if}{/if}{if $a.dias} {$a.dias} { if $a.dias == '1'}dia{else}dias{/if}{/if} {$a.horas} {if $a.horas} hrs e {/if}{$a.minutos} {if $a.minutos} mins {/if}</a></font>
 	  </td>
-      <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.bytes_in}/{$a.bytes_out}</font></td>
     </tr>{/foreach}
     {/foreach}
   </table>

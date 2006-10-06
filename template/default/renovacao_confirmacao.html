@@ -72,10 +72,15 @@
                     </tr>
                   </table></td>
               </tr>
+			  <tr>
+			  	<td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">vig&ecirc;ncia:</font></td>
+				<td>&nbsp;
+				  <input type="text" value="" name="vigencia" style="width:24px; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:10px;" /> <font size="1" face="Verdana, Arial, Helvetica, sans-serif">meses</font>
+			   </td> </tr>
               <tr> 
                 <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Tipo 
                   de Pagamento:</font></td>
-                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Carn&ecirc;</font></td>
+                <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;&nbsp;Carn&ecirc;</font></td>
               </tr>
               <tr> 
                 <td colspan="2"> <input type="hidden" name="pri_venc" value="{$pri_venc}"> 
@@ -83,7 +88,7 @@
                   <input type="hidden" name="id_produto" value="{$ct.id_produto}"> 
                   <input type="hidden" name="email_igual" value="{$ct.email_igual}"> 
                   <input type="hidden" name="data_contratacao" value="{$data_contratacao}"> 
-                  <input type="hidden" name="vigencia" value="{$vigencia}"> <input type="hidden" name="status" value="A"> 
+				  <input type="hidden" name="status" value="A"> 
                   <input type="hidden" name="dia_vencimento" value="{$dia_vencimento}"> 
                   <input type="hidden" name="carencia_pagamento" value="{$ct.carencia}"> 
                   <input type="hidden" name="desconto_promo" value="{$desconto_promo}"> 
