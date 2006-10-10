@@ -233,6 +233,11 @@ if( !defined("_VAADMINISTRADOR") ) {
 
 
 			}else if ($op == "altera"){
+			
+								if( ! $this->privPodeGravar("_ADMIN_PRIV") ) {
+									$this->privMSG();
+									return;
+					}	
 
 
 					$erro = array();
