@@ -63,10 +63,10 @@
 							  </tr>
 						    </table>
 							<hr size=1>
-					      </td>
-						</tr>
-					  </table>
-                      </form>
+				        </td>
+					  </tr>
+				  </table>
+</form>
 
 					  <table width="800" border="0" cellspacing="0" cellpadding="0">
 						  <tr>
@@ -74,7 +74,7 @@
 								<table width="800" border="0" cellspacing="0" cellpadding="0">
 									<tr>
 									  <td>
-									  	<table width="800" border="0" cellspacing="0" cellpadding="2">
+									  	<table width="800" border="0" cellpadding="2" cellspacing="0">
 									  		<tr bgcolor="#F1F1F1">
 												<td width="100" align="LEFT"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Usuário</font></td>
 												<td width="100" align="LEFT"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Origem</font></td>
@@ -86,25 +86,23 @@
 											</tr>
 
     										{foreach item=a from=$relat}{foreach item=b from=$a.id_cliente}
-    										<tr bgcolor="{$a.tipo_ng}">
-												<td align="LEFT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.usuario}</a></font></td>
-												<td align="LEFT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.origem}</a></font></td>
-												<td align="LEFT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.mensagem}</a></font></td>
-												<td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.inicio}</a></font></td>
-												<td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.fim}</a></font></td>
-												<td align="RIGHT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.tempo}</a></font></td>
-												<td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.bytes_in}/{$a.bytes_out}</a></font></td>
+    										<tr bgcolor="{$a.tipo_ng}" onMouseOver="{if $a.tipo_ng == '#F2C6C6'}style.background='#E89B9B';{/if}{if $a.tipo_ng == '#F2DEC6'}style.background='#E4BB89';{/if}{if $a.tipo_ng == '#D8E8F3'}style.background='#8DBCDC';{/if}{if $a.tipo_ng == '#D1F2C6'}style.background='#A5E68E';{/if}" onMouseOut="style.background='{$a.tipo_ng}'; ">
+												<td align="LEFT" class="style1 style3"><span class="style3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.usuario}</a></font></span></td>
+												<td align="LEFT" class="style1 style3"><span class="style3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.origem}</a></font></span></td>
+												<td align="LEFT" class="style1 style3"><span class="style3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.mensagem}</a></font></span></td>
+												<td align="CENTER" class="style1 style3"><span class="style3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.inicio}</a></font></span></td>
+												<td align="CENTER" class="style1 style3"><span class="style3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.fim}</a></font></span></td>
+												<td align="RIGHT" class="style1 style3"><span class="style3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.tempo|date_format:"%H:%M:%S" }</a></font></span></td>
+												<td align="CENTER" class="style1 style3"><span class="style3"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.bytes_in}/{$a.bytes_out}</a></font></span></td>
 										    </tr>
 										    <tr bgcolor="#999999">
 										    	<td colspan="7" height="1"></td>
 										    </tr>{/foreach}
 											{/foreach}
-
-									    </table>
-								  	  </td>
+									    </table>								  	  </td>
 								    </tr>
 							    </table>
-							 </td>
+						    </td>
 						  </tr>
                   	  </table>
 
