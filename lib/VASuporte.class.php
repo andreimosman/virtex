@@ -179,7 +179,8 @@ class VASuporte extends VirtexAdmin {
 			$sSQL .= "username as usuario, ";
 			$sSQL .= "to_char(login,'DD/MM/YYYY HH24:MI:SS') as inicio, ";
 			$sSQL .= "to_char(logout,'DD/MM/YYYY HH24:MI:SS') as fim, "; 
-			$sSQL .= "tempo, caller_id as origem, session_id, ";
+			$sSQL .= " CAST (logout - login as time) as tempo,  ";
+			$sSQL .= " caller_id as origem, session_id, ";
 			$sSQL .= "terminate_cause as mensagem, bytes_in, bytes_out ";
 			$sSQL .= "FROM ";
 			$sSQL .= "	rdtb_accounting ";
@@ -202,6 +203,7 @@ class VASuporte extends VirtexAdmin {
 			$sSQL .= "ORDER BY CASE WHEN logout is NULL then login ELSE logout END DESC ";
 			$sSQL .= "LIMIT $limite ";
 			
+			//echo $sSQL;			
 			
 			$relat = $this->bd->obtemRegistros($sSQL);
 			
@@ -379,7 +381,8 @@ class VASuporte extends VirtexAdmin {
 				echo "<font face='courier' size=-2>\n";
 				if (!count($erros)) {			
 					//$pinglist = `ping $ip -c $pacotes -s $tamanho`;
-					$fd = popen("/bin/ping  -n -c " . escapeshellarg($pacotes) . " -s " . escapeshellarg($tamanho) . " " . escapeshellarg($ip),"r");
+					$fd = popen("/sbin/ping  -n -c " . escapeshellarg($pacotes) . " -s " . escapeshellarg($tamanho) . " " . escapeshellarg($ip),"r");
+					///echo "PING: " . $fd . "<br>";
 					
 					while(!feof($fd)) {
 						for($x=1;$x<250;$x++) {
@@ -577,10 +580,11 @@ class VASuporte extends VirtexAdmin {
 			if (!$acao && $valor_pesquisa){
 			
 				$sSQL  = "SELECT ";
-				$sSQL .= "username , ";
+				$sSQL .= "username as usuario, ";
 				$sSQL .= "to_char(login,'DD/MM/YYYY HH24:MI:SS') as inicio, ";
 				$sSQL .= "to_char(logout,'DD/MM/YYYY HH24:MI:SS') as fim, "; 
-				$sSQL .= "tempo, caller_id as origem, session_id, ";
+				$sSQL .= " CAST (logout - login as time) as tempo,  ";
+				$sSQL .= " caller_id as origem, session_id, ";
 				$sSQL .= "terminate_cause as mensagem, bytes_in, bytes_out ";
 				$sSQL .= "FROM ";
 				$sSQL .= "	rdtb_accounting ";
@@ -628,7 +632,8 @@ class VASuporte extends VirtexAdmin {
 			$sSQL .= "username , ";
 			$sSQL .= "to_char(login,'DD/MM/YYYY HH24:MI:SS') as inicio, ";
 			$sSQL .= "to_char(logout,'DD/MM/YYYY HH24:MI:SS') as fim, "; 
-			$sSQL .= "tempo, caller_id as origem, session_id, ";
+			$sSQL .= " CAST (logout - login as time) as tempo,  ";
+			$sSQL .= " caller_id as origem, session_id, ";
 			$sSQL .= "terminate_cause as mensagem, bytes_in, bytes_out ";
 			$sSQL .= "FROM ";
 			$sSQL .= "	rdtb_accounting ";
@@ -653,7 +658,7 @@ class VASuporte extends VirtexAdmin {
 			}
 
 
-			$sSQL .= " ORDER BY inicio DESC " ; ///echo $sSQL;
+			$sSQL .= " ORDER BY inicio DESC " ; ////////echo $sSQL;
 
 			$extrato = $this->bd->obtemRegistros($sSQL);
 
@@ -712,10 +717,7 @@ class VASuporte extends VirtexAdmin {
 			$sSQL  = "SELECT ";
 			$sSQL .= "username , ";
 			$sSQL .= "login as inicio, "; 
-			$sSQL .= " date_part('month' , age(login))as mes,  ";
-			$sSQL .= " date_part('day' , age(login))as dias,  ";
-			$sSQL .= " date_part('hour' , age(login))as horas,  ";
-			$sSQL .= " date_part('minutes' , age(login))as minutos,  ";	
+			$sSQL .= " CAST (now() - login as time) as tempo,  ";
 			$sSQL .= " caller_id as origem, session_id, nas,  ";
 			$sSQL .= "terminate_cause as mensagem, bytes_in, bytes_out ";
 			$sSQL .= "FROM ";
