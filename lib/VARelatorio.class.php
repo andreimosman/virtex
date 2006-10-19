@@ -695,19 +695,34 @@ class VARelatorio extends VirtexAdmin {
 								return;
 				}	
 		
+		
+		$tipo_pesquisa = "ativos";
+		
+		$tipo_pesquisa = @$_REQUEST["tipo_pesquisa"];
+		
+		//echo $tipo_pesquisa;
 		$acao = @$_REQUEST["acao"];
 		$extra = @$_REQUEST["extra"];
 		if (!$acao) $acao = "geral";
 		
 		if ($acao == "geral") {
+		
 
 			$sSQL  = "SELECT ";
 			$sSQL .= " COUNT(cp.tipo_produto) as num_contratos, ";
 			$sSQL .= " cp.tipo_produto as tipo ";
 			$sSQL .= "FROM cbtb_contrato as cp ";
-			$sSQL .= " WHERE cp.status = 'A'   ";
+			
+			if ($tipo_pesquisa == "ativos" || $tipo_pesquisa == "" ){
+			
+				$sSQL .= " WHERE cp.status = 'A'   ";
+			
+			}
+			
 			$sSQL .= "GROUP BY cp.tipo_produto ";
 			$sSQL .= "ORDER BY cp.tipo_produto ";
+			
+			///echo $sSQL;
 			
 		
 		} else if ($acao == "sub_tprd") {
@@ -731,11 +746,18 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "   AND ct.id_cliente_produto = cp.id_cliente_produto ";
 			$sSQL .= "   AND cn.tipo_conta = '$tipo' ";
 			$sSQL .= "   AND cn.conta_mestre is true ";
-			$sSQL .= "   AND ct.status != 'C' ";
+			
+			if ($tipo_pesquisa == "ativos" || $tipo_pesquisa == "" ){
+			
+				$sSQL .= "   AND ct.status != 'C' ";
+				
+			}
+			
+			
 			$sSQL .= "ORDER BY ";
 			$sSQL .= "   cl.nome_razao ";
 			
-			
+			//////////////echo $sSQL;
 			/**
 			
 			
@@ -767,7 +789,8 @@ class VARelatorio extends VirtexAdmin {
 		//echo($sSQL);
 		
 		$relat = $this->bd->obtemRegistros($sSQL);
-		
+		$this->tpl->atribui("tipo_pesquisa",$tipo_pesquisa);
+		/////////////echo '<Br>'.'<Br>'.'<Br>'.$tipo_pesquisa;
 
 		if ($extra == "grafico") {
 		

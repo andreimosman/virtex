@@ -168,22 +168,33 @@
                         <table border=0 width="632" cellspacing=0 cellpadding=0>
                           <tr bgcolor="#FAFAFA"> 
                             <td width=188 align="left"><h2><b>..Id..</b></h2></td>
-                            <td width=306 align="left"><h2><b>..Rede..</b></h2></td>
+                            <td width=166 align="left"><h2><b>..Rede..</b></h2></td>
+							<td width="140"><H2><p>..Disponível..</p></H2></td>
                             <td width=69 align="center"><h2><b>..Tipo..</b></h2></td>
                             <td width=69 align="center" colspan=2><h2>..Operações..</h2></td>
                           </tr>
                           <tr> 
                             <td colspan=5 bgcolor="000000"><img src="template/default/images/menu/spacer.gif" width=1 height=1 border=0></td>
                           </tr>
-                          {foreach item=a from=$redes} 
+                          {foreach item=a from=$redes}
                           <tr bgcolor="#FFFFFF"> 
                             <td align="left"><p>{$a.id_rede}</p></td>
                             <td align="left"><p>{$a.rede}</p></td>
+							<td ><p>&nbsp;&nbsp;&nbsp;&nbsp;
+							{foreach item=b from=$a.redes_disponiveis}
+							 {if $b.rede || $b.ipaddr}
+							  <img src="template/default/images/gif_nas_disp_nao.gif" alt="NÃO DISPONÍVEL" border="0">
+							 {/if}
+							{/foreach}
+							{if !$a.redes_disponiveis}
+							<img src="template/default/images/gif_nas_disp.gif" alt="DISPONÍVEL" border="0">
+							 {/if}
+							</p></td>
                             <td align="center"><p>{$a.tipo_rede}</p></td>
                             <td align="center" colspan=2><p><a href="configuracao.php?op=rede&id_rede={$a.id_rede}&tipo_nas={$nas.tipo_nas}&network={$a.rede}"><img src="template/default/images/gif_alterar.gif" border="0"></a></p></td>
                           </tr>
                           <tr> 
-                            <td colspan="5"><hr size="1"></td>
+                            <td colspan="6"><hr size="1"></td>
                           </tr>
                           {/foreach} </table></td>
                       </tr>

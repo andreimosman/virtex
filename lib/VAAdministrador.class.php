@@ -495,13 +495,92 @@ if( !defined("_VAADMINISTRADOR") ) {
 
 
 
-	   }
+	   }else if ($op == "estornar_pagamentos"){
+	   
+	   
+		if( ! $this->privPodeLer("_ADMIN_ESTORNO") ) {
+			$this->privMSG();
+			return;	
+			
 
+			if( ! $this->privPodeGravar("_ADMIN_ESTORNO") ) {
+				$this->privMSG();
+				return;
 
+			}
 
+		}else{
+		
+			$acao = @$_REQUEST['acao'];
+			$cliente = @$_REQUEST["cliente"];
+			$descricao = @$_REQUEST["descricao"];
+			
+				if ($acao == 'pesquisar'){
+				
+				
+					$sSQL  = "SELECT * FROM ";
+					$sSQL .= " cbtb_faturas ";
+					$sSQL .= " WHERE ";
+					$sSQL .= " id_cliente_produto = '" . $this->bd->escape(@$_REQUEST['id_cliente_produto']) . "' ";
+					$sSQL .= "AND data = '" . $this->bd->escape(@$_REQUEST['data_vencimento']) . " ' ";
+					$sSQL .= "AND data_pagamento is not null ";
+					$sSQL .= "AND status = 'P' ";
+					$sSQL .= "AND valor_pago > '0.00' ";
+				
+				//echo $sSQL ;
+				
+				$relatorio_pagamento = $this->bd->obtemUnicoRegistro($sSQL);
+				
+				$this->tpl->atribui("relatorio_pagamento",$relatorio_pagamento);
+				$this->tpl->atribui("cliente",$cliente);
+				$this->tpl->atribui("descricao",$descricao);
+					
+				
+				
+				
+				}else if ($acao == "cadastrar"){
+				
+				
+				
+				
+				$sSQL  = " UPDATE cbtb_faturas SET ";
+				$sSQL .= " status = 'A' , ";
+				$sSQL .= " valor_pago = '0.00',  ";
+				$sSQL .= " data_pagamento = NULL ";
+				$sSQL .= " WHERE ";
+				$sSQL .= " id_cliente_produto = '" . $this->bd->escape(@$_REQUEST['id_cliente_produto']) . "'  ";
+				$sSQL .= " AND data = ' " . $this->bd->escape(@$_REQUEST['data']) . "'  ";
+				$sSQL .= " AND id_carne = '" . $this->bd->escape(@$_REQUEST['id_carne']) . "'  ";
+				
+				///echo $sSQL;
+				
+				$this->bd->consulta($sSQL);
+				
+				
+				$msg_final = "Pagamento Estornado com sucesso!!";
 
+				$this->tpl->atribui("mensagem",$msg_final);
+				$this->tpl->atribui("url","javascript:history.back();history.back();");
+				$this->tpl->atribui("target","_self");
 
+				$this->arquivoTemplate="msgredirect.html";
+				return;
 
+				
+				
+				
+				
+				}
+		
+		
+		
+		
+			$this->arquivoTemplate= "estornar_faturas.html";
+			return;
+
+		}
+
+	}
 
 
 		  }//function processa

@@ -294,6 +294,8 @@ class VAConfiguracao extends VirtexAdmin {
 			$sSQL .= "FROM cftb_nas ";
 
 			$reg = $this->bd->obtemRegistros($sSQL);
+			
+			
 
 			$this->tpl->atribui("lista_nas",$reg);
 
@@ -715,15 +717,35 @@ class VAConfiguracao extends VirtexAdmin {
 			$sSQL .= "";
 
 
-
+			//echo $sSQL;
 			// TODO: aplicar filtros e paginação...
 			$redes = $this->bd->obtemRegistros($sSQL);
+			
+			
+			for ($i=0; $i<count($redes); $i++){
+			
+			
+				$num_rede = @$redes[$i]["rede"];
+				$tipo_rede = @$redes[$i]["tipo_rede"];
+				
+					$aSQL  = " select rede,tipo_bandalarga,ipaddr from cntb_conta_bandalarga ";
+					$aSQL .= " WHERE rede = '$num_rede' OR ipaddr = '$num_rede' ";
+					
+					$redes_disponiveis = $this->bd->obtemRegistros($aSQL);
+					
+					$redes[$i]["redes_disponiveis"] = $redes_disponiveis;
+					
+					//echo $aSQL ."<Br><hr>";
+				
+				}
+			
+			
 
 			$this->tpl->atribui("redes",$redes);
 
 			$this->arquivoTemplate = "configuracao_nas_rede.html";
-
-
+			
+			
 		}
 
 
@@ -754,6 +776,230 @@ class VAConfiguracao extends VirtexAdmin {
 
 
 ///////////////////////////////		
+	}else if ($op == "listar_bandas"){
+	
+	
+	$bSQL  = "SELECT * FROM cftb_banda ";
+	$relatorio_banda = $this->bd->obtemRegistros($bSQL);
+
+	$this->tpl->atribui("relatorio_banda",$relatorio_banda);
+	
+			$velocidade_um_down = @$_REQUEST["velocidade_um_down"];
+			$velocidade_um_desc = @$_REQUEST["velocidade_um_desc"];
+
+			$velocidade_dois_down = @$_REQUEST["velocidade_dois_down"];
+			$velocidade_dois_desc = @$_REQUEST["velocidade_dois_desc"];
+
+			$velocidade_tres_down = @$_REQUEST["velocidade_tres_down"];
+			$velocidade_tres_desc = @$_REQUEST["velocidade_tres_desc"];
+
+			$velocidade_quatro_down = @$_REQUEST["velocidade_quatro_down"];
+			$velocidade_quatro_desc = @$_REQUEST["velocidade_quatro_desc"];
+
+			$velocidade_cinco_down = @$_REQUEST["velocidade_cinco_down"];
+			$velocidade_cinco_desc = @$_REQUEST["velocidade_cinco_desc"];
+
+			$velocidade_seis_down = @$_REQUEST["velocidade_seis_down"];
+			$velocidade_seis_desc = @$_REQUEST["velocidade_seis_desc"];
+
+			$velocidade_sete_down = @$_REQUEST["velocidade_sete_down"];
+			$velocidade_sete_desc = @$_REQUEST["velocidade_sete_desc"];
+
+			$velocidade_oito_down = @$_REQUEST["velocidade_oito_down"];
+			$velocidade_oito_desc = @$_REQUEST["velocidade_oito_desc"];
+
+			$velocidade_nove_down = @$_REQUEST["velocidade_nove_down"];
+			$velocidade_nove_desc = @$_REQUEST["velocidade_nove_desc"];
+
+			$velocidade_dez_down = @$_REQUEST["velocidade_dez_down"];
+			$velocidade_dez_desc = @$_REQUEST["velocidade_dez_desc"];
+
+			$velocidade_onze_down = @$_REQUEST["velocidade_onze_down"];
+			$velocidade_onze_desc = @$_REQUEST["velocidade_onze_desc"];
+
+			$velocidade_doze_down = @$_REQUEST["velocidade_doze_down"];
+			$velocidade_doze_desc = @$_REQUEST["velocidade_doze_desc"];
+
+			$velocidade_treze_down = @$_REQUEST["velocidade_treze_down"];
+			$velocidade_treze_desc = @$_REQUEST["velocidade_treze_desc"];
+
+			$velocidade_catorze_down = @$_REQUEST["velocidade_catorze"];
+			$velocidade_catorze_desc = @$_REQUEST["velocidade_catorze_desc"];
+
+			$velocidade_quinze_down = @$_REQUEST["velocidade_quinze_down"];
+			$velocidade_quinze_desc = @$_REQUEST["velocidade_quinze_desc"];
+
+			$acao = @$_REQUEST["acao"];
+			$sop = @$_REQUEST["sop"];
+			
+	if ($acao != "" && $sop == "fazer" ){		
+
+	if ($acao == "cadastrar" && $velocidade_um_down != "" && $sop == "fazer" ){
+	
+		$sSQL  = " BEGIN; ";
+		$sSQL  .= " DELETE FROM cftb_banda; ";
+	
+		$sSQL .= "INSERT INTO ";
+		$sSQL .= " cftb_banda (id, banda) ";
+		$sSQL .= " VALUES ('$velocidade_um_down', '$velocidade_um_desc'); ";
+		
+		
+		if ($velocidade_dois_down != ""){
+		
+			$sSQL .= "INSERT INTO ";
+			$sSQL .= " cftb_banda (id, banda) ";
+			$sSQL .= " VALUES ('$velocidade_dois_down', '$velocidade_dois_desc'); ";
+			
+			
+		
+		}
+		
+		if ($velocidade_tres_down != ""){
+				
+					$sSQL .= "INSERT INTO ";
+					$sSQL .= " cftb_banda (id, banda) ";
+					$sSQL .= " VALUES ('$velocidade_tres_down', '$velocidade_tres_desc'); ";
+					 
+					
+		}
+		
+		if ($velocidade_quatro_down != ""){
+				
+					$sSQL .= "INSERT INTO ";
+					$sSQL .= " cftb_banda (id, banda) ";
+					$sSQL .= " VALUES ('$velocidade_quatro_down', '$velocidade_quatro_desc'); ";
+					
+					
+		}
+		
+		if ($velocidade_cinco_down != ""){
+				
+					$sSQL .= "INSERT INTO ";
+					$sSQL .= " cftb_banda (id, banda) ";
+					$sSQL .= " VALUES ('$velocidade_cinco_down', '$velocidade_cinco_desc'); ";
+					
+					
+		}
+		
+		if ($velocidade_seis_down != ""){
+				
+					$sSQL .= "INSERT INTO ";
+					$sSQL .= " cftb_banda (id, banda) ";
+					$sSQL .= " VALUES ('$velocidade_seis_down', '$velocidade_seis_desc'); ";
+					
+				
+		}
+		
+		if ($velocidade_sete_down != ""){
+				
+					$sSQL .= "INSERT INTO ";
+					$sSQL .= " cftb_banda (id, banda) ";
+					$sSQL .= " VALUES ('$velocidade_sete_down', '$velocidade_sete_desc'); ";
+					
+				
+		}
+		
+		if ($velocidade_oito_down != ""){
+				
+					$sSQL .= "INSERT INTO ";
+					$sSQL .= " cftb_banda (id, banda) ";
+					$sSQL .= " VALUES ('$velocidade_oito_down', '$velocidade_oito_desc'); ";
+					
+				
+		}
+		
+		if ($velocidade_nove_down != ""){
+				
+					$sSQL .= "INSERT INTO ";
+					$sSQL .= " cftb_banda (id, banda) ";
+					$sSQL .= " VALUES ('$velocidade_nove_down', '$velocidade_nove_desc'); ";
+					
+				
+		}
+		
+		if ($velocidade_dez_down != ""){
+				
+					$sSQL .= "INSERT INTO ";
+					$sSQL .= " cftb_banda (id, banda) ";
+					$sSQL .= " VALUES ('$velocidade_dez_down', '$velocidade_dez_desc'); ";
+									
+		}
+		
+		if ($velocidade_onze_down != ""){
+				
+					$sSQL .= "INSERT INTO ";
+					$sSQL .= " cftb_banda (id, banda) ";
+					$sSQL .= " VALUES ('$velocidade_onze_down', '$velocidade_onze_desc'); ";
+					
+				
+		}
+		
+		if ($velocidade_doze_down != ""){
+				
+					$sSQL .= "INSERT INTO ";
+					$sSQL .= " cftb_banda (id, banda) ";
+					$sSQL .= " VALUES ('$velocidade_doze_down', '$velocidade_doze_desc'); ";
+					
+				
+		}
+		
+		if ($velocidade_treze_down != ""){
+				
+					$sSQL .= "INSERT INTO ";
+					$sSQL .= " cftb_banda (id, banda) ";
+					$sSQL .= " VALUES ('$velocidade_treze_down', '$velocidade_treze_desc'); ";
+					
+				
+		}
+		
+		if ($velocidade_catorze_down != ""){
+				
+					$sSQL .= "INSERT INTO ";
+					$sSQL .= " cftb_banda (id, banda) ";
+					$sSQL .= " VALUES ('$velocidade_catorze_down', '$velocidade_catorze_desc'); ";
+					
+				
+		}
+		
+		if ($velocidade_quinze_down != ""){
+				
+					$sSQL .= "INSERT INTO ";
+					$sSQL .= " cftb_banda (id, banda) ";
+					$sSQL .= " VALUES ('$velocidade_quinze_down', '$velocidade_quinze_desc'); ";
+					
+				
+		}
+		
+			$sSQL .= " COMMIT; ";
+			
+			$this->bd->consulta($sSQL);
+			
+		///echo $sSQL;
+		
+		$this->tpl->atribui("mensagem","Velocidades Alteradas com Sucesso!"); 
+		$this->tpl->atribui("url","configuracao.php?op=listar_bandas");
+		$this->tpl->atribui("target","_top");
+
+		$this->arquivoTemplate = "msgredirect.html";
+		return;
+			
+		
+		}
+		
+		$this->tpl->atribui("alterar",$sop);
+		
+
+		
+		}
+
+
+
+	
+	
+	$this->arquivoTemplate = "configuracao_lista_banda.html";
+	return;
+
+
 
 	}else if ($op == "cidades"){
 			if( ! $this->privPodeLer("_CONFIG_PREFERENCIAS") ) {

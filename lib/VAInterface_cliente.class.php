@@ -16,6 +16,11 @@ class VAInterface_cliente extends VirtexAdmin {
 	function processa($op="") {
 
 			$lic_interface = 'nao';
+			$lic_email = 'nao';
+			$lic_hospedagem = 'nao';
+			$lic_interface = 'nao';
+			$lic_discado = 'nao';
+			$lic_bandalarga = 'nao';
 	
 			 $licenca = $this->lic->obtemLicenca();
 	
@@ -24,7 +29,41 @@ class VAInterface_cliente extends VirtexAdmin {
 					$lic_interface = 'sim';
 	
 				}
-	
+				
+				if(($licenca["frontend"]["discado"]) == "1"){
+
+					$lic_discado = 'sim';
+
+				}
+				if(($licenca["frontend"]["banda_larga"]) == "1"){
+
+					$lic_bandalarga = 'sim';
+
+				}
+				if(($licenca["frontend"]["email"]) == "1"){
+
+					$lic_email = 'sim';
+				}
+				if(($licenca["frontend"]["hospedagem"]) == "1"){
+
+					$lic_hospedagem = 'sim';
+
+				}
+				if(($licenca["frontend"]["interface"]) == "1"){
+
+					$lic_interface = 'sim';
+
+				}
+				
+				
+
+
+		$this->tpl->atribui("lic_discado",$lic_discado);
+		$this->tpl->atribui("lic_email",$lic_email);
+		$this->tpl->atribui("lic_hospedagem",$lic_hospedagem);
+		$this->tpl->atribui("lic_email",$lic_email);
+		$this->tpl->atribui("lic_interface",$lic_interface);
+		$this->tpl->atribui("lic_bandalarga",$lic_bandalarga);
 		$this->tpl->atribui("lic_interface",$lic_interface);
 
 		$this->arquivoTemplate = "jsredir.html";

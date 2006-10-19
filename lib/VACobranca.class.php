@@ -3227,6 +3227,7 @@ class VACobranca extends VirtexAdmin {
 			$sSQL .= "   cl.nome_razao, ";
 			$sSQL .= "   cn.username, ";
 			$sSQL .= "   f.valor,  ";
+			$sSQL .= "	 f.data , " ;
 			$sSQL .= "   f.valor_pago,  ";
 			$sSQL .= "   f.acrescimo,  ";
 			$sSQL .= "   f.desconto,  ";
@@ -3242,6 +3243,8 @@ class VACobranca extends VirtexAdmin {
 			$sSQL .= "   AND (cn.username is null OR (cn.tipo_conta = p.tipo AND cn.conta_mestre is true)) ";
 			$sSQL .= "   AND f.status = 'P' ";
 			$sSQL .= "   AND f.data_pagamento = '$periodo' ";
+			
+			////////echo $sSQL;
 			
 			$eSQL  = "SELECT ";
 			$eSQL .= "	SUM(cb.valor_pago) as faturamento,  ";

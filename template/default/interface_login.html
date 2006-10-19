@@ -73,10 +73,10 @@ function check(form){
                                         <td><p align="center">Conta</p></td>
                                         <td><select name="tipo_conta_log">
                                             <option value=""></option>
-											<option value="BL">Banda Larga</option>
-                                            <option value="D">Discado</option>
-                                            <option value="E">E-Mail</option>
-                                            <option value="H">Hospedagem&nbsp;&nbsp;&nbsp;&nbsp;</option>
+											{if $lic_bandalarga == "sim"}<option value="BL">Banda Larga</option>{/if}
+                                            {if $lic_bandalarga == "sim"}<option value="D">Discado</option>{/if}
+                                            {if $lic_bandalarga == "sim"}<option value="E">E-Mail</option>{/if}
+                                            {if $lic_bandalarga == "sim"}<option value="H">Hospedagem&nbsp;&nbsp;&nbsp;&nbsp;</option>{/if}
                                           </select></td>
                                       </tr>
                                       <tr bgcolor="fefefe">

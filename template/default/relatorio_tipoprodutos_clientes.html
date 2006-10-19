@@ -3,8 +3,7 @@
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
 
-<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
-</head>
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css"></head>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
@@ -12,9 +11,6 @@
     <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
           <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-              <tr>
-                <td>&nbsp;</td>
-              </tr>
               <tr>
                 <td align="center" valign="middle">
 				<h1>Relatório</h1>
@@ -32,7 +28,23 @@
 					Clientes Banda Larga
                 {/if}
 				</font></b></p>
-				{if $acao == "geral"}
+				{if $acao == "geral"}				
+				<form name="form1" method="get" action="">
+				<table border="0" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td ><p align="center">listar contratos&nbsp;&nbsp;</p></td>
+				  	<td align="center">
+					<select name="tipo_pesquisa" onChange="javascript: document.form1.submit();">
+						<option value="ativos" {if $tipo_pesquisa  == "ativos"} selected="selected" {/if}>Ativos</option>
+						<option value="todos" {if $tipo_pesquisa  == "todos"} selected="selected" {/if}>Todos</option>
+					</select>					
+					
+					</td>
+				  </tr>
+                </table>	
+				<input type="hidden" name="op" value="tproduto_cliente">
+				<input type="hidden" name="acao" value="geral">
+				</form>	
 				{if $relat}<img src="{$smarty.server.PHP_SELF}?{$smarty.server.QUERY_STRING}&extra=grafico">{/if}
 						  {if $relat}
 						  <table width="450" border="0" cellspacing="0" cellpadding="0">
@@ -53,7 +65,7 @@
 										<tr>
 		
 										  <td aligh="LEFT"><p><img src="template/default/images/{$a.tipo|lower|trim}.gif" width="24" height="24"></p></td>
-										  <td width="43%" align="LEFT"><p>{if $a.tipo=="D "}<a href="relatorio.php?op={$op}&acao=sub_tprd&tipo=D">Discado</a>{/if}{if $a.tipo=="BL"}<a href="relatorio.php?op={$op}&acao=sub_tprd&tipo=BL">Banda Larga</a>{/if}{if $a.tipo=="H "}<a href="relatorio.php?op={$op}&acao=sub_tprd&tipo=H">Hospedagem</a>{/if}</p></td>
+										  <td width="43%" align="LEFT"><p>{if $a.tipo=="D "}<a href="relatorio.php?op={$op}&acao=sub_tprd&tipo=D&tipo_pesquisa={$tipo_pesquisa}">Discado</a>{/if}{if $a.tipo=="BL"}<a href="relatorio.php?op={$op}&acao=sub_tprd&tipo=BL&tipo_pesquisa={$tipo_pesquisa}">Banda Larga</a>{/if}{if $a.tipo=="H "}<a href="relatorio.php?op={$op}&acao=sub_tprd&tipo=H&tipo_pesquisa={$tipo_pesquisa}">Hospedagem</a>{/if}</p></td>
 										  <td width="50%" align="RIGHT"><p>{$a.num_contratos}</p></td>
 										</tr>
 										<tr bgcolor="#999999">
@@ -61,7 +73,7 @@
 										</tr>
 									  </table>
 									  {/foreach}
-									  </td>
+								    </td>
 								  </tr>
 								</table></td>
 							</tr>
@@ -82,23 +94,23 @@
 							  <td>
 							{foreach item=a from=$relat}
 							  <!--table width="400" border="0" cellspacing="2" cellpadding="0"-->
-								  <tr>
+							    <tr>
 									<td width="250" align="LEFT"><p><a href="clientes.php?op=produto&id_cliente={$a.id_cliente}&tipo={$tipo}">{$a.nome_razao}</a></p></td>
 									<td width="150" align="LEFT"><p><!--img src="template/default/images/{$a.tipo|lower|trim}.gif" width="24" height="24"-->{$a.produto}</p></td>
 									<td width="100" valign="LEFT" align="LEFT"><p>{$a.username}</p></td>
-								  </tr>
+				    </tr>
 								  <tr bgcolor="#999999">
 									<td colspan="3" height="1"></td>
 								  </tr>
 							  <!--/table-->
 							{/foreach}
 
-						  </table>
-						  </td>
+				  </table>
+			    </td>
 					  </tr>
                   </table>
 
-                  <p><a href="#" onCLick="javascript:history.back()">Voltar</a></p>
+                  <p><a href="javascript:history.back();" >Voltar</a></p>
 
                   {/if}
 <script language="JavaScript">ready = "yes";</script>

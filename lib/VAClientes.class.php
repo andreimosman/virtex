@@ -906,16 +906,40 @@ class VAClientes extends VirtexAdmin {
 
 
 		$lista_faturas = $this->bd->obtemRegistros($sSQL);
-		//////echo "Lista: $sSQL <br>";
+		///echo "Lista: $sSQL <br>";
 			
 		
 				$this->obtemPR($id_cliente);
+				
+				$estornar_pag = '' ;
 
-		
+				if( ! $this->privPodeLer("_ADMIN_ESTORNO") ) {
+					
+					$estornar_pag = 'nao' ;
+				    
+				}
+
+				else if( ! $this->privPodeGravar("_ADMIN_ESTORNO") && ! $this->privPodeLer("_ADMIN_ESTORNO") ) {
+					
+					$estornar_pag = 'nao' ;	
+				
+					
+					}
+
+				else if ( $this->privPodeGravar("_ADMIN_ESTORNO") &&  $this->privPodeLer("_ADMIN_ESTORNO") ){
+				
+					$estornar_pag = 'sim' ;
+
+
+				}
+
+				$this->tpl->atribui("estornar_pag",$estornar_pag);		
 		
 		
 		$sSQL = "SELECT nome_razao FROM cltb_cliente WHERE id_cliente = '$id_cliente'";
 		$cliente = $this->bd->obtemUnicoRegistro($sSQL);
+		
+		///echo $cliente['nome_razao'];
 		
 		//$this->tpl->atribui("lista_contrato",$lista_contrato);
 		
@@ -2301,9 +2325,12 @@ class VAClientes extends VirtexAdmin {
 				$this->tpl->atribui("tipo_conta",$tipo_conta);
 				$this->tpl->atribui("sop",$sop);
 				
-				global $_LS_BANDA;
-				$this->tpl->atribui("lista_upload",$_LS_BANDA);
-				$this->tpl->atribui("lista_download",$_LS_BANDA);
+				$sSQL  = "SELECT * FROM cftb_banda ";
+				$lista_download = $this->bd->obtemRegistros($sSQL);
+				//echo $sSQL;
+				
+				$this->tpl->atribui("lista_upload",$lista_download);
+				$this->tpl->atribui("lista_download",$lista_download);
 				
 				global $_LS_ST_CONTA;
 				$this->tpl->atribui("lista_status",$_LS_ST_CONTA);
@@ -3529,9 +3556,13 @@ class VAClientes extends VirtexAdmin {
 
 
 					// ATRIBUI AS VARIAVEIS DE TEMPLATE COM BASE EM REQUEST.
-					global $_LS_BANDA;
-					$this->tpl->atribui("lista_upload",$_LS_BANDA);
-					$this->tpl->atribui("lista_download",$_LS_BANDA);
+					
+					$sSQL  = " SELECT * FROM cftb_banda ORDER BY id";
+					$lista = $this->bd->obtemRegistros($sSQL);
+					//echo $sSQL ;
+					
+					$this->tpl->atribui("lista_upload",$lista);
+					$this->tpl->atribui("lista_download",$lista);
 
 					$altera_rede = @$_REQUEST["altera_rede"];
 					$this->tpl->atribui("altera_rede",$altera_rede);

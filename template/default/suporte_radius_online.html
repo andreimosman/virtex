@@ -22,12 +22,12 @@
       <td align="LEFT"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.origem}</a></font></td>
       <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.inicio|date_format:"%d/%m/%Y %H:%M:%S "}</a></font></td>
       <td align="CENTER"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.nas}</a></font></td>
-      <td align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{if $a.mes}{$a.mes} { if $a.mes == '1'}mês{else}meses{/if}{/if}{if $a.dias} {$a.dias} { if $a.dias == '1'}dia{else}dias{/if}{/if} {$a.horas} {if $a.horas} hrs e {/if}{$a.minutos} {if $a.minutos} mins {/if}</a></font>
+      <td align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><a href="clientes.php?op=cadastro&id_cliente={$b.id_cliente}">{$a.tempo|date_format:"%H:%M:%S"}</a></font>
 	  </td>
     </tr>{/foreach}
     {/foreach}
   </table>
-  <p> {if !$relacao_users} <strong><font color="#FF0000">Nao Há Registro de entradas de usuários online.</font> </strong>{/if} </p>
+  <p> {else} <strong><font color="#FF0000">Nao Há Registro de entradas de usuários online.</font> </strong>	  </p>
    {/if}
 
 

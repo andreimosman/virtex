@@ -88,6 +88,36 @@ function check(){
 {/literal}
 </script>
 {/if}
+{literal}
+
+<script language="javascript" type="text/javascript">
+
+function Tecla(e){
+	if (document.all){ // Internet Explorer
+		var tecla = event.keyCode;
+		
+	}else if(document.layers) // Nestcape
+		var tecla = e.which;
+		
+		if (tecla != 92 && tecla != 47 && tecla != 34  && tecla != 39 && tecla != 126 && tecla != 180 && tecla != 96 && tecla != 94 && tecla != 58 && tecla != 59 && tecla != 44 && tecla != 63 && tecla != 40 && tecla != 41 && tecla != 42 && tecla != 43 && tecla != 124 && tecla != 60 && tecla != 61 && tecla != 62 && tecla != 36 && tecla != 37 && tecla != 38 && tecla != 39 && tecla != 33 && tecla != 34 && tecla != 35 && tecla != 168 && tecla != 64 && tecla != 123 && tecla != 125 && tecla != 170 && tecla != 176 && tecla != 186 && tecla != 172 && tecla != 178 && tecla != 179 && tecla != 185 && tecla != 163 && tecla != 167 && tecla != 224 && tecla != 225 && tecla != 226 && tecla != 227 && tecla != 228 && tecla != 192 && tecla != 193 && tecla != 194 && tecla != 195 && tecla != 196 && tecla != 32  && tecla != 199 && tecla != 231 && tecla != 91 && tecla != 93 && tecla != 200 && tecla != 201 && tecla != 202 && tecla != 203 && tecla != 204 && tecla != 205 && tecla != 206 && tecla != 207 && tecla != 210 && tecla != 211 && tecla != 212 && tecla != 213 && tecla != 214 && tecla != 217 && tecla != 218 && tecla != 219 && tecla != 220 && tecla != 224 && tecla != 225 && tecla != 226 && tecla != 227 && tecla != 228 && tecla != 229 && tecla != 230 && tecla != 231 && tecla != 232 && tecla != 233 && tecla != 234 && tecla != 235 && tecla != 236 && tecla != 237 && tecla != 238 && tecla != 239 && tecla != 240 && tecla != 241 && tecla != 242 && tecla != 243 && tecla != 244 && tecla != 245 && tecla != 246 && tecla != 247 && tecla != 248 && tecla != 249 && tecla != 250 && tecla != 251 && tecla != 252 ){
+			return true;
+	
+	
+	}else{
+				if (tecla != 8) // backspace
+					event.keyCode = 0;
+					//return false;
+				else
+				
+					return true;
+			}
+}
+
+</script>
+
+
+{/literal}
+
 <body >
 <form name="frmConta" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="javascript:return check(this);">
 
@@ -120,7 +150,7 @@ function check(){
                     <tr> 
                       <td bgcolor="#FFFFFF" align="right" width="50" valign="top"> 
                         <p>Username:</p></td>
-                      <td bgcolor="#FFFFFF" colspan=2><input name="username" type="text" id="username" maxlength="30"></td>
+                      <td bgcolor="#FFFFFF" colspan=2><input name="username" type="text" id="username" maxlength="30" onKeyPress="return Tecla(event);" ></td>
                     </tr>
                     <tr> 
                       <td bgcolor="#FFFFFF" align="right" width="50" valign="top"> 
@@ -199,7 +229,7 @@ function check(){
               </tr>
               <tr> 
                 <td colspan="2">
-				<p align="center"><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Banda  </font></strong></p>
+				<p align="center"><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Banda</font></strong></p>
                     
                   <input name="op" type="hidden" id="op" value="conta">
                     <input name="id_cliente" type="hidden" id="id_cliente" value="{$id_cliente}">
@@ -222,17 +252,17 @@ function check(){
                       <td> <div align="right">
                           <SELECT name='upload_kbps' >
                 	{foreach key=id item=nome from=$lista_upload}
-                            <OPTION VALUE='{$id}' {if $id == $upload_kbps}SELECTED{/if} >{$nome}</OPTION>
+                            <OPTION VALUE='{$nome.id}' {if $nome.id == $upload_kbps}SELECTED{/if} >{$nome.banda}</OPTION>
                     {/foreach}
                           </SELECT>
                           &nbsp;&nbsp;</div></td>
                       <td> <SELECT name='download_kbps' >
 					{foreach key=id item=nome from=$lista_download}
-                          <OPTION VALUE='{$id}' {if $id == $download_kbps}SELECTED{/if} >{$nome}</OPTION>
+                          <OPTION VALUE='{$nome.id}' {if $nome.id == $download_kbps}SELECTED{/if} >{$nome.banda}</OPTION>
                     {/foreach}
                         </SELECT> </td>
                     </tr>
-                  </table></td>
+                </table></td>
               </tr>
               <tr> 
                 <td colspan="2" align="center"><input name="botao_enviar2" type="submit" class=input2 id="botao_enviar2" value="Alterar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;"></td>
@@ -301,7 +331,7 @@ function check(){
 						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
 						  					<p>Username:</p></td>
 						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p>
-            <input type="text" maxlength="30" name="username" value="{$username}" id="username">
+            <input type="text" maxlength="30" name="username" value="{$username}" id="username" onKeyPress="return Tecla(event);" >
             @
             <select name="dominio" id="dominio">
               {foreach item=a from=$dominios_provedor}
@@ -391,7 +421,7 @@ function check(){
 						                <tr>
 						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
 						  					<p>Username:</p></td>
-						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p><input type="text" maxlength="30" name="user" value="{$username}"></p></td>
+						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p><input type="text" maxlength="30" name="user" value="{$username}" onKeyPress="return Tecla(event);" ></p></td>
 						                </tr>
 						                <tr>
 						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
@@ -478,7 +508,7 @@ function check(){
 						                  <td bgcolor="#FFFFFF" align="right" width="50" valign="top">
 						  					<p>Username:</p></td>
 						                  <td bgcolor="#FFFFFF" colspan=2 width="300"><p>
-            <input name="username" type="text" value="{$username}" maxlength="30" id="username">
+            <input name="username" type="text" value="{$username}" maxlength="30" id="username" onKeyPress="return Tecla(event);" >
           </p></td>
 						                </tr>
 						                <tr>

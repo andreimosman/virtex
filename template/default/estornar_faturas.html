@@ -1,0 +1,126 @@
+<html>
+<head>
+<title>Estorna Faturas</title>
+<link rel="stylesheet" type="text/css" href="template/default/estilos1.css">
+
+{literal}
+<style type="text/css">
+<!--
+.style1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+.style2 {
+	color: #FF0033;
+	font-weight: bold;
+}
+.style7 {color: #2F5E3E}
+-->
+</style>
+<script>
+
+function confirmacao(){
+		return confirm("ATENÇÃO: Deseja mesmo confirmar essa operação?");
+}
+
+</script>
+{/literal}
+</head>
+
+<body>
+	<form action="" method="get" name="estornar" onSubmit="return confirmacao();">
+	<input type="hidden" name="op" value="estornar_pagamentos">
+	<input type="hidden" name="acao" value="cadastrar">
+		<table width="100%" height="100%">
+			<tr>
+				<td height="1px">&nbsp;</td>
+			</tr>
+			<tr>
+				<td align="center" valign="top" height="30px"><span class="style1">Estornar Pagamento</span></td>
+			</tr>
+			<tr>
+				<td align="center" valign="top"> 
+					
+				     <p>{if $relatorio_pagamento}<br>
+			        </p>
+				     <table width="480" height="200" border="0" style="border:#D5F0E3 1px solid;">
+					 	<tr>
+							<td colspan="4" bgcolor="#E4F1EC"><p class="style2"><span class="style7">Dados da Fatura</span> <br>
+							  <br>
+						  </p></td>
+						</tr>
+						<tr>
+							<td colspan="4" bgcolor="#FBFDFB"><p><strong>&nbsp;Cliente: </strong>{$cliente}</p></td>
+						<tr>
+						</tr>
+							<td colspan="4" bgcolor="#FBFDFB"><p><strong>&nbsp;Produto:</strong> {$descricao}</p></td>
+						</tr>
+					 	<tr>
+							<td width="135" align="left" bgcolor="#E4F1EC"><p><strong>&nbsp;&nbsp;ID Cliente Produto</strong></p></td>
+							<td width="115" align="left" bgcolor="#FBFDFB"><p>{$relatorio_pagamento.id_cliente_produto}</p></td>
+							<td width="120" align="left" bgcolor="#E4F1EC"><p><strong>Data Vencimento </strong></p></td>
+							<td width="130" align="left" bgcolor="#FBFDFB"><p>{$relatorio_pagamento.data|date_format:"%d/%m/%Y"}</p></td>
+						</tr>
+						<tr>
+							<td bgcolor="#E4F1EC"><p><strong>&nbsp;&nbsp;Valor</strong></p></td>
+							<td bgcolor="#FBFDFB"><p>{$relatorio_pagamento.valor}</p></td>
+							<td bgcolor="#E4F1EC"><p><strong>Status</strong></p></td>
+							<td bgcolor="#FBFDFB"><p><img src="template/default/images/{$relatorio_pagamento.status}.gif" width="68" height="20" border="0"></p></td>
+						</tr>
+						<tr>
+							<td bgcolor="#E4F1EC"><p><strong>&nbsp;&nbsp;Data do &nbsp;&nbsp;pagamento </strong></p></td>
+							<td bgcolor="#FBFDFB"><p>{$relatorio_pagamento.data_pagamento|date_format:"%d/%m/%Y"}</p></td>
+							<td colspan="2" bgcolor="#FBFDFB"></td>
+						</tr>
+						<tr>
+							<td bgcolor="#E4F1EC"><p><strong>&nbsp;&nbsp;Desconto </strong></p></td>
+							<td bgcolor="#FBFDFB"><p>{$relatorio_pagamento.desconto}</p></td>
+							<td colspan="2" bgcolor="#FBFDFB"></td>
+						</tr>
+						<tr>
+							<td bgcolor="#E4F1EC"><p><strong>&nbsp;&nbsp;Acréscimo </strong></p></td>
+							<td bgcolor="#FBFDFB"><p>{$relatorio_pagamento.acrescimo}</p></td>
+							<td colspan="2" bgcolor="#FBFDFB"></td>
+						</tr>
+						<tr>
+							<td bgcolor="#E4F1EC"><p><strong>&nbsp;&nbsp;Valor Pago</strong></p></td>
+							<td bgcolor="#FBFDFB"><p>{$relatorio_pagamento.valor_pago}</p></td>
+							<td colspan="2" bgcolor="#FBFDFB"></td>
+						</tr>
+						<tr>
+							<td bgcolor="#E4F1EC"><p><strong>&nbsp;&nbsp;ID Cobrança </strong></p></td>
+						  <td bgcolor="#FBFDFB"><p>{$relatorio_pagamento.id_cobranca}</p></td>
+							<td bgcolor="#E4F1EC"><p><strong>ID Carne </strong></p></td>
+							<td bgcolor="#FBFDFB"><p>{$relatorio_pagamento.id_carne}</p></td>
+						</tr>
+						<tr>
+							<td bgcolor="#E4F1EC"><p><strong>&nbsp;&nbsp;Nosso Número</strong></p></td>
+							<td bgcolor="#FBFDFB"><p>{$relatorio_pagamento.nosso_numero}</p></td>
+							<td colspan="2" bgcolor="#FBFDFB"></td>
+						</tr>
+						<tr>
+							<td bgcolor="#E4F1EC"><p><strong>&nbsp;&nbsp;C&oacute;digo de Barras</strong></p></td>
+							<td colspan="3" bgcolor="#FBFDFB"><p>{$relatorio_pagamento.cod_barra}</p></td>
+						</tr>
+				  </table>
+				     <table>
+				  	<tr>
+						<td height="20px">&nbsp;
+						<input type="hidden" name="id_cliente_produto" value="{$relatorio_pagamento.id_cliente_produto}">
+						<input type="hidden" name="data" value="{$relatorio_pagamento.data}">
+						<input type="hidden" name="id_carne" value="{$relatorio_pagamento.id_carne}">						
+						</td>
+					</tr>
+				  	<tr>
+						<td><input name="Estornar" type="submit" value="Estornar" ></td>
+						<td><input name="Estornar" type="button" value="Voltar" Onclick="javascript: history.back();"></td>
+					</tr>
+				  </table>	 
+					 {/if}
+              </td>
+			</tr>
+		</table>
+	</form>
+</body>
+
+</html>

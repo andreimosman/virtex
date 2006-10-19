@@ -367,14 +367,14 @@ function check(){
                       <td> <div align="right"> 
                           <SELECT name='upload_kbps' >
                 	{foreach key=id item=nome from=$lista_upload}
-                            <OPTION VALUE='{$id}' {if $id == $upload_kbps}SELECTED{/if} >{$nome}</OPTION>
+                            <OPTION VALUE='{$nome.id}' {if $nome.id == $upload_kbps}SELECTED{/if} >{$nome.banda}</OPTION>
                     {/foreach}
                           </SELECT>
                           &nbsp;&nbsp; </div></td>
                       <td>&nbsp;&nbsp; <SELECT name='download_kbps' >
 					{foreach key=id item=nome from=$lista_download}
                             
-                          <OPTION VALUE='{$id}' {if $id == $download_kbps}SELECTED{/if} >{$nome}</OPTION>
+                          <OPTION VALUE='{$nome.id}' {if $nome.id == $download_kbps}SELECTED{/if} >{$nome.banda}</OPTION>
                     {/foreach}
                           
                         </SELECT> </td>
