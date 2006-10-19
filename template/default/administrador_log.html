@@ -183,7 +183,7 @@ document.onmousemove=positiontip
                 <td align="CENTER" onMouseover="ddrivetip('<p align=center>{$a.ip}</p>', '#FFFFEA')" onMouseout="hideddrivetip()"> 
                   <p>{$a.admin}</p></td>
                 <td align="CENTER">
-<p>{$a.data}</p></td>
+<p>{$a.data|date_format:"%d/%m/%Y %H:%M:%S"}</p></td>
                 <td align="CENTER"> <p>{$a.operacao}</p></td>
                 <td align="CENTER"> <p>{$a.valor_original}</p></td>
                 <td align="CENTER"> <p>{$a.valor_alterado}</p></td>

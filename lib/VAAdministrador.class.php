@@ -451,19 +451,21 @@ if( !defined("_VAADMINISTRADOR") ) {
 				$sSQL .= "a.admin ";
 				$sSQL .= "FROM lgtb_administradores l, adtb_admin a ";
 				$sSQL .= "WHERE l.id_admin = a.id_admin ";
-				$sSQL .= "ORDER BY l.data, a.admin, l.operacao DESC LIMIT 50";
+				$sSQL .= "ORDER BY l.data DESC LIMIT 50";
 				$log = $this->bd->obtemRegistros($sSQL);
 
 
 			if ($tipo == "admin"){
 
-					$sSQL  = "SELECT l.id_admin, l.data, l.operacao, l.valor_original, l.valor_alterado, l.id_cliente_produto, l.username, l.tipo_conta, l.extras,l.ip, ";
+					$sSQL  = "SELECT l.id_admin, l.data ,  l.operacao, l.valor_original, l.valor_alterado, l.id_cliente_produto, l.username, l.tipo_conta, l.extras,l.ip, ";
 					$sSQL .= "a.admin ";
 					$sSQL .= "FROM lgtb_administradores l, adtb_admin a ";
 					$sSQL .= "WHERE l.id_admin = a.id_admin ";
-					$sSQL .= "AND l.id_admin = '".@$_REQUEST["admin"]."'";
-					$sSQL .= "ORDER BY l.data, a.admin, l.operacao DESC ";
+					$sSQL .= "AND l.id_admin = '".@$_REQUEST["admin"]."' ";
+					$sSQL .= "ORDER BY l.data DESC ";
 				$log = $this->bd->obtemRegistros($sSQL);
+				
+				//////echo $sSQL;
 
 				$this->tpl->atribui("admin",@$_REQUEST["admin"]);	
 
@@ -475,7 +477,7 @@ if( !defined("_VAADMINISTRADOR") ) {
 					$sSQL .= "FROM lgtb_administradores l, adtb_admin a ";
 					$sSQL .= "WHERE l.id_admin = a.id_admin ";
 					$sSQL .= "AND l.operacao = '".@$_REQUEST["operacao"]."'";
-					$sSQL .= "ORDER BY l.data, a.admin, l.operacao DESC ";
+					$sSQL .= "ORDER BY l.data DESC ";
 				$log = $this->bd->obtemRegistros($sSQL);   		
 
 				$this->tpl->atribui("operacao",@$_REQUEST["operacao"]);
