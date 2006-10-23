@@ -54,8 +54,8 @@ class VAPapocker extends VirtexAdmin {
 			
 			for ($i=0;count($produtos);$i++){
 			
-				$id_cliente_produto = $produto[$i]["id_cliente_produto"];
-				$id_produto = $produto[$i]["id_produto"];
+				$id_cliente_produto = $produtos[$i]["id_cliente_produto"];
+				$id_produto = $produtos[$i]["id_produto"];
 				$id_cobranca = 3;
 				$tipo_produto = $produtos[$i]["tipo_conta"];
 				
