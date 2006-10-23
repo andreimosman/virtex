@@ -3,6 +3,31 @@
 <head>
 <title>Untitled Document</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+{literal}
+
+<script>
+	
+	function checa_vigencia(){
+	
+		var vigencia = document.form1.vigencia.value ;
+		
+		
+		if (vigencia == ""){
+		
+			alert("É necessário colocar a vigência do contrato! ");
+			return false;
+		
+		}
+	
+	return true;
+	
+	
+	
+	}
+	
+	
+</script>
+{/literal}
 </head>
 <body> 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%">
@@ -22,20 +47,17 @@
               <tr> 
                 <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
                     da Contrata&ccedil;&atilde;o</font></p></td>
-                <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$data_contratacao|date_format:"%d/ 
-                    %m/ %Y"}</font></p></td>
+                <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$data_contratacao|date_format:"%d/%m/%Y"}</font></p></td>
               </tr>
               <tr> 
                 <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
                     da Renova&ccedil;&atilde;o</font></p></td>
-                <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$data_renovacao|date_format:"%d/ 
-                    %m/ %Y"}</font></p></td>
+                <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$data_renovacao|date_format:"%d/%m/%Y"}</font></p></td>
               </tr>
               <tr> 
                 <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Data 
                     do 1&ordm; Vencimento</font></p></td>
-                <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$pri_venc|date_format:"%d/ 
-                    %m/ %Y"}</font></p></td>
+                <td><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$pri_venc|date_format:"%d/%m/%Y"}</font></p></td>
               </tr>
               <tr> 
                 <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
@@ -56,19 +78,20 @@
             </table></td>
         </tr>
         <tr>
-          <td><form name="form1" method="post" action="">
+          <td><form name="form1" method="post" action="" onSubmit="return checa_vigencia();">
             <table width="600" border="0" cellspacing="1" cellpadding="0">
               <tr> 
                 <td width="160"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Forma 
                   de Cobranca:</font></td>
                 <td width="437"><table width="200">
-                    <tr> 
+                    <tr>
+					  <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                        <input type="radio" name="forma_pagamento" value="PRE" {if $forma_pagamento =="PRE"}checked{/if}>
+                        PRÉ</font></td> 
                       <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"><label> 
-                        <input type="radio" name="forma_pagamento" value="POS" {if $forma_pagamento == "POS"}checked{/if}>
-                        POS</label></font></td>
-                      <td> <font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
-                        <input type="radio" name="forma_pagamento" value="PRE" {if $forma_pagamento == "PRE"}checked{/if}>
-                        PRE</font></td>
+                        <input type="radio" name="forma_pagamento" value="POS" {if $forma_pagamento =="POS"}checked{/if}>
+                        PÓS </label></font></td>
+                      
                     </tr>
                   </table></td>
               </tr>

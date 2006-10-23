@@ -179,7 +179,7 @@ document.onmousemove=positiontip
                 <td height="20" width="300" bgcolor="#f1f1f1"> <p><strong>Extras</strong></p></td>
               </tr>
               {foreach item=a from=$log} 
-              <tr bgcolor='{if $a.operacao == "ALTMAC" OR $a.operacao == "ALTSTATUS" OR $a.operacao == "ALTBANDA"}#F3F8F7{else}#F1E4E7{/if}' height=20> 
+              <tr bgcolor='{if $a.operacao == "ALTMAC" OR $a.operacao == "ALTSTATUS" OR $a.operacao == "ALTBANDA"}#F3F8F7{else}{if $a.operacao == "ESTORNOPAG"}#ffffff{else}#F1E4E7{/if}{/if}' height=20> 
                 <td align="CENTER" onMouseover="ddrivetip('<p align=center>{$a.ip}</p>', '#FFFFEA')" onMouseout="hideddrivetip()"> 
                   <p>{$a.admin}</p></td>
                 <td align="CENTER">

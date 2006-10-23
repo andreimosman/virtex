@@ -554,9 +554,30 @@ if( !defined("_VAADMINISTRADOR") ) {
 				$sSQL .= " AND data = ' " . $this->bd->escape(@$_REQUEST['data']) . "'  ";
 				$sSQL .= " AND id_carne = '" . $this->bd->escape(@$_REQUEST['id_carne']) . "'  ";
 				
+				$aSQL  = " SELECT cn.username, cn.tipo_conta FROM cntb_conta cn, cbtb_faturas cb ";
+				$aSQL .= " WHERE cb.id_cliente_produto = '" . $this->bd->escape(@$_REQUEST['id_cliente_produto']) . "' AND cb.data = ' " . $this->bd->escape(@$_REQUEST['data']) . "'  ";
+				$aSQL .= " AND cn.id_cliente_produto = '" . $this->bd->escape(@$_REQUEST['id_cliente_produto']) . "' ";
+				$fatura = $this->bd->obtemUnicoRegistro($aSQL);
+				
+				/*echo $aSQL ."<br>";
+				
+				echo $fatura['username'] . "<Br>";
+				echo $fatura['tipo_conta'] . "<Br>";*/
+				
 				///echo $sSQL;
 				
 				$this->bd->consulta($sSQL);
+				
+				$valor_original = "PAGA";
+				$valor_alterado = "EM ABERTO";
+				$username = $fatura['username'];
+				$tipo_conta = $fatura['tipo_conta'];
+
+				$operacao = "ESTORNOPAG";
+				
+				$extra = "VENC: ". $this->bd->escape(@$_REQUEST['data']);
+
+				$this->logAdm($operacao,$valor_original,$valor_alterado,$username,$this->bd->escape(@$_REQUEST['id_cliente_produto']),$tipo_conta,$extra);
 				
 				
 				$msg_final = "Pagamento Estornado com sucesso!!";

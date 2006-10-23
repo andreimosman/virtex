@@ -397,9 +397,12 @@ class VARelatorio extends VirtexAdmin {
 				$aSQL .= "   c.id_cidade, c.cidade ";				
 				$aSQL .= "FROM ";
 				$aSQL .= "cltb_cliente cl, cftb_cidade c ";
-				$aSQL .= "WHERE c.id_cidade = cl.id_cidade";
+				$aSQL .= "WHERE c.id_cidade = cl.id_cidade ";
 				$aSQL .= "AND cl.excluido = false ";
-
+				$aSQL .= " AND cl.ativo = true";
+				
+				
+				///echo $aSQL;
 						
 				$reg = $this->bd->obtemRegistros($aSQL);
 				
@@ -437,7 +440,13 @@ class VARelatorio extends VirtexAdmin {
 			$aSQL .= "   c.id_cidade, c.cidade ";
 			$aSQL .= "FROM cltb_cliente cl, cftb_cidade c ";
 			$aSQL .= "WHERE (cl.nome_razao ilike '$inicial_up%' OR cl.nome_razao ilike '$inicial_lo%') AND c.id_cidade = cl.id_cidade ";
+			$aSQL .= "AND cl.excluido = false ";
+			$aSQL .= " AND cl.ativo = true";
 												
+			
+			///////echo $aSQL ;
+			
+			
 			$reg = $this->bd->obtemRegistros($aSQL);
 											
 			$this->tpl->atribui("ult_cli",$reg);
@@ -1476,10 +1485,19 @@ class VARelatorio extends VirtexAdmin {
 		if(!$periodo) $periodo = "12";
 		
 		if(!$acao) $acao = "geral";
+		
+		$hoje = date('d/m/Y');
+		
+		list($dia,$mes,$ano) = explode("/",$hoje);
+		
+		///echo '<br><br>';
+		//echo $dia . "/" . $mes . "/" . $ano ;
+		
 						
 		
 		if ($acao == "geral") {
-		/*
+		
+			/*
 			$sSQL  = "SELECT ";
 			$sSQL .= "	count(*) as num_bloqueios, tipo, ";
 			$sSQL .= "	EXTRACT(year from data_hora) as ano, ";
@@ -1490,10 +1508,9 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "	data_hora > (CAST(EXTRACT(year from now()) || '-' || EXTRACT(month from now()) || '-01' as date) + INTERVAL '1 month') - INTERVAL '12 months' ";
 			$sSQL .= "GROUP BY tipo, ano, mes ";
 			$sSQL .= "ORDER BY ano, mes, tipo ";
-			
-		*/			
+			*/	
 						
-			
+		
 			$sSQL  = "SELECT ";
 			$sSQL .= " * ";
 			$sSQL .= "FROM ";
@@ -1502,7 +1519,7 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= " FROM  ";
 			$sSQL .= "    lgtb_bloqueio_automatizado  ";
 			$sSQL .= " WHERE ";
-			$sSQL .= " 	  data_hora > (CAST(EXTRACT(year FROM now()) || '-' || EXTRACT(month from now()) || '-01' as date)) + INTERVAL '1 month' - INTERVAL '$periodo months' AND ";
+			$sSQL .= " 	  data_hora > (CAST('$ano-$mes-01' as date)) - INTERVAL '$periodo months' AND ";
 			$sSQL .= "    tipo = 'D' ";
 			$sSQL .= " GROUP BY ";
 			$sSQL .= "    mes,ano) dbq ";
@@ -1512,11 +1529,11 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "  FROM  ";
 			$sSQL .= "   lgtb_bloqueio_automatizado  ";
 			$sSQL .= "  WHERE ";			
-			$sSQL .= " 	  data_hora > (CAST(EXTRACT(year FROM now()) || '-' || EXTRACT(month from now()) || '-01' as date)) - INTERVAL '1 month' - INTERVAL '$periodo months' AND ";
-			$sSQL .= "   tipo = 'B'	 ";		
+			$sSQL .= " 	  data_hora > (CAST('$ano-$mes-01' as date)) + INTERVAL '1 month' - INTERVAL '$periodo months' AND ";
+			$sSQL .= "   tipo = 'B' OR  tipo = 'S'  ";		
 			$sSQL .= "   GROUP BY mes,ano	 ";		
-			$sSQL .= "  ) blq USING(mes,ano) ";
-			//////////echo $sSQL ;
+			$sSQL .= "  ) blq USING(mes,ano) ORDER BY mes DESC,ano ASC";
+			///echo $sSQL ;
 			
 	
 		} else if ($acao == "sub_geral") {
@@ -1543,7 +1560,7 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "	AND data_hora < CAST('$ano-$mes-01' as date) + INTERVAL '1 month' ";
 			$sSQL .= "	AND data_hora < CAST('$ano-$mes-01' as date) + INTERVAL '1 month' ";
 			$sSQL .= "	AND data_hora >= CAST('$ano-$mes-01' as date) ";
-			$sSQL .= "ORDER BY ano, mes, dia, clt.nome_razao ";
+			$sSQL .= "ORDER BY ano, mes, dia, clt.nome_razao DESC";
 			
 			///echo $sSQL ;
 			
@@ -1573,9 +1590,15 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "	AND data_hora < CAST('$ano-$mes-01' as date) + INTERVAL '1 month' ";
 			$sSQL .= "	AND data_hora < CAST('$ano-$mes-01' as date) + INTERVAL '1 month' ";
 			$sSQL .= "	AND data_hora >= CAST('$ano-$mes-01' as date) ";
+			
+			if ($tipo == "D"){
+			
 			$sSQL .= "  AND lba.tipo = '$tipo'";
+			
+			
+			}
 			$sSQL .= "  AND cnt.tipo_conta <> 'E' ";
-			$sSQL .= "ORDER BY ano, mes, dia, clt.nome_razao ";
+			$sSQL .= "ORDER BY ano, mes, dia, clt.nome_razao DESC ";
 			
 			////////echo ($sSQL);
 			
