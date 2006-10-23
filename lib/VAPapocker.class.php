@@ -65,7 +65,8 @@ class VAPapocker extends VirtexAdmin {
 				$sSQL .= "$id_cliente_produto, $id_produto, '2006-10-23', '0.00',$id_cobranca, 'A', '$tipo_produto', '0.00', '1', '50000', '0.00', '0.00', '20' ";
 				$this->bd->consulta($sSQL);
 				
-				echo "NUM: $i<br>ICP: $id_cliente_produto<BR>IP: $id_produto<br>TIPO: $tipo_produto<br>";
+				echo "SQL: $sSQL <br>";
+				echo "NUM: $i<br>ICP: $id_cliente_produto<BR>IP: $id_produto<br>TIPO: $tipo_produto<br><br><hr><br><br>";
 				
 				
 			}
