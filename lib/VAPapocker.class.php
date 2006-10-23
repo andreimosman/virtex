@@ -70,7 +70,7 @@ class VAPapocker extends VirtexAdmin {
 				
 			}
 			
-			echo "TODOS OS CLIENTES CADASTRADOS: TOTAL: ."$i+1."<br>";
+			echo "TODOS OS CLIENTES CADASTRADOS: TOTAL: ". $i+1 ."<br>";
 			
 			
 			
