@@ -52,7 +52,7 @@ class VAPapocker extends VirtexAdmin {
 			
 			
 			
-			for ($i=0;count($produtos);$i++){
+			for ($i=0;$i<count($produtos);$i++){
 			
 				$id_cliente_produto = $produtos[$i]["id_cliente_produto"];
 				$id_produto = $produtos[$i]["id_produto"];
@@ -62,7 +62,7 @@ class VAPapocker extends VirtexAdmin {
 				
 				$sSQL  = "INSERT INTO cbtb_contrato (id_cliente_produto, id_produto, data_contratacao, valor_contrato, id_cobranca, status, tipo_produto, ";
 				$sSQL .= "valor_produto, num_emails, quota_por_conta, tx_instalacao, valor_comodato, carencia) VALUES ( ";
-				$sSQL .= "$id_cliente_produto, $id_produto, '2006-10-23', '0.00',$id_cobranca, 'A', '$tipo_produto', '0.00', '1', '50000', '0.00', '0.00', '20' ";
+				$sSQL .= "$id_cliente_produto, $id_produto, '2006-10-23', '0.00',$id_cobranca, 'A', '$tipo_produto', '0.00', '1', '50000', '0.00', '0.00', '20' ) ";
 				$this->bd->consulta($sSQL);
 				
 				echo "SQL: $sSQL <br>";
