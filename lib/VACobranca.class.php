@@ -647,7 +647,7 @@ class VACobranca extends VirtexAdmin {
 				
 		
 		}else if ($op == "bloqueados"){
-				if( ! $this->privPodeGravar("_COBRANCA_BLOQUEIOS") ) {
+				if( ! $this->privPodeLer("_COBRANCA_BLOQUEIOS") ) {
 							$this->privMSG();
 							return;
 				}
@@ -661,6 +661,11 @@ class VACobranca extends VirtexAdmin {
 			
 			
 			if($acao == "bloquear") {
+			
+			if( ! $this->privPodeGravar("_COBRANCA_BLOQUEIOS") ) {
+										$this->privMSG();
+										return;
+				}
 					
 					$id_bloqueio = array();
 					$id_bloqueio = @$_REQUEST["id_bloqueio_box"];
