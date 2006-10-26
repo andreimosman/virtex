@@ -32,26 +32,37 @@
 
                               <table border=0 width="632" cellspacing=0 cellpadding=0>
                                 <tr bgcolor="#FAFAFA">
-                                  <td width=188 align="left"><h2><b>..nome..</b></h2></td>
-                                  <td width=306 align="left"><h2><b>..info..</b></h2></td>
-                                  <td width=69 align="center"><h2><b>..tipo..</b></h2></td>
-                                  <td align="center" colspan="2">&nbsp;</td>
+                                  <td width=239 align="left"><h2><b>..nome..</b></h2></td>
+                                  <td width=148 align="left"><h2><b>..info..</b></h2></td>
+								  <td width=124 align="left"><h2 align="center"><b>...ip...</b></h2></td>
+                                  <td width=65 align="center"><h2><b>..tipo..</b></h2></td>
+                                  <td align="center" colspan="3">&nbsp;</td>
                                 </tr>
                                 <tr>
-                                  <td colspan=5 bgcolor="000000"><img src="template/default/menu/spacer.gif" width=1 height=1 border=0></td>
+                                  <td colspan=7 bgcolor="000000"><img src="template/default/menu/spacer.gif" width=1 height=1 border=0></td>
                                 </tr>
+								<tr>
+									<td height="5"></td>
+								</tr>
                                 {foreach item=a from=$lista_pop}
                                 <tr bgcolor="#FFFFFF">
-                                  <td align="left"><p>{if $a.status != "A"}<font color="red"><b>{/if}<a href="relatorio.php?op=lista&tipo=POP&id={$a.id_pop}">{$a.tipo}
-                                      - {$a.nome}</a>{if $a.status != "A"}</b></font>{/if}</p></td>
-                                  <td align="left"><p>{$a.info|nl2br}</p></td>
-                                  <td align="center"><p>{$a.tipo}</p></td>
-                                  <td align="center" width="36">
+                                  <td align="left"><p>{if $a.status != "A"}<font color="red"><b>{/if}<a href="configuracao.php?op=pop&id_pop={$a.id_pop}">{$a.tipo}
+                                      - {$a.nome}</a><a href="configuracao.php?op=pop&id_pop={$a.id_pop}">{if $a.status != "A"}</a></b></font>{/if}</p></td>
+									  
+                                  <td align="left"><p><a href="configuracao.php?op=pop&id_pop={$a.id_pop}">{$a.info|nl2br}</a></p></td>
+								  <td><div align="center">
+								    <p><a href="configuracao.php?op=pop&id_pop={$a.id_pop}">{$a.ipaddr}</a></p>
+								  </div></td>
+                                  <td align="center"><p><a href="configuracao.php?op=pop&id_pop={$a.id_pop}">{$a.tipo}</a></p></td>
+                                  <td align="center" width="33">
                                     <p><a href="configuracao.php?op=pop&id_pop={$a.id_pop}"><img src="template/default/images/gif_alterar.gif" alt="ALTERAR POP" border="0"></a></p></td>
-                                  <td align="center" width="33"><a href="configuracao.php?op=pop&rotina=desativar&id_pop={$a.id_pop}"><img alt="DESATIVAR POP" src="template/default/images/delete.gif" width="15" height="15" border="0"></a></td>
+                                  <td align="center" width="23"><a href="configuracao.php?op=pop&rotina=desativar&id_pop={$a.id_pop}"><img alt="DESATIVAR POP" src="template/default/images/delete.gif" width="15" height="15" border="0"></a> </td><td>
+								<a href="relatorio.php?op=lista&tipo=POP&id={$a.id_pop}"><img src="template/default/images/user.gif" alt="Usuários no POP " border="0" >
+								 </a> 
+								 </td>
                                 </tr>
                                 <tr>
-                                  <td colspan="5"><hr size="1"> </td>
+                                  <td colspan="7"><hr size="1"> </td>
                                 </tr>
                                 {/foreach}
                               </table>

@@ -104,8 +104,10 @@ $_LS_ST_CIDADE = array(
 		);
 $_LS_TIPO_POP = array(
 		"AP" => "Access Point",
+		"B" => "BackBone",
 		"C" => "Cabo",
 		"CL" => "Cliente"
+		
 		);
 $_LS_TIPO_NAS = array(
 		"I" => "IP",

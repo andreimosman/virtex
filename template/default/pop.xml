@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<rss version="2.0">
+{foreach item=v from=$pop}
+<pop>
+<id_pop>{$v.id_pop}</id_pop>
+<nm_nome>{$v.nome}</nm_nome>
+</pop>
+{/foreach}
+</rss>

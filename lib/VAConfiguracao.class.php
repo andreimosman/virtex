@@ -27,13 +27,16 @@ class VAConfiguracao extends VirtexAdmin {
 			$enviando = false;
 
 
+
 			$reg = array();
 
 			$sSQL  = "SELECT ";
-			$sSQL .= "   id_pop, nome, info, tipo, id_pop_ap, status ";
-			$sSQL .= "FROM cftb_pop ";
+			$sSQL .= "   id_pop, nome, info, tipo, id_pop_ap, status , ipaddr, infoserver ,snmp_versao, snmp_ro_com, snmp_rw_com, ativar_snmp";
+			$sSQL .= " FROM cftb_pop ";
 			$sSQL .= "WHERE status != 'D' ";
 			$sSQL .= "ORDER BY nome ";
+			
+			///echo $sSQL;
 
 			$reg = $this->bd->obtemRegistros($sSQL);
 
@@ -42,9 +45,88 @@ class VAConfiguracao extends VirtexAdmin {
 
 
 			$this->arquivoTemplate = "configuracao_pop_lista.html";
+		} else if ($op == "ajax_loop") {
+			// $next_id = $reg["id_pop_ap"]; // Vem do formulario
+			$id_pop  = @$_REQUEST["id_pop"];
+			$next_id = @$_REQUEST["id_pop_ap"];
 
+			$linkados=array();
+			$erro = false;
+			//echo "ID POP: $id_pop<br>\n";
+			if( $next_id ) {
+				while(true) {
+					$sSQL  = "SELECT ";
+					$sSQL .= "   id_pop,id_pop_ap ";
+					$sSQL .= "FROM ";
+					$sSQL .= "   cftb_pop ";
+					$sSQL .= "WHERE ";
+					$sSQL .= "   id_pop = '$next_id' ";
 
-		}else if($op == "pop"){
+					$r = $this->bd->obtemUnicoRegistro($sSQL);
+					$next_id = $r["id_pop_ap"];
+
+					if( !$next_id ) {
+						// Return ok
+						//echo "<BR>P1<bR>\n";
+						break;
+					} else {
+						if( in_array($next_id,$linkados) ) {
+							// Erro - Recursividade do mau.
+							//echo "<BR>P2<bR>\n";
+							$erro = true;
+							break;
+						} else {
+							//echo "<BR>P3<bR>\n";
+							$linkados[] = $next_id;
+						}
+					}
+				}
+			}
+
+			if( $erro ) {
+				echo "Erro ao processar:\n - Erro recursivo.\n\rO POP não pode ser escolhido, por favor escolha outro.";
+			} else {
+				//echo "OK";
+			} 
+
+		}else if ($op == "ajax"){
+		
+			$tipo = @$_REQUEST["tipo"]; 
+			//$id_pop = @$_REQUEST["id_pop"]; 
+		
+			$sSQL  = " SELECT id_pop, nome, tipo " ;
+			$sSQL .= " FROM cftb_pop " ;
+			$sSQL .= " WHERE status = 'A' " ;
+			
+			
+			
+			if ($tipo != "CL" ){
+			
+			$sSQL .= " AND tipo = 'B' ";
+			//echo $sSQL;
+			
+			}
+			if ($tipo == "CL" ){
+			
+			$sSQL .= " AND tipo = 'AP' ";
+			
+			}
+			
+			$sSQL .= " ORDER BY nome ASC ";
+
+			////echo "//<sql>" . $sSQL . "</sql>";
+		
+			$pop = $this->bd->obtemRegistros($sSQL);
+			$this->tpl->atribui("pop",$pop);
+			// Retorno em XML para utilização com ajax
+			$this->arquivoTemplate = "pop.xml";
+			header("Content-type: text/xml");
+			
+			return;
+
+		}
+		
+		else if($op == "pop"){
 
 			if( ! $this->privPodeLer("_CONFIG_EQUIPAMENTOS") ) {
 				$this->privMSG();
@@ -59,17 +141,26 @@ class VAConfiguracao extends VirtexAdmin {
 			$id_pop = @$_REQUEST["id_pop"];
 
 			$enviando = false;
+			
+			$host_info = new ICHostInfo();
+			$hosts = $host_info->obtemListaServidores();
+			//echo $hosts;
+
+			$this->tpl->atribui("hosts",$hosts);
+			
 
 			$tSQL  = "SELECT ";
-			$tSQL .= "   id_pop, nome, info, tipo, id_pop_ap, status ";
+			$tSQL .= "   id_pop, nome, info, tipo, id_pop_ap, status, ipaddr, infoserver, snmp_versao, snmp_ro_com, snmp_rw_com, ativar_snmp ";
 			$tSQL .= "FROM cftb_pop ";
 			$tSQL .= "WHERE tipo = 'AP' AND status != 'D' ";
 			$tSQL .= "ORDER BY nome ";
+			
+			////////echo $tSQL;
 
 			$aps = $this->bd->obtemRegistros($tSQL);
 
-
-
+			
+			///////////echo $aSQL;
 
 
 
@@ -132,15 +223,20 @@ class VAConfiguracao extends VirtexAdmin {
 			} else {
 				// Se não recebe o campo ação e tem id_pop, é alteração, caso contrário é cadastro.
 				if( $id_pop ) {
+
 					// SELECT
 					$sSQL  = "SELECT ";
-					$sSQL .= "   id_pop, nome, info, tipo, id_pop_ap, status ";
+					$sSQL .= "   id_pop, nome, ipaddr, info, tipo, id_pop_ap, status, infoserver, snmp_versao, snmp_ro_com, snmp_rw_com, ativar_snmp ";
 					$sSQL .= "FROM cftb_pop ";
 					$sSQL .= "WHERE id_pop = '$id_pop' AND status != 'D' ";
-					$sSQL .= "ORDER BY nome ASC";
-
-
 					$reg = $this->bd->obtemUnicoRegistro($sSQL);
+					
+					$this->tpl->atribui("ipaddr",$reg["ipaddr"]);
+					$this->tpl->atribui("snmp",$reg["ativar_snmp"]);
+					$this->tpl->atribui("snmp_versao",$reg["snmp_versao"]);
+					$this->tpl->atribui("snmp_ro_com",$reg["snmp_ro_com"]);
+					$this->tpl->atribui("snmp_rw_com",$reg["snmp_rw_com"]);
+					$this->tpl->atribui("infoserver",$reg["infoserver"]);
 
 					$sSQL = "SELECT count(id_pop) as qtde_cli_pop FROM cntb_conta_bandalarga WHERE id_pop = '$id_pop' ";
 					$qtde = $this->bd->obtemUnicoRegistro($sSQL);
@@ -177,38 +273,122 @@ class VAConfiguracao extends VirtexAdmin {
 					$url = "configuracao.php?op=lista_pop";
 
 					$id_pop = $this->bd->proximoID("cfsq_id_pop");
+					
+					$ip = @$_REQUEST["ip"];
+					
+					if ($ip == ""){
+					
+						$ip = 'NULL' ;
+					
+					
+					}
+					
+					$ativar_snmp = @$_REQUEST["snmp"];
+
+					if ($ativar_snmp == "" ){
+
+						$ativar_snmp = 'f' ;
+
+
+					}
 
 
 					$sSQL  = "INSERT INTO ";
 					$sSQL .= "   cftb_pop( ";
-					$sSQL .= "      id_pop, nome, info, tipo, id_pop_ap, status ) ";
+					$sSQL .= "      id_pop, nome, info, tipo, id_pop_ap, status, ipaddr, infoserver, snmp_versao, snmp_ro_com, snmp_rw_com, ativar_snmp) ";
 					$sSQL .= "   VALUES (";
 					$sSQL .= "     '" . $this->bd->escape($id_pop) . "', ";
 					$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
 					$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["info"]) . "', ";
 					$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["tipo"]) . "', ";
 					$sSQL .= "      " . ($id_pop_ap ? "$id_pop_ap" : "NULL") . ",  ";
-					$sSQL .= "		 '" . $this->bd->escape(@$_REQUEST["status"]).  "' ";
+					$sSQL .= "		 '" . $this->bd->escape(@$_REQUEST["status"]).  "', ";
+					
+						if ($ip == "" || $ip == "NULL"){
+
+							$sSQL .= " 		$ip,";
+
+						}else{
+
+							$sSQL .= " 		'$ip', ";
+
+						}
+
+					
 					//$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["id_pop_ap"]) . "' ";
+					$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["infoserver"]) . "', ";
+					$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["snmp_versao"]) . "', ";
+					$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["snmp_ro_com"]) . "', ";
+					$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["snmp_rw_com"]) . "', ";
+					$sSQL .= "     '$ativar_snmp' ";
 					$sSQL .= "     )";
+					///echo $sSQL;
 
 
 				} else {
 				   // ALTERACAO
 					$msg_final = "POP Alterado com sucesso!";
 					$url = "configuracao.php?op=lista_pop";
-
-
+					
+					$id_pop_ap = @$_REQUEST["id_pop_ap"];
+					$ip = @$_REQUEST["ip"];
+						
+					$ativar_snmp = @$_REQUEST["snmp"];
+					
+					if ($ativar_snmp == "" ){
+					
+						$ativar_snmp = 'f' ;
+					
+					
+					}else{
+					
+						$ativar_snmp = 't';
+					
+					}
+						
+					
 					$sSQL  = "UPDATE ";
 					$sSQL .= "   cftb_pop ";
 					$sSQL .= "SET ";
 					$sSQL .= "   nome = '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
 					$sSQL .= "   info = '" . $this->bd->escape(@$_REQUEST["info"]) . "', ";
+					$sSQL .= "	 ativar_snmp = '$ativar_snmp', ";
+					$sSQL .= "	 snmp_versao = '" . $this->bd->escape(@$_REQUEST["snmp_versao"]) . "', ";
+					$sSQL .= "	 snmp_ro_com = '" . $this->bd->escape(@$_REQUEST["snmp_ro_com"]) . "', ";
+					$sSQL .= "	 snmp_rw_com = '" . $this->bd->escape(@$_REQUEST["snmp_rw_com"]) . "', ";
 					$sSQL .= "   tipo = '" . $this->bd->escape(@$_REQUEST["tipo"]) . "', ";
-					$sSQL .= "   id_pop_ap = ". (@$_REQUEST["tipo"] != "CL" ? "NULL" : "'" . $this->bd->escape(@$_REQUEST["id_pop_ap"]) . "'" ) .   ", ";
-					$sSQL .= "	 status = '" . $_REQUEST["status"] . "' ";
+					$sSQL .= "   infoserver = '" . $this->bd->escape(@$_REQUEST["infoserver"]) . "', ";
+					
+					////echo $sSQL ;
+
+						if (!$id_pop_ap){
+
+							$sSQL .= "  id_pop_ap = NULL , ";
+
+						}else{
+
+							$sSQL .= " 	id_pop_ap = '$id_pop_ap', ";
+
+						}
+
+					
+					$sSQL .= "	 status = '" . $_REQUEST["status"] . "', ";
+					
+						if ($ip == "" || $ip == "NULL"){
+
+							$sSQL .= "  ipaddr = $ip ";
+
+						}else{
+
+							$sSQL .= " 	ipaddr = '$ip' ";
+
+						}
+
+					
+					
 					$sSQL .= "WHERE ";
 					$sSQL .= "   id_pop = '" . $this->bd->escape(@$_REQUEST["id_pop"]) . "' ";  
+					
 
 
 				}
@@ -776,6 +956,24 @@ class VAConfiguracao extends VirtexAdmin {
 
 
 ///////////////////////////////		
+	}else if ($op == "monitoramento"){
+	
+	
+	$sSQL  =" SELECT ";
+	$sSQL .=" p.nome, p.ipaddr, t.id_pop,  t.min_ping , t.max_ping ,t.media_ping ,t.num_perdas ,t.num_ping ,t.status ,t.num_erros ";
+	$sSQL .=" FROM sttb_pop_status t, cftb_pop p ";
+	$sSQL .=" WHERE t.id_pop = p.id_pop ORDER BY p.nome ";
+	
+	///echo $sSQL;
+	
+	$rel_monitoramento = $this->bd->obtemRegistros($sSQL);
+	
+	$this->tpl->atribui("rel_monitoramento",$rel_monitoramento);
+	
+	
+	$this->arquivoTemplate = "suporte_monitoramento_pops.html";	
+	
+	
 	}else if ($op == "listar_bandas"){
 	
 	

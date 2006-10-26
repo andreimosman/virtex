@@ -1817,11 +1817,12 @@ class VAClientes extends VirtexAdmin {
 					$sSQL .= "   id_pop, nome ";
 					$sSQL .= "FROM ";
 					$sSQL .= "   cftb_pop ";
-					$sSQL .= "WHERE status = 'A' ";
+					$sSQL .= "WHERE status = 'A' AND tipo != 'B' ";
 					$sSQL .= "ORDER BY ";
 					$sSQL .= "   nome";
 
 					$lista_pops = $this->bd->obtemRegistros($sSQL);
+					//echo $sSQL;
 					$this->tpl->atribui("lista_pops",$lista_pops);
 
 					// LISTA DE NAS
@@ -2250,13 +2251,14 @@ class VAClientes extends VirtexAdmin {
 			$sSQL .= "   id_pop, nome ";
 			$sSQL .= "FROM ";
 			$sSQL .= "   cftb_pop ";
-			$sSQL .= "WHERE status = 'A' ";
+			$sSQL .= "WHERE status = 'A' AND tipo != 'B' ";
 			$sSQL .= "ORDER BY ";
 			$sSQL .= "   nome";
 
 
 			//echo "POPs: $sSQL <br>";
 			$lista_pops = $this->bd->obtemRegistros($sSQL);
+			///echo $sSQL;
 			$this->tpl->atribui("lista_pops",$lista_pops);
 
 			// LISTA DE NAS
@@ -3377,13 +3379,14 @@ class VAClientes extends VirtexAdmin {
 			$sSQL .= "   id_pop, nome ";
 			$sSQL .= "FROM ";
 			$sSQL .= "   cftb_pop ";
-			$sSQL .= "WHERE status = 'A' ";
+			$sSQL .= "WHERE status = 'A' AND tipo != 'B' ";
 			$sSQL .= "ORDER BY ";
 			$sSQL .= "   nome";
 
 
 			//////////echo "POPs: $sSQL <br>";
 			$lista_pops = $this->bd->obtemRegistros($sSQL);
+			///echo $sSQL;
 			$this->tpl->atribui("lista_pops",$lista_pops);
 
 			// LISTA DE NAS
