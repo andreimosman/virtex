@@ -135,6 +135,23 @@
 							fputs($this->conn,base64_encode($this->criptografa($tabelaarp,$challenge)));
 							fputs($this->conn,"\n.\n");
 							
+
+							break;
+						/**
+						 * Evia um FPING
+						 */
+						case 'VAFP':
+							// Primeiro envia um "VAFS" (iniciando FPING SEND)
+							fwrite($this->conn,$this->talk("VAFS","",$challenge));
+							list($ip,$num_pacotes,$tamanho) = explode(":",trim($proc["parametros"]));
+
+							
+							$ping = (!$ip ? array() : SOFreeBSD::fping($ip,$num_pacotes,$tamanho));
+							$resposta = implode(":",$ping);
+							
+							fputs($this->conn,base64_encode($this->criptografa($resposta,$challenge)));
+							fputs($this->conn,"\n.\n");
+							
 							break;
 							
 						/**

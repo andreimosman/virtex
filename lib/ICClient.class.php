@@ -88,10 +88,10 @@
 
 						case 'VAAS':
 							// INICIANDO O ARP SEND
+						case 'VAFS':
+							// INICIANDO O FPING SEND
 						case 'VASI':
 							// STATS INIT
-
-
 
 							$recebendo = true;
 							break;
@@ -170,6 +170,15 @@
 			
 			return($arp);
 		}
+
+		/**
+		 * Obtem o resultado de um fping do endereço especificado.
+		 */
+		public function getFPING($ip,$num_pacotes=2,$tamanho="") {
+			$dados = $this->getData("VAFP",$ip.":".$num_pacotes.":".$tamanho);
+			return(explode(":",$dados));
+		}
+
 		
 		/**
 		 * Obtem as estatísticas de acesso
