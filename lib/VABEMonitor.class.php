@@ -235,7 +235,7 @@
 			$r = array();
 			
 			
-			echo "ICCHOST: $icc_host";
+			//echo "ICCHOST: $icc_host";
 			
 			
 			/**
@@ -248,13 +248,14 @@
 			$r = explode(" ",$info);
 			
 			*/
-			
-			//$r=SOFreeBSD::fping($ip,$num_pacotes,$tamanho);
-			$info = $this->ich->obtemInfoServidor($icc_host);
-			
-			if($this->icc->open($info["host"],$info["port"],$info["chave"],$info["username"],$info["password"])) {
-				// Conseguiu conectar o servidor
-				$r = $this->icc->getFPING($ip,$num_pacotes,$tamanho);
+			if( $icc_host ) {
+				//$r=SOFreeBSD::fping($ip,$num_pacotes,$tamanho);
+				$info = $this->ich->obtemInfoServidor($icc_host);
+
+				if($this->icc->open($info["host"],$info["port"],$info["chave"],$info["username"],$info["password"])) {
+					// Conseguiu conectar o servidor
+					$r = $this->icc->getFPING($ip,$num_pacotes,$tamanho);
+				}
 			}
 
 			// Retorna as respostas do ping
