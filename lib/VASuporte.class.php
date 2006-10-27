@@ -246,6 +246,50 @@ class VASuporte extends VirtexAdmin {
 			
 			//echo $sSQL;
 			
+		}else if($op == "monitoramento_barra"){
+		
+		
+			$sSQL  = "SELECT ";
+			$sSQL .= " count(status) as num, status ";
+			$sSQL .= " FROM sttb_pop_status ";
+			$sSQL .= " GROUP BY status ";
+			$r= $this->bd->obtemRegistros($sSQL);
+			
+			$erros=0;
+			$alertas=0;
+			$ok=0;
+			for($i=0;$i<count($r);$i++) {
+				switch($r[$i]["status"]) {
+					case "OK":
+						$ok=$r[$i]["num"];
+						break;
+					case "ERR":
+						$erros=$r[$i]["num"];
+						break;
+					case "WRN":
+						$alertas=$r[$i]["num"];
+						break;
+				}
+			}
+			
+			$num_pops = $erros+$alertas+$ok;
+			
+		
+			$this->tpl->atribui("erros",$erros);
+			$this->tpl->atribui("alertas",$alertas);
+			$this->tpl->atribui("ok",$ok);
+			$this->tpl->atribui("num_pops",$num_pops);
+		
+			$this->arquivoTemplate = "suporte_monitoramento_barra.html";
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		} else if ($op == "monit"){
 			$this->arquivoTemplate = "cobranca_versaolight.html";
 			//$this->arquivoTemplate = "suporte_monitoramento.html";

@@ -960,7 +960,7 @@ class VAConfiguracao extends VirtexAdmin {
 	
 	
 	$sSQL  =" SELECT ";
-	$sSQL .=" p.nome, p.ipaddr, t.id_pop,  t.min_ping , t.max_ping ,t.media_ping ,t.num_perdas ,t.num_ping ,t.status ,t.num_erros ";
+	$sSQL .=" p.nome, p.ipaddr, p.tipo, t.id_pop,  t.min_ping , t.max_ping ,t.media_ping ,t.num_perdas ,t.num_ping ,t.status ,t.num_erros ";
 	$sSQL .=" FROM sttb_pop_status t, cftb_pop p ";
 	$sSQL .=" WHERE t.id_pop = p.id_pop ORDER BY p.nome ";
 	
