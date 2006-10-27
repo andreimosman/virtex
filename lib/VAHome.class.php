@@ -81,7 +81,13 @@ class VAHome extends VirtexAdmin {
 				$sSQL = "SELECT * from cftb_forma_pagamento where id_cobranca = 1 and disponivel is true";
 				$boleto_existe = $this->bd->obtemUnicoRegistro($sSQL);
 				
+				$aSQL = " SELECT exibir_monitor FROM pftb_preferencia_monitoracao ";
 				
+				$exibir_monitor = $this->bd->obtemUnicoRegistro($aSQL);
+				
+				//////echo $exibir_monitor['exibir_monitor'];
+				
+				$this->tpl->atribui("exibir_monitor",$exibir_monitor['exibir_monitor']);
 				$this->tpl->atribui("boleto",$boleto_existe);
 				$this->tpl->atribui("lic_discado",$lic_discado);
 				$this->tpl->atribui("lic_email",$lic_email);

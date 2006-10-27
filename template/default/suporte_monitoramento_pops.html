@@ -12,6 +12,11 @@
 	color: #DDDDDD;
 	font-weight: bold;
 }
+.style1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #FFFFFF;
+}
 -->
 </style>
 {/literal}
@@ -19,7 +24,7 @@
 
 <body>
 <h1 align="center"> Informa&ccedil;&otilde;es de Monitoramento	</h1>
-<table width="602" border="0" align="center" cellpadding="0" cellspacing="0" style="border:1px solid #D8E7DB;">
+<table width="750" border="0" align="center" cellpadding="0" cellspacing="0" style="border:1px solid #D8E7DB;">
 
   <tr>
     <td><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="border:1px solid #FFFFFF" >
@@ -30,8 +35,8 @@
         <td colspan="5" bgcolor="#F3F8F4"  style="border:1px solid #FFFFFF;"><p align="center"><strong>Ping</strong></p></td>
       </tr>
       <tr>
-        <td bgcolor="#F9FBF9" style="border:1px solid #FFFFFF;"><p>Tipo</p></td>
-		<td bgcolor="#F9FBF9" style="border:1px solid #FFFFFF;"><p>Nome</p></td>
+        <td bgcolor="#F9FBF9"  width="60px" style="border:1px solid #FFFFFF;"><p><strong>Tipo</strong></p></td>
+		<td bgcolor="#F9FBF9" width="200px" style="border:1px solid #FFFFFF;"><p><strong>Nome</strong></p></td>
 		 <td bgcolor="#F9FBF9" style="border:1px solid #FFFFFF;">&nbsp;</td>
         <td bgcolor="#F9FBF9" style="border:1px solid #FFFFFF;">&nbsp;</td>
 		 <td bgcolor="#F5F5F5" style="border:1px solid #FFFFFF;"><p align="center"><strong>p.enviados</strong></p></td>
@@ -41,7 +46,7 @@
         <td bgcolor="#FFFFEA" style="border:1px solid #FFFFFF;"><p align="center"><strong>m&eacute;dia</strong></p></td>
       </tr>
 	  <tr>
-                                  <td height="1px" colspan="8" align="center" valign="middle" bgcolor="#DFDFDF"><img src="template/default/images/menu/spacer.gif" height="1"/></td>
+                                  <td height="1px" colspan="11" align="center" valign="middle" bgcolor="#DFDFDF"><img src="template/default/images/menu/spacer.gif" height="1"/></td>
         </tr>
       {foreach item=a from=$rel_monitoramento}
   <tr> 
@@ -54,9 +59,35 @@
 	
 	
 	</td>
-    <td bgcolor="#FBFDFB"  style="border:1px solid #FFFFFF;"><p>{$a.nome}</p></td>
+    <td bgcolor="#FBFDFB"  width="150px" style="border:1px solid #FFFFFF;"><p>{$a.nome}</p></td>
 	 <td bgcolor="#F9FBF9" style="border:1px solid #FFFFFF;"><p align="left">{$a.ipaddr}</p></td>
-    <td bgcolor="#FBFDFB"  style="border:1px solid #FFFFFF;"><p align="center"><img src="template/default/images/{$a.status}.gif" /></p></td>
+    <td style="border:1px solid #FFFFFF;"
+		
+		{if $a.status == 'ERR' }
+			bgcolor="#FF0033"
+		{/if}
+
+		{if $a.status == "OK"}
+			bgcolor="#569C5B"
+		{/if}
+		
+		{if $a.status == "WRN"}
+			bgcolor="#F7962B"
+		{/if}
+	
+	><p align="center" class="style1" >
+		{if $a.status == 'ERR' }
+			Erro
+		{/if}
+
+		{if $a.status == "OK"}
+			Ok
+		{/if}
+		
+		{if $a.status == "WRN"}
+			Alerta
+		{/if}
+	</p></td>
 	<td bgcolor="#FCFCFC"  style="border:1px solid #FFFFFF;"><p align="center">{$a.num_ping}</p></td>
     <td bgcolor="#FCFCFC"  style="border:1px solid #FFFFFF;"><p align="center">{$a.num_perdas}</p></td>  
     <td bgcolor="#FCFCFC"  style="border:1px solid #FFFFFF;"><p align="center">{assign var='minimo' value=$a.min_ping/1000}{if $minimo=="0"}<b>T.E.</b>{else}{$minimo}{/if}</p></td>
@@ -64,12 +95,12 @@
     <td bgcolor="#FCFCFC"  style="border:1px solid #FFFFFF;"><p align="center">{assign var='media' value=$a.media_ping/1000}{if $media=="0"}<b>T.E.</b>{else}{$media}{/if}</p></td>
   </tr>
  <tr>
-                                  <td height="1px" colspan="8" align="center" valign="middle" bgcolor="#DFDFDF"><img src="template/default/images/menu/spacer.gif" height="1"/></td>
+                                  <td height="1px" colspan="10" align="center" valign="middle" bgcolor="#DFDFDF"><img src="template/default/images/menu/spacer.gif" height="1"/></td>
         </tr>
       {/foreach}
     </table></td>
   </tr>
 </table>
-<p align="center" class="style6">T.E. = Tempo Esgotado </p>
+<p align="center" class="style6">T.E. = Tempo Esgotado</p>
 </body>
 </html>

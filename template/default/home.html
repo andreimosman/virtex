@@ -133,7 +133,7 @@ function Tecla(e)
 	</div>
 </fieldset>
 {/if}
-<div align="center">
+{if $exibir_monitor == 't'}<div align="center">
 <fieldset style="height:112; width:130; border:1px solid #004411"><legend><span class="style1">Monitoramento</span></legend>
 <table align="center" border="0" width="123" bgcolor="#A6C4B0" height="60">
   <tr>
@@ -155,6 +155,7 @@ function Tecla(e)
 
 </fieldset>
 </div>
+{/if}
 	<div name="caixa_pesquisa" id="caixa_pesquisa" class="box_fechada">
 		<table width="100%" class="barra_pequisa" bgcolor="#7BA88B" cellspacing=1 cellpadding=0>
 			<tr>

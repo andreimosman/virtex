@@ -248,6 +248,16 @@ class VASuporte extends VirtexAdmin {
 			
 		}else if($op == "monitoramento_barra"){
 		
+			$aSQL  = " SELECT " ;
+			$aSQL .= " alerta_sonoro ";
+			$aSQL .= " FROM pftb_preferencia_monitoracao ";
+
+			$alerta = $this->bd->obtemUnicoRegistro($aSQL) ;
+
+			///echo $alerta['alerta_sonoro'];
+			
+			$this->tpl->atribui("alerta_sonoro",$alerta['alerta_sonoro']);
+			
 		
 			$sSQL  = "SELECT ";
 			$sSQL .= " count(status) as num, status ";
