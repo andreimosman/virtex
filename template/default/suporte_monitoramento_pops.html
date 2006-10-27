@@ -36,7 +36,7 @@
       </tr>
       <tr>
         <td bgcolor="#F9FBF9"  width="60px" style="border:1px solid #FFFFFF;"><p><strong>Tipo</strong></p></td>
-		<td bgcolor="#F9FBF9" width="250px" style="border:1px solid #FFFFFF;" nowrap="nowrap"><p><strong>Nome</strong></p></td>
+		<td bgcolor="#F9FBF9" width="250px" style="border:1px solid #FFFFFF;"><p><strong>Nome</strong></p></td>
 		 <td bgcolor="#F9FBF9" style="border:1px solid #FFFFFF;">&nbsp;</td>
         <td bgcolor="#F9FBF9" style="border:1px solid #FFFFFF;">&nbsp;</td>
 		 <td bgcolor="#F5F5F5" style="border:1px solid #FFFFFF;"><p align="center"><strong>p.env</strong></p></td>
@@ -59,23 +59,9 @@
 	
 	
 	</td>
-    <td bgcolor="#FBFDFB"  width="150px" style="border:1px solid #FFFFFF;"><p>{$a.nome}</p></td>
+    <td bgcolor="#FBFDFB"  width="250px" style="border:1px solid #FFFFFF;"  nowrap="true"><p>{$a.nome}</p></td>
 	 <td bgcolor="#F9FBF9" style="border:1px solid #FFFFFF;"><p align="left">{$a.ipaddr}</p></td>
-    <td style="border:1px solid #FFFFFF;"
-		
-		{if $a.status == 'ERR' }
-			bgcolor="#FF0033"
-		{/if}
-
-		{if $a.status == "OK"}
-			bgcolor="#569C5B"
-		{/if}
-		
-		{if $a.status == "WRN"}
-			bgcolor="#F7962B"
-		{/if}
-	
-	><p align="center" class="style1" >
+    <td style="border:1px solid #FFFFFF;" {if $a.status == 'ERR' } bgcolor="#FF0033"{/if}{if $a.status == "OK"}bgcolor="#569C5B"{/if}{if $a.status == "WRN"}bgcolor="#F7962B"{/if}><p align="center" class="style1" >
 		{if $a.status == 'ERR' }
 			Erro
 		{/if}
