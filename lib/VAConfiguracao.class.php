@@ -2166,6 +2166,61 @@ class VAConfiguracao extends VirtexAdmin {
 					$this->arquivoTemplate = "preferencia_resumo.html";
 					return;						
 
+				}else if ($op == "preferencia_monitor"){
+				
+						$acao = @$_REQUEST["acao"];
+						
+						echo $acao;
+						$sSQL = "SELECT * FROM pftb_preferencia_monitoracao WHERE id_provedor = 1";
+						$monitor = $this->bd->obtemUnicoRegistro($sSQL);
+						//echo "SQL: $sSQL<BR>";
+						
+						$emails = $monitor["emails"];
+						$exibir_monitor = $monitor["exibir_monitor"];
+						$alerta_sonoro = $monitor["alerta_sonoro"];
+						
+						$this->tpl->atribui("emails",$emails);
+						$this->tpl->atribui("exibir_monitor",$exibir_monitor);
+						$this->tpl->atribui("alerta_sonoro",$alerta_sonoro);
+						
+						if ($acao == "alt"){
+						
+							$emails = @$_REQUEST["emails"];
+							$exibir_monitor = @$_REQUEST["exibir_monitor"];
+							$alerta_sonoro = @$_REQUEST["alerta_sonoro"];
+							
+							$sSQL = "UPDATE pftb_preferencia_monitoracao set emails = '$emails', exibir_monitor = $exibir_monitor, alerta_sonoro = $alerta_sonoro ";
+							$sSQL .= "WHERE id_provedor = 1";
+							
+							$this->bd->consulta($sSQL);
+							echo "UPDATE: $sSQL<br>";
+							$mensagem = "Preferências cadastradas com sucesso!";
+														
+							$this->tpl->atribui("mensagem",$mensagem);
+							
+							$this->tpl->atribui("url","configuracao.php?op=resumo");
+							$this->tpl->atribui("target","_self");
+							
+							$this->arquivoTemplate = "msgredirect.html";
+							return;
+
+						
+						
+						
+						
+						}
+						
+						
+						
+						
+						
+						
+						
+						
+						$this->arquivoTemplate = "configuracao_preferencia_monitoracao.html";
+						
+				
+				
 				}// $ops
 
 
