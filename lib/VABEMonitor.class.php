@@ -252,10 +252,11 @@
 				//$r=SOFreeBSD::fping($ip,$num_pacotes,$tamanho);
 				$info = $this->ich->obtemInfoServidor($icc_host);
 
-				if($this->icc->open($info["host"],$info["port"],$info["chave"],$info["username"],$info["password"])) {
+				if(@$this->icc->open($info["host"],$info["port"],$info["chave"],$info["username"],$info["password"])) {
 					// Conseguiu conectar o servidor
 					$r = $this->icc->getFPING($ip,$num_pacotes,$tamanho);
 				}
+				$this->icc->close();
 			}
 
 			// Retorna as respostas do ping
