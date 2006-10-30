@@ -306,7 +306,7 @@ class VAConfiguracao extends VirtexAdmin {
 					
 						if ($ip == "" || $ip == "NULL"){
 
-							$sSQL .= " 		$ip,";
+							$sSQL .= " 		$ip, ";
 
 						}else{
 
@@ -374,9 +374,9 @@ class VAConfiguracao extends VirtexAdmin {
 					
 					$sSQL .= "	 status = '" . $_REQUEST["status"] . "', ";
 					
-						if ($ip == "" || $ip == "NULL"){
+						if (!$ip){
 
-							$sSQL .= "  ipaddr = $ip ";
+							$sSQL .= "  ipaddr = NULL ";
 
 						}else{
 
