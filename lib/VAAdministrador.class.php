@@ -116,45 +116,116 @@ if( !defined("_VAADMINISTRADOR") ) {
 								return;
 
 							}
+							
+					////////$hoje = date('d/m/Y');
 
+					$operacao = "NOVOADM" ;
+					$valor_original = "" ;
+					$valor_alterado = "" ;
+					$username = $this->bd->escape(@$_REQUEST["admin"]); 
+					$tipo_conta  = "";
+					//$extra = $hoje ; 
+					$idcp = "NULL";
+					$nome = "NOME: " . $this->bd->escape(@$_REQUEST["nome"]) ."/STATUS : " .  $this->bd->escape(@$_REQUEST["status"]) ;
+			  
+					$this->logAdm($operacao,$valor_original,$valor_alterado,$username,$idcp,$tipo_conta,$nome);
 
-
-									  $id_admin = $this->bd->proximoID("adsq_id_admin");
-
-							   // Cadastro
-				   $sSQL  = "INSERT INTO ";
-				   $sSQL .= "   adtb_admin( ";
-				   $sSQL .= "      id_admin, admin, senha, status, ";
-				   $sSQL .= "      nome, email, primeiro_login) ";
-				   $sSQL .= "   VALUES (";
-				   $sSQL .= "     '" . $this->bd->escape($id_admin) . "', ";
-				   $sSQL .= "     '" . $this->bd->escape(@$_REQUEST["admin"]) . "', ";
-				   $sSQL .= "     '" . md5($this->bd->escape(@$_REQUEST["senha"])) . "', ";
-				   $sSQL .= "     '" . $this->bd->escape(@$_REQUEST["status"]) . "', ";
-				   $sSQL .= "     '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
-				   $sSQL .= "     '" . $this->bd->escape(@$_REQUEST["email"]) . "', ";
-				   $sSQL .= "     '" . $this->bd->escape($primeiro_login) . "' ";
-				   $sSQL .= "     )";
-						  }else {
+					$id_admin = $this->bd->proximoID("adsq_id_admin");
+					
+					
+					// Cadastro
+					$sSQL  = "INSERT INTO ";
+					$sSQL .= "   adtb_admin( ";
+					$sSQL .= "      id_admin, admin, senha, status, ";
+					$sSQL .= "      nome, email, primeiro_login) ";
+					$sSQL .= "   VALUES (";
+					$sSQL .= "     '" . $this->bd->escape($id_admin) . "', ";
+					$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["admin"]) . "', ";
+					$sSQL .= "     '" . md5($this->bd->escape(@$_REQUEST["senha"])) . "', ";
+					$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["status"]) . "', ";
+					$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
+					$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["email"]) . "', ";
+					$sSQL .= "     '" . $this->bd->escape($primeiro_login) . "' ";
+					$sSQL .= "     )";
+				
+					}else {
 							 // alteracao
+							 
+						$aSQL  = " SELECT ";
+						$aSQL .= " admin, status , nome, email , senha ";
+						$aSQL .= " FROM adtb_admin ";
+						$aSQL .= " WHERE admin = '".@$_REQUEST["admin"]."' ";
+						
+						$list_alt = $this->bd->obtemUnicoRegistro($aSQL);
+						
+						if ($list_alt['admin'] != $this->bd->escape(@$_REQUEST["admin"])){
+												
+							$valor_original = $list_alt['admin'] ;
+							$valor_alterado = $this->bd->escape(@$_REQUEST["admin"]);
+							$extra = "ALTERAÇÃO DE USERNAME";
 
-				$sSQL  = "UPDATE ";
-				$sSQL .= "   adtb_admin ";
-				$sSQL .= "SET ";
-				$sSQL .= "   admin = '" . $this->bd->escape(@$_REQUEST["admin"]) . "', ";
-					$sSQL .= "   status = '" . $this->bd->escape(@$_REQUEST["status"]) . "', ";
-					$sSQL .= "   nome = '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
-					$sSQL .= "   email = '" . $this->bd->escape(@$_REQUEST["email"]) . "' ";
-	//      			$sSQL .= "   primeiro_login = '" . $this->bd->escape($primeiro_login) . "' ";
-						if(($confsenha =="") && ($senha=="")){	
-					$sSQL .= "WHERE ";
-				$sSQL .= "   id_admin = '" . $this->bd->escape(@$_REQUEST["id_admin"]) . "' ";
+
 						}
-						else{
-				$sSQL .= " ,   senha = '" . md5($this->bd->escape(@$_REQUEST["senha"])) . "' ";
-				$sSQL .= " WHERE ";
-				$sSQL .= "   id_admin = '" . $this->bd->escape(@$_REQUEST["id_admin"]) . "' ";
+						else if ($list_alt['status'] != $this->bd->escape(@$_REQUEST["status"])){
+												
+							$valor_original = $list_alt['status'] ;
+							$valor_alterado = $this->bd->escape(@$_REQUEST["status"]);
+							$extra = "ALTERAÇÃO DE STATUS";
+												
+												
 						}
+						else if ($list_alt['nome'] != $this->bd->escape(@$_REQUEST["nome"])){
+												
+							$valor_original = $list_alt['nome'] ;
+							$valor_alterado = $this->bd->escape(@$_REQUEST["nome"]);
+							$extra = "ALTERAÇÃO DE NOME";
+
+						}
+						else if ($list_alt['email'] != $this->bd->escape(@$_REQUEST["email"])){
+												
+							$valor_original = $list_alt['email'] ;
+							$valor_alterado = $this->bd->escape(@$_REQUEST["email"]);
+							$extra = "ALTERAÇÃO DE EMAIL";
+
+						}
+						else if ($list_alt['senha'] != md5($this->bd->escape(@$_REQUEST["senha"]))){
+
+							$valor_original = "Alteração de Senha" ;
+							$valor_alterado = "Alteração de Senha" ;
+							$extra = "ALTERAÇÃO DE SENHA";
+
+						}
+						$operacao = "ALTADM" ; 
+						$username = $this->bd->escape(@$_REQUEST["admin"]);
+						$idcp = 'NULL' ;
+						$tipo_conta = "";
+						
+						
+						$this->logAdm($operacao,$valor_original,$valor_alterado,$username,$idcp,$tipo_conta,$extra);
+						
+						
+
+						$sSQL  = "UPDATE ";
+						$sSQL .= "   adtb_admin ";
+						$sSQL .= "SET ";
+						$sSQL .= "   admin = '" . $this->bd->escape(@$_REQUEST["admin"]) . "', ";
+						$sSQL .= "   status = '" . $this->bd->escape(@$_REQUEST["status"]) . "', ";
+						$sSQL .= "   nome = '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
+						$sSQL .= "   email = '" . $this->bd->escape(@$_REQUEST["email"]) . "' ";
+						//      			$sSQL .= "   primeiro_login = '" . $this->bd->escape($primeiro_login) . "' ";
+						
+							if(($confsenha =="") && ($senha=="")){	
+						
+								$sSQL .= "WHERE ";
+								$sSQL .= "   id_admin = '" . $this->bd->escape(@$_REQUEST["id_admin"]) . "' ";
+						
+							}else{
+								
+								$sSQL .= " ,   senha = '" . md5($this->bd->escape(@$_REQUEST["senha"])) . "' ";
+								$sSQL .= " WHERE ";
+								$sSQL .= "   id_admin = '" . $this->bd->escape(@$_REQUEST["id_admin"]) . "' ";
+							
+							}
 
 
 						  }
