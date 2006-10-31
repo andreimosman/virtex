@@ -2,6 +2,7 @@
 {include file='cliente_header.html'}
 
 {literal}
+<script src="template/default/ajax_ping_arp.js" language="javascript" />
 <script language="JavaScript" type="text/javascript">
 
 function confirmacao(){
@@ -32,9 +33,9 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
               <tr>
                 <td colspan=2> <table width="100%" border="0" cellspacing="2" cellpadding="0">
                     <tr>
-                      <td width="84%"><font face=arial size="+1" color="#000000"><b>Ficha
+                      <td width="70%"><font face=arial size="+1" color="#000000"><b>Ficha
                         técnica</b></font> </td>
-                      <td width="16%" align="center"> <p>[<a href="{$smarty.server.PHP_SELF}?op=conta&id_cliente={$id_cliente}&username={$username}&dominio={$dominio}&tipo_conta={$tipo_conta}">alterar</a>]</p></td>
+                      <td width="30%" align="center"> <p>[<a href="{$smarty.server.PHP_SELF}?op=conta&id_cliente={$id_cliente}&username={$username}&dominio={$dominio}&tipo_conta={$tipo_conta}">alterar</a>] [<a href="javascript:;" onClick="javascript: Ping();">ping</a>] [<a href="javascript:;" onClick="javascript: Arp();">arp</a>] </p></td>
                     </tr>
                   </table></td>
               </tr>
@@ -108,6 +109,19 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 								<td width="150" bgcolor="#FFFFFF"> <p>{$download_kbps} kbps</p> </td>
 							</tr>
 						</table>
+					</td>
+				</tr>
+				<tr>
+				  <td align="center">
+						
+								<form name="frmConta" action="">
+										<input type="hidden" value="{$endereco_ip}" name="end_ip">
+										<input type="hidden" value="{$nas.id_nas}" name="nas_orig">
+								</form>
+								<font face="verdana" size="2" color="#999999">
+			<div id="ping" align="left" class="box_fechada" style="height:120px; width:450px;border:2px solid #EFEFEF; padding-left:10px; padding-top:5px;"></div>
+							  	</font>
+						       
 					</td>
 				</tr>
 

@@ -1,5 +1,6 @@
 <!-- cliente_conta.html --> {include file='cliente_header.html'}<script type="text/javascript" src="template/default/ajax.js"></script>
 <script type="text/javascript" src="template/default/ajax_validacoes.js"></script>
+<script type="text/javascript" src="template/default/ajax_ping_arp.js"></script>
 {if (($lic_bandalarga == 'nao')&&($tipo_conta == "BL"))||(($lic_discado == 'nao')&&($tipo_conta == "D"))||(($lic_hospedagem == 'nao')&&($tipo_conta == "H"))||(($lic_email == 'nao')&&($tipo_conta == "E"))}
 {literal}<script>window.location="home.php";</script>{/literal}
 {/if}
@@ -237,39 +238,37 @@ function check(){
 
                             <tr>
                               <td align="center" valign="middle"><table width="600" border="0">
+							  
             <tr>
-                <td width="350" valign="top"><table width="300" border=0 bgcolor="#F1F1F1">
+                <td width="350" valign="top"><table width="300" height="165" border=0 cellspacing="2" bgcolor="#F1F1F1">
                   <tr> 
-                      <td widht="150" colspan="3"><h2><font color="#000000">Dados do Usuário</font></h2></td>
+                      <td widht="150" colspan="3"><font color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><strong>Dados do Usuário</strong></font></td>
 					
                       
-                    <td width="118" valign="top">{if $tipo_bandalarga=="P"} 
+                    <td width="154" valign="top">{if $tipo_bandalarga=="P"} 
                       <div align="right"> 
                           <p>[<a href="suporte.php?op=extrato&valor_pesquisa={$username}&tipo_conta={$tipo_conta}">extrato 
                             de acesso</a>]<br>{/if}</p>
-                        </div></td>
-                    </tr>
+                    </div></td>
+                  </tr>
                     <tr> 
-                      <td bgcolor="#FFFFFF" align="right"  width="77" valign="top"> 
-                        <p>Username:</p></td>
+                      <td bgcolor="#FFFFFF" align="right"  width="64" valign="top"> 
+                      <p align="right">Username:</p></td>
                       <td bgcolor="#FFFFFF" colspan="3"><input type="text" maxlength="30" name="username2"  disabled="true" value="{$username}"></td>
-
                     </tr>
                     <tr> 
-                      <td bgcolor="#FFFFFF" align="right"  width="77" valign="top"> 
-                        <p>Senha:</p></td>
-                      <td bgcolor="#FFFFFF" colspan="3"> <input type="password" maxlength="32" name="senha" id="senha" > 
-                      </td> 
+                      <td bgcolor="#FFFFFF" align="right"  width="64" valign="top"> 
+                      <p align="right">Senha:</p></td>
+                      <td bgcolor="#FFFFFF" colspan="3"> <input type="password" maxlength="32" name="senha" id="senha" >                      </td> 
                     </tr>
                     <tr> 
-                      <td bgcolor="#FFFFFF" align="right"  width="77" valign="top"> 
-                        <p>Confirme:</p></td>
-                      <td bgcolor="#FFFFFF" colspan="3"> <input type="password" maxlength="32" name="conf_senha" id="conf_senha" > 
-                      </td> 
+                      <td bgcolor="#FFFFFF" align="right"  width="64" valign="top"> 
+                      <p align="right">Confirme:</p></td>
+                      <td bgcolor="#FFFFFF" colspan="3"> <input type="password" maxlength="32" name="conf_senha" id="conf_senha" >                      </td> 
                     </tr>
                     <tr> 
-                      <td  width="77" align="right" valign="top" bgcolor="#FFFFFF"> 
-                        <p>Status:</p></td>
+                      <td  width="64" align="right" valign="top" bgcolor="#FFFFFF"> 
+                      <p align="right">Status:</p></td>
                       
                       <td bgcolor="#FFFFFF" colspan="3"> <p>{if $status == "S"}<font color="#999999"><strong>
                           <input type="text" name="status" value="Suspenso"  style="border: #000000" disabled>
@@ -284,7 +283,7 @@ function check(){
                           {/if} </p></td> 
                     </tr>
                     <tr> 
-                      <td  width="77" align="right" valign="top" bgcolor="#FFFFFF"><p>Tipo:</p></td>
+                      <td  width="64" align="right" valign="top" bgcolor="#FFFFFF"><p align="right">Tipo:</p></td>
                       <td bgcolor="#FFFFFF" colspan="3"><p> 
                           <select name='conta_mestre' >
                             <option></option>
@@ -294,11 +293,18 @@ function check(){
                           </select>
                         </p></td> 
                     </tr>
+					<tr>
+						<td  bgcolor="#FFFFFF" colspan="4">
+							<div align="center"><a href="javascript:;" onClick="javascript: Ping();">
+						        <font color="#FF0033">
+							  <input type="hidden" value="{$endereco_ip}" name="end_ip">
+							  pingar para o cliente </font></a> {if $tipo_bandalarga == 'I'} - <a href="javascript:;" onClick="javascript: Arp();"><font color="#FF0033">arp</font></a> {/if}</div></td>
+					</tr>
                   </table></td>
-                <td width="450" valign="top"><table width="300" border=0 bgcolor="#F1F1F1" id="disc">
+                <td width="450" valign="top"><table width="300" height="165" border=0 bgcolor="#F1F1F1" id="disc">
                   <tr> 
-                      <td colspan=2><p><strong>Dados da Conexão</strong></p></td>
-                    </tr>
+                      <td colspan=2><font color="#000000" face="Arial, Helvetica, sans-serif" size="-1"><strong>Dados da Conex&atilde;o </strong></font></td>
+                  </tr>
                     <tr> 
                       <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>POP:</p></td>
                       <td bgcolor="#FFFFFF"> <SELECT name='id_pop' >
@@ -318,7 +324,7 @@ function check(){
                           <option value='A' >Automática</option>
                           <option value='M' >Manual</option>
                         </select> <br> <input type="text" name="endereco_ip" id="endereco_ip2" value="{$endereco_ip}"></td>
-						</tr><tr>
+				  </tr><tr>
 						<td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>NAS:</p></td>
                       <td bgcolor="#FFFFFF"> <SELECT name='id_nas' onChange="javascript:alteraNas();">
 										{foreach item=v from=$lista_nas}
@@ -329,7 +335,6 @@ function check(){
 
                         </SELECT> </td>
 						</tr>
-						
                       <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>MAC:</p></td>
                       <td bgcolor="#FFFFFF" valign="top"><input type="text" name="mac" value="{$mac}" maxlength="17" size=17></td>
                       {literal} 
@@ -343,10 +348,18 @@ function check(){
                           <input name="redirecionar" type="checkbox" value="true" id="redirecionar2" class="checkbox" {if $ip_externo}checked{/if}>
                           {if $ip_externo}IP: {$ip_externo}{/if}</p></td>
                     </tr>
+					
                   </table></td>
               </tr>
+			   <tr>
+							  	<td colspan="2" align="center"><font face="verdana" size="2" color="#999999">
+			<div id="ping" align="left" class="box_fechada" style="height:120px; width:395px;border:1px solid #EFEFEF;"></div>
+							  	</font>
+				</td>
+							  </tr>
               <tr>
-                <td colspan="2"> <p align="center"><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Banda 
+                <td colspan="2" align="center">  <p align="center"><strong> <font size="1" face="Verdana, Arial, Helvetica, sans-serif">
+                Banda 
 
                   <input name="op" type="hidden" id="op" value="conta">
                   <input name="id_cliente" type="hidden" id="id_cliente" value="{$id_cliente}">
@@ -389,6 +402,7 @@ function check(){
                   </div></td>
          
               </tr>
+			 
                           </table>
 
 

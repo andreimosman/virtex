@@ -89,7 +89,132 @@ class VAConfiguracao extends VirtexAdmin {
 				//echo "OK";
 			} 
 
-		}else if ($op == "ajax"){
+		}
+		
+		else if ($op == "ajax_ping"){
+		
+				$tamanho = @$_REQUEST["tamanho"];
+				$endereco_ip = @$_REQUEST["ip"];
+				$pacotes = @$_REQUEST["pacotes"];
+				$id_nas = @$_REQUEST["id_nas"];
+				
+				$aSQL  = " SELECT tipo_nas FROM cftb_nas WHERE id_nas = '$id_nas' ";
+				///echo $aSQL;
+				$nas = $this->bd->obtemUnicoRegistro($aSQL);
+				
+				$erros = array();
+				
+				if(!$tamanho || $tamanho < 1) $tamanho = 32;
+				if(!$pacotes || $pacotes < 1) $pacotes = 4;
+
+
+				header("pragma: no-cache");
+				header("connection: keep-state");
+				echo "<p>\n";
+				
+				
+				if( $nas["tipo_nas"] == "I" ) {
+					   $r = new RedeIP($endereco_ip);
+
+					   $gateway    = $r->minHost();
+					   $mascara    = $r->mascara();
+					   $ip_cliente = $r->maxHost();
+
+					   
+					  // echo $ip_cliente;
+					  
+					  			
+					//$pinglist = `ping $ip -c $pacotes -s $tamanho`;
+					$fd = popen("/sbin/ping  -n -c " . escapeshellarg($pacotes) . " -s " . escapeshellarg($tamanho) . " " . escapeshellarg($ip_cliente),"r");
+					///echo "PING: " . $fd . "<br>";
+
+					while(!feof($fd)) {
+						for($x=1;$x<250;$x++) {
+							echo "<!-- BUFFER -->\n";
+							flush();
+						}
+
+						$linha = fgets($fd);
+						echo nl2br($linha);
+
+						flush();
+
+						sleep(1);
+					}
+
+					fclose($fd);	   					   
+
+				}else if ( $nas["tipo_nas"] == "P"  ){
+				
+					$fd = popen("/sbin/ping  -n -c " . escapeshellarg($pacotes) . " -s " . escapeshellarg($tamanho) . " " . escapeshellarg('172.16.253.254'),"r");
+						///echo "PING: " . $fd . "<br>";
+
+						while(!feof($fd)) {
+							for($x=1;$x<250;$x++) {
+								echo "<!-- BUFFER -->\n";
+								flush();
+							}
+
+							$linha = fgets($fd);
+							echo nl2br($linha);
+
+							flush();
+
+							sleep(1);
+						}
+
+						fclose($fd);
+
+				
+				}else {
+					for($i=0; $i<count($erros); $i++) echo "$erros[$i]<br>";
+				}
+				echo "</p>";
+				$this->arquivoTemplate = "";
+
+
+		///echo $ip ;
+		}
+		
+		else if ($op == "ajax_arp"){
+		
+		
+		$host = @$_REQUEST["host"];
+		$ip = @$_REQUEST["ip"];
+
+		$arp=array();
+
+		if( $ip ) {
+			$ich = new ICHostInfo();
+			$icc = new ICClient();
+
+			$hosts = $ich->obtemListaServidores();
+
+			$arp = array();  
+
+			for($i=0;$i<count($hosts);$i++) {
+				if( $host && $host != $hosts[$i] ) continue;
+
+				$info = $ich->obtemInfoServidor($hosts[$i]);
+
+				if(!$icc->open($info["host"],$info["port"],$info["chave"],$info["username"],$info["password"])) {
+					continue;
+				}
+
+				$arp[] = array("host"=>$hosts[$i], "tabela" => $icc->getARP($ip) );
+
+			}
+
+
+		}
+
+
+
+
+
+		}	
+		
+		else if ($op == "ajax"){
 		
 			$tipo = @$_REQUEST["tipo"]; 
 			//$id_pop = @$_REQUEST["id_pop"]; 
@@ -470,8 +595,8 @@ class VAConfiguracao extends VirtexAdmin {
 			$reg = array();
 
 			$sSQL  = "SELECT ";
-			$sSQL .= "   id_nas, nome, ip, secret, tipo_nas ";
-			$sSQL .= "FROM cftb_nas ";
+			$sSQL .= "   id_nas, nome, ip, secret, tipo_nas,infoserver ";
+			$sSQL .= "FROM cftb_nas ORDER BY id_nas ASC ";
 
 			$reg = $this->bd->obtemRegistros($sSQL);
 			
@@ -506,6 +631,12 @@ class VAConfiguracao extends VirtexAdmin {
 
 			$reg = array();
 
+			$host_info = new ICHostInfo();
+			$hosts = $host_info->obtemListaServidores();
+			//echo $hosts;
+
+			$this->tpl->atribui("hosts",$hosts);
+
 
 			if( $acao ) {
 				// Se ele recebeu o campo ação é pq veio de um submit
@@ -515,7 +646,7 @@ class VAConfiguracao extends VirtexAdmin {
 				if( $id_nas ) {
 					// SELECT
 					$sSQL  = "SELECT ";
-					$sSQL .= "   id_nas, nome, ip, secret, tipo_nas ";
+					$sSQL .= "   id_nas, nome, ip, secret, tipo_nas, infoserver ";
 					$sSQL .= "FROM cftb_nas ";
 					$sSQL .= "WHERE id_nas = '$id_nas'";
 
@@ -557,14 +688,18 @@ class VAConfiguracao extends VirtexAdmin {
 
 							$sSQL  = "INSERT INTO ";
 							$sSQL .= "   cftb_nas( ";
-							$sSQL .= "      id_nas, nome, ip, secret, tipo_nas ) ";
+							$sSQL .= "      id_nas, nome, ip, secret, tipo_nas, infoserver) ";
 							$sSQL .= "   VALUES (";
 							$sSQL .= "     '" . $id_nas . "', ";
 							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
 							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["ip"]) . "', ";
 							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["secret"]) . "', ";
-							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["tipo_nas"]) . "' ";
+							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["tipo_nas"]) . "', ";
+							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["infoserver"]) . "' ";
 							$sSQL .= "     )";
+							
+							////echo $sSQL ;
+
 
 
 							$this->spool->radiusAdicionaNAS($ip,$secret);
@@ -575,14 +710,18 @@ class VAConfiguracao extends VirtexAdmin {
 
 							$sSQL  = "INSERT INTO ";
 							$sSQL .= "   cftb_nas( ";
-							$sSQL .= "      id_nas, nome, ip, secret, tipo_nas ) ";
+							$sSQL .= "      id_nas, nome, ip, secret, tipo_nas, infoserver ) ";
 							$sSQL .= "   VALUES (";
 							$sSQL .= "     '" . $this->bd->escape($id_nas) . "', ";
 							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
 							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["ip"]) . "', ";
 							$sSQL .= "     NULL, ";
-							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["tipo_nas"]) . "' ";
+							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["tipo_nas"]) . "', ";
+							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["infoserver"]) . "' ";
 							$sSQL .= "     )";
+							
+							///echo $sSQL ;
+
 
 						}
 
@@ -604,7 +743,7 @@ class VAConfiguracao extends VirtexAdmin {
 						if($tipo_nas_up == "R" || $tipo_nas_up == "P"){
 
 							$tSQL  = "SELECT ";
-							$tSQL .= "	ip, secret ";
+							$tSQL .= "	ip, secret,infoserver ";
 							$tSQL .= "FROM ";
 							$tSQL .= "	cftb_nas ";
 							$tSQL .= "WHERE ";
@@ -619,10 +758,12 @@ class VAConfiguracao extends VirtexAdmin {
 							$sSQL .= "   nome = '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
 							$sSQL .= "   ip = '" . $this->bd->escape(@$_REQUEST["ip"]) . "', ";
 							$sSQL .= "   secret = '" . $this->bd->escape(@$_REQUEST["secret"]) . "', ";
-							$sSQL .= "   tipo_nas = '" . $this->bd->escape(@$_REQUEST["tipo_nas_up"]) . "' ";
+							$sSQL .= "   tipo_nas = '" . $this->bd->escape(@$_REQUEST["tipo_nas_up"]) . "', ";
+							$sSQL .= "   infoserver = '" . $this->bd->escape(@$_REQUEST["infoserver"]) . "' ";
 							$sSQL .= "WHERE ";
 							$sSQL .= "   id_nas = '" . $this->bd->escape(@$_REQUEST["id_nas"]) . "' ";  
 
+							///echo $sSQL ;
 
 
 							if ($ip != $compara['ip'] || $secret != $compara['secret']){
@@ -643,12 +784,13 @@ class VAConfiguracao extends VirtexAdmin {
 							$sSQL .= "SET ";
 							$sSQL .= "   nome = '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
 							$sSQL .= "   ip = '" . $this->bd->escape(@$_REQUEST["ip"]) . "', ";
+							$sSQL .= "   infoserver = '" . $this->bd->escape(@$_REQUEST["infoserver"]) . "', ";
 							$sSQL .= "   secret = NULL, ";
 							$sSQL .= "   tipo_nas = '$tipo_nas_up' ";
 							$sSQL .= "WHERE ";
 							$sSQL .= "   id_nas = '" . $this->bd->escape(@$_REQUEST["id_nas"]) . "' ";  
 
-
+							////echo $sSQL ;
 
 						}
 
@@ -698,7 +840,9 @@ class VAConfiguracao extends VirtexAdmin {
 			$this->tpl->atribui("ls_tipo_nas",$_LS_TIPO_NAS);
 
 			// Atribui os campos
+			
 			$this->tpl->atribui("id_nas",@$reg["id_nas"]);
+			$this->tpl->atribui("infoserver",@$reg["infoserver"]);
 			$this->tpl->atribui("nome",@$reg["nome"]);
 			$this->tpl->atribui("ip",@$reg["ip"]);// pega a info do db e atribui ao campo correspon do form
 			$this->tpl->atribui("secret",@$reg["secret"]);
@@ -747,7 +891,7 @@ class VAConfiguracao extends VirtexAdmin {
 		$reg = array();
 
 		$sSQL  = "SELECT ";
-		$sSQL .= "   id_nas, nome, ip, secret, tipo_nas ";
+		$sSQL .= "   id_nas, nome, ip, secret, tipo_nas, infoserver ";
 		$sSQL .= "FROM ";
 		$sSQL .= "   cftb_nas ";
 		$sSQL .= "WHERE ";
@@ -862,7 +1006,7 @@ class VAConfiguracao extends VirtexAdmin {
 		if( !$erro ) {
 			// Informações do NAS
 			$sSQL  = "SELECT ";
-			$sSQL .= "   id_nas, nome, ip, secret, tipo_nas ";
+			$sSQL .= "   id_nas, nome, ip, secret, tipo_nas, infoserver ";
 			$sSQL .= "FROM ";
 			$sSQL .= "   cftb_nas ";
 			$sSQL .= "WHERE ";
@@ -1586,6 +1730,7 @@ class VAConfiguracao extends VirtexAdmin {
 					$convenio_boleto = @$_REQUEST["convenio_boleto"];	
 					$enviar_email = @$_REQUEST["enviar_email"];
 					$mensagem_email = nl2br(@$_REQUEST["mensagem_email"]);
+					$email_remetente = @$_REQUEST['email_remetente'];
 					
 					if ($enviar_email == ""){
 					
@@ -1665,10 +1810,10 @@ class VAConfiguracao extends VirtexAdmin {
 						$sSQL .= " pftb_preferencia_cobranca ";
 						$sSQL .= " (id_provedor, carencia, tx_juros, multa, dia_venc, cod_banco, carteira, ";
 						$sSQL .= " agencia, num_conta, convenio, pagamento, observacoes, path_contrato, cod_banco_boleto, ";
-						$sSQL .= " carteira_boleto, agencia_boleto, conta_boleto, convenio_boleto, enviar_email, mensagem_email) ";
+						$sSQL .= " carteira_boleto, agencia_boleto, conta_boleto, convenio_boleto, enviar_email, mensagem_email, email_remetente) ";
 						$sSQL .= " VALUES ( '1', '$carencia', '$tx_juros', '$multa', '$dia_venc', $cod_banco, $carteira, ";
 						$sSQL .= "			$agencia, $num_conta, $convenio, '$pagamento', '$observacoes', '$path_contrato', $cod_banco_boleto, ";
-						$sSQL .= "			$carteira_boleto, $agencia_boleto, $conta_boleto, $convenio_boleto, '$enviar_email', '$mensagem_email'); ";
+						$sSQL .= "			$carteira_boleto, $agencia_boleto, $conta_boleto, $convenio_boleto, '$enviar_email', '$mensagem_email', '$email_remetente' ); ";
 						$sSQL .= " COMMIT ; ";
 						
 						
@@ -2037,7 +2182,7 @@ class VAConfiguracao extends VirtexAdmin {
 					$externos = $this->bd->obtemRegistros($sSQL);
 
 					$sSQL  = "SELECT ";
-					$sSQL .= "id_nas, nome, ip, tipo_nas ";
+					$sSQL .= "id_nas, nome, ip, tipo_nas, infoserver ";
 					$sSQL .= "FROM ";
 					$sSQL .= "cftb_nas ";
 					$sSQL .= "WHERE ";
@@ -2178,8 +2323,10 @@ class VAConfiguracao extends VirtexAdmin {
 						$emails = $monitor["emails"];
 						$exibir_monitor = $monitor["exibir_monitor"];
 						$alerta_sonoro = $monitor["alerta_sonoro"];
+						$num_pings = $monitor["num_pings"];
 						
 						$this->tpl->atribui("emails",$emails);
+						$this->tpl->atribui("num_ping",$num_pings);
 						$this->tpl->atribui("exibir_monitor",$exibir_monitor);
 						$this->tpl->atribui("alerta_sonoro",$alerta_sonoro);
 						
@@ -2188,9 +2335,11 @@ class VAConfiguracao extends VirtexAdmin {
 							$emails = @$_REQUEST["emails"];
 							$exibir_monitor = @$_REQUEST["exibir_monitor"];
 							$alerta_sonoro = @$_REQUEST["alerta_sonoro"];
+							$num_pings = @$_REQUEST["num_ping"];
 							
-							$sSQL = "UPDATE pftb_preferencia_monitoracao set emails = '$emails', ";
 							
+							$sSQL  = "UPDATE pftb_preferencia_monitoracao set emails = '$emails', ";
+							$sSQL .= " num_pings = '$num_pings', ";
 							
 							if(!$exibir_monitor){
 														

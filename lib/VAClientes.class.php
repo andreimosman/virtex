@@ -2276,6 +2276,12 @@ class VAClientes extends VirtexAdmin {
 			$lista_nas = $this->bd->obtemRegistros($sSQL);
 
 			global $_LS_TIPO_NAS;
+			
+			$bSQL  = " SELECT tipo_bandalarga FROM cntb_conta_bandalarga WHERE username = '$username' AND dominio = '$dominio'  " ;
+			$tipo_bandalarga = $this->bd->obtemUnicoRegistro($bSQL);
+			
+			$this->tpl->atribui("tipo_bandalarga",$tipo_bandalarga['tipo_bandalarga']);
+			
 
 			for($i=0;$i<count($lista_nas);$i++) {
 				 $lista_nas[$i]["tp"] = $_LS_TIPO_NAS[ $lista_nas[$i]["tipo_nas"] ];
@@ -4265,6 +4271,7 @@ class VAClientes extends VirtexAdmin {
 						$this->tpl->atribui("pop",$pop);
 
 						//////////echo $nas;
+						///echo "AI AI AI";
 						//////////echo $pop;
 
 						if( $nas["tipo_nas"] == "I" ) {
