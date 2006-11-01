@@ -30,10 +30,19 @@
 		}
 		
 		protected function initVars() {
-
 			$this->host = "0.0.0.0";
 			$this->port = "11000";
 		}
+		
+		
+		protected function puts($texto) {
+			$ret = @fputs($this->conn,$texto);
+			if( !$ret ) {
+				// Faz alguma coisa	
+			}
+			return($ret);
+		}
+		
 
 
 		/**
@@ -64,7 +73,7 @@
 			// Gera o challenge
 			$challenge = crypt( rand(1000,2000) ,"VA");
 
-			fwrite($this->conn,$this->talk("VACH",$challenge,$this->chave));
+			@fwrite($this->conn,$this->talk("VACH",$challenge,$this->chave));
 
 
 			$transmissao = false;
@@ -98,11 +107,11 @@
 							@list($user,$pass) = explode("::",$infoauth);
 
 							if( !$this->auth($user,$pass) ) {
-								fwrite($this->conn,$this->talk("VAER","Autenticação Inválida",$challenge));
+								@fwrite($this->conn,$this->talk("VAER","Autenticação Inválida",$challenge));
 								return(-1);
 							}
 
-							fwrite($this->conn,$this->talk("VAOK","Bem vindo",$challenge));
+							@fwrite($this->conn,$this->talk("VAOK","Bem vindo",$challenge));
 
 							break;
 						/**
@@ -111,7 +120,7 @@
 						 */				
 						case 'VASS':
 							$tipo_transmissao = 'stats';
-							fwrite($this->conn,$this->talk("VAOK","Aguardando início de transmissão",$challenge));
+							@fwrite($this->conn,$this->talk("VAOK","Aguardando início de transmissão",$challenge));
 							$transmissao = true;
 							break;
 
@@ -120,7 +129,7 @@
 						 */				
 						case 'VAAR': // ARP REQUEST
 							// Primeiro envia um "VAAS" (iniciando ARP SEND)
-							fwrite($this->conn,$this->talk("VAAS","",$challenge));
+							@fwrite($this->conn,$this->talk("VAAS","",$challenge));
 							$ip = trim($proc["parametros"]);
 							
 							if(!$ip) $ip = "-a";
@@ -132,8 +141,8 @@
 								$tabelaarp .= $arp[$i]["addr"].",".$arp[$i]["mac"].",".$arp[$i]["iface"]."\n";
 							}
 							
-							fputs($this->conn,base64_encode($this->criptografa($tabelaarp,$challenge)));
-							fputs($this->conn,"\n.\n");
+							$this->puts(base64_encode($this->criptografa($tabelaarp,$challenge)));
+							$this->puts("\n.\n");
 							
 
 							break;
@@ -142,15 +151,15 @@
 						 */
 						case 'VAFP':
 							// Primeiro envia um "VAFS" (iniciando FPING SEND)
-							fwrite($this->conn,$this->talk("VAFS","",$challenge));
+							@fwrite($this->conn,$this->talk("VAFS","",$challenge));
 							list($ip,$num_pacotes,$tamanho) = explode(":",trim($proc["parametros"]));
 
 							
 							$ping = (!$ip ? array() : SOFreeBSD::fping($ip,$num_pacotes,$tamanho));
 							$resposta = implode(":",$ping);
 							
-							fputs($this->conn,base64_encode($this->criptografa($resposta,$challenge)));
-							fputs($this->conn,"\n.\n");
+							$this->puts(base64_encode($this->criptografa($resposta,$challenge)));
+							$this->puts("\n.\n");
 							
 							break;
 							
@@ -159,7 +168,7 @@
 						 */				
 						case 'VASR': // STAT REQUEST
 							// Primeiro envia um "VASI" (iniciando STAT INIT)
-							fwrite($this->conn,$this->talk("VASI","",$challenge));
+							@fwrite($this->conn,$this->talk("VASI","",$challenge));
 							$stats = SOFreeBSD::obtemEstatisticas();
 							
 							
@@ -171,8 +180,8 @@
 
 
 							
-							fputs($this->conn,base64_encode($this->criptografa($estatisticas,$challenge)));
-							fputs($this->conn,"\n.\n");
+							$this->puts(base64_encode($this->criptografa($estatisticas,$challenge)));
+							$this->puts("\n.\n");
 							
 							break;
 
@@ -202,7 +211,7 @@
 
 
 						// Retorna OK
-						fwrite($this->conn,$this->talk("VAOK","Dados Recebidos",$challenge));
+						@fwrite($this->conn,$this->talk("VAOK","Dados Recebidos",$challenge));
 
 					} else {
 						$dados .= $linha;
@@ -218,10 +227,11 @@
 
 			$server_str = "tcp://" . $this->host . ":" . $this->port;
 
-			$socket = stream_socket_server($server_str, $errno, $errstr);
+			$socket = @stream_socket_server($server_str, $errno, $errstr);
 
 			if( !$socket ) {
 				echo "$errstr ($errno)\n";
+				exit(-1);
 			} else {
 				/**
 				 * Loop Principal

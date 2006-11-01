@@ -125,7 +125,7 @@
 		 * Abre uma conexão
 		 */
 		public function open($host,$porta,$chave,$user,$pass) {
-			$this->conn = fsockopen($host,$porta,$errno,$errstr,30);
+			$this->conn = @fsockopen($host,$porta,$errno,$errstr,30);
 			
 			$this->conectado = false;
 			if( !$this->conn ) {

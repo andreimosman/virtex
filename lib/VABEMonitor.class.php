@@ -15,7 +15,11 @@
 		protected $processados;
 		protected $hosts;
 		protected $ich;
-		protected $icc;
+		protected $icc_cache;
+		
+		// Preferencias
+		protected $prefs;
+		 
 		
 		/**
 		 * Construtor
@@ -23,7 +27,6 @@
 		public function __construct() {
 			parent::__construct();
 			$this->initVars();
-			
 			
 			//$this->licencaBL = ((int)$this->licenca("backend","banda_larga"));
 			//$this->licencaD  = ((int)$this->licenca("backend","discado"));
@@ -40,19 +43,22 @@
 		protected function initVars() {
 			$this->processados=array();
 			$this->ich = new ICHostInfo();
-			$this->icc = new ICClient();
 			$this->hosts=$this->ich->obtemListaServidores();
-
+			$this->icc_cache=array();
+			
+			$sSQL  = "SELECT ";
+			$sSQL .= "   emails,num_pings ";
+			$sSQL .= "FROM ";
+			$sSQL .= "   pftb_preferencia_monitoracao ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "   id_provedor=1";
+			$this->prefs = $this->bd->obtemUnicoRegistro($sSQL);
+			
 		}
 
 		public function executa() {
-		
-			//for($i=0;$i<count($this->hosts);$i++) {
-			//	echo $this->hosts[$i]."\n";
-			//}
-		
-		
 			$this->testeRecursivo();
+			$this->limpaCache();
 		}
 		
 		
@@ -79,8 +85,9 @@
 				$pop = $this->bd->obtemUnicoRegistro($sSQL);
 				
 				if( $ip ) {
-				
-					$r = $this->testePing($ip,2,"",@$pop["infoserver"]);
+					$num_pings =  !@$this->prefs["num_pings"] ? 2 : @$this->prefs["num_pings"];
+
+					$r = $this->testePing($ip,$num_pings,"",@$pop["infoserver"]);
 
 					$perdas=0;
 					$minimo=999999999999;
@@ -112,10 +119,10 @@
 					$regs = $this->bd->obtemRegistros($sSQL);
 					$num_erros=0;
 					$status='OK';
-					$media = ($maximo + $minimo)/count($r);
+					$media = count($r)?($maximo + $minimo)/count($r):0;
 
 					if($perdas == count($r)){
-						$status = 'ERR';
+						$status = !count($r)?'IER':'ERR';
 						$minimo=0;
 						$maximo=0;
 						$media=0;
@@ -125,12 +132,6 @@
 					if( $status != 'OK' ) {
 						$num_erros=1;
 					}
-					
-					//$status='ERR';
-					$minimo=$minimo;
-					$maximo=$maximo;
-					$media=$media;
-					
 
 					if( !count($regs) ) {
 						// Insere no banco de dados.
@@ -186,23 +187,10 @@
 						$sSQL .= "WHERE ";
 						$sSQL .= "   id_pop = '" . $this->bd->escape($id_pop) . "' ";
 						$this->bd->consulta($sSQL);
-						//echo "\n";
-						//echo "$sSQL;\n";
 
 
 					}
-					/**
 
-					echo "IP: $ip\n";
-					echo "   p env.: ".count($r)."\n";
-					echo "   perdas: $perdas\n";
-					if( $perdas != count($r) ) {
-						echo "   minimo: $minimo\n";
-						echo "   maximo: $maximo\n";
-					}
-					echo "-----------------------\n";
-					
-					*/
 				}
 				
 				// Fazer a média
@@ -226,46 +214,42 @@
 
 		}
 		
-		/**
-		 * TODO: Definir retorno.
-		 */
 		public function testePing($ip,$num_pacotes=2,$tamanho="",$icc_host="") {
-			// 
-			//echo "pingando $ip...\n";
 			$r = array();
-			
-			
-			//echo "ICCHOST: $icc_host";
-			
-			
-			/**
 
-			$result = exec("/usr/local/sbin/fping -C $num_pacotes -q $ip 2>&1");
-			list($host,$info) = explode(":",$result,2);
-			$host=trim($host);
-			$info=trim($info);
-			
-			$r = explode(" ",$info);
-			
-			*/
 			if( $icc_host ) {
-				//$r=SOFreeBSD::fping($ip,$num_pacotes,$tamanho);
-				$info = $this->ich->obtemInfoServidor($icc_host);
-
-				if(@$this->icc->open($info["host"],$info["port"],$info["chave"],$info["username"],$info["password"])) {
-					// Conseguiu conectar o servidor
-					$r = $this->icc->getFPING($ip,$num_pacotes,$tamanho);
+				if( ! @$this->icc_cache[$icc_host] ) {
+					$info = $this->ich->obtemInfoServidor($icc_host);
+					$this->icc_cache[$icc_host] = new ICClient();
+					
+					if( !@$this->icc_cache[$icc_host]->open($info["host"],$info["port"],$info["chave"],$info["username"],$info["password"]) ) {
+						$this->icc_cache[$icc_host] = null;
+					}
 				}
-				$this->icc->close();
+				
+				if( $this->icc_cache[$icc_host] ) {
+					// CONECTADO
+					$r = $this->icc_cache[$icc_host]->getFPING($ip,$num_pacotes,$tamanho);
+				}
+
 			}
 
 			// Retorna as respostas do ping
 			return($r);
 			
-			//echo "R: $result";
-			
 		}
-
+		
+		/**
+		 * Fecha as conexões ao ICCServer
+		 */
+		public function limpaCache() {
+			while( list($icc_host,$icc) = each($this->icc_cache) ) {
+				if( $icc ) {
+					$icc->close();
+					$this->icc_cache[$icc_host] = null;
+				}
+			}
+		}
 	}
 
 ?>
