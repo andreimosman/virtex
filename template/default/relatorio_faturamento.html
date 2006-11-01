@@ -210,36 +210,34 @@
 						  <tr>
 							<td><table width="760" border="0" cellspacing="0" cellpadding="0">
 								<tr>
-								  <td><table width="760" border="0" cellspacing="2" cellpadding="0">
-									  <tr>
-										<td  align="LEFT" bgcolor="#F1F1F1"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Cliente</font></td>
-										<td width="90" align="LEFt" bgcolor="#F1F1F1"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Produto</font></td>
-										<td width="80" align="LEFT" bgcolor="#F1F1F1"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Username</font></td>
-										<td width="70" align="CENTER" bgcolor="#F1F1F1"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Data de Vencimento</font></td>
-										<td width="100" align="RIGHT" bgcolor="#F1F1F1"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Valor Documento</font></td>
-										<td width="70" align="RIGHT" bgcolor="#F1F1F1"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Acrescimo</font></td>
-										<td width="70" align="RIGHT" bgcolor="#F1F1F1"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Desconto</font></td>
-										<td width="80" align="RIGHT" bgcolor="#F1F1F1"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Valor Pago</font></td>
-										
-									  </tr>  
-
-								{foreach item=a from=$relat}
-									  <tr>
-										<td  align="LEFT" bgcolor="#FFFFFF"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.nome_razao}</a></font></td>
-										<td width="90" align="LEFt" bgcolor="#FFFFFF"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.nome}</a></font></td>
-										<td width="80" align="LEFT" bgcolor="#FFFFFF"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.username}</a></font></td>
-										<td width="70" align="RIGHT" bgcolor="#FFFFFF"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.data|date_format:"%d/%m/%Y "}</a></font></td>
-										<td width="100" align="RIGHT" bgcolor="#FFFFFF"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.valor}</a></font></td>
-										<td width="70" align="RIGHT" bgcolor="#FFFFFF"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.acrescimo}</a></font></td>
-										<td width="70" align="RIGHT" bgcolor="#FFFFFF"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.desconto}</a></font></td>
-										<td width="80" align="RIGHT" bgcolor="#FFFFFF"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.valor_pago}</a></font></td>
-									  </tr>
-									 
-									  <tr bgcolor="#999999">
-										<td colspan="8" height="1"></td>
-									  </tr>
-									    {/foreach}
-								  </table>
+								  <td><table width="680" border="0" align="center" cellpadding="0" cellspacing="2">
+                                <tr> 
+                                  <td  align="LEFT" bgcolor="#F1F1F1"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Cliente</font></td>
+                                  <td width="120" align="LEFt" bgcolor="#F1F1F1"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Produto</font></td>
+                                  <td width="70" align="CENTER" bgcolor="#F1F1F1"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Data 
+                                    de Vencimento</font></td>
+                                  <td width="100" align="RIGHT" bgcolor="#F1F1F1"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Valor 
+                                    Documento</font></td>
+                                  <td width="70" align="RIGHT" bgcolor="#F1F1F1"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Acrescimo</font></td>
+                                  <td width="70" align="RIGHT" bgcolor="#F1F1F1"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Desconto</font></td>
+                                  <td width="80" align="RIGHT" bgcolor="#F1F1F1"><font face="Verdana, Arial, Helvetica, sans-serif" size="1">Valor 
+                                    Pago</font></td>
+                                </tr>
+                                {foreach item=a from=$relat} 
+                                <tr> 
+                                  <td  align="LEFT" bgcolor="#FFFFFF"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.nome_razao|truncate:20}</a></font></td>
+                                  <td width="120" align="LEFt" bgcolor="#FFFFFF"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.nome}</a></font></td>
+                                  <td width="70" align="RIGHT" bgcolor="#FFFFFF"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.data|date_format:"%d/%m/%Y 
+                                    "}</a></font></td>
+                                  <td width="100" align="RIGHT" bgcolor="#FFFFFF"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.valor}</a></font></td>
+                                  <td width="70" align="RIGHT" bgcolor="#FFFFFF"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.acrescimo}</a></font></td>
+                                  <td width="70" align="RIGHT" bgcolor="#FFFFFF"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.desconto}</a></font></td>
+                                  <td width="80" align="RIGHT" bgcolor="#FFFFFF"><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo">{$a.valor_pago}</a></font></td>
+                                </tr>
+                                <tr bgcolor="#999999"> 
+                                  <td colspan="7" height="1"></td>
+                                </tr>
+                                {/foreach} </table>
 								
 
 								  </td>
@@ -251,8 +249,8 @@
 								  <td>
 
 
-									<table width="760" border="0" cellspacing="0" cellpadding="1">
-									  <tr bgcolor="#F1F1F1">
+									<table width="680" border="0" align="center" cellpadding="1" cellspacing="0">
+                                <tr bgcolor="#F1F1F1">
 										<td align="LEFT"><p>Totalização</p></td>
 										<td align="LEFT" width="90"><p></p></td>
 										<td align="LEFT" width="80"><p></p></td>
