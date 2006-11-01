@@ -12,11 +12,35 @@
 		protected $chave;		// Shared Key
 		protected $challenge;	// Challenge
 		
+		protected $conectado;	// Está conectado.
 		
 
 		public function __construct() {
-
+			$this->conectado = false;
 		}
+		
+		/**
+		 * Básico
+		 */
+		protected function puts($texto) {
+			return($this->write($texto));
+		}
+		
+		protected function write($texto) {
+			if( $this->conectado ) {
+				$ret = @fputs($this->conn,$texto);
+				if( !$ret ) {
+					// Faz alguma coisa	
+					$this->conectado = false;
+				}
+				return($ret);
+			}
+		}		
+
+		public function estaConectado() {
+			return($this->conectado);
+		}
+
 
 
 		/**

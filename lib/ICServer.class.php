@@ -35,13 +35,7 @@
 		}
 		
 		
-		protected function puts($texto) {
-			$ret = @fputs($this->conn,$texto);
-			if( !$ret ) {
-				// Faz alguma coisa	
-			}
-			return($ret);
-		}
+
 		
 
 
@@ -191,9 +185,9 @@
 						// Fim de transmissão
 						$transmissao = false;
 
-						echo "--------------------------------\n";
-						echo $dados;
-						echo "\n--------------------------------\n";
+						//echo "--------------------------------\n";
+						//echo $dados;
+						//echo "\n--------------------------------\n";
 
 
 						// Decriptografa
@@ -201,9 +195,9 @@
 
 						//
 
-						echo "--------------------------------\n";
-						echo $dados;
-						echo "\n--------------------------------\n";
+						//echo "--------------------------------\n";
+						//echo $dados;
+						//echo "\n--------------------------------\n";
 
 
 

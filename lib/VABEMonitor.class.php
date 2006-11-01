@@ -93,12 +93,15 @@
 					$minimo=999999999999;
 					$maximo=0;
 					// Computar
+					$soma=0;
 					for($i=0;$i<count($r);$i++) {
 						//echo "PING: $ip: ".$r[$i]."\n";
 
 						if(trim($r[$i])=="-") {
 						   $perdas++;
+						   $soma += 0;
 						} else {
+							$soma += $r[$i];
 							$r[$i]=$r[$i]*1000;
 							if( $r[$i] < $minimo ) {
 								$minimo = $r[$i];
@@ -119,7 +122,7 @@
 					$regs = $this->bd->obtemRegistros($sSQL);
 					$num_erros=0;
 					$status='OK';
-					$media = count($r)?($maximo + $minimo)/count($r):0;
+					$media = (int)(count($r)?$soma/count($r):0);
 
 					if($perdas == count($r)){
 						$status = !count($r)?'IER':'ERR';
@@ -216,29 +219,51 @@
 		
 		public function testePing($ip,$num_pacotes=2,$tamanho="",$icc_host="") {
 			$r = array();
-
+			
 			if( $icc_host ) {
-				if( ! @$this->icc_cache[$icc_host] ) {
-					$info = $this->ich->obtemInfoServidor($icc_host);
-					$this->icc_cache[$icc_host] = new ICClient();
-					
-					if( !@$this->icc_cache[$icc_host]->open($info["host"],$info["port"],$info["chave"],$info["username"],$info["password"]) ) {
-						$this->icc_cache[$icc_host] = null;
-					}
-				}
-				
-				if( $this->icc_cache[$icc_host] ) {
+				$icc = $this->getICC($icc_host);
+
+				if($icc) {
 					// CONECTADO
-					$r = $this->icc_cache[$icc_host]->getFPING($ip,$num_pacotes,$tamanho);
+					$r = $icc->getFPING($ip,$num_pacotes,$tamanho);
 				}
 
 			}
-
+			
 			// Retorna as respostas do ping
 			return($r);
 			
 		}
 		
+		
+		/**
+		 * Obtem o objeto ICC conectado
+		 */
+		protected function getICC($icc_host) {
+			// Verifica o cache
+			if( ! @$this->icc_cache[$icc_host] ) {
+				$info = $this->ich->obtemInfoServidor($icc_host);
+				$this->icc_cache[$icc_host] = new ICClient();
+
+				if( !@$this->icc_cache[$icc_host]->open($info["host"],$info["port"],$info["chave"],$info["username"],$info["password"]) ) {
+					$this->icc_cache[$icc_host] = null;
+				}
+			}
+			
+			// Verifica se o objeto está conectado.
+			if( @$this->icc_cache[$icc_host] ) {
+				
+				if($this->icc_cache[$icc_host]->estaConectado()) {
+					return($this->icc_cache[$icc_host]);
+				}
+				$this->icc_cache[$icc_host]->close();
+				$this->icc_cache[$icc_host] = null;
+			}
+			return null;
+			
+		}		
+
+
 		/**
 		 * Fecha as conexões ao ICCServer
 		 */

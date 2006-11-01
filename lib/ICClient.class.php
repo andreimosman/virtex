@@ -11,7 +11,7 @@
 
 	class ICClient extends InfoCenter {
 	
-		protected $conectado;
+		//protected $conectado;
 
 		public function __construct() {
 		
@@ -27,15 +27,14 @@
 				/**
 				 * Interpreta a solicitação
 				 */
-				
 				// Zera a indicação de conectado.
-				$this->conectado 	= false;
+				//$this->conectado 	= false;
+				
+				$this->conectado = true;
 				$this->chave 		= "";
 
 				while( ($linha=fgets($this->conn)) && !feof($this->conn) ) {
-
 					$proc = $this->listen($linha,$chave);
-
 					switch($proc["comando"]) {
 
 						case 'VACH':
@@ -46,7 +45,7 @@
 							$cript_auth = base64_encode($this->criptografa($infoauth,$challenge));
 
 							// Enviar resposta
-							fputs($this->conn,$this->talk("VARP",$cript_auth,$chave));
+							$this->puts($this->talk("VARP",$cript_auth,$chave));
 							break;
 
 						case 'VAOK':
@@ -58,6 +57,7 @@
 
 
 						case 'VAER':
+							$tihs->conectado 	= false;
 							return(false);
 							break;
 
@@ -67,14 +67,14 @@
 			
 			return(false);
 		}
-
+		
 		/**
 		 * Obtem Dados
 		 */
 		protected function getData($comando,$parametros) {
 			if( !$this->conectado ) return "";
 
-			fputs($this->conn,$this->talk($comando,$parametros,$this->chave));
+			$this->puts($this->talk($comando,$parametros,$this->chave));
 			$recebendo = false;
 			$dados = "";
 			while( ($linha=fgets($this->conn)) && !feof($this->conn) ) {
@@ -126,22 +126,22 @@
 		 */
 		public function open($host,$porta,$chave,$user,$pass) {
 			$this->conn = @fsockopen($host,$porta,$errno,$errstr,30);
-			
 			$this->conectado = false;
 			if( !$this->conn ) {
 				return(false);
 			} else {
 				$this->conectado = true;
+
 				if( !$this->clientAuth($chave,$user,$pass) ) {
 					return(false);
 				}
+
+				
 			}
-			
 			$this->conectado = true;
-			
+
 			return(true);
-			
-			
+		
 		}
 		
 		/**
@@ -162,9 +162,7 @@
 			$linhas = explode("\n",$dados);
 			
 			for($i=0;$i<count($linhas);$i++) {
-				
 				@list($addr,$mac,$iface) = explode(',',$linhas[$i]);
-				
 				$arp[] = array( "addr" => $addr, "mac" => $mac, "iface" => $iface );
 			}
 			
