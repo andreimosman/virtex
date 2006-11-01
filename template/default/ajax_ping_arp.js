@@ -25,7 +25,7 @@ function Ping(){
 			if(ajax.readyState == 1) {
 			
 				document.getElementById("container").className = "box_aberta" ; 
-				document.getElementById("container").innerHTML= "processando..";
+				document.getElementById("container").innerHTML= "processando...";
 
 
 	        }
@@ -40,7 +40,7 @@ function Ping(){
 	        if(ajax.readyState == 3) {
 
 				document.getElementById("container").className = "box_aberta" ;
-				document.getElementById("container").innerHTML= "processando......";
+				document.getElementById("container").innerHTML= "processando.....";
 						
 	        }
 	        
@@ -60,7 +60,7 @@ function Ping(){
 
 		}
 		
-		var params = "ip="+frmConta.end_ip.value + '&id_nas=' + frmConta.nas_orig.value;
+		var params = "ip="+frmConta.end_ip.value + '&id_nas=' + frmConta.nas_orig.value + '&host=' + frmConta.infoserver.value;
 		ajax.send(params);
 
 
@@ -131,7 +131,7 @@ function Arp(){
 
 		}
 		
-		var params = "ip="+frmConta.end_ip.value + '&id_nas=' + frmConta.nas_orig.value;
+		var params = "ip="+frmConta.end_ip.value + '&host=' + frmConta.infoserver.value;
 		ajax.send(params);
 
 

@@ -35,7 +35,7 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                     <tr>
                       <td width="70%"><font face=arial size="+1" color="#000000"><b>Ficha
                         técnica</b></font> </td>
-                      <td width="30%" align="center"> <p>[<a href="{$smarty.server.PHP_SELF}?op=conta&id_cliente={$id_cliente}&username={$username}&dominio={$dominio}&tipo_conta={$tipo_conta}">alterar</a>] [<a href="javascript:;" onClick="javascript: Ping();">ping</a>] {if @$tipo_bandalarga == 'I'}[<a href="javascript:;" onClick="javascript: Arp();">arp</a>]{/if} </p></td>
+                      <td width="30%" align="center"> <p>[<a href="{$smarty.server.PHP_SELF}?op=conta&id_cliente={$id_cliente}&username={$username}&dominio={$dominio}&tipo_conta={$tipo_conta}">alterar</a>] {if $infoserver != ""} [<a href="javascript:;" onClick="javascript: Ping();">ping</a>] {if @$tipo_bandalarga == 'I'}[<a href="javascript:;" onClick="javascript: Arp();">arp</a>]{/if} {/if}</p></td>
                     </tr>
                   </table></td>
               </tr>
@@ -117,6 +117,7 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 								<form name="frmConta" action="">
 										<input type="hidden" value="{$endereco_ip}" name="end_ip">
 										<input type="hidden" value="{$nas.id_nas}" name="nas_orig">
+										<input type="hidden" value="{$infoserver}" name="infoserver" />
 								</form>
 								<font face="verdana" size="2" color="#999999">
 								<div id="container" align="left" class="box_fechada" style="height:120px; width:450px;border:2px solid #EFEFEF; padding:8px;"></div><div align="right" id="fecha"></div>

@@ -2234,6 +2234,20 @@ class VAClientes extends VirtexAdmin {
 			$conta_mestre = @$_REQUEST["conta_mestre"];
 
 			$this->obtemPR($id_cliente);
+			
+			
+			$bnSQL  = " SELECT n.infoserver  " ;
+			$bnSQL .= "FROM cftb_nas n, cntb_conta_bandalarga cn " ;
+			$bnSQL .= " WHERE ";
+			$bnSQL .= " cn.username = '$username' " ;
+			$bnSQL .= " AND cn.dominio  = '$dominio' " ;
+			$bnSQL .= " AND cn.id_nas = n.id_nas ";
+			////////////////////echo $bnSQL;
+			
+			$info_server = $this->bd->obtemUnicoRegistro($bnSQL);
+			$infoserver = $info_server['infoserver'];
+			
+			$this->tpl->atribui("infoserver",$infoserver);
 
 				if ((($lic_bandalarga == 'nao')&&($tipo_conta == "BL"))||(($lic_discado == 'nao')&&($tipo_conta == "D"))||(($lic_hospedagem == 'nao')&&($tipo_conta == "H"))||(($lic_email == 'nao')&&($tipo_conta == "E"))){
 	  
@@ -2280,8 +2294,13 @@ class VAClientes extends VirtexAdmin {
 			$bSQL  = " SELECT tipo_bandalarga FROM cntb_conta_bandalarga WHERE username = '$username' AND dominio = '$dominio'  " ;
 			$tipo_bandalarga = $this->bd->obtemUnicoRegistro($bSQL);
 			
+			
 			$this->tpl->atribui("tipo_bandalarga",$tipo_bandalarga['tipo_bandalarga']);
 			
+			//////$nsSQL  = "SELECT infoserver FROM cftb_nas WHERE id_nas = '$id_nas'  ";
+			///echo $nsSQL;
+			
+
 
 			for($i=0;$i<count($lista_nas);$i++) {
 				 $lista_nas[$i]["tp"] = $_LS_TIPO_NAS[ $lista_nas[$i]["tipo_nas"] ];
@@ -4257,7 +4276,16 @@ class VAClientes extends VirtexAdmin {
 				
 				$bSQL  = " SELECT tipo_bandalarga FROM cntb_conta_bandalarga WHERE username = '$username' AND dominio = '$dominio'  " ;
 				$tipo_bandalarga = $this->bd->obtemUnicoRegistro($bSQL);
+				
+				$nas = $this->obtemNas($conta["id_nas"]);
+				
+				$id_nas = $nas['id_nas'];
+				$nSQL  = " SELECT infoserver FROM cftb_nas WHERE id_nas = '$id_nas' " ;
+				
+				$info_nas = $this->bd->obtemUnicoRegistro($nSQL);
+				$infoserver = $info_nas['infoserver'];
 
+				$this->tpl->atribui("infoserver",$infoserver);
 				$this->tpl->atribui("tipo_bandalarga",$tipo_bandalarga['tipo_bandalarga']);	
 				
 				switch($tipo_conta) {
@@ -4274,6 +4302,7 @@ class VAClientes extends VirtexAdmin {
 						$pop = $this->obtemPop($conta["id_pop"]);
 						$this->tpl->atribui("nas",$nas);
 						$this->tpl->atribui("pop",$pop);
+						
 
 						//////////echo $nas;
 						///echo "AI AI AI";

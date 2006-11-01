@@ -293,14 +293,14 @@ function check(){
                           </select>
                         </p></td> 
                     </tr>
-					<tr>
+					{if $infoserver != "" }<tr>
 						<td  bgcolor="#FFFFFF" colspan="4">
 							<div align="center"><a href="javascript:;" onClick="javascript: Ping();">
 						        <font color="#FF0033">
+								<input type="hidden" value="{$infoserver}" name="infoserver" />
 							  <input type="hidden" value="{$endereco_ip}" name="end_ip">
-							  [
-							  ping ]</font></a>{if $tipo_bandalarga == 'I'} -  <a href="javascript:;" onClick="javascript: Arp();"><font color="#FF0033">[ arp ]</font></a> {/if}</div></td>
-					</tr>
+							  [ ping ]</font></a>{if $tipo_bandalarga == 'I'} -  <a href="javascript:;" onClick="javascript: Arp();"><font color="#FF0033">[ arp ]</font></a> {/if}</div></td>
+					</tr>{/if}
                   </table></td>
                 <td width="450" valign="top"><table width="300" height="165" border=0 bgcolor="#F1F1F1" id="disc">
                   <tr> 

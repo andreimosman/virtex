@@ -97,6 +97,7 @@ class VAConfiguracao extends VirtexAdmin {
 				$endereco_ip = @$_REQUEST["ip"];
 				$pacotes = @$_REQUEST["pacotes"];
 				$id_nas = @$_REQUEST["id_nas"];
+				$host = @$_REQUEST['host'];
 				
 				$aSQL  = " SELECT tipo_nas FROM cftb_nas WHERE id_nas = '$id_nas' ";
 				///echo $aSQL;
@@ -126,58 +127,139 @@ class VAConfiguracao extends VirtexAdmin {
 					   
 					  // echo $ip_cliente;
 					  
-					  			
-					//$pinglist = `ping $ip -c $pacotes -s $tamanho`;
-					$fd = popen("/sbin/ping  -n -c " . escapeshellarg($pacotes) . " -s " . escapeshellarg($tamanho) . " " . escapeshellarg($ip_cliente),"r");
-					///echo "PING: " . $fd . "<br>";
+				$ich = new ICHostInfo();
+				$icc = new ICClient();
 
-					while(!feof($fd)) {
-						for($x=1;$x<250;$x++) {
-							echo "<!-- BUFFER -->\n";
-							flush();
-						}
+				$info = $ich->obtemInfoServidor($host);
 
-						$linha = fgets($fd);
-						echo nl2br($linha);
+				if(!$icc->open($info["host"],$info["port"],$info["chave"],$info["username"],$info["password"])) {
+					
+					if (!$icc->estaConectado() ){
+												
+						echo "<br><Br><div align=center><strong><font color='#000000'>Não foi possível conectá-lo ao servidor " . $host . ".</font></strong></div>";
+						return;
 
-						flush();
-
-						//////////////sleep(1);
 					}
 
-					fclose($fd);	   					   
-
-				}else if ( $nas["tipo_nas"] == "P"  ){
+					continue;
+				}
 				
-					$fd = popen("/sbin/ping  -n -c " . escapeshellarg($pacotes) . " -s " . escapeshellarg($tamanho) . " " . escapeshellarg($endereco_ip),"r");
-						///echo "PING: " . $fd . "<br>";
+				////$ip_cliente = 'www.google.com.br';
+	
 
-						while(!feof($fd)) {
-							for($x=1;$x<250;$x++) {
-								echo "<!-- BUFFER -->\n";
-								flush();
+				$dados = $icc->getFPING($ip_cliente,$pacotes,$tamanho) ;
+				
+				echo "PING ".$ip_cliente." (".$ip_cliente.") ".$tamanho." bytes de dados. <br>";
+				$counter="0";
+				$counter_received="0";
+				$counter_loss="0";
+				$tempo = '0';
+
+				for($i=0; $i<count($dados); $i++){
+
+					if (($dados[$i] != '-') && ($dados[$i] >0) && ($dados[$i] !="-") && ($dados[$i] !="") ){
+						
+					echo $tamanho . " bytes para " . $ip_cliente . ": icmp_seq=".$i." time=".trim($dados[$i])." ms <br>\n" ;
+						$counter++;
+						$counter_received++;
+						$tempo += $dados[$i];
+					
+					}else{
+						
+						echo "tempo esgotado.<br>\n";
+						$counter++;
+						$counter_loss++;
+						$tempo += '754.25';
+					}
+					
+
+			}
+			
+			$percent = ((($counter_loss)*100)/$counter) ;
+			
+			if ($counter){
+			
+			echo "<br>" .  $counter ." pacotes enviados, " .$counter_received. " recebidos, " .$percent. "% perdidos, tempo " .$tempo . "ms<br> Pacotes enviados pelo servidor " .$host ."(".$info['host'] .")";
+			return;
+			
+			}
+
+			}
+
+				else if ( $nas["tipo_nas"] == "P"  ){				
+
+					$ich = new ICHostInfo();
+					$icc = new ICClient();
+
+					$arp = array();  
+
+					$info = $ich->obtemInfoServidor($host);
+
+						if(!$icc->open($info["host"],$info["port"],$info["chave"],$info["username"],$info["password"])) {
+							
+							if (!$icc->estaConectado() ){
+							
+								echo "<br><Br><div align=center><strong><font color='#000000'>Não foi possível conectá-lo ao servidor " . $host . ".</font></strong></div>";
+								return;
+
 							}
 
-							$linha = fgets($fd);
-							echo nl2br($linha);
+							continue;
 
-							flush();
-
-						////////////////	sleep(1);
 						}
 
-						fclose($fd);
+				$dados = $icc->getFPING($ip_cliente,$pacotes,$tamanho) ;
+				
+				echo "PING ".$ip_cliente." (".$ip_cliente.") ".$tamanho." bytes de dados. <br>";
+				$counter="0";
+				$counter_received="0";
+				$counter_loss="0";
+				$tempo = '0';
+
+				for($i=0; $i<count($dados); $i++){
+
+					if (($dados[$i] != '-') && ($dados[$i] >0) && ($dados[$i] !="-") && ($dados[$i] !="") ){
+						
+					echo $tamanho . " bytes para " . $ip_cliente . ": icmp_seq=".$i." time=".trim($dados[$i])." ms <br>\n" ;
+						$counter++;
+						$counter_received++;
+						$tempo += $dados[$i];
+					
+					}else{
+						
+						echo "tempo esgotado.<br>\n";
+						$counter++;
+						$counter_loss++;
+						$tempo += '754.25';
+					}
+					
+
+			}
+			
+			$percent = ((($counter_loss)*100)/$counter) ;
+			
+			if ($counter){
+			
+			echo "<br>" .  $counter ." pacotes enviados, " .$counter_received. " recebidos, " .$percent. "% perdidos, tempo " .$tempo . "ms<br> Pacotes enviados pelo servidor " .$host ."(".$info['host'] .")";
+			return;
+			
+			}
+
 
 				
-				}else {
-					for($i=0; $i<count($erros); $i++) echo "$erros[$i]<br>";
-				}
-				echo "</p>";
+		}else {
+			
+			for($i=0; $i<count($erros); $i++) echo "$erros[$i]<br>";
+			
+		}
+		echo "</p>";
 				//$this->arquivoTemplate = "";
 
 
 		///echo $ip ;
+
 		}
+
 		
 		else if ($op == "ajax_arp"){
 		
@@ -198,34 +280,35 @@ class VAConfiguracao extends VirtexAdmin {
 			$ich = new ICHostInfo();
 			$icc = new ICClient();
 
-			$hosts = $ich->obtemListaServidores();
-
 			$arp = array();  
 
-			for($i=0;$i<count($hosts);$i++) {
-				if( $host && $host != $hosts[$i] ) continue;
-
-				$info = $ich->obtemInfoServidor($hosts[$i]);
+				$info = $ich->obtemInfoServidor($host);
 
 				if(!$icc->open($info["host"],$info["port"],$info["chave"],$info["username"],$info["password"])) {
+					
+
+					if (!$icc->estaConectado() ){
+
+							echo "<br><Br><div align=center><strong><font color='#000000'>Não foi possível conectá-lo ao servidor " . $host . ".</font></strong></div>";
+							return;
+
+					}
+					
 					continue;
 				}
+				
+				
 
-				$arp[] = array("host"=>$hosts[$i], "tabela"=>$icc->getARP($ip_cliente) );
+				$arp[] = array("host"=>$host, "tabela"=>$icc->getARP($ip_cliente) );
 				
-				for ($x=0;$x<count($hosts);$x++){
-					if( $hosts[$i] && $hosts[$i] != $hosts[$x] ) continue;
-					
-						echo "<b><font color=black>Infoserver:</font><font color=#587466> " . $hosts[$i] . '</font></b><br>' ;
-						echo "<hr size='1' color=#587466>";
+					echo "<b><font color=black>Servidor:</font><font color=#587466> " . $host . '</font></b><br>' ;
+					echo "<hr size='1' color=#587466>";
 										
-				}
-				$counter = "";
 				
-				for ($z=0;$z<count($arp[$i]);$z++){
+				for ($z=0;$z<count($arp);$z++){
 				
 				
-					$tabela = $arp[$i]['tabela'];
+					$tabela = $arp[$z]['tabela'];
 					
 					for ($a=0;$a<count($tabela);$a++){
 					
@@ -251,7 +334,7 @@ class VAConfiguracao extends VirtexAdmin {
 			}
 
 
-		}
+		
 
 
 
