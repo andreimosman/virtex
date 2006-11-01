@@ -208,9 +208,9 @@ class VAConfiguracao extends VirtexAdmin {
 
 						}
 
-				$dados = $icc->getFPING($ip_cliente,$pacotes,$tamanho) ;
+				$dados = $icc->getFPING($endereco_ip,$pacotes,$tamanho) ;
 				
-				echo "PING ".$ip_cliente." (".$ip_cliente.") ".$tamanho." bytes de dados. <br>";
+				echo "PING ".$endereco_ip." (".$endereco_ip.") ".$tamanho." bytes de dados. <br>";
 				$counter="0";
 				$counter_received="0";
 				$counter_loss="0";
@@ -220,7 +220,7 @@ class VAConfiguracao extends VirtexAdmin {
 
 					if (($dados[$i] != '-') && ($dados[$i] >0) && ($dados[$i] !="-") && ($dados[$i] !="") ){
 						
-					echo $tamanho . " bytes para " . $ip_cliente . ": icmp_seq=".$i." time=".trim($dados[$i])." ms <br>\n" ;
+					echo $tamanho . " bytes para " . $endereco_ip . ": icmp_seq=".$i." time=".trim($dados[$i])." ms <br>\n" ;
 						$counter++;
 						$counter_received++;
 						$tempo += $dados[$i];
