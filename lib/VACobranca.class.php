@@ -3393,7 +3393,7 @@ class VACobranca extends VirtexAdmin {
 				}		
 		
 		$sSQL  = "SELECT ";
-		$sSQL .= "re.id_cliente_produto, re.data as data_vencimento, to_char(re.data_reagendamento, 'DD/mm/YYYY') as data_reagendamento, re.admin, to_char(re.data_para_reagendamento, 'DD/mm/YYYY') as reagendado_para, re.id_reagendamento, ";
+		$sSQL .= "re.id_cliente_produto, re.data as data_vencimento, to_char(re.data_reagendamento, 'DD/mm/YYYY') as data_reagendamento, re.id_admin, to_char(re.data_para_reagendamento, 'DD/mm/YYYY') as reagendado_para, re.id_reagendamento, ";
 		$sSQL .= "fa.id_cliente_produto, fa.data as data, fa.valor, fa.status, fa.id_carne, to_char(fa.reagendamento, 'DD/mm/YYYY') as reagendamento, fa.id_cobranca, ";
 		$sSQL .= "ca.id_cliente_produto, ca.id_cliente, ";
 		$sSQL .= "ad.admin, ad.id_admin ";
@@ -3403,7 +3403,7 @@ class VACobranca extends VirtexAdmin {
 		$sSQL .= "re.id_cliente_produto = fa.id_cliente_produto AND "; 
 		$sSQL .= "re.data = fa.data AND ";
 		$sSQL .= "fa.id_cliente_produto = ca.id_cliente_produto AND ";
-		$sSQL .= "ad.admin = re.admin ";
+		$sSQL .= "ad.id_admin = re.id_admin ";
 		
 		////echo"REAGENDAMENTO: $sSQL <br>";
 		
@@ -4755,8 +4755,13 @@ class VACobranca extends VirtexAdmin {
 		if ($reagendar && $reagendamento){
 
 			$adm = $this->admLogin->obtemAdmin();
+			
+			$sSQL = "SELECT id_admin FROM adtb_admin WHERE admin = '$adm'";
+			$_adm = $this->bd->obtemUnicoRegistro($sSQL);
+			
+			$id_admin = $_adm["id_admin"];
 
-			$sSQL = "INSERT INTO lgtb_reagendamento (data, id_cliente_produto, admin, data_para_reagendamento) VALUES ('".@$_REQUEST["data"]."','$id_cliente_produto','$adm','$reagendamento') ";
+			$sSQL = "INSERT INTO lgtb_reagendamento (data, id_cliente_produto, admin, data_para_reagendamento) VALUES ('".@$_REQUEST["data"]."','$id_cliente_produto','$id_admin','$reagendamento') ";
 			$this->bd->consulta($sSQL);
 
 			////echo"LOG REAGENDAMENTO: $sSQL <br>";
