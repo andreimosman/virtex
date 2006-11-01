@@ -45,7 +45,7 @@
 							$cript_auth = base64_encode($this->criptografa($infoauth,$challenge));
 
 							// Enviar resposta
-							$this->puts($this->talk("VARP",$cript_auth,$chave));
+							fputs($this->conn,$this->talk("VARP",$cript_auth,$chave));
 							break;
 
 						case 'VAOK':
@@ -74,7 +74,7 @@
 		protected function getData($comando,$parametros) {
 			if( !$this->conectado ) return "";
 
-			$this->puts($this->talk($comando,$parametros,$this->chave));
+			@fputs($this->conn,$this->talk($comando,$parametros,$this->chave));
 			$recebendo = false;
 			$dados = "";
 			while( ($linha=fgets($this->conn)) && !feof($this->conn) ) {
@@ -126,20 +126,21 @@
 		 */
 		public function open($host,$porta,$chave,$user,$pass) {
 			$this->conn = @fsockopen($host,$porta,$errno,$errstr,30);
-			$this->conectado = false;
+
 			if( !$this->conn ) {
+				$this->conectado = false;
 				return(false);
 			} else {
 				$this->conectado = true;
 
 				if( !$this->clientAuth($chave,$user,$pass) ) {
+					$this->conectado = false;
 					return(false);
 				}
-
 				
 			}
 			$this->conectado = true;
-
+			
 			return(true);
 		
 		}

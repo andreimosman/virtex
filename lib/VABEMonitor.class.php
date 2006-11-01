@@ -141,7 +141,7 @@
 						//echo "INSERINDO NO BD\n";
 						$sSQL  = "INSERT INTO ";
 						$sSQL .= "   sttb_pop_status (";
-						$sSQL .= "      id_pop,min_ping,max_ping,media_ping,num_ping,num_perdas,status,num_erros ";
+						$sSQL .= "      id_pop,min_ping,max_ping,media_ping,num_ping,num_perdas,status,num_erros, laststats ";
 						$sSQL .= " ) VALUES ( ";
 						$sSQL .= "   '".$this->bd->escape($id_pop)."', ";
 						$sSQL .= "   '".$this->bd->escape($minimo)."', ";
@@ -150,7 +150,7 @@
 						$sSQL .= "   '".$this->bd->escape(((int)count($r)))."', ";
 						$sSQL .= "   '".$this->bd->escape($perdas)."', ";
 						$sSQL .= "   '".$this->bd->escape($status)."', ";
-						$sSQL .= "   '$num_erros' ";
+						$sSQL .= "   '$num_erros', now() ";
 						$sSQL .= ") ";
 						//$sSQL = str_replace(".",",",$sSQL);
 						$this->bd->consulta($sSQL);
@@ -186,7 +186,8 @@
 						$sSQL .= "   num_ping='".$this->bd->escape(count($r))."', ";
 						$sSQL .= "   num_perdas='".$this->bd->escape($perdas)."', ";
 						$sSQL .= "   status='".$this->bd->escape($status)."', ";
-						$sSQL .= "   num_erros='$num_erros' ";
+						$sSQL .= "   num_erros='$num_erros', ";
+						$sSQL .= "   laststats=now() ";
 						$sSQL .= "WHERE ";
 						$sSQL .= "   id_pop = '" . $this->bd->escape($id_pop) . "' ";
 						$this->bd->consulta($sSQL);
@@ -219,7 +220,6 @@
 		
 		public function testePing($ip,$num_pacotes=2,$tamanho="",$icc_host="") {
 			$r = array();
-			
 			if( $icc_host ) {
 				$icc = $this->getICC($icc_host);
 

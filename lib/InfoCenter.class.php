@@ -27,14 +27,14 @@
 		}
 		
 		protected function write($texto) {
-			if( $this->conectado ) {
+			//if( $this->conectado ) {
 				$ret = @fputs($this->conn,$texto);
 				if( !$ret ) {
 					// Faz alguma coisa	
 					$this->conectado = false;
 				}
 				return($ret);
-			}
+			//}
 		}		
 
 		public function estaConectado() {
