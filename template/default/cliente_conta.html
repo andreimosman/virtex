@@ -298,7 +298,8 @@ function check(){
 							<div align="center"><a href="javascript:;" onClick="javascript: Ping();">
 						        <font color="#FF0033">
 							  <input type="hidden" value="{$endereco_ip}" name="end_ip">
-							  pingar para o cliente </font></a> {if $tipo_bandalarga == 'I'} - <a href="javascript:;" onClick="javascript: Arp();"><font color="#FF0033">arp</font></a> {/if}</div></td>
+							  [
+							  ping ]</font></a>{if $tipo_bandalarga == 'I'} -  <a href="javascript:;" onClick="javascript: Arp();"><font color="#FF0033">[ arp ]</font></a> {/if}</div></td>
 					</tr>
                   </table></td>
                 <td width="450" valign="top"><table width="300" height="165" border=0 bgcolor="#F1F1F1" id="disc">
@@ -353,7 +354,7 @@ function check(){
               </tr>
 			   <tr>
 							  	<td colspan="2" align="center"><font face="verdana" size="2" color="#999999">
-			<div id="ping" align="left" class="box_fechada" style="height:120px; width:395px;border:1px solid #EFEFEF;"></div>
+			<div id="container" align="left" class="box_fechada" style="height:120px; width:410px;border:1px solid #EFEFEF; padding:8px;"></div>
 							  	</font>
 				</td>
 							  </tr>

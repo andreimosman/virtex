@@ -31,9 +31,9 @@
                         <td colspan="4"><textarea name="emails" cols="60" rows="8" id="emails">{$emails}</textarea></td>
                       </tr>
                       <tr> 
-                        <td width="141"><p><strong>Mostrar Monitoramento na barra 
-                            lateral? </strong></p></td>
-                        <td width="252" colspan="3"><input name="exibir_monitor" type="checkbox" id="exibir_monitor" value="true" class="checkbox" {if $exibir_monitor == "t"}checked{/if}></td>
+                        <td width="158"><p><strong>Mostrar Monitoramento na barra 
+                        lateral? </strong></p></td>
+                        <td width="216" colspan="3"><input name="exibir_monitor" type="checkbox" id="exibir_monitor" value="true" class="checkbox" {if $exibir_monitor == "t"}checked{/if}></td>
                       </tr>
                       <tr> 
                         <td><p><strong>Ativar alerta sonoro?</strong></p></td>
@@ -43,6 +43,10 @@
                         <td>&nbsp;</td>
                         <td colspan="3">&nbsp;</td>
                       </tr>
+					  <tr>
+					  	<td><strong><p>Quantidade de pings:</p></strong></td>
+						<td colspan="3"><input type="text" name="num_ping" value="{$num_ping}" />
+					  </tr>
                       <tr> 
                         <td>&nbsp;</td>
                         <td colspan="3"><input name="op" type="hidden" id="op" value="preferencia_monitor">

@@ -4255,6 +4255,11 @@ class VAClientes extends VirtexAdmin {
 			if( $pg == "ficha" ) {
 				$this->tpl->atribui("str_status",$_LS_ST_CONTA[$conta["status"]]);
 				
+				$bSQL  = " SELECT tipo_bandalarga FROM cntb_conta_bandalarga WHERE username = '$username' AND dominio = '$dominio'  " ;
+				$tipo_bandalarga = $this->bd->obtemUnicoRegistro($bSQL);
+
+				$this->tpl->atribui("tipo_bandalarga",$tipo_bandalarga['tipo_bandalarga']);	
+				
 				switch($tipo_conta) {
 				
 					case 'D':

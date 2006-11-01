@@ -43,10 +43,10 @@
                                 </tr>
                                 {foreach item=a from=$lista_nas} 
                                 <tr bgcolor="#FFFFFF"> 
-                                  <td align="CENTER" width="20"><p>{$a.id_nas}</p></td>
-                                  <td align="left"><p>{$a.nome}</p></td>
-                                  <td align="left"><p>{$a.ip}</p></td>
-                                  <td align="center"><p>{$a.tipo_nas}</p></td>
+                                  <td align="CENTER" width="20"><p><a href="configuracao.php?op=nas&id_nas={$a.id_nas}">{$a.id_nas}</a></p></td>
+                                  <td align="left"><p><a href="configuracao.php?op=nas&id_nas={$a.id_nas}">{$a.nome}</a></p></td>
+                                  <td align="left"><p><a href="configuracao.php?op=nas&id_nas={$a.id_nas}">{$a.ip}</a></p></td>
+                                  <td align="center"><p><a href="configuracao.php?op=nas&id_nas={$a.id_nas}">{$a.tipo_nas}</a></p></td>
                                   <td align="center"><p>{if $a.tipo_nas != "R"}<a href="configuracao.php?op=rede&id_nas={$a.id_nas}&tipo_nas={$a.tipo_nas}"><img src="template/default/images/gif_rede.gif" border="0" alt="Redes Internas do NAS: {$a.nome}" ></a>{/if}</p></td>
                                   <td align="center"><a href="configuracao.php?op=externo&id_nas={$a.id_nas}&tipo_nas={$a.tipo_nas}&acao=novo"><img alt="Cadastrar Endereço Externo no nas: {$a.nome}" src="template/default/images/icon_externo.gif" width="20" height="20" border="0"></a></td>
                                   <td align="center"><p><a href="configuracao.php?op=nas&id_nas={$a.id_nas}"><img src="template/default/images/gif_alterar.gif" border="0" alt="Alterar NAS: {$a.nome}"></a></p></td>

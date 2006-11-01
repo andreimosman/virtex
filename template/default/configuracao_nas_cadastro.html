@@ -62,12 +62,12 @@ function verificaTipoNAS() {
                         <td align="center" valign="middle"><h1>{$titulo} NAS</h1></td>
                       </tr>
                       <tr>
-                        <td align="center" valign="top"><table width="350" border="0" cellspacing="2" cellpadding="0">
+                        <td align="center" valign="top"><table width="400" border="0" cellspacing="2" cellpadding="0">
                             <tr>
-                              <td width="84" align="right"> <p>Nome:</p></td>
-                              <td width="410"><p>
+                              <td width="122" align="right"> <p>Nome:</p></td>
+                              <td width="272"><p>
                                   <input name="nome" type="text" value="{$nome}" size="25">
-                                </p></td>
+                              </p></td>
                             </tr>
                             <tr>
                               <td align="right"> <p>Ip:</p></td>
@@ -100,10 +100,18 @@ function verificaTipoNAS() {
 							</select></td>
 							</tr>
 							{/if}
+<tr>
+                              <td><p align="right">
 
-
-
-
+ 	Monitorado por</p></td>
+							<td><p><select name="infoserver" style="width:130px;">
+								<option value=""></option>
+									{foreach item=h from=$hosts}
+										<option value="{$h}" {if $h == $infoserver}SELECTED{/if}>{$h}</option>
+									{/foreach}
+							</select>
+</p></td>
+</tr>
                             <tr>
                               <td><p>&nbsp;</p></td>
                               <td><p>&nbsp;</p></td>

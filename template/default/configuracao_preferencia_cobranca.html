@@ -14,6 +14,7 @@
 			if (textarea == "Coloque aqui a mensagem que será enviada no e-mail."){
 			
 				document.form1.mensagem_email.value = "" ;
+
 			
 			}
 	
@@ -30,6 +31,7 @@ function mostraCaixa() {
 
 		
 		tE.className = "box_fechada";
+		document.form1.email_remetente.value = "" ;
 		
 		
 	}else{
@@ -313,10 +315,10 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td align="center" valign="middle"> <h1 align="center">Cadastro
-                    de Prefer&ecirc;ncias de Cobran&ccedil;a</h1>
+                <td align="center" valign="middle"><font face="Arial, Helvetica, sans-serif" size="4"><strong>Cadastro
+                    de Prefer&ecirc;ncias de Cobran&ccedil;a</strong></font>
                   <form name="form1" method="post" action="" onSubmit="return valida_campos(this);">
-                    <table  border="0" style="border: 1px solid #CCCCCC;">
+                    <table  border="0" style="border: 1px solid #CCCCCC;" cellpadding="0" cellspacing="0">
 					  <tr>
 
                         <td>
@@ -357,7 +359,7 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                                     <td>&nbsp;</td>
                                   </tr>
 								  <tr>
-								  	<Td>&nbsp;</Td>
+								  	<Td height="5px"></Td>
 								  </tr>
                                   <tr valign="top"><td  colspan="4"><table>
                                     <td valign="top"><p><strong>Observa&ccedil;&otilde;es
@@ -367,7 +369,7 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                                         </strong></p></td>
                                     <td colspan="3"> <strong>
                                       <textarea name="observacoes" id="textarea" cols="45" rows="5">{$prefs.observacoes}</textarea>
-                                      </strong></td>
+                                    </strong></td>
                                   </tr>
                                   <tr>
                                     <td><p><strong>Path Contrato</strong></p></td>
@@ -379,12 +381,19 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 								  	  <input type="checkbox" name="enviar_email" class="checkbox" value="t" id="enviar_email" onClick="mostraCaixa();" {if $prefs.enviar_email == 't'}CHECKED{/if}>
 								  	   Enviar e-mail aos clientes que ser&atilde;o bloqueados. </p>
 									  <div id="texto_email" align="center">
-									  	
-									  	  <textarea name="mensagem_email" style="color: #999999;font: Verdana, Arial, Helvetica, sans-serif 12px; " id="textarea" cols="50" rows="4" onClick="limpa_texto();" >{if !$prefs.mensagem_email}Coloque aqui a mensagem que será enviada no e-mail.{/if}{$prefs.mensagem_email|replace:"<br />":""}</textarea><br>
-									  	  <label>
+									    <table width="248" border="0" cellpadding="0" cellspacing="0">
+                                          <tr>
+                                            <td width="210"><p>email do remetente:</p></td>
+                                           <td width="156"><input name="email_remetente" type="text" value="{$prefs.email_remetente}" size="26" /></td>
+                                          </tr>
+                                          <tr>
+                                            <td colspan="2"><textarea name="mensagem_email" style="color: #999999;font: Verdana, Arial, Helvetica, sans-serif 12px; " id="textarea2" cols="50" rows="4" onClick="limpa_texto();" >{if !$prefs.mensagem_email}Coloque aqui a mensagem que será enviada no e-mail.{/if}{$prefs.mensagem_email|replace:"<br />":""}</textarea></td>
+                                          </tr>
+                                        </table>
+									    <label>
 										  <input type="button" value="Limpar" onClick="javascript: document.form1.mensagem_email.value='';" />
 									  	  <input name="Ver" type="button" id="Ver" value="Ver Exemplo" onClick="javascript: exibe();">
-								  	      </label>
+							  	        </label>
 									  	
 									  </div>
 							  	   </td>

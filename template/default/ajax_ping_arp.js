@@ -23,23 +23,24 @@ function Ping(){
 		ajax.onreadystatechange = function() {
             //enquanto estiver processando...emite a msg de carregando
 			if(ajax.readyState == 1) {
-			document.getElementById("ping").className = "box_aberta" ; 
-			 document.getElementById("ping").innerHTML= "processando...";
+			
+				document.getElementById("container").className = "box_aberta" ; 
+				document.getElementById("container").innerHTML= "processando..";
 
 
 	        }
 	        if(ajax.readyState == 2) {
-			document.getElementById("ping").className = "box_aberta" ;
-			
-						document.getElementById("ping").innerHTML= "processando........";
+				
+				document.getElementById("container").className = "box_aberta" ;
+				document.getElementById("container").innerHTML= "processando....";
 
 			
 			
 	        }
 	        if(ajax.readyState == 3) {
-	        document.getElementById("ping").className = "box_aberta" ;
-									
-						document.getElementById("ping").innerHTML= "processando........";
+
+				document.getElementById("container").className = "box_aberta" ;
+				document.getElementById("container").innerHTML= "processando......";
 						
 	        }
 	        
@@ -47,10 +48,10 @@ function Ping(){
 			if(ajax.readyState == 4 ) {
 				if(ajax.responseTEXT) {
 				
-					document.getElementById("ping").className = "box_aberta" ;
-					
-					document.getElementById("ping").innerHTML=(ajax.responseTEXT);
-					
+				document.getElementById("container").className = "box_aberta" ;
+				document.getElementById("container").innerHTML=(ajax.responseTEXT);
+				
+
 					
 				} else {
 			       
@@ -94,33 +95,33 @@ function Arp(){
 		ajax.onreadystatechange = function() {
             //enquanto estiver processando...emite a msg de carregando
 			if(ajax.readyState == 1) {
-			document.getElementById("ping").className = "box_aberta" ; 
-			 document.getElementById("ping").innerHTML= "processando...";
-
+			
+				document.getElementById("container").className = "box_aberta" ; 
+				document.getElementById("container").innerHTML= "processando...";
 
 	        }
 	        if(ajax.readyState == 2) {
-			document.getElementById("ping").className = "box_aberta" ;
 			
-						document.getElementById("ping").innerHTML= "processando........";
+			
+				document.getElementById("container").className = "box_aberta" ;
+				document.getElementById("container").innerHTML= "processando....";
 
 			
 			
 	        }
 	        if(ajax.readyState == 3) {
-	        document.getElementById("ping").className = "box_aberta" ;
-									
-						document.getElementById("ping").innerHTML= "processando........";
-						
+			
+				document.getElementById("container").className = "box_aberta" ;
+				document.getElementById("container").innerHTML= "processando........";
+
 	        }
 	        
 			//após ser processado
 			if(ajax.readyState == 4 ) {
 				if(ajax.responseTEXT) {
 				
-					document.getElementById("ping").className = "box_aberta" ;
-					
-					document.getElementById("ping").innerHTML=(ajax.responseTEXT);
+					document.getElementById("container").className = "box_aberta" ;
+					document.getElementById("container").innerHTML=(ajax.responseTEXT);
 					
 					
 				} else {

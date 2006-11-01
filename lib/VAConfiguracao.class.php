@@ -108,6 +108,9 @@ class VAConfiguracao extends VirtexAdmin {
 				if(!$pacotes || $pacotes < 1) $pacotes = 4;
 
 
+				header("Content-type: text/html; charset=iso-8859-1");
+				header("Cache-Control: no-store, no-cache, must-revalidate");
+				header("Cache-Control: post-check=0, pre-check=0", false);
 				header("pragma: no-cache");
 				header("connection: keep-state");
 				echo "<p>\n";
@@ -139,14 +142,14 @@ class VAConfiguracao extends VirtexAdmin {
 
 						flush();
 
-						sleep(1);
+						//////////////sleep(1);
 					}
 
 					fclose($fd);	   					   
 
 				}else if ( $nas["tipo_nas"] == "P"  ){
 				
-					$fd = popen("/sbin/ping  -n -c " . escapeshellarg($pacotes) . " -s " . escapeshellarg($tamanho) . " " . escapeshellarg('172.16.253.254'),"r");
+					$fd = popen("/sbin/ping  -n -c " . escapeshellarg($pacotes) . " -s " . escapeshellarg($tamanho) . " " . escapeshellarg($endereco_ip),"r");
 						///echo "PING: " . $fd . "<br>";
 
 						while(!feof($fd)) {
@@ -160,7 +163,7 @@ class VAConfiguracao extends VirtexAdmin {
 
 							flush();
 
-							sleep(1);
+						////////////////	sleep(1);
 						}
 
 						fclose($fd);
@@ -170,7 +173,7 @@ class VAConfiguracao extends VirtexAdmin {
 					for($i=0; $i<count($erros); $i++) echo "$erros[$i]<br>";
 				}
 				echo "</p>";
-				$this->arquivoTemplate = "";
+				//$this->arquivoTemplate = "";
 
 
 		///echo $ip ;
@@ -181,10 +184,17 @@ class VAConfiguracao extends VirtexAdmin {
 		
 		$host = @$_REQUEST["host"];
 		$ip = @$_REQUEST["ip"];
+		
+		$r = new RedeIP($ip);
+
+		$gateway    = $r->minHost();
+		$mascara    = $r->mascara();
+		$ip_cliente = $r->maxHost();
 
 		$arp=array();
 
 		if( $ip ) {
+			
 			$ich = new ICHostInfo();
 			$icc = new ICClient();
 
@@ -201,8 +211,43 @@ class VAConfiguracao extends VirtexAdmin {
 					continue;
 				}
 
-				$arp[] = array("host"=>$hosts[$i], "tabela" => $icc->getARP($ip) );
+				$arp[] = array("host"=>$hosts[$i], "tabela"=>$icc->getARP($ip_cliente) );
+				
+				for ($x=0;$x<count($hosts);$x++){
+					if( $hosts[$i] && $hosts[$i] != $hosts[$x] ) continue;
+					
+						echo "<b><font color=black>Infoserver:</font><font color=#587466> " . $hosts[$i] . '</font></b><br>' ;
+						echo "<hr size='1' color=#587466>";
+										
+				}
+				$counter = "";
+				
+				for ($z=0;$z<count($arp[$i]);$z++){
+				
+				
+					$tabela = $arp[$i]['tabela'];
+					
+					for ($a=0;$a<count($tabela);$a++){
+					
+						if ($tabela[$a]['mac'] != "" && $tabela[$a]['addr'] != "" && $tabela[$a]['iface'] != ""){
 
+							echo "<b>Mac	: </b>" . $tabela[$a]['mac'] . '<Br>' ;
+							echo "<b>IP 	: </b>" . $tabela[$a]['addr'] . '<Br>' ;
+							echo "<b>Iface	: </b>" . $tabela[$a]['iface'] . '<Br>' ;
+							return;
+
+						}else{
+						
+							echo "<br><b><div align=center><font color=#FF0000>sem resposta para o IP " . $ip_cliente . "</div></div></b>";
+							return;
+						
+						}
+					
+					}
+				
+				
+				}
+			
 			}
 
 
@@ -210,11 +255,7 @@ class VAConfiguracao extends VirtexAdmin {
 
 
 
-
-
-		}	
-		
-		else if ($op == "ajax"){
+		}else if ($op == "ajax"){
 		
 			$tipo = @$_REQUEST["tipo"]; 
 			//$id_pop = @$_REQUEST["id_pop"]; 
