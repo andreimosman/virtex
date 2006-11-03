@@ -12,6 +12,54 @@ class VAConfiguracao extends VirtexAdmin {
 	   $erros = array();
 	   return $erros;
 	}
+	
+	 protected function obtemListaPOPs($id_pop="",$nivel=0) {
+
+	   $sSQL  = "SELECT ";
+	   $sSQL .= "   * ";
+	   $sSQL .= "FROM ";
+	   $sSQL .= "   cftb_pop ";
+	   $sSQL .= "WHERE ";
+
+	   if( $id_pop ) {
+
+		   $sSQL .= "   id_pop_ap = '".$this->bd->escape($id_pop)."' ";
+
+	   } else {
+
+		   $sSQL .= "   id_pop_ap is null ";
+
+	   }
+
+	   $sSQL .= "ORDER BY ";
+	   $sSQL .= "   nome";
+
+
+
+	   $lista = $this->bd->obtemRegistros($sSQL);
+
+	   $retorno = array();
+
+	   for($i=0;$i<count($lista);$i++) {
+
+		   $lista[$i]["nivel"] = $nivel;
+		   $retorno[] = $lista[$i];
+		   $sub = $this->obtemListaPOPs($lista[$i]["id_pop"],$nivel+1);
+
+		   for($x=0;$x<count($sub);$x++) {
+
+			   $retorno[] = $sub[$x];
+
+		   }
+
+	   }
+
+
+	   return($retorno);
+
+	}
+
+
 
 	public function processa($op=null) {// Cria função processa
 
@@ -30,17 +78,18 @@ class VAConfiguracao extends VirtexAdmin {
 
 			$reg = array();
 
-			$sSQL  = "SELECT ";
-			$sSQL .= "   id_pop, nome, info, tipo, id_pop_ap, status , ipaddr, infoserver ,snmp_versao, snmp_ro_com, snmp_rw_com, ativar_snmp";
-			$sSQL .= " FROM cftb_pop ";
-			$sSQL .= "WHERE status != 'D' ";
-			$sSQL .= "ORDER BY nome ";
-			
-			///echo $sSQL;
+			$lista = $this->obtemListaPOPs();
 
-			$reg = $this->bd->obtemRegistros($sSQL);
+			for($i=0;$i<count($lista);$i++) {
 
-			$this->tpl->atribui("lista_pop",$reg);
+			//   echo str_repeat(" ",$lista[$i]["nivel"]) ."&nbsp;". $lista[$i]["nome"] . "\n<br>";
+
+			 ///echo $lista[$i]["nivel"] . "/" . $lista[$i]["nome"] . "\n<br>";
+
+			}
+
+
+			$this->tpl->atribui("lista_pop",$lista);
 
 
 
@@ -149,7 +198,6 @@ class VAConfiguracao extends VirtexAdmin {
 
 				$dados = $icc->getFPING($ip_cliente,$pacotes,$tamanho) ;
 				
-				echo "PING ".$ip_cliente." (".$ip_cliente.") ".$tamanho." bytes de dados. <br>";
 				$counter="0";
 				$counter_received="0";
 				$counter_loss="0";
@@ -159,14 +207,12 @@ class VAConfiguracao extends VirtexAdmin {
 
 					if (($dados[$i] != '-') && ($dados[$i] >0) && ($dados[$i] !="-") && ($dados[$i] !="") ){
 						
-					echo $tamanho . " bytes para " . $ip_cliente . ": icmp_seq=".$i." time=".trim($dados[$i])." ms <br>\n" ;
 						$counter++;
 						$counter_received++;
 						$tempo += $dados[$i];
 					
 					}else{
 						
-						echo "tempo esgotado.<br>\n";
 						$counter++;
 						$counter_loss++;
 						$tempo += '754.25';
@@ -179,7 +225,33 @@ class VAConfiguracao extends VirtexAdmin {
 			
 			if ($counter){
 			
-			echo "<br>" .  $counter ." pacotes enviados, " .$counter_received. " recebidos, " .$percent. "% perdidos, tempo " .$tempo . "ms<br> Pacotes enviados pelo servidor " .$host ."(".$info['host'] .")";
+			echo "			
+<table width='430' border='0' cellpadding='0' cellspacing='0'>
+  <tr>
+    <td bgcolor='#F9F9F9' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>Ping</font></strong></p></td>
+  <td colspan='4' bgcolor='#F9F9F9' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>Pacotes</font></strong></p></td
+  >
+  </tr>
+  <tr>
+    <td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>IP</font></strong></p></td>
+    <td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='center'><p><strong><font color='#BCD3C4'>enviados</font></strong></p></td>
+    <td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='center'><p><strong><font color='#BCD3C4'>recebidos</font></strong></p></td>
+    <td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='center'><p><strong><font color='#BCD3C4'>perdidos</font></strong></p></td>
+    <td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='center'><p><strong><font color='#BCD3C4'>tempo</font></strong></p></td>
+  </tr>
+  <tr>
+    <td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$ip_cliente."</p></td>
+    <td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$counter. "</p></td>
+    <td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$counter_received. "</p></td>
+    <td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$counter_loss. "</p></td>
+    <td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$tempo." ms</p></td>
+  </tr>
+  <tr>
+    <td colspan='5' bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p>Pacotes enviados pelo servidor " .$host. "(".$info['host'] . ")</p></td> 
+  </tr>
+</table>" ;
+
+
 			return;
 			
 			}
@@ -191,7 +263,7 @@ class VAConfiguracao extends VirtexAdmin {
 					$ich = new ICHostInfo();
 					$icc = new ICClient();
 
-					$arp = array();  
+					  
 
 					$info = $ich->obtemInfoServidor($host);
 
@@ -210,7 +282,6 @@ class VAConfiguracao extends VirtexAdmin {
 
 				$dados = $icc->getFPING($endereco_ip,$pacotes,$tamanho) ;
 				
-				echo "PING ".$endereco_ip." (".$endereco_ip.") ".$tamanho." bytes de dados. <br>";
 				$counter="0";
 				$counter_received="0";
 				$counter_loss="0";
@@ -220,14 +291,14 @@ class VAConfiguracao extends VirtexAdmin {
 
 					if (($dados[$i] != '-') && ($dados[$i] >0) && ($dados[$i] !="-") && ($dados[$i] !="") ){
 						
-					echo $tamanho . " bytes para " . $endereco_ip . ": icmp_seq=".$i." time=".trim($dados[$i])." ms <br>\n" ;
+				///	echo $tamanho . " bytes para " . $endereco_ip . ": icmp_seq=".$i." time=".trim($dados[$i])." ms <br>\n" ;
 						$counter++;
 						$counter_received++;
 						$tempo += $dados[$i];
 					
 					}else{
 						
-						echo "tempo esgotado.<br>\n";
+				///		echo "tempo esgotado.<br>\n";
 						$counter++;
 						$counter_loss++;
 						$tempo += '754.25';
@@ -240,8 +311,32 @@ class VAConfiguracao extends VirtexAdmin {
 			
 			if ($counter){
 			
-			echo "<br>" .  $counter ." pacotes enviados, " .$counter_received. " recebidos, " .$percent. "% perdidos, tempo " .$tempo . "ms<br> Pacotes enviados pelo servidor " .$host ."(".$info['host'] .")";
-			return;
+						echo "			
+			<table width='430' border='0' cellpadding='0' cellspacing='0'>
+			  <tr>
+			    <td bgcolor='#F9F9F9' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>Ping</font></strong></p></td>
+			  <td colspan='4' bgcolor='#F9F9F9' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>Pacotes</font></strong></p></td
+			  >
+			  </tr>
+			  <tr>
+			    <td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='center'><p><strong><font color='#BCD3C4'>IP</font></strong></p></td>
+			    <td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='center'><p><strong><font color='#BCD3C4'>enviados</font></strong></p></td>
+			    <td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='center'><p><strong><font color='#BCD3C4'>recebidos</font></strong></p></td>
+			    <td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='center'><p><strong><font color='#BCD3C4'>perdidos</font></strong></p></td>
+			    <td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='center'><p><strong><font color='#BCD3C4'>tempo</font></strong></p></td>
+			  </tr>
+			  <tr>
+			    <td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$endereco_ip."</p></td>
+			    <td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$counter. "</p></td>
+			    <td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$counter_received. "</p></td>
+			    <td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$counter_loss. "</p></td>
+			    <td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$tempo." ms</p></td>
+			  </tr>
+			  <tr>
+			    <td colspan='5' bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p>Pacotes enviados pelo servidor " .$host. "(".$info['host'] . ")</p></td> 
+			  </tr>
+			</table>
+	" ;
 			
 			}
 
@@ -301,10 +396,14 @@ class VAConfiguracao extends VirtexAdmin {
 
 				$arp[] = array("host"=>$host, "tabela"=>$icc->getARP($ip_cliente) );
 				
-					echo "<b><font color=black>Servidor:</font><font color=#587466> " . $host . '</font></b><br>' ;
-					echo "<hr size='1' color=#587466>";
-										
+				echo "
+					  <table width='430' border='0' cellpadding='0' cellspacing='0'>
+						<tr>
+							<td colspan='3' bgcolor='#F9F9F9' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>Servidor " .$host. "</font></strong></p></td>
+						</tr>
+					 ";
 				
+
 				for ($z=0;$z<count($arp);$z++){
 				
 				
@@ -314,9 +413,19 @@ class VAConfiguracao extends VirtexAdmin {
 					
 						if ($tabela[$a]['mac'] != "" && $tabela[$a]['addr'] != "" && $tabela[$a]['iface'] != ""){
 
-							echo "<b>Mac	: </b>" . $tabela[$a]['mac'] . '<Br>' ;
-							echo "<b>IP 	: </b>" . $tabela[$a]['addr'] . '<Br>' ;
-							echo "<b>Iface	: </b>" . $tabela[$a]['iface'] . '<Br>' ;
+						echo "<tr>
+							    <td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>IP</font></strong></p></td>
+							    <td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>MAC</font></strong></p></td>
+							    <td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>IFACE</font></strong></p></td>
+							  </tr>
+							  <tr>
+							    <td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" . $tabela[$a]['addr'] . "</p></td>
+							    <td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" . $tabela[$a]['mac'] . "</p></td>
+							    <td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" . $tabela[$a]['iface'] . "</p></td>
+							  </tr>
+							</table>
+						
+						";
 							return;
 
 						}else{
@@ -338,7 +447,192 @@ class VAConfiguracao extends VirtexAdmin {
 
 
 
-		}else if ($op == "ajax"){
+		}
+		else if ($op =='ajax_ping_pop'){
+		
+		
+		$ip = @$_REQUEST['ip'];
+		$host = @$_REQUEST['host'];
+		$pacotes = @$_REQUEST['pacotes'];
+		$tamanho = @$_REQUEST['tamanho'];
+		
+			if(!$tamanho || $tamanho < 1) $tamanho = 32;
+			if(!$pacotes || $pacotes < 1) $pacotes = 4;
+
+
+					header("Content-type: text/html; charset=iso-8859-1");
+					header("Cache-Control: no-store, no-cache, must-revalidate");
+					header("Cache-Control: post-check=0, pre-check=0", false);
+					header("pragma: no-cache");
+					header("connection: keep-state");
+					echo "<p>\n";
+
+					$ich = new ICHostInfo();
+					$icc = new ICClient();
+
+					$info = $ich->obtemInfoServidor($host);
+
+					if(!$icc->open($info["host"],$info["port"],$info["chave"],$info["username"],$info["password"])) {
+
+						if (!$icc->estaConectado() ){
+
+							echo "<br><Br><div align=center><strong><font color='#000000'>Não foi possível conectá-lo ao servidor " . $host . ".</font></strong></div>";
+							return;
+
+						}
+
+						continue;
+					}
+
+					////$ip_cliente = 'www.google.com.br';
+
+
+					$dados = $icc->getFPING($ip,$pacotes,$tamanho) ;
+
+					$counter="0";
+					$counter_received="0";
+					$counter_loss="0";
+					$tempo = '0';
+
+					for($i=0; $i<count($dados); $i++){
+
+						if (($dados[$i] != '-') && ($dados[$i] >0) && ($dados[$i] !="-") && ($dados[$i] !="") ){
+
+							$counter++;
+							$counter_received++;
+							$tempo += $dados[$i];
+
+						}else{
+
+							$counter++;
+							$counter_loss++;
+							$tempo += '754.25';
+						}
+
+
+				}
+
+				$percent = ((($counter_loss)*100)/$counter) ;
+
+				if ($counter){
+
+					echo "			
+						<table width='410' border='0' cellpadding='0' cellspacing='0'>
+						  <tr>
+							<td bgcolor='#F9F9F9' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>Ping</font></strong></p></td>
+						  <td colspan='4' bgcolor='#F9F9F9' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>Pacotes</font></strong></p></td
+						  >
+						  </tr>
+						  <tr>
+							<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>IP</font></strong></p></td>
+							<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='center'><p><strong><font color='#BCD3C4'>enviados</font></strong></p></td>
+							<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='center'><p><strong><font color='#BCD3C4'>recebidos</font></strong></p></td>
+							<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='center'><p><strong><font color='#BCD3C4'>perdidos</font></strong></p></td>
+							<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='center'><p><strong><font color='#BCD3C4'>tempo</font></strong></p></td>
+						  </tr>
+						  <tr>
+							<td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$ip."</p></td>
+							<td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$counter. "</p></td>
+							<td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$counter_received. "</p></td>
+							<td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$counter_loss. "</p></td>
+							<td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$tempo." ms</p></td>
+						  </tr>
+						  <tr>
+							<td colspan='5' bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p>Pacotes enviados pelo servidor " .$host. "(".$info['host'] . ")</p></td> 
+						  </tr>
+						</table>" ;
+
+
+					return;
+				}	
+		
+		}
+		
+		else if ($op == "ajax_arp_pop"){
+		
+				
+		$host = @$_REQUEST["host"];
+		$ip = @$_REQUEST["ip"];
+
+		$arp=array();
+
+		if( $ip ) {
+
+			$ich = new ICHostInfo();
+			$icc = new ICClient();
+
+			$arp = array();  
+
+				$info = $ich->obtemInfoServidor($host);
+
+				if(!$icc->open($info["host"],$info["port"],$info["chave"],$info["username"],$info["password"])) {
+
+
+					if (!$icc->estaConectado() ){
+
+							echo "<br><Br><div align=center><strong><font color='#000000'>Não foi possível conectá-lo ao servidor " . $host . ".</font></strong></div>";
+							return;
+
+					}
+
+					continue;
+				}
+
+
+
+				$arp[] = array("host"=>$host, "tabela"=>$icc->getARP($ip) );
+
+
+
+				for ($z=0;$z<count($arp);$z++){
+
+
+					$tabela = $arp[$z]['tabela'];
+
+					for ($a=0;$a<count($tabela);$a++){
+
+						if ($tabela[$a]['mac'] != "" && $tabela[$a]['addr'] != "" && $tabela[$a]['iface'] != ""){
+
+						echo "
+							<table width='410' border='0' cellpadding='0' cellspacing='0'>
+							  <tr>
+							  	<td colspan='3' bgcolor='#F9F9F9' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>Servidor " .$host. "</font></strong></p></td>
+							  </tr>
+							  <tr>
+								<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>IP</font></strong></p></td>
+								<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>MAC</font></strong></p></td>
+								<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>IFACE</font></strong></p></td>
+							  </tr>
+							  <tr>
+								<td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" . $tabela[$a]['addr'] . "</p></td>
+								<td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" . $tabela[$a]['mac'] . "</p></td>
+								<td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" . $tabela[$a]['iface'] . "</p></td>
+							  </tr>
+							</table>
+
+						";
+							return;
+
+						}else{
+
+							echo "<br><b><div align=center><font color=#FF0000>sem resposta para o IP " . $ip . "</div></div></b>";
+							return;
+
+						}
+
+					}
+
+
+				}
+
+			}
+
+		
+		
+		}
+		
+		
+		else if ($op == "ajax"){
 		
 			$tipo = @$_REQUEST["tipo"]; 
 			//$id_pop = @$_REQUEST["id_pop"]; 
@@ -2515,6 +2809,11 @@ class VAConfiguracao extends VirtexAdmin {
 						
 						$this->arquivoTemplate = "configuracao_preferencia_monitoracao.html";
 						
+				
+				
+				}else if ($op == "links"){
+				
+				require_once("links.php");
 				
 				
 				}// $ops
