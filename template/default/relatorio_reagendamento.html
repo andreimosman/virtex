@@ -32,9 +32,9 @@
 					{foreach item=a from=$reagendamentos}
 
                     <tr bgcolor="{cycle values="#ffffff,#f1f1f1"}">
-                      <td width="100" height="20" align="center"><p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$a.id_cliente}">{$a.data_vencimento|date_format:"%e/%m/%Y"}</a></p></td>
-                      <td width="150" height="20" align="center"><p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$a.id_cliente}">{$a.data_reagendamento}</a></p></td>
-                      <td width="150" height="20" align="center"><p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$a.id_cliente}">{$a.reagendado_para}</a></p></td>
+                      <td width="100" height="20" align="center"><p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$a.id_cliente}">{$a.data|date_format:"%e/%m/%Y"}</a></p></td>
+                      <td width="150" height="20" align="center"><p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$a.id_cliente}">{$a.data_reagendamento|date_format:"%e/%m/%Y"}</a></p></td>
+                      <td width="150" height="20" align="center"><p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$a.id_cliente}">{$a.data_para_reagendamento|date_format:"%e/%m/%Y"}</a></p></td>
                       <td width="100" height="20" align="right"><p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$a.id_cliente}">{$a.valor}</a></p></td>
                       <td width="100" height="20" align="center"><p><a href="administrador.php?op=cadastro&id_admin={$a.id_admin}">{$a.admin}</a></p></td>
                     </tr>

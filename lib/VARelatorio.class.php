@@ -2142,6 +2142,23 @@ class VARelatorio extends VirtexAdmin {
 	
 	
 	
+	}else if ($op == "sem_mac"){
+	
+		$sSQL  = "SELECT bl.username, bl.dominio, bl.id_pop, bl.tipo_bandalarga, bl.ipaddr, bl.rede, bl.upload_kbps, bl.download_kbps, bl.status, bl.mac, ";
+		$sSQL .= "cn.id_cliente, cl.nome_razao ";
+		$sSQL .= "FROM cntb_conta_bandalarga bl, cntb_conta cn, cltb_cliente cl ";
+		$sSQL .= "WHERE ";
+		$sSQL .= "bl.tipo_conta = 'BL' AND ";
+		$sSQL .= "bl.username = cn.username AND bl.tipo_conta = cn.tipo_conta AND bl.dominio = cn.dominio AND ";
+		$sSQL .= "cl.id_cliente = cn.id_cliente AND bl.mac is null ";
+		$lista = $this->bd->obtemRegistros($sSQL);
+		
+		//echo "LISTA: $sSQL <br>";
+	
+		$this->tpl->atribui("lista",$lista);
+		
+		$this->arquivoTemplate = "relatorio_clientes_sem_mac.html";
+	
 	}
 	
 	

@@ -1,0 +1,119 @@
+<!-- nhaaaaaaaaaaaaaaa relatorio_config_cliente.html-->
+<html>
+<head>
+<title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
+
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+<script language="JavaScript">ready = "yes";</script>
+<script>
+{literal}
+var estado=false;
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_showHideLayers() { //v6.0
+  var i,p,v,obj,args=MM_showHideLayers.arguments;
+  for (i=0; i<(args.length-2); i+=3) if ((obj=MM_findObj(args[i]))!=null) { v=args[i+2];
+    if (obj.style) { obj=obj.style; v=(v=='show')?'visible':(v=='hide')?'hidden':v; }
+    obj.visibility=v; }
+}
+var da = (document.all) ? 1 : 0;
+var pr = (window.print) ? 1 : 0;
+var mac = (navigator.userAgent.indexOf("Mac") != -1);
+
+function printPage() {
+  if (pr) // NS4, IE5
+    window.print()
+  else if (da && !mac) // IE4 (Windows)
+       vbPrintPage()
+  else // other browsers
+    alert("Desculpe seu browser não suporta esta função. Por favor utilize a barra de trabalho para imprimir a página.");
+}
+
+if (da && !pr && !mac) with (document) {
+  writeln('<OBJECT ID="WB" WIDTH="0" HEIGHT="0" CLASSID="clsid:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>');
+  writeln('<' + 'SCRIPT LANGUAGE="VBScript">');
+  writeln('Sub window_onunload');
+  writeln('  On Error Resume Next');
+  writeln('  Set WB = nothing');
+  writeln('End Sub');
+  writeln('Sub vbPrintPage');
+  writeln('  OLECMDID_PRINT = 6');
+  writeln('  OLECMDEXECOPT_DONTPROMPTUSER = 1');
+  writeln('  OLECMDEXECOPT_PROMPTUSER = 1');
+  writeln('  On Error Resume Next');
+  writeln('  WB.ExecWB OLECMDID_PRINT, OLECMDEXECOPT_DONTPROMPTUSER');
+  writeln('End Sub');
+  writeln('<' + '/SCRIPT>');
+}
+{/literal}
+</script>
+
+</head>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td align="center" valign="middle"><h1>Cadastramento de Links 
+                    Externos </h1>
+                  <table width="500" border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td><form name="form1" method="post" action="">
+                          <table width="100%" border="0" cellspacing="2" cellpadding="0">
+                            <tr> 
+                              <td width="15%"><p>Titulo:</p></td>
+                              <td width="85%"><input name="titulo" type="text" id="titulo" size="60"></td>
+                            </tr>
+                            <tr> 
+                              <td><p>URL:</p></td>
+                              <td><input name="url" type="text" id="url" size="60"></td>
+                            </tr>
+                            <tr> 
+                              <td><p>Alvo:</p></td>
+                              <td><select name="select">
+                                  <option value="_blank">Nova P&aacute;gina</option>
+                                  <option value="_self">Dentro do Sistema</option>
+                                </select></td>
+                            </tr>
+                            <tr> 
+                              <td><p>Descri&ccedil;&atilde;o:</p></td>
+                              <td><textarea name="descricao" cols="50" id="descricao"></textarea></td>
+                            </tr>
+                            <tr>
+                              <td><input name="op" type="hidden" id="op" value="links">
+                                <input name="id_link" type="hidden" id="id_link" value="{$id_link}">
+                                <input type="hidden"> </td>
+                              <td><input type="submit" name="Submit" value="Gravar Link Externo"></td>
+                            </tr>
+                          </table>
+                        </form></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" align="center">&nbsp;</td>
+                    </tr>
+                    <tr> 
+                      <td colspan="2" align="center"><a href="javascript: history.back();">&laquo; 
+                        Voltar</a></td>
+                    </tr>
+                  </table>
+                  <p id="imprimir" align="center">&nbsp;</p></td>
+              </tr>
+            </table></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+</body>
+</html>
