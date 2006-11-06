@@ -439,7 +439,7 @@ class VAConfiguracao extends VirtexAdmin {
 				
 				
 
-				$arp[] = array("host"=>$host, "tabela"=>$icc->getARP('172.16.253.254') );
+				$arp[] = array("host"=>$host, "tabela"=>$icc->getARP($ip_cliente) );
 			
 				
 
