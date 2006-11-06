@@ -2151,6 +2151,7 @@ class VARelatorio extends VirtexAdmin {
 		$sSQL .= "bl.tipo_conta = 'BL' AND ";
 		$sSQL .= "bl.username = cn.username AND bl.tipo_conta = cn.tipo_conta AND bl.dominio = cn.dominio AND ";
 		$sSQL .= "cl.id_cliente = cn.id_cliente AND bl.mac is null ";
+		$sSQL .= "ORDER BY cl.nome_razao,bl.username";
 		$lista = $this->bd->obtemRegistros($sSQL);
 		
 		//echo "LISTA: $sSQL <br>";

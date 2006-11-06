@@ -66,49 +66,42 @@ if (da && !pr && !mac) with (document) {
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <td align="center" valign="middle"><h1>Cadastramento de Links 
-                    Externos </h1>
-                  <table width="500" border="0" cellspacing="0" cellpadding="0">
-                    <tr> 
-                      <td><form name="form1" method="post" action="">
-                          <table width="100%" border="0" cellspacing="2" cellpadding="0">
-                            <tr> 
-                              <td width="15%"><p>Titulo:</p></td>
-                              <td width="85%"><input name="titulo" type="text" id="titulo" size="60"></td>
-                            </tr>
-                            <tr> 
-                              <td><p>URL:</p></td>
-                              <td><input name="url" type="text" id="url" size="60"></td>
-                            </tr>
-                            <tr> 
-                              <td><p>Alvo:</p></td>
-                              <td><select name="select">
-                                  <option value="_blank">Nova P&aacute;gina</option>
-                                  <option value="_self">Dentro do Sistema</option>
-                                </select></td>
-                            </tr>
-                            <tr> 
-                              <td><p>Descri&ccedil;&atilde;o:</p></td>
-                              <td><textarea name="descricao" cols="50" id="descricao"></textarea></td>
-                            </tr>
-                            <tr>
-                              <td><input name="op" type="hidden" id="op" value="links">
-                                <input name="id_link" type="hidden" id="id_link" value="{$id_link}">
-                                <input type="hidden"> </td>
-                              <td><input type="submit" name="Submit" value="Gravar Link Externo"></td>
-                            </tr>
-                          </table>
-                        </form></td>
+                <td align="center" valign="middle"><h1>Relat&oacute;rio de Clientes 
+                    sem MAC Cadastrado</h1>
+                  <p>&nbsp;</p>
+                  <table width="600" border="0" cellspacing="2" cellpadding="0">
+                    <tr bgcolor="#E4E4E4"> 
+                      <td height="20"> 
+                        <p><strong>Nome</strong></p></td>
+                      <td height="20"> 
+                        <p><strong>Username</strong></p></td>
+                      <td height="20" bgcolor="#E4E4E4"> 
+                        <p>&nbsp;</p></td>
                     </tr>
+                    {foreach item=v name=links from=$lista} 
+                    <tr bgcolor="{cycle values="#ffffff,#f1f1f1"}"> 
+                      <td><p><a href="clientes.php?op=conta&id_cliente={$v.id_cliente}&username={$v.username}&dominio={$v.dominio}&tipo_conta=BL">{$v.nome_razao}</a></p>
+                      </td>
+                      <td><p><a href="clientes.php?op=conta&id_cliente={$v.id_cliente}&username={$v.username}&dominio={$v.dominio}&tipo_conta=BL">{$v.username}</a></p></td>
+                      <td><p><a href="clientes.php?op=conta&id_cliente={$v.id_cliente}&username={$v.username}&dominio={$v.dominio}&tipo_conta=BL">{if 
+                          $v.tipo_bandalarga == "P"}{$v.ipaddr}{else}{$v.rede}{/if}</a></p></td>
+                    </tr>
+                    {/foreach} 
+					
+                  </table>
+				  <br>
+                  <table width="600" border="0" cellpadding="0" cellspacing="0" bgcolor="#E4E4E4">
                     <tr>
-                      <td colspan="2" align="center">&nbsp;</td>
-                    </tr>
-                    <tr> 
-                      <td colspan="2" align="center"><a href="javascript: history.back();">&laquo; 
-                        Voltar</a></td>
+                      <td><table width="300" border="0" cellspacing="2" cellpadding="0">
+                          <tr> 
+                            <td width="150"> <p>Total de Clientes s/ MAC:</p></td>
+                            <td align="left" valign="middle"> <p><strong>{$smarty.foreach.links.total}</strong></p></td>
+                          </tr>
+                        </table></td>
                     </tr>
                   </table>
-                  <p id="imprimir" align="center">&nbsp;</p></td>
+                  <p>&nbsp;</p>
+                  <p id="imprimir" align="center"><a href="javascript:;" onClick="return printPage();">IMPRIMIR</a></p></td>
               </tr>
             </table></td>
         </tr>
