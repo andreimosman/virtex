@@ -1,0 +1,88 @@
+<!-- configuracao_preferencia_provedor.html -->
+<html>
+<head>
+<title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
+
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td align="center" valign="middle"> <h1 align="center">Cadastro 
+                    de Links Externos</h1>
+                  <p align="center">&nbsp;</p>
+                  <form name="form1" method="post" action="">
+
+                    <table width="500" border="0" cellspacing="2" cellpadding="0">
+                      <tr> 
+                        <td width="122"><p><strong>Titulo</strong></p></td>
+                        <td colspan="3" width="368"><p><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><strong> 
+                            <input name="titulo" type="text" id="titulo" value="{$lista.titulo}" size="50">
+                            </strong></font></p></td>
+                      </tr>
+                      <tr> 
+                        <td><p><strong>URL</strong></p></td>
+                        <td colspan="3"><p><font face="Verdana, Arial, Helvetica, sans-serif" size="1"><strong> 
+                            <input name="url" type="text" id="url" value="{$lista.url}" size="50">
+                            </strong></font></p></td>
+                      </tr>
+                      <tr> 
+                        <td><p><strong>Alvo</strong></p></td>
+                        <td colspan="3"><p>
+                            <select name="target" id="target">
+                              <option value="_blank" {if $lista.target == "_blank"}selected{/if}>Nova P&aacute;gina</option>
+                              <option value="_self" {if $lista.target == "_self"}selected{/if}>No sistema</option>
+                            </select>
+                            <font face="Verdana, Arial, Helvetica, sans-serif" size="1"><strong> 
+                            </strong></font></p></td>
+                      </tr>
+                      <tr> 
+                        <td align="left" valign="top"> 
+                          <p><strong>Descri&ccedil;&atilde;o</strong></p></td>
+                        <td colspan="3"><p>
+                            <textarea name="descricao" cols="50" rows="5" id="descricao">{$lista.descricao}</textarea>
+                            <strong> </strong></p></td>
+                      </tr>
+                      <tr> 
+                        <td>&nbsp;</td>
+                        <td colspan="3">&nbsp;</td>
+                      </tr>
+                      <tr> 
+                        <td>&nbsp;</td>
+                        <td colspan="3"><input name="op" type="hidden" id="op" value="links"> 
+                          <input name="id_link" type="hidden" id="id_link" value="{$lista.id_link}"> 
+                          <input name="acao" type="hidden" id="acao" value="{$acao}">
+                          <input name="sop" type="hidden" id="sop" value="ok"></td>
+                      </tr>
+                      <tr align="center"> 
+                        <td colspan="4">&nbsp;</td>
+                      </tr>
+                    </table>
+                    <table>
+                      <tr align="center"> 
+                        <td><input type="submit" name="Submit" value="Cadastrar"></td>
+                      </tr>
+                    </table>
+                  </form>
+                  <p align="center"><a href="configuracao.php?op=links&acao=alt&pp=excluir&id_link={$lista.id_link}&sop=ok">EXCLUIR 
+                    PERMANENTEMENTE ESTE LINK DA LISTA</a></p>
+				<p>&nbsp;</p></td>
+              </tr>
+            </table></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+</body>
+
+
+</html>
