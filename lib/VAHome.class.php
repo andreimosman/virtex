@@ -156,7 +156,8 @@ class VAHome extends VirtexAdmin {
 					$empresa = $this->prefs->obtem("geral","nome");
 					$dominio = $this->prefs->obtem("geral","dominio_padrao");
 					
-					$email = list($nome_dominio , $com ,$br) = explode (".",$dominio);
+					$email = $this->prefs->obtem("cobranca","email_remetente");
+					////////echo $email;
 					
 					$html = "<div align='center'>
 					<br>
@@ -215,9 +216,10 @@ class VAHome extends VirtexAdmin {
 					</div>
 					";
 					$headers = "Content-type: text/html; charset=iso-8859-1\r\n"; 
-					$headers .= "From: $empresa <$nome_dominio@$dominio>\r\n" ;
+					$headers .= "From: $empresa <$email>\r\n" ;
 					
-
+				$counter = "" ;
+				
 				for ( $i=0; $i <count($rel_clientes); $i++){
 
 					$email_cliente = $rel_clientes[$i]["email"];
@@ -239,14 +241,19 @@ class VAHome extends VirtexAdmin {
 
 						$sSQL  = "UPDATE cbtb_faturas SET email_aviso = 't' WHERE cod_barra = '$cod_barra' AND nosso_numero = '$nosso_numero' AND id_cliente_produto = '$id_cliente_produto' ";
 						$this->bd->consulta($sSQL);
-						///echo $sSQL;
+						
+						$counter++ ;
+
 						}
 
 					}
 
+					$lista_id = $rel_clientes[$i]["id_cliente_produto"];
+					
 
 				}
 				
+								
 				$this->tpl->atribui("mensagem",$mensagem['mensagem_email']);
 				$this->tpl->atribui("empresa",$empresa);
 
@@ -304,6 +311,14 @@ class VAHome extends VirtexAdmin {
 
 	   $this->arquivoTemplate = "home_principal.html";
 		   
+		}
+		if ($op == "lista_email"){
+		
+		
+		$this->arquivoTemplate = 'relatorio_lista_email.html' ;
+		return;
+		
+		
 		}
 		
 		if ($op == "mostra_email"){

@@ -4,12 +4,21 @@
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
 
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+{literal}<style type="text/css">
+<!--
+.style1 {
+	color: #C5C3C3;
+	font-weight: bold;
+}
+-->
+</style>
+{/literal}
 </head>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <td align="center" {if $a.nivel!='0'} valign="top" {/if} height='26'><table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
           <td height="100%" align="center" valign="middle"><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
               <tr>
@@ -30,13 +39,12 @@
                             <td colspan="2"><p align="center"> <a href="configuracao.php?op=pop"><img src="template/default/images/bt_pop.gif" width="77" height="73" border="0"></a></p>
                               <div align="center">
 
-                              <table border=0 width="632" cellspacing=0 cellpadding=0>
+                              <table border=0 width="650" cellspacing=0 cellpadding=0>
                                 <tr bgcolor="#FAFAFA">
-                                  <td width=239 align="left"><h2><b>..nome..</b></h2></td>
-                                  <td width=148 align="left"><h2><b>..info..</b></h2></td>
-								  <td width=124 align="left"><h2 align="center"><b>...ip...</b></h2></td>
-                                  <td width=65 align="center"><h2><b>..tipo..</b></h2></td>
-                                  <td align="center" colspan="3">&nbsp;</td>
+                                  <td width=260 align="left"><font face="Arial, Helvetica, sans-serif"><b>..nome..</b></font></td>
+								  <td width=200 align="center"><font face="Arial, Helvetica, sans-serif"><b>...ip...</b></font></td>
+                                  <td width=95 align="center"><font face="Arial, Helvetica, sans-serif"><b>..tipo..</b></font></td>
+                                  <td align="center" colspan="3"><font face="Arial, Helvetica, sans-serif"><b>..::..&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></font></td>
                                 </tr>
                                 <tr>
                                   <td colspan=7 bgcolor="000000"><img src="template/default/menu/spacer.gif" width=1 height=1 border=0></td>
@@ -44,25 +52,71 @@
 								<tr>
 									<td height="5"></td>
 								</tr>
-                                {foreach item=a from=$lista_pop}
+							{foreach item=a from=$lista_pop}
                                 <tr bgcolor="#FFFFFF">
-                                  <td align="left"><p>{if $a.status != "A"}<font color="red"><b>{/if}<a href="configuracao.php?op=pop&id_pop={$a.id_pop}">{$a.tipo}
-                                      - {$a.nome}</a><a href="configuracao.php?op=pop&id_pop={$a.id_pop}">{if $a.status != "A"}</a></b></font>{/if}</p></td>
+                                  <td align="left" nowrap="nowrap" style="border-bottom: 1px solid #C5C3C3;" {if $a.nivel!='0'} valign="top" {/if} height='26' ><p>
+								 	{if $a.nivel=='0'}
+										<span class="style1">•</span>
+									{/if}
+									{if $a.nivel=='1'}
+										<img src="template/default/images/conector.gif" alt="NÍVEL DE DEPENDÊNCIA 1"><span class="style1">•</span>
+									{/if} 
+									{if $a.nivel=='2'}
+										<img src="template/default/images/menu/spacer.gif" width="18"><img src="template/default/images/conector.gif" alt="NÍVEL DE DEPENDÊNCIA 2"><span class="style1">•</span>
+									{/if}
+									{if $a.nivel=='3'}<img src="template/default/images/menu/spacer.gif" width="35" height="1"><img src="template/default/images/conector.gif" alt="NÍVEL DE DEPENDÊNCIA 3"><span class="style1">•</span>
+									{/if}
+									{if $a.nivel=='4'}<img src="template/default/images/menu/spacer.gif" width="53" height="1"><img src="template/default/images/conector.gif" alt="NÍVEL DE DEPENDÊNCIA 4"><span class="style1">•</span>
+									{/if} 
+									{if $a.nivel=='5'}<img src="template/default/images/menu/spacer.gif" width="71" height="1"><img src="template/default/images/conector.gif" alt="NÍVEL DE DEPENDÊNCIA 5"><span class="style1">•</span>
+									{/if} 
+									{if $a.nivel=='6'}<img src="template/default/images/menu/spacer.gif" width="87" height="1"><img src="template/default/images/conector.gif" alt="NÍVEL DE DEPENDÊNCIA 6"><span class="style1">•</span>
+									{/if} 
+								   
+								  
+								 
+									  <a href="configuracao.php?op=pop&id_pop={$a.id_pop}">
+										  
+										  {if $a.nivel == "0"}
+											<font color="#002200"><b>
+										  {/if}
+										  {if $a.nivel != "0"}
+											<font color="#333333">
+										  {/if}
+										  {if $a.status == "N"}
+											<font color="#CDCDCD"><b>
+										  {/if}
+											{$a.tipo} - {$a.nome}
+										  {if $a.status == "N"}
+										  	</b></font>
+										  {/if}
+										  </a>
+									  </p>
 									  
-                                  <td align="left"><p><a href="configuracao.php?op=pop&id_pop={$a.id_pop}">{$a.info|nl2br}</a></p></td>
-								  <td><div align="center">
-								    <p><a href="configuracao.php?op=pop&id_pop={$a.id_pop}">{$a.ipaddr}</a></p>
-								  </div></td>
-                                  <td align="center"><p><a href="configuracao.php?op=pop&id_pop={$a.id_pop}">{$a.tipo}</a></p></td>
-                                  <td align="center" width="33">
-                                    <p><a href="configuracao.php?op=pop&id_pop={$a.id_pop}"><img src="template/default/images/gif_alterar.gif" alt="ALTERAR POP" border="0"></a></p></td>
-                                  <td align="center" width="23"><a href="configuracao.php?op=pop&rotina=desativar&id_pop={$a.id_pop}"><img alt="DESATIVAR POP" src="template/default/images/delete.gif" width="15" height="15" border="0"></a> </td><td>
-								<a href="relatorio.php?op=lista&tipo=POP&id={$a.id_pop}"><img src="template/default/images/user.gif" alt="Usuários no POP " border="0" >
-								 </a> 
-								 </td>
-                                </tr>
-                                <tr>
-                                  <td colspan="7"><hr size="1"> </td>
+								  </td>
+								
+								  <td style="border-bottom: 1px solid #C5C3C3;" height='26'>
+									  <div align="center">
+										<p><a href="configuracao.php?op=pop&id_pop={$a.id_pop}">{if !$a.ipaddr}&nbsp;{else}{$a.ipaddr}{/if}</a></p>
+									  </div>
+								  </td>
+                                  <td align="center" style="border-bottom: 1px solid #C5C3C3;"  height='26'>
+								  	<p><a href="configuracao.php?op=pop&id_pop={$a.id_pop}">{$a.tipo}</a></p>
+								  </td>
+                                  <td align="center" width="33" style="border-bottom: 1px solid #C5C3C3;" height='26'>
+                                    <p><a href="configuracao.php?op=pop&id_pop={$a.id_pop}">
+									 <img src="template/default/images/gif_alterar.gif" alt="ALTERAR POP" border="0">
+									</a></p>
+								  </td>
+                                  <td align="center" width="23" style="border-bottom: 1px solid #C5C3C3;" height='26'>
+								  	<a href="configuracao.php?op=pop&rotina=desativar&id_pop={$a.id_pop}">
+								  	<img alt="DESATIVAR POP" src="template/default/images/delete.gif" width="15" height="15" border="0"></a>
+								  </td>
+								  <td style="border-bottom: 1px solid #C5C3C3;" height='26'>
+									<a href="relatorio.php?op=lista&tipo=POP&id={$a.id_pop}">
+									<img src="template/default/images/user.gif" alt="Usuários no POP " border="0" >
+								 	</a> 
+								  </td>
                                 </tr>
                                 {/foreach}
                               </table>

@@ -14,6 +14,65 @@
 -->
 </style>
 {/literal}
+{literal}
+
+<script language="javascript">
+
+	function valida(form){
+
+		var ping = document.form1.ip.value;
+			monitor = document.form1.host.value;
+		
+		
+		if (ping == "" && monitor == "#"){
+		
+		alert("Coloque o IP e selecione um servidor.");
+		return false; 
+		
+		
+		}
+		if (ping == ""){
+		
+		alert("Coloque o IP.");
+		return false; 
+		
+		
+		}
+		if (monitor == "#"){
+		
+		alert("Selecione um servidor.");
+		return false; 	
+		}
+
+	}
+
+	var regra = new Object();
+	
+	regra.ip = /^(([0-9]{1,2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]{1,2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$/;
+	
+	function valida_ip(){
+	
+		var sel = regra.ip; 
+		var ver = sel.exec(document.form1.ip.value); 
+		if(!ver && document.form1.ip.value !=""){ 
+			  alert('o IP '+document.form1.ip.value+' não é válido.'); 
+			  document.form1.ip.focus();
+			  document.form1.ip.select();
+			  return false; 
+		} 
+		return true; 
+	}
+			
+	function valida_pacotes(){
+	
+		var pacotes = document.form1.pacotes.value;
+		
+		if (pacotes > 20){
+			document.form1.pacotes.value = '20' ;
+		}
+	}
+</script>
+{/literal}
 </head>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="document.form1.ip.focus();">
@@ -25,14 +84,23 @@
               <tr>
                 <td align="center" valign="middle"> <p class="style1"><font >PING</font>
                 </p>
-                  <form action="{$smarty.server.PHP_SELF}" method=GET target="janela" name=form1>
+                  <form action="{$smarty.server.PHP_SELF}" method=GET target="janela" name=form1 onSubmit="return valida(this);">
                   <input type="hidden" name="op" value="{$op}">
                   <input type="hidden" name="acao" value="ping">
                   <input type="hidden" name="extra" value="ping">
 					<table border="0" width="350">
 						<tr>
-							<td align="RIGHT"><p>IP</p></td><td align="LEFT"><input type="text" name="ip" value="{$ip}" size="15"></td>
-							<td align="RIGHT"><p>Pacotes</p></td><td align="LEFT"><input type="text" value="{if $pacotes}{$pacotes}{else}4{/if}" name="pacotes" size="3" maxlength="2"></td>
+							<td align="RIGHT"><p>IP</p></td><td align="LEFT"><input type="text" name="ip" value="{$ip}" size="17" onBlur="valida_ip();"></td>
+							<td nowrap="nowrap"><p>pingar por</p></td>
+							<td>
+								<select name="host" style="width:70px;">
+									<option value="#"></option>
+									{foreach item=h from=$hosts}
+									<option value="{$h}" {if $h == $infoserver}SELECTED{/if}>{$h}</option>
+									{/foreach}
+								</select>
+							</td>
+							<td align="RIGHT"><p>Pacotes</p></td><td align="LEFT"><input type="text" value="{if $pacotes}{$pacotes}{else}4{/if}" name="pacotes" size="3" maxlength="2" onBlur="valida_pacotes();"></td>
 							<td align="RIGHT"><p>Tamanho</p></td><td align="LEFT"><input type="text" value="{if $tamanho}{$tamanho}{else}32{/if}" name="tamanho" size="5" maxlength="4"></td>
 							<td align="RIGHT"><input type="submit" value="OK"></td>
 						</tr>
@@ -53,6 +121,4 @@
   </tr>
 </table>
 </body>
-
-
 </html>

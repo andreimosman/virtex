@@ -16,7 +16,7 @@ class VAConfiguracao extends VirtexAdmin {
 	 protected function obtemListaPOPs($id_pop="",$nivel=0) {
 
 	   $sSQL  = "SELECT ";
-	   $sSQL .= "   * ";
+	   $sSQL .= "   id_pop, nome, info, tipo , id_pop_ap , status, ipaddr, infoserver, snmp_versao, snmp_ro_com, snmp_rw_com, ativar_snmp  ";
 	   $sSQL .= "FROM ";
 	   $sSQL .= "   cftb_pop ";
 	   $sSQL .= "WHERE ";
@@ -30,9 +30,10 @@ class VAConfiguracao extends VirtexAdmin {
 		   $sSQL .= "   id_pop_ap is null ";
 
 	   }
-
-	   $sSQL .= "ORDER BY ";
-	   $sSQL .= "   nome";
+	
+		$sSQL .= " AND status != 'D' ";
+		$sSQL .= "ORDER BY ";
+		$sSQL .= "   nome";
 
 
 
@@ -59,7 +60,49 @@ class VAConfiguracao extends VirtexAdmin {
 
 	}
 
+	 protected function obtemListaMonitorPOPs($id_pop="",$nivel=0) {
 
+		$sSQL  = "SELECT ";
+		$sSQL .=" p.nome, p.ipaddr, p.tipo, t.id_pop,  t.min_ping , t.max_ping ,t.media_ping ,t.num_perdas ,t.num_ping ,t.status ,t.num_erros, t.laststats ";
+		$sSQL .=" FROM sttb_pop_status t, cftb_pop p ";
+		$sSQL .= "WHERE ";
+
+		   if( $id_pop ) {
+
+			   $sSQL .= "   id_pop_ap = '".$this->bd->escape($id_pop)."' ";
+
+		   } else {
+
+			   $sSQL .= "   id_pop_ap is null ";
+
+		   }
+
+		$sSQL .=" AND  t.id_pop = p.id_pop ORDER BY p.nome ";
+
+
+
+		   $lista = $this->bd->obtemRegistros($sSQL);
+
+		   $retorno = array();
+
+		   for($i=0;$i<count($lista);$i++) {
+
+			   $lista[$i]["nivel"] = $nivel;
+			   $retorno[] = $lista[$i];
+			   $sub = $this->obtemListaMonitorPOPs($lista[$i]["id_pop"],$nivel+1);
+
+			   for($x=0;$x<count($sub);$x++) {
+
+				   $retorno[] = $sub[$x];
+
+			   }
+
+		   }
+
+
+		   return($retorno);
+
+		}
 
 	public function processa($op=null) {// Cria função processa
 
@@ -185,7 +228,7 @@ class VAConfiguracao extends VirtexAdmin {
 					
 					if (!$icc->estaConectado() ){
 												
-						echo "<br><Br><div align=center><strong><font color='#000000'>Não foi possível conectá-lo ao servidor " . $host . ".</font></strong></div>";
+						echo "<br><Br><div align=center><strong><font color='#000000'>Nao foi possvel conecta-lo ao servidor " . $host . ".</font></strong></div>";
 						return;
 
 					}
@@ -226,30 +269,31 @@ class VAConfiguracao extends VirtexAdmin {
 			if ($counter){
 			
 			echo "			
-<table width='430' border='0' cellpadding='0' cellspacing='0'>
-  <tr>
-    <td bgcolor='#F9F9F9' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>Ping</font></strong></p></td>
-  <td colspan='4' bgcolor='#F9F9F9' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>Pacotes</font></strong></p></td
-  >
-  </tr>
-  <tr>
-    <td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>IP</font></strong></p></td>
-    <td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='center'><p><strong><font color='#BCD3C4'>enviados</font></strong></p></td>
-    <td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='center'><p><strong><font color='#BCD3C4'>recebidos</font></strong></p></td>
-    <td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='center'><p><strong><font color='#BCD3C4'>perdidos</font></strong></p></td>
-    <td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='center'><p><strong><font color='#BCD3C4'>tempo</font></strong></p></td>
-  </tr>
-  <tr>
-    <td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$ip_cliente."</p></td>
-    <td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$counter. "</p></td>
-    <td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$counter_received. "</p></td>
-    <td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$counter_loss. "</p></td>
-    <td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$tempo." ms</p></td>
-  </tr>
-  <tr>
-    <td colspan='5' bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p>Pacotes enviados pelo servidor " .$host. "(".$info['host'] . ")</p></td> 
-  </tr>
-</table>" ;
+				<table width='430' border='0' cellpadding='0' cellspacing='0'>
+				  <tr>
+					<td bgcolor='#F9F9F9' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>Ping</font></strong></p></td>
+				  <td colspan='4' bgcolor='#F9F9F9' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>Pacotes</font></strong></p></td
+				  >
+				  </tr>
+				  <tr>
+					<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>IP</font></strong></p></td>
+					<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='center'><p><strong><font color='#BCD3C4'>enviados</font></strong></p></td>
+					<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='center'><p><strong><font color='#BCD3C4'>recebidos</font></strong></p></td>
+					<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='center'><p><strong><font color='#BCD3C4'>perdidos</font></strong></p></td>
+					<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='center'><p><strong><font color='#BCD3C4'>tempo</font></strong></p></td>
+				  </tr>
+				  <tr>
+					<td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$ip_cliente."</p></td>
+					<td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$counter. "</p></td>
+					<td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$counter_received. "</p></td>
+					<td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$counter_loss. "</p></td>
+					<td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$tempo." ms</p></td>
+				  </tr>
+				  <tr>
+					<td colspan='4' bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p>Pacotes enviados pelo servidor " .$host. "(".$info['host'] . ")</p></td> 
+					<td align='right' valign='bottom'><a href='javascript:;' onClick=' Fecha();' ><font color='#FF0033'>[fechar]</font></a></td>
+				  </tr>
+				</table>" ;
 
 
 			return;
@@ -271,7 +315,7 @@ class VAConfiguracao extends VirtexAdmin {
 							
 							if (!$icc->estaConectado() ){
 							
-								echo "<br><Br><div align=center><strong><font color='#000000'>Não foi possível conectá-lo ao servidor " . $host . ".</font></strong></div>";
+								echo "<br><Br><div align=center><strong><font color='#000000'>Nao foi possivel conecta-lo ao servidor " . $host . ".</font></strong></div>";
 								return;
 
 							}
@@ -333,7 +377,8 @@ class VAConfiguracao extends VirtexAdmin {
 			    <td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$tempo." ms</p></td>
 			  </tr>
 			  <tr>
-			    <td colspan='5' bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p>Pacotes enviados pelo servidor " .$host. "(".$info['host'] . ")</p></td> 
+			    <td colspan='4' bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p>Pacotes enviados pelo servidor " .$host. "(".$info['host'] . ")</p></td> 
+    			<td align='right' valign='bottom'><a href='javascript:;' onClick=' Fecha();' ><font color='#FF0033'>[fechar]</font></a></td>
 			  </tr>
 			</table>
 	" ;
@@ -384,7 +429,7 @@ class VAConfiguracao extends VirtexAdmin {
 
 					if (!$icc->estaConectado() ){
 
-							echo "<br><Br><div align=center><strong><font color='#000000'>Não foi possível conectá-lo ao servidor " . $host . ".</font></strong></div>";
+							echo "<br><Br><div align=center><strong><font color='#000000'>Nao foi possivel conecta-lo ao servidor " . $host . ".</font></strong></div>";
 							return;
 
 					}
@@ -394,14 +439,8 @@ class VAConfiguracao extends VirtexAdmin {
 				
 				
 
-				$arp[] = array("host"=>$host, "tabela"=>$icc->getARP($ip_cliente) );
-				
-				echo "
-					  <table width='430' border='0' cellpadding='0' cellspacing='0'>
-						<tr>
-							<td colspan='3' bgcolor='#F9F9F9' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>Servidor " .$host. "</font></strong></p></td>
-						</tr>
-					 ";
+				$arp[] = array("host"=>$host, "tabela"=>$icc->getARP('172.16.253.254') );
+			
 				
 
 				for ($z=0;$z<count($arp);$z++){
@@ -413,7 +452,12 @@ class VAConfiguracao extends VirtexAdmin {
 					
 						if ($tabela[$a]['mac'] != "" && $tabela[$a]['addr'] != "" && $tabela[$a]['iface'] != ""){
 
-						echo "<tr>
+						echo "
+							  <table width='430' border='0' cellpadding='0' cellspacing='0'>
+							  <tr>
+								<td colspan='3' bgcolor='#F9F9F9' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>Servidor " .$host. "</font></strong></p></td>
+							  </tr>
+							  <tr>
 							    <td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>IP</font></strong></p></td>
 							    <td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>MAC</font></strong></p></td>
 							    <td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>IFACE</font></strong></p></td>
@@ -422,6 +466,9 @@ class VAConfiguracao extends VirtexAdmin {
 							    <td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" . $tabela[$a]['addr'] . "</p></td>
 							    <td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" . $tabela[$a]['mac'] . "</p></td>
 							    <td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" . $tabela[$a]['iface'] . "</p></td>
+							  </tr>
+							  <tr>
+							  	<td colspan='3' bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='right'><a href='javascript:;' onClick=' Fecha();' ><font color='#FF0033'>[fechar]</font></a></td>
 							  </tr>
 							</table>
 						
@@ -460,56 +507,54 @@ class VAConfiguracao extends VirtexAdmin {
 			if(!$pacotes || $pacotes < 1) $pacotes = 4;
 
 
-					header("Content-type: text/html; charset=iso-8859-1");
-					header("Cache-Control: no-store, no-cache, must-revalidate");
-					header("Cache-Control: post-check=0, pre-check=0", false);
-					header("pragma: no-cache");
-					header("connection: keep-state");
-					echo "<p>\n";
+				header("Content-type: text/html; charset=iso-8859-1");
+				header("Cache-Control: no-store, no-cache, must-revalidate");
+				header("Cache-Control: post-check=0, pre-check=0", false);
+				header("pragma: no-cache");
+				header("connection: keep-state");
+				echo "<p>\n";
 
-					$ich = new ICHostInfo();
-					$icc = new ICClient();
+				$ich = new ICHostInfo();
+				$icc = new ICClient();
 
-					$info = $ich->obtemInfoServidor($host);
+				$info = $ich->obtemInfoServidor($host);
 
-					if(!$icc->open($info["host"],$info["port"],$info["chave"],$info["username"],$info["password"])) {
+				if(!$icc->open($info["host"],$info["port"],$info["chave"],$info["username"],$info["password"])) {
 
-						if (!$icc->estaConectado() ){
+				if (!$icc->estaConectado() ){
 
-							echo "<br><Br><div align=center><strong><font color='#000000'>Não foi possível conectá-lo ao servidor " . $host . ".</font></strong></div>";
-							return;
+				echo "<br><Br><div align=center><strong><font color='#000000'>Nao foi possivel conecta-lo ao servidor " . $host . ".</font></strong></div>";
+				return;
 
-						}
+				}
 
-						continue;
+				continue;
+				}
+
+				////$ip_cliente = 'www.google.com.br';
+
+
+				$dados = $icc->getFPING($ip,$pacotes,$tamanho) ;
+
+				$counter="0";
+				$counter_received="0";
+				$counter_loss="0";
+				$tempo = '0';
+
+				for($i=0; $i<count($dados); $i++){
+
+					if (($dados[$i] != '-') && ($dados[$i] >0) && ($dados[$i] !="-") && ($dados[$i] !="") ){
+
+						$counter++;
+						$counter_received++;
+						$tempo += $dados[$i];
+
+					}else{
+
+						$counter++;
+						$counter_loss++;
+						$tempo += '754.25';
 					}
-
-					////$ip_cliente = 'www.google.com.br';
-
-
-					$dados = $icc->getFPING($ip,$pacotes,$tamanho) ;
-
-					$counter="0";
-					$counter_received="0";
-					$counter_loss="0";
-					$tempo = '0';
-
-					for($i=0; $i<count($dados); $i++){
-
-						if (($dados[$i] != '-') && ($dados[$i] >0) && ($dados[$i] !="-") && ($dados[$i] !="") ){
-
-							$counter++;
-							$counter_received++;
-							$tempo += $dados[$i];
-
-						}else{
-
-							$counter++;
-							$counter_loss++;
-							$tempo += '754.25';
-						}
-
-
 				}
 
 				$percent = ((($counter_loss)*100)/$counter) ;
@@ -538,7 +583,8 @@ class VAConfiguracao extends VirtexAdmin {
 							<td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" .$tempo." ms</p></td>
 						  </tr>
 						  <tr>
-							<td colspan='5' bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p>Pacotes enviados pelo servidor " .$host. "(".$info['host'] . ")</p></td> 
+							<td colspan='4' bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p>Pacotes enviados pelo servidor " .$host. "(".$info['host'] . ")</p></td> 
+							<td align='right' valign='bottom'><a href='javascript:;' onClick=' Fecha();' >[fechar]</a></td>
 						  </tr>
 						</table>" ;
 
@@ -546,130 +592,120 @@ class VAConfiguracao extends VirtexAdmin {
 					return;
 				}	
 		
-		}
-		
-		else if ($op == "ajax_arp_pop"){
+		}else if ($op == "ajax_arp_pop"){
 		
 				
-		$host = @$_REQUEST["host"];
-		$ip = @$_REQUEST["ip"];
+			$host = @$_REQUEST["host"];
+			$ip = @$_REQUEST["ip"];
 
-		$arp=array();
+			$arp=array();
 
-		if( $ip ) {
+			if( $ip ) {
 
-			$ich = new ICHostInfo();
-			$icc = new ICClient();
+				$ich = new ICHostInfo();
+				$icc = new ICClient();
 
-			$arp = array();  
+				$arp = array();  
 
-				$info = $ich->obtemInfoServidor($host);
+					$info = $ich->obtemInfoServidor($host);
 
-				if(!$icc->open($info["host"],$info["port"],$info["chave"],$info["username"],$info["password"])) {
-
-
-					if (!$icc->estaConectado() ){
-
-							echo "<br><Br><div align=center><strong><font color='#000000'>Não foi possível conectá-lo ao servidor " . $host . ".</font></strong></div>";
-							return;
-
-					}
-
-					continue;
-				}
+					if(!$icc->open($info["host"],$info["port"],$info["chave"],$info["username"],$info["password"])) {
 
 
+						if (!$icc->estaConectado() ){
 
-				$arp[] = array("host"=>$host, "tabela"=>$icc->getARP($ip) );
-
-
-
-				for ($z=0;$z<count($arp);$z++){
-
-
-					$tabela = $arp[$z]['tabela'];
-
-					for ($a=0;$a<count($tabela);$a++){
-
-						if ($tabela[$a]['mac'] != "" && $tabela[$a]['addr'] != "" && $tabela[$a]['iface'] != ""){
-
-						echo "
-							<table width='410' border='0' cellpadding='0' cellspacing='0'>
-							  <tr>
-							  	<td colspan='3' bgcolor='#F9F9F9' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>Servidor " .$host. "</font></strong></p></td>
-							  </tr>
-							  <tr>
-								<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>IP</font></strong></p></td>
-								<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>MAC</font></strong></p></td>
-								<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>IFACE</font></strong></p></td>
-							  </tr>
-							  <tr>
-								<td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" . $tabela[$a]['addr'] . "</p></td>
-								<td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" . $tabela[$a]['mac'] . "</p></td>
-								<td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" . $tabela[$a]['iface'] . "</p></td>
-							  </tr>
-							</table>
-
-						";
-							return;
-
-						}else{
-
-							echo "<br><b><div align=center><font color=#FF0000>sem resposta para o IP " . $ip . "</div></div></b>";
+							echo "<br><Br><div align=center><strong><font color='#000000'>Nao foi possivel conecta-lo ao servidor " . $host . ".</font></strong></div>";
 							return;
 
 						}
+					continue;
+					}
+
+					$arp[] = array("host"=>$host, "tabela"=>$icc->getARP($ip) );
+
+					for ($z=0;$z<count($arp);$z++){
+
+						$tabela = $arp[$z]['tabela'];
+
+						for ($a=0;$a<count($tabela);$a++){
+
+							if ($tabela[$a]['mac'] != "" && $tabela[$a]['addr'] != "" && $tabela[$a]['iface'] != ""){
+
+								echo "
+									<table width='410' border='0' cellpadding='0' cellspacing='0'>
+									  <tr>
+										<td colspan='3' bgcolor='#F9F9F9' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>Servidor " .$host. "</font></strong></p></td>
+									  </tr>
+									  <tr>
+										<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>IP</font></strong></p></td>
+										<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>MAC</font></strong></p></td>
+										<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;'><p><strong><font color='#BCD3C4'>IFACE</font></strong></p></td>
+									  </tr>
+									  <tr>
+										<td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" . $tabela[$a]['addr'] . "</p></td>
+										<td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" . $tabela[$a]['mac'] . "</p></td>
+										<td bgcolor='#FDFDFD' style='border: 1px solid #FFFFFF;' align='center'><p>" . $tabela[$a]['iface'] . "</p></td>
+									  </tr>
+									  <tr>
+										<td colspan='3' bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='right'><a href='javascript:;' onClick=' Fecha();' >[fechar]</a></td>
+									  </tr>
+									</table>
+
+									";
+								return;
+
+							}else{
+
+								echo "<br><b><div align=center><font color=#FF0000>sem resposta para o IP " . $ip . "</div></div></b>";
+								return;
+
+							}
+
+						}
+
 
 					}
 
-
 				}
 
-			}
 
-		
-		
+
 		}
 		
 		
 		else if ($op == "ajax"){
 		
-			$tipo = @$_REQUEST["tipo"]; 
-			//$id_pop = @$_REQUEST["id_pop"]; 
-		
-			$sSQL  = " SELECT id_pop, nome, tipo " ;
-			$sSQL .= " FROM cftb_pop " ;
-			$sSQL .= " WHERE status = 'A' " ;
-			
-			
-			
-			if ($tipo != "CL" ){
-			
-			$sSQL .= " AND tipo = 'B' ";
-			//echo $sSQL;
-			
-			}
-			if ($tipo == "CL" ){
-			
-			$sSQL .= " AND tipo = 'AP' ";
-			
-			}
-			
-			$sSQL .= " ORDER BY nome ASC ";
+				$tipo = @$_REQUEST["tipo"]; 
+				//$id_pop = @$_REQUEST["id_pop"]; 
 
-			////echo "//<sql>" . $sSQL . "</sql>";
-		
-			$pop = $this->bd->obtemRegistros($sSQL);
-			$this->tpl->atribui("pop",$pop);
-			// Retorno em XML para utilização com ajax
-			$this->arquivoTemplate = "pop.xml";
-			header("Content-type: text/xml");
-			
+				$sSQL  = " SELECT id_pop, nome, tipo " ;
+				$sSQL .= " FROM cftb_pop " ;
+				$sSQL .= " WHERE status = 'A' " ;
+
+
+				if ($tipo != "CL" ){
+
+					$sSQL .= " AND tipo = 'B' ";
+					//echo $sSQL;
+
+				}
+				if ($tipo == "CL" ){
+
+					$sSQL .= " AND tipo = 'AP' ";
+
+				}
+
+				$sSQL .= " ORDER BY nome ASC ";
+
+
+				$pop = $this->bd->obtemRegistros($sSQL);
+				$this->tpl->atribui("pop",$pop);
+				$this->arquivoTemplate = "pop.xml";
+				header("Content-type: text/xml");
+
 			return;
 
-		}
-		
-		else if($op == "pop"){
+		}else if($op == "pop"){
 
 			if( ! $this->privPodeLer("_CONFIG_EQUIPAMENTOS") ) {
 				$this->privMSG();
@@ -720,6 +756,8 @@ class VAConfiguracao extends VirtexAdmin {
 				$sSQL = "SELECT count(id_pop) as qtde_cli_pop FROM cntb_conta_bandalarga WHERE id_pop = '$id_pop' ";
 				$qtde = $this->bd->obtemUnicoRegistro($sSQL);
 				//echo "QTDE_POP: $sSQL <br>";
+				
+				$dSQL = " SELECT count(id_pop_status) as links FROM cftb_pop WHERE id_pop_status = '$id_pop' " ;
 
 				$sSQL = "SELECT nome, tipo FROM cftb_pop WHERE id_pop = $id_pop ORDER BY nome ";
 				$_pop = $this->bd->obtemUnicoRegistro($sSQL);
@@ -823,7 +861,6 @@ class VAConfiguracao extends VirtexAdmin {
 					
 						$ip = 'NULL' ;
 					
-					
 					}
 					
 					$ativar_snmp = @$_REQUEST["snmp"];
@@ -831,7 +868,6 @@ class VAConfiguracao extends VirtexAdmin {
 					if ($ativar_snmp == "" ){
 
 						$ativar_snmp = 'f' ;
-
 
 					}
 
@@ -846,16 +882,16 @@ class VAConfiguracao extends VirtexAdmin {
 					$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["tipo"]) . "', ";
 					$sSQL .= "      " . ($id_pop_ap ? "$id_pop_ap" : "NULL") . ",  ";
 					$sSQL .= "		 '" . $this->bd->escape(@$_REQUEST["status"]).  "', ";
-					
-						if ($ip == "" || $ip == "NULL"){
 
-							$sSQL .= " 		$ip, ";
+					if ($ip == "" || $ip == "NULL"){
 
-						}else{
+						$sSQL .= " 		$ip, ";
 
-							$sSQL .= " 		'$ip', ";
+					}else{
 
-						}
+						$sSQL .= " 		'$ip', ";
+
+					}
 
 					
 					//$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["id_pop_ap"]) . "' ";
@@ -882,7 +918,6 @@ class VAConfiguracao extends VirtexAdmin {
 					
 						$ativar_snmp = 'f' ;
 					
-					
 					}else{
 					
 						$ativar_snmp = 't';
@@ -904,44 +939,40 @@ class VAConfiguracao extends VirtexAdmin {
 					
 					////echo $sSQL ;
 
-						if (!$id_pop_ap){
+					if (!$id_pop_ap){
 
-							$sSQL .= "  id_pop_ap = NULL , ";
+						$sSQL .= "  id_pop_ap = NULL , ";
 
-						}else{
+					}else{
 
-							$sSQL .= " 	id_pop_ap = '$id_pop_ap', ";
+						$sSQL .= " 	id_pop_ap = '$id_pop_ap', ";
 
-						}
-
+					}
 					
 					$sSQL .= "	 status = '" . $_REQUEST["status"] . "', ";
-					
-						if (!$ip){
 
-							$sSQL .= "  ipaddr = NULL ";
+					if (!$ip){
 
-						}else{
+						$sSQL .= "  ipaddr = NULL ";
 
-							$sSQL .= " 	ipaddr = '$ip' ";
+					}else{
 
-						}
+						$sSQL .= " 	ipaddr = '$ip' ";
 
-					
-					
+					}
+
 					$sSQL .= "WHERE ";
 					$sSQL .= "   id_pop = '" . $this->bd->escape(@$_REQUEST["id_pop"]) . "' ";  
 					
-
-
 				}
 
 				$this->bd->consulta($sSQL);  
 
 				if( $this->bd->obtemErro() != MDATABASE_OK ) {
+					
 					echo "ERRO: " . $this->bd->obtemMensagemErro() , "<br>\n";
 					echo "QUERY: " . $sSQL . "<br>\n";
-
+					
 				}
 
 
@@ -1492,7 +1523,7 @@ class VAConfiguracao extends VirtexAdmin {
 
 
 
-		// Atribui a variável de erro no template.
+		// Atribui a variável de erro no template.asdsa
 		$this->tpl->atribui("erros",$erros);
 		$this->tpl->atribui("mensagem",$erros);
 		$this->tpl->atribui("acao",$acao);
@@ -1521,14 +1552,8 @@ class VAConfiguracao extends VirtexAdmin {
 	}else if ($op == "monitoramento"){
 	
 	
-	$sSQL  =" SELECT ";
-	$sSQL .=" p.nome, p.ipaddr, p.tipo, t.id_pop,  t.min_ping , t.max_ping ,t.media_ping ,t.num_perdas ,t.num_ping ,t.status ,t.num_erros ";
-	$sSQL .=" FROM sttb_pop_status t, cftb_pop p ";
-	$sSQL .=" WHERE t.id_pop = p.id_pop ORDER BY p.nome ";
 	
-	///echo $sSQL;
-	
-	$rel_monitoramento = $this->bd->obtemRegistros($sSQL);
+	$rel_monitoramento = $this->obtemListaMonitorPOPs();
 	
 	$this->tpl->atribui("rel_monitoramento",$rel_monitoramento);
 	

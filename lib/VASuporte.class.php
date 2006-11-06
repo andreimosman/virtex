@@ -395,6 +395,11 @@ class VASuporte extends VirtexAdmin {
 			$ping_limite = 20;
 			$ping_max_pkg = 1400;
 			
+			$host_info = new ICHostInfo();
+			$hosts = $host_info->obtemListaServidores();
+			//echo $hosts;
+
+			$this->tpl->atribui("hosts",$hosts);
 				
 			$erros = array();
 			
@@ -405,6 +410,8 @@ class VASuporte extends VirtexAdmin {
 			$acao = @$_REQUEST["acao"];
 			$extra = @$_REQUEST["extra"];
 			$op = @$_REQUEST["op"];
+			$host = @$_REQUEST['host'];
+			///echo $host;
 			
 			
 			if(!$tamanho || $tamanho < 1) $tamanho = 32;
@@ -432,35 +439,77 @@ class VASuporte extends VirtexAdmin {
 			if ($extra == "ping") {
 				header("pragma: no-cache");
 				header("connection: keep-state");
-				echo "<font face='courier' size=-2>\n";
+				echo "<br><div style='padding-left=70px;'><font face='courier' size=-2>\n";
 				if (!count($erros)) {			
-					//$pinglist = `ping $ip -c $pacotes -s $tamanho`;
-					$fd = popen("/sbin/ping  -n -c " . escapeshellarg($pacotes) . " -s " . escapeshellarg($tamanho) . " " . escapeshellarg($ip),"r");
-					///echo "PING: " . $fd . "<br>";
-					
-					while(!feof($fd)) {
-						for($x=1;$x<250;$x++) {
-							echo "<!-- BUFFER -->\n";
-							flush();
+					$ich = new ICHostInfo();
+					$icc = new ICClient();
+
+
+
+					$info = $ich->obtemInfoServidor($host);
+
+					if(!@$icc->open($info["host"],$info["port"],$info["chave"],$info["username"],$info["password"])) {
+
+						if (!$icc->estaConectado() ){
+
+							echo "<br><Br><div align=center><strong><font color='#000000' face='verdana'>Não foi possível conectá-lo ao servidor " . $host . ".</font></strong></div><font color='#FFFFFF'>";
+						
+
 						}
 
-						$linha = fgets($fd);
-						echo nl2br($linha);
-						
-						flush();
-						
-						//usleep(1);
+						continue;
+
 					}
+
+					$dados = $icc->getFPING($ip,$pacotes,$tamanho) ;
 					
-					fclose($fd);
-					
-					
+					echo "PING ".$ip." (".$ip.") ".$tamanho." bytes de dados. <br>";
+					$counter="0";
+					$counter_received="0";
+					$counter_loss="0";
+					$tempo = '0';
+
+					for($i=0; $i<count($dados); $i++){
+
+						if (($dados[$i] != '-') && ($dados[$i] >0) && ($dados[$i] !="-") && ($dados[$i] !="") ){
+
+							echo $tamanho . " bytes para " . $ip . ": icmp_seq=".$i." tempo=".trim($dados[$i])." ms <br>\n" ;
+							$counter++;
+							$counter_received++;
+							$tempo += $dados[$i];
+
+						}else{
+
+							echo "tempo esgotado.<br>\n";
+							$counter++;
+							$counter_loss++;
+							$tempo += '754.25';
+						}
+
+
+					}
+
+					$percent = ((($counter_loss)*100)/$counter) ;
+
+					if ($counter){
+
+						echo "<br>" .  $counter ." pacotes enviados, " .$counter_received. " recebidos, " .$percent. "% perdidos, tempo " .$tempo . "ms<br> Pacotes enviados pelo servidor " .$host ."(".$info['host'] .")";
+							
+					}					
+				
+				
 				} else {
+					
 					for($i=0; $i<count($erros); $i++) echo "$erros[$i]<br>";
+					
 				}
-				echo "</font>";
-				$this->arquivoTemplate = "";
-			} 
+		
+			echo "</font></div>";
+
+			$this->arquivoTemplate = "";
+			return;
+
+		} 
 				
 		}else if($op == "backup") {
 			if( ! $this->privPodeGravar("_SUPORTE_BACKUP") ) {

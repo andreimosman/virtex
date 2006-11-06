@@ -8,6 +8,13 @@
 {literal}
 <style type="text/css">
 <!--
+.style8 {font-size: 9px}
+<style type="text/css">
+<!--
+.style7 {
+	font-size: 9px;
+	font-weight: bold;
+}
 .style6 {
 	color: #DDDDDD;
 	font-weight: bold;
@@ -16,6 +23,10 @@
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-weight: bold;
 	color: #FFFFFF;
+}
+.style2 {
+	color: #C5C3C3;
+	font-weight: bold;
 }
 -->
 </style>
@@ -32,11 +43,11 @@
         <td height="20" bgcolor="#F3F8F4" style="border:1px solid #FFFFFF;" colspan="2"><p><strong>Pop</strong></p></td>
 		 <td height="20" bgcolor="#F3F8F4" style="border:1px solid #FFFFFF;"><p><strong>IP</strong></p></td>
         <td bgcolor="#F3F8F4"  style="border:1px solid #FFFFFF;"><p align="center"><strong>Status</strong></p></td>
-        <td colspan="5" bgcolor="#F3F8F4"  style="border:1px solid #FFFFFF;"><p align="center"><strong>Ping</strong></p></td>
+        <td colspan="6" bgcolor="#F3F8F4"  style="border:1px solid #FFFFFF;"><p align="center"><strong>Ping</strong></p></td>
       </tr>
       <tr>
         <td bgcolor="#F9FBF9"  width="60px" style="border:1px solid #FFFFFF;"><p><strong>Tipo</strong></p></td>
-		<td bgcolor="#F9FBF9" width="250px" style="border:1px solid #FFFFFF;"><p><strong>Nome</strong></p></td>
+		<td bgcolor="#F9FBF9" width="180px" style="border:1px solid #FFFFFF;"><p><strong>Nome</strong></p></td>
 		 <td bgcolor="#F9FBF9" style="border:1px solid #FFFFFF;">&nbsp;</td>
         <td bgcolor="#F9FBF9" style="border:1px solid #FFFFFF;">&nbsp;</td>
 		 <td bgcolor="#F5F5F5" style="border:1px solid #FFFFFF;"><p align="center"><strong>p.env</strong></p></td>
@@ -44,22 +55,44 @@
         <td bgcolor="#ECFBFB" style="border:1px solid #FFFFFF;"><p align="center"><strong>min</strong></p></td>
         <td bgcolor="#FFF2F4" style="border:1px solid #FFFFFF;"><p align="center"><strong>max</strong></p></td>
         <td bgcolor="#FFFFEA" style="border:1px solid #FFFFFF;"><p align="center"><strong>med</strong></p></td>
+		<td bgcolor="#F3F8F4" style="border:1px solid #FFFFFF;"><p align="center" class="style7">Hora Coleta</p></td>
       </tr>
 	  <tr>
-                                  <td height="1px" colspan="11" align="center" valign="middle" bgcolor="#DFDFDF"><img src="template/default/images/menu/spacer.gif" height="1"/></td>
+                                  <td height="1px" colspan="11" align="center" valign="middle" bgcolor="#DFDFDF" height="18" nowrap="nowrap"><img src="template/default/images/menu/spacer.gif" height="1"/></td>
         </tr>
       {foreach item=a from=$rel_monitoramento}
   <tr> 
-  	<td bgcolor="#FBFDFB"  style="border:1px solid #FFFFFF;"><p>
+  	<td bgcolor="#FBFDFB"  style="border:1px solid #FFFFFF;" valign="top"><p>
+{if $a.nivel=='0'}
+										<span class="style2">•</span>
+									{/if}
+									{if $a.nivel=='1'}
+										<img src="template/default/images/conector_mon.gif" alt="NÍVEL DE DEPENDÊNCIA 1"><span class="style2">•</span>
+									{/if} 
+									{if $a.nivel=='2'}
+										<img src="template/default/images/menu/spacer.gif" width="12"><img src="template/default/images/conector_mon.gif" alt="NÍVEL DE DEPENDÊNCIA 2"><span class="style2">•</span>
+									{/if}
+									{if $a.nivel=='3'}<img src="template/default/images/menu/spacer.gif" width="24" height="1"><img src="template/default/images/conector_mon.gif" alt="NÍVEL DE DEPENDÊNCIA 3"><span class="style2">•</span>
+									{/if}
+									{if $a.nivel=='4'}<img src="template/default/images/menu/spacer.gif" width="36" height="1"><img src="template/default/images/conector_mon.gif" alt="NÍVEL DE DEPENDÊNCIA 4"><span class="style2">•</span>
+									{/if} 
+									{if $a.nivel=='5'}<img src="template/default/images/menu/spacer.gif" width="48" height="1"><img src="template/default/images/conector_mon.gif" alt="NÍVEL DE DEPENDÊNCIA 5"><span class="style2">•</span>
+									{/if} 
+									{if $a.nivel=='6'}<img src="template/default/images/menu/spacer.gif" width="60" height="1"><img src="template/default/images/conector_mon.gif" alt="NÍVEL DE DEPENDÊNCIA 6"><span class="style2">•</span>
+									{/if} 
+									{if $a.nivel=='7'}<img src="template/default/images/menu/spacer.gif" width="72" height="1"><img src="template/default/images/conector_mon.gif" alt="NÍVEL DE DEPENDÊNCIA 7"><span class="style2">•</span>
+									{/if} 
+	{if $a.nivel == '0'}<font color="#003300"><strong>{/if}							  
 	{if $a.tipo == "C"}Cabo{/if}
 	{if $a.tipo == "CL"}Cliente{/if}
 	{if $a.tipo == "B"}Backbone{/if}
 	{if $a.tipo == "AP"}Access Point{/if}
+	{if $a.nivel == '0'}</strong></font>{/if}							  
 	</p>
 	
 	
 	</td>
-    <td bgcolor="#FBFDFB"  width="250px" style="border:1px solid #FFFFFF;"  nowrap="nowrap"><p>{$a.nome}</p></td>
+    <td bgcolor="#FBFDFB"  width="180px" style="border:1px solid #FFFFFF;"  nowrap="nowrap"><p>{$a.nome}</p></td>
 	 <td bgcolor="#F9FBF9" style="border:1px solid #FFFFFF;"><p align="left">{$a.ipaddr}</p></td>
     <td style="border:1px solid #FFFFFF;" {if $a.status == 'ERR' } bgcolor="#FF0033"{/if}{if $a.status == "OK"}bgcolor="#569C5B"{/if}{if $a.status == "WRN"}bgcolor="#F7962B"{/if}><p align="center" class="style1" >
 		{if $a.status == 'ERR' }
@@ -74,14 +107,26 @@
 			Alerta
 		{/if}
 	</p></td>
-	<td bgcolor="#FCFCFC"  style="border:1px solid #FFFFFF;"><p align="center">{$a.num_ping}</p></td>
-    <td bgcolor="#FCFCFC"  style="border:1px solid #FFFFFF;"><p align="center">{$a.num_perdas}</p></td>  
-    <td bgcolor="#FCFCFC"  style="border:1px solid #FFFFFF;"><p align="center">{assign var='minimo' value=$a.min_ping/1000}{if $minimo=="0"}<b>T.E.</b>{else}{$minimo}{/if}</p></td>
-    <td bgcolor="#FCFCFC"  style="border:1px solid #FFFFFF;"><p align="center">{assign var='maximo' value=$a.max_ping/1000}{if $maximo=="0"}<b>T.E.</b>{else}{$maximo}{/if}</p></td>
-    <td bgcolor="#FCFCFC"  style="border:1px solid #FFFFFF;"><p align="center">{assign var='media' value=$a.media_ping/1000}{if $media=="0"}<b>T.E.</b>{else}{$media}{/if}</p></td>
+	<td bgcolor="#FCFCFC"  style="border:1px solid #FFFFFF;">
+		<p align="center">{$a.num_ping}</p>
+	</td>
+    <td bgcolor="#FCFCFC" style="border:1px solid #FFFFFF;">
+		<p align="center">{$a.num_perdas}</p>
+	</td>  
+    <td bgcolor="#FCFCFC" style="border:1px solid #FFFFFF;">
+		<p align="center">{assign var='minimo' value=$a.min_ping/1000}{if $minimo=="0"}<b>T.E.</b>{else}{$minimo}{/if}</p>
+	</td>
+    <td bgcolor="#FCFCFC"  style="border:1px solid #FFFFFF;">
+		<p align="center">{assign var='maximo' value=$a.max_ping/1000}{if $maximo=="0"}<b>T.E.</b>{else}{$maximo}{/if}</p>
+	</td>
+    <td bgcolor="#FCFCFC"  style="border:1px solid #FFFFFF;">
+		<p align="center">{assign var='media' value=$a.media_ping/1000}{if $media=="0"}<b>T.E.</b>{else}{$media}{/if}</p>
+	</td>
+	<td bgcolor="#FCFCFC" style="border:1px solid #FFFFFF;" width="70">
+		<p align="center" class="style8">{$a.laststats|date_format:"%d/%m/%Y %H:%M:%S"}</p>	</td>
   </tr>
  <tr>
-                                  <td height="1px" colspan="10" align="center" valign="middle" bgcolor="#DFDFDF"><img src="template/default/images/menu/spacer.gif" height="1"/></td>
+    <td height="1px" colspan="10" align="center" valign="middle" bgcolor="#DFDFDF"><img src="template/default/images/menu/spacer.gif" height="1"/></td>
         </tr>
       {/foreach}
     </table></td>

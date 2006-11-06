@@ -17,7 +17,7 @@ function Ping(){
 	//se tiver suporte ajax
 	if(ajax) {
 
-		ajax.open("POST", "configuracao.php?op=ajax_ping", true);
+		ajax.open("POST", "configuracao.php?op=ajax_ping_pop", true);
 		ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
 		ajax.onreadystatechange = function() {
@@ -60,7 +60,7 @@ function Ping(){
 
 		}
 		
-		var params = "ip="+frmConta.end_ip.value + '&id_nas=' + frmConta.nas_orig.value + '&host=' + frmConta.infoserver.value;
+		var params = "ip="+formulario.ip.value + '&host=' + formulario.infoserver.value;
 		ajax.send(params);
 
 
@@ -89,7 +89,7 @@ function Arp(){
 	//se tiver suporte ajax
 	if(ajax) {
 
-		ajax.open("POST", "configuracao.php?op=ajax_arp", true);
+		ajax.open("POST", "configuracao.php?op=ajax_arp_pop", true);
 		ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
 		ajax.onreadystatechange = function() {
@@ -131,15 +131,13 @@ function Arp(){
 
 		}
 		
-		var params = "ip="+frmConta.end_ip.value + '&host=' + frmConta.infoserver.value;
+		var params = "ip="+formulario.ip.value + '&host=' + formulario.infoserver.value;
 		ajax.send(params);
 
 
 	}
 
 }
-
-
 
 function Fecha(){
 
@@ -149,4 +147,5 @@ function Fecha(){
 
 
 }
+
 

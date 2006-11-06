@@ -2,7 +2,13 @@
 <html>
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
-<link href="template/default/estilos1.css" rel="stylesheet" type="text/css"></head>
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+{literal}<style type="text/css">
+<!--
+.style1 {font-size: 9px}
+-->
+</style>{/literal}
+</head>
 { literal }
 <script language="JavaScript" type="text/JavaScript">
 function MM_reloadPage(init) {  //reloads the window if Nav4 resized
@@ -209,43 +215,43 @@ function CampoBranco(campo){
                           <div align="center">
                             <table width="100%" border="0" cellpadding="0" cellspacing="2" id="tform_BL">
                               <tr> 
-                                <td width="50%"> <p>Download</p></td>
-                                <td width="50%"> <p>Upload</p></td>
+                                <td width="53%"> <p>Download</p></td>
+                                <td width="47%"> <p>Upload</p></td>
                               </tr>
                               <tr> 
                                 <td><p> 
                                     <select name='banda_download_kbps' >
   									{ foreach key=id item=nome from=$ls_banda_download_kbps }
 									
-                                      <option value='{$id}'{if $id == $banda_download_kbps}selected{/if}>{$nome}</option>
+                                      <option value='{$nome.id}'{if $nome.id == $banda_download_kbps}selected{/if}>{$nome.banda}</option>
 									{ /foreach }
                                   
                                     </select>
                                     kbps </p></td>
                                 <td><p> 
                                     <select name='banda_upload_kbps' >
-  									{ foreach key=id item=nome from=$ls_banda_upload_kbps }
+  									{ foreach key=id item=nome from=$ls_banda_download_kbps }
 									
-                                      <option value='{$id}'{if $id == $banda_upload_kbps}selected{/if}>{$nome}</option>
+                                      <option value='{$nome.id}'{if $nome.id == $banda_download_kbps}selected{/if}>{$nome.banda}</option>
 									{ /foreach }
                                   
                                     </select>
                                     kbps</p></td>
                               </tr>
                               <tr> 
-                                <td height="42"> <p>Franquia Tráfego Mensal (GB)</p></td>
-                                <td><p>Valor GB adicional</p></td>
+                                <td height="42"> <p class="style1">Franquia Tráfego Mensal (GB)</p></td>
+                                <td><p>
+                                  <input name="franquia_trafego_mensal_gb" type="text" value="{$franquia_trafego_mensal_gb}" size="16">
+                                </p></td>
                               </tr>
                               <tr> 
-                                <td><p> 
-                                    <input name="franquia_trafego_mensal_gb" type="text" value="{$franquia_trafego_mensal_gb}" size="16">
-                                  </p></td>
+                                <td><p>Valor GB adicional</p></td>
                                 <td><p> 
                                     <input name="valor_trafego_adicional_gb" type="text" value="{$valor_trafego_adicional_gb}" size="16">
                                   </p></td>
                               </tr>
                               <tr> 
-                                <td ><p align="right">Comodato: 
+                                <td ><p align="left">Comodato: 
                                     <input name="comodato" type="checkbox" value="t" class="checkbox">
                                     &nbsp;Valor: </td><td>
                                     <input name="valor_comodato" type="text" size="16">
@@ -320,7 +326,7 @@ function CampoBranco(campo){
                                 <td width="275"><p>Descrição</p></td>
                               </tr>
                               <tr> 
-                                <td><textarea name="descricao" cols="44" rows=8 id="textarea3">{$descricao}</textarea></td>
+                                <td><textarea name="descricao" cols="45" rows=8 id="textarea3">{$descricao}</textarea></td>
                               </tr>
                             </table>
                           </div></td>

@@ -2,7 +2,9 @@
 <html>
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
-{literal}<style type="text/css">
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">{literal}
+<script language="javascript" src="template/default/ajax_ping_arp_pop.js"></script>
+<style type="text/css">
 <!--
 .style2 {
 	font-family: Arial, Helvetica, sans-serif;
@@ -21,27 +23,23 @@
 		tB = document.getElementById("tabela");
 		snmp = document.getElementById("snmp");
 		
-	if (!snmp.checked){
-	
-		tB.className = "box_fechada";	
+		if (!snmp.checked){
 		
-		document.formulario.snmp_versao.value = "" ;
-		document.formulario.snmp_ro_com.value = "" ;
-		document.formulario.snmp_rw_com.value = "" ;
+			tB.className = "box_fechada";		
+			document.formulario.snmp_versao.value = "" ;
+			document.formulario.snmp_ro_com.value = "" ;
+			document.formulario.snmp_rw_com.value = "" ;
 		
-	
-	}
-	else{
-	
-		tB.className = "box_aberta";	
-	
-	}
-}	
+		}
+		else{
+			tB.className = "box_aberta";	
+		}
+	}	
 </script>
 {/literal}
 
 {literal}<script type="text/javascript" src="template/default/ajax_select.js" ></script>{/literal}
-<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+
 {literal}<script language="JavaScript">
 
 	var regra = new Object();
@@ -62,46 +60,41 @@
 			return true; 
 			} 
 
-		function valida_ip(){
+	function valida_ip(){
 		
-			var sel = regra.ip; 
-			var ver = sel.exec(document.formulario.ip.value); 
-			if(!ver && document.formulario.ip.value !="") 
-			{ 
-				  alert('o IP '+document.formulario.ip.value+' não é válido.'); 
-				  document.formulario.ip.focus();
-				  document.formulario.ip.select();
-				  return false; 
-			} 
-			return true; 
-			} 
+		var sel = regra.ip; 
+		var ver = sel.exec(document.formulario.ip.value); 
+		if(!ver && document.formulario.ip.value !=""){ 
+			  alert('o IP '+document.formulario.ip.value+' não é válido.'); 
+			  document.formulario.ip.focus();
+			  document.formulario.ip.select();
+			  return false; 
+		} 
+		return true; 
+	} 
 
-function checaNome(){
-	if (formulario.nome.value == ""){
-		window.alert('Não é possivel cadastrar POP com nome em branco');
-		return false;
+	function checaNome(){
+		if (formulario.nome.value == ""){
+			window.alert('Não é possivel cadastrar POP com nome em branco');
+			return false;
+		}
+		return true;
 	}
-	return true;
-}
-function verificaTipoPop() {
- 	
-	formulario.id_pop_ap.disabled = formulario.tipo.value == "C" ;
-	formulario.id_pop_ap.value = "" ;
 
-   if (formulario.tipo.value == "CL" || formulario.tipo.value == "B" || formulario.tipo.value == "AP"){
-   
-   		window.location= "javascript: Dados(formulario.tipo.value);";
-
-   
-   }
-   
-   
-   
-}
+	function verificaTipoPop() {
+	
+		formulario.id_pop_ap.disabled = formulario.tipo.value == "C" ;
+		formulario.id_pop_ap.value = "" ;
+	
+		if (formulario.tipo.value == "CL" || formulario.tipo.value == "B" || formulario.tipo.value == "AP"){
+	   
+			window.location= "javascript: Dados(formulario.tipo.value);";
+		}   
+	}
 </script>{/literal}
 </head>
 
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="javascript:  calc_pop(); habilita();">
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="javascript: {if $tipo != 'C'}calc_pop();{/if} habilita();">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -118,11 +111,15 @@ function verificaTipoPop() {
 
                     <table width="600" border="0" cellspacing="0" cellpadding="0">
                       <tr>
-                        <td align="center" valign="middle"><span class="style2">{$titulo} POP</span></td>
+                       
+					    <td align="center" valign="middle"><span class="style2">{$titulo} POP</span> <span class="style1">
+						{if $id_pop} [<a href="javascript:;" onClick="javascript: Ping();">ping</a>] [<a href="javascript:;" onClick="javascript: Arp();">arp</a>]		{/if}				</span></td>
                       </tr>
                       <tr>
                         <td align="center" valign="top">
-						
+						<font face="verdana" size="2" color="#999999"><center>
+								<div id="container" align="left" class="box_fechada" style="height:74px; width:430px;border:1px solid #CCCCCC; padding:5px;"></div></center>
+								</font>
 						
 						<table width="430" border="0" cellspacing="2" cellpadding="0">
                             <tr>

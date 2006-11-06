@@ -2245,7 +2245,7 @@ class VAClientes extends VirtexAdmin {
 			////////////////////echo $bnSQL;
 			
 			$info_server = $this->bd->obtemUnicoRegistro($bnSQL);
-			$infoserver = $info_server['infoserver'];
+			$infoserver = @$info_server['infoserver'];
 			
 			$this->tpl->atribui("infoserver",$infoserver);
 
@@ -2295,7 +2295,7 @@ class VAClientes extends VirtexAdmin {
 			$tipo_bandalarga = $this->bd->obtemUnicoRegistro($bSQL);
 			
 			
-			$this->tpl->atribui("tipo_bandalarga",$tipo_bandalarga['tipo_bandalarga']);
+			$this->tpl->atribui("tipo_bandalarga",@$tipo_bandalarga['tipo_bandalarga']);
 			
 			//////$nsSQL  = "SELECT infoserver FROM cftb_nas WHERE id_nas = '$id_nas'  ";
 			///echo $nsSQL;
