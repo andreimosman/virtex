@@ -1,5 +1,10 @@
 <?
 
+				if( ! $this->privPodeLer("_LINKS") ) {
+					$this->privMSG();
+					return;
+				}	
+
 	$id_link = @$_REQUEST["id_link"];
 	$sop = @$_REQUEST["sop"];
 	$pp = @$_REQUEST["pp"];
@@ -20,6 +25,10 @@
 	}	
 	
 	if (!$sop && ($acao == "alt"||$pp == "new")){
+			if( ! $this->privPodeGravar("_LINKS") ) {
+				$this->privMSG();
+				return;
+			}	
 	
 		//echo "ACAO: $acao<br>";
 		$sSQL = "SELECT * FROM cftb_links WHERE id_link = $id_link";
@@ -37,6 +46,11 @@
 	}
 	
 	if ($sop == "ok"){
+	
+					if( ! $this->privPodeGravar("_LINKS") ) {
+						$this->privMSG();
+						return;
+					}	
 
 		$titulo = @$_REQUEST["titulo"];
 		$url = @$_REQUEST["url"];

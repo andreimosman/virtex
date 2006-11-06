@@ -208,8 +208,8 @@ function Tecla(e)
                   <td> <a href="suporte.php?op=graf"><img src="template/default/images/bt_graficos_barra.gif" border="0"></a> 
                   </td>
                   {/if} </tr>
-                <tr>
-                  <td><a href="configuracao.php?op=links"><img src="template/default/images/bt_links_barra.gif" border="0"></a></td>
+                <tr>{if $privilegio_links == "sim"}
+                  <td><a href="configuracao.php?op=links"><img src="template/default/images/bt_links_barra.gif" border="0"></a></td>{/if}
                 </tr>
               </table>
 

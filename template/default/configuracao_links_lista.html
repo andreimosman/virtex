@@ -31,9 +31,9 @@
                           </tr>
                           {foreach item=v name=link from=$lista} 
                           <tr> 
-                            <td width="50%"><p><a href="http://{$v.url}" target="{$v.target}">{$v.titulo}</a></p></td>
+                            <td width="50%"><p><a href="{$v.url}" target="{$v.target}">{$v.titulo}</a></p></td>
                             <td width="50%">
-<p><a href="http://{$v.url}" target="{$v.target}">{$v.url}</a></p></td>
+<p><a href="{$v.url}" target="{$v.target}">{$v.url}</a></p></td>
                             <td width="16"><a href="configuracao.php?op=links&id_link={$v.id_link}"><img src="template/default/images/gif_alterar.gif" alt="ALTERAR" width="16" height="16" border="0"></a></td>
                           </tr>
                           {/foreach} </table></td>
