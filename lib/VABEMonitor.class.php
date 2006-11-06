@@ -101,8 +101,8 @@
 						   $perdas++;
 						   $soma += 0;
 						} else {
-							$soma += $r[$i];
 							$r[$i]=$r[$i]*1000;
+							$soma += $r[$i];
 							if( $r[$i] < $minimo ) {
 								$minimo = $r[$i];
 							}
@@ -156,8 +156,6 @@
 						$this->bd->consulta($sSQL);
 						//echo "\n";
 						//echo $sSQL."\n";
-						
-						
 						
 					} else {
 						//echo "ALTERANDO DO BD\n";
