@@ -1551,14 +1551,15 @@ class VAConfiguracao extends VirtexAdmin {
 ///////////////////////////////		
 	}else if ($op == "monitoramento"){
 	
+		if( !$this->privPodeLer("_SUPORTE_MONITORAMENTO") ) {
+			$this->privMSG();
+			return;
+		}	
 	
-	
-	$rel_monitoramento = $this->obtemListaMonitorPOPs();
-	
-	$this->tpl->atribui("rel_monitoramento",$rel_monitoramento);
-	
-	
-	$this->arquivoTemplate = "suporte_monitoramento_pops.html";	
+			$rel_monitoramento = $this->obtemListaMonitorPOPs();
+
+		$this->tpl->atribui("rel_monitoramento",$rel_monitoramento);
+		$this->arquivoTemplate = "suporte_monitoramento_pops.html";	
 	
 	
 	}else if ($op == "listar_bandas"){
