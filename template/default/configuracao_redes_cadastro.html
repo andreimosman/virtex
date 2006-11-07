@@ -6,7 +6,18 @@
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
 
 
-
+{literal}
+<style type="text/css">
+<!--
+.style1 {
+	font-size: 14px;
+	font-weight: bold;
+	color: #005533;
+}
+.style2 {font-size: 14px}
+-->
+</style>
+{/literal}
 </head>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
@@ -153,7 +164,7 @@
 						        <tr align="center" valign="middle">
 						        <td colspan="2"><input type="submit" name="Submit2" value="{$titulo}"></td>
 						        </tr>
-						        </table>
+				          </table>
 
 						        <p>&nbsp;</p>
                           		<p>&nbsp;</p>
@@ -165,38 +176,34 @@
                         <p><b>NAS::Redes - {$nas.nome} ({if $nas.tipo_nas =="P"}PPPoE 
                           {/if}{if $nas.tipo_nas=="I"}IP{/if} /{$nas.ip})</b></p>
                         <p> 
-                        <table border=0 width="632" cellspacing=0 cellpadding=0>
+                        <table border=0 width="640" cellspacing=0 cellpadding=0>
                           <tr bgcolor="#FAFAFA"> 
-                            <td width=188 align="left"><h2><b>..Id..</b></h2></td>
-                            <td width=166 align="left"><h2><b>..Rede..</b></h2></td>
-							<td width="140"><H2><p>..Disponível..</p></H2></td>
-                            <td width=69 align="center"><h2><b>..Tipo..</b></h2></td>
-                            <td width=69 align="center" colspan=2><h2>..Operações..</h2></td>
+                            <td width=190 align="left"><div align="center" class="style1">
+                              <div align="left"><font face="Arial, Helvetica, sans-serif">..Id..</font></div>
+                            </div></td>
+                            <td width=190 align="left"><div align="center" class="style1"><font face="Arial, Helvetica, sans-serif">..Rede..</font></div></td>
+                            <td width=190><div align="center" class="style1"><font face="Arial, Helvetica, sans-serif">..Tipo..</font></div></td>
+                            <td width=69 align="center" colspan=2><div align="center" class="style1"><font face="Arial, Helvetica, sans-serif">..Operações..</font></div></td>
                           </tr>
                           <tr> 
-                            <td colspan=5 bgcolor="000000"><img src="template/default/images/menu/spacer.gif" width=1 height=1 border=0></td>
+                            <td colspan=5 bgcolor="000000"><div align="left"><img src="template/default/images/menu/spacer.gif" width=1 height=1 border=0></div></td>
                           </tr>
 						  							{assign var="disp" value="0"}
 							{assign var="ndisp" value="0"}
                           {foreach item=a from=$redes}
-                          <tr bgcolor="#FFFFFF"> 
+							  {foreach item=b from=$a.redes_disponiveis}
+								{if $b.rede || $b.ipaddr}
+									{assign var="ndisp" value=$ndisp+1}
+								{/if}
+							  {/foreach}
+								{if !$a.redes_disponiveis}
+									{assign var="disp" value=$disp+1}
+								{/if}
+						  <tr bgcolor="#FFFFFF" {if $a.redes_disponiveis} style="font-weight:bold;"{/if}>
                             <td align="left"><p>{$a.id_rede}</p></td>
-                            <td align="left"><p>{$a.rede}</p></td>
-							<td ><p>&nbsp;&nbsp;&nbsp;&nbsp;
-
-							{foreach item=b from=$a.redes_disponiveis}
-							 {if $b.rede || $b.ipaddr}
-							 {assign var="ndisp" value=$ndisp+1}
-							  <img src="template/default/images/gif_nas_disp_nao.gif" alt="NÃO DISPONÍVEL" border="0">
-							 {/if}
-							{/foreach}
-							{if !$a.redes_disponiveis}
-							{assign var="disp" value=$disp+1}
-							<img src="template/default/images/gif_nas_disp.gif" alt="DISPONÍVEL" border="0">
-							 {/if}
-							</p></td>
-                            <td align="center"><p>{$a.tipo_rede}</p></td>
-                            <td align="center" colspan=2><p><a href="configuracao.php?op=rede&id_rede={$a.id_rede}&tipo_nas={$nas.tipo_nas}&network={$a.rede}"><img src="template/default/images/gif_alterar.gif" border="0"></a></p></td>
+                            <td align="left"><p align="center">{$a.rede}</p></td>
+                            <td ><p align="center">{if $a.tipo_rede=='C'}Cliente{elseif $a.tipo_rede=='I'}Infra-estrutura{elseif $a.tipo_rede=='S'}Suporte{/if}</p></td>
+                            <td align="center" colspan=2><p align="center"><a href="configuracao.php?op=rede&id_rede={$a.id_rede}&tipo_nas={$nas.tipo_nas}&network={$a.rede}"><img src="template/default/images/gif_alterar.gif" border="0"></a></p></td>
                           </tr>
                           <tr> 
                             <td colspan="6"><hr size="1"></td>
