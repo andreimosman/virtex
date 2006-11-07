@@ -4749,7 +4749,7 @@ class VACobranca extends VirtexAdmin {
 		$sSQL .= "	data = '".@$_REQUEST["data"]."' ";
 
 
-		echo"QUERY: $sSQL <br>\n";
+		//echo"QUERY: $sSQL <br>\n";
 		$this->bd->consulta($sSQL);
 
 		if ($reagendar && $reagendamento){
