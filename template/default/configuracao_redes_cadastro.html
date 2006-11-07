@@ -176,17 +176,22 @@
                           <tr> 
                             <td colspan=5 bgcolor="000000"><img src="template/default/images/menu/spacer.gif" width=1 height=1 border=0></td>
                           </tr>
+						  							{assign var="disp" value="0"}
+							{assign var="ndisp" value="0"}
                           {foreach item=a from=$redes}
                           <tr bgcolor="#FFFFFF"> 
                             <td align="left"><p>{$a.id_rede}</p></td>
                             <td align="left"><p>{$a.rede}</p></td>
 							<td ><p>&nbsp;&nbsp;&nbsp;&nbsp;
+
 							{foreach item=b from=$a.redes_disponiveis}
 							 {if $b.rede || $b.ipaddr}
+							 {assign var="ndisp" value=$ndisp+1}
 							  <img src="template/default/images/gif_nas_disp_nao.gif" alt="NÃO DISPONÍVEL" border="0">
 							 {/if}
 							{/foreach}
 							{if !$a.redes_disponiveis}
+							{assign var="disp" value=$disp+1}
 							<img src="template/default/images/gif_nas_disp.gif" alt="DISPONÍVEL" border="0">
 							 {/if}
 							</p></td>
@@ -199,6 +204,9 @@
                           {/foreach} </table></td>
                       </tr>
                     </table>
+                    <p><br>
+                      Total de IPS disponiveis <strong>{$disp}</strong><br>
+                      Total de IPS em uso <strong>{$ndisp} </strong></p>
                   </form>
                   <p><a href="configuracao.php?op=lista_nas">voltar</a><br>
                   </p>
