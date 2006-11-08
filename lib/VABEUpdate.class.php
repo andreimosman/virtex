@@ -302,6 +302,8 @@
 		 */
 		protected function diff($a,$b) {
 			$r = array();
+			$r["diff"] = array();
+
 			$diffTab = $this->diffTabelas($a,$b);
 			$r["faltando_a"]["tabelas"] = $diffTab["faltando_a"];
 			$r["faltando_b"]["tabelas"] = $diffTab["faltando_b"];
@@ -335,15 +337,12 @@
 				$r["faltando_a"]["campos"] = $faltando_a;
 
 				// Varre os campos comuns e verifica se são iguais
-				$r["diff"] = array();
-				
 				for($x=0;$x<count($diffCmp["comuns"]);$x++) {
 					$campo = $diffCmp["comuns"][$x];
-					
 					// Compara
-					if( $campos_a[$campo]["tipo"] != $campos_b[$campo]["tipo"] ||
-					    $campos_a[$campo]["tamanho"] != $campos_b[$campo]["tamanho"] ||
-					    $campos_a[$campo]["flags"] != $campos_b[$campo]["flags"]
+					if( ($campos_a[$campo]["tipo"] 		!= $campos_b[$campo]["tipo"]) ||
+					    ($campos_a[$campo]["tamanho"] 	!= $campos_b[$campo]["tamanho"]) ||
+					    ($campos_a[$campo]["flags"]		!= $campos_b[$campo]["flags"])
 					  ) {
 						$r["diff"][$tabela][$campo]["a"] = $campos_a[$campo];
 						$r["diff"][$tabela][$campo]["b"] = $campos_b[$campo];
@@ -449,7 +448,7 @@
 				echo "+--------------------------------------------+\n";			
 				echo "| CAMPOS QUE DIFEREM NO BANCO E NO ARQUIVO   |\n";
 				echo "+--------------------------------------------+\n";
-
+				
 				while( list($tabela,$campos) = each($diffs["diff"]) ) {
 					echo "  - " . $tabela . "\n";
 					//for($i=0;$i<count($campos);$i++) {
