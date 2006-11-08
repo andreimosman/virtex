@@ -113,7 +113,7 @@
 		
 			while( list($tabela,$campos) = each($tableinfo) ) {
 				for($i=0;$i<count($campos);$i++) {
-					$linha = implode($sep,array($tabela,$campos[$i]["nome"],$campos[$i]["tipo"],$campos[$i]["tamanho"],$campos[$i]["flags"]));
+					$linha = implode($sep,array($tabela,$campos[$i]["nome"],$campos[$i]["tipo"],$campos[$i]["tamanho"],str_replace("public.","",$campos[$i]["flags"])));
 					$r .= $linha ."\n";
 				}
 			}

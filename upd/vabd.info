@@ -168,7 +168,7 @@ cbtb_cliente_produto:::id_cliente:::int2:::2:::not_null
 cbtb_cliente_produto:::id_produto:::int2:::2:::not_null
 cbtb_cliente_produto:::dominio:::varchar:::-1:::
 cbtb_cliente_produto:::excluido:::bool:::1:::default_false
-lgtb_reagendamento:::id_reagendamento:::int4:::4:::not_null default_nextval%28public.lgtb_reagendamento_id_reagendamento_seq%29 primary_key
+lgtb_reagendamento:::id_reagendamento:::int4:::4:::not_null default_nextval%28lgtb_reagendamento_id_reagendamento_seq%29 primary_key
 lgtb_reagendamento:::id_cliente_produto:::int2:::2:::not_null
 lgtb_reagendamento:::data:::date:::4:::not_null
 lgtb_reagendamento:::admin:::int2:::2:::
@@ -183,7 +183,7 @@ lgtb_retorno_faturas:::valor_tarifa:::numeric:::-1:::
 lgtb_retorno_faturas:::status:::bpchar:::-1:::
 lgtb_retorno_faturas:::id_arquivo:::int4:::4:::not_null
 lgtb_retorno_faturas:::motivo:::varchar:::-1:::
-lgtb_retorno:::id_arquivo:::int4:::4:::not_null default_nextval%28public.lgtb_retorno_id_arquivo_seq%29 primary_key
+lgtb_retorno:::id_arquivo:::int4:::4:::not_null default_nextval%28lgtb_retorno_id_arquivo_seq%29 primary_key
 lgtb_retorno:::nome_arquivo:::varchar:::-1:::
 lgtb_retorno:::tamanho:::int2:::2:::
 lgtb_retorno:::data:::timestamp:::8:::
@@ -209,7 +209,7 @@ prtb_produto_hospedagem:::id_produto:::int2:::2:::not_null primary_key
 prtb_produto_hospedagem:::dominio:::bool:::1:::
 prtb_produto_hospedagem:::franquia_em_mb:::int2:::2:::
 prtb_produto_hospedagem:::valor_mb_adicional:::numeric:::-1:::
-sptb_spool:::id_spool:::int4:::4:::not_null default_nextval%28public.sptb_spool_id_spool_seq%29 primary_key
+sptb_spool:::id_spool:::int4:::4:::not_null default_nextval%28sptb_spool_id_spool_seq%29 primary_key
 sptb_spool:::registro:::timestamp:::8:::default_now%28%29
 sptb_spool:::execucao:::timestamp:::8:::
 sptb_spool:::destino:::varchar:::-1:::
@@ -237,7 +237,7 @@ bktb_arquivos:::data_backup:::date:::4:::
 bktb_arquivos:::tipo_backup:::varchar:::-1:::
 bktb_arquivos:::arquivo_backup:::varchar:::-1:::
 bktb_arquivos:::status_backup:::varchar:::-1:::
-bktb_backup:::id_backup:::int4:::4:::not_null default_nextval%28public.bktb_backup_id_backup_seq%29 primary_key
+bktb_backup:::id_backup:::int4:::4:::not_null default_nextval%28bktb_backup_id_backup_seq%29 primary_key
 bktb_backup:::data_backup:::date:::4:::
 bktb_backup:::status_backup:::varchar:::-1:::
 bktb_backup:::admin:::int2:::2:::
@@ -281,8 +281,8 @@ lgtb_renovacao:::id_cliente_produto:::int2:::2:::not_null
 lgtb_renovacao:::data_renovacao:::date:::4:::
 lgtb_renovacao:::data_proxima_renovacao:::date:::4:::
 lgtb_renovacao:::historico:::text:::-1:::
-lgtb_renovacao:::id_renovacao:::int4:::4:::not_null default_nextval%28public.lgtb_renovacao_id_renovacao_seq%29 primary_key
-lgtb_restore:::id_restore:::int4:::4:::not_null default_nextval%28public.lgtb_restore_id_restore_seq%29 primary_key
+lgtb_renovacao:::id_renovacao:::int4:::4:::not_null default_nextval%28lgtb_renovacao_id_renovacao_seq%29 primary_key
+lgtb_restore:::id_restore:::int4:::4:::not_null default_nextval%28lgtb_restore_id_restore_seq%29 primary_key
 lgtb_restore:::arquivo_restore:::varchar:::-1:::
 lgtb_restore:::data_restore:::timestamp:::8:::
 lgtb_restore:::admin:::varchar:::-1:::
@@ -332,7 +332,7 @@ lgtb_backup:::cfg_so:::bool:::1:::
 lgtb_backup:::cfg_vtx:::bool:::1:::
 lgtb_backup:::cfg_utilitarios:::bool:::1:::
 lgtb_backup:::obs:::text:::-1:::
-lgtb_contas_excluidas:::id_excluida:::int4:::4:::not_null default_nextval%28public.lgtb_contas_excluidas_id_excluida_seq%29 primary_key
+lgtb_contas_excluidas:::id_excluida:::int4:::4:::not_null default_nextval%28lgtb_contas_excluidas_id_excluida_seq%29 primary_key
 lgtb_contas_excluidas:::id_cliente:::varchar:::-1:::
 lgtb_contas_excluidas:::id_cliente_produto:::varchar:::-1:::
 lgtb_contas_excluidas:::id_conta:::varchar:::-1:::
@@ -413,7 +413,7 @@ cbtb_faturas:::data_pagamento:::date:::4:::
 cbtb_faturas:::desconto:::numeric:::-1:::
 cbtb_faturas:::acrescimo:::numeric:::-1:::
 cbtb_faturas:::valor_pago:::numeric:::-1:::
-cbtb_faturas:::id_cobranca:::int4:::4:::not_null default_nextval%28public.cbtb_faturas_id_cobranca_seq%29
+cbtb_faturas:::id_cobranca:::int4:::4:::not_null default_nextval%28cbtb_faturas_id_cobranca_seq%29
 cbtb_faturas:::cod_barra:::varchar:::-1:::unique_key
 cbtb_faturas:::anterior:::bool:::1:::default_false
 cbtb_faturas:::id_carne:::int2:::2:::not_null
@@ -478,7 +478,7 @@ sttb_pop_status:::num_ping:::int4:::4:::
 sttb_pop_status:::status:::varchar:::-1:::
 sttb_pop_status:::num_erros:::int4:::4:::
 sttb_pop_status:::laststats:::timestamp:::8:::default_now%28%29
-cftb_links:::id_link:::int4:::4:::not_null default_nextval%28public.cftb_links_id_link_seq%29 primary_key
+cftb_links:::id_link:::int4:::4:::not_null default_nextval%28cftb_links_id_link_seq%29 primary_key
 cftb_links:::titulo:::varchar:::-1:::
 cftb_links:::url:::varchar:::-1:::
 cftb_links:::target:::varchar:::-1:::
