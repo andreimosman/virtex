@@ -228,7 +228,20 @@ class VAConfiguracao extends VirtexAdmin {
 					
 					if (!$icc->estaConectado() ){
 												
-						echo "<br><Br><div align=center><strong><font color='#000000'>Nao foi possvel conecta-lo ao servidor " . $host . ".</font></strong></div>";
+						echo "<br>
+							<table border='0' cellspacing='0' cellpadding='0' align='center'>
+							  <tr>
+							  	<td height='2'></td>
+							  </tr>
+							  <tr>
+							    <td colspan='2'><div align=center><strong><font color='#001100' size='2' >Nao foi possivel conecta-lo ao servidor ".$host."</font></strong></div></td>
+							  </tr>
+							  <tr>
+							    <td>&nbsp;</td>
+							    <td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='right'><a href='javascript:;' onClick=' Fecha();' ><font color='#FF0033'>[fechar]</font></a></td>
+							  </tr>
+							</table>
+							";
 						return;
 
 					}
@@ -315,7 +328,20 @@ class VAConfiguracao extends VirtexAdmin {
 							
 							if (!$icc->estaConectado() ){
 							
-								echo "<br><Br><div align=center><strong><font color='#000000'>Nao foi possivel conecta-lo ao servidor " . $host . ".</font></strong></div>";
+								echo "<br>
+									<table border='0' cellspacing='0' cellpadding='0' align='center'>
+									  <tr>
+										<td height='2'></td>
+									  </tr>
+									  <tr>
+										<td colspan='2'><div align=center><strong><font color='#001100' size='2' >Nao foi possivel conecta-lo ao servidor ".$host."</font></strong></div></td>
+									  </tr>
+									  <tr>
+										<td>&nbsp;</td>
+										<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='right'><a href='javascript:;' onClick=' Fecha();' ><font color='#FF0033'>[fechar]</font></a></td>
+									  </tr>
+									</table>
+											";
 								return;
 
 							}
@@ -429,9 +455,21 @@ class VAConfiguracao extends VirtexAdmin {
 
 					if (!$icc->estaConectado() ){
 
-							echo "<br><Br><div align=center><strong><font color='#000000'>Nao foi possivel conecta-lo ao servidor " . $host . ".</font></strong></div>";
+							echo "<br>
+								<table border='0' cellspacing='0' cellpadding='0' align='center'>
+								  <tr>
+									<td height='2'></td>
+								  </tr>
+								  <tr>
+									<td colspan='2'><div align=center><strong><font color='#001100' size='2' >Nao foi possivel conecta-lo ao servidor ".$host."</font></strong></div></td>
+								  </tr>
+								  <tr>
+									<td>&nbsp;</td>
+									<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='right'><a href='javascript:;' onClick=' Fecha();' ><font color='#FF0033'>[fechar]</font></a></td>
+								  </tr>
+								</table>
+								";
 							return;
-
 					}
 					
 					continue;
@@ -477,8 +515,18 @@ class VAConfiguracao extends VirtexAdmin {
 
 						}else{
 						
-							echo "<br><b><div align=center><font color=#FF0000>sem resposta para o IP " . $ip_cliente . "</div></div></b>";
+							echo "<br>
+								<table border='0' cellspacing='0' cellpadding='0' align='center'>
+								  <tr>
+									<td colspan='2'><div align=center><strong><font color='#FF0000' size='2'>Sem resposta para o IP " . $ip_cliente . "</font></strong></div></td>
+								  </tr>
+								  <tr>
+									<td>&nbsp;</td>
+									<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='right'><a href='javascript:;' onClick=' Fecha();' ><font color='#FF1133'>[fechar]</font></a></td>
+								  </tr>
+								</table>";
 							return;
+
 						
 						}
 					
@@ -523,7 +571,20 @@ class VAConfiguracao extends VirtexAdmin {
 
 				if (!$icc->estaConectado() ){
 
-				echo "<br><Br><div align=center><strong><font color='#000000'>Nao foi possivel conecta-lo ao servidor " . $host . ".</font></strong></div>";
+				echo "<br>
+					<table border='0' cellspacing='0' cellpadding='0' align='center'>
+					  <tr>
+						<td height='2'></td>
+					  </tr>
+					  <tr>
+						<td colspan='2'><div align=center><strong><font color='#001100' size='2' >Nao foi possivel conecta-lo ao servidor ".$host."</font></strong></div></td>
+					  </tr>
+					  <tr>
+						<td>&nbsp;</td>
+						<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='right'><a href='javascript:;' onClick=' Fecha();' ><font color='#FF0033'>[fechar]</font></a></td>
+					  </tr>
+					</table>
+					";
 				return;
 
 				}
@@ -614,7 +675,20 @@ class VAConfiguracao extends VirtexAdmin {
 
 						if (!$icc->estaConectado() ){
 
-							echo "<br><Br><div align=center><strong><font color='#000000'>Nao foi possivel conecta-lo ao servidor " . $host . ".</font></strong></div>";
+							echo "<br>
+								<table border='0' cellspacing='0' cellpadding='0' align='center'>
+								  <tr>
+									<td height='2'></td>
+								  </tr>
+								  <tr>
+									<td colspan='2'><div align=center><strong><font color='#001100' size='2' >Nao foi possivel conecta-lo ao servidor ".$host."</font></strong></div></td>
+								  </tr>
+								  <tr>
+									<td>&nbsp;</td>
+									<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='right'><a href='javascript:;' onClick=' Fecha();' ><font color='#FF0033'>[fechar]</font></a></td>
+								  </tr>
+								</table>
+								";
 							return;
 
 						}
@@ -656,7 +730,16 @@ class VAConfiguracao extends VirtexAdmin {
 
 							}else{
 
-								echo "<br><b><div align=center><font color=#FF0000>sem resposta para o IP " . $ip . "</div></div></b>";
+								echo "
+									<table border='0' cellspacing='0' cellpadding='0' align='center'>
+									  <tr>
+										<td colspan='2'><div align=center><strong><font color='#FF0000' size='2'>Sem resposta para o IP " . $ip . "</font></strong></div></td>
+									  </tr>
+									  <tr>
+										<td>&nbsp;</td>
+										<td bgcolor='#FCFCFC' style='border: 1px solid #FFFFFF;' align='right'><a href='javascript:;' onClick=' Fecha();' ><font color='#FF0033'>[fechar]</font></a></td>
+									  </tr>
+									</table>";
 								return;
 
 							}
@@ -1095,12 +1178,16 @@ class VAConfiguracao extends VirtexAdmin {
 				if( $id_nas ) {
 					// SELECT
 					$sSQL  = "SELECT ";
-					$sSQL .= "   id_nas, nome, ip, secret, tipo_nas, infoserver ";
+					$sSQL .= "   id_nas, nome, ip, secret, tipo_nas, infoserver, padrao ";
 					$sSQL .= "FROM cftb_nas ";
 					$sSQL .= "WHERE id_nas = '$id_nas'";
 
 
 					$reg = $this->bd->obtemUnicoRegistro($sSQL);
+					
+					$padrao = $reg['padrao'];
+					
+					$this->tpl->atribui("padrao",$padrao);
 
 
 					$acao = "alt";
@@ -1133,18 +1220,30 @@ class VAConfiguracao extends VirtexAdmin {
 
 
 							$id_nas = $this->bd->proximoID("cfsq_id_nas");
+							
+							$tipo_nas = @$_REQUEST['tipo_nas'];
 
 
 							$sSQL  = "INSERT INTO ";
 							$sSQL .= "   cftb_nas( ";
-							$sSQL .= "      id_nas, nome, ip, secret, tipo_nas, infoserver) ";
+							$sSQL .= "      id_nas, nome, ip, secret, tipo_nas, infoserver, padrao) ";
 							$sSQL .= "   VALUES (";
 							$sSQL .= "     '" . $id_nas . "', ";
 							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
 							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["ip"]) . "', ";
 							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["secret"]) . "', ";
-							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["tipo_nas"]) . "', ";
-							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["infoserver"]) . "' ";
+							$sSQL .= "     '$tipo_nas', ";
+							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["infoserver"]) . "', ";
+							if ($tipo_nas == 'P' ){
+							
+								$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["padrao"]) . "' ";
+							
+							}
+							else{
+							
+								$sSQL .= " NULL ";
+							
+							}
 							$sSQL .= "     )";
 							
 							////echo $sSQL ;
@@ -1200,15 +1299,27 @@ class VAConfiguracao extends VirtexAdmin {
 
 							$compara = $this->bd->obtemUnicoRegistro($tSQL);
 
-
+							$tipo_nas = @$_REQUEST['tipo_nas_up'];
+							
+							
 							$sSQL  = "UPDATE ";
 							$sSQL .= "   cftb_nas ";
 							$sSQL .= "SET ";
 							$sSQL .= "   nome = '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
 							$sSQL .= "   ip = '" . $this->bd->escape(@$_REQUEST["ip"]) . "', ";
 							$sSQL .= "   secret = '" . $this->bd->escape(@$_REQUEST["secret"]) . "', ";
-							$sSQL .= "   tipo_nas = '" . $this->bd->escape(@$_REQUEST["tipo_nas_up"]) . "', ";
-							$sSQL .= "   infoserver = '" . $this->bd->escape(@$_REQUEST["infoserver"]) . "' ";
+							$sSQL .= "   tipo_nas = '$tipo_nas', ";
+							$sSQL .= "   infoserver = '" . $this->bd->escape(@$_REQUEST["infoserver"]) . "', ";
+							
+							if ($tipo_nas == 'P'){
+							
+								$sSQL .= "	padrao ='" . $this->bd->escape(@$_REQUEST["padrao"]) . "' ";
+							
+							}else{
+							
+								$sSQL .= "	padrao = NULL ";
+								
+							}
 							$sSQL .= "WHERE ";
 							$sSQL .= "   id_nas = '" . $this->bd->escape(@$_REQUEST["id_nas"]) . "' ";  
 

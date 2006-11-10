@@ -10,8 +10,24 @@
 
 function verificaTipoNAS() {
    formulario.secret.disabled = formulario.tipo_nas.value == "I";
+  
 }
 
+function mostraPadrao(){
+
+	tB = document.getElementById("tabela");
+	
+		if (document.formulario.tipo_nas.value == 'P'){
+		
+			tB.className = "box_aberta";	
+			
+		}else{
+		
+			tB.className = "box_fechada";
+				
+		} 
+
+}
 	var regra = new Object();
 	
 	regra.ip = /^(([0-9]{1,2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]{1,2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$/;
@@ -38,7 +54,7 @@ function verificaTipoNAS() {
 
 </head>
 
-<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" onLoad="verificaTipoNAS();">
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -62,49 +78,66 @@ function verificaTipoNAS() {
                         <td align="center" valign="middle"><h1>{$titulo} NAS</h1></td>
                       </tr>
                       <tr>
-                        <td align="center" valign="top"><table width="400" border="0" cellspacing="2" cellpadding="0">
+                        <td align="center" valign="top"><table width="422" border="0" cellspacing="2" cellpadding="0">
                             <tr>
                               <td width="122" align="right"> <p>Nome:</p></td>
-                              <td width="272"><p>
+                              <td width="294" colspan="2"><p>
                                   <input name="nome" type="text" value="{$nome}" size="25">
                               </p></td>
                             </tr>
                             <tr>
                               <td align="right"> <p>Ip:</p></td>
-                              <td><p>
+                              <td colspan="2"><p>
                                   <input name="ip" type="text" value="{$ip}" size="25" onBlur="return valida_ip();">
                                 </p></td>
                             </tr>
                             <tr>
                               <td align="right"> <p>Secret::</p></td>
-                              <td><input name="secret" type="text" value="{$secret}" size="25">
+                              <td colspan="2"><input name="secret" type="text" value="{$secret}" size="25">
                               </td>
                             </tr>
                             { if !$id_nas }
                             <tr>
                               <td align="right"><p>Tipo:</p></td>
-                              <td> <select name="tipo_nas" onChange='javascript:verificaTipoNAS();'>
+                              <td> <select name="tipo_nas" onChange='javascript:verificaTipoNAS(); mostraPadrao(this.value)'>
 							  	{ foreach key=id item=nome from=$ls_tipo_nas }
                                   <option value="{$id}" {if $id==$tipo_nas}SELECTED{/if}>{$nome}</option>
 								{ /foreach }
-                                </select></td>
+                                </select>
+								</td>
+								<td>
+								<div id="tabela" class="box_fechada"><p>Padrão:
+                                <select name="padrao">
+                                  <option value="VA" {if $padrao == 'VA'}SELECTED{/if}>VirtexAdmin</option>
+                                  <option value="MK" {if $padrao == 'MK'}SELECTED{/if}>Mikrotik</option>
+                                </select></p></div>
+							  </td>
                             </tr>
                             {/if}
                             { if $id_nas }
 							<tr>
 							<td align="right"><p>Tipo:</p></td>
-							<td> <select name="tipo_nas" onChange='javascript:verificaTipoNAS();' DISABLED>
+							<td {if $id_nas && $tipo_nas == "P"} {else}colspan="2"{/if}> <select name="tipo_nas" onChange='javascript:verificaTipoNAS();' DISABLED>
 							{ foreach key=id item=nome from=$ls_tipo_nas }
 							<option value="{$id}" {if $id==$tipo_nas}SELECTED{/if}>{$nome}</option>
 							{ /foreach }
 							</select></td>
+							{if $id_nas && $tipo_nas == "P"}
+								<td>
+									<div id="tabela" class="box_aberta"><p>Padrão:
+									<select name="padrao">
+									  <option value="VA" {if $padrao =='VA'}SELECTED{/if}>VirtexAdmin</option>
+									  <option value="MK" {if $padrao =='MK'}SELECTED{/if}>Mikrotik</option>
+									</select></p></div>
+								</td>
+							{/if}
 							</tr>
 							{/if}
 <tr>
                               <td><p align="right">
 
  	Monitorado por</p></td>
-							<td><p><select name="infoserver" style="width:130px;">
+							<td colspan="2"><p><select name="infoserver" style="width:130px;">
 								<option value=""></option>
 									{foreach item=h from=$hosts}
 										<option value="{$h}" {if $h == $infoserver}SELECTED{/if}>{$h}</option>
@@ -114,10 +147,10 @@ function verificaTipoNAS() {
 </tr>
                             <tr>
                               <td><p>&nbsp;</p></td>
-                              <td><p>&nbsp;</p></td>
+                              <td colspan="2"><p>&nbsp;</p></td>
                             </tr>
                             <tr>
-                              <td colspan="2" align="center"> <input type="submit" name="Submit" value="{$titulo}"></td>
+                              <td colspan="3" align="center"> <input type="submit" name="Submit" value="{$titulo}"></td>
                             </tr>
                           </table></td>
                       </tr>
