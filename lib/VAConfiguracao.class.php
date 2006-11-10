@@ -1127,7 +1127,7 @@ class VAConfiguracao extends VirtexAdmin {
 			$reg = array();
 
 			$sSQL  = "SELECT ";
-			$sSQL .= "   id_nas, nome, ip, secret, tipo_nas,infoserver ";
+			$sSQL .= "   id_nas, nome, ip, secret, tipo_nas,infoserver, padrao ";
 			$sSQL .= "FROM cftb_nas ORDER BY id_nas ASC ";
 
 			$reg = $this->bd->obtemRegistros($sSQL);
