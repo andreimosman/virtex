@@ -15,7 +15,49 @@ class VASuporte extends VirtexAdmin {
 	
 	}*/
 	
-	
+	 protected function obtemListaMonitorPOPs($id_pop="",$nivel=0) {
+
+		$sSQL  = "SELECT ";
+		$sSQL .=" p.nome, p.ipaddr, p.tipo, t.id_pop,  t.min_ping , t.max_ping ,t.media_ping ,t.num_perdas ,t.num_ping ,t.status ,t.num_erros, t.laststats ";
+		$sSQL .=" FROM sttb_pop_status t, cftb_pop p ";
+		$sSQL .= "WHERE ";
+
+		   if( $id_pop ) {
+
+			   $sSQL .= "   id_pop_ap = '".$this->bd->escape($id_pop)."' ";
+
+		   } else {
+
+			   $sSQL .= "   id_pop_ap is null ";
+
+		   }
+
+		$sSQL .=" AND  t.id_pop = p.id_pop ORDER BY p.nome ";
+
+
+
+		   $lista = $this->bd->obtemRegistros($sSQL);
+
+		   $retorno = array();
+
+		   for($i=0;$i<count($lista);$i++) {
+
+			   $lista[$i]["nivel"] = $nivel;
+			   $retorno[] = $lista[$i];
+			   $sub = $this->obtemListaMonitorPOPs($lista[$i]["id_pop"],$nivel+1);
+
+			   for($x=0;$x<count($sub);$x++) {
+
+				   $retorno[] = $sub[$x];
+
+			   }
+
+		   }
+
+
+		   return($retorno);
+
+	}
 	
 	public function processa($op=null) {	
 		if( ! $this->privPodeLer("_SUPORTE") ) {
@@ -162,7 +204,19 @@ class VASuporte extends VirtexAdmin {
 		
 			//$this->arquivoTemplate = "cobranca_versaolight.html";
 			$this->arquivoTemplate = "suporte_grafico.html";
-		} else if ($op == "log"){
+		}else if ($op == "monitoramento"){
+			
+			if( !$this->privPodeLer("_SUPORTE_MONITORAMENTO") ) {
+				$this->privMSG();
+				return;
+			}	
+
+			$rel_monitoramento = $this->obtemListaMonitorPOPs();
+			$this->tpl->atribui("rel_monitoramento",$rel_monitoramento);
+			$this->arquivoTemplate = "suporte_monitoramento_pops.html";	
+
+		}
+		else if ($op == "log"){
 		
 			//$this->arquivoTemplate = "cobranca_versaolight.html";
 			$this->arquivoTemplate = "suporte_radiuslog.html";
