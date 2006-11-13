@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link type="text/css" rel="stylesheet" href="template/default/estilos1.css" />
+<title>lista emails cobrança</title>
+{literal}
+<style type="text/css">
+<!--
+.style8 {color: #779977}
+.style1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+.style7 {font-family: Verdana, Arial, Helvetica, sans-serif; color: #FFFFFF; font-weight: bold; font-size: 12px; }
+-->
+</style>
+{/literal}
+</head>
+
+<body style="x-overflow:hidden;">
+<br />
+{if !$index_array }
+<table border="0" align="center" cellpadding="1" cellspacing="1" style="border:1px solid #779977;">
+  <tr>
+    <td colspan="2" style="border-bottom:1px solid #779977;"><span class="style1 style8">Lista de Emails de Cobrança Enviados</span></td>
+  </tr>
+  <tr>
+    <td bgcolor="779977" style="border:1px solid #779977;"><div align="center"><span class="style7">Emails enviados</span></div></td>
+    <td bgcolor="779977" style="border:1px solid #779977;"><div align="center"><span class="style7">Data do envio</span></div></td>
+  </tr> 
+  <tr>
+    <td colspan="2" height="4px"></td>
+  </tr>
+  	{foreach item=b from=$array_array}
+	  <tr>
+		<td style="padding-left:15px; padding-bottom:3px;"><a href="cobranca.php?op=amortizacao&id_cliente_produto={$b.idcp}&data={$b.data_fatura}&id_cliente={$b.id_cliente}&tipo={$b.tipo}">{$b.email}</a></td>
+		<td style="padding-left:28px; padding-bottom:4px;"><a href="cobranca.php?op=amortizacao&id_cliente_produto={$b.idcp}&data={$b.data_fatura}&id_cliente={$b.id_cliente}&tipo={$b.tipo}">{$b.data}</a></td>
+	  </tr>
+	{/foreach}
+</table><br />
+<div align="center">
+<a href="home.php?op=index_email">&laquo; voltar</a>
+</div><br />
+{else}
+<div align="center" >
+<span class="style1 style8">Escolha o dia em que foi enviado o email</span>
+	<form name="form">
+		<select name="data">
+			{foreach item=a from=$index_array}
+				<option value="{$a.dia}-{$a.mes}-{$a.ano}" >{$a.dia}/{$a.mes}/{$a.ano}</option>
+			{/foreach}
+		</select>
+		<input type="submit" value="Ok" />
+		<input type="hidden" name="op" value="lista_email" />
+	</form>
+</div>
+{/if}
+</body>
+</html>
