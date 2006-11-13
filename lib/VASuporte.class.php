@@ -200,7 +200,8 @@ class VASuporte extends VirtexAdmin {
 				$sSQL .= " session_id ilike 'E:%' "; 
 			
 			}
-			$sSQL .= "ORDER BY CASE WHEN logout is NULL then login ELSE logout END DESC ";
+			//$sSQL .= "ORDER BY CASE WHEN logout is NULL then login ELSE logout END DESC ";
+			$sSQL .= "ORDER BY login DESC ";
 			$sSQL .= "LIMIT $limite ";
 			
 			//echo $sSQL;			
