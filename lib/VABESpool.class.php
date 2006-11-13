@@ -134,19 +134,41 @@
 				/**
 				 * Configurações de rede
 				 */
-				 $abl->networkUP();
+				 //$abl->networkUP();
 				
-				
+				//$ext_if = $abl->obtemInterfaceExterna();
 				
 				/**
 				 * BandaLarga: TCP/IP
 				 */
 				 
-				
-				
 				$lista_nas = $abl->obtemListaNasIPAtivos();
 				
 				if(count($lista_nas)) {
+					/**
+					 * Ergue os endereços e regras de infra-estrutura
+					 */
+					
+					$sSQL  = "SELECT ";
+					$sSQL .= "   r.rede,r.id_rede,nr.id_nas ";
+					$sSQL .= "FROM ";
+					$sSQL .= "   cftb_nas_rede nr INNER JOIN cftb_rede r USING(rede) ";
+					$sSQL .= "WHERE ";
+					$sSQL .= "   id_nas IN (".implode(",",$lista_nas).") ";
+					$sSQL .= "   AND r.tipo_rede = 'I' ";
+					
+					$infra = $this->bd->obtemRegistros($sSQL);
+					
+					for($i=0;$i<count($infra);$i++) {
+						//echo "Infra: \n";
+						//echo "   " . $infra[$i]["rede"] . " - " . $infra[$i]["id_rede"] . "\n";
+						$abl->infraUP($infra[$i]["rede"],$infra[$i]["id_rede"],$infra[$i]["id_nas"]);
+					}
+					
+					//return;
+					
+				
+				
 				
 					//if ($this->licencaBL == 1) { 
 				
@@ -267,9 +289,48 @@
 			if( count($lista_nas) ) {
 			
 				//if ($this->licencaBL != 1) return -1 ;
+				
+				/**
+				 * Processo de infra-estrutura
+				 */
+
+				// Início da transação
+				$this->bd->consulta("BEGIN");
+
+				$sSQL  = "SELECT ";
+				$sSQL .= "   id_spool, op, id_conta, parametros ";
+				$sSQL .= "FROM ";
+				$sSQL .= "   sptb_spool ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "   tipo = 'IF' ";
+				$sSQL .= "   AND status = 'A' ";
+				$sSQL .= "   AND destino in ('". implode("','",$lista_nas) ."') ";
+				$sSQL .= "FOR UPDATE";
+				
+				$fila = $this->bd->obtemRegistros($sSQL);
+				
+				for($i=0;$i<count($fila);$i++) {
+					// TODO: TRATAR ERRO DE PROCESSAMENTO E JOGAR PRO BANCO
+					$abl->processaIF($fila[$i]["op"],$fila[$i]["id_conta"],$fila[$i]["parametros"]);
+					
+					$sSQL = "UPDATE sptb_spool SET status = 'OK' WHERE id_spool = '".$this->bd->escape($fila[$i]["id_spool"])."'";
+					$this->bd->consulta($sSQL);
+				
+				}
+				
+				// Fim da transação
+				$this->bd->consulta("END");
+
+
+
+
+				
+				
 			
 			
-			
+				/**
+				 * Processo de cliente banda larga
+				 */
 			
 				// Início da transação
 				$this->bd->consulta("BEGIN");

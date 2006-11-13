@@ -113,6 +113,41 @@
 
 		}
 		
+		/**
+		 * Ergue a rede de infraestrutura
+		 */
+		function infraUP($rede,$id_rede,$id_nas) {
+			$r = new RedeIP($rede);
+			$ip_interface	= $r->maxHost();
+			$mascara		= $r->mascara();
+
+			// Configura ip na internface
+			$iface = $this->nas_list[ $id_nas ];
+			$this->so->ifConfig($iface,$ip_interface,$mascara);
+
+			// Adiciona regra no firewall
+			$baserule     = SistemaOperacional::$FW_SUB_BASERULE;
+			$this->so->adicionaRegraSP($id_rede,$baserule,$rede,$this->obtemInterfaceExterna());
+
+		}
+		
+		/**
+		 * Baixa a rede de infra-estrutura
+		 */
+		function infraDOWN($rede,$id_rede,$id_nas) {
+			$r = new RedeIP($rede);
+			$ip_interface	= $r->maxHost();
+			
+			// Baixa a configuração da interface
+			$iface = $this->nas_list[ $id_nas ];
+			$this->so->ifUnConfig($iface,$ip_interface);
+			
+			// Apaga regra do Firewall
+			$baserule     = SistemaOperacional::$FW_SUB_BASERULE;
+			$this->so->deletaRegraSP($id_rede,$baserule);
+
+		}
+		
 		protected function loadInfo($tipo="TCPIP") {
 			$n = $tipo == "PPPoE" ? $this->pppoe_cfg : $this->tcpip_cfg;
 			
@@ -151,6 +186,10 @@
 		public function obtemListaNasPPPoEAtivos() {
 			return($this->pppoe_lista_nas);
 		}
+		
+		public function obtemListaIfacesPPPoEAtivos() {
+			return(array_keys($this->pppoe_iface_list));
+		}
 
 		
 		protected function obtemNasConta($id_conta) {
@@ -166,6 +205,35 @@
 			
 			return(@$r["id_nas"]);
 		
+		}
+		
+		/**
+		 * Processamento utilizado para classes de infra-estrutura.
+		 */
+		public function processaIF($op,$id_conta,$parametros) {
+			$ext_if = $this->obtemInterfaceExterna();
+			
+			@list($rede,$id_rede,$id_nas) = explode($parametros);
+			
+			switch($op) {
+				case 'a':
+					/**
+					 * Adicionar rede de infraestrutura
+					 */
+					$this->infraUP($rede,$id_rede,$id_nas);
+					break;
+				case 'x':
+					/**
+					 * Excluir rede de infraestrutura
+					 */
+					$this->infraDOWN($rede,$id_rede,$id_nas);
+					break;
+			}
+			
+			return;
+
+
+
 		}
 
 		

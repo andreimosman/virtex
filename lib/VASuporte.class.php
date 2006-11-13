@@ -18,44 +18,36 @@ class VASuporte extends VirtexAdmin {
 	 protected function obtemListaMonitorPOPs($id_pop="",$nivel=0) {
 
 		$sSQL  = "SELECT ";
-		$sSQL .=" p.nome, p.ipaddr, p.tipo, t.id_pop,  t.min_ping , t.max_ping ,t.media_ping ,t.num_perdas ,t.num_ping ,t.status ,t.num_erros, t.laststats ";
-		$sSQL .=" FROM sttb_pop_status t, cftb_pop p ";
+		$sSQL .= "    p.id_pop_ap, p.nome, p.ipaddr, p.ativar_monitoramento, p.tipo, p.id_pop,  t.min_ping , t.max_ping ,t.media_ping ,t.num_perdas ,t.num_ping ,t.status ,t.num_erros, t.laststats ";
+		$sSQL .= "FROM ";
+		$sSQL .= "   cftb_pop p LEFT OUTER JOIN sttb_pop_status t USING(id_pop) ";
 		$sSQL .= "WHERE ";
 
-		   if( $id_pop ) {
+		if( $id_pop ) {
+			$sSQL .= "   id_pop_ap = '".$this->bd->escape($id_pop)."' ";
+		} else {
+			$sSQL .= "   id_pop_ap is null ";
+		}
 
-			   $sSQL .= "   id_pop_ap = '".$this->bd->escape($id_pop)."' ";
+		//$sSQL .=" AND  t.id_pop = p.id_pop ORDER BY p.nome ";
+		$sSQL .= "ORDER BY ";
+		$sSQL .= "   p.nome ";
 
-		   } else {
+	   $lista = $this->bd->obtemRegistros($sSQL);
 
-			   $sSQL .= "   id_pop_ap is null ";
+	   $retorno = array();
 
+	   for($i=0;$i<count($lista);$i++) {
+		   $lista[$i]["nivel"] = $nivel;
+		   $retorno[] = $lista[$i];
+		   $sub = $this->obtemListaMonitorPOPs($lista[$i]["id_pop"],$nivel+1);
+
+		   for($x=0;$x<count($sub);$x++) {
+			   $retorno[] = $sub[$x];
 		   }
+	   }
 
-		$sSQL .=" AND  t.id_pop = p.id_pop ORDER BY p.nome ";
-
-
-
-		   $lista = $this->bd->obtemRegistros($sSQL);
-
-		   $retorno = array();
-
-		   for($i=0;$i<count($lista);$i++) {
-
-			   $lista[$i]["nivel"] = $nivel;
-			   $retorno[] = $lista[$i];
-			   $sub = $this->obtemListaMonitorPOPs($lista[$i]["id_pop"],$nivel+1);
-
-			   for($x=0;$x<count($sub);$x++) {
-
-				   $retorno[] = $sub[$x];
-
-			   }
-
-		   }
-
-
-		   return($retorno);
+	   return($retorno);
 
 	}
 	

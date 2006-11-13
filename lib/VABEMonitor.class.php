@@ -65,7 +65,7 @@
 		/**
 		 * Testa recursivamente os POPs
 		 */
-		public function testeRecursivo($id_pop="",$ip="",$tipo="") {
+		public function testeRecursivo($id_pop="",$ip="",$tipo="",$ativar_monitoramento="") {
 			//echo "Verificando: $id_pop\n";
 			if( !$id_pop ) {
 				$this->processados=array();
@@ -84,7 +84,7 @@
 				$sSQL = "SELECT infoserver FROM cftb_pop WHERE id_pop='".$this->bd->escape($id_pop)."'";
 				$pop = $this->bd->obtemUnicoRegistro($sSQL);
 				
-				if( $ip ) {
+				if( $ativar_monitoramento && $ip ) {
 					$num_pings =  !@$this->prefs["num_pings"] ? 2 : @$this->prefs["num_pings"];
 
 					$r = $this->testePing($ip,$num_pings,"",@$pop["infoserver"]);
@@ -201,7 +201,7 @@
 				
 			}
 			
-			$sSQL = "SELECT id_pop, nome, tipo, ipaddr FROM cftb_pop WHERE ";
+			$sSQL = "SELECT id_pop, nome, tipo, ipaddr, CASE WHEN ativar_monitoramento is true THEN 1 ELSE 0 END as ativar_monitoramento FROM cftb_pop WHERE ";
 			if( $id_pop ) {
 			   $sSQL .= " id_pop_ap = '".$this->bd->escape($id_pop)."' ";
 			} else {
@@ -211,7 +211,7 @@
 			$pops = $this->bd->obtemRegistros($sSQL);
 			
 			for($i=0;$i<count($pops);$i++) {
-				$this->testeRecursivo($pops[$i]["id_pop"],$pops[$i]["ipaddr"],$pops[$i]["tipo"]);
+				$this->testeRecursivo($pops[$i]["id_pop"],$pops[$i]["ipaddr"],$pops[$i]["tipo"],$pops[$i]["ativar_monitoramento"]);
 			}
 
 		}

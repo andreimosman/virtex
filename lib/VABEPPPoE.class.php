@@ -35,7 +35,7 @@
 			$this->initVars();
 			
 			// Configura o getopt e chama as opções para processamento posterior
-			$this->_shortopts = "WUDKRi:a:u:p:";
+			$this->_shortopts = "WUDKRIi:a:u:p:";
 			$this->getopt();
 		
 		}
@@ -49,6 +49,7 @@
 			$this->linkup			= 0;
 			$this->linkdown			= 0;
 			$this->rc				= 0;
+			$this->info				= 0;
 			
 			$this->username 		= "";
 			$this->hisaddr	 		= "";
@@ -94,6 +95,10 @@
 					case 'R':
 						$this->rc = 1;
 						break;
+					
+					case 'I':
+						$this->info = 1;
+						break;
 					/**
 					 * Parâmetros gerais
 					 */
@@ -116,6 +121,14 @@
 				}
 			}
 			
+			
+			/**
+			 * Info
+			 */
+			if( $this->info ) {
+				$this->print_info();
+				return;
+			}
 			
 			/**
 			 * Who
@@ -226,7 +239,8 @@
 			
 			for ($i=0;$i<count($interfaces);$i++){
 				$comando_start = "/usr/libexec/pppoed -d -P /var/run/pppoe.pid -p '*' -l pppoe-in ".$interfaces[$i];
-				 SOFreeBSD::executa("echo \"$comando_start\"|/bin/sh\n");
+				//echo $comando_start."\n";
+				// SOFreeBSD::executa("echo \"$comando_start\"|/bin/sh\n");
 			}
 			
 		}
@@ -248,6 +262,15 @@
 	
 		protected function print_who() {
 		
+		}
+		
+		protected function print_info() {
+			$bl = new AtuadorBandaLarga($this->bd);
+			$ifaces = $bl->obtemListaIfacesPPPoEAtivos();
+			
+			for($i=0;$i<count($ifaces);$i++) {
+				echo $ifaces[$i]."\n";
+			}
 		}
 		
 		protected function dokick() {
