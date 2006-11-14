@@ -1,326 +1,61 @@
-cbtb_contrato:::id_cliente_produto:::int2:::2:::not_null primary_key
-cbtb_contrato:::data_contratacao:::date:::4:::
-cbtb_contrato:::vigencia:::int2:::2:::
-cbtb_contrato:::data_renovacao:::date:::4:::
-cbtb_contrato:::valor_contrato:::numeric:::-1:::
-cbtb_contrato:::id_cobranca:::int2:::2:::not_null
-cbtb_contrato:::status:::bpchar:::-1:::
-cbtb_contrato:::tipo_produto:::bpchar:::-1:::
-cbtb_contrato:::valor_produto:::numeric:::-1:::
-cbtb_contrato:::num_emails:::int2:::2:::
-cbtb_contrato:::quota_por_conta:::int4:::4:::
-cbtb_contrato:::tx_instalacao:::numeric:::-1:::
-cbtb_contrato:::comodato:::bool:::1:::
-cbtb_contrato:::valor_comodato:::numeric:::-1:::
-cbtb_contrato:::desconto_promo:::numeric:::-1:::
-cbtb_contrato:::periodo_desconto:::int2:::2:::
-cbtb_contrato:::hosp_dominio:::bool:::1:::
-cbtb_contrato:::hosp_franquia_em_mb:::int2:::2:::
-cbtb_contrato:::hosp_valor_mb_adicional:::numeric:::-1:::
-cbtb_contrato:::disc_franquia_horas:::int2:::2:::
-cbtb_contrato:::disc_permitir_duplicidade:::bool:::1:::
-cbtb_contrato:::disc_valor_hora_adicional:::numeric:::-1:::
-cbtb_contrato:::bl_banda_upload_kbps:::int2:::2:::
-cbtb_contrato:::bl_banda_download_kbps:::int2:::2:::
-cbtb_contrato:::bl_franquia_trafego_mensal_gb:::int2:::2:::
-cbtb_contrato:::bl_valor_trafego_adicional_gb:::numeric:::-1:::
-cbtb_contrato:::cod_banco:::int2:::2:::
-cbtb_contrato:::carteira:::int2:::2:::
-cbtb_contrato:::agencia:::int2:::2:::
-cbtb_contrato:::num_conta:::int4:::4:::
-cbtb_contrato:::convenio:::int2:::2:::
-cbtb_contrato:::cc_vencimento:::varchar:::-1:::
-cbtb_contrato:::cc_numero:::varchar:::-1:::
-cbtb_contrato:::cc_operadora:::bpchar:::-1:::
-cbtb_contrato:::db_banco:::int2:::2:::
-cbtb_contrato:::db_agencia:::int2:::2:::
-cbtb_contrato:::db_conta:::int2:::2:::
-cbtb_contrato:::vencimento:::int2:::2:::
-cbtb_contrato:::carencia:::int2:::2:::
-cbtb_contrato:::data_alt_status:::date:::4:::
-cbtb_contrato:::id_produto:::int2:::2:::
+aged_rdtb_accounting:::session_id:::varchar:::-1:::
+aged_rdtb_accounting:::username:::varchar:::-1:::
+aged_rdtb_accounting:::login:::timestamp:::8:::
+aged_rdtb_accounting:::logout:::timestamp:::8:::
+aged_rdtb_accounting:::tempo:::numeric:::-1:::
+aged_rdtb_accounting:::caller_id:::varchar:::-1:::
+aged_rdtb_accounting:::nas:::varchar:::-1:::
+aged_rdtb_accounting:::framed_ip_address:::varchar:::-1:::
+aged_rdtb_accounting:::terminate_cause:::varchar:::-1:::
+aged_rdtb_accounting:::bytes_in:::numeric:::-1:::
+aged_rdtb_accounting:::bytes_out:::numeric:::-1:::
+cftb_backup:::path_backup:::varchar:::-1:::
+cftb_backup:::ftp:::varchar:::-1:::
+cftb_backup:::usuario:::varchar:::-1:::
+cftb_backup:::senha:::varchar:::-1:::
+cftb_banda:::banda:::varchar:::-1:::
+cftb_banda:::id:::int2:::2:::
 lgtb_remessas:::id_remessa:::int2:::2:::not_null
 lgtb_remessas:::id_cliente_produto:::int2:::2:::
 lgtb_remessas:::data_remessa:::timestamp:::8:::
 lgtb_remessas:::data_vencimento:::date:::4:::
 lgtb_remessas:::valor:::numeric:::-1:::
-lgtb_remessas:::periodo:::int4:::4:::
-lgtb_remessas:::mes:::int4:::4:::
-lgtb_remessas:::ano:::int4:::4:::
-prtb_produto:::id_produto:::int2:::2:::not_null primary_key
-prtb_produto:::nome:::varchar:::-1:::
-prtb_produto:::descricao:::text:::-1:::
-prtb_produto:::tipo:::bpchar:::-1:::
-prtb_produto:::valor:::numeric:::-1:::
-prtb_produto:::disponivel:::bool:::1:::
-prtb_produto:::num_emails:::int2:::2:::
-prtb_produto:::quota_por_conta:::int4:::4:::
-prtb_produto:::vl_email_adicional:::numeric:::-1:::
-prtb_produto:::permitir_outros_dominios:::bool:::1:::
-prtb_produto:::email_anexado:::bool:::1:::
-prtb_produto:::numero_contas:::int2:::2:::
-prtb_produto:::comodato:::bool:::1:::
-prtb_produto:::valor_comodato:::numeric:::-1:::
-prtb_produto:::desconto_promo:::numeric:::-1:::
-prtb_produto:::periodo_desconto:::int2:::2:::
-prtb_produto:::tx_instalacao:::numeric:::-1:::
-cltb_cliente:::id_cliente:::int2:::2:::not_null primary_key
-cltb_cliente:::data_cadastro:::date:::4:::
-cltb_cliente:::nome_razao:::varchar:::-1:::
-cltb_cliente:::tipo_pessoa:::bpchar:::-1:::
-cltb_cliente:::rg_inscr:::varchar:::-1:::
-cltb_cliente:::rg_expedicao:::varchar:::-1:::
-cltb_cliente:::cpf_cnpj:::varchar:::-1:::
-cltb_cliente:::email:::varchar:::-1:::
-cltb_cliente:::endereco:::varchar:::-1:::
-cltb_cliente:::complemento:::varchar:::-1:::
-cltb_cliente:::id_cidade:::int2:::2:::
-cltb_cliente:::cidade:::varchar:::-1:::
-cltb_cliente:::estado:::bpchar:::-1:::
-cltb_cliente:::cep:::bpchar:::-1:::
-cltb_cliente:::bairro:::varchar:::-1:::
-cltb_cliente:::fone_comercial:::varchar:::-1:::
-cltb_cliente:::fone_residencial:::varchar:::-1:::
-cltb_cliente:::fone_celular:::varchar:::-1:::
-cltb_cliente:::contato:::varchar:::-1:::
-cltb_cliente:::banco:::varchar:::-1:::
-cltb_cliente:::conta_corrente:::varchar:::-1:::
-cltb_cliente:::agencia:::varchar:::-1:::
-cltb_cliente:::dia_pagamento:::int2:::2:::
-cltb_cliente:::ativo:::bool:::1:::
-cltb_cliente:::obs:::text:::-1:::
-cltb_cliente:::provedor:::bool:::1:::default_false
-cltb_cliente:::excluido:::bool:::1:::default_false
-cltb_cliente:::info_cobranca:::bool:::1:::default_false
-cftb_backup:::path_backup:::varchar:::-1:::
-cftb_backup:::ftp:::varchar:::-1:::
-cftb_backup:::usuario:::varchar:::-1:::
-cftb_backup:::senha:::varchar:::-1:::
-rdtb_log:::id_log:::int4:::4:::not_null default_nextval%28rdtb_log_id_log%29 primary_key
-rdtb_log:::datahora:::timestamp:::8:::default_now%28%29
-rdtb_log:::tipo:::varchar:::-1:::
-rdtb_log:::username:::varchar:::-1:::
-rdtb_log:::mensagem:::text:::-1:::
-rdtb_log:::caller_id:::varchar:::-1:::
-cftb_ip_externo:::ip_externo:::inet:::-1:::not_null primary_key
-cftb_ip_externo:::id_nas:::int2:::2:::not_null
-cftb_ip:::ipaddr:::inet:::-1:::not_null primary_key
-cftb_rede:::rede:::cidr:::-1:::not_null primary_key
-cftb_rede:::tipo_rede:::bpchar:::-1:::
-cftb_rede:::id_rede:::int2:::2:::
-cntb_conta_bandalarga:::username:::varchar:::-1:::not_null primary_key multiple_key
-cntb_conta_bandalarga:::tipo_conta:::varchar:::-1:::not_null primary_key multiple_key
-cntb_conta_bandalarga:::dominio:::varchar:::-1:::not_null primary_key multiple_key
-cntb_conta_bandalarga:::id_pop:::int2:::2:::not_null
-cntb_conta_bandalarga:::tipo_bandalarga:::bpchar:::-1:::
-cntb_conta_bandalarga:::ipaddr:::inet:::-1:::
-cntb_conta_bandalarga:::rede:::cidr:::-1:::
-cntb_conta_bandalarga:::upload_kbps:::int2:::2:::
-cntb_conta_bandalarga:::download_kbps:::int2:::2:::
-cntb_conta_bandalarga:::status:::bpchar:::-1:::
-cntb_conta_bandalarga:::mac:::macaddr:::6:::
-cntb_conta_bandalarga:::id_nas:::int2:::2:::not_null
-cntb_conta_bandalarga:::ip_externo:::inet:::-1:::
-cntb_conta_discado:::username:::varchar:::-1:::not_null primary_key multiple_key
-cntb_conta_discado:::tipo_conta:::varchar:::-1:::not_null primary_key multiple_key
-cntb_conta_discado:::dominio:::varchar:::-1:::not_null primary_key multiple_key
-cntb_conta_discado:::foneinfo:::varchar:::-1:::
-cntb_conta_email:::username:::varchar:::-1:::not_null primary_key multiple_key
-cntb_conta_email:::tipo_conta:::varchar:::-1:::not_null primary_key multiple_key
-cntb_conta_email:::dominio:::varchar:::-1:::not_null primary_key multiple_key
-cntb_conta_email:::quota:::int4:::4:::
-cntb_conta_email:::email:::varchar:::-1:::
-cntb_conta_hospedagem:::username:::varchar:::-1:::not_null primary_key multiple_key
-cntb_conta_hospedagem:::tipo_conta:::varchar:::-1:::not_null primary_key multiple_key
-cntb_conta_hospedagem:::dominio:::varchar:::-1:::not_null primary_key multiple_key
-cntb_conta_hospedagem:::tipo_hospedagem:::bpchar:::-1:::
-cntb_conta_hospedagem:::senha_cript:::varchar:::-1:::
-cntb_conta_hospedagem:::uid:::int4:::4:::
-cntb_conta_hospedagem:::gid:::int4:::4:::
-cntb_conta_hospedagem:::home:::varchar:::-1:::
-cntb_conta_hospedagem:::shell:::varchar:::-1:::
-cntb_conta_hospedagem:::dominio_hospedagem:::varchar:::-1:::
-cntb_conta:::username:::varchar:::-1:::not_null primary_key multiple_key
-cntb_conta:::dominio:::varchar:::-1:::not_null primary_key multiple_key
-cntb_conta:::tipo_conta:::varchar:::-1:::not_null primary_key multiple_key
-cntb_conta:::senha:::varchar:::-1:::
-cntb_conta:::id_cliente:::int2:::2:::
-cntb_conta:::id_cliente_produto:::int2:::2:::not_null
-cntb_conta:::id_conta:::int2:::2:::unique_key
-cntb_conta:::senha_cript:::varchar:::-1:::
-cntb_conta:::conta_mestre:::bool:::1:::default_true
-cntb_conta:::status:::bpchar:::-1:::default_A
-cntb_conta:::observacoes:::text:::-1:::
-dominio:::dominio:::varchar:::-1:::not_null primary_key
-dominio:::id_cliente:::int2:::2:::
-dominio:::provedor:::bool:::1:::default_false
-dominio:::status:::bpchar:::-1:::
-dominio:::dominio_provedor:::bool:::1:::
-lgtb_bloqueio_automatizado:::id_processo:::int2:::2:::not_null primary_key
-lgtb_bloqueio_automatizado:::id_cliente_produto:::int2:::2:::not_null
-lgtb_bloqueio_automatizado:::data_hora:::timestamp:::8:::not_null default_now%28%29
-lgtb_bloqueio_automatizado:::tipo:::varchar:::-1:::not_null
-lgtb_bloqueio_automatizado:::admin:::varchar:::-1:::
-lgtb_bloqueio_automatizado:::auto_obs:::varchar:::-1:::
-lgtb_bloqueio_automatizado:::admin_obs:::text:::-1:::
-cbtb_cliente_produto:::id_cliente_produto:::int2:::2:::not_null primary_key
-cbtb_cliente_produto:::id_cliente:::int2:::2:::not_null
-cbtb_cliente_produto:::id_produto:::int2:::2:::not_null
-cbtb_cliente_produto:::dominio:::varchar:::-1:::
-cbtb_cliente_produto:::excluido:::bool:::1:::default_false
-lgtb_reagendamento:::id_reagendamento:::int4:::4:::not_null default_nextval%28lgtb_reagendamento_id_reagendamento_seq%29 primary_key
-lgtb_reagendamento:::id_cliente_produto:::int2:::2:::not_null
-lgtb_reagendamento:::data:::date:::4:::not_null
-lgtb_reagendamento:::admin:::int2:::2:::
-lgtb_reagendamento:::data_reagendamento:::date:::4:::default_now%28%29
-lgtb_reagendamento:::data_para_reagendamento:::date:::4:::
-lgtb_retorno_faturas:::nsr:::int2:::2:::
-lgtb_retorno_faturas:::data_pagamento:::date:::4:::
-lgtb_retorno_faturas:::data_credito:::date:::4:::
-lgtb_retorno_faturas:::valor_recebido:::numeric:::-1:::
-lgtb_retorno_faturas:::codigo_barras:::varchar:::-1:::
-lgtb_retorno_faturas:::valor_tarifa:::numeric:::-1:::
-lgtb_retorno_faturas:::status:::bpchar:::-1:::
-lgtb_retorno_faturas:::id_arquivo:::int4:::4:::not_null
-lgtb_retorno_faturas:::motivo:::varchar:::-1:::
-lgtb_retorno:::id_arquivo:::int4:::4:::not_null default_nextval%28lgtb_retorno_id_arquivo_seq%29 primary_key
-lgtb_retorno:::nome_arquivo:::varchar:::-1:::
-lgtb_retorno:::tamanho:::int2:::2:::
-lgtb_retorno:::data:::timestamp:::8:::
-lgtb_retorno:::qtde_registros:::int2:::2:::
-lgtb_retorno:::status:::bpchar:::-1:::
-lgtb_retorno:::nra:::bpchar:::-1:::
-lgtb_retorno:::nrpr:::bpchar:::-1:::
-lgtb_retorno:::nrsc:::bpchar:::-1:::
-lgtb_retorno:::nrpe:::bpchar:::-1:::
-lgtb_retorno:::admin:::varchar:::-1:::
-lgtb_retorno:::tipo_retorno:::int4:::4:::
-prtb_produto_bandalarga:::id_produto:::int2:::2:::not_null primary_key
-prtb_produto_bandalarga:::banda_upload_kbps:::int2:::2:::
-prtb_produto_bandalarga:::banda_download_kbps:::int2:::2:::
-prtb_produto_bandalarga:::franquia_trafego_mensal_gb:::int2:::2:::
-prtb_produto_bandalarga:::valor_trafego_adicional_gb:::numeric:::-1:::
-prtb_produto_bandalarga:::roteado:::bool:::1:::
-prtb_produto_discado:::id_produto:::int2:::2:::not_null primary_key
-prtb_produto_discado:::franquia_horas:::int2:::2:::
-prtb_produto_discado:::permitir_duplicidade:::bool:::1:::default_false
-prtb_produto_discado:::valor_hora_adicional:::numeric:::-1:::
-prtb_produto_hospedagem:::id_produto:::int2:::2:::not_null primary_key
-prtb_produto_hospedagem:::dominio:::bool:::1:::
-prtb_produto_hospedagem:::franquia_em_mb:::int2:::2:::
-prtb_produto_hospedagem:::valor_mb_adicional:::numeric:::-1:::
-sptb_spool:::id_spool:::int4:::4:::not_null default_nextval%28sptb_spool_id_spool_seq%29 primary_key
-sptb_spool:::registro:::timestamp:::8:::default_now%28%29
-sptb_spool:::execucao:::timestamp:::8:::
-sptb_spool:::destino:::varchar:::-1:::
-sptb_spool:::tipo:::varchar:::-1:::not_null
-sptb_spool:::op:::bpchar:::-1:::
-sptb_spool:::id_conta:::int2:::2:::
-sptb_spool:::parametros:::text:::-1:::
-sptb_spool:::status:::varchar:::-1:::not_null
-sptb_spool:::cod_erro:::int2:::2:::
-adtb_admin:::id_admin:::int2:::2:::not_null primary_key
-adtb_admin:::admin:::varchar:::-1:::not_null unique_key
-adtb_admin:::senha:::varchar:::-1:::not_null
-adtb_admin:::status:::bpchar:::-1:::
-adtb_admin:::nome:::varchar:::-1:::
-adtb_admin:::email:::varchar:::-1:::unique_key
-adtb_admin:::primeiro_login:::bool:::1:::
-adtb_usuario_privilegio:::id_admin:::int2:::2:::not_null primary_key multiple_key
-adtb_usuario_privilegio:::id_priv:::int2:::2:::not_null primary_key multiple_key
-adtb_usuario_privilegio:::pode_gravar:::bool:::1:::
-adtb_privilegio:::id_priv:::int2:::2:::not_null primary_key
-adtb_privilegio:::cod_priv:::varchar:::-1:::unique_key
-adtb_privilegio:::nome:::varchar:::-1:::
-bktb_arquivos:::id_backup:::int4:::4:::not_null
-bktb_arquivos:::data_backup:::date:::4:::
-bktb_arquivos:::tipo_backup:::varchar:::-1:::
-bktb_arquivos:::arquivo_backup:::varchar:::-1:::
-bktb_arquivos:::status_backup:::varchar:::-1:::
-bktb_backup:::id_backup:::int4:::4:::not_null default_nextval%28bktb_backup_id_backup_seq%29 primary_key
-bktb_backup:::data_backup:::date:::4:::
-bktb_backup:::status_backup:::varchar:::-1:::
-bktb_backup:::admin:::int2:::2:::
-bktb_backup:::operador_backup:::varchar:::-1:::
-bktb_backup:::data:::timestamp:::8:::default_now%28%29
-cftb_forma_pagamento:::id_cobranca:::int2:::2:::not_null primary_key
-cftb_forma_pagamento:::nome_cobranca:::varchar:::-1:::
-cftb_forma_pagamento:::disponivel:::bool:::1:::
-cbtb_carne:::id_carne:::int2:::2:::not_null primary_key
-cbtb_carne:::data_geracao:::date:::4:::
-cbtb_carne:::status:::varchar:::-1:::default_A%20varying
-cbtb_carne:::id_cliente_produto:::int2:::2:::
-cbtb_carne:::valor:::numeric:::-1:::
-cbtb_carne:::vigencia:::int2:::2:::
-cbtb_carne:::id_cliente:::int2:::2:::
-cftb_uf:::uf:::bpchar:::-1:::not_null primary_key
-cftb_uf:::estado:::varchar:::-1:::
-cftb_nas_rede:::rede:::cidr:::-1:::not_null primary_key multiple_key
-cftb_nas_rede:::id_nas:::int2:::2:::not_null primary_key multiple_key
-cftb_cidade:::id_cidade:::int2:::2:::not_null primary_key
-cftb_cidade:::uf:::bpchar:::-1:::not_null
-cftb_cidade:::cidade:::varchar:::-1:::
-cftb_cidade:::disponivel:::bool:::1:::default_false
-lgtb_exclusao:::id_exclusao:::int2:::2:::not_null primary_key
-lgtb_exclusao:::admin:::varchar:::-1:::
-lgtb_exclusao:::data:::timestamp:::8:::
-lgtb_exclusao:::tipo:::varchar:::-1:::
-lgtb_exclusao:::id_excluido:::int2:::2:::
-lgtb_exclusao:::observacao:::text:::-1:::
-lgtb_administradores:::id_admin:::int2:::2:::not_null
-lgtb_administradores:::data:::timestamp:::8:::default_now%28%29
-lgtb_administradores:::operacao:::varchar:::-1:::
-lgtb_administradores:::valor_original:::varchar:::-1:::
-lgtb_administradores:::valor_alterado:::varchar:::-1:::
-lgtb_administradores:::username:::varchar:::-1:::
-lgtb_administradores:::id_cliente_produto:::int2:::2:::
-lgtb_administradores:::tipo_conta:::varchar:::-1:::
-lgtb_administradores:::extras:::varchar:::-1:::
-lgtb_administradores:::ip:::inet:::-1:::
-lgtb_renovacao:::id_cliente_produto:::int2:::2:::not_null
-lgtb_renovacao:::data_renovacao:::date:::4:::
-lgtb_renovacao:::data_proxima_renovacao:::date:::4:::
-lgtb_renovacao:::historico:::text:::-1:::
-lgtb_renovacao:::id_renovacao:::int4:::4:::not_null default_nextval%28lgtb_renovacao_id_renovacao_seq%29 primary_key
-lgtb_restore:::id_restore:::int4:::4:::not_null default_nextval%28lgtb_restore_id_restore_seq%29 primary_key
-lgtb_restore:::arquivo_restore:::varchar:::-1:::
-lgtb_restore:::data_restore:::timestamp:::8:::
-lgtb_restore:::admin:::varchar:::-1:::
-lgtb_restore:::status_restore:::varchar:::-1:::
-pftb_preferencia_geral:::id_provedor:::int2:::2:::not_null primary_key
-pftb_preferencia_geral:::dominio_padrao:::varchar:::-1:::
-pftb_preferencia_geral:::nome:::varchar:::-1:::
-pftb_preferencia_geral:::radius_server:::inet:::-1:::
-pftb_preferencia_geral:::hosp_server:::inet:::-1:::
-pftb_preferencia_geral:::hosp_ns1:::inet:::-1:::
-pftb_preferencia_geral:::hosp_ns2:::inet:::-1:::
-pftb_preferencia_geral:::hosp_uid:::int4:::4:::
-pftb_preferencia_geral:::hosp_gid:::int4:::4:::
-pftb_preferencia_geral:::mail_server:::inet:::-1:::
-pftb_preferencia_geral:::mail_uid:::int4:::4:::
-pftb_preferencia_geral:::mail_gid:::int4:::4:::
-pftb_preferencia_geral:::pop_host:::varchar:::-1:::
-pftb_preferencia_geral:::smtp_host:::varchar:::-1:::
-pftb_preferencia_geral:::hosp_base:::varchar:::-1:::
-pftb_preferencia_geral:::agrupar:::int2:::2:::
-pftb_preferencia_geral:::email_base:::varchar:::-1:::
-pftb_preferencia_provedor:::id_provedor:::int2:::2:::not_null primary_key
-pftb_preferencia_provedor:::endereco:::varchar:::-1:::
-pftb_preferencia_provedor:::localidade:::varchar:::-1:::
-pftb_preferencia_provedor:::cep:::varchar:::-1:::
-pftb_preferencia_provedor:::cnpj:::bpchar:::-1:::
-pftb_preferencia_provedor:::fone:::varchar:::-1:::
-rdtb_accounting:::session_id:::varchar:::-1:::not_null primary_key
-rdtb_accounting:::username:::varchar:::-1:::
-rdtb_accounting:::login:::timestamp:::8:::default_now%28%29
-rdtb_accounting:::logout:::timestamp:::8:::
-rdtb_accounting:::tempo:::numeric:::-1:::
-rdtb_accounting:::caller_id:::varchar:::-1:::
-rdtb_accounting:::nas:::varchar:::-1:::
-rdtb_accounting:::framed_ip_address:::varchar:::-1:::
-rdtb_accounting:::terminate_cause:::varchar:::-1:::
-rdtb_accounting:::bytes_in:::numeric:::-1:::
-rdtb_accounting:::bytes_out:::numeric:::-1:::
+lgtb_remessas:::periodo:::int2:::2:::
+lgtb_remessas:::mes:::int2:::2:::
+lgtb_remessas:::ano:::int2:::2:::
+cftb_links:::id_link:::int4:::4:::not_null default_nextval%28cftb_links_id_link_seq%29 primary_key
+cftb_links:::titulo:::varchar:::-1:::
+cftb_links:::url:::varchar:::-1:::
+cftb_links:::target:::varchar:::-1:::
+cftb_links:::descricao:::text:::-1:::
+cftb_preferencias:::id_provedor:::int2:::2:::not_null primary_key
+cftb_preferencias:::dominio_padrao:::varchar:::-1:::
+cftb_preferencias:::nome:::varchar:::-1:::
+cftb_preferencias:::localidade:::varchar:::-1:::
+cftb_preferencias:::radius_server:::inet:::-1:::
+cftb_preferencias:::hosp_server:::inet:::-1:::
+cftb_preferencias:::hosp_ns1:::inet:::-1:::
+cftb_preferencias:::hosp_ns2:::inet:::-1:::
+cftb_preferencias:::hosp_uid:::int2:::2:::
+cftb_preferencias:::hosp_gid:::int2:::2:::
+cftb_preferencias:::mail_server:::inet:::-1:::
+cftb_preferencias:::mail_uid:::int2:::2:::
+cftb_preferencias:::mail_gid:::int2:::2:::
+cftb_preferencias:::pop_host:::varchar:::-1:::
+cftb_preferencias:::smtp_host:::varchar:::-1:::
+cftb_preferencias:::hosp_base:::varchar:::-1:::
+cftb_preferencias:::tx_juros:::int2:::2:::
+cftb_preferencias:::multa:::int2:::2:::
+cftb_preferencias:::dia_venc:::int2:::2:::
+cftb_preferencias:::carencia:::int2:::2:::
+cftb_preferencias:::cnpj:::bpchar:::-1:::
+cftb_preferencias:::cod_banco:::int2:::2:::
+cftb_preferencias:::agencia:::int2:::2:::
+cftb_preferencias:::num_conta:::int2:::2:::
+cftb_preferencias:::observacoes:::text:::-1:::
+cftb_preferencias:::carteira:::int2:::2:::
+cftb_preferencias:::convenio:::int2:::2:::
+cftb_preferencias:::pagamento:::bpchar:::-1:::
 lgtb_backup:::id_backup:::int2:::2:::not_null primary_key
 lgtb_backup:::admin:::varchar:::-1:::
 lgtb_backup:::data:::date:::4:::
@@ -364,77 +99,22 @@ lgtb_contas_excluidas:::conta_mestre:::varchar:::-1:::
 lgtb_contas_excluidas:::observacoes:::text:::-1:::
 lgtb_contas_excluidas:::admin:::varchar:::-1:::
 lgtb_contas_excluidas:::data_exclusao:::date:::4:::default_now%28%29
-cupom:::id_cupom:::int2:::2:::not_null default_nextval%28id_cupom_seq%29 primary_key
-cupom:::data:::timestamp:::8:::default_now%28%29
-cupom:::ip:::inet:::-1:::
-cupom:::nome:::varchar:::-1:::
-cupom:::email:::varchar:::-1:::
-cupom:::fone:::varchar:::-1:::
-cupom:::cupom:::varchar:::-1:::
-cftb_preferencias:::id_provedor:::int2:::2:::not_null primary_key
-cftb_preferencias:::dominio_padrao:::varchar:::-1:::
-cftb_preferencias:::nome:::varchar:::-1:::
-cftb_preferencias:::localidade:::varchar:::-1:::
-cftb_preferencias:::radius_server:::inet:::-1:::
-cftb_preferencias:::hosp_server:::inet:::-1:::
-cftb_preferencias:::hosp_ns1:::inet:::-1:::
-cftb_preferencias:::hosp_ns2:::inet:::-1:::
-cftb_preferencias:::hosp_uid:::int2:::2:::
-cftb_preferencias:::hosp_gid:::int2:::2:::
-cftb_preferencias:::mail_server:::inet:::-1:::
-cftb_preferencias:::mail_uid:::int2:::2:::
-cftb_preferencias:::mail_gid:::int2:::2:::
-cftb_preferencias:::pop_host:::varchar:::-1:::
-cftb_preferencias:::smtp_host:::varchar:::-1:::
-cftb_preferencias:::hosp_base:::varchar:::-1:::
-cftb_preferencias:::tx_juros:::int2:::2:::
-cftb_preferencias:::multa:::int2:::2:::
-cftb_preferencias:::dia_venc:::int2:::2:::
-cftb_preferencias:::carencia:::int2:::2:::
-cftb_preferencias:::cnpj:::bpchar:::-1:::
-cftb_preferencias:::cod_banco:::int2:::2:::
-cftb_preferencias:::agencia:::int2:::2:::
-cftb_preferencias:::num_conta:::int2:::2:::
-cftb_preferencias:::observacoes:::text:::-1:::
-cftb_preferencias:::carteira:::int2:::2:::
-cftb_preferencias:::convenio:::int2:::2:::
-cftb_preferencias:::pagamento:::bpchar:::-1:::
-tmp_cidades:::cidade:::text:::-1:::
-tmp_cidades:::id_cidade:::int4:::4:::
-cbtb_faturas:::id_cliente_produto:::int2:::2:::not_null primary_key multiple_key
-cbtb_faturas:::data:::date:::4:::not_null primary_key multiple_key
-cbtb_faturas:::descricao:::text:::-1:::
-cbtb_faturas:::valor:::numeric:::-1:::not_null
-cbtb_faturas:::status:::varchar:::-1:::
-cbtb_faturas:::observacoes:::text:::-1:::
-cbtb_faturas:::reagendamento:::date:::4:::
-cbtb_faturas:::pagto_parcial:::numeric:::-1:::
-cbtb_faturas:::data_pagamento:::date:::4:::
-cbtb_faturas:::desconto:::numeric:::-1:::
-cbtb_faturas:::acrescimo:::numeric:::-1:::
-cbtb_faturas:::valor_pago:::numeric:::-1:::
-cbtb_faturas:::id_cobranca:::int4:::4:::not_null default_nextval%28cbtb_faturas_id_cobranca_seq%29
-cbtb_faturas:::cod_barra:::varchar:::-1:::unique_key
-cbtb_faturas:::anterior:::bool:::1:::default_false
-cbtb_faturas:::id_carne:::int2:::2:::not_null
-cbtb_faturas:::nosso_numero:::varchar:::-1:::
-cbtb_faturas:::linha_digitavel:::varchar:::-1:::
-cbtb_faturas:::tipo_retorno:::int4:::4:::
-cbtb_faturas:::email_aviso:::bool:::1:::default_false
-cftb_pop:::id_pop:::int2:::2:::not_null primary_key
-cftb_pop:::nome:::varchar:::-1:::not_null
-cftb_pop:::info:::text:::-1:::
-cftb_pop:::tipo:::varchar:::-1:::
-cftb_pop:::id_pop_ap:::int2:::2:::
-cftb_pop:::status:::bpchar:::-1:::default_A
-cftb_pop:::ipaddr:::inet:::-1:::
-cftb_pop:::infoserver:::varchar:::-1:::
-cftb_pop:::snmp_versao:::varchar:::-1:::
-cftb_pop:::snmp_ro_com:::varchar:::-1:::
-cftb_pop:::snmp_rw_com:::varchar:::-1:::
-cftb_pop:::ativar_snmp:::bool:::1:::default_false
-cftb_banda:::banda:::varchar:::-1:::
-cftb_banda:::id:::int2:::2:::
+lgtb_exclusao:::id_exclusao:::int2:::2:::not_null primary_key
+lgtb_exclusao:::admin:::varchar:::-1:::
+lgtb_exclusao:::data:::timestamp:::8:::
+lgtb_exclusao:::tipo:::varchar:::-1:::
+lgtb_exclusao:::id_excluido:::int2:::2:::
+lgtb_exclusao:::observacao:::text:::-1:::
+lgtb_renovacao:::id_cliente_produto:::int2:::2:::not_null
+lgtb_renovacao:::data_renovacao:::date:::4:::
+lgtb_renovacao:::data_proxima_renovacao:::date:::4:::
+lgtb_renovacao:::historico:::text:::-1:::
+lgtb_renovacao:::id_renovacao:::int4:::4:::not_null default_nextval%28lgtb_renovacao_id_renovacao_seq%29 primary_key
+lgtb_restore:::id_restore:::int4:::4:::not_null default_nextval%28lgtb_restore_id_restore_seq%29 primary_key
+lgtb_restore:::arquivo_restore:::varchar:::-1:::
+lgtb_restore:::data_restore:::timestamp:::8:::
+lgtb_restore:::admin:::varchar:::-1:::
+lgtb_restore:::status_restore:::varchar:::-1:::
 pftb_preferencia_cobranca:::id_provedor:::int2:::2:::not_null primary_key
 pftb_preferencia_cobranca:::tx_juros:::int2:::2:::
 pftb_preferencia_cobranca:::multa:::int2:::2:::
@@ -453,15 +133,26 @@ pftb_preferencia_cobranca:::carteira_boleto:::varchar:::-1:::
 pftb_preferencia_cobranca:::agencia_boleto:::int4:::4:::
 pftb_preferencia_cobranca:::conta_boleto:::int4:::4:::
 pftb_preferencia_cobranca:::convenio_boleto:::int4:::4:::
-pftb_preferencia_cobranca:::enviar_email:::bool:::1:::default_false
+pftb_preferencia_cobranca:::enviar_email:::bool:::1:::
 pftb_preferencia_cobranca:::mensagem_email:::text:::-1:::
 pftb_preferencia_cobranca:::email_remetente:::varchar:::-1:::
-cftb_nas:::id_nas:::int2:::2:::not_null primary_key
-cftb_nas:::nome:::varchar:::-1:::not_null
-cftb_nas:::ip:::inet:::-1:::not_null
-cftb_nas:::secret:::varchar:::-1:::
-cftb_nas:::tipo_nas:::bpchar:::-1:::
-cftb_nas:::infoserver:::varchar:::-1:::
+pftb_preferencia_geral:::id_provedor:::int2:::2:::not_null primary_key
+pftb_preferencia_geral:::dominio_padrao:::varchar:::-1:::
+pftb_preferencia_geral:::nome:::varchar:::-1:::
+pftb_preferencia_geral:::radius_server:::inet:::-1:::
+pftb_preferencia_geral:::hosp_server:::inet:::-1:::
+pftb_preferencia_geral:::hosp_ns1:::inet:::-1:::
+pftb_preferencia_geral:::hosp_ns2:::inet:::-1:::
+pftb_preferencia_geral:::hosp_uid:::int4:::4:::
+pftb_preferencia_geral:::hosp_gid:::int4:::4:::
+pftb_preferencia_geral:::mail_server:::inet:::-1:::
+pftb_preferencia_geral:::mail_uid:::int4:::4:::
+pftb_preferencia_geral:::mail_gid:::int4:::4:::
+pftb_preferencia_geral:::pop_host:::varchar:::-1:::
+pftb_preferencia_geral:::smtp_host:::varchar:::-1:::
+pftb_preferencia_geral:::hosp_base:::varchar:::-1:::
+pftb_preferencia_geral:::agrupar:::int2:::2:::
+pftb_preferencia_geral:::email_base:::varchar:::-1:::
 pftb_preferencia_monitoracao:::id_provedor:::int2:::2:::not_null primary_key
 pftb_preferencia_monitoracao:::emails:::text:::-1:::
 pftb_preferencia_monitoracao:::exibir_monitor:::bool:::1:::
@@ -469,17 +160,355 @@ pftb_preferencia_monitoracao:::alerta_sonoro:::bool:::1:::
 pftb_preferencia_monitoracao:::celular:::bool:::1:::
 pftb_preferencia_monitoracao:::nro_celular:::int2:::2:::
 pftb_preferencia_monitoracao:::num_pings:::int4:::4:::
+pftb_preferencia_provedor:::id_provedor:::int2:::2:::not_null primary_key
+pftb_preferencia_provedor:::endereco:::varchar:::-1:::
+pftb_preferencia_provedor:::localidade:::varchar:::-1:::
+pftb_preferencia_provedor:::cep:::varchar:::-1:::
+pftb_preferencia_provedor:::cnpj:::bpchar:::-1:::
+pftb_preferencia_provedor:::fone:::varchar:::-1:::
+rdtb_accounting:::session_id:::varchar:::-1:::not_null primary_key multiple_key multiple_key
+rdtb_accounting:::username:::varchar:::-1:::multiple_key multiple_key
+rdtb_accounting:::login:::timestamp:::8:::default_now%28%29 multiple_key multiple_key multiple_key
+rdtb_accounting:::logout:::timestamp:::8:::multiple_key multiple_key
+rdtb_accounting:::tempo:::numeric:::-1:::
+rdtb_accounting:::caller_id:::varchar:::-1:::
+rdtb_accounting:::nas:::varchar:::-1:::
+rdtb_accounting:::framed_ip_address:::varchar:::-1:::
+rdtb_accounting:::terminate_cause:::varchar:::-1:::
+rdtb_accounting:::bytes_in:::numeric:::-1:::
+rdtb_accounting:::bytes_out:::numeric:::-1:::
+rdtb_log:::id_log:::int4:::4:::not_null default_nextval%28rdtb_log_id_log%29 primary_key
+rdtb_log:::datahora:::timestamp:::8:::default_now%28%29
+rdtb_log:::tipo:::varchar:::-1:::
+rdtb_log:::username:::varchar:::-1:::
+rdtb_log:::mensagem:::text:::-1:::
+rdtb_log:::caller_id:::varchar:::-1:::
+sptb_spool:::id_spool:::int4:::4:::not_null default_nextval%28sptb_spool_id_spool_seq%29 primary_key
+sptb_spool:::registro:::timestamp:::8:::default_now%28%29
+sptb_spool:::execucao:::timestamp:::8:::
+sptb_spool:::destino:::varchar:::-1:::
+sptb_spool:::tipo:::varchar:::-1:::not_null
+sptb_spool:::op:::bpchar:::-1:::
+sptb_spool:::id_conta:::int2:::2:::
+sptb_spool:::parametros:::text:::-1:::
+sptb_spool:::status:::varchar:::-1:::not_null
+sptb_spool:::cod_erro:::int2:::2:::
+adtb_usuario_privilegio:::id_admin:::int2:::2:::not_null primary_key multiple_key
+adtb_usuario_privilegio:::id_priv:::int2:::2:::not_null primary_key multiple_key
+adtb_usuario_privilegio:::pode_gravar:::bool:::1:::
+adtb_privilegio:::id_priv:::int2:::2:::not_null primary_key
+adtb_privilegio:::cod_priv:::varchar:::-1:::unique_key
+adtb_privilegio:::nome:::varchar:::-1:::
+bktb_arquivos:::id_backup:::int4:::4:::not_null
+bktb_arquivos:::data_backup:::date:::4:::
+bktb_arquivos:::tipo_backup:::varchar:::-1:::
+bktb_arquivos:::arquivo_backup:::varchar:::-1:::
+bktb_arquivos:::status_backup:::varchar:::-1:::
+bktb_backup:::id_backup:::int4:::4:::not_null default_nextval%28bktb_backup_id_backup_seq%29 primary_key
+bktb_backup:::data_backup:::date:::4:::
+bktb_backup:::status_backup:::varchar:::-1:::
+bktb_backup:::admin:::int2:::2:::
+bktb_backup:::operador_backup:::varchar:::-1:::
+bktb_backup:::data:::timestamp:::8:::default_now%28%29
+cftb_forma_pagamento:::id_cobranca:::int2:::2:::not_null primary_key
+cftb_forma_pagamento:::nome_cobranca:::varchar:::-1:::
+cftb_forma_pagamento:::disponivel:::bool:::1:::
+cbtb_carne:::id_carne:::int2:::2:::not_null primary_key
+cbtb_carne:::data_geracao:::date:::4:::
+cbtb_carne:::status:::varchar:::-1:::default_A%20varying
+cbtb_carne:::id_cliente_produto:::int2:::2:::
+cbtb_carne:::valor:::numeric:::-1:::
+cbtb_carne:::vigencia:::int2:::2:::
+cbtb_carne:::id_cliente:::int2:::2:::
+cbtb_contrato:::id_cliente_produto:::int2:::2:::not_null primary_key
+cbtb_contrato:::data_contratacao:::date:::4:::
+cbtb_contrato:::vigencia:::int2:::2:::
+cbtb_contrato:::data_renovacao:::date:::4:::
+cbtb_contrato:::valor_contrato:::numeric:::-1:::
+cbtb_contrato:::id_cobranca:::int2:::2:::not_null
+cbtb_contrato:::status:::bpchar:::-1:::
+cbtb_contrato:::tipo_produto:::bpchar:::-1:::
+cbtb_contrato:::valor_produto:::numeric:::-1:::
+cbtb_contrato:::num_emails:::int2:::2:::
+cbtb_contrato:::quota_por_conta:::int4:::4:::
+cbtb_contrato:::tx_instalacao:::numeric:::-1:::
+cbtb_contrato:::comodato:::bool:::1:::
+cbtb_contrato:::valor_comodato:::numeric:::-1:::
+cbtb_contrato:::desconto_promo:::numeric:::-1:::
+cbtb_contrato:::periodo_desconto:::int2:::2:::
+cbtb_contrato:::hosp_dominio:::bool:::1:::
+cbtb_contrato:::hosp_franquia_em_mb:::int2:::2:::
+cbtb_contrato:::hosp_valor_mb_adicional:::numeric:::-1:::
+cbtb_contrato:::disc_franquia_horas:::int2:::2:::
+cbtb_contrato:::disc_permitir_duplicidade:::bool:::1:::
+cbtb_contrato:::disc_valor_hora_adicional:::numeric:::-1:::
+cbtb_contrato:::bl_banda_upload_kbps:::int2:::2:::
+cbtb_contrato:::bl_banda_download_kbps:::int2:::2:::
+cbtb_contrato:::bl_franquia_trafego_mensal_gb:::int2:::2:::
+cbtb_contrato:::bl_valor_trafego_adicional_gb:::numeric:::-1:::
+cbtb_contrato:::cod_banco:::int2:::2:::
+cbtb_contrato:::carteira:::varchar:::-1:::
+cbtb_contrato:::agencia:::int4:::4:::
+cbtb_contrato:::num_conta:::int4:::4:::
+cbtb_contrato:::convenio:::int4:::4:::
+cbtb_contrato:::cc_vencimento:::varchar:::-1:::
+cbtb_contrato:::cc_numero:::varchar:::-1:::
+cbtb_contrato:::cc_operadora:::bpchar:::-1:::
+cbtb_contrato:::db_banco:::int2:::2:::
+cbtb_contrato:::db_agencia:::int2:::2:::
+cbtb_contrato:::db_conta:::int2:::2:::
+cbtb_contrato:::vencimento:::int2:::2:::
+cbtb_contrato:::carencia:::int2:::2:::
+cbtb_contrato:::data_alt_status:::date:::4:::
+cbtb_contrato:::id_produto:::int2:::2:::
+cftb_uf:::uf:::bpchar:::-1:::not_null primary_key
+cftb_uf:::estado:::varchar:::-1:::
+cftb_nas_rede:::rede:::cidr:::-1:::not_null primary_key multiple_key
+cftb_nas_rede:::id_nas:::int2:::2:::not_null primary_key multiple_key
+cftb_cidade:::id_cidade:::int2:::2:::not_null primary_key
+cftb_cidade:::uf:::bpchar:::-1:::not_null
+cftb_cidade:::cidade:::varchar:::-1:::
+cftb_cidade:::disponivel:::bool:::1:::default_false
+cftb_ip_externo:::ip_externo:::inet:::-1:::not_null primary_key
+cftb_ip_externo:::id_nas:::int2:::2:::not_null
+cftb_ip:::ipaddr:::inet:::-1:::not_null primary_key
+cftb_rede:::rede:::cidr:::-1:::not_null primary_key
+cftb_rede:::tipo_rede:::bpchar:::-1:::
+cftb_rede:::id_rede:::int2:::2:::
+cntb_conta_bandalarga:::username:::varchar:::-1:::not_null primary_key multiple_key
+cntb_conta_bandalarga:::tipo_conta:::varchar:::-1:::not_null primary_key multiple_key
+cntb_conta_bandalarga:::dominio:::varchar:::-1:::not_null primary_key multiple_key
+cntb_conta_bandalarga:::id_pop:::int2:::2:::not_null
+cntb_conta_bandalarga:::tipo_bandalarga:::bpchar:::-1:::
+cntb_conta_bandalarga:::ipaddr:::inet:::-1:::
+cntb_conta_bandalarga:::rede:::cidr:::-1:::
+cntb_conta_bandalarga:::upload_kbps:::int2:::2:::
+cntb_conta_bandalarga:::download_kbps:::int2:::2:::
+cntb_conta_bandalarga:::status:::bpchar:::-1:::
+cntb_conta_bandalarga:::mac:::macaddr:::6:::
+cntb_conta_bandalarga:::id_nas:::int2:::2:::not_null
+cntb_conta_bandalarga:::ip_externo:::inet:::-1:::
+cntb_conta_discado:::username:::varchar:::-1:::not_null primary_key multiple_key
+cntb_conta_discado:::tipo_conta:::varchar:::-1:::not_null primary_key multiple_key
+cntb_conta_discado:::dominio:::varchar:::-1:::not_null primary_key multiple_key
+cntb_conta_discado:::foneinfo:::varchar:::-1:::
+cntb_conta_email:::username:::varchar:::-1:::not_null primary_key multiple_key
+cntb_conta_email:::tipo_conta:::varchar:::-1:::not_null primary_key multiple_key
+cntb_conta_email:::dominio:::varchar:::-1:::not_null primary_key multiple_key
+cntb_conta_email:::quota:::int4:::4:::
+cntb_conta_email:::email:::varchar:::-1:::
+cntb_conta_hospedagem:::username:::varchar:::-1:::not_null primary_key multiple_key
+cntb_conta_hospedagem:::tipo_conta:::varchar:::-1:::not_null primary_key multiple_key
+cntb_conta_hospedagem:::dominio:::varchar:::-1:::not_null primary_key multiple_key
+cntb_conta_hospedagem:::tipo_hospedagem:::bpchar:::-1:::
+cntb_conta_hospedagem:::senha_cript:::varchar:::-1:::
+cntb_conta_hospedagem:::uid:::int4:::4:::
+cntb_conta_hospedagem:::gid:::int4:::4:::
+cntb_conta_hospedagem:::home:::varchar:::-1:::
+cntb_conta_hospedagem:::shell:::varchar:::-1:::
+cntb_conta_hospedagem:::dominio_hospedagem:::varchar:::-1:::
+dominio:::dominio:::varchar:::-1:::not_null primary_key
+dominio:::id_cliente:::int2:::2:::
+dominio:::provedor:::bool:::1:::default_false
+dominio:::status:::bpchar:::-1:::
+dominio:::dominio_provedor:::bool:::1:::
+cltb_cliente:::id_cliente:::int2:::2:::not_null primary_key
+cltb_cliente:::data_cadastro:::date:::4:::
+cltb_cliente:::nome_razao:::varchar:::-1:::
+cltb_cliente:::tipo_pessoa:::bpchar:::-1:::
+cltb_cliente:::rg_inscr:::varchar:::-1:::
+cltb_cliente:::rg_expedicao:::varchar:::-1:::
+cltb_cliente:::cpf_cnpj:::varchar:::-1:::
+cltb_cliente:::email:::varchar:::-1:::
+cltb_cliente:::endereco:::varchar:::-1:::
+cltb_cliente:::complemento:::varchar:::-1:::
+cltb_cliente:::id_cidade:::int2:::2:::
+cltb_cliente:::cidade:::varchar:::-1:::
+cltb_cliente:::estado:::bpchar:::-1:::
+cltb_cliente:::cep:::bpchar:::-1:::
+cltb_cliente:::bairro:::varchar:::-1:::
+cltb_cliente:::fone_comercial:::varchar:::-1:::
+cltb_cliente:::fone_residencial:::varchar:::-1:::
+cltb_cliente:::fone_celular:::varchar:::-1:::
+cltb_cliente:::contato:::varchar:::-1:::
+cltb_cliente:::banco:::varchar:::-1:::
+cltb_cliente:::conta_corrente:::varchar:::-1:::
+cltb_cliente:::agencia:::varchar:::-1:::
+cltb_cliente:::dia_pagamento:::int2:::2:::
+cltb_cliente:::ativo:::bool:::1:::
+cltb_cliente:::obs:::text:::-1:::
+cltb_cliente:::provedor:::bool:::1:::default_false
+cltb_cliente:::excluido:::bool:::1:::default_false
+cltb_cliente:::info_cobranca:::bool:::1:::default_false
+lgtb_administradores:::id_admin:::int2:::2:::not_null
+lgtb_administradores:::data:::timestamp:::8:::default_now%28%29
+lgtb_administradores:::operacao:::varchar:::-1:::
+lgtb_administradores:::valor_original:::varchar:::-1:::
+lgtb_administradores:::valor_alterado:::varchar:::-1:::
+lgtb_administradores:::username:::varchar:::-1:::
+lgtb_administradores:::id_fatura:::int2:::2:::
+lgtb_administradores:::tipo_conta:::varchar:::-1:::
+lgtb_administradores:::ip:::inet:::-1:::
+lgtb_administradores:::id_cliente_produto:::int2:::2:::
+lgtb_administradores:::extras:::varchar:::-1:::
+adtb_admin:::id_admin:::int2:::2:::not_null primary_key
+adtb_admin:::admin:::varchar:::-1:::not_null unique_key
+adtb_admin:::senha:::varchar:::-1:::not_null
+adtb_admin:::status:::bpchar:::-1:::
+adtb_admin:::nome:::varchar:::-1:::
+adtb_admin:::email:::varchar:::-1:::unique_key
+adtb_admin:::primeiro_login:::bool:::1:::
+lgtb_bloqueio_automatizado:::id_processo:::int2:::2:::not_null primary_key
+lgtb_bloqueio_automatizado:::id_cliente_produto:::int2:::2:::not_null
+lgtb_bloqueio_automatizado:::data_hora:::timestamp:::8:::not_null default_now%28%29
+lgtb_bloqueio_automatizado:::tipo:::varchar:::-1:::not_null
+lgtb_bloqueio_automatizado:::admin:::varchar:::-1:::
+lgtb_bloqueio_automatizado:::auto_obs:::varchar:::-1:::
+lgtb_bloqueio_automatizado:::admin_obs:::text:::-1:::
+lgtb_reagendamento:::id_reagendamento:::int4:::4:::not_null default_nextval%28lgtb_reagendamento_id_reagendamento_seq%29 primary_key
+lgtb_reagendamento:::id_cliente_produto:::int2:::2:::not_null
+lgtb_reagendamento:::data:::date:::4:::not_null
+lgtb_reagendamento:::admin:::int2:::2:::
+lgtb_reagendamento:::data_reagendamento:::date:::4:::default_now%28%29
+lgtb_reagendamento:::data_para_reagendamento:::date:::4:::
+cbtb_faturas:::id_cliente_produto:::int2:::2:::not_null primary_key multiple_key
+cbtb_faturas:::data:::date:::4:::not_null primary_key multiple_key
+cbtb_faturas:::descricao:::text:::-1:::
+cbtb_faturas:::valor:::numeric:::-1:::not_null
+cbtb_faturas:::status:::varchar:::-1:::
+cbtb_faturas:::observacoes:::text:::-1:::
+cbtb_faturas:::reagendamento:::date:::4:::
+cbtb_faturas:::pagto_parcial:::numeric:::-1:::
+cbtb_faturas:::data_pagamento:::date:::4:::
+cbtb_faturas:::desconto:::numeric:::-1:::
+cbtb_faturas:::acrescimo:::numeric:::-1:::
+cbtb_faturas:::valor_pago:::numeric:::-1:::
+cbtb_faturas:::id_cobranca:::int4:::4:::not_null default_nextval%28cbtb_faturas_id_cobranca_seq%29
+cbtb_faturas:::cod_barra:::varchar:::-1:::unique_key
+cbtb_faturas:::anterior:::bool:::1:::default_false
+cbtb_faturas:::id_carne:::int2:::2:::
+cbtb_faturas:::nosso_numero:::varchar:::-1:::
+cbtb_faturas:::linha_digitavel:::varchar:::-1:::
+cbtb_faturas:::nosso_numero_banco:::numeric:::-1:::
+cbtb_faturas:::tipo_retorno:::int4:::4:::
+cbtb_faturas:::email_aviso:::bool:::1:::default_false
+lgtb_retorno_faturas:::nsr:::int4:::4:::
+lgtb_retorno_faturas:::data_pagamento:::date:::4:::
+lgtb_retorno_faturas:::data_credito:::date:::4:::
+lgtb_retorno_faturas:::valor_recebido:::numeric:::-1:::
+lgtb_retorno_faturas:::codigo_barras:::varchar:::-1:::
+lgtb_retorno_faturas:::valor_tarifa:::numeric:::-1:::
+lgtb_retorno_faturas:::status:::bpchar:::-1:::
+lgtb_retorno_faturas:::id_arquivo:::int4:::4:::not_null
+lgtb_retorno_faturas:::motivo:::varchar:::-1:::
+lgtb_retorno_faturas:::agencia:::int4:::4:::
+lgtb_retorno_faturas:::dv_agencia:::int4:::4:::
+lgtb_retorno_faturas:::cedente:::int4:::4:::
+lgtb_retorno_faturas:::dv_cedente:::int4:::4:::
+lgtb_retorno_faturas:::convenente:::int4:::4:::
+lgtb_retorno_faturas:::nome_empresa:::varchar:::-1:::
+lgtb_retorno_faturas:::seq_retorno:::int4:::4:::
+lgtb_retorno:::id_arquivo:::int4:::4:::not_null default_nextval%28lgtb_retorno_id_arquivo_seq%29 primary_key
+lgtb_retorno:::nome_arquivo:::varchar:::-1:::
+lgtb_retorno:::tamanho:::int2:::2:::
+lgtb_retorno:::data:::timestamp:::8:::
+lgtb_retorno:::qtde_registros:::int2:::2:::
+lgtb_retorno:::status:::bpchar:::-1:::
+lgtb_retorno:::nra:::bpchar:::-1:::
+lgtb_retorno:::nrpr:::bpchar:::-1:::
+lgtb_retorno:::nrsc:::bpchar:::-1:::
+lgtb_retorno:::nrpe:::bpchar:::-1:::
+lgtb_retorno:::admin:::varchar:::-1:::
+lgtb_retorno:::tipo_retorno:::varchar:::-1:::
+lgtb_retorno:::agencia:::int4:::4:::
+lgtb_retorno:::dv_agencia:::int4:::4:::
+lgtb_retorno:::cedente:::int4:::4:::
+lgtb_retorno:::dv_cedente:::int4:::4:::
+lgtb_retorno:::convenente:::int4:::4:::
+lgtb_retorno:::nome_empresa:::varchar:::-1:::
+lgtb_retorno:::seq_retorno:::int4:::4:::
+prtb_produto_bandalarga:::id_produto:::int2:::2:::not_null primary_key
+prtb_produto_bandalarga:::banda_upload_kbps:::int2:::2:::
+prtb_produto_bandalarga:::banda_download_kbps:::int2:::2:::
+prtb_produto_bandalarga:::franquia_trafego_mensal_gb:::int2:::2:::
+prtb_produto_bandalarga:::valor_trafego_adicional_gb:::numeric:::-1:::
+prtb_produto_bandalarga:::roteado:::bool:::1:::
+prtb_produto_discado:::id_produto:::int2:::2:::not_null primary_key
+prtb_produto_discado:::franquia_horas:::int2:::2:::
+prtb_produto_discado:::permitir_duplicidade:::bool:::1:::default_false
+prtb_produto_discado:::valor_hora_adicional:::numeric:::-1:::
+prtb_produto_hospedagem:::id_produto:::int2:::2:::not_null primary_key
+prtb_produto_hospedagem:::dominio:::bool:::1:::
+prtb_produto_hospedagem:::franquia_em_mb:::int2:::2:::
+prtb_produto_hospedagem:::valor_mb_adicional:::numeric:::-1:::
+prtb_produto:::id_produto:::int2:::2:::not_null primary_key
+prtb_produto:::nome:::varchar:::-1:::
+prtb_produto:::descricao:::text:::-1:::
+prtb_produto:::tipo:::bpchar:::-1:::
+prtb_produto:::valor:::numeric:::-1:::
+prtb_produto:::disponivel:::bool:::1:::
+prtb_produto:::num_emails:::int2:::2:::
+prtb_produto:::quota_por_conta:::int4:::4:::
+prtb_produto:::vl_email_adicional:::numeric:::-1:::
+prtb_produto:::permitir_outros_dominios:::bool:::1:::
+prtb_produto:::email_anexado:::bool:::1:::
+prtb_produto:::numero_contas:::int2:::2:::
+prtb_produto:::comodato:::bool:::1:::
+prtb_produto:::valor_comodato:::numeric:::-1:::
+prtb_produto:::desconto_promo:::numeric:::-1:::
+prtb_produto:::periodo_desconto:::int2:::2:::
+prtb_produto:::tx_instalacao:::numeric:::-1:::
 sttb_pop_status:::id_pop:::int2:::2:::not_null primary_key
-sttb_pop_status:::min_ping:::varchar:::-1:::
-sttb_pop_status:::max_ping:::varchar:::-1:::
-sttb_pop_status:::media_ping:::varchar:::-1:::
+sttb_pop_status:::min_ping:::int4:::4:::
+sttb_pop_status:::max_ping:::int4:::4:::
+sttb_pop_status:::media_ping:::int4:::4:::
 sttb_pop_status:::num_perdas:::int4:::4:::
-sttb_pop_status:::num_ping:::int4:::4:::
 sttb_pop_status:::status:::varchar:::-1:::
 sttb_pop_status:::num_erros:::int4:::4:::
+sttb_pop_status:::num_ping:::int4:::4:::
 sttb_pop_status:::laststats:::timestamp:::8:::default_now%28%29
-cftb_links:::id_link:::int4:::4:::not_null default_nextval%28cftb_links_id_link_seq%29 primary_key
-cftb_links:::titulo:::varchar:::-1:::
-cftb_links:::url:::varchar:::-1:::
-cftb_links:::target:::varchar:::-1:::
-cftb_links:::descricao:::text:::-1:::
+cftb_pop:::id_pop:::int2:::2:::not_null primary_key
+cftb_pop:::nome:::varchar:::-1:::not_null
+cftb_pop:::info:::text:::-1:::
+cftb_pop:::tipo:::varchar:::-1:::
+cftb_pop:::id_pop_ap:::int2:::2:::
+cftb_pop:::status:::bpchar:::-1:::default_A
+cftb_pop:::ipaddr:::inet:::-1:::
+cftb_pop:::snmp_rw_com:::varchar:::-1:::
+cftb_pop:::infoserver:::varchar:::-1:::
+cftb_pop:::snmp_versao:::varchar:::-1:::
+cftb_pop:::snmp_ro_com:::varchar:::-1:::
+cftb_pop:::ativar_snmp:::varchar:::-1:::
+cftb_pop:::ativar_monitoramento:::bool:::1:::default_false
+cbtb_cliente_produto:::id_cliente_produto:::int2:::2:::not_null primary_key
+cbtb_cliente_produto:::id_cliente:::int2:::2:::not_null
+cbtb_cliente_produto:::id_produto:::int2:::2:::not_null
+cbtb_cliente_produto:::dominio:::varchar:::-1:::
+cbtb_cliente_produto:::excluido:::bool:::1:::default_false
+lgtb_status_conta:::id_processo:::int4:::4:::not_null default_nextval%28lgtb_status_conta_id_processo_seq%29 primary_key
+lgtb_status_conta:::id_cliente_produto:::int2:::2:::not_null
+lgtb_status_conta:::username:::varchar:::-1:::not_null
+lgtb_status_conta:::dominio:::varchar:::-1:::not_null
+lgtb_status_conta:::tipo_conta:::varchar:::-1:::not_null
+lgtb_status_conta:::data_hora:::timestamp:::8:::
+lgtb_status_conta:::id_admin:::int2:::2:::
+lgtb_status_conta:::ip_admin:::inet:::-1:::
+lgtb_status_conta:::operacao:::varchar:::-1:::
+cntb_conta:::username:::varchar:::-1:::not_null primary_key multiple_key
+cntb_conta:::dominio:::varchar:::-1:::not_null primary_key multiple_key
+cntb_conta:::tipo_conta:::varchar:::-1:::not_null primary_key multiple_key
+cntb_conta:::senha:::varchar:::-1:::
+cntb_conta:::id_cliente:::int2:::2:::
+cntb_conta:::id_cliente_produto:::int2:::2:::not_null
+cntb_conta:::id_conta:::int2:::2:::unique_key
+cntb_conta:::senha_cript:::varchar:::-1:::
+cntb_conta:::conta_mestre:::bool:::1:::default_true
+cntb_conta:::status:::bpchar:::-1:::default_A
+cntb_conta:::observacoes:::text:::-1:::
+cftb_nas:::id_nas:::int2:::2:::not_null primary_key
+cftb_nas:::nome:::varchar:::-1:::not_null
+cftb_nas:::ip:::inet:::-1:::not_null
+cftb_nas:::secret:::varchar:::-1:::
+cftb_nas:::tipo_nas:::bpchar:::-1:::
+cftb_nas:::infoserver:::varchar:::-1:::
+cftb_nas:::padrao:::bpchar:::-1:::
