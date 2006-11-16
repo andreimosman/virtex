@@ -16,7 +16,7 @@ class VAConfiguracao extends VirtexAdmin {
 	 protected function obtemListaPOPs($id_pop="",$nivel=0) {
 
 	   $sSQL  = "SELECT ";
-	   $sSQL .= "   id_pop, nome, info, tipo , id_pop_ap , status, ipaddr, infoserver, snmp_versao, snmp_ro_com, snmp_rw_com, ativar_snmp  ";
+	   $sSQL .= "   id_pop, nome, info, tipo , id_pop_ap , status, ipaddr, infoserver, snmp_versao, snmp_ro_com, snmp_rw_com, ativar_snmp, ativar_monitoramento  ";
 	   $sSQL .= "FROM ";
 	   $sSQL .= "   cftb_pop ";
 	   $sSQL .= "WHERE ";
@@ -770,7 +770,7 @@ class VAConfiguracao extends VirtexAdmin {
 			
 
 			$tSQL  = "SELECT ";
-			$tSQL .= "   id_pop, nome, info, tipo, id_pop_ap, status, ipaddr, infoserver, snmp_versao, snmp_ro_com, snmp_rw_com, ativar_snmp ";
+			$tSQL .= "   id_pop, nome, info, tipo, id_pop_ap, status, ipaddr, infoserver, snmp_versao, snmp_ro_com, snmp_rw_com, ativar_snmp, ativar_monitoramento ";
 			$tSQL .= "FROM cftb_pop ";
 			$tSQL .= "WHERE tipo = 'AP' AND status != 'D' ";
 			$tSQL .= "ORDER BY nome ";
@@ -848,7 +848,7 @@ class VAConfiguracao extends VirtexAdmin {
 
 					// SELECT
 					$sSQL  = "SELECT ";
-					$sSQL .= "   id_pop, nome, ipaddr, info, tipo, id_pop_ap, status, infoserver, snmp_versao, snmp_ro_com, snmp_rw_com, ativar_snmp ";
+					$sSQL .= "   id_pop, nome, ipaddr, info, tipo, id_pop_ap, status, infoserver, snmp_versao, snmp_ro_com, snmp_rw_com, ativar_snmp, ativar_monitoramento ";
 					$sSQL .= "FROM cftb_pop ";
 					$sSQL .= "WHERE id_pop = '$id_pop' AND status != 'D' ";
 					$reg = $this->bd->obtemUnicoRegistro($sSQL);
@@ -858,6 +858,7 @@ class VAConfiguracao extends VirtexAdmin {
 					$this->tpl->atribui("snmp_versao",$reg["snmp_versao"]);
 					$this->tpl->atribui("snmp_ro_com",$reg["snmp_ro_com"]);
 					$this->tpl->atribui("snmp_rw_com",$reg["snmp_rw_com"]);
+					$this->tpl->atribui("ativar_monitoramento", $reg['ativar_monitoramento']);
 					$this->tpl->atribui("infoserver",$reg["infoserver"]);
 
 					$sSQL = "SELECT count(id_pop) as qtde_cli_pop FROM cntb_conta_bandalarga WHERE id_pop = '$id_pop' ";
@@ -915,7 +916,7 @@ class VAConfiguracao extends VirtexAdmin {
 
 					$sSQL  = "INSERT INTO ";
 					$sSQL .= "   cftb_pop( ";
-					$sSQL .= "      id_pop, nome, info, tipo, id_pop_ap, status, ipaddr, infoserver, snmp_versao, snmp_ro_com, snmp_rw_com, ativar_snmp) ";
+					$sSQL .= "      id_pop, nome, info, tipo, id_pop_ap, status, ipaddr, infoserver, snmp_versao, snmp_ro_com, snmp_rw_com, ativar_snmp, ativar_monitoramento) ";
 					$sSQL .= "   VALUES (";
 					$sSQL .= "     '" . $this->bd->escape($id_pop) . "', ";
 					$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["nome"]) . "', ";
@@ -940,7 +941,8 @@ class VAConfiguracao extends VirtexAdmin {
 					$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["snmp_versao"]) . "', ";
 					$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["snmp_ro_com"]) . "', ";
 					$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["snmp_rw_com"]) . "', ";
-					$sSQL .= "     '$ativar_snmp' ";
+					$sSQL .= "     '$ativar_snmp', ";
+					$sSQL .= "	   '" . $this->bd->escape(@$_REQUEST["ativar_monitoramento"]) . "' ";
 					$sSQL .= "     )";
 					///echo $sSQL;
 
@@ -954,7 +956,9 @@ class VAConfiguracao extends VirtexAdmin {
 					$ip = @$_REQUEST["ip"];
 						
 					$ativar_snmp = @$_REQUEST["snmp"];
+					$ativar_monitoramento = @$_REQUEST["ativar_monitoramento"];
 					
+					///valor para boolean snmp
 					if ($ativar_snmp == "" ){
 					
 						$ativar_snmp = 'f' ;
@@ -964,7 +968,17 @@ class VAConfiguracao extends VirtexAdmin {
 						$ativar_snmp = 't';
 					
 					}
-						
+					
+					///valor para boolean monitoramento
+					if ($ativar_monitoramento == "" ){
+					
+						$ativar_monitoramento = 'f' ;
+					
+					}else{
+					
+						$ativar_monitoramento  = 't';
+					
+					}
 					
 					$sSQL  = "UPDATE ";
 					$sSQL .= "   cftb_pop ";
@@ -976,6 +990,7 @@ class VAConfiguracao extends VirtexAdmin {
 					$sSQL .= "	 snmp_ro_com = '" . $this->bd->escape(@$_REQUEST["snmp_ro_com"]) . "', ";
 					$sSQL .= "	 snmp_rw_com = '" . $this->bd->escape(@$_REQUEST["snmp_rw_com"]) . "', ";
 					$sSQL .= "   tipo = '" . $this->bd->escape(@$_REQUEST["tipo"]) . "', ";
+					$sSQL .= " 	 ativar_monitoramento =  '$ativar_monitoramento'	 , ";
 					$sSQL .= "   infoserver = '" . $this->bd->escape(@$_REQUEST["infoserver"]) . "', ";
 					
 					////echo $sSQL ;
