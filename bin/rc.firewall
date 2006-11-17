@@ -60,3 +60,7 @@ ipfw add 9000 deny ip from 172.16.0.0/12 to 192.168.0.0/16
 ipfw add 9000 deny ip from 192.168.0.0/16 to 10.0.0.0/8
 ipfw add 9000 deny ip from 192.168.0.0/16 to 172.16.0.0/12
 ipfw add 9000 deny ip from 192.168.0.0/16 to 192.168.0.0/16
+
+if [ -f /mosman/virtex/app/etc/rc.firewall.local ] ; then
+	. /mosman/virtex/app/etc/rc.firewall.local
+fi

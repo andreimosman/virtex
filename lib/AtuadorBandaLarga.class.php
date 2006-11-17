@@ -259,7 +259,7 @@
 			}
 			
 			// Este NAS não deveria estar chamando desta máquina. Não está habilitado ou configurado;
-			if( !$int_if ) return;
+			if( $tipo_nas == "TCPIP" && !$int_if ) return;
 			
 			switch($op) {
 				
