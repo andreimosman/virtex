@@ -135,33 +135,39 @@
 						  <tr>
 							<td><table width="550" border="0" cellspacing="0" cellpadding="0">
 								<tr>
-								  <td bgcolor="#F1F1F1"><table width="550" border="0" cellspacing="2" cellpadding="0">
-									  <tr>
-									  	<td width="80" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Data</font></td>
-										<td width="120" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Valor Documento</font></td>
-										<td width="100" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Acrescimo</font></td>
-										<td width="100" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Desconto</font></td>
-										<td width="100" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Faturamento</font></td>
-									  </tr>
-									</table></td>
+								  <td bgcolor="#F1F1F1"><table width="650" border="0" cellspacing="2" cellpadding="0">
+                                <tr> 
+                                  <td width="80" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Data</font></td>
+                                  <td width="120" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Valor 
+                                    Documento</font></td>
+                                  <td width="100" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Acrescimo</font></td>
+                                  <td width="100" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Desconto</font></td>
+                                  <td width="100" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">Faturamento</font></td>
+                                  <td width="100" align="RIGHT"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Subtotal</font></td>
+                                </tr>
+                              </table></td>
 								</tr>
 								<tr>
 								  <td>
-
+									{assign var="subtotal" value="0.00"}
 								{foreach item=a from=$relat}
-								  <table width="550" border="0" cellspacing="2" cellpadding="0">
-									  <tr>
-										<td width="80" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><p><a href="cobranca.php?op={$op}&acao=sub_dia&periodo={$a.ano}-{$a.mes}-{$a.dia}">{$a.dia}-{$a.mes}-{$a.ano}</a></p></font></td>
-										<td width="120" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><a href="cobranca.php?op={$op}&acao=sub_dia&periodo={$a.ano}-{$a.mes}-{$a.dia}">{$a.valor}</a></font></td>
-										<td width="100" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><a href="cobranca.php?op={$op}&acao=sub_dia&periodo={$a.ano}-{$a.mes}-{$a.dia}">{$a.acrescimo}</a></font></td>
-										<td width="100" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><a href="cobranca.php?op={$op}&acao=sub_dia&periodo={$a.ano}-{$a.mes}-{$a.dia}">{$a.desconto}</a></font></td>
-										<td align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><a href="cobranca.php?op={$op}&acao=sub_dia&periodo={$a.ano}-{$a.mes}-{$a.dia}">{$a.faturamento}</a></font></td>
-
-									  </tr>
-									  <tr bgcolor="#999999">
-									  	<td colspan="5" height="1"></td>
-									  </tr>
-								  </table>
+								  
+                              <table width="650" border="0" cellspacing="2" cellpadding="0">
+                                <tr> 
+                                  <td width="80" align="CENTER"><font face="Verdana, Arial, Helvetica, sans-serif" size="2">
+                                    <p><a href="cobranca.php?op={$op}&acao=sub_dia&periodo={$a.ano}-{$a.mes}-{$a.dia}">{$a.dia}-{$a.mes}-{$a.ano}</a></p>
+                                    </font></td>
+                                  <td width="120" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><a href="cobranca.php?op={$op}&acao=sub_dia&periodo={$a.ano}-{$a.mes}-{$a.dia}">{$a.valor}</a></font></td>
+                                  <td width="100" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><a href="cobranca.php?op={$op}&acao=sub_dia&periodo={$a.ano}-{$a.mes}-{$a.dia}">{$a.acrescimo}</a></font></td>
+                                  <td width="100" align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><a href="cobranca.php?op={$op}&acao=sub_dia&periodo={$a.ano}-{$a.mes}-{$a.dia}">{$a.desconto}</a></font></td>
+                                  <td align="RIGHT"><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><a href="cobranca.php?op={$op}&acao=sub_dia&periodo={$a.ano}-{$a.mes}-{$a.dia}">{$a.faturamento}</a></font></td>
+                                  <td width="100" align="RIGHT"><p><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{assign 
+                                      var="subtotal" value=$subtotal+$a.faturamento}{math equation="x*1" x=$subtotal format="%.2f"}</font></p></td>
+                                </tr>
+                                <tr bgcolor="#999999"> 
+                                  <td colspan="6" height="1"></td>
+                                </tr>
+                              </table>
 								 {/foreach}
 
 								  </td>
@@ -173,8 +179,8 @@
 								  <td>
 
 
-								    <table width="550" border="0" cellspacing="0" cellpadding="1">
-									  <tr bgcolor="#F1F1F1">
+								    <table width="650" border="0" cellspacing="0" cellpadding="1">
+                                <tr bgcolor="#F1F1F1">
 										<td align="LEFT" width="80"><p>Totalização</p></td>
 										<td align="RIGHT" width="120"><p>Estimativa</p></td>
 										<td align="RIGHT" width="100"><p>Acrescimos</p></td>
