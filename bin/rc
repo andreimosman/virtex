@@ -32,7 +32,7 @@ if [ -f /mosman/virtex/app/etc/rc.local ] ; then
 fi
 
 # Starta o PPPoE
-for iface in $( ${PHP} ${VTX_BIN}/vtx-pppoe.php -I ) ; do
+for iface in $( ${PHP} ${VTXBIN}/vtx-pppoe.php -I ) ; do
         echo "/usr/libexec/pppoed -d -P /var/run/pppoe.pid -p '*' -l pppoe-in ${iface}"
 done
 
