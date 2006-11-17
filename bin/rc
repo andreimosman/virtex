@@ -33,7 +33,7 @@ fi
 
 # Starta o PPPoE
 for iface in $( ${PHP} ${VTXBIN}/vtx-pppoe.php -I ) ; do
-        echo "/usr/libexec/pppoed -d -P /var/run/pppoe.pid -p '*' -l pppoe-in ${iface}"
+        /usr/libexec/pppoed -d -P /var/run/pppoe.pid -p '*' -l pppoe-in ${iface}
 done
 
 
