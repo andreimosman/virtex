@@ -2169,12 +2169,18 @@ class VARelatorio extends VirtexAdmin {
 		
 		$ano = @$_REQUEST["ano"];
 		$ano_atual = Date("Y");
-		
+		$metodo = @$_REQUEST["metodo"];
 		
 		
 		if (!$ano ){
 			$ano = $ano_atual;
+			$metodo = "2";
+		}
 		
+		if ($metodo == "1"){
+			$titulo = "Comparativo";		
+		}else{
+			$titulo = "Acumulativo";
 		}
 		
 		$data_inicio = $ano."-01-01";
@@ -2198,7 +2204,7 @@ class VARelatorio extends VirtexAdmin {
 		$sSQL .= "GROUP BY   ";
 		$sSQL .= "ano, mes, dia  ";
 		$sSQL .= "ORDER BY   ";
-		$sSQL .= "ano, mes, dia  ";
+		$sSQL .= "dia, mes, ano  ";
 		
 		$fat = $this->bd->obtemRegistros($sSQL);
 		
@@ -2224,6 +2230,9 @@ class VARelatorio extends VirtexAdmin {
 			//echo $tabela[$i]["1"] . " - " . $tabela[$i]["2"] . " - ". $tabela[$i]["3"] . "<br>\n";
 		}
 		
+		
+		$this->tpl->atribui("metodo",$metodo);
+		$this->tpl->atribui("titulo",$titulo);
 		$this->tpl->atribui("ano",$ano);
 		$this->tpl->atribui("tabela",$tabela);
 		$this->arquivoTemplate = "relatorio_faturamento_periodo.html";

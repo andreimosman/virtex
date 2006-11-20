@@ -67,20 +67,36 @@ if (da && !pr && !mac) with (document) {
               </tr>
               <tr>
                 <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio 
-                    Faturamento Comparativo<br>
+                    Faturamento Anual {$titulo}<br>
                   </h1>
                   <form name="form1" method="post" action="">
-                    <table width="250" border="0" cellspacing="0" cellpadding="0">
-                      <tr>
-                        <td width="100"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Escolha 
+                    <table width="300" border="0" cellspacing="0" cellpadding="0">
+                      <tr> 
+                        <td width="87"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Escolha 
                           o ano:</font></td>
-                        <td width="59"><select name="ano" id="ano">
+                        <td width="59"><select name="ano" id="select">
                             <option value="2005" {if $ano == "2005"}selected{/if}>2005</option>
                             <option value="2006" {if $ano == "2006"}selected{/if}>2006</option>
                             <option value="2007" {if $ano == "2007"}selected{/if}>2007</option>
                             <option value="2008" {if $ano == "2008"}selected{/if}>2008</option>
                           </select></td>
-                        <td width="49"><input type="submit" name="Submit" value="listar">
+                        <td width="98"><table width="100%" cellpadding="0" cellspacing="0">
+                            <tr> 
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <label> 
+                                <input type="radio" name="metodo" value="1" class="checkbox" {if $metodo == "1"}checked{/if}>
+                                Comparativo</label>
+                                </font></td>
+                            </tr>
+                            <tr> 
+                              <td><font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                                <label> 
+                                <input type="radio" name="metodo" value="2" class="checkbox" {if $metodo == "2"}checked{/if}>
+                                Acumulativo</label>
+                                </font></td>
+                            </tr>
+                          </table></td>
+                        <td width="56"><input type="submit" name="Submit" value="listar"> 
                           <input name="op" type="hidden" id="op" value="faturamento_comp"></td>
                       </tr>
                     </table>
@@ -106,6 +122,7 @@ if (da && !pr && !mac) with (document) {
                       <td width="57" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">NOV</font></td>
                       <td width="57" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">DEZ</font></td>
                     </tr>
+				{if $metodo == "2"}
 					{assign var='s1' value=0}
 					{assign var='s2' value=0}
 					{assign var='s3' value=0}
@@ -138,7 +155,31 @@ if (da && !pr && !mac) with (document) {
 					<tr> 
                       <td colspan=13 bgcolor="#000000"><img src="template/default/menu/spacer.gif" width=100 height=1></td>
                     </tr>
-                    {/foreach} 
+					{/foreach} 
+				{else if $metodo == "1"}
+					{foreach key=dia item=fat from=$tabela} 
+                    <tr> 
+                      <td width="30" height="15" align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$dia}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$fat.1|string_format:"%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$fat.2|string_format:"%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$fat.3|string_format:"%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$fat.4|string_format:"%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$fat.5|string_format:"%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$fat.6|string_format:"%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$fat.7|string_format:"%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$fat.8|string_format:"%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$fat.9|string_format:"%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$fat.10|string_format:"%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$fat.11|string_format:"%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$fat.12|string_format:"%.2f"}</font></td>
+
+                    </tr>
+					<tr> 
+                      <td colspan=13 bgcolor="#000000"><img src="template/default/menu/spacer.gif" width=100 height=1></td>
+                    </tr>
+					{/foreach} 
+				{/if}
+                    
                   </table>
                   <h2 align="center"><font size="2"> </font> </h2>
 				  <p><a href="javascript:history.go(-1);">Voltar</a></p>
