@@ -2160,6 +2160,63 @@ class VARelatorio extends VirtexAdmin {
 		
 		$this->arquivoTemplate = "relatorio_clientes_sem_mac.html";
 	
+	}else if ($op == "faturamento_comp"){
+	
+		if( !$this->privPodeGravar("_FATURAMENTO") ) {
+					$this->privMSG();
+					return;
+		}	
+
+		$sSQL  = "SELECT "; 
+		$sSQL .= "SUM(valor_pago) as faturamento, ";
+		$sSQL .= "EXTRACT(day from data_pagamento) as dia, ";  
+		$sSQL .= "EXTRACT(month from data_pagamento) as mes, ";  
+		$sSQL .= "EXTRACT(year from data_pagamento) as ano   ";
+		$sSQL .= "FROM   ";
+		$sSQL .= "cbtb_faturas   ";
+		$sSQL .= "WHERE   ";
+		$sSQL .= "status = 'P' ";
+		$sSQL .= "AND data_pagamento BETWEEN   ";
+		$sSQL .= "CAST( '2006-01-01' as date)  ";
+		$sSQL .= "AND CAST( '2006-12-31' as date )  ";
+		$sSQL .= "GROUP BY   ";
+		$sSQL .= "ano, mes, dia  ";
+		$sSQL .= "ORDER BY   ";
+		$sSQL .= "ano, mes, dia  ";
+		
+		$fat = $this->bd->obtemRegistros($sSQL);
+		
+		$tabela = array();
+		
+		for($i=0;$i<count($fat);$i++) {
+			$tabela[   ((int)$fat[$i]["dia"]) ][   ((int)$fat[$i]["mes"]) ] = $fat[$i]["faturamento"] ;
+			//echo "tabela[".((int)$fat[$i]["dia"])."][".((int)$fat[$i]["mes"]) . "] = " . $fat[$i]["faturamento"] . "<br>\n";
+			//echo "D: " . ((int)$fat[$i]["dia"]) . "<br>\n";
+			//echo "M: " . ((int)$fat[$i]["mes"]) . "<br>\n";
+			//echo "V: " . ((int)$fat[$i]["faturamento"]) . "<br>\n";
+		}
+		
+		for($i=1;$i<=31;$i++) {
+			if( !@$tabela[$i] ) {
+				$tabela[$i]=array();
+			}
+			for($x=1;$x<=12;$x++) {
+				if( !@$tabela[$i][$x] ) {
+					$tabela[$i][$x] = 0;
+				}
+			}
+			//echo $tabela[$i]["1"] . " - " . $tabela[$i]["2"] . " - ". $tabela[$i]["3"] . "<br>\n";
+		}
+		
+		
+		$this->tpl->atribui("tabela",$tabela);
+		$this->arquivoTemplate = "relatorio_faturamento_periodo.html";
+
+		
+	
+	
+	
+	
 	}
 	
 	

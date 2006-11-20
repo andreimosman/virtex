@@ -1,0 +1,136 @@
+<!-- RELATORIO_FATURAMENTO.HTML -->
+<html>
+<head>
+                    <script language="JavaScript">ready = "yes";</script>
+                    <script>
+{literal}
+var estado=false;
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_showHideLayers() { //v6.0
+  var i,p,v,obj,args=MM_showHideLayers.arguments;
+  for (i=0; i<(args.length-2); i+=3) if ((obj=MM_findObj(args[i]))!=null) { v=args[i+2];
+    if (obj.style) { obj=obj.style; v=(v=='show')?'visible':(v=='hide')?'hidden':v; }
+    obj.visibility=v; }
+}
+var da = (document.all) ? 1 : 0;
+var pr = (window.print) ? 1 : 0;
+var mac = (navigator.userAgent.indexOf("Mac") != -1);
+
+function printPage() {
+  if (pr) // NS4, IE5
+    window.print()
+  else if (da && !mac) // IE4 (Windows)
+       vbPrintPage()
+  else // other browsers
+    alert("Desculpe seu browser não suporta esta função. Por favor utilize a barra de trabalho para imprimir a página.");
+}
+
+if (da && !pr && !mac) with (document) {
+  writeln('<OBJECT ID="WB" WIDTH="0" HEIGHT="0" CLASSID="clsid:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>');
+  writeln('<' + 'SCRIPT LANGUAGE="VBScript">');
+  writeln('Sub window_onunload');
+  writeln('  On Error Resume Next');
+  writeln('  Set WB = nothing');
+  writeln('End Sub');
+  writeln('Sub vbPrintPage');
+  writeln('  OLECMDID_PRINT = 6');
+  writeln('  OLECMDEXECOPT_DONTPROMPTUSER = 1');
+  writeln('  OLECMDEXECOPT_PROMPTUSER = 1');
+  writeln('  On Error Resume Next');
+  writeln('  WB.ExecWB OLECMDID_PRINT, OLECMDEXECOPT_DONTPROMPTUSER');
+  writeln('End Sub');
+  writeln('<' + '/SCRIPT>');
+}
+{/literal}
+</script>
+<title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
+
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+</head>
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio 
+                    Faturamento Comparativo</h1>
+                  <table width="750" border="0" cellspacing="0" cellpadding="0">
+                    <tr align="center" bgcolor="#CCCCCC"> 
+                      <td width="57" rowspan="2" bgcolor="#666666"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong><font color="#FFFFFF">Dia</font></strong></font><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
+                      <td colspan="12" bgcolor="#333333"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Meses</strong></font></td>
+                    </tr>
+                    <tr align="center" bgcolor="#f1f1f1"> 
+                      <td width="57" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">JAN</font></td>
+                      <td width="57" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">FEV</font></td>
+                      <td width="57" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">MAR</font></td>
+                      <td width="57" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">ABR</font></td>
+                      <td width="57" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">MAI</font></td>
+                      <td width="57" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">JUN</font></td>
+                      <td width="57" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">JUL</font></td>
+                      <td width="57" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">AGO</font></td>
+                      <td width="57" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">SET</font></td>
+                      <td width="57" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">OUT</font></td>
+                      <td width="57" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">NOV</font></td>
+                      <td width="57" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">DEZ</font></td>
+                    </tr>
+                    {foreach key=dia item=fat from=$tabela} 
+                    <tr bgcolor="{cycle values="#ffffff,#f1f1f1"}"}"> 
+                      <td height="10" align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$dia}</font></td>
+                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                        equation="x*1" x=$fat.1 format="%.2f"}</font></td>
+                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                        equation="x*1" x=$fat.2 format="%.2f"}</font></td>
+                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                        equation="x*1" x=$fat.3 format="%.2f"}</font></td>
+                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                        equation="x*1" x=$fat.4 format="%.2f"}</font></td>
+                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                        equation="x*1" x=$fat.5 format="%.2f"}</font></td>
+                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                        equation="x*1" x=$fat.6 format="%.2f"}</font></td>
+                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                        equation="x*1" x=$fat.7 format="%.2f"}</font></td>
+                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                        equation="x*1" x=$fat.8 format="%.2f"}</font></td>
+                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                        equation="x*1" x=$fat.9 format="%.2f"}</font></td>
+                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                        equation="x*1" x=$fat.10 format="%.2f"}</font></td>
+                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                        equation="x*1" x=$fat.11 format="%.2f"}</font></td>
+                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                        equation="x*1" x=$fat.12 format="%.2f"}</font></td>
+                    </tr>
+                    {/foreach} 
+                  </table>
+                  <h2 align="center"><font size="2"> </font> </h2>
+				  <p><a href="javascript:history.go(-1);">Voltar</a></p>
+
+
+					<p id="imprimir" align="center"><a href="javascript:;" onClick="return printPage();">IMPRIMIR</a></p>
+
+					</td>
+              </tr>
+            </table></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+</body>
+
+
+</html>
