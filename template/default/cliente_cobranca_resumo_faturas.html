@@ -22,48 +22,42 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                     <tr>
                       <td bgcolor="#F1F1F1"><table width="710" border="0" cellspacing="1" cellpadding="0">
                           <tr bgcolor="#CDCDCD">
-                            <td colspan="8" align="center" height="20"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2">FATURAS</font></strong></td>
+                            <td colspan="9" align="center" height="20"><strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2">FATURAS</font></strong></td>
                           </tr>
                           <tr>
                             <td width="99" align="center">
                               <p><strong>Vencimento</strong></p></td>
                             <td width="127" align="center"> <p><strong>Descri&ccedil;&atilde;o</strong></p></td>
                             <td width="77" align="RIGHT">
-                              <p><strong>Valor</strong></p></td>
+                            <p align="center"><strong>Valor</strong></p></td>
                             <td width="74" align="RIGHT">
-                              <p><strong>Vl.Pago</strong></p></td>
+                            <p align="center"><strong>Vl.Pago</strong></p></td>
                             <td width="95" align="center">
                               <p><strong>Dt.Pagto</strong></p></td>
                             <td width="98" align="center">
                               <p><strong>Reagend.</strong></p></td>
                             <td width="72" align="center">
 <p><strong>Status</strong></p></td>
-                            <td width="59" align="center"></td>
+                       
                           </tr>
-                        </table></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <table width="710" border="0" cellspacing="2" cellpadding="3">
+                        
 						{foreach item=a from=$lista_faturas}
                           <tr>
-                            <td width="100" align="center">
-                              <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}">{$a.data_conv}</a></p></td>
-                            <td width="150" align="LEFT">
-                              <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}">{$a.descricao}- 
-                                {$a.username} </a></p></td>
-                            <td width="80" align="RIGHT">
-                              <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}">{$a.valor}</a></p></td>
-                            <td width="80" align="RIGHT">
-                              <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}">{$a.valor_pago}</a></p></td>
-                            <td width="100" align="CENTER">
-                              <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}">{$a.data_pagamento}</a></p></td>
-                            <td width="100" align="CENTER">
-                              <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}">{$a.reagendamento}</a></p></td>
-                            <td width="68" align="center">
+                            <td width="100" align="center" bgcolor="#FFFFFF">
+                            <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}">{$a.data_conv}</a></p></td>
+                            <td width="150" align="LEFT" bgcolor="#FFFFFF">
+                              <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}">{$a.descricao}</a></p></td>
+                            <td width="80" align="RIGHT" bgcolor="#FFFFFF">
+                            <p align="center"><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}">{$a.valor}</a></p></td>
+                            <td width="80" align="RIGHT" bgcolor="#FFFFFF">
+                            <p align="center"><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}">{$a.valor_pago}</a></p></td>
+                            <td width="100" align="CENTER" bgcolor="#FFFFFF">
+                            <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}">{$a.data_pagamento}</a></p></td>
+                            <td width="100" align="CENTER" bgcolor="#FFFFFF">
+                            <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}">{$a.reagendamento}</a></p></td>
+                            <td width="68" align="center" bgcolor="#FFFFFF">
 <p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}"><img src="template/default/images/{$a.extstatus}.gif" width="68" height="20" border="0"></a></p></td>
-                            <td width="20" align="center"><a href="javascript:;"><img {if $a.id_cobranca == "2"} alt="IMPRIMIR FATURA" {elseif $a.id_cobranca == "1"}ALT="IMPRIMIR BOLETO"{/if}src="template/default/images/boleto.gif" width="15" height="16" {if $a.id_cobranca == "2"} onclick="MM_openBrWindow('cobranca.php?op=boleto_pc&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}','boleto','scrollbars=yes,width={$largura},height={$altura}')"{elseif $a.id_cobranca == "1"}onclick="MM_openBrWindow('cobranca.php?op=boleto_bb&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}','boleto','scrollbars=yes,width=700,height=800')"{/if} border="0"></a></td>
-                            <td width="23" align="center">{if $estornar_pag== "sim" && $a.extstatus == 'P'}<a href="administrador.php?op=estornar_pagamentos&acao=pesquisar&id_cliente_produto={$a.id_cliente_produto}&data_vencimento={$a.data}&cliente={$cliente.nome_razao}&descricao={$a.descricao}"><img src="template/default/images/estornar.gif"  alt="ESTORNAR PAGAMENTO" border="0" /></a>{/if}</td>
+                            <td width='50' align="left" bgcolor="#FFFFFF" style="padding-left:2px"><a href="javascript:;"><img {if $a.id_cobranca == "2"} alt="IMPRIMIR FATURA" {elseif $a.id_cobranca == "1"}ALT="IMPRIMIR BOLETO"{/if}src="template/default/images/boleto.gif" width="15" height="16" {if $a.id_cobranca == "2"} onclick="MM_openBrWindow('cobranca.php?op=boleto_pc&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}','boleto','scrollbars=yes,width={$largura},height={$altura}')"{elseif $a.id_cobranca == "1"}onclick="MM_openBrWindow('cobranca.php?op=boleto_bb&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$id_cliente}','boleto','scrollbars=yes,width=700,height=800')"{/if} border="0">&nbsp;{if $estornar_pag== "sim" && $a.extstatus == 'P'}<a href="administrador.php?op=estornar_pagamentos&acao=pesquisar&id_cliente_produto={$a.id_cliente_produto}&data_vencimento={$a.data}&cliente={$cliente.nome_razao}&descricao={$a.descricao}"><img src="template/default/images/estornar.gif"  alt="ESTORNAR PAGAMENTO" border="0" /></a>{/if}</a></td>
                           </tr>
                           <tr bgcolor="#CCCCCC">
                             <td colspan="9" align="center" height="1"></td>

@@ -3,6 +3,7 @@
 
 {literal}
 <script src="template/default/ajax_ping_arp.js" language="javascript" ></script>
+<script src="template/default/historico_ajax.js" language="javascript" ></script>
 {/literal}
 {literal}
 <script language="JavaScript" type="text/javascript">
@@ -17,10 +18,9 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 
 </script>
 {/literal}
-
 <table width="100" border="0" cellspacing="0" cellpadding="0" align="center">
 	<tr>
-		<td>
+	  <td>
 		{if $tipo_conta == "BL"}
 			<table width="500" border="0" cellspacing="2" cellpadding="2">
 				<tr>
@@ -35,7 +35,7 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                 <td colspan=2> <table width="100%" border="0" cellspacing="2" cellpadding="0">
                     <tr>
                       <td width="70%"><font face=arial size="+1" color="#000000"><b>Ficha
-                        técnica</b></font> </td>
+                        técnica</b></font></td>
                       <td width="30%" align="center"> <p>[<a href="{$smarty.server.PHP_SELF}?op=conta&id_cliente={$id_cliente}&username={$username}&dominio={$dominio}&tipo_conta={$tipo_conta}">alterar</a>] {if $infoserver != ""} [<a href="javascript:;" onClick="javascript: Ping();">ping</a>] {if @$tipo_bandalarga == 'I'}[<a href="javascript:;" onClick="javascript: Arp();">arp</a>]{/if} {/if}</p></td>
                     </tr>
                   </table></td>
@@ -51,13 +51,22 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                 <td bgcolor="#FFFFFF" colspan=2 width="400"> <font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>{$str_status}</b>
                   </font></td>
               </tr>
+			  {if $count_historico== 'true'}<tr>
+			  	<form name="form1">
+			  		<input type="hidden" value="{$id_cliente_produto}" name="idcp"/>
+					<input type="hidden" value="{$username}" name="username"/>
+					<input type="hidden" value="{$tipo_conta}" name="tipo_conta"/>
+					<input type="hidden" value="{$dominio}" name="dominio"/>
+				</form>					
+			  	<td colspan="3" bgcolor="#FFFFFF" align="center"><a href="javascript:;" onclick="process_history();"><img src="template/default/images/historico.jpg" border="0" alt="Clique aqui para ver histórico" /></a></td>
+			  </tr>{/if}
             </table>
-
+			<div id="historico" class="box_fechada" style="width:450px;border:2px solid #EFEFEF; padding:8px; background:#FEFEFE"></div>
 					</td>
 				</tr>
 
 				<tr>
-					<td align="center" valign="middle" id="tdados">&nbsp;
+					<td align="center" valign="middle" id="tdados">
 
 						<table width="450" border=0 bgcolor="#F1F1F1" id="disc">
               <tr>
@@ -124,7 +133,7 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 								<div id="container" align="left" class="box_fechada" style="height:80px; width:450px;border:2px solid #EFEFEF; padding:8px;"></div></center>
 								</font>
 						       
-					</td>
+				  </td>
 				</tr>
 
 				<tr>
@@ -186,7 +195,7 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                       <td width="16%" align="center"> <p>[<a href="{$smarty.server.PHP_SELF}?op=conta&id_cliente={$id_cliente}&username={$username}&dominio={$dominio}&tipo_conta={$tipo_conta}">alterar</a>]</p></td>
                     </tr>
                   </table></td>
-						              </tr>
+			              </tr>
 						              <tr>
 						                <td width="100" align="right" valign="middle" bgcolor="#FFFFFF">
 						                  <p>Username:</p></td>
@@ -202,7 +211,17 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 						                <td width="100" align="right" valign="middle" bgcolor="#FFFFFF"><p>FTP:</p></td>
 						                <td bgcolor="#FFFFFF" colspan=2><p>{if $tipo_hospedagem == "D"}ftp.{$dominio_hospedagem}{/if}{if $tipo_hospedagem != "D"}{$dominio}/{$username}{/if}</p></td>
 						              </tr>
-            </table>
+					{if $count_historico== 'true'}<tr>
+			  	<form name="form1">
+			  		<input type="hidden" value="{$id_cliente_produto}" name="idcp"/>
+					<input type="hidden" value="{$username}" name="username"/>
+					<input type="hidden" value="{$tipo_conta}" name="tipo_conta"/>
+					<input type="hidden" value="{$dominio}" name="dominio"/>
+				</form>					
+			  	<td colspan="3" bgcolor="#FFFFFF" align="center"><a href="javascript:;" onclick="process_history();"><img src="template/default/images/historico.jpg" border="0" alt="Clique aqui para ver histórico" /></a></td>
+			  </tr>{/if}
+            </table>&nbsp;
+			<div id="historico" class="box_fechada" style="width:450px;border:2px solid #EFEFEF; padding:8px; background:#FEFEFE"></div>
 
 			{/if}
 
@@ -226,12 +245,19 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 	<td width="100" align="right" valign="middle" bgcolor="#FFFFFF"><p>Foneinfo:</p></td>
 	<td bgcolor="#FFFFFF" colspan=2 width="400"> <font size="2" face="Verdana, Arial, Helvetica, sans-serif"><b>{$foneinfo}</b></font></td>
 	</tr>
+	 {if $count_historico== 'true'}<tr>
+			  	<form name="form1">
+			  		<input type="hidden" value="{$id_cliente_produto}" name="idcp"/>
+					<input type="hidden" value="{$username}" name="username"/>
+					<input type="hidden" value="{$tipo_conta}" name="tipo_conta"/>
+					<input type="hidden" value="{$dominio}" name="dominio"/>
+				</form>					
+			  	<td colspan="3" bgcolor="#FFFFFF" align="center"><a href="javascript:;" onclick="process_history();"><img src="template/default/images/historico.jpg" border="0" alt="Clique aqui para ver histórico" /></a></td>
+			  </tr>{/if}
 	</table>
-
-{/if}
-
-
-		</td>
+<div id="historico" class="box_fechada" style="width:450px;border:2px solid #EFEFEF; padding:8px; background:#FEFEFE"></div>
+        	{/if}
+      </td>
 	</tr>
 </table>
 
