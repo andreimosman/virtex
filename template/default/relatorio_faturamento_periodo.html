@@ -106,33 +106,34 @@ if (da && !pr && !mac) with (document) {
                       <td width="57" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">NOV</font></td>
                       <td width="57" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">DEZ</font></td>
                     </tr>
+					{assign var='s1' value=0}
+					{assign var='s2' value=0}
+					{assign var='s3' value=0}
+					{assign var='s4' value=0}
+					{assign var='s5' value=0}
+					{assign var='s6' value=0}
+					{assign var='s7' value=0}
+					{assign var='s8' value=0}
+					{assign var='s9' value=0}
+					{assign var='s10' value=0}
+					{assign var='s11' value=0}
+					{assign var='s12' value=0}					
                     {foreach key=dia item=fat from=$tabela} 
                     <tr> 
                       <td width="30" height="15" align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$dia}</font></td>
-                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
-                        equation="x*1" x=$fat.1 format="%.2f"}</font></td>
-                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
-                        equation="x*1" x=$fat.2 format="%.2f"}</font></td>
-                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
-                        equation="x*1" x=$fat.3 format="%.2f"}</font></td>
-                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
-                        equation="x*1" x=$fat.4 format="%.2f"}</font></td>
-                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
-                        equation="x*1" x=$fat.5 format="%.2f"}</font></td>
-                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
-                        equation="x*1" x=$fat.6 format="%.2f"}</font></td>
-                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
-                        equation="x*1" x=$fat.7 format="%.2f"}</font></td>
-                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
-                        equation="x*1" x=$fat.8 format="%.2f"}</font></td>
-                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
-                        equation="x*1" x=$fat.9 format="%.2f"}</font></td>
-                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
-                        equation="x*1" x=$fat.10 format="%.2f"}</font></td>
-                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
-                        equation="x*1" x=$fat.11 format="%.2f"}</font></td>
-                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
-                        equation="x*1" x=$fat.12 format="%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{assign var='s1' value=$s1+$fat.1}{$s1|string_format:"%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{assign var='s2' value=$s2+$fat.2}{$s2|string_format:"%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{assign var='s3' value=$s3+$fat.3}{$s3|string_format:"%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{assign var='s4' value=$s4+$fat.4}{$s4|string_format:"%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{assign var='s5' value=$s5+$fat.5}{$s5|string_format:"%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{assign var='s6' value=$s6+$fat.6}{$s6|string_format:"%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{assign var='s7' value=$s7+$fat.7}{$s7|string_format:"%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{assign var='s8' value=$s8+$fat.8}{$s8|string_format:"%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{assign var='s9' value=$s9+$fat.9}{$s9|string_format:"%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{assign var='s10' value=$s10+$fat.10}{$s10|string_format:"%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{assign var='s11' value=$s11+$fat.11}{$s11|string_format:"%.2f"}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{assign var='s12' value=$s12+$fat.12}{$s12|string_format:"%.2f"}</font></td>
+
                     </tr>
 					<tr> 
                       <td colspan=13 bgcolor="#000000"><img src="template/default/menu/spacer.gif" width=100 height=1></td>
