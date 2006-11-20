@@ -2127,14 +2127,14 @@ class VACobranca extends VirtexAdmin {
 						 
 						 }
 						 
-				//$sSQL .= "SET status = 'C' where username = '".$contrato["username"]."' AND tipo_conta = '".$contrato["tipo_produto"]."' AND dominio = '".$contrato["dominio"]."' ";
-				$sSQL .= "SET status = 'C' where id_cliente_produto = $id_cliente_produto' ";
+				$sSQL .= "SET status = 'C' where username = '".$contrato["username"]."' AND tipo_conta ='".trim($contrato["tipo_produto"])."' AND dominio = '".$contrato["dominio"]."' ";
+				
 				$this->bd->consulta($sSQL);
 			//	//echo"UPDATE CANCELAR4: $sSQL <br>";
 			
 			
 				// SETA ID_CLIENTE_PRODUTO COMO EXCLUIDO
-				$sSQL = "UPDATE cbtb_cliente_produto set excluido = TRUE where id_cliente_produto = $id_cliente_produto";
+				$sSQL = "UPDATE cbtb_cliente_produto set excluido = TRUE where id_cliente_produto = '$id_cliente_produto'";
 				$this->bd->consulta($sSQL);
 				
 				$msg_final = "CONTRATOS CANCELADOS COM SUCESSO!<BR>FATURAS CANCELADAS COM SUCESSO!<BR>CONTAS CANCELADAS COM SUCESSO!<br>CARNE CANCELADO COM SUCESSO!";
@@ -2212,11 +2212,13 @@ class VACobranca extends VirtexAdmin {
 					$bl = $this->bd->obtemUnicoRegistro($sSQL);
 					////echo"SPOOL BL: $sSQL <br>";
 					
-					$sSQL  = "SELECT ip, id_nas FROM cftb_nas WHERE id_nas = '".$bl["id_nas"]."' ";
-					$nas = $this->bd->obtemUnicoRegistro($sSQL);
-					////echo"SPOOL NAS: $sSQL <br>";
-					
-					
+					if ($bl["id_nas"]){
+
+						$sSQL  = "SELECT ip, id_nas FROM cftb_nas WHERE id_nas = '".$bl["id_nas"]."' ";
+						$nas = $this->bd->obtemUnicoRegistro($sSQL);
+						////echo"SPOOL NAS: $sSQL <br>";
+
+					}
 					
 					if ($bl["tipo_bandalarga"] == "P"){
 						
@@ -2958,7 +2960,7 @@ class VACobranca extends VirtexAdmin {
 							
 							/* SETA NO CBTB_CLIENTE_PRODUTO COMO EXCLUIDO O ID_CLIENTE_PRODUTO DO CONTRATO ANTIGO */
 							
-							$sSQL = "UPDATE cbtb_cliente_produto SET excluido = true where id_cliente_produto = '$id_cliente_produto' ";
+							$sSQL = "UPDATE cbtb_cliente_produto SET excluido = 'true' where id_cliente_produto = '$id_cliente_produto' ";
 							$this->bd->consulta($sSQL);
 							
 							/* FINAL DO CBTB_CLIENTE_PRODUTO */
@@ -3396,11 +3398,16 @@ class VACobranca extends VirtexAdmin {
 				}		
 
 		
-		$sSQL  = "SELECT re.data, re.id_cliente_produto, re.admin, re.data_reagendamento, re.data_para_reagendamento, ad.admin, f.valor  ";
-		$sSQL .= "FROM lgtb_reagendamento re, adtb_admin ad, cbtb_faturas f ";
-		$sSQL .= "WHERE ad.id_admin = re.admin AND ";
-		$sSQL .= "re.id_cliente_produto = f.id_cliente_produto AND ";
-		$sSQL .= "re.data = f.data ";
+		$sSQL  = "	SELECT cl.nome_razao, cn.username, re.data, re.id_cliente_produto, re.admin, re.data_reagendamento, re.data_para_reagendamento, ad.admin, f.valor, cl.id_cliente  ";
+		$sSQL .= "		FROM lgtb_reagendamento re, adtb_admin ad, cbtb_faturas f, cntb_conta cn, cltb_cliente cl, cbtb_cliente_produto cb ";
+		$sSQL .= "	WHERE ad.id_admin = re.admin AND ";
+		$sSQL .= "		re.id_cliente_produto = f.id_cliente_produto AND ";
+		$sSQL .= "		cn.id_cliente_produto = f.id_cliente_produto AND " ;
+		$sSQL .= "		cb.id_cliente_produto = f.id_cliente_produto AND";
+		$sSQL .= "		cl.id_cliente = cb.id_cliente AND ";
+		$sSQL .= "		re.data = f.data ORDER BY data_para_reagendamento DESC, valor DESC, nome ASC, ad.admin ASC ";
+		
+		///////////echo $sSQL ;
 		
 		
 		

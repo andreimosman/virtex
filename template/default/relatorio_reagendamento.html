@@ -4,6 +4,15 @@
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
 
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+{literal}
+<style type="text/css">
+<!--
+.style7 {font-family: Verdana, Arial, Helvetica, sans-serif; font-weight: bold; color: #9D9D9D; }
+.style4 {color: #505854}
+.style5 {font-family: Verdana, Arial, Helvetica, sans-serif; font-weight: bold; color: #505854; }
+-->
+</style>
+{/literal}
 </head>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
@@ -20,26 +29,36 @@
 				  <h1 align="center">Reagendamentos</h1>
 				  {if !$reagendamentos}<p align="center"><b>Não existem reagendamentos aplicados</b></p>
 				  {else}
-				  <table width="600" border="0" cellspacing="2" cellpadding="0">
-                    <tr>
-                      <td width="100" align="center" bgcolor="#C9C9C9"><p><strong>Vencimento</strong></p></td>
-                      <td width="150" align="center" bgcolor="#C9C9C9"><p><strong>Data_reagendamento</strong></p></td>
-                      <td width="150" align="center" bgcolor="#C9C9C9"><p><strong>Reagendado
-                            para </strong></p></td>
-                      <td width="100" align="right" bgcolor="#C9C9C9"><p><strong>Valor</strong></p></td>
-                      <td width="100" align="center" bgcolor="#C9C9C9"><p><strong>Admin</strong></p></td>
-                    </tr>
-					{foreach item=a from=$reagendamentos}
-
-                    <tr bgcolor="{cycle values="#ffffff,#f1f1f1"}">
-                      <td width="100" height="20" align="center"><p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$a.id_cliente}">{$a.data|date_format:"%e/%m/%Y"}</a></p></td>
-                      <td width="150" height="20" align="center"><p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$a.id_cliente}">{$a.data_reagendamento|date_format:"%e/%m/%Y"}</a></p></td>
-                      <td width="150" height="20" align="center"><p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$a.id_cliente}">{$a.data_para_reagendamento|date_format:"%e/%m/%Y"}</a></p></td>
-                      <td width="100" height="20" align="right"><p><a href="cobranca.php?op=amortizacao&id_cliente_produto={$a.id_cliente_produto}&data={$a.data}&id_cliente={$a.id_cliente}">{$a.valor}</a></p></td>
-                      <td width="100" height="20" align="center"><p><a href="administrador.php?op=cadastro&id_admin={$a.id_admin}">{$a.admin}</a></p></td>
-                    </tr>
-					{/foreach}
-                  </table>
+				  <table width="700" border="0" cellspacing="1" cellpadding="0" style="border:1px solid #C0DED0">
+					  <tr>
+						<td bgcolor="#D7EAE1" style="border:1px solid #FFFFFF"><p align="center" class="style7 style4">NOME</p></td>
+						<td bgcolor="#D7EAE1" style="border:1px solid #FFFFFF"><p align="center" class="style7 style4">USERNAME</p></td>
+						<td bgcolor="#D7EAE1" style="border:1px solid #FFFFFF"><p align="center" class="style7 style4">VENCIMENTO</p></td>
+						<td bgcolor="#D7EAE1" style="border:1px solid #FFFFFF"><p align="center" class="style7 style4">DATA DO REAGENDAMENTO </p></td>
+						<td bgcolor="#D7EAE1" style="border:1px solid #FFFFFF"><p align="center" class="style7 style4">REAGENDADO PARA </p></td>
+						<td bgcolor="#D7EAE1" style="border:1px solid #FFFFFF"><p align="center" class="style7 style4">VALOR</p></td>
+						<td bgcolor="#D7EAE1" style="border:1px solid #FFFFFF"><p align="center" class="style7 style4">ADMIN</p></td>
+					  </tr>{assign var=total value='0'}
+				  {foreach item=a from=$reagendamentos}{assign var=total value=$total+1}
+					  <tr>
+						<td bgcolor="#F9F9F9" style="border:1px solid #FFFFFF"><p><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo&tipo_lista=tudo">{$a.nome_razao}</a></p></td>
+						<td bgcolor="#F9F9F9" style="border:1px solid #FFFFFF"><p align="center"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo&tipo_lista=tudo">{$a.username}</a></p></td>
+						<td bgcolor="#F9F9F9" style="border:1px solid #FFFFFF"><p align="center"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo&tipo_lista=tudo">{$a.data|date_format:"%d/%m/%Y"}</a></p></td>
+						<td bgcolor="#F9F9F9" style="border:1px solid #FFFFFF"><p align="center"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo&tipo_lista=tudo">{$a.data_reagendamento|date_format:"%d/%m/%Y"}</a></p></td>
+						<td bgcolor="#F9F9F9" style="border:1px solid #FFFFFF"><p align="center"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo&tipo_lista=tudo">{$a.data_para_reagendamento|date_format:"%d/%m/%Y"}</a></p></td>
+						<td bgcolor="#F9F9F9" style="border:1px solid #FFFFFF"><p align="center"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo&tipo_lista=tudo">{$a.valor}</a></p></td>
+						<td bgcolor="#F9F9F9" style="border:1px solid #FFFFFF"><p align="center"><a href="clientes.php?op=cobranca&id_cliente={$a.id_cliente}&rotina=resumo&tipo_lista=tudo">{$a.admin}</a></p></td>
+					  </tr>
+					  <tr>
+					  	<td height="1" bgcolor="#D7EAE1" colspan="7"><img src="template/default/images/menu/spacer.gif" height="1"></td>
+					  </tr>
+				  {/foreach}
+				</table>
+				<table width="700" border="0" cellspacing="1" cellpadding="0" style="border:1px solid #C0DED0">
+					<tr>
+					  <td bgcolor="#F5FAF8" style="border:1px solid #FFFFFF"><p align="center" class="style5">Reagendadas {$total} faturas no total.</p></td>
+					</tr>
+				</table>
 				  {/if}
 <script language="JavaScript">ready = "yes";</script>
 <script>

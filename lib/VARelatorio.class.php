@@ -1560,7 +1560,7 @@ class VARelatorio extends VirtexAdmin {
 			$sSQL .= "	AND data_hora < CAST('$ano-$mes-01' as date) + INTERVAL '1 month' ";
 			$sSQL .= "	AND data_hora < CAST('$ano-$mes-01' as date) + INTERVAL '1 month' ";
 			$sSQL .= "	AND data_hora >= CAST('$ano-$mes-01' as date) ";
-			$sSQL .= "ORDER BY ano, mes, dia, clt.nome_razao DESC";
+			$sSQL .= "ORDER BY ano, mes, dia DESC ,clt.nome_razao ASC";
 			
 			///echo $sSQL ;
 			
@@ -1593,14 +1593,14 @@ class VARelatorio extends VirtexAdmin {
 			
 			if ($tipo == "D"){
 			
-			$sSQL .= "  AND lba.tipo = '$tipo'";
-			
+				$sSQL .= "  AND lba.tipo = '$tipo'";
 			
 			}
-			$sSQL .= "  AND cnt.tipo_conta <> 'E' ";
-			$sSQL .= "ORDER BY ano, mes, dia, clt.nome_razao DESC ";
 			
-			////////echo ($sSQL);
+			$sSQL .= "  AND cnt.tipo_conta <> 'E' ";
+			$sSQL .= "	ORDER BY ano, mes, dia DESC , clt.nome_razao ASC ";
+			
+			//////////echo ($sSQL);
 			
 		}
 		

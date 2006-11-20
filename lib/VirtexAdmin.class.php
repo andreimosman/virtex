@@ -384,6 +384,22 @@ class VirtexAdmin extends MWebApp {
 	
 	}
 	
+	public function HistoricoConta($cod_operacao, $id_cliente_produto, $tipo_conta, $username, $operacao, $dominio){
+			
+			$id_admin = $this->admLogin->obtemId();
+			$ip_admin = $_SERVER['REMOTE_ADDR']; 
+			$agora = DATE("Y-m-d H:i:s");
+			
+			$aSQL  = " INSERT INTO ";
+			$aSQL .= " lgtb_status_conta (cod_operacao, id_cliente_produto , data_hora , tipo_conta , username, ip_admin, id_admin, operacao, dominio ) ";
+			$aSQL .= " VALUES ('$cod_operacao', '$id_cliente_produto' , now() , '$tipo_conta', '$username' , '$ip_admin' , '$id_admin', '$operacao', '$dominio' ) ";
+			$this->bd->consulta($aSQL) ;
+			
+			
+			return;
+
+	}
+	
 	public function licenca($tipo,$modulo){
 		$lic = $this->lic->obtemLicenca();
 		$licenca = (int)@$lic[$tipo][$modulo];

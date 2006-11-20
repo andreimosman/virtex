@@ -990,7 +990,7 @@ class VAClientes extends VirtexAdmin {
 
 			
 		//////////echo "lista: $sSQL <br>";
-			$this->tpl->atribui("conta",$contas);
+			$this->tpl->atribui("conta",@$contas);
 			$this->tpl->atribui("lista_contrato",$lista_contrato);
 			$this->tpl->atribui("cliente",$cliente);
 			$this->tpl->atribui("id_cliente", $id_cliente);
@@ -1206,9 +1206,12 @@ class VAClientes extends VirtexAdmin {
 						$this->bd->consulta($sSQL);  
 						//if( $this->bd->obtemErro() ) {
 						//	////////echo "ERRO: " , $this->bd->obtemMensagemErro() . "<br>\n";
-						//////echo "conta: $sSQL <br>\n";
+						///echo "conta: $sSQL <br>\n";
 						//}
 						
+						$operacao = "NOVA_CONTA";
+						$this->HistoricoConta("1", $id_cliente_produto, @$_REQUEST["tipo"], @$_REQUEST["username"], $operacao, $dominioPadrao);
+
 												
 						if ($email_igual == "1"){
 							
@@ -1238,8 +1241,6 @@ class VAClientes extends VirtexAdmin {
 							//////echo "conta: $sSQL <br>\n";
 							//}
 							
-							
-
 							
 							
 							$id_produto = @$_REQUEST['id_produto'];
@@ -1584,6 +1585,9 @@ class VAClientes extends VirtexAdmin {
 									$sSQL .= ") ";
 
 								}
+
+							
+
 								
 									$this->bd->consulta($sSQL);
 									//////////echo "QUERY INSERÇÃO: $sSQL <BR>\n";
@@ -2548,10 +2552,15 @@ class VAClientes extends VirtexAdmin {
 						$sSQL .= "     '" .	$id_cliente_produto . "', ";
 						$sSQL .= "     '" . $senhaCr . "', ";
 						$sSQL .= "     false, ";
-						$sSQL .= "     'A' )";						
-
+						$sSQL .= "     'A' )";	
+						
 						$this->bd->consulta($sSQL);  
 						//////echo "CNTB_CONTA: $sSQL <br>";
+						
+						$operacao = "NOVA_CONTA";
+
+						$this->HistoricoConta("1", $id_cliente_produto, @$_REQUEST["tipo_conta"], @$_REQUEST["username"], $operacao, $dominio);
+
 
 						if ($email_igual == "1"){
 
@@ -3883,9 +3892,7 @@ class VAClientes extends VirtexAdmin {
 					$extra = $CONTA["dominio"];
 					
 					$this->logAdm($operacao,$CONTA["status"],$status,$username,$CONTA["id_cliente_produto"],$tipo_conta,$extra);
-				
-				
-				
+
 				}
 				
 
@@ -3906,7 +3913,58 @@ class VAClientes extends VirtexAdmin {
 								$status = 'S' ;
 
 							}
-													
+							
+							
+							$iSQL  = " SELECT id_cliente_produto, status, senha, conta_mestre FROM cntb_conta WHERE username ='$username' AND dominio = '$dominio' AND tipo_conta ='$tipo_conta' ";
+							$reg = $this->bd->obtemUnicoRegistro($iSQL);
+							
+							$fSQL  = " SELECT foneinfo FROM cntb_conta_discado WHERE username = '$username' AND tipo_conta = '$tipo_conta' AND dominio = '$dominio' ";
+							$reg_fone = $this->bd->obtemUnicoRegistro($fSQL);
+							
+							$id_cliente_produto = $reg['id_cliente_produto'];
+
+							if ($status != $reg['status'] && $status == 'S' ){
+
+								$operacao = "ALTSTATUS(SUSPENSO)";
+
+							}
+							if ($status != $reg['status'] && $status== 'B' ){
+
+								$operacao = "ALTSTATUS(BLOQUEADO)";
+								$this->HistoricoConta("4",$id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);
+
+							}
+							if ($status != $reg['status'] && $status=='A'){
+
+								$operacao = "ALTSTATUS(ATIVO)";
+								$this->HistoricoConta("3", $id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);
+
+							}
+							if (@$_REQUEST['foneinfo'] != $reg_fone['foneinfo'] && @$_REQUEST['foneinfo']){
+							
+								$operacao = 'ALTFONE';
+								$this->HistoricoConta("6", $id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);
+							
+							}
+							if ($senha != $reg['senha'] && $senha ){
+														
+								$operacao = 'ALTSENHA';
+
+								$this->HistoricoConta("2",$id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);							
+							}
+							if ($conta_mestre != $reg['conta_mestre'] && $conta_mestre =='f' ){
+														
+								$operacao = 'ALTSTATUSCONTA(NORMAL)';
+
+								$this->HistoricoConta("10",$id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);							
+							}
+							if ($conta_mestre != $reg['conta_mestre'] && $conta_mestre =='t' ){
+														
+								$operacao = 'ALTSTATUSCONTA(MESTRE)';
+
+								$this->HistoricoConta("11",$id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);							
+							}
+							
 														
 							$sSQL  = "UPDATE ";
 							$sSQL .= "	cntb_conta_discado ";
@@ -3936,6 +3994,7 @@ class VAClientes extends VirtexAdmin {
 							$this->bd->consulta($sSQL);
 							
 							//////////echo $sSQL ."<br>\n<hr>" ;
+							
 						
 							break;
 					
@@ -3958,6 +4017,9 @@ class VAClientes extends VirtexAdmin {
 								
 								$this->logAdm($operacao,$valor_original,$valor_alterado,$username,$CONTA["id_cliente_produto"],$tipo_conta,$extra);
 								
+								$operacao = "ALTBANDA - " . $valor_original . " - " . $valor_alterado ; 
+								
+								$this->HistoricoConta("8", $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
 
 							
 							}
@@ -3967,13 +4029,84 @@ class VAClientes extends VirtexAdmin {
 								$operacao = "ALTMAC";
 								
 								$this->logAdm($operacao,$bandalarga["mac"],$mac,$username,$CONTA["id_cliente_produto"],$tipo_conta,$extra);
+								
+								$this->HistoricoConta("9", $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
 							
 														
+							}
+							$stSQL  = " SELECT status, senha, conta_mestre FROM cntb_conta WHERE username ='$username' AND tipo_conta ='$tipo_conta' AND dominio = '$dominio' ";
+							$statusalt = $this->bd->obtemUnicoRegistro($stSQL);
+							////////echo $stSQL ;
+
+
+							if ($conta_mestre != $statusalt["conta_mestre"] && $conta_mestre=='f'){
+														
+								$operacao = "ALTSTATUSCONTA(NORMAL)";
+
+								$this->HistoricoConta("10", $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
+							
+							}
+							if ($conta_mestre != $statusalt["conta_mestre"] && $conta_mestre=='t'){
+														
+								$operacao = "ALTSTATUSCONTA(MESTRE)";
+
+								$this->HistoricoConta("11", $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
+
+							}
+							if ($id_pop != $bandalarga["id_pop"] && $id_pop){
+																					
+								$operacao = "ALTPOP";
+
+								$this->HistoricoConta("12", $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
+
 							}
 							
 							
 							
+							if ($status != $statusalt['status'] && $status){
 							
+								if($status == 'S'){
+
+									$operacao = 'ALTSTATUS(SUSPENSO)';
+									$cod_operacao = "5";
+
+								}
+								if($status == 'A'){
+
+									$operacao = 'ALTSTATUS(ATIVO)';
+									$cod_operacao = "3";
+
+								}
+								if($status == 'B'){
+																
+									$operacao = 'ALTSTATUS(BLOQUEADO)';
+									$cod_operacao = "4";
+
+								}
+							
+								$this->HistoricoConta($cod_operacao, $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
+							}
+							
+							
+							if ($senha != $statusalt['senha'] && $senha){
+							
+							
+								$operacao = 'ALTSENHA' ;
+								
+								$this->HistoricoConta("2", $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
+							
+							
+							}
+							
+							
+							if ( $id_nas != $bandalarga['id_nas'] && $id_nas){
+							
+								$operacao = 'ALTNAS' ;
+							
+								$this->HistoricoConta("7", $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
+							
+							
+							}
 				
 							// SPOOL
 							if( $excluir ) {
@@ -4142,14 +4275,55 @@ class VAClientes extends VirtexAdmin {
 							$id_conta = $conta["id_conta"];
 							//$server = $conta["mail_server"];
 							//$dominio_padrao = $conta["dominio_padrao"];
-																			
+							
+
+							$iSQL  = " SELECT id_cliente_produto, status, senha, conta_mestre FROM cntb_conta WHERE username ='$username' AND dominio = '$dominio' AND tipo_conta ='$tipo_conta' ";
+							$reg = $this->bd->obtemUnicoRegistro($iSQL);
+
+							$id_cliente_produto = $reg['id_cliente_produto'];
+
+							if ($status != $reg['status'] && $status == 'S' ){
+
+								$operacao = "ALTSTATUS(SUSPENSO)";
+
+
+							}
+							if ($status != $reg['status'] && $status== 'B' ){
+
+								$operacao = "ALTSTATUS(BLOQUEADO)";
+								$this->HistoricoConta($id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);
+
+							}
+							if ($status != $reg['status'] && $status=='A'){
+
+								$operacao = "ALTSTATUS(ATIVO)";
+								$this->HistoricoConta($id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);
+							}
+							if ($senha != $reg['senha'] && $senha ){
+
+								$operacao = 'ALTSENHA';
+
+								$this->HistoricoConta("2", $id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);							
+							}
+							if ($conta_mestre != $reg['conta_mestre'] && $conta_mestre == 'f' ){
+							
+								$operacao = 'ALTSTATUSCONTA(NORMAL)';
+
+								$this->HistoricoConta("10", $id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);							
+							}
+							if ($conta_mestre != $reg['conta_mestre'] && $conta_mestre == 't' ){
+
+								$operacao = 'ALTSTATUSCONTA(MESTRE)';
+
+								$this->HistoricoConta("11", $id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);							
+							}
 							
 							$sSQL  = "UPDATE ";
 							$sSQL .= "	cntb_conta_hospedagem ";
 							$sSQL .= "SET ";
 							$sSQL .= "	dominio_hospedagem = '$dominio_hospedagem' ";
 							if ($senha){
-	              $sSQL .= "  , senha_cript = '$senha_cript' ";
+								$sSQL .= "  , senha_cript = '$senha_cript' ";
 							}
 							$sSQL .= "WHERE ";
 							$sSQL .= "	username = '$username' AND dominio = '$dominio' AND tipo_conta = '$tipo_conta'";
@@ -4227,39 +4401,24 @@ class VAClientes extends VirtexAdmin {
 						$sSQL .= "   id_nas = '".$id_nas."' ";
 										
 						$nas_status_novo = $this->bd->obtemUnicoRegistro($sSQL);
-						
 						$destino = $nas_status["ip"];						
-			   			
 			   			//$this->spool->bandalargaAdicionaRede($destino,$id_conta,$rede,$mac,$banda_upload_kbps,$banda_download_kbps);
-						
-			   			
-			   			
-			   		}
+					}
 			   		
 			   		// Se estava manda uma requisição de exclusão pro NAS ($conta["id_nas"]) - via spool
-			   		
 			   		// Caso contrário manda uma requisição de inclusão pro NAS ($id_nas) - via spool
-
-			   
-			   
 			   // Exibe que a conta foi alterada com sucesso e papoca fora.
 			   
 			   $this->tpl->atribui("mensagem","Conta Alterada com sucesso!");
-			   
 			   $this->arquivoTemplate = "msgredirect.html";
-			   
 			   return;
 			  
-			   
-			
-			
 			} else {
 				while( list($nome,$valor)=each($conta) ){
 					$this->tpl->atribui($nome,$valor);
 				}
 			
 			}
-			
 			
 			
 			if( $tipo_conta == "D" || $tipo_conta == "H" ) {
@@ -4272,21 +4431,60 @@ class VAClientes extends VirtexAdmin {
 			$pg = @$_REQUEST["pg"];
 			
 			if( $pg == "ficha" ) {
-				$this->tpl->atribui("str_status",$_LS_ST_CONTA[$conta["status"]]);
-				
 				$bSQL  = " SELECT tipo_bandalarga FROM cntb_conta_bandalarga WHERE username = '$username' AND dominio = '$dominio'  " ;
 				$tipo_bandalarga = $this->bd->obtemUnicoRegistro($bSQL);
 				
-				$nas = $this->obtemNas($conta["id_nas"]);
+				if ($conta['status'] == 'B' ){
+				
+					$str_status = 'Bloqueado' ;
+				}
+				if ($conta['status'] == 'S' ){
+					
+					$str_status = 'Suspenso' ;
+				
+				}if ($conta['status'] == 'A'){
+				
+					$str_status = 'Ativo';
+			
+				}
+				
+				$idSQL  = " SELECT id_cliente_produto FROM cntb_conta WHERE dominio = '$dominio' AND username ='$username' AND tipo_conta ='$tipo_conta' " ;
+				$id = $this->bd->obtemUnicoRegistro($idSQL);
+				$id_cliente_produto = $id['id_cliente_produto'];
+				
+				
+				$hsSQL  = " SELECT  l.id_cliente_produto ,l.username, l.dominio, l.tipo_conta, l.data_hora, l.id_admin, ";
+				$hsSQL .= " l.ip_admin, l.operacao, l.cod_operacao, a.admin    " ;       
+				$hsSQL .= " FROM lgtb_status_conta l, adtb_admin a ";
+				$hsSQL .= " WHERE l.id_admin = a.id_admin ";
+				$hsSQL .= " AND username = '$username' AND tipo_conta = '$tipo_conta' AND dominio = '$dominio' ";
+				$hsSQL .= " AND id_cliente_produto = '$id_cliente_produto' GROUP BY data_hora ,admin , l.id_admin, ip_admin ,cod_operacao , operacao, username, id_cliente_produto, dominio, tipo_conta ORDER BY data_hora, username, operacao, l.id_admin " ;
+				$rel = $this->bd->obtemRegistros($hsSQL) ;
+				
+				///echo $hsSQL;
+			
+				if(!count($rel)){
+					$count_historico = 'false';
+				}else{
+					$count_historico = 'true';
+				}
+					
+				
+				$hSQL  = "SELECT username, dominio, operacao, cod_operacao FROM lgtb_status_conta WHERE tipo_conta = '$tipo_conta' AND username = '$username' AND dominio = '$dominio' AND operacao <> '' ";
+				$cont_historico = $this->bd->obtemRegistros($hSQL);
+				
+				@$nas = $this->obtemNas(@$conta["id_nas"]);
 				
 				$id_nas = $nas['id_nas'];
 				$nSQL  = " SELECT infoserver FROM cftb_nas WHERE id_nas = '$id_nas' " ;
 				
 				$info_nas = $this->bd->obtemUnicoRegistro($nSQL);
 				$infoserver = $info_nas['infoserver'];
-
+				
+				$this->tpl->atribui("count_historico",$count_historico);
+				$this->tpl->atribui("str_status",$str_status);
 				$this->tpl->atribui("infoserver",$infoserver);
-				$this->tpl->atribui("tipo_bandalarga",$tipo_bandalarga['tipo_bandalarga']);	
+				$this->tpl->atribui("tipo_bandalarga",@$tipo_bandalarga['tipo_bandalarga']);	
 				
 				switch($tipo_conta) {
 				
@@ -4758,9 +4956,7 @@ class VAClientes extends VirtexAdmin {
 		
 			$this->testePDF();
 			
-		}
-		
-		if ($op == "excluir_email"){
+		}if ($op == "excluir_email"){
 		
 		$username = @$_REQUEST["username"];
 		$dominio = @$_REQUEST["dominio"];
@@ -4782,6 +4978,78 @@ class VAClientes extends VirtexAdmin {
 
 		$this->arquivoTemplate = "msgredirect.html";
 		
+		}if ($op == "historico"){
+		
+		
+			$username = @$_REQUEST['username'];
+			$id_cliente_produto = @$_REQUEST['id_cliente_produto'];
+			$dominio = @$_REQUEST['dominio'];
+			$tipo_conta = @$_REQUEST['tipo_conta'];
+		
+			$sSQL  = " SELECT  l.id_cliente_produto ,l.username, l.dominio, l.tipo_conta, l.data_hora, l.id_admin, ";
+			$sSQL .= " l.ip_admin, l.operacao, l.cod_operacao, a.admin    " ;       
+			$sSQL .= " FROM lgtb_status_conta l, adtb_admin a ";
+			$sSQL .= " WHERE l.id_admin = a.id_admin ";
+			$sSQL .= " AND username = '$username' AND tipo_conta = '$tipo_conta' AND dominio = '$dominio' ";
+			$sSQL .= " AND id_cliente_produto = '$id_cliente_produto' GROUP BY data_hora ,admin , l.id_admin, ip_admin ,cod_operacao , operacao, username, id_cliente_produto, dominio, tipo_conta ORDER BY data_hora, username, operacao, l.id_admin " ;
+			
+			$rel = $this->bd->obtemRegistros($sSQL) ;
+			
+			echo "			
+				    <table border='0' cellspacing='1' style='border: 1px solid #FCFCFC;' width='430'>
+					  <tr>
+						<td style='border: 1px solid #DCDCDC;' bgcolor='#F0F0F0' width='125' align='center'><font face='verdana' size='1' color='#85B79E'><b> data/hora</b></font></td>
+						<td style='border: 1px solid #DCDCDC;' bgcolor='#F0F0F0' width='248'align='center'><font face='verdana' size='1' color='#85B79E'><b>operacao</b></font></td>
+						<td style='border: 1px solid #DCDCDC;' bgcolor='#F0F0F0'align='center'><font face='verdana' size='1' color='#85B79E'><b>admin</b></font></td>
+					  </tr>
+				 ";
+				
+			
+			for ($i=0; $i<count($rel); $i++){
+			
+				$operacao = trim($rel[$i]['operacao']);
+				$tipo_conta = $rel[$i]['tipo_conta'];
+				$data_hora = $rel[$i]['data_hora'];
+				$cod_operacao = $rel[$i]['cod_operacao'];
+				$admin = $rel[$i]['admin'];
+				$ip_admin = trim($rel[$i]['ip_admin']);
+					list($data, $hora) = explode (" ",$data_hora);
+					list($ano, $mes, $dia) = explode("-",$data);
+					list($_hora, $resto) = explode(".",$hora);
+				
+				$mk_operacao = "";
+				
+				
+				if ($cod_operacao=="1"){$mk_operacao = 'Conta Criada';}				
+				if ($cod_operacao=="2"){$mk_operacao = 'Senha Alterada';}
+				if ($cod_operacao=="3"){$mk_operacao = 'Alteração de status (ativo)';}
+				if ($cod_operacao=="4"){$mk_operacao = 'Alteração de status (bloqueado)';}
+				if ($cod_operacao=="5"){$mk_operacao = 'Alteração de status (suspenso)';}
+				if ($cod_operacao=="6"){$mk_operacao = 'Telefone Alterado';}
+				if ($cod_operacao=="7"){$mk_operacao = 'NAS Alterado';}
+				if ($cod_operacao=='8'){								
+					list($nome, $banda_origem, $banda_alt) = explode("-",$operacao);
+					$mk_operacao = "Banda Alterada de" . $banda_origem . " para " . $banda_alt;
+				}
+				if ($cod_operacao=="9"){$mk_operacao = 'MAC Alterado';}
+				if ($cod_operacao=="10"){$mk_operacao = 'Alteração da conta(normal)';}
+				if ($cod_operacao=="11"){$mk_operacao = 'Alteração da conta(mestre)';}
+				if ($cod_operacao=="12"){$mk_operacao = 'Alteração de POP';}
+				
+				
+				echo "<tr>
+						<td style='border: 1px solid #DCDCDC;' bgcolor='#FFFFFF' width='125'><font face='verdana' size='1'>" . $dia . "/" . $mes . "/" . $ano . "&nbsp;" .$_hora. "</font></td>
+						<td style='border: 1px solid #DCDCDC;' bgcolor='#FFFFFF' width='251'><font face='verdana' size='1'>" . $mk_operacao . "</font></td>
+						<td style='border: 1px solid #DCDCDC;' bgcolor='#FFFFFF'><font face='verdana' size='1' >" . $admin . "</font></td>
+				 	  </tr>";
+				
+			}
+			
+			echo "	  <tr>
+						<td colspan='3' align='right'><font size='1' face='verdana' color='#85B79E'>[<a href='javascript:;' onClick='Fecha_hist();'><font size='1' face='verdana' color='#85B79E'>fechar</font></a>]</font></td>
+				  	  </tr>
+				  	</table>";
+			return;
 		}
 	}
 	
