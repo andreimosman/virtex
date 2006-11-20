@@ -2166,6 +2166,22 @@ class VARelatorio extends VirtexAdmin {
 					$this->privMSG();
 					return;
 		}	
+		
+		$ano = @$_REQUEST["ano"];
+		$ano_atual = Date("Y");
+		
+		
+		
+		if (!$ano ){
+			$ano = $ano_atual;
+		
+		}
+		
+		$data_inicio = $ano."-01-01";
+		$data_final = $ano."-12-31";
+		
+		
+		
 
 		$sSQL  = "SELECT "; 
 		$sSQL .= "SUM(valor_pago) as faturamento, ";
@@ -2177,8 +2193,8 @@ class VARelatorio extends VirtexAdmin {
 		$sSQL .= "WHERE   ";
 		$sSQL .= "status = 'P' ";
 		$sSQL .= "AND data_pagamento BETWEEN   ";
-		$sSQL .= "CAST( '2006-01-01' as date)  ";
-		$sSQL .= "AND CAST( '2006-12-31' as date )  ";
+		$sSQL .= "CAST( '$data_inicio' as date)  ";
+		$sSQL .= "AND CAST( '$data_final' as date )  ";
 		$sSQL .= "GROUP BY   ";
 		$sSQL .= "ano, mes, dia  ";
 		$sSQL .= "ORDER BY   ";
@@ -2208,7 +2224,7 @@ class VARelatorio extends VirtexAdmin {
 			//echo $tabela[$i]["1"] . " - " . $tabela[$i]["2"] . " - ". $tabela[$i]["3"] . "<br>\n";
 		}
 		
-		
+		$this->tpl->atribui("ano",$ano);
 		$this->tpl->atribui("tabela",$tabela);
 		$this->arquivoTemplate = "relatorio_faturamento_periodo.html";
 

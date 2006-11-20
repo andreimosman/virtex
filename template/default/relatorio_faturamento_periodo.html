@@ -67,11 +67,30 @@ if (da && !pr && !mac) with (document) {
               </tr>
               <tr>
                 <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio 
-                    Faturamento Comparativo</h1>
+                    Faturamento Comparativo<br>
+                  </h1>
+                  <form name="form1" method="post" action="">
+                    <table width="250" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td width="100"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Escolha 
+                          o ano:</font></td>
+                        <td width="59"><select name="ano" id="ano">
+                            <option value="2005" {if $ano == "2005"}selected{/if}>2005</option>
+                            <option value="2006" {if $ano == "2006"}selected{/if}>2006</option>
+                            <option value="2007" {if $ano == "2007"}selected{/if}>2007</option>
+                            <option value="2008" {if $ano == "2008"}selected{/if}>2008</option>
+                          </select></td>
+                        <td width="49"><input type="submit" name="Submit" value="listar">
+                          <input name="op" type="hidden" id="op" value="faturamento_comp"></td>
+                      </tr>
+                    </table>
+                  </form>
+                  <p align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Ano:<strong> 
+                    {$ano}</strong></font></p>
                   <table width="750" border="0" cellspacing="0" cellpadding="0">
-                    <tr align="center" bgcolor="#CCCCCC"> 
-                      <td width="57" rowspan="2" bgcolor="#666666"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong><font color="#FFFFFF">Dia</font></strong></font><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
-                      <td colspan="12" bgcolor="#333333"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Meses</strong></font></td>
+                    <tr align="center"> 
+                      <td width="30" rowspan="2" bgcolor="#666666"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong><font color="#FFFFFF">Dia</font></strong></font><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif">&nbsp;</font></td>
+                      <td colspan="12" bgcolor="#666666"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Meses</strong></font></td>
                     </tr>
                     <tr align="center" bgcolor="#f1f1f1"> 
                       <td width="57" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">JAN</font></td>
@@ -88,32 +107,35 @@ if (da && !pr && !mac) with (document) {
                       <td width="57" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">DEZ</font></td>
                     </tr>
                     {foreach key=dia item=fat from=$tabela} 
-                    <tr bgcolor="{cycle values="#ffffff,#f1f1f1"}"}"> 
-                      <td height="10" align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$dia}</font></td>
-                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                    <tr> 
+                      <td width="30" height="15" align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$dia}</font></td>
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
                         equation="x*1" x=$fat.1 format="%.2f"}</font></td>
-                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
                         equation="x*1" x=$fat.2 format="%.2f"}</font></td>
-                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
                         equation="x*1" x=$fat.3 format="%.2f"}</font></td>
-                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
                         equation="x*1" x=$fat.4 format="%.2f"}</font></td>
-                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
                         equation="x*1" x=$fat.5 format="%.2f"}</font></td>
-                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
                         equation="x*1" x=$fat.6 format="%.2f"}</font></td>
-                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
                         equation="x*1" x=$fat.7 format="%.2f"}</font></td>
-                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
                         equation="x*1" x=$fat.8 format="%.2f"}</font></td>
-                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
                         equation="x*1" x=$fat.9 format="%.2f"}</font></td>
-                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
                         equation="x*1" x=$fat.10 format="%.2f"}</font></td>
-                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
                         equation="x*1" x=$fat.11 format="%.2f"}</font></td>
-                      <td height="10" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
+                      <td height="15" align="right"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{math 
                         equation="x*1" x=$fat.12 format="%.2f"}</font></td>
+                    </tr>
+					<tr> 
+                      <td colspan=13 bgcolor="#000000"><img src="template/default/menu/spacer.gif" width=100 height=1></td>
                     </tr>
                     {/foreach} 
                   </table>
