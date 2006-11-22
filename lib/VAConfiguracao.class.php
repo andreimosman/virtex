@@ -912,6 +912,14 @@ class VAConfiguracao extends VirtexAdmin {
 						$ativar_snmp = 'f' ;
 
 					}
+					
+					$ativar_monitoramento = @$_REQUEST["ativar_monitoramento"];
+
+					if ($ativar_monitoramento == "" ){
+
+						$ativar_monitoramento = 'f' ;
+
+					}
 
 
 					$sSQL  = "INSERT INTO ";
@@ -942,7 +950,7 @@ class VAConfiguracao extends VirtexAdmin {
 					$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["snmp_ro_com"]) . "', ";
 					$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["snmp_rw_com"]) . "', ";
 					$sSQL .= "     '$ativar_snmp', ";
-					$sSQL .= "	   '" . $this->bd->escape(@$_REQUEST["ativar_monitoramento"]) . "' ";
+					$sSQL .= "	   '$ativar_monitoramento' ";
 					$sSQL .= "     )";
 					///echo $sSQL;
 
