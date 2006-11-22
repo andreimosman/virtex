@@ -114,9 +114,9 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 							</tr>
 							<tr>
 								<td width="75" bgcolor="#FFFFFF" align="right"> <p>Upload:</p> </td>
-								<td width="150" bgcolor="#FFFFFF"> <p>{$upload_kbps} kbps</p> </td>
+								<td width="150" bgcolor="#FFFFFF"> <p>{if $upload_kbps=='0'}Ilimitado{else}{$upload_kbps} kbps{/if}</p> </td>
 								<td width="75" bgcolor="#FFFFFF" align="right"> <p>Download:</p> </td>
-								<td width="150" bgcolor="#FFFFFF"> <p>{$download_kbps} kbps</p> </td>
+								<td width="150" bgcolor="#FFFFFF"> <p>{if $download_kbps=='0'}Ilimitado{else}{$download_kbps} kbps{/if}</p> </td>
 							</tr>
 						</table>
 					</td>

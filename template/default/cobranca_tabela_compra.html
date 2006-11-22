@@ -1,0 +1,73 @@
+<!--cobranca_tabela_compra.html//-->
+<html>
+<head>
+<title>tabela de compra</title>
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+
+	<script language="javascript" src="template/default/tabela_compra.js" type="text/javascript" ></script>
+{literal}
+<style>
+.td{
+text-align:center
+}
+</style>
+{/literal}
+</head>
+
+
+<body>
+<form name="formulario" >
+<table border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td colspan="2"><div align="center">TABELA DE COMPRA</div></td>
+  </tr> 
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Nome/Valor do Produto</td>
+    <td>
+		<select name="nome" onChange="Processa(this.value);">
+					<option value="#"></option>
+				{foreach item=a from=$rel}
+					<option value="{$a.id_produto}">{$a.nome} / {$a.valor}</option>
+				{/foreach}
+		</select>
+	</td>
+  </tr>
+ 
+</table>
+
+</form>
+
+<div align="center"><p>
+<div id="tabela_permanente" style="width:500px; padding:10px;" align="left" class="box_fechada"></div>
+<form name="tabela_compra" >
+<table border='1' align='center' cellpadding='0' cellspacing='0' width='550' class="box_fechada" id="tabela" class="td">
+	<tr>
+	  <td align='center' width='110'>COD</td>
+	  <td align='center' width='150'>NOME</td>
+	  <td align='center' width='110'>QUANT</td>
+	  <td align='center' width='110'>PRE&Ccedil;O UNI</td>
+	  <td align='center' width="70">TOTAL</td>
+	</tr>
+	
+</table>
+<table width='550' border='0' cellspacing='1' cellpadding='2' class="box_fechada" id="tabela_botao">
+	<tr>
+		<td align='right'>total ----- <input type="text" size="6" name="total_calc" id="total_calc" disabled="disabled" style="border:1px solid #FFFFFF; font:Verdana, Arial, Helvetica, sans-serif; color:#000000; font-size:11px"></td>
+	</tr>
+	<tr>
+		<td align='right' colspan='2'><input type='submit' value='Comprar'></td>
+	</tr>
+</table>
+<input type="hidden" value="0" name="total">
+<input type="hidden" value="0" name="vezes" id="vezes"/>	
+<input type="hidden" value="tabela_compra" name="op" >
+<input type="hidden" value="comprar" name="acao">
+</form>
+</div>
+</p></div>
+</body>
+</html>
