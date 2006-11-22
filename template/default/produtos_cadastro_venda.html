@@ -1,0 +1,48 @@
+<html>
+<head>
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<div align="center">
+  <h1>{$titulo} Produtos ou Servi&ccedil;os para Venda</h1>
+  <form name="form1" method="post" action="">
+    <table width="500" border="0" cellspacing="1" cellpadding="0">
+      <tr> 
+        <td width="76"><p>Nome:</p></td>
+        <td colspan="3"><input name="nome" type="text" id="nome" value="{$nome}" size="50"></td>
+      </tr>
+      <tr> 
+        <td><p>Valor:</p></td>
+        <td width="421"><input name="valor" type="text" id="valor" value="{$valor}" size="10"></td>
+        <td width="421"><p>Disponivel para contratacao:</p></td>
+        <td width="421"><select name="disponivel" id="disponivel">
+            <option value="t" {if $disponivel == "t"}selected{/if}>Sim</option>
+            <option value="f" {if $disponivel == "f"}selected{/if}>N&atilde;o</option>
+          </select></td>
+      </tr>
+      <tr> 
+        <td><p>Descri&ccedil;&atilde;o:</p></td>
+        <td colspan="3"><textarea name="descricao" cols="50" rows="4" id="descricao">{$descricao}</textarea></td>
+      </tr>
+      <tr> 
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr> 
+        <td>&nbsp;</td>
+        <td colspan="3"><input type="submit" name="Submit" value="{$titulo}"> 
+          <input name="op" type="hidden" id="op" value="cadastro_venda"> <input name="acao" type="hidden" id="acao" value="{$acao}"> 
+          <input name="id_produto" type="hidden" id="id_produto" value="{$id_produto}"> 
+          <input name="enviando" type="hidden" id="enviando" value="true"></td>
+      </tr>
+    </table>
+  </form>
+  <p>&nbsp;</p>
+  </div>
+</body>
+</html>

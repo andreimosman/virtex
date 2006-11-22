@@ -1,0 +1,32 @@
+<html>
+<head>
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<div align="center"> 
+  <h1>Produtos e Servi&ccedil;os</h1>
+  <p><a href="cobranca.php?op=cadastro_venda">Cadastrar Novo</a></p>
+  <table width="600" border="0" cellspacing="1" cellpadding="2">
+    <tr bgcolor="#CCCCCC"> 
+      <td width="140"> <p><strong>Produto</strong></p></td>
+      <td width="298"> <p><strong>Descricao</strong></p></td>
+      <td width="94"> <p><strong>Valor</strong></p></td>
+      <td width="63"> <p><strong>Disponivel</strong></p></td>
+    </tr>
+	{foreach item=v from=$produto}
+    <tr bgcolor="{cycle values="#ffffff,#f1f1f1"}"> 
+      <td><p><a href="cobranca.php?op=cadastro_venda&id_produto={$v.id_produto}">{$v.nome}</a></p></td>
+      <td><p><a href="cobranca.php?op=cadastro_venda&id_produto={$v.id_produto}">{$v.descricao}</a></p></td>
+      <td><p><a href="cobranca.php?op=cadastro_venda&id_produto={$v.id_produto}">{$v.valor}</a></p></td>
+      <td>{if $v.disponivel == "t"}<a href="cobranca.php?op=cadastro_venda&id_produto={$v.id_produto}"><img src="template/default/images/gif_disp.gif" alt="Disponivel para Venda" width="26" height="26" border="0"></a>{else}<a href="cobranca.php?op=cadastro_venda&id_produto={$v.id_produto}"><img src="template/default/images/gif_indisp.gif" alt="Indisponivel para Venda" width="26" height="26" border="0"></a>{/if}</td>
+    </tr>
+    {/foreach}
+  </table>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+</div>
+</body>
+</html>
