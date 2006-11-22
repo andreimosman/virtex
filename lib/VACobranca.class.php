@@ -590,6 +590,7 @@ class VACobranca extends VirtexAdmin {
 				$sSQL .= "   valor, disponivel ";
 				$sSQL .= "FROM prtb_produto ";
 				
+				
 				$where = "";
 				
 				$clausulas = array();
@@ -612,7 +613,7 @@ class VACobranca extends VirtexAdmin {
 					$where = "WHERE ". implode(' AND ', $clausulas);
 					
 					$sSQL .= $where;
-				
+					$sSQL .= "AND tipo != 'V' ";
 				}
 				
 				
@@ -4646,6 +4647,121 @@ class VACobranca extends VirtexAdmin {
 
 	
 	
+
+	}else if ($op == "lista_produtos"){
+	
+	
+		$sSQL  = "SELECT id_produto, nome, descricao, valor, disponivel FROM prtb_produto WHERE tipo = 'V' AND id_produto != 10000 ORDER BY nome ";
+		$prod = $this->bd->obtemRegistros($sSQL);
+		
+		$this->tpl->atribui("produto",$prod);
+		$this->arquivoTemplate = "produtos_lista_venda.html";
+	
+	
+	
+	
+	
+	
+	
+	
+	}else if ($op == "cadastro_venda"){
+	
+		$acao = @$_REQUEST["acao"];
+		$id_produto = @$_REQUEST["id_produto"];
+		$enviando = @$_REQUEST["enviando"];
+		
+		$sSQL  = "SELECT id_produto, nome, descricao, valor, disponivel FROM prtb_produto WHERE id_produto = $id_produto AND tipo = 'V' ORDER BY nome ";
+		$prod = $this->bd->obtemRegistros($sSQL);
+	
+		if ($id_produto){
+			$acao = "alt";
+			
+		}else{
+			$acao = "cad";
+		}
+		
+		
+		if ($acao == "cad"){
+			if ($enviando){
+				$nome = @$_REQUEST["nome"];
+				$descricao = @$_REQUEST["descricao"];
+				$tipo = "V";
+				$disponivel = @$_REQUEST["disponivel"];
+
+				$valor = number_format(trim(@$_REQUEST['valor']),2,'.',',');
+				if(!$valor) $valor = 0.00;				
+
+				$id_produto = $this->bd->proximoID("prsq_id_produto");
+
+				$sSQL  = "INSERT INTO prtb_produto (id_produto,nome,valor,descricao,tipo,disponivel) ";
+				$sSQL .= "VALUES ($id_produto,'$nome','$valor','$descricao','$tipo','$disponivel' ) ";
+				$this->bd->consulta($sSQL);
+
+				$url = "cobranca.php?op=lista_produtos";
+				$mensagem = "Produto cadastrado com sucesso";
+
+
+				$this->tpl->atribui("url",$url);
+				$this->tpl->atribui("mensagem",$mensagem);
+				$this->arquivoTemplate = "msgredirect.html";
+			}else{
+			
+				$this->tpl->atribui("titulo", "Cadastrar");
+				$this->arquivoTemplate = "produtos_cadastro_venda.html";
+			
+			}
+		
+		}else if ($acao == "alt"){
+			if ($enviando){
+				$nome = @$_REQUEST["nome"];
+				$descricao = @$_REQUEST["descricao"];
+				$tipo = "V";
+				$disponivel = @$_REQUEST["disponivel"];
+				
+				$valor = number_format(trim(@$_REQUEST['valor']),2,'.',',');
+				if(!$valor) $valor = 0.00;		
+
+				$sSQL  = "UPDATE prtb_produto SET ";
+				$sSQL .= "nome = '$nome', descricao = '$descricao', valor = '$valor', disponivel = '$disponivel' ";
+				$sSQL .= "WHERE id_produto = '".@$_REQUEST["id_produto"]."' ";
+				$this->bd->consulta($sSQL);
+
+
+				$url = "cobranca.php?op=lista_produtos";
+				$mensagem = "Produto alterado com sucesso";
+
+
+				$this->tpl->atribui("url",$url);
+				$this->tpl->atribui("mensagem",$mensagem);
+				$this->arquivoTemplate = "msgredirect.html";		
+			}else{
+				$sSQL = "SELECT * FROM prtb_produto where id_produto = '".@$_REQUEST["id_produto"]."' ";
+				$pr = $this->bd->obtemUnicoRegistro($sSQL);
+				
+				$this->tpl->atribui("id_produto",$pr["id_produto"]);
+				$this->tpl->atribui("nome",$pr["nome"]);
+				$this->tpl->atribui("valor",$pr["valor"]);
+				$this->tpl->atribui("descricao",$pr["descricao"]);
+				$this->tpl->atribui("disponivel",$pr["disponivel"]);
+				$this->tpl->atribui("acao",$acao);
+			
+			
+			
+				$this->tpl->atribui("titulo","Alterar");
+				$this->arquivoTemplate = "produtos_cadastro_venda.html";
+			
+			
+			
+			}
+		
+		
+		
+		
+		}
+	
+	
+	
+	
 	}else if ($op == "tabela_compra"){
 	
 		$acao = @$_REQUEST['acao'];
@@ -4769,6 +4885,7 @@ class VACobranca extends VirtexAdmin {
 	
 	$this->arquivoTemplate = "cobranca_tabela_compra.html";
 	
+>>>>>>> 1.116
 	}
 	
 	
