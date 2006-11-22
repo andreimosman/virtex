@@ -20,7 +20,7 @@
 
 <body style="x-overflow:hidden;">
 <br />
-{if !$index_array }
+{if !$lista_dias }
 <table border="0" align="center" cellpadding="1" cellspacing="1" style="border:1px solid #779977;">
   <tr>
     <td colspan="2" style="border-bottom:1px solid #779977;"><span class="style1 style8">Lista de Emails de Cobrança Enviados</span></td>
@@ -32,10 +32,10 @@
   <tr>
     <td colspan="2" height="4px"></td>
   </tr>
-  	{foreach item=b from=$array_array}
+  	{foreach item=b from=$emails_lista}
 	  <tr>
-		<td style="padding-left:15px; padding-bottom:3px;"><a href="cobranca.php?op=amortizacao&id_cliente_produto={$b.idcp}&data={$b.data_fatura}&id_cliente={$b.id_cliente}&tipo={$b.tipo}">{$b.email}</a></td>
-		<td style="padding-left:28px; padding-bottom:4px;"><a href="cobranca.php?op=amortizacao&id_cliente_produto={$b.idcp}&data={$b.data_fatura}&id_cliente={$b.id_cliente}&tipo={$b.tipo}">{$b.data}</a></td>
+		<td style="padding-left:15px; padding-bottom:3px;"><a href="cobranca.php?op=amortizacao&id_cliente_produto={$b.id_cliente_produto}&data={$b.data}&id_cliente={$b.id_cliente}&tipo={$b.tipo_conta}">{$b.email}</a></td>
+		<td style="padding-left:28px; padding-bottom:4px;"><a href="cobranca.php?op=amortizacao&id_cliente_produto={$b.id_cliente_produto}&data={$b.data}&id_cliente={$b.id_cliente}&tipo={$b.tipo_conta}">{$b.hora_envio|date_format:"%H:%M:%S %d/%m/%Y"}</a></td>
 	  </tr>
 	{/foreach}
 </table><br />
@@ -47,12 +47,13 @@
 <span class="style1 style8">Escolha o dia em que foi enviado o email</span>
 	<form name="form">
 		<select name="data">
-			{foreach item=a from=$index_array}
-				<option value="{$a.dia}-{$a.mes}-{$a.ano}" >{$a.dia}/{$a.mes}/{$a.ano}</option>
+			{foreach item=a from=$lista_dias}
+				<option value="{$a.ano}-{$a.mes}-{$a.dia}" >{$a.dia}/{$a.mes}/{$a.ano}</option>
 			{/foreach}
 		</select>
 		<input type="submit" value="Ok" />
-		<input type="hidden" name="op" value="lista_email" />
+		<input type="hidden" name="op" value="index_email" />
+		<input type="hidden" name="acao" value="pesquisar" />
 	</form>
 </div>
 {/if}

@@ -42,7 +42,7 @@ z-index: 100;
 </style>
 {/literal}
 </head>
-<body style="" marginheight="0" marginwidth="0"> 
+<body style="" marginheight="0" marginwidth="0" > 
 <div id="dhtmltooltip"></div>
 {literal}
 
@@ -118,9 +118,29 @@ tipobj.style.width=''
 
 document.onmousemove=positiontip
 
+	function jump_func(){
+	
+		document.form1.submit();	
+	
+	
+	}
+
 </script>
 {/literal}
-<h1 align="center"> Informa&ccedil;&otilde;es de Monitoramento	</h1>
+<h1 align="center">Informa&ccedil;&otilde;es de Monitoramento</h1>
+<div align="center">
+	<form name="form1" method="post" action="">
+		<p>mostrar POPs
+		  <label>
+			  <select name="tipo_lista" onChange="jump_func(this.value);">
+				<option value="mostrar" {if $mostra_tudo == 'false' || !$mostra_tudo}SELECTED{/if}>todos</option>
+				<option value="nao_mostrar" {if $mostra_tudo == 'true'}SELECTED{/if}>monitorados</option>
+			  </select>
+		  </label>
+		</p>
+		<input type="hidden" value="monitoramento" name="op">
+	</form>
+</div>
 <table width="740" border="0"  align="center" cellpadding="0" cellspacing="0" style="border:1px solid #D8E7DB;">
 
   <tr>
@@ -146,6 +166,8 @@ document.onmousemove=positiontip
 		<td height="1px" id="td_spacer" colspan="9" align="center" valign="middle" nowrap="nowrap"><img src="template/default/images/menu/spacer.gif" height="1"/></td>
 	</tr>
       {foreach item=a from=$rel_monitoramento}
+	  	{if $mostra_tudo =='true'}
+		 {if $a.ativar_monitoramento =='t'} 
 	<tr bgcolor="#FBFDFB" onMouseOver="style.background='#F4F4F4';" onMouseOut="style.background='#FBFDFB'; "> 
 		<td style="border:1px solid #FFFFFF;" valign="top" onMouseover="ddrivetip('<p align=center>{if $a.tipo == "C"}Cabo{/if}
 		{if $a.tipo == "CL"}Cliente{/if}
@@ -193,7 +215,7 @@ document.onmousemove=positiontip
 		</p>
 		
 		
-		</td>
+	  </td>
 		<td width="250px" style="border:1px solid #FFFFFF;"  nowrap="nowrap"  {if $a.ativar_monitoramento == 't'}onMouseover="ddrivetip('<p align=center>{$a.ipaddr}</p>', '#FFFFEA')" onMouseout="hideddrivetip()"{/if}>
 			<p>{if $a.ativar_monitoramento =='f' || !$a.ipaddr }<font color='#ABABAB'>{else}<font color='#000000'>{/if}{$a.nome}</font></p>
 		</td>
@@ -246,6 +268,108 @@ document.onmousemove=positiontip
  <tr>
     <td colspan="9" bgcolor="#DFDFDF"><img src="template/default/images/menu/spacer.gif" height="1"/></td>
       </tr>
+	  	{else}{/if}
+	{else}
+			<tr bgcolor="#FBFDFB" onMouseOver="style.background='#F4F4F4';" onMouseOut="style.background='#FBFDFB'; "> 
+		<td style="border:1px solid #FFFFFF;" valign="top" onMouseover="ddrivetip('<p align=center>{if $a.tipo == "C"}Cabo{/if}
+		{if $a.tipo == "CL"}Cliente{/if}
+		{if $a.tipo == "B"}Backbone{/if}
+		{if $a.tipo == "AP"}Access Point{/if}</p>', '#FFFFEA')" onMouseout="hideddrivetip()"><p>
+		{if $a.nivel=='0'}
+			<span class="style2">•</span>
+		{/if}
+		{if $a.nivel=='1'}
+			<img src="template/default/images/conector_mon.gif" alt="NÍVEL DE DEPENDÊNCIA 1"><span class="style2">•</span>
+		{/if} 
+		
+		{if $a.nivel=='2'}
+			<img src="template/default/images/menu/spacer.gif" width="12"><img src="template/default/images/conector_mon.gif" alt="NÍVEL DE DEPENDÊNCIA 2"><span class="style2">•</span>
+		{/if}
+		
+		{if $a.nivel=='3'}
+			<img src="template/default/images/menu/spacer.gif" width="24" height="1"><img src="template/default/images/conector_mon.gif" alt="NÍVEL DE DEPENDÊNCIA 3"><span class="style2">•</span>
+		{/if}
+		
+		{if $a.nivel=='4'}
+			<img src="template/default/images/menu/spacer.gif" width="36" height="1"><img src="template/default/images/conector_mon.gif" alt="NÍVEL DE DEPENDÊNCIA 4"><span class="style2">•</span>
+		{/if} 
+		
+		{if $a.nivel=='5'}
+			<img src="template/default/images/menu/spacer.gif" width="48" height="1"><img src="template/default/images/conector_mon.gif" alt="NÍVEL DE DEPENDÊNCIA 5"><span class="style2">•</span>
+		{/if} 
+		
+		{if $a.nivel=='6'}
+			<img src="template/default/images/menu/spacer.gif" width="60" height="1"><img src="template/default/images/conector_mon.gif" alt="NÍVEL DE DEPENDÊNCIA 6"><span class="style2">•</span>
+		{/if} 
+		
+		{if $a.nivel=='7'}
+			<img src="template/default/images/menu/spacer.gif" width="72" height="1"><img src="template/default/images/conector_mon.gif" alt="NÍVEL DE DEPENDÊNCIA 7"><span class="style2">•</span>
+		{/if} 
+		
+		{if $a.nivel == '0'}<font color="#003300"><strong>{/if}							  
+		{if $a.ativar_monitoramento =='f' || !$a.ipaddr }<font color='#ABABAB'>{/if}
+		{if $a.tipo == "C"}CB{/if}
+		{if $a.tipo == "CL"}CL{/if}
+		{if $a.tipo == "B"}BB{/if}
+		{if $a.tipo == "AP"}AP{/if}
+		{if $a.ativar_monitoramento =='f' || !$a.ipaddr }</font>{/if}
+		{if $a.nivel == '0'}</strong></font>{/if}							  
+		</p>
+		
+		
+	  </td>
+		<td width="250px" style="border:1px solid #FFFFFF;"  nowrap="nowrap"  {if $a.ativar_monitoramento == 't'}onMouseover="ddrivetip('<p align=center>{$a.ipaddr}</p>', '#FFFFEA')" onMouseout="hideddrivetip()"{/if}>
+			<p>{if $a.ativar_monitoramento =='f' || !$a.ipaddr }<font color='#ABABAB'>{else}<font color='#000000'>{/if}{$a.nome}</font></p>
+		</td>
+		<td style="border:1px solid #FFFFFF;" {if $a.ativar_monitoramento == 't'}onMouseover="ddrivetip('<p align=center>{$a.ipaddr}</p>', '#FFFFEA')" onMouseout="hideddrivetip()"{/if} nowrap="nowrap">
+			<p align="left">{$a.laststats|date_format:"%d/%m/%Y %H:%M:%S"}</p>
+		</td>
+    <td style="border:1px solid #FFFFFF;" 
+	{if $a.status == 'ERR' } 
+		bgcolor="#FF0033"
+	{/if}
+	{if $a.status == "OK"}
+		bgcolor="#569C5B"
+	{/if}
+	{if $a.status == "WRN"}
+		bgcolor="#F7962B"
+	{/if} 
+	{if $a.status == "" && $a.ativar_monitoramento == 'f'}
+		bgcolor=""
+	{/if}
+	{if $a.ativar_monitoramento == 't'}onMouseover="ddrivetip('<p align=center>{$a.ipaddr}</p>', '#FFFFEA')" onMouseout="hideddrivetip()"{/if}>
+		<p align="center" class="style1" >
+		{if $a.status == 'ERR' }
+			Erro
+		{/if}
+
+		{if $a.status == "OK"}
+			Ok
+		{/if}
+		
+		{if $a.status == "WRN"}
+			Alerta
+		{/if}
+	</p></td>
+	<td style="border:1px solid #FFFFFF;" {if $a.ativar_monitoramento == 't'}onMouseover="ddrivetip('<p align=center>{$a.ipaddr}</p>', '#FFFFEA')" onMouseout="hideddrivetip()"{/if}>
+		<p align="center">{$a.num_ping}</p>
+	</td>
+    <td style="border:1px solid #FFFFFF;" {if $a.ativar_monitoramento == 't'}onMouseover="ddrivetip('<p align=center>{$a.ipaddr}</p>', '#FFFFEA')" onMouseout="hideddrivetip()"{/if}>
+		<p align="center">{$a.num_perdas}</p>
+	</td>  
+    <td style="border:1px solid #FFFFFF;" {if $a.ativar_monitoramento == 't'}onMouseover="ddrivetip('<p align=center>{$a.ipaddr}</p>', '#FFFFEA')" onMouseout="hideddrivetip()"{/if}>
+		<p align="center">{if $a.ativar_monitoramento=='t'}{assign var='minimo' value=$a.min_ping/1000}{if $minimo=="0"}<b>T.E.</b>{else}{$minimo}{/if}{else}&nbsp;{/if}</p>
+	</td>
+    <td style="border:1px solid #FFFFFF;" {if $a.ativar_monitoramento == 't'}onMouseover="ddrivetip('<p align=center>{$a.ipaddr}</p>', '#FFFFEA')" onMouseout="hideddrivetip()"{/if}>
+		<p align="center">{if $a.ativar_monitoramento=='t'}{assign var='maximo' value=$a.max_ping/1000}{if $maximo=="0"}<b>T.E.</b>{else}{$maximo}{/if}{else}&nbsp;{/if}</p>
+	</td>
+    <td style="border:1px solid #FFFFFF;" {if $a.ativar_monitoramento == 't'}onMouseover="ddrivetip('<p align=center>{$a.ipaddr}</p>', '#FFFFEA')" onMouseout="hideddrivetip()"{/if}>
+		<p align="center">{if $a.ativar_monitoramento=='t'}{assign var='media' value=$a.media_ping/1000}{if $media=="0"}<b>T.E.</b>{else}{$media}{/if}{else}&nbsp;{/if}</p>
+	</td>
+  </tr>
+ <tr>
+    <td colspan="9" bgcolor="#DFDFDF"><img src="template/default/images/menu/spacer.gif" height="1"/></td>
+      </tr>{/if}
       {/foreach}
     </table></td>
   </tr>

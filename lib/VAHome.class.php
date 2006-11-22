@@ -228,48 +228,39 @@ class VAHome extends VirtexAdmin {
 					$cod_barra = $rel_clientes[$i]["cod_barra"];
 					$nosso_numero = $rel_clientes[$i]["nosso_numero"];
 					$id_cliente_produto = $rel_clientes[$i]["id_cliente_produto"];
-
-
-					$sSQL  = " SELECT email_aviso, data FROM cbtb_faturas WHERE id_cliente_produto = '$id_cliente_produto' AND cod_barra = '$cod_barra' AND nosso_numero = '$nosso_numero' ";
+					
+					$sSQL  = " SELECT f.email_aviso, f.data, cn.username, cn.tipo_conta ";
+					$sSQL .= " FROM cbtb_faturas f, cntb_conta cn ";
+					$sSQL .= " WHERE f.id_cliente_produto = '$id_cliente_produto' ";
+					$sSQL .= " AND f.cod_barra = '$cod_barra' AND nosso_numero = '$nosso_numero' ";
+					$sSQL .= " AND f.id_cliente_produto = cn.id_cliente_produto ";
+					$sSQL .= " AND cn.tipo_conta <> 'E' " ;
+					
 					$email_aviso = $this->bd->obtemUnicoRegistro($sSQL);
 					$data = $email_aviso['data'];
+					$username = $email_aviso['username'];
+					$tipo_conta = $email_aviso['tipo_conta'];
 
 					if ($email_aviso['email_aviso'] == 'f' && $email_cliente != "" ){
 					
-					$data = $email_aviso['data'];
-
 						if(mail($email_cliente, "Problemas na Sua Conta" ,  $html, $headers)){
 
 							// SE O EMAIL FOR ENVIADO ATUALIZA O CAMPO EMAIL AVISO COMO TRUE NA TABELA CBTB_FATURAS
 							$sSQL  = "UPDATE cbtb_faturas SET email_aviso = 't' WHERE cod_barra = '$cod_barra' AND nosso_numero = '$nosso_numero' AND id_cliente_produto = '$id_cliente_produto' ";
 							$this->bd->consulta($sSQL);
-							$send_mail = "true";
 							
-							$hoje = date('d/m/Y \a\s\ H:i:s');
-							$now = date('d/m/Y');
+							$hoje = date("Y-m-d");
 							
-							list($dia_arq, $mes_arq, $ano_arq) = explode("/",$now);
-								$arquivo = "./etc/email-log.$dia_arq-$mes_arq-$ano_arq.log"; 
-								$texto = "$email_cliente-$id_cliente_produto-$data , $hoje \r\n";
-								$arquivo_caminho = "./etc/email-log.$dia_arq-$mes_arq-$ano_arq.log \r\n"; 
-
-							if ($arquivo_add == 'true'){
+							$cSQL  = " SELECT id_cliente FROM cbtb_cliente_produto WHERE id_cliente_produto = '$id_cliente_produto' ";
+							$idcp = $this->bd->obtemUnicoRegistro($cSQL);
 							
-								$index = "./etc/index_email.log"; 
-								$fp = fopen($index,"a+"); 
-								fwrite($fp, $arquivo_caminho ); 
-								fclose($fp); 
-
-							}
-
-							$texto = "$email_cliente-$id_cliente_produto-$data , $hoje \r\n";
+							$id_cliente = $idcp['id_cliente'];
 							
-							$fp = fopen($arquivo,"a+"); 
-							fwrite($fp, $texto ); 
-							fclose($fp); 
-							
-							$arquivo_add = 'false';
-
+							// INSERE NA TABELA DE LOG DOS EMAILS
+							$aSQL  = " INSERT INTO lgtb_emails_cobranca(data_envio, id_cliente_produto, data, email,username, tipo_conta, id_cliente) ";
+							$aSQL .= " VALUES ('$hoje' , '$id_cliente_produto', '$data', '$email_cliente', '$username', '$tipo_conta', $id_cliente) " ;							
+							$this->bd->consulta($aSQL);
+					
 						}
 	
 					}
@@ -337,73 +328,39 @@ class VAHome extends VirtexAdmin {
 			
 			$this->arquivoTemplate = "home_principal.html";
 				
-		}if ($op == "index_email" ){
-		
-			$arquivo = "./etc/index_email.log";
+		}if ($op == "index_email"){
 			
+			$acao = @$_REQUEST['acao'];
+			if ($acao=='pesquisar'){
 			
-			$fd = fopen($arquivo,"a+");
-			$index_array=array();
+				$data = @$_REQUEST['data'];
+				list($ano, $mes, $dia) = explode("-", $data);
+				
+				$sSQL  = "SELECT * FROM lgtb_emails_cobranca WHERE ";
+				$sSQL .= " EXTRACT(year FROM data_envio) = '$ano' " ;
+				$sSQL .= " AND EXTRACT(month FROM data_envio) = '$mes' " ;
+				$sSQL .= " AND EXTRACT(day FROM data_envio) = '$dia' " ;
+				$emails_lista = $this->bd->obtemRegistros($sSQL);
+				$this->tpl->atribui("emails_lista", $emails_lista);
+			
+			}else{
 
-			while(($linha = fgets($fd)) && !feof($fd) ) {
-				$linha = preg_replace('/[\n]/',"",$linha);
-				@list($ponto, $caminho, $arquivo ) = explode("/",$linha);
-				if($arquivo && $caminho) {
+			
+				$rSQL  = " SELECT DISTINCT(EXTRACT (year FROM data_envio)) as ano ,EXTRACT (month FROM data_envio)as mes ,EXTRACT (day FROM data_envio)as dia  FROM lgtb_emails_cobranca ";
 
-					list($nome, $data, $extensao) = explode(".", $arquivo);
-
-						if ($data){
-							list($dia, $mes, $ano) = explode("-", $data);
-							$index_array[]= array("pasta"=> $caminho, "arquivo"=>$arquivo, "dia"=>$dia, "mes"=>$mes, "ano"=>$ano);
-						}
-				}
-
+				$lista_dias = $this->bd->obtemRegistros($rSQL);
+				$this->tpl->atribui("lista_dias",$lista_dias);
+				
 			}
-
-			fclose($fd);
-			$this->tpl->atribui("index_array",$index_array);
-			$this->arquivoTemplate= "home_lista_email.html";
-			return;
+				$this->arquivoTemplate = 'home_lista_email.html';
 
 		
-		}if ($op == "lista_email"){
 		
-			$data = @$_REQUEST['data'];
-			$arquivo = "./etc/email-log." .trim($data). ".log";
-			$fd = fopen($arquivo,"a+");
-			$array_array=array();
-
-			while(($linha = fgets($fd)) && !feof($fd) ) {
-				#$linha = str_replace('\n','',$linha);
-				$linha = preg_replace('/[\n]/',"",$linha);
-				@list($email, $data ) = explode(",",$linha);
-				if($email) {
-
-					@list($email_certo, $idcp, $ano, $mes, $dia ) = explode("-",$email);
-
-						$sSQL  = " SELECT cp.id_cliente, cn.tipo_conta FROM cbtb_cliente_produto cp, cntb_conta cn WHERE cp.id_cliente_produto = '$idcp' AND cn.id_cliente_produto = cp.id_cliente_produto AND cn.tipo_conta <> 'E' " ;
-						$reg_cliente = $this->bd->obtemUnicoRegistro($sSQL);
-
-						$id_cliente = $reg_cliente['id_cliente'];
-						$tipo = $reg_cliente['tipo_conta'];
-						$data_fatura = trim($ano ."-". $mes ."-". $dia);
-
-						$array_array[]= array("tipo"=> $tipo, "id_cliente"=>$id_cliente, "data_fatura"=>$data_fatura, "idcp"=>$idcp, "email"=> $email_certo,"data"=> $data);
-
-				}
-
-			}
-
-			fclose($fd);
-			$this->tpl->atribui("array_array",$array_array);
-			$this->arquivoTemplate= "home_lista_email.html";
-			return;
-
-
 		}if ($op == "mostra_email"){
 					
 			$empresa = $this->prefs->obtem("geral","nome");
 			$mensagem = @$_REQUEST['mensagem'];
+			return;
 			
 		 	if ($mensagem != ""){
 			

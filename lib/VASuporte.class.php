@@ -202,9 +202,22 @@ class VASuporte extends VirtexAdmin {
 				$this->privMSG();
 				return;
 			}	
+			
+			$tipo_lista = @$_REQUEST['tipo_lista'];
+			
+			if ($tipo_lista =="mostrar" || $tipo_lista ==""){
+			
+				$mostra_tudo = 'false';
+				
+			}else if($tipo_lista =="nao_mostrar"){
+			
+				$mostra_tudo = 'true';
+				
+			}
 
 			$rel_monitoramento = $this->obtemListaMonitorPOPs();
 			$this->tpl->atribui("rel_monitoramento",$rel_monitoramento);
+			$this->tpl->atribui("mostra_tudo",$mostra_tudo);
 			$this->arquivoTemplate = "suporte_monitoramento_pops.html";	
 
 		}
