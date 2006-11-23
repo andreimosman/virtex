@@ -38,7 +38,7 @@ done
 
 
 # Starta o Radiusd
-${VTXHOME}/radius/sbin/radiusd -y
+${VTXHOME}/radius/sbin/radiusd -y > /dev/null 2>&1
 
 # Carrega configurações de rede e dos usuários
 ${PHP} ${VTXBIN}/vtx-spool.php -b
