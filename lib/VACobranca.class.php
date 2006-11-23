@@ -4762,17 +4762,20 @@ class VACobranca extends VirtexAdmin {
 	
 	
 	
-	}else if ($op == "tabela_compra"){
+	}else if ($op == "compra_produto"){
 	
 		$acao = @$_REQUEST['acao'];
-	
-	
+		$id_cliente = @$_REQUEST['id_cliente'];
+		
+		$cSQL  = " SELECT nome_razao FROM cltb_cliente WHERE id_cliente = '$id_cliente' ";
+		$cliente = $this->bd->obtemUnicoRegistro($cSQL);
+		
 		$sSQL  = " SELECT nome, valor, id_produto FROM prtb_produto WHERE tipo ='V' AND id_produto != 10000 " ;
 		$rel = $this->bd->obtemRegistros($sSQL);
 		
 		$this->tpl->atribui("rel",$rel);
-		
-	
+		$this->tpl->atribui("id_cliente",$id_cliente);
+		$this->tpl->atribui("cliente",$cliente);
 	
 		if ($acao == "listar"){
 		
@@ -4871,21 +4874,66 @@ class VACobranca extends VirtexAdmin {
 		
 		
 		
+		}else if($acao == "confirma_compra"){
+			
+			$vezes = @$_REQUEST['vezes'];	
+			$total = @$_REQUEST['total'];
+			$id_cliente = @$_REQUEST['id_cliente'];
+			echo $id_cliente ;
+
+				for($i=0;$i<($vezes);$i++){
+
+					$id_produto = @$_REQUEST['id_produto'];	
+					$nome = @$_REQUEST['nome'];	
+					$quant = @$_REQUEST['quant'];	
+					$valor = @$_REQUEST['valor'];	
+					$total_parc = @$_REQUEST['total_parc'];
+
+					$all_info = array("id_produto" => $id_produto , "nome" => $nome , "quant" => $quant , "valor" => $valor , "total_parc" => $total_parc);
+					//echo $all_info["id_produto"][$i] . "<br>" ;
+				}
+
+			$this->tpl->atribui("all_info",$all_info);
+			$this->tpl->atribui("vezes",$vezes);
+			$this->tpl->atribui("total",$total);
+
+			$this->arquivoTemplate = "cobranca_confirma_compra.html";
+			return ;
+
 		}else if($acao == "comprar"){
 		
-			$vezes = @$_REQUEST['vezes'];
+			$vezes = @$_REQUEST['vezes'];	
+			$total = @$_REQUEST['total'];
+			$id_cliente = @$_REQUEST['id_cliente'];
+			
+			$cSQL  = " INSERT INTO LALAALL (')";
 
-			///VEZES É A QUANTIDADE DE PRODUTOS Q FORAM INSERIDOS NA LISTA DE COMPRA.		
+			for($i=0;$i<=($vezes);$i++){
+			
+				if ($i>0){
+
+				$id_produto = @$_REQUEST['id_produto'];	
+				$nome = @$_REQUEST['nome'];	
+				$quant = @$_REQUEST['quant'];	
+				$valor = @$_REQUEST['valor'];	
+				$total_parc = @$_REQUEST['total_parc'];
 
 
-			$this->arquivoTemplate = "";
+			///	echo $id_produto[$i];
+
+				$sSQL  = "INSERT INTO LALAL VALUES ('$id_produto[$i]', '$nome[$i]' , '$quant[$i]',  '$valor[$i]' , '$total_parc[$i]', '$total') ";
+
+				echo $sSQL . "<hr>";
+				}
+				
+			}
+			
 			return;
-
 		}
+				
 	
 	$this->arquivoTemplate = "cobranca_tabela_compra.html";
-	
->>>>>>> 1.116
+	return;	
 	}
 	
 	
