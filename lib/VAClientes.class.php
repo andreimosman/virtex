@@ -4108,16 +4108,18 @@ class VAClientes extends VirtexAdmin {
 							
 							}
 				
-							// SPOOL
-							if( $excluir ) {
-								//////////echo "excluir";
-								$this->spool->bandalargaExcluiRede($nas_atual["id_nas"],$conta["id_conta"],$conta["rede"]);
-							}
+							// SPOOL (ALTERADO HUGO)
+							if ( $conta["tipo_bandalarga"] == "I"){
+								if( $excluir ) {
+									//////////echo "excluir";
+									$this->spool->bandalargaExcluiRede($nas_atual["id_nas"],$conta["id_conta"],$conta["rede"]);
+								}
 
-							if( $incluir ) {
-								//////////echo "incluir<br>";
-								$id_conta = $conta["id_conta"];
-								$this->spool->bandalargaAdicionaRede($nas_novo["id_nas"],$id_conta,$rede,$mac,$upload_kbps,$download_kbps,$username);
+								if( $incluir ) {
+									//////////echo "incluir<br>";
+									$id_conta = $conta["id_conta"];
+									$this->spool->bandalargaAdicionaRede($nas_novo["id_nas"],$id_conta,$rede,$mac,$upload_kbps,$download_kbps,$username);
+								}
 							}
 
 							// Faz o update nos dados em cntb_conta e cntb_conta_bandalarga
