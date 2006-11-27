@@ -4879,18 +4879,30 @@ class VACobranca extends VirtexAdmin {
 			$vezes = @$_REQUEST['vezes'];	
 			$total = @$_REQUEST['total'];
 			$id_cliente = @$_REQUEST['id_cliente'];
-			echo $id_cliente ;
+			
+			$all_info = array();
 
 				for($i=0;$i<($vezes);$i++){
 
-					$id_produto = @$_REQUEST['id_produto'];	
-					$nome = @$_REQUEST['nome'];	
-					$quant = @$_REQUEST['quant'];	
-					$valor = @$_REQUEST['valor'];	
-					$total_parc = @$_REQUEST['total_parc'];
 
-					$all_info = array("id_produto" => $id_produto , "nome" => $nome , "quant" => $quant , "valor" => $valor , "total_parc" => $total_parc);
-					//echo $all_info["id_produto"][$i] . "<br>" ;
+
+					$id_produto 	= @$_REQUEST['id_produto'];	
+					$nome 		= @$_REQUEST['nome'];	
+					$quant 		= @$_REQUEST['quant'];	
+					$valor 		= @$_REQUEST['valor'];	
+					$total_parc 	= @$_REQUEST['total_parc'];
+					
+					$all_info[$i] = array("id_produto" => $id_produto , "nome" => $nome , "quant" => $quant , "valor" => $valor , "total_parc" => $total_parc);
+					
+					/*echo "IDPR : " . $all_info[$i]["id_produto"][$i] . "<Br>" ;
+					echo "NOME : " . $all_info[$i]["nome"][$i] . "<Br>" ;
+					echo "VALR : " . $all_info[$i]["valor"][$i] . "<Br>" ;
+					echo "QUAN : " . $all_info[$i]["quant"][$i] . "<Br>" ;
+					echo "TTPC : " . $all_info[$i]["total_parc"][$i] . "<Br>" ;
+					*/
+					$all_info[] = $all_info[$i];
+					////echo "<br><br><br><br><Br>";29.90
+ 
 				}
 
 			$this->tpl->atribui("all_info",$all_info);
@@ -4905,8 +4917,34 @@ class VACobranca extends VirtexAdmin {
 			$vezes = @$_REQUEST['vezes'];	
 			$total = @$_REQUEST['total'];
 			$id_cliente = @$_REQUEST['id_cliente'];
+
+				$pSQL  = "  SELECT dominio_padrao FROM pftb_preferencia_geral ";
+				$dominio = $this->bd->obtemUnicoRegistro($pSQL);
 			
-			$cSQL  = " INSERT INTO LALAALL (')";
+			$id_cliente_produto_novo = $this->bd->proximoID("cbsq_id_cliente_produto");
+
+				$cSQL  = " INSERT INTO cbtb_cliente_produto(id_cliente_produto, id_cliente, id_produto, dominio, excluido) ";
+				$cSQL .= " VALUES ('$id_cliente_produto_novo','$id_cliente', '10000', '" . $dominio['dominio_padrao'] . "', 'f' )";
+				///echo $cSQL . "<hr>";
+				$this->bd->consulta($cSQL);
+			
+			$sSQL = "SELECT currval('cbsq_id_cliente_produto') as icpn";
+			$icpn = $this->bd->obtemUnicoRegistro($sSQL);
+
+			$id_cliente_produto_new = $icpn["icpn"];
+			$id_venda = $this->bd->proximoID("id_venda_seq");
+			
+			$admin = $this->admLogin->obtemId();
+
+				$vSQL  = " INSERT INTO cbtb_venda (id_venda, id_cliente_produto, valor, data, admin) ";
+				$vSQL .= " VALUES ('$id_venda', '$id_cliente_produto_new', '$total', now(), '$admin')";
+				////echo $vSQL . "<hr>";
+				$this->bd->consulta($vSQL);
+
+			$iSQL = "SELECT currval('id_venda_seq') as idvs";
+			$idvs = $this->bd->obtemUnicoRegistro($iSQL);
+			
+			$id_venda = $idvs["idvs"];
 
 			for($i=0;$i<=($vezes);$i++){
 			
@@ -4917,16 +4955,24 @@ class VACobranca extends VirtexAdmin {
 				$quant = @$_REQUEST['quant'];	
 				$valor = @$_REQUEST['valor'];	
 				$total_parc = @$_REQUEST['total_parc'];
-
-
-			///	echo $id_produto[$i];
-
-				$sSQL  = "INSERT INTO LALAL VALUES ('$id_produto[$i]', '$nome[$i]' , '$quant[$i]',  '$valor[$i]' , '$total_parc[$i]', '$total') ";
-
-				echo $sSQL . "<hr>";
+				
+				$sSQL  = "INSERT INTO cbtb_produtos_venda ";
+				$sSQL .= " (id_venda, id_produto, quantidade, data) ";
+				$sSQL .= " VALUES ('$id_venda', '$id_produto[$i]', '$quant[$i]', now()) ";
+				
+				///echo $sSQL . "<hr>";
+				$this->bd->consulta($sSQL);
 				}
 				
 			}
+			
+			$this->tpl->atribui("mensagem","VENDA EFETUADA COM SUCESSO!"); 
+			$this->tpl->atribui("url", "clientes.php?op=cobranca&id_cliente=$id_cliente&rotina=resumo");
+			$this->tpl->atribui("target","_top");
+
+			$this->arquivoTemplate = "msgredirect.html";
+
+			
 			
 			return;
 		}
