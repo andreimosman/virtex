@@ -360,7 +360,7 @@ class VAHome extends VirtexAdmin {
 					
 			$empresa = $this->prefs->obtem("geral","nome");
 			$mensagem = @$_REQUEST['mensagem'];
-			return;
+			
 			
 		 	if ($mensagem != ""){
 			
@@ -370,6 +370,7 @@ class VAHome extends VirtexAdmin {
 
 			$this->tpl->atribui("empresa",$empresa);
 			$this->arquivoTemplate = 'exemplo_email.html';
+			return;
 		
 		}if ($op == "renovacao_contrato"){
 
