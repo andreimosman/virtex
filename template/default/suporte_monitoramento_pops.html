@@ -129,12 +129,13 @@ document.onmousemove=positiontip
 {/literal}
 <h1 align="center">Informa&ccedil;&otilde;es de Monitoramento</h1>
 <div align="center">
-	<form name="form1" method="post" action="">
+	<form name="form1" method="get" action="">
 		<p>mostrar POPs
 		  <label>
 			  <select name="tipo_lista" onChange="jump_func(this.value);">
-				<option value="mostrar" {if $mostra_tudo == 'false' || !$mostra_tudo}SELECTED{/if}>todos</option>
-				<option value="nao_mostrar" {if $mostra_tudo == 'true'}SELECTED{/if}>monitorados</option>
+			  <option value="nao_mostrar" {if $mostra_tudo == 'true'||  !$mostra_tudo}SELECTED{/if}>monitorados</option>
+				<option value="mostrar" {if $mostra_tudo == 'false' }SELECTED{/if}>todos</option>
+				
 			  </select>
 		  </label>
 		</p>
