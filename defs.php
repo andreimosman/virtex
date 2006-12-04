@@ -19,35 +19,32 @@ define('PATH_ETC','./etc');
 define('PATH_TMP','./tmp');
 
 
-
 /**
- * Requerimentos
- * Aqui são incluidos todos os arquivos de classes que chamam os templates (templates/default)
+ * Carrega dinamicamente os arquivos de acordo com o nome da classe
+ * Verifica de acordo com algumas notações.
  */
-require_once(PATH_LIB . '/status.defs.php');
-require_once(PATH_LIB . '/redes.class.php');
-require_once(PATH_LIB . '/Spool.class.php');
-require_once(PATH_LIB . '/AdminLogin.class.php');
-require_once(PATH_LIB . '/VirtexAdmin.class.php');
-require_once(PATH_LIB . '/VAGrafico.class.php');
-require_once(PATH_LIB . '/VALogin.class.php');
-require_once(PATH_LIB . '/VAHome.class.php');
-require_once(PATH_LIB . '/VAClientes.class.php');
-require_once(PATH_LIB . '/VACobranca.class.php');
-require_once(PATH_LIB . '/VASuporte.class.php');
-require_once(PATH_LIB . '/VAConfiguracao.class.php');
-require_once(PATH_LIB . '/VAAdministrador.class.php');
-require_once(PATH_LIB . '/VARelatorio.class.php');
-require_once(PATH_LIB . '/VAInterface_cliente.class.php');
-require_once(PATH_LIB . '/VAInterface_cliente_home.class.php');
-require_once(PATH_LIB . '/spool_hospedagem.class.php');
-require_once(PATH_LIB . '/VABackup.class.php');
-require_once(PATH_LIB . '/VAPapocker.class.php');
 
+function __autoload($class_name) {
+  $pear_dirs = array("/usr/local/share/pear","/usr/share/pear");
 
-//function __autoload($class_name) {
-//   require_once PATH_LIB . "/" . $class_name . '.class.php';
-//}
+   $possibilidades = array();
+   $possibilidades[] = PATH_LIB . "/" . $class_name . ".class.php";
+   $possibilidades[] = $class_name . "class.php";
+   $possibilidades[] = $class_name . ".php";
+   //$possibilidades[] = $class_name . "/" . $class_name . ".php";
+   $possibilidades[] = str_replace("_","/",$class_name) . ".php";
+
+   $encontrado = 0;
+   for($i=0;$i<count($possibilidades);$i++) {
+       if( @include_once($possibilidades[$i]) ) {
+         $encontrado = 1;
+         break;
+       }
+   }
+   if( !$encontrado ) {
+     die("Classe nao encontrada: $class_name \n");
+   }
+}
 
 //session_start();
 
