@@ -2154,10 +2154,16 @@ class VARelatorio extends VirtexAdmin {
 		$sSQL .= "ORDER BY cl.nome_razao,bl.username";
 		$lista = $this->bd->obtemRegistros($sSQL);
 		
+		if (!$lista){
+			$mostrar='false';
+		}else{
+			$mostrar='true';
+		}
+		
 		//echo "LISTA: $sSQL <br>";
 	
 		$this->tpl->atribui("lista",$lista);
-		
+		$this->tpl->atribui("mostrar",$mostrar);		
 		$this->arquivoTemplate = "relatorio_clientes_sem_mac.html";
 	
 	}else if ($op == "faturamento_comp"){

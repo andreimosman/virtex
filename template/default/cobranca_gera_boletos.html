@@ -4,7 +4,16 @@
 <title>Untitled Document</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
-
+{literal}
+<style type="text/css">
+<!--
+.style1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+-->
+</style>
+{/literal}
 </head>
 <body><h1 align="CENTER">Gera&ccedil;&atilde;o de Boletos Banc&aacute;rios </h1><form name="form1" method="post" action="">
 <table align="CENTER" width="400" border="0" cellspacing="2" cellpadding="0">
@@ -110,7 +119,7 @@
 </table>
 </form>{elseif !$boletos and $periodo} 
 <p align="center">Não existem faturas a gerar neste periodo</p>
-<p>{else}</p>
+<p>{else}</p>{if $remessa}
 <div align="CENTER"><font color="#000000" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Ultimas Remessas Processadas</strong></font><br>
 </div>
 <table align="CENTER" width="600" border="0" cellspacing="1" cellpadding="0">
@@ -139,6 +148,7 @@
   </tr>
   {/foreach} 
 </table>
+{else}<div align="center"><p>Não há registro de remessas processadas.</p> </div>{/if}
 <p>{/if} </p>
 <p align="CENTER">&nbsp;</p>
 </body>

@@ -4,7 +4,16 @@
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
 
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
-
+{literal}
+<style type="text/css">
+<!--
+.style1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+-->
+</style>
+{/literal}
 </head>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
@@ -21,6 +30,8 @@
                     Links Externos Cadastrados</h1>
                   <p align="center"><a href="configuracao.php?op=links&pp=new">cadastrar 
                     novo</a></p>
+					
+					{if $mostrar=='true'}
                   <table width="500" border="0" cellspacing="2" cellpadding="0">
                     <tr> 
                       <td width="490"><table width="100%" border="0" cellspacing="2" cellpadding="0">
@@ -39,6 +50,8 @@
                           {/foreach} </table></td>
                     </tr>
                   </table>
+				  {else}<span class="style1"> Não há links cadastrados.
+				  </span>{/if}
                   <p align="center">&nbsp;</p>
 				<p>&nbsp;</p></td>
               </tr>

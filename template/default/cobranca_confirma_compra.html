@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>Untitled Document</title>
+<link rel='stylesheet' href='template/default/estilos1.css' type='text/css'>
+{literal}
+<script language='javascript'>
+
+function confirmacao(){
+		return confirm('Tem certeza que deseja efetuar a compra desses produtos?');
+}
+
+
+</script>
+{/literal}
+</head>
+
+<body>
+
+<input type='hidden' value='compra_produto' name='op'>
+<input type='hidden' value='comprar' name='acao'>
+<input type='hidden' value='{$vezes}' name='vezes'>
+<input type='hidden' value='{$id_cliente}' name='id_cliente'>
+<input type='hidden' value='{$total}' name='total'>
+<div align='center'>
+  <input type='button' value='&laquo; Voltar' onClick='javascript:history.back();' style='height:21; font-size:11;width:57px;'/>
+  <input type='submit' value='Ok &raquo;' style='height:21; font-size:11; width:57px;'/>
+</div>
+
+</body>
+</html>
+</form>

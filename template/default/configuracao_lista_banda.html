@@ -1,7 +1,6 @@
 <!--CONFIGURACA0_LISTA_BANDA.HTML-->
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link rel="stylesheet" type="text/css" href="template/default/estilos1.css"/>
 <title>mosman</title>
 
@@ -398,7 +397,7 @@ var tT = document.getElementById("tabela_velocidades");
 		<td></td>
 	</tr>
 	<tr>
-		<td valign="top" bgcolor="#FEFEFE">{if $alterar}
+	  <td valign="top" bgcolor="#FEFEFE">{if $alterar}
 		  <table align="center">
 			<tr>
 			  <td valign="top"><p align="center"><span class="style9">Selecione o número de velocidades que voce deseja habilitar:</span>
@@ -419,7 +418,7 @@ var tT = document.getElementById("tabela_velocidades");
 					<option value="13">13</option>
 					<option value="14">14</option>
 					<option value="15">15</option>
-				  </select>
+			    </select>
 				</p></td>
 		    </tr>
 			 <tr>
@@ -523,7 +522,8 @@ var tT = document.getElementById("tabela_velocidades");
 	                                        <input type="hidden" value="fazer" name="sop">
 				  </div>	
 				</div>		
-				<p>{elseif $relatorio_banda}				</p>
+				<p>{if $mostrar=='true'}
+				{elseif $relatorio_banda}				</p>
 				<p align="center" class="style5">Velocidades que o seu sistema usa atualmente: </p>
 				<table width="180" align="center" style="border:1px solid #CCCCCC;">
 					<tr>
@@ -540,7 +540,15 @@ var tT = document.getElementById("tabela_velocidades");
 					</tr>
 					{/foreach}
 		  </table>
-	  {/if}	  </td>
+	            {/if}
+	             {elseif $mostrar=='false'}
+        <div align="center"><br>
+			<p align="center">Não há bandas cadastradas no seu sistema atualmente.</p>
+			<br>
+			<input type="button" value="&laquo; voltar" onClick="javascript:history.back();">
+		</div>
+		{/if}
+		</td>
 	</tr>
 
 

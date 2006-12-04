@@ -5,67 +5,103 @@
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
 
 	<script language="javascript" src="template/default/tabela_compra.js" type="text/javascript" ></script>
+
 {literal}
-<style>
+<style type="text/css">
+.style6 {color: #609571}
+.style2 {color: #999999}
 .td{
-text-align:center
+text-align:center;
+border:1px solid #FFFFFF;
+border-bottom:1px dashed #CCCCCC;
+padding: 3px;
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:12px;
+color:#0F1A12;
 }
+.td_rait{
+text-align:right;
+border:1px solid #FFFFFF;
+border-bottom:1px dashed #CCCCCC;
+padding: 3px;
+font-family:Verdana, Arial, Helvetica, sans-serif;
+font-size:12px;
+color:#0F1A12;
+}
+.style1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+.style5 {color: #C2D8C9; font-weight: bold; }
+.style7 {color: #C9E8C8}
 </style>
 {/literal}
 </head>
 
 
 <body>
-<form name="formulario" >
+<form name="formulario">
+{if $mostrar=='true'}
 <table border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td colspan="2"><div align="center">TABELA DE COMPRA</div></td>
+    <td colspan="2"><div align="center" class="style1">TABELA DE COMPRA</div></td>
   </tr> 
   <tr>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td>Nome/Valor do Produto</td>
+    <td><p>Nome/Valor do Produto</p></td>
     <td>
 		<select name="nome" onChange="Processa(this.value);">
 					<option value="#"></option>
 				{foreach item=a from=$rel}
 					<option value="{$a.id_produto}">{$a.nome} / {$a.valor}</option>
 				{/foreach}
-		</select>
-	</td>
+		</select>	</td>
   </tr>
- 
 </table>
 
 </form>
 
 <div align="center"><p>
 <div id="tabela_permanente" style="width:500px; padding:10px;" align="left" class="box_fechada"></div>
-<form name="tabela_compra" >
-<table border='1' align='center' cellpadding='0' cellspacing='0' width='550' class="box_fechada" id="tabela" class="td">
+<form name="tabela_compra" action="cobranca.php" method="get">
+<table border='0' align='center' cellpadding='0' cellspacing='1' width='550' class="box_fechada" id="tabela" style="border:1px solid #CCCCCC">
 	<tr>
-	  <td align='center' width='110'>COD</td>
-	  <td align='center' width='150'>NOME</td>
-	  <td align='center' width='110'>QUANT</td>
-	  <td align='center' width='110'>PRE&Ccedil;O UNI</td>
-	  <td align='center' width="70">TOTAL</td>
+	  <td colspan="5" style="padding-left:20px; border-bottom:1px solid #D2E8D6;"><p class="style1 style6">{$cliente.nome_razao} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="style5">items de compra</span></p>
+	    </td>
 	</tr>
-	
+	<tr>
+	  <td width='110' align='center' style="padding-left:2px; border-bottom:1px solid #D2E8D6;"><p class="style5">Código</p></td>
+	  <td width='150' align='center' style="padding-left:2px; border-bottom:1px solid #D2E8D6;"><p class="style5">Nome</p></td>
+	  <td width='110' align='center' style="padding-left:2px; border-bottom:1px solid #D2E8D6;"><p class="style5">Quantidade</p></td>
+	  <td width='110' align='center' style="padding-left:2px; border-bottom:1px solid #D2E8D6;"><p class="style5">Pre&ccedil;o unitario</p></td>
+	  <td width="70" align='center' style="padding-left:2px; border-bottom:1px solid #D2E8D6;"><p class="style5">Total</p></td>
+	</tr>
 </table>
 <table width='550' border='0' cellspacing='1' cellpadding='2' class="box_fechada" id="tabela_botao">
 	<tr>
-		<td align='right'>total ----- <input type="text" size="6" name="total_calc" id="total_calc" disabled="disabled" style="border:1px solid #FFFFFF; font:Verdana, Arial, Helvetica, sans-serif; color:#000000; font-size:11px"></td>
+		<td align='right'><p class="style2">total ----- 
+	        <input type="text" size="8" name="total_calc" id="total_calc" disabled="disabled" style="border:1px solid #FFFFFF; font:Verdana, Arial, Helvetica, sans-serif; font-size:11px; text-align:right">
+		</p></td>
 	</tr>
 	<tr>
 		<td align='right' colspan='2'><input type='submit' value='Comprar'></td>
 	</tr>
 </table>
-<input type="hidden" value="0" name="total">
-<input type="hidden" value="0" name="vezes" id="vezes"/>	
-<input type="hidden" value="tabela_compra" name="op" >
-<input type="hidden" value="comprar" name="acao">
+<p>
+  <input type="hidden" value="0" name="total">
+  <input type="hidden" value="{$id_cliente}" name="id_cliente">
+  <input type="hidden" value="0" name="vezes" id="vezes"/>	
+  <input type="hidden" value="compra_produto" name="op" >
+  <input type="hidden" value="confirma_compra" name="acao">
+  </p> {else}<br><br>
+ <div align="center">
+<span class="style1">Não existem produtos/serviços cadastrados, ou disponíveis para venda.</span>
+<br><br><input type="button" value="cadastrar produtos &raquo;" onClick="window.location='cobranca.php?op=lista_produtos'; "><br><br><input type="button" value="&laquo voltar " onClick="javascript:history.back();">
+{/if}
+</div>
 </form>
 </div>
 </p></div>

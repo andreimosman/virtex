@@ -1,8 +1,7 @@
-<!-- nhaaaaaaaaaaaaaaa relatorio_config_cliente.html-->
+<!-- rekatorio_clientes_sem_mac.html -->
 <html>
 <head>
 <title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
-
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
 <script language="JavaScript">ready = "yes";</script>
 <script>
@@ -68,7 +67,7 @@ if (da && !pr && !mac) with (document) {
               <tr>
                 <td align="center" valign="middle"><h1>Relat&oacute;rio de Clientes 
                     sem MAC Cadastrado</h1>
-                  <p>&nbsp;</p>
+                  <p>&nbsp;</p>{if $mostrar=='true'}
                   <table width="600" border="0" cellspacing="2" cellpadding="0">
                     <tr bgcolor="#E4E4E4"> 
                       <td height="20"> 
@@ -97,7 +96,11 @@ if (da && !pr && !mac) with (document) {
                             <td width="150"> <p>Total de Clientes s/ MAC:</p></td>
                             <td align="left" valign="middle"> <p><strong>{$smarty.foreach.links.total}</strong></p></td>
                           </tr>
-                        </table></td>
+                        </table>
+						{else}
+							<p>Não há clientes sem MAC cadastrado.</p>
+						{/if}	
+						</td>
                     </tr>
                   </table>
                   <p>&nbsp;</p>

@@ -219,15 +219,43 @@ class VAHome extends VirtexAdmin {
 								";
 					$headers = "Content-type: text/html; charset=iso-8859-1\r\n"; 
 					$headers .= "From: $empresa <$email>\r\n" ;
-					
-				$arquivo_add = 'true';
 				
 				for ( $i=0; $i <count($rel_clientes); $i++){
 
-					$email_cliente = $rel_clientes[$i]["email"];
 					$cod_barra = $rel_clientes[$i]["cod_barra"];
 					$nosso_numero = $rel_clientes[$i]["nosso_numero"];
 					$id_cliente_produto = $rel_clientes[$i]["id_cliente_produto"];
+					$email_cliente = strtolower($rel_clientes[$i]["email"]);
+					
+					if (!$rel_clientes[$i]["email"]){
+					
+						$eSQL  = " SELECT username, dominio FROM cntb_conta WHERE id_cliente_produto = '" . $id_cliente_produto . "' AND tipo_conta = 'E'  ";
+						$r = $this->bd->obtemUnicoRegistro($eSQL);
+						
+						if ($r){
+
+							$username	= $r['username'];
+							$dominio	= $r['dominio'];
+
+							$ceSQL  = " SELECT email FROM cntb_conta_email WHERE username ='" . $username . "' AND dominio='" . $dominio . "' ";
+							$re = $this->bd->obtemUnicoRegistro($ceSQL);
+
+							$email_confirm = @$re["email"];
+
+							if (@$re["email"]){
+
+								list($username_confirm, $dominio_confirm) = explode("@", @$email_confirm);
+
+								if ($username == $username_confirm && $dominio_confirm == $dominio){
+
+									$email_cliente = strtolower($email_confirm);
+
+								}
+
+							}
+						}
+					
+					}
 					
 					$sSQL  = " SELECT f.email_aviso, f.data, cn.username, cn.tipo_conta ";
 					$sSQL .= " FROM cbtb_faturas f, cntb_conta cn ";
@@ -236,14 +264,16 @@ class VAHome extends VirtexAdmin {
 					$sSQL .= " AND f.id_cliente_produto = cn.id_cliente_produto ";
 					$sSQL .= " AND cn.tipo_conta <> 'E' " ;
 					
-					$email_aviso = $this->bd->obtemUnicoRegistro($sSQL);
-					$data = $email_aviso['data'];
-					$username = $email_aviso['username'];
-					$tipo_conta = $email_aviso['tipo_conta'];
-
-					if ($email_aviso['email_aviso'] == 'f' && $email_cliente != "" ){
+					$email_aviso = $this->bd->obtemUnicoRegistro($sSQL);					
+					$data = @$email_aviso['data'];
+					$username = @$email_aviso['username'];
+					$tipo_conta = @$email_aviso['tipo_conta'];
 					
-						if(mail($email_cliente, "Problemas na Sua Conta" ,  $html, $headers)){
+					//echo $email_cliente . "<hr>" ;
+
+					if (@$email_aviso['email_aviso'] == 'f' && @$email_cliente != "" ){
+					
+						/*if(mail($email_cliente, "Problemas na Sua Conta" ,  $html, $headers)){
 
 							// SE O EMAIL FOR ENVIADO ATUALIZA O CAMPO EMAIL AVISO COMO TRUE NA TABELA CBTB_FATURAS
 							$sSQL  = "UPDATE cbtb_faturas SET email_aviso = 't' WHERE cod_barra = '$cod_barra' AND nosso_numero = '$nosso_numero' AND id_cliente_produto = '$id_cliente_produto' ";
@@ -261,7 +291,7 @@ class VAHome extends VirtexAdmin {
 							$aSQL .= " VALUES ('$hoje' , '$id_cliente_produto', '$data', '$email_cliente', '$username', '$tipo_conta', $id_cliente) " ;							
 							$this->bd->consulta($aSQL);
 					
-						}
+						}*/
 	
 					}
 				
@@ -331,6 +361,23 @@ class VAHome extends VirtexAdmin {
 		}if ($op == "index_email"){
 			
 			$acao = @$_REQUEST['acao'];
+			
+			
+			$aSQL = " SELECT * FROM lgtb_emails_cobranca " ;
+			$res = $this->bd->obtemRegistros($aSQL);
+			
+			if (!$res){
+			
+				$mostrar='false';
+
+			}else{
+
+				$mostrar='true';
+
+			}
+			$this->tpl->atribui("mostrar",$mostrar);
+
+
 			if ($acao=='pesquisar'){
 			
 				$data = @$_REQUEST['data'];
@@ -340,6 +387,7 @@ class VAHome extends VirtexAdmin {
 				$sSQL .= " EXTRACT(year FROM data_envio) = '$ano' " ;
 				$sSQL .= " AND EXTRACT(month FROM data_envio) = '$mes' " ;
 				$sSQL .= " AND EXTRACT(day FROM data_envio) = '$dia' " ;
+				
 				$emails_lista = $this->bd->obtemRegistros($sSQL);
 				$this->tpl->atribui("emails_lista", $emails_lista);
 			

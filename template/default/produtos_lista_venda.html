@@ -3,12 +3,23 @@
 <link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
 <title>Untitled Document</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+{literal}
+<style type="text/css">
+<!--
+.style1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+}
+-->
+</style>
+{/literal}
 </head>
 
 <body>
 <div align="center"> 
   <h1>Produtos e Servi&ccedil;os</h1>
   <p><a href="cobranca.php?op=cadastro_venda">Cadastrar Novo</a></p>
+  {if $mostrar=='true'}
   <table width="600" border="0" cellspacing="1" cellpadding="2">
     <tr bgcolor="#CCCCCC"> 
       <td width="140"> <p><strong>Produto</strong></p></td>
@@ -25,6 +36,8 @@
     </tr>
     {/foreach}
   </table>
+  {else}
+	  <span class="style1">Não há produtos/serviços cadastrados.      </span>{/if}
   <p>&nbsp;</p>
   <p>&nbsp;</p>
 </div>

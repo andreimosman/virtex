@@ -1,7 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link type="text/css" rel="stylesheet" href="template/default/estilos1.css" />
 <title>lista emails cobrança</title>
 {literal}
@@ -20,14 +18,15 @@
 
 <body style="x-overflow:hidden;">
 <br />
+{if $mostrar=='true'}
 {if !$lista_dias }
 <table border="0" align="center" cellpadding="1" cellspacing="1" style="border:1px solid #779977;">
   <tr>
-    <td colspan="2" style="border-bottom:1px solid #779977;"><span class="style1 style8">Lista de Emails de Cobrança Enviados</span></td>
+    <td colspan="2" class="style1 style8" style="border-bottom:1px solid #779977;">Lista de Emails de Cobrança Enviados</td>
   </tr>
   <tr>
-    <td bgcolor="779977" style="border:1px solid #779977;"><div align="center"><span class="style7">Emails enviados</span></div></td>
-    <td bgcolor="779977" style="border:1px solid #779977;"><div align="center"><span class="style7">Data do envio</span></div></td>
+    <td bgcolor="779977" style="border:1px solid #779977;"><div align="center" class="style7">Emails enviados</div></td>
+    <td bgcolor="779977" style="border:1px solid #779977;"><div align="center" class="style7">Data do envio</div></td>
   </tr> 
   <tr>
     <td colspan="2" height="4px"></td>
@@ -40,8 +39,7 @@
 	{/foreach}
 </table><br />
 <div align="center">
-<a href="home.php?op=index_email">&laquo; voltar</a>
-</div><br />
+<a href="home.php?op=index_email">&laquo; voltar</a></div><br />
 {else}
 <div align="center" >
 <span class="style1 style8">Escolha o dia em que foi enviado o email</span>
@@ -56,6 +54,13 @@
 		<input type="hidden" name="acao" value="pesquisar" />
 	</form>
 </div>
-{/if}
+
+  {/if}
+    {else}
+<div align="center">
+  <span class="style1">Até o momento nao foi enviado nenhum email de cobrança.</span><br /><br />
+      <input type="button" name="button" value="&laquo; voltar" onClick="javascript:history.back();"/>
+  {/if} 
+</div>
 </body>
 </html>
