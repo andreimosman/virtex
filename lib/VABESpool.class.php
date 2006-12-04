@@ -8,16 +8,6 @@
 	 *
 	 */
 	
-	require_once("SOFreeBSD.class.php");
-	
-	require_once("Atuador.class.php");
-	require_once("AtuadorBandaLarga.class.php");
-	require_once("AtuadorEmail.class.php");
-	require_once("AtuadorHospedagem.class.php");
-	require_once("AtuadorDNS.class.php");
-	
-	require_once(PATH_LIB."/VirtexAdminBackend.class.php");
-
 	class VABESpool extends VirtexAdminBackend {
 	
 		/**

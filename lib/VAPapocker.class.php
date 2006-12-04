@@ -1,9 +1,6 @@
 <?
 
-
-require_once( PATH_LIB . "/VirtexAdmin.class.php" );
-
-class VAPapocker extends VirtexAdmin {
+class VAPapocker extends VirtexAdminWeb {
 
 	public function VAPapocker() {
 		parent::VirtexAdmin();

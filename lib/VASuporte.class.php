@@ -1,13 +1,9 @@
 <?
 
-require_once( PATH_LIB . "/VirtexAdmin.class.php" );
-require_once( PATH_LIB . "/ICClient.class.php" );
-require_once( PATH_LIB . "/ICHostInfo.class.php");
+class VASuporte extends VirtexAdminWeb {
 
-class VASuporte extends VirtexAdmin {
-
-	public function VASuporte() {
-		parent::VirtexAdmin();
+	public function __construct() {
+		parent::__construct();
 	}
 
 	// metodo para pegar as propriedadas enviadas via menu na interface.

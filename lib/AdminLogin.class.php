@@ -1,7 +1,5 @@
 <?
 
-require_once("MDatabase.class.php");
-
 class AdminLogin {
 
 	public $bd;

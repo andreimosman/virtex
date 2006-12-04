@@ -5,9 +5,6 @@
 	 * Classe do Backend p/ Servidor de Informações
 	 */
 
-	require_once(PATH_LIB."/VirtexAdminBackend.class.php");
-	require_once(PATH_LIB."/ICServer.class.php");
-	 
 	class VABEInfoServer extends VirtexAdminBackend {
 		
 		protected $userbase;

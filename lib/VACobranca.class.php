@@ -1,18 +1,13 @@
 <?
 
-require_once( PATH_LIB . "/VirtexAdmin.class.php" );
-
 require_once( "jpgraph.php" );
 require_once( "jpgraph_line.php" );
 require_once( "jpgraph_bar.php" );
 
-require_once('MRetornoPagContas.class.php');
-require_once('MRetornoCBR643.class.php');
+class VACobranca extends VirtexAdminWeb {
 
-class VACobranca extends VirtexAdmin {
-
-	public function VACobranca() {
-		parent::VirtexAdmin();
+	public function __construct() {
+		parent::__construct();
 
 
 	}

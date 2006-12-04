@@ -6,11 +6,6 @@
 	 * Procedimentos de limpeza do sistema.
 	 */
 	
-	require_once(PATH_LIB."/VirtexAdminBackend.class.php");
-	require_once(PATH_LIB."/AtuadorBandaLarga.class.php");
-	//require_once(PATH_LIB."/Atuador.class.php");
-	require_once("SOFreeBSD.class.php");
-
 	class VABELimpeza extends VirtexAdminBackend {
 
 		/**

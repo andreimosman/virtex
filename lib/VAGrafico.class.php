@@ -1,12 +1,9 @@
 <?
 
+class VAGrafico extends VirtexAdminWeb {
 
-require_once( PATH_LIB . "/VirtexAdmin.class.php" );
-
-class VAGrafico extends VirtexAdmin {
-
-	public function VAHome() {
-		parent::VirtexAdmin();
+	public function __construct() {
+		parent::__construct();
 	
 		$adm = $this->admLogin->obtemAdmin();
 		$this->tpl->atribui("admin",$adm);	

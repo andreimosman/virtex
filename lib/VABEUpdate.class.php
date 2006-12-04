@@ -7,9 +7,6 @@
 	 *
 	 */
 
-	require_once(PATH_LIB."/VirtexAdminBackend.class.php");
-	require_once("SOFreeBSD.class.php");
-
 	class VABEUpdate extends VirtexAdminBackend {
 		protected $sep;
 
@@ -81,16 +78,6 @@
 		
 		
 			return;
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 			// Informações sobre o banco de dados local
 			//$info = $this->loadLocalDatabaseInfo();

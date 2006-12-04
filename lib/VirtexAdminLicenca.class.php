@@ -1,15 +1,13 @@
 <?
 
-require_once("MLicenca.class.php");
-
 if(!defined("VA_SALT")) define("VA_SALT","VA0200");
 
 class VirtexAdminLicenca extends MLicenca {
 
 
 
-	function VirtexAdminLicenca() {
-		parent::MLicenca("etc/virtex.lic",VA_SALT);
+	function __construct() {
+		parent::__construct("etc/virtex.lic",VA_SALT);
 		
 	}
 	

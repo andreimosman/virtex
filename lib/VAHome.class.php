@@ -1,111 +1,101 @@
 <?
 
+class VAHome extends VirtexAdminWeb {
 
-require_once( PATH_LIB . "/VirtexAdmin.class.php" );
-
-class VAHome extends VirtexAdmin {
-
-	public function VAHome() {
-		parent::VirtexAdmin();
+	public function __construct() {
+		parent::__construct();
 	
 		$adm = $this->admLogin->obtemAdmin();
 		$this->tpl->atribui("admin",$adm);	
 
 			
-			// PERMISSÕES DE PRIVILÉGIO
-			$privilegio_cliente = 'sim';
-			$privilegio_radius = 'sim';
-			$privilegio_config = 'sim';
-			$privilegio_cobranca = 'sim';
-			$privilegio_gravar_cliente = 'sim';
-			$privilegio_registro  = 'sim';
-			$privilegio_links = 'sim';
+		// PERMISSÕES DE PRIVILÉGIO
+		$privilegio_cliente = 'sim';
+		$privilegio_radius = 'sim';
+		$privilegio_config = 'sim';
+		$privilegio_cobranca = 'sim';
+		$privilegio_gravar_cliente = 'sim';
+		$privilegio_registro  = 'sim';
+		$privilegio_links = 'sim';
 
-			if( ! $this->privPodeLer("_SUPORTE") ) {
-				$privilegio_radius = 'nao';
-			}
-			if( ! $this->privPodeLer("_CLIENTES") ) {
-				$privilegio_cliente = 'nao';
-			}
-			if( ! $this->privPodeLer("_CONFIG_PREFERENCIAS") ) {
-				$privilegio_config = 'nao';
-			}
-			if( ! $this->privPodeLer("_COBRANCA") ) {
-				$privilegio_cobranca = 'nao';
-			}
-			if ( ! $this->privPodeGravar("_CLIENTES") ) {
-				$privilegio_gravar_cliente  = 'nao';
-			}
-			if( ! $this->privPodeLer("_CONFIG_REGISTRO") ) {
-				$privilegio_registro  = 'nao';
-			}
-			if( ! $this->privPodeLer("_LINKS") ) {
-				$privilegio_links  = 'nao';
-			}
+		if( ! $this->privPodeLer("_SUPORTE") ) {
+			$privilegio_radius = 'nao';
+		}
+		if( ! $this->privPodeLer("_CLIENTES") ) {
+			$privilegio_cliente = 'nao';
+		}
+		if( ! $this->privPodeLer("_CONFIG_PREFERENCIAS") ) {
+			$privilegio_config = 'nao';
+		}
+		if( ! $this->privPodeLer("_COBRANCA") ) {
+			$privilegio_cobranca = 'nao';
+		}
+		if ( ! $this->privPodeGravar("_CLIENTES") ) {
+			$privilegio_gravar_cliente  = 'nao';
+		}
+		if( ! $this->privPodeLer("_CONFIG_REGISTRO") ) {
+			$privilegio_registro  = 'nao';
+		}
+		if( ! $this->privPodeLer("_LINKS") ) {
+			$privilegio_links  = 'nao';
+		}
 
-			$this->tpl->atribui("privilegio_config",$privilegio_config);
-			$this->tpl->atribui("privilegio_registro",$privilegio_registro);
-			$this->tpl->atribui("privilegio_gravar_cliente",$privilegio_gravar_cliente);
-			$this->tpl->atribui("privilegio_cobranca",$privilegio_cobranca);
-			$this->tpl->atribui("privilegio_radius",$privilegio_radius);
-			$this->tpl->atribui("privilegio_cliente",$privilegio_cliente);
-			$this->tpl->atribui("privilegio_links",$privilegio_links);
+		$this->tpl->atribui("privilegio_config",$privilegio_config);
+		$this->tpl->atribui("privilegio_registro",$privilegio_registro);
+		$this->tpl->atribui("privilegio_gravar_cliente",$privilegio_gravar_cliente);
+		$this->tpl->atribui("privilegio_cobranca",$privilegio_cobranca);
+		$this->tpl->atribui("privilegio_radius",$privilegio_radius);
+		$this->tpl->atribui("privilegio_cliente",$privilegio_cliente);
+		$this->tpl->atribui("privilegio_links",$privilegio_links);
+
+
+		//	PERMISSÕES DE LICENÇA
+		$lic_interface = 'nao';
+		$lic_email = 'nao';
+		$lic_hospedagem = 'nao';
+		$lic_interface = 'nao';
+		$lic_discado = 'nao';
+		$lic_bandalarga = 'nao';
+
+		$licenca = $this->lic->obtemLicenca();
+		if(($licenca["frontend"]["discado"]) == "1"){
+			$lic_discado = 'sim';
+		}
+
+		if(($licenca["frontend"]["banda_larga"]) == "1"){
+			$lic_bandalarga = 'sim';
+		}
+
+		if(($licenca["frontend"]["email"]) == "1"){
+			$lic_email = 'sim';
+		}
+
+		if(($licenca["frontend"]["hospedagem"]) == "1"){
+			$lic_hospedagem = 'sim';
+		}
+
+		if(($licenca["frontend"]["interface"]) == "1"){
+			$lic_interface = 'sim';
+		}
 				
-			
-			//	PERMISSÕES DE LICENÇA
-			$lic_interface = 'nao';
-			$lic_email = 'nao';
-			$lic_hospedagem = 'nao';
-			$lic_interface = 'nao';
-			$lic_discado = 'nao';
-			$lic_bandalarga = 'nao';
+		$sSQL = "SELECT * from cftb_forma_pagamento where id_cobranca = 1 and disponivel is true";
+		$boleto_existe = $this->bd->obtemUnicoRegistro($sSQL);
 
-			 $licenca = $this->lic->obtemLicenca();
-				if(($licenca["frontend"]["discado"]) == "1"){
+		$aSQL = " SELECT exibir_monitor FROM pftb_preferencia_monitoracao ";
 
-					$lic_discado = 'sim';
+		$exibir_monitor = $this->bd->obtemUnicoRegistro($aSQL);
 
-				}
-				if(($licenca["frontend"]["banda_larga"]) == "1"){
+		//////echo $exibir_monitor['exibir_monitor'];
 
-					$lic_bandalarga = 'sim';
-
-				}
-				if(($licenca["frontend"]["email"]) == "1"){
-
-					$lic_email = 'sim';
-				}
-				if(($licenca["frontend"]["hospedagem"]) == "1"){
-
-					$lic_hospedagem = 'sim';
-
-				}
-				if(($licenca["frontend"]["interface"]) == "1"){
-
-					$lic_interface = 'sim';
-
-				}
+		$this->tpl->atribui("exibir_monitor",$exibir_monitor['exibir_monitor']);
+		$this->tpl->atribui("boleto",$boleto_existe);
+		$this->tpl->atribui("lic_discado",$lic_discado);
+		$this->tpl->atribui("lic_email",$lic_email);
+		$this->tpl->atribui("lic_hospedagem",$lic_hospedagem);
+		$this->tpl->atribui("lic_email",$lic_email);
+		$this->tpl->atribui("lic_interface",$lic_interface);
+		$this->tpl->atribui("lic_bandalarga",$lic_bandalarga);
 				
-				
-				$sSQL = "SELECT * from cftb_forma_pagamento where id_cobranca = 1 and disponivel is true";
-				$boleto_existe = $this->bd->obtemUnicoRegistro($sSQL);
-				
-				$aSQL = " SELECT exibir_monitor FROM pftb_preferencia_monitoracao ";
-				
-				$exibir_monitor = $this->bd->obtemUnicoRegistro($aSQL);
-				
-				//////echo $exibir_monitor['exibir_monitor'];
-				
-				$this->tpl->atribui("exibir_monitor",$exibir_monitor['exibir_monitor']);
-				$this->tpl->atribui("boleto",$boleto_existe);
-				$this->tpl->atribui("lic_discado",$lic_discado);
-				$this->tpl->atribui("lic_email",$lic_email);
-				$this->tpl->atribui("lic_hospedagem",$lic_hospedagem);
-				$this->tpl->atribui("lic_email",$lic_email);
-				$this->tpl->atribui("lic_interface",$lic_interface);
-				$this->tpl->atribui("lic_bandalarga",$lic_bandalarga);
-				
-		
 		$this->arquivoTemplate = "home.html";
 	
 	}
@@ -468,9 +458,9 @@ class VAHome extends VirtexAdmin {
 	
 	}
 
-public function __destruct() {
-      	parent::__destruct();
-}
+	public function __destruct() {
+			parent::__destruct();
+	}
 
 }
 

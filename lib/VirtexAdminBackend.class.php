@@ -1,8 +1,8 @@
 <?
 
 
-require_once(PATH_LIB."/VirtexAdmin.class.php");
-require_once("Console/Getopt.php");
+//require_once(PATH_LIB."/VirtexAdmin.class.php");
+//require_once("Console/Getopt.php");
 
 /**
  * Classe do BackEnd
@@ -21,9 +21,9 @@ class VirtexAdminBackend extends VirtexAdmin {
 
 
 	
-	public function __construct($usar_bd=true) {
+	public function __construct($usar_bd=true,$usar_lic=false) {
 		// Inicializações da classe pai
-		parent::__construct("etc/virtex.ini","template/backend",$usar_bd);
+		parent::__construct("etc/virtex.ini","template/backend",$usar_bd,$usar_lic);
 		
 		$this->_console = new Console_Getopt;
 		$this->_args = $this->_console->readPHPArgv();
@@ -63,24 +63,15 @@ class VirtexAdminBackend extends VirtexAdmin {
 			}
 			
 			$this->options = $this->_options[0];
-		
-		
-		
 		}
-		
-		
 		
 	}
 	
 	// Já faz o getopt	
 	public function executa() {
 		
-		
-
 	}
 	
-	
-
 }
 
 

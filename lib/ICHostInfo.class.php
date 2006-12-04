@@ -5,8 +5,6 @@
 	 * Informações 
 	 */
 	
-	require_once("MConfig.class.php");
-	
 	class ICHostInfo {
 		
 		protected $cfg;

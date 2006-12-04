@@ -1,15 +1,11 @@
 <?
 
-require_once( PATH_LIB . "/VirtexAdmin.class.php" );
-require_once("MArrecadacao.class.php");
-require_once("MUtils.class.php");
-
-class VAClientes extends VirtexAdmin {
+class VAClientes extends VirtexAdminWeb {
 
 
 
-	public function VAClientes() {
-		parent::VirtexAdmin();
+	public function __construct() {
+		parent::__construct();
 
 	}
 
@@ -1327,7 +1323,7 @@ class VAClientes extends VirtexAdmin {
 						
 						$operacao = "NOVA_CONTA";
 
-						$this->HistoricoConta("1", $id_cliente_produto, @$_REQUEST["tipo_conta"], @$_REQUEST["username"], $operacao, $dominio);
+						$this->logConta("1", $id_cliente_produto, @$_REQUEST["tipo_conta"], @$_REQUEST["username"], $operacao, $dominio);
 
 
 						if ($email_igual == "1"){
@@ -2681,7 +2677,7 @@ class VAClientes extends VirtexAdmin {
 								$status = 'S' ;
 
 							}
-							
+
 							
 							$iSQL  = " SELECT id_cliente_produto, status, senha, conta_mestre FROM cntb_conta WHERE username ='$username' AND dominio = '$dominio' AND tipo_conta ='$tipo_conta' ";
 							$reg = $this->bd->obtemUnicoRegistro($iSQL);
@@ -2699,38 +2695,38 @@ class VAClientes extends VirtexAdmin {
 							if ($status != $reg['status'] && $status== 'B' ){
 
 								$operacao = "ALTSTATUS(BLOQUEADO)";
-								$this->HistoricoConta("4",$id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);
+								$this->logConta("4",$id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);
 
 							}
 							if ($status != $reg['status'] && $status=='A'){
 
 								$operacao = "ALTSTATUS(ATIVO)";
-								$this->HistoricoConta("3", $id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);
+								$this->logConta("3", $id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);
 
 							}
 							if (@$_REQUEST['foneinfo'] != $reg_fone['foneinfo'] && @$_REQUEST['foneinfo']){
 							
 								$operacao = 'ALTFONE';
-								$this->HistoricoConta("6", $id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);
+								$this->logConta("6", $id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);
 							
 							}
 							if ($senha != $reg['senha'] && $senha ){
 														
 								$operacao = 'ALTSENHA';
 
-								$this->HistoricoConta("2",$id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);							
+								$this->logConta("2",$id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);							
 							}
 							if ($conta_mestre != $reg['conta_mestre'] && $conta_mestre =='f' ){
 														
 								$operacao = 'ALTSTATUSCONTA(NORMAL)';
 
-								$this->HistoricoConta("10",$id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);							
+								$this->logConta("10",$id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);							
 							}
 							if ($conta_mestre != $reg['conta_mestre'] && $conta_mestre =='t' ){
 														
 								$operacao = 'ALTSTATUSCONTA(MESTRE)';
 
-								$this->HistoricoConta("11",$id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);							
+								$this->logConta("11",$id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);							
 							}
 							
 														
@@ -2787,7 +2783,7 @@ class VAClientes extends VirtexAdmin {
 								
 								$operacao = "ALTBANDA - " . $valor_original . " - " . $valor_alterado ; 
 								
-								$this->HistoricoConta("8", $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
+								$this->logConta("8", $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
 
 							
 							}
@@ -2798,7 +2794,7 @@ class VAClientes extends VirtexAdmin {
 								
 								$this->logAdm($operacao,$bandalarga["mac"],$mac,$username,$CONTA["id_cliente_produto"],$tipo_conta,$extra);
 								
-								$this->HistoricoConta("9", $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
+								$this->logConta("9", $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
 							
 														
 							}
@@ -2811,21 +2807,21 @@ class VAClientes extends VirtexAdmin {
 														
 								$operacao = "ALTSTATUSCONTA(NORMAL)";
 
-								$this->HistoricoConta("10", $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
+								$this->logConta("10", $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
 							
 							}
 							if ($conta_mestre != $statusalt["conta_mestre"] && $conta_mestre=='t'){
 														
 								$operacao = "ALTSTATUSCONTA(MESTRE)";
 
-								$this->HistoricoConta("11", $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
+								$this->logConta("11", $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
 
 							}
 							if ($id_pop != $bandalarga["id_pop"] && $id_pop){
 																					
 								$operacao = "ALTPOP";
 
-								$this->HistoricoConta("12", $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
+								$this->logConta("12", $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
 
 							}
 							
@@ -2852,7 +2848,7 @@ class VAClientes extends VirtexAdmin {
 
 								}
 							
-								$this->HistoricoConta($cod_operacao, $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
+								$this->logConta($cod_operacao, $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
 							}
 							
 							
@@ -2861,7 +2857,7 @@ class VAClientes extends VirtexAdmin {
 							
 								$operacao = 'ALTSENHA' ;
 								
-								$this->HistoricoConta("2", $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
+								$this->logConta("2", $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
 							
 							
 							}
@@ -2871,7 +2867,7 @@ class VAClientes extends VirtexAdmin {
 							
 								$operacao = 'ALTNAS' ;
 							
-								$this->HistoricoConta("7", $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
+								$this->logConta("7", $CONTA['id_cliente_produto'], $tipo_conta, $username, $operacao, $dominio);
 							
 							
 							}
@@ -3061,31 +3057,31 @@ class VAClientes extends VirtexAdmin {
 							if ($status != $reg['status'] && $status== 'B' ){
 
 								$operacao = "ALTSTATUS(BLOQUEADO)";
-								$this->HistoricoConta($id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);
+								$this->logConta($id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);
 
 							}
 							if ($status != $reg['status'] && $status=='A'){
 
 								$operacao = "ALTSTATUS(ATIVO)";
-								$this->HistoricoConta($id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);
+								$this->logConta($id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);
 							}
 							if ($senha != $reg['senha'] && $senha ){
 
 								$operacao = 'ALTSENHA';
 
-								$this->HistoricoConta("2", $id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);							
+								$this->logConta("2", $id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);							
 							}
 							if ($conta_mestre != $reg['conta_mestre'] && $conta_mestre == 'f' ){
 							
 								$operacao = 'ALTSTATUSCONTA(NORMAL)';
 
-								$this->HistoricoConta("10", $id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);							
+								$this->logConta("10", $id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);							
 							}
 							if ($conta_mestre != $reg['conta_mestre'] && $conta_mestre == 't' ){
 
 								$operacao = 'ALTSTATUSCONTA(MESTRE)';
 
-								$this->HistoricoConta("11", $id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);							
+								$this->logConta("11", $id_cliente_produto, $tipo_conta, @$_REQUEST["username"], $operacao, $dominio);							
 							}
 							
 							$sSQL  = "UPDATE ";

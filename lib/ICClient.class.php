@@ -6,8 +6,6 @@
 	 *
 	 * Implementação Cliente
 	 */
-	require_once(PATH_LIB."/InfoCenter.class.php");
-	require_once("SOFreeBSD.class.php");
 
 	class ICClient extends InfoCenter {
 	

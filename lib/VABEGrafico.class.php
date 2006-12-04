@@ -8,12 +8,6 @@
 	 *
 	 */
 	
-	require_once("SOFreeBSD.class.php");
-	require_once(PATH_LIB."/VirtexAdminBackend.class.php");
-	
-	require_once( PATH_LIB . "/ICClient.class.php" );
-	require_once( PATH_LIB . "/ICHostInfo.class.php");
-
 	class VABEGrafico extends VirtexAdminBackend {
 	
 		protected $arquivoLog;

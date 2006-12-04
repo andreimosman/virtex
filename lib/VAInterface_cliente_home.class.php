@@ -7,10 +7,14 @@ require_once("MUtils.class.php");
 require_once(PATH_LIB . "/VAClientes.class.php");
 
 class VAInterface_cliente_home extends VirtexAdmin {
-		
+	
+	public function __construct() {
+		parent::__construct();
+	}
+	
 
-	function processa($op="") {
-	parent::VirtexAdmin();
+	public function processa($op="") {
+	
 	
 		$acao = @$_REQUEST["acao"];
 
@@ -28,9 +32,9 @@ class VAInterface_cliente_home extends VirtexAdmin {
 		$sSQL .= " AND cc.id_cliente = cl.id_cliente ";
 		$sSQL .= " AND id_conta = '$id_conta' ";
 
-			$this->bd->consulta($sSQL);
+		$this->bd->consulta($sSQL);
 
-			$conta = $this->bd->obtemUnicoRegistro($sSQL);
+		$conta = $this->bd->obtemUnicoRegistro($sSQL);
 
 
 
@@ -53,13 +57,13 @@ class VAInterface_cliente_home extends VirtexAdmin {
 
 		$this->arquivoTemplate = "interface_home.html";
 
-	if ($op == "dados"){
-	
-		$dados = "true";	
+		if ($op == "dados") {
 
-		$username = @$_REQUEST["username"];
-		$tipo_conta = @$_REQUEST["tipo_conta"];
-		$dominio = @$_REQUEST["dominio"];
+			$dados = "true";	
+
+			$username = @$_REQUEST["username"];
+			$tipo_conta = @$_REQUEST["tipo_conta"];
+			$dominio = @$_REQUEST["dominio"];
 
 			switch($tipo_conta) {
 			
@@ -140,91 +144,73 @@ class VAInterface_cliente_home extends VirtexAdmin {
 				break;
 				
 				
-		}		
+			}		
 				
-		$this->tpl->atribui("tipo_conta",$tipo_conta);
-		$this->tpl->atribui("username",$username);
-		$this->tpl->atribui("dominio",$dominio);	
+			$this->tpl->atribui("tipo_conta",$tipo_conta);
+			$this->tpl->atribui("username",$username);
+			$this->tpl->atribui("dominio",$dominio);	
 
 
 
-		$this->tpl->atribui("dados",$dados);
+			$this->tpl->atribui("dados",$dados);
 
-		$this->arquivoTemplate = "interface_home.html";
+			$this->arquivoTemplate = "interface_home.html";
+
 	
-	
-	}
-		
-	if ($op == "home"){
+		} else if ($op == "home") {
 		
 			$this->arquivoTemplate = "interface_home.html";
 
-		}
-		
-		if ($op == "alterar_senha"){
+		} else if ($op == "alterar_senha"){
 
 			$id_conta2 = @$_REQUEST["id_conta"];
 			$atual = @$_REQUEST["atual"];
 
-		if (!$acao && !$id_conta2){
+			if (!$acao && !$id_conta2){
+				$username = $_REQUEST["username"];
+				$dominio = @$_REQUEST ["dominio"];
+				$tipo_conta = @$_REQUEST ["tipo_conta"] ;
+			}
 		
+		
+		
+			$alterar_senhas = "true";
+			$msg = "Senha Alterada com sucesso!";
+			$url ="index_home.php?op=home";
 
-			$username = $_REQUEST["username"];
-			$dominio = @$_REQUEST ["dominio"];
-			$tipo_conta = @$_REQUEST ["tipo_conta"] ;
-		
-		}
-		
-		
-		
-		$alterar_senhas = "true";
-		$msg = "Senha Alterada com sucesso!";
-		$url ="index_home.php?op=home";
-		
-		if ($acao == "alterar" ){
-			
-		   if ($atual){
-			
+			if ($acao == "alterar" ){
 
+			   if ($atual){
 			
-				$aSQL  = "SELECT senha FROM cntb_conta WHERE username= '" . $this->bd->escape(@$_REQUEST["username"]) . "' AND dominio = '" . $this->bd->escape(@$_REQUEST["dominio"]) . "' AND tipo_conta = '" . $this->bd->escape(@$_REQUEST["tipo_conta"]) . "' " ;
+					$aSQL  = "SELECT senha FROM cntb_conta WHERE username= '" . $this->bd->escape(@$_REQUEST["username"]) . "' AND dominio = '" . $this->bd->escape(@$_REQUEST["dominio"]) . "' AND tipo_conta = '" . $this->bd->escape(@$_REQUEST["tipo_conta"]) . "' " ;
 
 					$senha_conta = $this->bd->obtemUnicoRegistro($aSQL);
 					$senha_atual = $senha_conta['senha'];
 
 
-				if ($senha_atual == $this->bd->escape(@$_REQUEST["senha_atual"])){
-			
-					$msg = "Senha Alterada com sucesso!";
-					$url ="index_home.php?op=home";
-
-				}else{
-			
-					$msg = "Erro ao processar, as senhas não conferem.Tente Novamente";
-					$url ="javascript:history.back();";
-
+					if ($senha_atual == $this->bd->escape(@$_REQUEST["senha_atual"])){
+						$msg = "Senha Alterada com sucesso!";
+						$url ="index_home.php?op=home";
+					}else{
+						$msg = "Erro ao processar, as senhas não conferem.Tente Novamente";
+						$url ="javascript:history.back();";
+					}
 				}
-			}
 		
-			$sSQL  = " UPDATE ";
-			$sSQL .= " cntb_conta ";
-			$sSQL .= " SET ";
-			$sSQL .= " senha_cript = '" . $this->criptSenha($this->bd->escape(@$_REQUEST["senha"]))  . "', ";
-			$sSQL .= " senha = '" . $this->bd->escape(@$_REQUEST["senha"])  . "' ";
-			$sSQL .= " WHERE ";
-			$sSQL .= " '" . $this->bd->escape(@$_REQUEST["senha"]) . "' = '" . $this->bd->escape(@$_REQUEST["senha_conf"]) . "' ";
-			$sSQL .= " AND username= '" . $this->bd->escape(@$_REQUEST["username"]) . "' ";
-			$sSQL .= " AND dominio = '" . $this->bd->escape(@$_REQUEST["dominio"]) . "' ";
-			$sSQL .= " AND tipo_conta = '" . $this->bd->escape(@$_REQUEST["tipo_conta"]) . "' ";
+				$sSQL  = " UPDATE ";
+				$sSQL .= " cntb_conta ";
+				$sSQL .= " SET ";
+				$sSQL .= " senha_cript = '" . $this->criptSenha($this->bd->escape(@$_REQUEST["senha"]))  . "', ";
+				$sSQL .= " senha = '" . $this->bd->escape(@$_REQUEST["senha"])  . "' ";
+				$sSQL .= " WHERE ";
+				$sSQL .= " '" . $this->bd->escape(@$_REQUEST["senha"]) . "' = '" . $this->bd->escape(@$_REQUEST["senha_conf"]) . "' ";
+				$sSQL .= " AND username= '" . $this->bd->escape(@$_REQUEST["username"]) . "' ";
+				$sSQL .= " AND dominio = '" . $this->bd->escape(@$_REQUEST["dominio"]) . "' ";
+				$sSQL .= " AND tipo_conta = '" . $this->bd->escape(@$_REQUEST["tipo_conta"]) . "' ";
 
-
-
-		
-		if ($atual){
-		
-			$sSQL .= " AND senha = '" . $this->bd->escape(@$_REQUEST["senha_atual"]) . "' ";
-
-		}
+				if ($atual){
+					$sSQL .= " AND senha = '" . $this->bd->escape(@$_REQUEST["senha_atual"]) . "' ";
+				}
 
 
 				$this->bd->consulta($sSQL);
@@ -247,9 +233,7 @@ class VAInterface_cliente_home extends VirtexAdmin {
 			$this->tpl->atribui("alterar_senhas",$alterar_senhas);
 			$this->arquivoTemplate = "interface_home.html";
 		
-		}
-		
-		if ($op == "contas"){
+		} else if ($op == "contas") {
 
 			$sSQL  = " SELECT ";
 			$sSQL .= " cc.username, pp.nome, cc.id_cliente, cc.dominio, cc.id_conta , cc.tipo_conta , cc.id_cliente_produto ";
@@ -267,40 +251,15 @@ class VAInterface_cliente_home extends VirtexAdmin {
 
 			$contas = $this->bd->obtemRegistros($sSQL);
 
-			/*		for($i=0;$i<count($contas);$i++) {
-
-						$username = $contas[$i]["username"];
-						$dominio = $contas[$i]["dominio"];
-
-						$dSQL  = "SELECT ";
-						$dSQL .= "	username, tipo_conta, dominio , email ";
-						$dSQL .= "FROM ";
-						$dSQL .= "	cntb_conta_email ";
-						$dSQL .= "WHERE ";
-						$dSQL .= "	dominio = '$dominio' ";
-						$dSQL .= "	AND username = '$username'";
-
-
-
-						///echo $dSQL ."<hr>\n";
-
-						$contas_email = $this->bd->obtemRegistros($dSQL);
-
-						$contas[$i]["conta"] = $contas_email;
-			}	*/
-
 			$this->tpl->atribui("contas",$contas);
 			$this->arquivoTemplate = "interface_home.html";
 			
-	}
-	
-	if ($op == "cobranca" ){
-	
-		$cobranca = true;
-	
+		} else if ($op == "cobranca" ) {
+			$cobranca = true;
+
 			$sSQL = "SELECT nome_razao FROM cltb_cliente WHERE id_cliente = '$id_cliente'";
 			$cliente = $this->bd->obtemUnicoRegistro($sSQL);
-			
+
 
 			$sSQL  = "SELECT ";
 			$sSQL .= "	ct.id_cliente_produto, ct.data_contratacao, ct.vigencia, ct.id_produto, ct.tipo_produto, ct.valor_contrato, ct.status, ";
@@ -315,7 +274,7 @@ class VAInterface_cliente_home extends VirtexAdmin {
 			$lista_contrato = $this->bd->obtemRegistros($sSQL);
 
 			for($i=0;$i<count($lista_contrato);$i++) {
-					
+
 				$id_cp = $lista_contrato[$i]["id_cliente_produto"];
 
 				$dSQL  = "SELECT ";
@@ -339,15 +298,9 @@ class VAInterface_cliente_home extends VirtexAdmin {
 			$this->tpl->atribui("cobranca",$cobranca);
 			$this->tpl->atribui("lista_contrato",$lista_contrato);
 
-
-	}
-	
-	if ($op == "criar_email"){
-	
-		
-		$acao = @$_REQUEST["acao"];
-
-		$criar_email = true;
+		} else if ($op == "criar_email") {
+			$acao = @$_REQUEST["acao"];
+			$criar_email = true;
 	  
 			$sSQL  = "SELECT ";
 			$sSQL .= "   cp.id_cliente_produto, p.nome as produto, p.num_emails, conta.num_emails as emails_cliente, p.id_produto ";
@@ -368,15 +321,8 @@ class VAInterface_cliente_home extends VirtexAdmin {
 			$sSQL .= "   p.id_produto = cp.id_produto ";
 			$sSQL .= "   AND cp.id_cliente_produto = conta.id_cliente_produto ";
 			$sSQL .= "   AND p.num_emails > conta.num_emails ";
-
-
 		
 			$num_email = $this->bd->obtemRegistros($sSQL);
-
-			
-			
-			
-			/////echo $sSQL ;
 
 			for ($i=0;$i<count($num_email);$i++){
 
@@ -389,112 +335,89 @@ class VAInterface_cliente_home extends VirtexAdmin {
 				$dSQL .= " AND conta_mestre = true ";
 				$dSQL .= " AND status = 'A' ";
 				$dSQL .= " AND tipo_conta <> 'E' ";
-				
-				
- 
-				////////echo $dSQL . "<br><hr>";
-
-
 				$user = $this->bd->obtemRegistros($dSQL);
 
 				$num_email[$i]["user"] = $user;
 
 			}
 			
-				
+			if ($acao == "ficha") {
 
 			
-			
-			
-			if ($acao == "ficha"){
+				//SELECT PARA POPULAR O DROP DE DOMINIO
+				$sSQL = "SELECT * FROM dominio WHERE dominio_provedor is true";
+				$dominios_provedor = $this->bd->obtemRegistros($sSQL);
 
-			
-			//SELECT PARA POPULAR O DROP DE DOMINIO
-			
-			
-					$sSQL = "SELECT * FROM dominio WHERE dominio_provedor is true";
-					$dominios_provedor = $this->bd->obtemRegistros($sSQL);
+				$sSQL  = "SELECT h.dominio_hospedagem as dominio FROM cntb_conta c, cntb_conta_hospedagem h WHERE ";
+				$sSQL .= "c.username = h.username AND ";
+				$sSQL .= "c.tipo_conta = h.tipo_conta AND ";
+				$sSQL .= "c.dominio = h.dominio AND ";
+				$sSQL .= "c.id_cliente = $id_cliente ";
+				$hospeda = $this->bd->obtemRegistros($sSQL);
+				////echo $sSQL ."<br>";
+				if (count($hospeda)) {
 
-					$sSQL  = "SELECT h.dominio_hospedagem as dominio FROM cntb_conta c, cntb_conta_hospedagem h WHERE ";
-					$sSQL .= "c.username = h.username AND ";
-					$sSQL .= "c.tipo_conta = h.tipo_conta AND ";
-					$sSQL .= "c.dominio = h.dominio AND ";
-					$sSQL .= "c.id_cliente = $id_cliente ";
-					$hospeda = $this->bd->obtemRegistros($sSQL);
-					////echo $sSQL ."<br>";
-					if (count($hospeda)) {
+					$dominios_provedor = array_merge($dominios_provedor, $hospeda);
 
-						$dominios_provedor = array_merge($dominios_provedor, $hospeda);
-
-					}
+				}
 					
-			///	SELECT ACABA AQUI
 
-					$this->tpl->atribui("dominios_provedor", $dominios_provedor);
+				$this->tpl->atribui("dominios_provedor", $dominios_provedor);
 					
 		
 
-					$produto_conta = @$_REQUEST["produto_conta"];			
-					
-					@list($produto_conta,$total_emails) = explode("/",$produto_conta);
-					
+				$produto_conta = @$_REQUEST["produto_conta"];			
 
-					$mostrar = true;
+				@list($produto_conta,$total_emails) = explode("/",$produto_conta);
 
-					$aSQL  = " SELECT ";
-					$aSQL .= " p.nome, cp.id_cliente_produto ";
-					$aSQL .= " FROM prtb_produto p, cbtb_cliente_produto cp ";
-					$aSQL .= " WHERE p.id_produto='$produto_conta' ";
-					$aSQL .= " AND cp.id_cliente = '$id_cliente' ";
-					$aSQL .= " AND cp.id_produto = p.id_produto ";
-					
-					/////////////////echo $aSQL ;
-				
-					$nome_produto = $this->bd->obtemUnicoRegistro($aSQL);
-				
-					$nome = strtoupper($nome_produto["nome"]);
-					
-					$id_cliente_produto_slctd = $nome_produto["id_cliente_produto"];
-			
-					$this->tpl->atribui("mostrar",$mostrar);			
-					$this->tpl->atribui("id_cliente",$id_cliente);
-					$this->tpl->atribui("total_emails",$total_emails);
-					$this->tpl->atribui("id_cliente_produto",$id_cliente_produto_slctd);
-					$this->tpl->atribui("nome",$nome);			
-			}
-			
-			if ($acao == "papocar"){
-			
-			$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
-			
 
-					$sSQL  = "SELECT ";
-					$sSQL .= "   username ";
-					$sSQL .= "FROM ";
-					$sSQL .= "   cntb_conta ";
-					$sSQL .= "WHERE ";
-					$sSQL .= "   username = '".@$_REQUEST["username"]."' ";
-					$sSQL .= "   and tipo_conta = 'E' ";
-					$sSQL .= "   and dominio = '".@$_REQUEST["dominio"]."' ";
-					$sSQL .= "ORDER BY ";
-					$sSQL .= "   username ";
+				$mostrar = true;
 
-					$lista_user = $this->bd->obtemUnicoRegistro($sSQL);
-					/////////////////////echo $sSQL ;
+				$aSQL  = " SELECT ";
+				$aSQL .= " p.nome, cp.id_cliente_produto ";
+				$aSQL .= " FROM prtb_produto p, cbtb_cliente_produto cp ";
+				$aSQL .= " WHERE p.id_produto='$produto_conta' ";
+				$aSQL .= " AND cp.id_cliente = '$id_cliente' ";
+				$aSQL .= " AND cp.id_produto = p.id_produto ";
+
+				/////////////////echo $aSQL ;
+
+				$nome_produto = $this->bd->obtemUnicoRegistro($aSQL);
+
+				$nome = strtoupper($nome_produto["nome"]);
+
+				$id_cliente_produto_slctd = $nome_produto["id_cliente_produto"];
+
+				$this->tpl->atribui("mostrar",$mostrar);			
+				$this->tpl->atribui("id_cliente",$id_cliente);
+				$this->tpl->atribui("total_emails",$total_emails);
+				$this->tpl->atribui("id_cliente_produto",$id_cliente_produto_slctd);
+				$this->tpl->atribui("nome",$nome);			
+			} else if ($acao == "papocar") {
+			
+				$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
+
+				$sSQL  = "SELECT ";
+				$sSQL .= "   username ";
+				$sSQL .= "FROM ";
+				$sSQL .= "   cntb_conta ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "   username = '".@$_REQUEST["username"]."' ";
+				$sSQL .= "   and tipo_conta = 'E' ";
+				$sSQL .= "   and dominio = '".@$_REQUEST["dominio"]."' ";
+				$sSQL .= "ORDER BY ";
+				$sSQL .= "   username ";
+
+				$lista_user = $this->bd->obtemUnicoRegistro($sSQL);
 
 				if(count($lista_user) && $lista_user["username"]){
-						// ver como processar
-					 $msg = "Já existe outra conta cadastrada com esse username!";
-					 $url = "index_home.php?op=criar_email ";
-					 $criar_email = true;
-					 $this->tpl->atribui("criar_email",$criar_email);
+					// ver como processar
+					$msg = "Já existe outra conta cadastrada com esse username!";
+					$url = "index_home.php?op=criar_email ";
+					$criar_email = true;
+					$this->tpl->atribui("criar_email",$criar_email);
 
-
-				}
-				
-				else{
-					
-
+				} else {
 					$id_conta = $this->bd->proximoID("cnsq_id_conta");
 
 					$sSQL  = "INSERT INTO ";
@@ -535,8 +458,8 @@ class VAInterface_cliente_home extends VirtexAdmin {
 					$this->spool->adicionarEmail($server, $id_conta, $this->bd->escape(@$_REQUEST["username"]), $this->bd->escape(@$_REQUEST["dominio"]));
 					
 					
-				$msg = "E-mail adicionado com sucesso! ";
-				$url = "index_home.php" ;
+					$msg = "E-mail adicionado com sucesso! ";
+					$url = "index_home.php" ;
 				
 				}
 				
@@ -552,47 +475,33 @@ class VAInterface_cliente_home extends VirtexAdmin {
 			$this->tpl->atribui("num_email",$num_email);
 			$this->tpl->atribui("criar_email",$criar_email);
 	
-	}
+		} else if ($op == "faturas") {
 	
-	
-	if ($op == "faturas"){
+			$faturas_segunda_via = true;
+			$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
 
-	
-		$faturas_segunda_via = true;
-		$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
-		
-		$sSQL  = "SELECT ";
-		$sSQL .= "f.id_cliente_produto, to_char(f.data, 'DD/mm/YYYY') as data_conv,f.data, f.valor, f.observacoes,f.descricao,to_char(f.reagendamento, 'DD/mm/YYYY') as reagendamento, f.pagto_parcial, ";
-		$sSQL .= "to_char(f.data_pagamento, 'DD/mm/YYYY') as data_pagamento, f.desconto, f.acrescimo, f.valor_pago, ";
-		$sSQL .= "c.id_cliente_produto, c.id_cliente, ";
-		$sSQL .= "CASE WHEN (f.data < CAST(now() as date) AND f.status='A') OR (f.reagendamento < CAST(now() as date) AND f.status='R') ";
-		$sSQL .= "THEN 'S' ELSE ";
-		$sSQL .= "CASE WHEN f.reagendamento is not null AND f.status != 'P' ";
-		$sSQL .= "THEN 'G' ELSE f.status ";
-		$sSQL .= "END ";
-		$sSQL .= "END as extstatus ";
-		$sSQL .= "FROM ";
-		$sSQL .= "cbtb_faturas f, cbtb_cliente_produto c ";
-		$sSQL .= "WHERE ";
-		$sSQL .= "id_cliente = '$id_cliente' ";
-		$sSQL .= "AND ";
-		$sSQL .= "f.id_cliente_produto = c.id_cliente_produto ";
-		$sSQL .= " AND f.reagendamento is null AND f.valor_pago = '0.00' ";
-		$sSQL .= " AND f.id_cliente_produto = '$id_cliente_produto' ";
-		$sSQL .= " AND f.status != 'E' AND f.status != 'C' ";
-		//$sSQL .= "AND (f.status = 'A' OR f.status = 'R') ";
-		//$sSQL .= "AND f.data < now() + interval '10 day' ";
-		$sSQL .= "ORDER BY f.data ASC ";
-
+			$sSQL  = "SELECT ";
+			$sSQL .= "f.id_cliente_produto, to_char(f.data, 'DD/mm/YYYY') as data_conv,f.data, f.valor, f.observacoes,f.descricao,to_char(f.reagendamento, 'DD/mm/YYYY') as reagendamento, f.pagto_parcial, ";
+			$sSQL .= "to_char(f.data_pagamento, 'DD/mm/YYYY') as data_pagamento, f.desconto, f.acrescimo, f.valor_pago, ";
+			$sSQL .= "c.id_cliente_produto, c.id_cliente, ";
+			$sSQL .= "CASE WHEN (f.data < CAST(now() as date) AND f.status='A') OR (f.reagendamento < CAST(now() as date) AND f.status='R') ";
+			$sSQL .= "THEN 'S' ELSE ";
+			$sSQL .= "CASE WHEN f.reagendamento is not null AND f.status != 'P' ";
+			$sSQL .= "THEN 'G' ELSE f.status ";
+			$sSQL .= "END ";
+			$sSQL .= "END as extstatus ";
+			$sSQL .= "FROM ";
+			$sSQL .= "cbtb_faturas f, cbtb_cliente_produto c ";
+			$sSQL .= "WHERE ";
+			$sSQL .= "id_cliente = '$id_cliente' ";
+			$sSQL .= "AND ";
+			$sSQL .= "f.id_cliente_produto = c.id_cliente_produto ";
+			$sSQL .= " AND f.reagendamento is null AND f.valor_pago = '0.00' ";
+			$sSQL .= " AND f.id_cliente_produto = '$id_cliente_produto' ";
+			$sSQL .= " AND f.status != 'E' AND f.status != 'C' ";
+			$sSQL .= "ORDER BY f.data ASC ";
 
 			$lista_faturas = $this->bd->obtemRegistros($sSQL);
-			//////echo "Faturas: $sSQL <br>";
-
-
-				///$this->obtemPR($id_cliente);
-
-
-
 
 			$sSQL = "SELECT nome_razao FROM cltb_cliente WHERE id_cliente = '$id_cliente'";
 			$cliente = $this->bd->obtemUnicoRegistro($sSQL);
@@ -601,120 +510,106 @@ class VAInterface_cliente_home extends VirtexAdmin {
 			$this->tpl->atribui("id_cliente", $id_cliente);
 			$this->tpl->atribui("lista_faturas",$lista_faturas);
 			$this->tpl->atribui("faturas_segunda_via",$faturas_segunda_via);	
-	
-	
-	}
-	
-	
-	if ($op == "segunda_via"){
+		} else if ($op == "segunda_via") {
 			
-			  $id_carne = @$_REQUEST["id_carne"];
-			  $faturas = array();
-	
-				$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
-				$id_cliente = @$_REQUEST["id_cliente"];
-				$data = @$_REQUEST["data"];
-				
-				$forma_pagamento = "PRE";
-			  
-			  if( !$id_carne ) {
-					// Se não tiver o id_carne é pq é pra exibir uma única fatura.
+			$id_carne = @$_REQUEST["id_carne"];
+			$faturas = array();
+
+			$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
+			$id_cliente = @$_REQUEST["id_cliente"];
+			$data = @$_REQUEST["data"];
+
+			$forma_pagamento = "PRE";
+
+			if( !$id_carne ) {
+				// Se não tiver o id_carne é pq é pra exibir uma única fatura.
+				$fatura_html = $this->carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,true);  
+
+				$faturas[] = array( "fatura_html" => $fatura_html, "pagebrake" => false );
+
+
+			} else {
+
+				// Exibe TODAS as faturas em ABERTO		  	
+				$sSQL  = "SELECT ";
+				$sSQL .= "   id_cliente_produto, data, id_carne ";
+				$sSQL .= "FROM ";		
+				$sSQL .= "   cbtb_faturas ";
+				$sSQL .= "WHERE ";
+				$sSQL .= "id_carne = '".$_REQUEST["id_carne"]."' AND ";
+				$sSQL .= "status = 'A' ";
 					
-			  	
-			  	$fatura_html = $this->carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,true);  
-			  	
-			  	///echo $fatura_html;
-			  	
-			  	$faturas[] = array( "fatura_html" => $fatura_html, "pagebrake" => false );
-			     
-			     
-			  } else {
-						// Exibe TODAS as faturas em ABERTO		  	
+				$fat = $this->bd->obtemRegistros($sSQL);
 	
+				for($i=0;$i<count($fat);$i++) {
+						// Se nãoi passar o último parametro como true o sistema fica gerando o "Nosso Numero"
+					 $fatura_html = $this->carne($fat[$i]["id_cliente_produto"],$fat[$i]["data"],$id_cliente,$forma_pagamento,true);
+
+					 $pagebrake=false;
+
+					 // blablabla do pagebrake
+					 if( $i>0 && ($i+1) != count($fat) && ($i+1) % 3 == 0 ) {
+						$pagebrake = true;
+					 }
+
+					 $faturas[] = array( "fatura_html" => $fatura_html,
+															 "pagebreak" => $pagebrake );
 	
-					$sSQL  = "SELECT ";
-					$sSQL .= "   id_cliente_produto, data, id_carne ";
-					$sSQL .= "FROM ";		
-					$sSQL .= "   cbtb_faturas ";
-					$sSQL .= "WHERE ";
-		//			$sSQL .= "id_cliente_produto = '".$REQUEST["id_cliente_produto"]."' AND ";
-					$sSQL .= "id_carne = '".$_REQUEST["id_carne"]."' AND ";
-					$sSQL .= "status = 'A' ";
-					
-					$fat = $this->bd->obtemRegistros($sSQL);
+				}					
+			}
 	
-					for($i=0;$i<count($fat);$i++) {
-							// Se nãoi passar o último parametro como true o sistema fica gerando o "Nosso Numero"
-						 $fatura_html = $this->carne($fat[$i]["id_cliente_produto"],$fat[$i]["data"],$id_cliente,$forma_pagamento,true);
-						 
-						 $pagebrake=false;
-	
-						 // blablabla do pagebrake
-						 if( $i>0 && ($i+1) != count($fat) && ($i+1) % 3 == 0 ) {
-							$pagebrake = true;
-						 }
-	
-						 $faturas[] = array( "fatura_html" => $fatura_html,
-																 "pagebreak" => $pagebrake );
-	
-					}// for
-					
-				}
-	
-				$this->tpl->atribui("faturas",$faturas);
-				$this->arquivoTemplate = "carne_segunda_via.html";
-				return;
+			$this->tpl->atribui("faturas",$faturas);
+			$this->arquivoTemplate = "carne_segunda_via.html";
+			return;
 
 		
-	}
-	if ($op == "imprime_contrato"){
-			
-				$rotina = @$_REQUEST["rotina"];
-				$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
-				$id_cliente = @$_REQUEST["id_cliente"];
-				///$this->obtemPR($id_cliente);
-	
-				$sSQL = "SELECT * FROM cbtb_contrato WHERE id_cliente_produto = '$id_cliente_produto'";
-				$contr = $this->bd->obtemUnicoRegistro($sSQL);
-				///echo $sSQL ;
-	
-				$data_contratacao = $contr["data_contratacao"];
-	
-				//$arqPDF = $this->contratoPDF($id_cliente_produto,$data_contratacao);
-	
-				$sSQL = "SELECT path_contrato FROM pftb_preferencia_cobranca WHERE id_provedor = '1'";
-				$_path = $this->bd->obtemUnicoRegistro($sSQL);
-				$path = $_path["path_contrato"];
-				$host = "dev.mosman.com.br";
-	
-				//////////echo "path_contratos: $sSQL <br>";
-				//////////echo "path: $path <br>";
-				//contrato-418-2006-05-10.html
-	
-				$base_nome = "contrato-".$id_cliente_produto."-".$data_contratacao;
-				$nome_arq = $path.$base_nome.".html";
-				$arq_mostra = $path."/".$base_nome.".pdf";
-				$arq = $base_nome.".html";
-				///////echo $arq;
+		} else if ($op == "imprime_contrato") {
+
+			$rotina = @$_REQUEST["rotina"];
+			$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
+			$id_cliente = @$_REQUEST["id_cliente"];
+			///$this->obtemPR($id_cliente);
+
+			$sSQL = "SELECT * FROM cbtb_contrato WHERE id_cliente_produto = '$id_cliente_produto'";
+			$contr = $this->bd->obtemUnicoRegistro($sSQL);
+			///echo $sSQL ;
+
+			$data_contratacao = $contr["data_contratacao"];
+
+			//$arqPDF = $this->contratoPDF($id_cliente_produto,$data_contratacao);
+
+			$sSQL = "SELECT path_contrato FROM pftb_preferencia_cobranca WHERE id_provedor = '1'";
+			$_path = $this->bd->obtemUnicoRegistro($sSQL);
+			$path = $_path["path_contrato"];
+			$host = "dev.mosman.com.br";
+
+			//////////echo "path_contratos: $sSQL <br>";
+			//////////echo "path: $path <br>";
+			//contrato-418-2006-05-10.html
+
+			$base_nome = "contrato-".$id_cliente_produto."-".$data_contratacao;
+			$nome_arq = $path.$base_nome.".html";
+			$arq_mostra = $path."/".$base_nome.".pdf";
+			$arq = $base_nome.".html";
+			///////echo $arq;
 				
-				if ($rotina == "pdf"){
+			if ($rotina == "pdf"){
 
-					//////////echo "nome arquivo: $nome_arq <br>";	
+				//////////echo "nome arquivo: $nome_arq <br>";	
 
-					$p = new MHTML2PDF();
-					$p->setDebug(0);
-					$arqPDF = $p->converte($nome_arq,$host,$path);
-					copy($arqPDF,$path.$base_nome.".pdf");
-					//copy($arqPDF,"/home/hugo".$base_nome.".pdf");
+				$p = new MHTML2PDF();
+				$p->setDebug(0);
+				$arqPDF = $p->converte($nome_arq,$host,$path);
+				copy($arqPDF,$path.$base_nome.".pdf");
+				//copy($arqPDF,"/home/hugo".$base_nome.".pdf");
 
-					if (!$arqPDF){
+				if (!$arqPDF){
 
-						////////echo "papocou esta bosta";
-						////////echo "path_contratos: $sSQL <br>";
-						////////echo "path: $path <br>";
+					////////echo "papocou esta bosta";
+					////////echo "path_contratos: $sSQL <br>";
+					////////echo "path: $path <br>";
 
-					}else{
-
+				} else {
 
 					header('Pragma: public');
 					header('Expires: 0');
@@ -723,18 +618,12 @@ class VAInterface_cliente_home extends VirtexAdmin {
 					header('Content-Disposition: attachment; filename="'.$base_nome.'.pdf"');
 					readfile($arqPDF);
 
-					}
+				}
 
-				}else{
+			} else {
 
-				//////////echo $arqPDF;
-				//////////echo "BOSTA";
-
-				//$this->arquivoTemplate = "home.html";
 				$contr = fopen($nome_arq, "r");
-				//echo fread($contr,filesize($nome_arq));
 				fclose($contr);
-				//$this->tpl->atribui("arquivo_contrato",$arquivo_contrato);
 				$this->arquivoTemplate = $nome_arq;
 				return;
 			}
@@ -745,11 +634,8 @@ class VAInterface_cliente_home extends VirtexAdmin {
 		$this->arquivoTemplate = "interface_home.html";	
 	
 	}
+
 	public function carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$segunda_via=false){
-	
-	
-		////////echo "DATA ENVIADA: $data <BR>\n";
-	
 		
 		$sSQL  = "SELECT cl.nome_razao, cl.endereco, cl.complemento, cl.id_cidade, cl.estado, cl.cep, cl.cpf_cnpj,cl.bairro, cd.cidade as nome_cidade, cd.id_cidade  ";
 		$sSQL .= "FROM ";
@@ -757,10 +643,8 @@ class VAInterface_cliente_home extends VirtexAdmin {
 		$sSQL .= "WHERE ";
 		$sSQL .= "cl.id_cliente = '$id_cliente' AND ";
 		$sSQL .= "cd.id_cidade = cl.id_cidade";
-		///////echo $sSQL;
 	
 		$cliente = $this->bd->obtemUnicoRegistro($sSQL);
-		////////echo "CLIENTE: $sSQL  <br>";
 		
 		if( strstr($data,"/") && $segunda_via) {
 		   list($d,$m,$y) = explode("/",$data);
@@ -775,68 +659,42 @@ class VAInterface_cliente_home extends VirtexAdmin {
 		$sSQL .= "data = '$data' ";
 	
 		$fatura = $this->bd->obtemUnicoRegistro($sSQL);
-		
-		////////echo "fatura: $sSQL<br>";
-		
-		//$data_cadastrada = $fatura["data"];
-		////////echo "DATA: $data_cadastrada <br>";
-		////////echo "SHIT: " . $fatura["data"] . "<br>\n";
-		
 		list ($dia,$mes,$ano) = explode("/",$fatura["data"]);
-		
-		
 		$mes_array = array("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
 		
-		if ($forma_pagamento == "PRE"){
-		
+		if ($forma_pagamento == "PRE") {
 			$referente = $mes_array[(int)$mes-1]."/".$ano;
-		
-		}else if ($forma_pagamento == "POS"){
-		
-			//$mes_ref = mktime(0, 0, 0, $mes-1);
-			////////echo "MES: $mes <br>\n";
-			////////echo "MES REF: $mes_ref <br>\n";
+		}else if ($forma_pagamento == "POS") {
 			$referente = $mes_array[(int)$mes-1]."/".$ano;
-		
 		}
-		
-	
-	
+
 		// PEGANDO INFORMAÇÕES DAS PREFERENCIAS
 		$provedor = $this->prefs->obtem("total");
-		//$provedor = $this->prefs->obtem();
 	
 		$sSQL = "SELECT ct.id_produto, pd.nome from cbtb_contrato ct, prtb_produto pd WHERE ct.id_cliente_produto = '$id_cliente_produto' and ct.id_produto = pd.id_produto";
 		$produto = $this->bd->obtemUnicoRegistro($sSQL);
-		//////////echo "PRODUTO: $sSQL <br>";
-	
-		//$codigo = @$_REQUEST["codigo"];
-		//$data_venc = "30/04/2006";
 		
-		if (!$segunda_via){
+		if (!$segunda_via) {
 		
 			$sSQL = "SELECT nextval('blsq_carne_nossonumero') as nosso_numero ";
 			$nn = $this->bd->obtemUnicoRegistro($sSQL);
 	
 			$nosso_numero = $nn['nosso_numero'];
 			
-		}else {
-		
+		} else {
 			$nosso_numero = $fatura["nosso_numero"];
-			"porraaaaa";
-			
 		}
 	
 		$data_venc = $fatura["data"];
 		@list($dia,$mes,$ano) = explode("/",$fatura["data"]);
 		$vencimento = $ano.$mes.$dia;
-		//////////echo $codigo;
+
 		$valor = $fatura["valor"];
 		$id_cobranca = $fatura["id_cobranca"];
 		$nome_cliente = $cliente["nome_razao"];
 		$cpf_cliente = $cliente["cpf_cnpj"];
 		$id_empresa = $provedor["cnpj"];
-		//$nosso_numero = 1;
+
 		$nome_cedente = $provedor['nome'];
 		$cendereco = $provedor['endereco'];
 		$clocalidade = $provedor['localidade'];
@@ -844,22 +702,16 @@ class VAInterface_cliente_home extends VirtexAdmin {
 		$nome_produto = $produto["nome"];
 		$complemento = $cliente["complemento"];
 		
-		//$informacoes = $provedor["observacoes"];
-	
-	  if( $segunda_via ) {
-	
-	     $hoje = $fatura["data"];
-	     $codigo_barras = $fatura["cod_barra"];
-	     $linha_digitavel = $fatura["linha_digitavel"];
+		if( $segunda_via ) {
+			$hoje = $fatura["data"];
+			$codigo_barras = $fatura["cod_barra"];
+			$linha_digitavel = $fatura["linha_digitavel"];
+		} else {
+			$codigo_barras = MArrecadacao::codigoBarrasPagContas($valor,$id_empresa,$nosso_numero,$vencimento);
+			$hoje = date("d/m/Y");
+			$linha_digitavel = MArrecadacao::linhaDigitavel($codigo_barras);
 
-	     
-	  } else {
-	  
-	   	$codigo_barras = MArrecadacao::codigoBarrasPagContas($valor,$id_empresa,$nosso_numero,$vencimento);
-	   	$hoje = date("d/m/Y");
-	   	$linha_digitavel = MArrecadacao::linhaDigitavel($codigo_barras);
-		
-	   		$sSQL  = "UPDATE ";
+			$sSQL  = "UPDATE ";
 			$sSQL .= "cbtb_faturas SET ";
 			$sSQL .= "nosso_numero = '$nosso_numero', ";
 			$sSQL .= "linha_digitavel = '$linha_digitavel', ";
@@ -867,34 +719,15 @@ class VAInterface_cliente_home extends VirtexAdmin {
 			$sSQL .= "WHERE ";
 			$sSQL .= "id_cliente_produto = '$id_cliente_produto' AND ";
 			$sSQL .= "data = '$data' ";
-		
+
 			$this->bd->consulta($sSQL);
 		}
 		
-	   	
-		////////echo "FATURA: $sSQL <br>";
-		
 		$target = "/mosman/virtex/dados/carnes/codigos";
-		///echo $target;
-		//$target = "carnes/codigos";
 		MArrecadacao::barCode($codigo_barras,"$target/$codigo_barras.png");
-			
-		//	$codigo = MArrecadacao::pagConta(...);
-			
-		//copy ("/mosman/virtex/dados/carnes/codigos/".$codigo_barras.".png","/home/hugo/public_html/virtex/codigos/".$codigo_barras.".png");
-			
-	
-		//$barra = MArrecadacao::barCode($codigo_barras);
-		
 		$ph = new MUtils;
-		
 		$_path = MUtils::getPwd();
-		
-		
 		$images = $_path."/template/boletos/imagens";
-		
-		/////////////echo $images;
-		
 		$this->tpl->atribui("codigo_barras",$codigo_barras);
 	
 		$this->tpl->atribui("linha_digitavel",$linha_digitavel);
@@ -920,31 +753,19 @@ class VAInterface_cliente_home extends VirtexAdmin {
 		$this->tpl->atribui("referente",$referente);
 		$this->tpl->atribui("cpf_cnpj",$cliente["cpf_cnpj"]);
 		$this->tpl->atribui("bairro",$cliente["bairro"]);
-		//$this->tpl->atribui("barra",$barra);
 		
-		
-		
-		/////return($carne_emitido);
-		
-		
-		if ( $segunda_via == true ){
-			
+		if ( $segunda_via == true ) {
 			$this->tpl->atribui("imprimir",true);
 			$estilo = $this->tpl->obtemPagina("../boletos/pc-estilo.html");
 			$fatura = $this->tpl->obtemPagina("../boletos/layout-pc.html");
-			
 			return($estilo.$fatura);
-		
-		}else{
-		
+		} else {
 			$fatura = $this->tpl->obtemPagina("../boletos/layout-pc.html");
 			return($fatura);
-			
-		
 		}
 		
 		
-}
+	}
 	
 
 

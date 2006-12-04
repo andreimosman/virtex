@@ -8,7 +8,11 @@
  * Trabalha com a variável de sessao $admLogin conforme setado em VirtexAdmin.class.php
  */
 
-class VALogin extends VirtexAdmin {
+class VALogin extends VirtexAdminWeb {
+
+	function __construct() {
+		parent::__construct();
+	}
 
 	function processa($op="") {
 

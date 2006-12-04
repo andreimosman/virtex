@@ -1,16 +1,16 @@
 <?
 
-require_once("VirtexAdmin.class.php");
-require_once("Userlogin.class.php");
-
 /**
  * Tela de login.
  *
  * Trabalha com a variável de sessao $admLogin conforme setado em VirtexAdmin.class.php
  */
 
-class VAInterface_cliente extends VirtexAdmin {
-
+class VAInterface_cliente extends VirtexAdminWeb {
+	
+	public function __construct() {
+		parent::__construct();
+	}
 
 
 	function processa($op="") {

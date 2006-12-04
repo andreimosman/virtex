@@ -1,10 +1,9 @@
 <?
-require_once( PATH_LIB . "/VirtexAdmin.class.php" );
 
-class VAConfiguracao extends VirtexAdmin {
+class VAConfiguracao extends VirtexAdminWeb {
 
-	public function VAConfiguracao() {
-		parent::VirtexAdmin();
+	public function __construt() {
+		parent::__construct();
 	}
 
 

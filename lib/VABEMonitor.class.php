@@ -7,10 +7,6 @@
 	 *
 	 */
 
-	require_once(PATH_LIB."/VirtexAdminBackend.class.php");
-	require_once("SOFreeBSD.class.php");
-
-
 	class VABEMonitor extends VirtexAdminBackend {
 		protected $processados;
 		protected $hosts;

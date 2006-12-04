@@ -1,19 +1,20 @@
 <?
 
-
-require_once( PATH_LIB . "/VirtexAdmin.class.php" );
+/**
+ * Não retirar os requires do jpgraph
+ * Eles não serão alcançados no __autoload
+ * TODO: Fazer mapeamento do jograph no autoload.
+ */
 require_once( "jpgraph.php" );
 require_once( "jpgraph_line.php" );
 require_once( "jpgraph_bar.php" );
 require_once( "jpgraph_pie.php");
 require_once( "jpgraph_pie3d.php");
 
-class VARelatorio extends VirtexAdmin {
+class VARelatorio extends VirtexAdminWeb {
 
-	public function VARelatorio() {
-		parent::VirtexAdmin();
-	
-	
+	public function __construct() {
+		parent::__construct();
 	}
 	
 	public function obtem_mes($numero_mes) {	

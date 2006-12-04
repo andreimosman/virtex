@@ -7,11 +7,6 @@
 	 *
 	 */
 
-	require_once(PATH_LIB."/VirtexAdminBackend.class.php");
-	require_once(PATH_LIB."/AtuadorBandaLarga.class.php");
-	//require_once(PATH_LIB."/Atuador.class.php");
-	require_once("SOFreeBSD.class.php");
-
 	class VABEPPPoE extends VirtexAdminBackend {
 	
 		protected $who;

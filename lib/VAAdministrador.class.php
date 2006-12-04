@@ -1,15 +1,12 @@
 <?
 
-
-require_once( PATH_LIB . "/VirtexAdmin.class.php" );
-
 if( !defined("_VAADMINISTRADOR") ) {
 	define("_VAADMINISTRADOR",1);
 
-	class VAAdministrador extends VirtexAdmin {
+	class VAAdministrador extends VirtexAdminWeb {
 
-		public function VAAdministrador() {
-			parent::VirtexAdmin();
+		public function __construct() {
+			parent::__construct();
 
 
 		}
@@ -23,9 +20,6 @@ if( !defined("_VAADMINISTRADOR") ) {
 
 
 		public function processa($op=null) {
-
-
-
 
 			if ($op == "cadastro"){
 

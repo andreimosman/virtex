@@ -1,11 +1,9 @@
 <?
-require_once( PATH_LIB . "/VirtexAdmin.class.php" );
 
+class VABackup extends VirtexAdminWeb {
 
-class VABackup extends VirtexAdmin {
-
-	public function VABackup() {
-		parent::VirtexAdmin();
+	public function __construct() {
+		parent::__construct();
 	}
 
 	public function processa($op=null) {	
