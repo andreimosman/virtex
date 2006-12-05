@@ -921,7 +921,6 @@
 
 						switch($forma_pagamento) {
 							case 'POS':
-
 									if($id_cobranca == 2) { //Tipo de pagamento for carnê
 
 	// CARNÊ POS PAGO - INICIO
@@ -953,7 +952,7 @@
 
 													//Calcula a data dos próximos pagamentos de fatura.
 
-													$sSQL =  "INSERT INTO cbtb_faturas(";
+													$sSQL  =  "INSERT INTO cbtb_faturas(";
 													$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
 													$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
 													$sSQL .= "	acrescimo, valor_pago, id_carne ";
@@ -1082,9 +1081,10 @@
 												
 												$data = $fatura_dt_vencimento;
 												$fatura = $this->boleto($id_cliente_produto,$data,$id_cliente,$forma_pagamento);
-
 	// BOLETO POS PAGO - FINAL
-
+											}
+											
+											
 									} else { //Caso a cobrança não seja do tipo carnê nem boleto (carne = 2 e boleto = 1).
 
 
@@ -1105,7 +1105,7 @@
 
 											$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $cm, $cd, $ca));
 
-											$sSQL =  "INSERT INTO cbtb_faturas(";
+											$sSQL  =  "INSERT INTO cbtb_faturas(";
 											$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
 											$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
 											$sSQL .= "	acrescimo, valor_pago, id_carne ";
@@ -1116,14 +1116,17 @@
 											$sSQL .= ")";
 
 											$this->bd->consulta($sSQL);
-											if ($this->bd->obtemErro())	break;
-										}								
+																						
+											if ($this->bd->obtemErro()) break;											
+										}
 
-									}									
+								}									
 
-								break;
 
+							break;
 							case 'PRE':
+							
+									
 									if($id_cobranca == 2) {	//Tipo pagamento for Carnê.
 
 	// CARNE PRE PAGO - INICIO
@@ -1132,7 +1135,6 @@
 												$data_carne = @$_REQUEST["data_carne"];
 												$prorata = @$_REQUEST["prorata"];
 												$valor_prorata = @$_REQUEST["valor_prorata"];
-
 
 												list($ini_d, $ini_m, $ini_a) = explode("/", $ini_carne);
 												list($dat_d, $dat_m, $dat_a) = explode("/", $data_carne);
@@ -1193,7 +1195,6 @@
 
 													$this->bd->consulta($sSQL);
 													if ($this->bd->obtemErro())	break;
-													
 
 													$data = $fatura_dt_vencimento;
 
@@ -1296,6 +1297,7 @@
 										$this->bd->consulta($sSQL);
 										if ($this->bd->obtemErro())	break;
 									}
+									
 								break;						
 						}
 
