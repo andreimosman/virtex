@@ -739,7 +739,11 @@ class VACobranca extends VirtexAdminWeb {
 							/* FINAL SPOOL */
 							
 						}
-							
+							$aSQL  = " SELECT username, dominio FROM cntb_conta WHERE id_cliente_produto = '$id_cli_produto' AND tipo_conta = '$tipo' " ;
+							$r = $this->bd->obtemUnicoRegistro($aSQL);
+							//echo $aSQL ;
+							$dominio = $r['dominio'];
+							$username = $r['username'];
 							
 							$sSQL  = "UPDATE ";
 							$sSQL .= "   cntb_conta ";
@@ -749,15 +753,23 @@ class VACobranca extends VirtexAdminWeb {
 							$sSQL .= "   id_cliente_produto = $id_cli_produto ";
 							$sSQL .= "   AND tipo_conta = '$tipo' "; /* esse bl é o tipo do produto contratado */
 		   					//$sSQL .= "AND status = 'A' "; /* conta ativa */
-		   					
+
 		   					$this->bd->consulta($sSQL);
 							//echo"QUERY UPDATE: $sSQL<br>\n";
+							
+								
+							$operacao = "ALTSTATUS(SUSPENSO)";
+							$this->logConta("5",$id_cli_produto, $tipo, $username, $operacao, $dominio);
 			
 						}
 					$mensagem = "Cliente(s) Bloqueado(s) com sucesso!";
+					$this->tpl->atribui("url", "cobranca.php?op=bloqueados");
+					$this->tpl->atribui("target","_self");
+
 					$this->tpl->atribui("mensagem",$mensagem);
 										
 					$this->arquivoTemplate = "msgredirect.html";
+					return;
 					}
 					
 					
@@ -4749,17 +4761,262 @@ class VACobranca extends VirtexAdminWeb {
 	
 	}else if ($op == "compra_produto"){
 	
+		$acao = @$_REQUEST['acao'];
+		$id_cliente = @$_REQUEST['id_cliente'];
+		///echo $id_cliente ;
+		
+		$cSQL  = " SELECT nome_razao FROM cltb_cliente WHERE id_cliente = '$id_cliente' ";
+		$cliente = $this->bd->obtemUnicoRegistro($cSQL);
+		
+		$sSQL  = " SELECT nome, valor, id_produto FROM prtb_produto WHERE tipo ='V' AND id_produto != 10000 " ;
+		$rel = $this->bd->obtemRegistros($sSQL);
+
+			if (!$rel){
+				$mostrar='false';
+			}else{
+				$mostrar='true';
+			}
+
+		$this->tpl->atribui("mostrar",$mostrar);
+		$this->tpl->atribui("rel",$rel);
+		$this->tpl->atribui("id_cliente",$id_cliente);
+		$this->tpl->atribui("cliente",$cliente);
 	
+		if ($acao == "listar"){
+		
+			$id_produto = @$_REQUEST['id_produto'];
+			
+			$aSQL  = " SELECT nome, valor, descricao , valor_estatico FROM prtb_produto WHERE id_produto = '$id_produto' " ;
+			$relatorio = $this->bd->obtemUnicoRegistro($aSQL);
+			
+			//echo $aSQL ;
+			
+			$nome = $relatorio['nome'] ;
+			$descricao = $relatorio['descricao'] ;
+			$valor = $relatorio['valor'];
+			$valor_estatico = $relatorio['valor_estatico'];
+			
+			echo "
+				<form id='form_tabela' name='form_tabela' method='post' action='' align='center'>
+				  <table width='475' border='0' cellspacing='1' cellpadding='2' style='border:1px solid #D2E8D6;'>
+					<tr>
+					  <td width='90' style='border:1px solid #D2E8D6;'><p>Nome</p></td>
+					  <td colspan='3' style='border:1px solid #D2E8D6;'><p>$nome&nbsp;</p></td>
+					</tr>
+					<tr>
+					  <td width='90' style='border:1px solid #D2E8D6;'><p>Valor</p></td>
+					  <td width='55' style='border:1px solid #D2E8D6;'><p>
+						  <input type='text' name='valor' value='$valor' "; if ($valor_estatico=='f'){  echo "disabled='disabled'"; } echo "/>
+						</p></td>
+					  <td width='50' style='border:1px solid #D2E8D6;'><p>&nbsp;&nbsp;Quantidade&nbsp;</p></td>
+					  <td style='border:1px solid #D2E8D6;'><p>
+						<label>
+						  <input type='text' name='quant' value='1' size='10' />
+						</label>
+						</p></td>
+					</tr>
+					<tr>
+					  <td width='90' style='border:1px solid #D2E8D6;'><p>Descricao </p></td>
+					  <td colspan='3' width='385' height='40' style='border:1px solid #D2E8D6;' valign='top'><p>$descricao&nbsp;</p></td>
+					</tr>
+				  </table>
+				  <table width='475' border='0' cellspacing='1' cellpadding='2'>
+				  	<tr>
+				  		<td align='right'><input type='button' value='Adicionar à lista' onClick='Processa_lista();'></td>
+				  	</tr>
+				  </table>
+				  <input type='hidden' value='$nome' name='nome'>
+				  <input type='hidden' value='$id_produto' name='id_produto'>
+			
+				</form>
+
+				";		
+			
+			return;
+		
+		}else if ($acao == "adicionar_lista"){
+		
+		
+			$id_produto = @$_REQUEST['id_produto'];
+			$valor = @$_REQUEST['valor'];
+			$quant = @$_REQUEST['quant'];
+			$nome = @$_REQUEST['nome'];
+			$vezes = @$_REQUEST['vezes'];
+			
+			$total_parc = ($valor*$quant); 
+			
+			$total_parc_format = number_format($total_parc, 2, '.', '');
+
+			echo  $id_produto . "-" . $nome . "-" . $quant ."-" . $valor ."-" . $total_parc_format ;
+			echo   "<input type='hidden' value='$id_produto' name='id_produto[$vezes]' id='id_produto[$vezes]'>
+					<input type='hidden' value='$nome' name='nome[$vezes]' id='nome[$vezes]'>
+					<input type='hidden' value='$quant' name='quant[$vezes]' id='quant[$vezes]'>
+					<input type='hidden' value='$valor' name='valor[$vezes]' id='valor[$vezes]'>
+					<input type='hidden' value='$total_parc' name='total_parc[$vezes]' id='total_parc[$vezes]'>";
+				
+				
+			return;
+		
+		
+		
+		}else if($acao == "confirma_compra"){
+			
+			$vezes = @$_REQUEST['vezes'];	
+			$total = @$_REQUEST['total'];
+			$id_cliente = @$_REQUEST['id_cliente'];
+			
+			$all_info = array();
+			
+			echo "<style type='text/css'>
+					<!--
+						.style7 {
+							font-family: Verdana, Arial, Helvetica, sans-serif;
+							font-weight: bold;
+							color: #003300;
+							font-size: 12px;
+							font-style: italic;						
+						}
+						.style9 {font-family: Verdana, Arial, Helvetica, sans-serif; font-weight: bold; color: #006600; font-size: 10px; }
+						.style10 {font-family: Verdana, Arial, Helvetica, sans-serif; font-weight: bold; color: #006600; font-size: 12px;}
+						.style4 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9px; }
+						.style5 {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; }
+					-->
+					</style>
+					<form action='cobranca.php' method='get' name='form_confirmacao' onSubmit='return confirmacao();'>
+				  <table width='0' border='0' align='center' cellpadding='2' cellspacing='2'>
+				  <tr>
+					<td width='500'><font face='Verdana' size='4'>Confirmar compra de: </font></td>
+				  </tr>
+				 ";
+
+				for($i=0;$i<($vezes);$i++){
+
+
+
+					$id_produto = @$_REQUEST['id_produto'];	
+					$nome 		= @$_REQUEST['nome'];	
+					$quant 		= @$_REQUEST['quant'];	
+					$valor 		= @$_REQUEST['valor'];	
+					$total_parc = @$_REQUEST['total_parc'];
+					
+					$all_info[$i] = array("id_produto" => $id_produto , "nome" => $nome , "quant" => $quant , "valor" => $valor , "total_parc" => $total_parc);
+					$all_info[] = $all_info[$i];
+
+					echo" <tr>
+					<td align='center'>  <hr width='400' align='center' size='2' color='#DBEADC'><table width='400' border='0' cellpadding='0' cellspacing='1' style='border:1px solid #DCF1DA'>
+						  <tr>
+							<td colspan='2' style='border:1px solid #DCF1DA'><span class='style7'>" . $all_info[$i]["id_produto"][$i] . "&nbsp;&nbsp; - &nbsp;&nbsp; " . $all_info[$i]["nome"][$i] . "</span><input type='hidden' value='" . $all_info[$i]["nome"][$i] . "' name='nome[$i]' id='nome[$i]'><input type='hidden' value='" . $all_info[$i]["id_produto"][$i] . "' name='id_produto[$i]' id='id_produto[$i]'></td> 
+						  </tr>
+						  <tr>
+							<td width='246' style='border:1px solid #DCF1DA'><span class='style9'>VALOR UNIT&Aacute;RIO</span> </td>
+							<td width='148' style='border:1px solid #DCF1DA'><span class='style4'>" . $all_info[$i]["valor"][$i] . "</span><input type='hidden' value='" . $all_info[$i]["valor"][$i] . "' name='valor[$i]' id='valor[$i]'></td>
+						  </tr>
+						  <tr>
+							<td style='border:1px solid #DCF1DA'><span class='style9'>QUANTIDADE</span></td>
+							<td style='border:1px solid #DCF1DA'><span class='style4'>" . $all_info[$i]["quant"][$i] . "</span><input type='hidden' value='" . $all_info[$i]["quant"][$i] . "' name='quant[$i]' id='quant[$i]'></td>
+						  </tr>
+						  <tr>
+							<td style='border:1px solid #DCF1DA'><span class='style9'>TOTAL</span></td>
+							<td style='border:1px solid #DCF1DA'><span class='style4'>" . $all_info[$i]["total_parc"][$i] . " reais</span><input type='hidden' value='" . $all_info[$i]["total_parc"][$i] . "' name='total_parc[$i]' id='total_parc[$i]'></td>
+						  </tr>	
+						  
+						</table></td>
+					  </tr>";
+
+				}
+				
+				echo "
+				
+					  <tr>
+					<td align='center'> <hr width='400' align='center' size='2' color='#DBEADC'><table width='400' border='0' cellpadding='0' cellspacing='1'>
+						  <tr>
+							<td colspan='2' align='right'><span class='style10'>Valor total - </span><span class='style5'>" . $total . "</span></td>	
+						  </tr>
+						 </table>
+					  </tr>
+					</table>";
+
+			$this->tpl->atribui("all_info",$all_info);
+			$this->tpl->atribui("vezes",$vezes);
+			$this->tpl->atribui("total",$total);
+			$this->tpl->atribui("id_cliente",$id_cliente);
+
+			$this->arquivoTemplate = "cobranca_confirma_compra.html";
+			return ;
+
+		}else if($acao == "comprar"){
+		
+			$vezes = @$_REQUEST['vezes'];	
+			$total = @$_REQUEST['total'];
+			$id_cliente = @$_REQUEST['id_cliente'];
+
+				$pSQL  = "  SELECT dominio_padrao FROM pftb_preferencia_geral ";
+				$dominio = $this->bd->obtemUnicoRegistro($pSQL);
+			
+			$id_cliente_produto_novo = $this->bd->proximoID("cbsq_id_cliente_produto");
+
+				$cSQL  = " INSERT INTO cbtb_cliente_produto(id_cliente_produto, id_cliente, id_produto, dominio, excluido) ";
+				$cSQL .= " VALUES ('$id_cliente_produto_novo','$id_cliente', '10000', '" . $dominio['dominio_padrao'] . "', 'f' )";
+				///echo $cSQL . "<hr>";
+				$this->bd->consulta($cSQL);
+			
+			$sSQL = "SELECT currval('cbsq_id_cliente_produto') as icpn";
+			$icpn = $this->bd->obtemUnicoRegistro($sSQL);
+
+			$id_cliente_produto_new = $icpn["icpn"];
+			$id_venda = $this->bd->proximoID("id_venda_seq");
+			
+			$admin = $this->admLogin->obtemId();
+
+				$vSQL  = " INSERT INTO cbtb_venda (id_venda, id_cliente_produto, valor, data, admin) ";
+				$vSQL .= " VALUES ('$id_venda', '$id_cliente_produto_new', '$total', now(), '$admin')";
+				////echo $vSQL . "<hr>";
+				$this->bd->consulta($vSQL);
+
+			$iSQL = "SELECT currval('id_venda_seq') as idvs";
+			$idvs = $this->bd->obtemUnicoRegistro($iSQL);
+			
+			$id_venda = $idvs["idvs"];
+
+			for($i=0;$i<($vezes);$i++){
+			
+				$id_produto = @$_REQUEST['id_produto'];	
+				$nome = @$_REQUEST['nome'];	
+				$quant = @$_REQUEST['quant'];	
+				$valor = @$_REQUEST['valor'];	
+				$total_parc = @$_REQUEST['total_parc'];
+				
+				$sSQL  = "INSERT INTO cbtb_produtos_venda ";
+				$sSQL .= " (id_venda, id_produto, quantidade, data) ";
+				$sSQL .= " VALUES ('$id_venda', '$id_produto[$i]', '$quant[$i]', now()) ";
+				
+				///echo $sSQL . "<hr>";
+				$this->bd->consulta($sSQL);
+				
+			}
+			
+			$valor_original = "";
+			$valor_alterado = $total;
+			$username = "";
+			$tipo_conta = "";
+			$extra = "QUANT: " . $vezes;
+
+			$operacao = "PRODUTOVENDA";
+			$this->logAdm($operacao,$valor_original,$valor_alterado,$username,$id_cliente_produto_new,$tipo_conta,$extra);
+
+			
+			
+			$this->tpl->atribui("mensagem","VENDA EFETUADA COM SUCESSO!"); 
+			$this->tpl->atribui("url", "clientes.php?op=cobranca&id_cliente=$id_cliente&rotina=resumo");
+			$this->tpl->atribui("target","_top");
+
+			$this->arquivoTemplate = "msgredirect.html";
+
+			return;
+		}
 	
-		$this->tpl->atribui("mensagem","Página em Construção."); 
-		$this->tpl->atribui("url","home.php?op=home");
-		$this->tpl->atribui("target","_self");
-	
-		$this->arquivoTemplate="msgredirect.html";
-	
-	
-	
-	
+	$this->arquivoTemplate = "cobranca_tabela_compra.html";
+	return;	
 	}
 	
 	// op = contratos
