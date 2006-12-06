@@ -1,0 +1,2040 @@
+
+Warning: fread(): Length parameter must be greater than 0. in /home/mosman/cvs/virtex/lib/VABEUpdate.class.php on line 66
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 776
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 780
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 783
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 784
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 787
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 788
+
+Warning: Variable passed to each() is not an array or object in /usr/mosman/php/framework/MDatabase.class.php on line 797
+
+Warning: Variable passed to each() is not an array or object in /usr/mosman/php/framework/MDatabase.class.php on line 802
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 815
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 817
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 818
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 822
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 830
+
+Warning: array_keys(): The first argument should be an array in /usr/mosman/php/framework/MDatabase.class.php on line 856
+
+Warning: array_diff(): Argument #1 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 858
+
+Warning: array_diff(): Argument #2 is not an array in /usr/mosman/php/framework/MDatabase.class.php on line 859
+
+Warning: Invalid argument supplied for foreach() in /usr/mosman/php/framework/MDatabase.class.php on line 861
+
+--------------------------------------------------------------------------
+-- BEGIN                                                                --
+--------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------
+-- STRUCT                                                               --
+--------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------
+-- END                                                                  --
+--------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------
+-- COMENTARIOS                                                          --
+--------------------------------------------------------------------------
+
