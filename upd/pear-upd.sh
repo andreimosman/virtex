@@ -7,8 +7,10 @@
 #       (consultoria@mosman.com.br)          #
 #############################################
 
-LIST_STABLE="Archive_Tar PEAR MDB2 MDB2_Driver_pgsql XML_Tree"
-LIST_UNSTABLE="channel://pear.php.net/MDB2_Schema-0.7.0"
+#LIST_STABLE="Archive_Tar PEAR MDB2 MDB2_Driver_pgsql XML_Tree"
+LIST_STABLE="Archive_Tar PEAR MDB2 MDB2_Driver_pgsql"
+#LIST_UNSTABLE="channel://pear.php.net/MDB2_Schema-0.7.0"
+LIST_UNSTABLE=""
 
 # Parametros do SED sao diferentes entre o linux e o freebsd.
 SO=$(uname)
@@ -48,3 +50,4 @@ for pkg in ${LIST_UNSTABLE} ; do
 		pear install ${pkg} > /dev/null
 	fi
 done
+

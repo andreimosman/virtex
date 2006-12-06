@@ -16,7 +16,7 @@ class VirtexAdminLicenca extends MLicenca {
 		 * Se a licença não for valida ou não tiver a informação da expiração retorna que expirou.
 		 */
 		if(!$this->isValid() || !@$campo) return true;
-		@list($ano,$mes,$dia) = explode("-",@$campo);
+		@list($ano,$mes,$dia) = explode("-",chop(@$campo));
 		
 		// Se não tiver o dia, mês ou ano retorna que expirou.
 		if( !$dia || !$mes || !$ano ) return true;
@@ -24,7 +24,7 @@ class VirtexAdminLicenca extends MLicenca {
 		
 		$t_campo   = mktime(0,0,0,$mes,$dia,$ano);
 		$t_sistema = mktime(0,0,0,$m,$d,$a);
-		return( $t_sistema > $t_campo );
+		return( $t_sistema >= $t_campo );
 		
 	}
 	
