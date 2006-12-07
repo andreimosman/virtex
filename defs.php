@@ -26,7 +26,7 @@ require_once("autoload.def.php");
  * Carregar arquivos necessários
  * TODO: definições dentro de classes estáticas.
  */
-__autoload("status.defs");
+require_once("status.defs");
 
 //session_start();
 
