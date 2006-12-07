@@ -522,7 +522,7 @@ var tT = document.getElementById("tabela_velocidades");
 	                                        <input type="hidden" value="fazer" name="sop">
 				  </div>	
 				</div>		
-				<p>{if $mostrar=='true'}
+				<p>
 				{elseif $relatorio_banda}				</p>
 				<p align="center" class="style5">Velocidades que o seu sistema usa atualmente: </p>
 				<table width="180" align="center" style="border:1px solid #CCCCCC;">
@@ -541,13 +541,6 @@ var tT = document.getElementById("tabela_velocidades");
 					{/foreach}
 		  </table>
 	            {/if}
-	             {elseif $mostrar=='false'}
-        <div align="center"><br>
-			<p align="center">Não há bandas cadastradas no seu sistema atualmente.</p>
-			<br>
-			<input type="button" value="&laquo; voltar" onClick="javascript:history.back();">
-		</div>
-		{/if}
 		</td>
 	</tr>
 
