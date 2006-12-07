@@ -291,6 +291,7 @@
 
 					// Valida os dados
 					//DOMINIO PADRAO
+					$dominioPadrao = $lista_dominop['dominio_padrao'];
 					
 					$sSQL  = "SELECT ";
 					$sSQL .= "   username ";
@@ -360,7 +361,7 @@
 							if ($this->bd->obtemErro())	break;
 							
 							$operacao = "NOVA_CONTA";
-							$this->HistoricoConta("1", $id_cliente_produto, @$_REQUEST["tipo"], @$_REQUEST["username"], $operacao, $dominioPadrao);
+							$this->logConta("1", $id_cliente_produto, @$_REQUEST["tipo"], @$_REQUEST["username"], $operacao, $dominioPadrao);
 
 
 							if ($email_igual == "1"){
