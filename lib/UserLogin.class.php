@@ -1,9 +1,6 @@
 <?
 
-require_once("MDatabase.class.php");
-require_once("VirtexAdmin.class.php");
-
-class UserLogin extends VirtexAdmin {
+class UserLogin  {
 
 	public $bd;
 
@@ -33,11 +30,11 @@ class UserLogin extends VirtexAdmin {
 	 * Constructor
 	 * Recebe referencia à instância do banco de dados.
 	 */
-	function VirtexAdminLogin($bd) {
-		$this->bd = $bd;
-		$this->logout();
+	 
+	 function __construct($bd=NULL) {
+	 		$this->bd = $bd;
+	 		$this->logout();
 	}
-
 	/**
 	 * Verifica usuário e senha
 	 */

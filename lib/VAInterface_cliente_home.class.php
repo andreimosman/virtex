@@ -1,12 +1,6 @@
 <?
 
-require_once( PATH_LIB . "/Userlogin.class.php");
-require_once( PATH_LIB . "/VirtexAdmin.class.php" );
-require_once("MArrecadacao.class.php");
-require_once("MUtils.class.php");
-require_once(PATH_LIB . "/VAClientes.class.php");
-
-class VAInterface_cliente_home extends VirtexAdmin {
+class VAInterface_cliente_home extends VirtexAdminWeb {
 	
 	public function __construct() {
 		parent::__construct();

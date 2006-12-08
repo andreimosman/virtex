@@ -247,7 +247,7 @@
 		 * Retorna false se o administrador não estiver logado.
 		 * O status retornado indicara se deve ou nao chamar processa.
 		 */
-		public function userLogin() {
+		public function UserLogin() {
 			 $op = @$_REQUEST["op"];
 
 			if( !isset($_SESSION["usrLogin"]) || $op == "logout" ) {

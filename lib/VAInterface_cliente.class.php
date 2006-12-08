@@ -88,7 +88,7 @@ class VAInterface_cliente extends VirtexAdminWeb {
 
 		$erro = "";
 		
-		$_SESSION["usrLogin"] = new userLogin();	// Zera a informação de login (faz logout)
+		$_SESSION["usrLogin"] = new UserLogin();	// Zera a informação de login (faz logout)
 		
 		if( !$op || $op == "logout") {
 			$this->arquivoTemplate = "interface_login.html";
