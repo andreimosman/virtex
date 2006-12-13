@@ -315,7 +315,7 @@
 					if( !count($erros) ) {
 // COMEÇA O TRATAMENTO DE ERROS
 
-						$this->bd->begin();
+						//$this->bd->begin();
 						while(true){
 							// pega id_cliente_produto
 							$id_cliente_produto = $this->bd->proximoID("cbsq_id_cliente_produto");
@@ -331,7 +331,7 @@
 							$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["id_produto"]) . "' ";
 							$sSQL .= "     )";						
 							$this->bd->consulta($sSQL);  
-							if ($this->bd->obtemErro())	break;
+							////////////if ($this->bd->obtemErro())  break;
 
 
 							$username = @str_replace(" ","",$_REQUEST["username"]);
@@ -358,7 +358,7 @@
 							$sSQL .= "     'A' )";						
 
 							$this->bd->consulta($sSQL);  
-							if ($this->bd->obtemErro())	break;
+							////if ($this->bd->obtemErro())  break;
 							
 							$operacao = "NOVA_CONTA";
 							$this->logConta("1", $id_cliente_produto, @$_REQUEST["tipo"], @$_REQUEST["username"], $operacao, $dominioPadrao);
@@ -386,7 +386,7 @@
 								$sSQL .= "     'A' )";						
 
 								$this->bd->consulta($sSQL);  
-								if ($this->bd->obtemErro())	break;
+								////if ($this->bd->obtemErro())  break;
 
 								$id_produto = @$_REQUEST['id_produto'];
 								$prod = $this->obtemProduto($id_produto);	
@@ -408,7 +408,7 @@
 								$sSQL .= "     '". $username."@". $dominioPadrao ."' ";
 								$sSQL .= " )";
 								$this->bd->consulta($sSQL);
-								if ($this->bd->obtemErro())	break;
+								////if ($this->bd->obtemErro())  break;
 								
 								$server = $this->prefs->obtem("geral","mail_server");
 
@@ -439,7 +439,7 @@
 									$sSQL .= "'$username', '$tipo_conta', '$dominio', '$foneinfo' )";
 
 									$this->bd->consulta($sSQL);
-									if ($this->bd->obtemErro())	break;
+									////if ($this->bd->obtemErro())  break;
 									
 									$this->tpl->atribui("foneinfo",$foneinfo);
 
@@ -637,10 +637,11 @@
 									$sSQL .= "     '" . $this->bd->escape(trim(@$_REQUEST["id_nas"])) . "', ";
 									$sSQL .= "     "  . $_MAC .", ";
 									$sSQL .= "	   "  . $ip_externo ."  ";
-									$sSQL .= "     )";						
+									$sSQL .= "     )";			
+									
 
 									$this->bd->consulta($sSQL);  
-									if ($this->bd->obtemErro())	break;
+									//if ($this->bd->obtemErro()) break;
 									
 									break;
 
@@ -662,7 +663,7 @@
 									$server = $prefs["hosp_server"];
 
 
-									$sSQL  = "select * from cntb_conta where username = $username AND tipo_conta = $tipo_conta AND dominio = $dominio";
+									$sSQL  = "select * from cntb_conta where username = '$username' AND tipo_conta = '$tipo_conta' AND dominio = '$dominio'";
 									$prep = $this->bd->obtemRegistros($sSQL);
 
 
@@ -698,13 +699,13 @@
 
 
 									$this->bd->consulta($sSQL);
-									if ($this->bd->obtemErro())	break;
+									////if ($this->bd->obtemErro())  break;
 									
 									$this->spool->hospedagemAdicionaRede($server,$id_conta,$tipo_hospedagem,$username,$dominio,$dominio_hospedagem);
 									break;
 
 
-							}
+							}///FIM DO SWITCH DO TIPO DE PRODUTO
 
 
 
@@ -767,8 +768,6 @@
 						$db_agencia = @$_REQUEST["db_agencia"];
 						$db_conta = @$_REQUEST["db_conta"];
 
-
-
 						//Corrige possíveis falhas de entrada em alguns campos
 						if (!$comodato) {
 							$comodato = 'f';
@@ -793,8 +792,7 @@
 						$valor_cont_temp = $valor_contrato;
 						//Diminui o desconto no valor real do contrato caso este tenha mesmo período que a vigência do contrato
 						if ($periodo_desconto >= $vigencia) $valor_contrato -= $desconto_promo;
-
-
+						
 						$sSQL =  "INSERT INTO cbtb_contrato ( ";
 						$sSQL .= "	id_cliente_produto, data_contratacao, vigencia, data_renovacao, valor_contrato, id_cobranca, status, ";
 						$sSQL .= "	tipo_produto, valor_produto, num_emails, quota_por_conta, tx_instalacao, comodato, valor_comodato, ";
@@ -806,10 +804,11 @@
 						$sSQL .= "	$desconto_promo, $periodo_desconto, $id_produto, $cod_banco, $agencia, $num_conta, $carteira, ";
 						$sSQL .= "	$convenio, '$cc_vencimento', '$cc_numero', '$cc_operadora', $db_banco, $db_agencia, $db_conta, $carencia, $vencimento ";
 						$sSQL .= ")";
-						$this->bd->consulta($sSQL);	//Salva as configurações de contrato
-						if ($this->bd->obtemErro())	break;
+						$this->bd->consulta($sSQL); //Salva as configurações de contrato
+						////if ($this->bd->obtemErro())  break;
 
 						switch($tipo_produto) {
+						
 							case 'BL':
 								$sSQL = "SELECT * FROM prtb_produto_bandalarga WHERE id_produto = $id_produto";
 								$info_ad_produto = $this->bd->obtemUnicoRegistro($sSQL);
@@ -817,15 +816,16 @@
 								$bl_banda_upload_kbps = $info_ad_produto["banda_upload_kbps"];
 								$bl_banda_download_kbps = $info_ad_produto["banda_download_kbps"];
 								$bl_franquia_trafego_mensal_gb = $info_ad_produto["franquia_trafego_mensal_gb"];
-									$bl_valor_trafego_adicional_gb = $info_ad_produto["valor_trafego_adicional_gb"];
+								$bl_valor_trafego_adicional_gb = $info_ad_produto["valor_trafego_adicional_gb"];
 
-									$sSQL =  "UPDATE cbtb_contrato SET";
-									$sSQL .= "	bl_banda_upload_kbps = $bl_banda_upload_kbps, ";
+								$sSQL =  "UPDATE cbtb_contrato SET";
+								$sSQL .= "	bl_banda_upload_kbps = $bl_banda_upload_kbps, ";
 								$sSQL .= "	bl_banda_download_kbps = $bl_banda_download_kbps, ";
 								$sSQL .= "	bl_franquia_trafego_mensal_gb = $bl_franquia_trafego_mensal_gb,";
 								$sSQL .= "	bl_valor_trafego_adicional_gb = $bl_valor_trafego_adicional_gb ";
 								$sSQL .= "WHERE id_cliente_produto = $id_cliente_produto";
-								break;
+								
+							break;
 								
 								
 							case 'D':
@@ -841,7 +841,8 @@
 								$sSQL .= "	disc_permitir_duplicidade = '$disc_permitir_duplicidade',";
 								$sSQL .= "	disc_valor_hora_adicional = $disc_valor_hora_adicional ";
 								$sSQL .= "WHERE id_cliente_produto = $id_cliente_produto";
-								break;
+								
+							break;
 
 							case 'H':
 								$sSQL = "SELECT * FROM prtb_produto_hospedagem WHERE id_produto = $id_produto";
@@ -858,13 +859,14 @@
 								$sSQL .= "	hosp_franquia_em_mb = $hosp_franquia_em_mb, ";
 								$sSQL .= "	hosp_valor_mb_adicional = $hosp_valor_mb_adicional ";
 								$sSQL .= "WHERE id_cliente_produto = $id_cliente_produto";
-								break;
-						}
-
-
-						$this->bd->consulta($sSQL);
-						if ($this->bd->obtemErro())	break;
+								
+							break;
+							
+						}///FIM DO OUTRO SWITCH DE PRODUTO
 						
+						$this->bd->consulta($sSQL);							
+						////if ($this->bd->obtemErro())  break;
+	
 						$this->contratoHTML($id_cliente,$id_cliente_produto,$tipo_produto);
 
 
@@ -881,7 +883,7 @@
 						$sSQL .= "('$_id_carne','$data_contratacao','$id_cliente_produto','$valor_contrato','A','$vigencia','$id_cliente') ";
 
 						$this->bd->consulta($sSQL);
-						if ($this->bd->obtemErro())	break;
+						////if ($this->bd->obtemErro())  break;
 						
 						$id_carne = $_id_carne;
 
@@ -964,7 +966,7 @@
 													$sSQL .= ")";
 
 													$this->bd->consulta($sSQL);
-													if ($this->bd->obtemErro())	break;
+													////if ($this->bd->obtemErro())  break;
 												}
 
 												for($i=0; $i<=floor($diferenca_meses); $i++) {
@@ -1021,7 +1023,7 @@
 													$sSQL .= ")";
 
 													$this->bd->consulta($sSQL);
-													if ($this->bd->obtemErro())	break;
+													////if ($this->bd->obtemErro())  break;
 													
 													$data = $fatura_dt_vencimento;
 													$fatura = $this->carne($id_cliente_produto,$data,$id_cliente,$forma_pagamento);
@@ -1078,7 +1080,8 @@
 												$sSQL .= ")";
 
 												$this->bd->consulta($sSQL);
-												if ($this->bd->obtemErro())	break;
+												////if ($this->bd->obtemErro())  break;
+												
 												
 												$data = $fatura_dt_vencimento;
 												$fatura = $this->boleto($id_cliente_produto,$data,$id_cliente,$forma_pagamento);
@@ -1118,7 +1121,7 @@
 
 											$this->bd->consulta($sSQL);
 																						
-											if ($this->bd->obtemErro()) break;											
+											////if ($this->bd->obtemErro())  break;
 										}
 
 								}									
@@ -1195,7 +1198,7 @@
 													$sSQL .= ")";
 
 													$this->bd->consulta($sSQL);
-													if ($this->bd->obtemErro())	break;
+													////if ($this->bd->obtemErro())  break;
 
 													$data = $fatura_dt_vencimento;
 
@@ -1248,8 +1251,8 @@
 													$sSQL .= "	$fatura_pg_acrescimo, $fatura_vl_pago, $id_carne ";
 													$sSQL .= ")";
 
-													$this->bd->consulta($sSQL);
-													if ($this->bd->obtemErro())	break;
+													$this->bd->consulta($sSQL); 
+													////if ($this->bd->obtemErro()) break;
 
 													$data = $fatura_dt_vencimento;
 
@@ -1268,11 +1271,11 @@
 										if($qt_desconto > 0) {
 											$fatura_desconto = $desconto_promo;
 											$qt_desconto--; 
-										} else
+										} else{
 											$fatura_desconto = 0;
-
-
-										if($tx_instalacao != 0) $fatura_valor += $tx_instalacao;
+										}if($tx_instalacao != 0){
+											$fatura_valor += $tx_instalacao;
+										}
 
 										//Calcula a data dos próximos pagamentos de fatura.
 										if($pri_venc != ""){
@@ -1281,11 +1284,11 @@
 										}else{
 											$fatura_dt_vencimento = date("Y-m-d", mktime(0,0,0, $cm, $cd, $ca));
 										}
-
+										
 										//Calcula o desconto sobre a fatura.
 										$fatura_valor -= $fatura_desconto;
 
-										$sSQL =  "INSERT INTO cbtb_faturas(";
+										$sSQL  =  "INSERT INTO cbtb_faturas(";
 										$sSQL .= "	id_cliente_produto, data, descricao, valor, status, observacoes, ";
 										$sSQL .= "	reagendamento, pagto_parcial, data_pagamento, desconto, ";
 										$sSQL .= "	acrescimo, valor_pago, id_carne ";
@@ -1296,11 +1299,11 @@
 										$sSQL .= ")";
 
 										$this->bd->consulta($sSQL);
-										if ($this->bd->obtemErro())	break;
+										////if ($this->bd->obtemErro())  break;
 									}
 									
 								break;						
-						}
+						}//FIM DO SWITCH DE FORMA DE PAGAMENTO
 
 									$hoje = date("Y-m-d");
 									$nome_arquivo = "carne-".$hoje."-".$id_cliente_produto;
@@ -1388,30 +1391,40 @@
 							$this->tpl->atribui("id_cobranca",$id_cobranca);
 
 							$this->obtemPR($id_cliente);
-
 							$this->arquivoTemplate="cliente_cobranca_intro.html";
-
 							return;
 
 							$exibeForm = false;
-
 						}// fim do while
-						
-						// Se saiu com um erro:
+
+						/*// Se saiu com um erro:
 						if ($this->bd->obtemErro()){
+
 							// Descarta os erros
 							$this->bd->rollback();
 
 							// PEGA AS INFORMACOES (lista de sql, mensagem de erro, etc)
 							$queries  = $this->bd->obtemListaSQL();
 							$mensagem = $this->bd->obtemMensagemErro();
-							// SALVA AS COISAS NO ARQUIVO DE LOG.
+
+							for($i=0;$i<=count($queries);$i++){// SALVA AS COISAS NO ARQUIVO DE LOG.
+
+								$query = $queries[$i];
+								$msg = $mensagem;
+
+								$aSQL  = " INSERT INTO lgtb_erros_db (data, query, mensagem) " ;
+								$aSQL .= " VALUES(now(), '".$query."', '$msg') ";
+
+								$this->bd->consulta($aSQL);
+								echo $aSQL ."<br><hr><br>";
+
+							}							
 
 						}else{
 							$this->bd->commit();
-						}
-// FINAL DO TRATAMENTO DE ERRO
-						
+						}// FINAL DO TRATAMENTO DE ERRO
+						*/
+
 					}else{ // se contem erros
 					
 						switch($tipo){

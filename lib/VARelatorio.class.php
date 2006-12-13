@@ -816,7 +816,7 @@ class VARelatorio extends VirtexAdminWeb {
 				for($i=0;$i<count($relat);$i++) {
 					if( $tp_grafico != "3d" || $relat[$i]["num_contratos"] > 0 ) {
 						$valores[]  = $relat[$i]["num_contratos"];
-						$legendas[] = (trim($relat[$i]["tipo"]) == 'BL')? "Banda Larga" : (trim($relat[$i]["tipo"]) == 'H')? "Hospedagem" : "Discado" ;
+						$legendas[] = (trim($relat[$i]["tipo"])=='BL')? "Banda Larga" : (trim($relat[$i]["tipo"]) == 'H')? "Hospedagem" : "Discado" ;
 						$cores[] = $base_cores[$i];	
 					}
 				}
