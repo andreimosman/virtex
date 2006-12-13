@@ -1,0 +1,46 @@
+#!/usr/bin/perl
+
+$arquivo = $ARGV[0];
+
+#print "ARQUIVO: $arquivo\n";
+
+if( $arquivo =~ /$^/ ) {
+	#	print "Usage: " . $^X . " </path/to/php.ini>\n";
+	exit;
+}
+$PEARLIB = "/usr/local/lib/php/pear";
+
+$tmpArq = "/tmp/mic-$$";
+
+open(ARQUIVO,$arquivo) or die "Nao foi possivel abrir o arquivo '$arquivo'";
+open(TMP,">$tmpArq") or die "Nao foi possivel abrir o arquivo temporario '$tmpArq' para gravacao";
+while($linha=<ARQUIVO>) {
+	#print($linha);
+	if( $linha =~ /^[\s]*include_path/ ) {
+		#print $linha;
+		if( $linha =~/$PEARLIB/ ) {
+		} else {
+			local($cm,$vl) = split(/\=/,$linha);
+			chop($vl);
+			$vl=~s/['"\s]//g;
+			$vl = "\"$vl:$PEARLIB\"";
+			$linha = "$cm = $vl\n";
+		}
+	}
+
+	print TMP $linha
+}
+
+
+close(ARQUIVO);
+close(TMPARQ);
+
+open(CP,">$arquivo");
+open(TMP,"$tmpArq");
+while($linha=<TMP>) {
+	print CP $linha;
+}
+close(CP);
+close(TMP);
+unlink($tmpArq);
+
