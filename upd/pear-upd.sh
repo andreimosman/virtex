@@ -14,6 +14,8 @@ if [ ! -f "pear-upd.sh" ] ; then
 	exit -1;
 fi
 
+PEARLIB="/usr/local/lib/php/pear"
+
 
 #LIST_STABLE="Archive_Tar PEAR MDB2 MDB2_Driver_pgsql XML_Tree"
 LIST_STABLE="Archive_Tar PEAR MDB2 MDB2_Driver_pgsql"
@@ -45,6 +47,13 @@ for pkg in ${LIST_STABLE} ; do
 		# Tem o pacote, upgrade
 		echo UPG ${pkg}...
 		pear upgrade ${pkg} > /dev/null
+		if [ ${pkg} = "PEAR" ] ; then
+			# Corrige o pau do pear no FreeBSD
+			if [ -f ${PEARLIB}/pearcmd.php ] ; then
+				cp ${PEARLIB}/pearcmd.php ${PEARLIB}/pearcmd.php.$$
+				cp pearcmd.php ${PEARLIB}
+			fi
+		fi
 	else
 		# Nao tem o pacote
 		echo INS ${pkg}...
@@ -80,6 +89,9 @@ if [ "${SO}" = "Linux" ] ; then
 	SUM_PG=$( ${MD5} ${MDB2_NATIVE_PG} | ${CUT} -d ' ' -f 1)
 	SUM_CORR=$( ${MD5} ${MDB2_NATIVE_CORR_PG} | ${CUT} -d ' ' -f 1 )
 else
+	if [ ! -f MDB2_NATIVE_PG ] ; then
+		MDB2_NATIVE_PG=${PEARLIB}/MDB2/Driver/Datatype/pgsql.php
+	fi
 	SUM_PG=$( ${MD5} ${MDB2_NATIVE_PG}|${SED} -E 's/ //g'|${CUT} -d'=' -f2)
 	SUM_CORR=$( ${MD5} ${MDB2_NATIVE_CORR_PG}|${SED} -E 's/ //g'|${CUT} -d'=' -f2 )
 fi
