@@ -30,23 +30,26 @@ if [ "${SO}" = "Linux" ] ; then
 	PEAR_PATH="/usr/share/pear/"
 	MD5=/usr/bin/md5sum
 	CUT=/bin/cut
-	
+	PEAR=pear
+	PHP_INI=/etc/php.ini	
 else
 	SED=/usr/bin/sed
 	SED_REGEXFLAG="-E"
 	PEAR_PATH="/usr/local/share/pear/"
 	MD5=/sbin/md5
-	CUT=/usr/bin/cut	
+	CUT=/usr/bin/cut
+	PEAR=pear
+	PHP_INI=/usr/local/etc/php.ini
 fi
 
 for pkg in ${LIST_STABLE} ; do
 	#echo PKG: $pkg
-	pear list|grep "${pkg} " >/dev/null
+	${PEAR} list|grep "${pkg} " >/dev/null
 	
 	if [ $? -eq 0 ] ; then
 		# Tem o pacote, upgrade
 		echo UPG ${pkg}...
-		pear upgrade ${pkg} > /dev/null
+		${PEAR} upgrade ${pkg} > /dev/null
 		if [ ${pkg} = "PEAR" ] ; then
 			# Corrige o pau do pear no FreeBSD
 			if [ -f ${PEARLIB}/pearcmd.php ] ; then
@@ -57,7 +60,7 @@ for pkg in ${LIST_STABLE} ; do
 	else
 		# Nao tem o pacote
 		echo INS ${pkg}...
-		pear install ${pkg} > /dev/null
+		${PEAR} install ${pkg} > /dev/null
 	fi
 done
 
@@ -68,12 +71,12 @@ for pkg in ${LIST_UNSTABLE} ; do
 	if [ $? -eq 0 ] ; then
 		# Tem o pacote, upgrade
 		echo UPG ${ppkg}...
-		echo pear upgrade ${pkg} > /dev/null
+		${PEAR} upgrade ${pkg} > /dev/null
 
 	else
 		# Nao tem o pacote
 		echo INS ${ppkg}...
-		pear install ${pkg} > /dev/null
+		${PEAR} install ${pkg} > /dev/null
 	fi
 done
 
@@ -105,3 +108,11 @@ if [ "${SUM_PG}" != "${SUM_CORR}" ] ; then
 #else
 #	echo "arquivos iguais"
 fi
+
+#######################################
+# Verificacao/Correcao do php.ini
+######################
+if [ ! -x php_ini_correct ] ; then
+	chmod +x php_ini_correct
+fi
+./php_ini_correct ${PHP_INI}
