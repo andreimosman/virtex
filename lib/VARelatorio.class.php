@@ -1963,14 +1963,14 @@ class VARelatorio extends VirtexAdminWeb {
 			$sSQL  = "SELECT ";
 			$sSQL .= "   b.banda, count(cbl.username) as num_contas "; 
 			$sSQL .= "FROM ";
-			$sSQL .= "   cftb_banda b LEFT OUTER JOIN cntb_conta_bandalarga cbl ON(cbl.upload_kbps = b.banda OR cbl.download_kbps = banda) ";
+			$sSQL .= "   cftb_banda b LEFT OUTER JOIN cntb_conta_bandalarga cbl ON(cbl.upload_kbps = b.id OR cbl.download_kbps = id) ";
 			$sSQL .= "GROUP BY ";
-			$sSQL .= "   b.banda ";
+			$sSQL .= "   b.id , b.banda ";
 			$sSQL .= "ORDER BY ";
-			$sSQL .= "   b.banda";
+			$sSQL .= "   b.id";
 	
 			$bandas = $this->bd->obtemRegistros($sSQL);
-			//echo "BANDA: $sSQL <br>";
+			////echo "BANDA: $sSQL <br>";
 			
 			$total_contas = 0;
 			for($i=0;$i<count($bandas);$i++) {
