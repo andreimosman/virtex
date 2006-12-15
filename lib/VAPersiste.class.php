@@ -25,16 +25,30 @@
 		}
 		
 		/**
-		 * Update Generico
+		 * Delete
 		 */
-		protected function _atualiza($tabela,$campos,$condicao) {
-			$sql = $this->bd->sqlUpdate($tabela,$campos,$condicao);
-			retun($this->bd->consulta($sql));
+		protected function _delete($tabela,$condicao) {
+			$sql = $this->bd->sqlDelete($tabela,$condicao);
+			return($this->bd->consulta($sql));
 		}
 		
 		/**
+		 * Update Generico
+		**/
+		protected function _atualiza($tabela,$campos,$condicao) {
+			$sql = $this->bd->sqlUpdate($tabela,$campos,$condicao);
+			return($this->bd->consulta($sql));
+		}
+		
+		protected function _atualiza($tabela,$campos,$condicao) {
+			$sql = $this->bd->sqlUpdate($tabela,$campos,$condicao);
+			return($this->bd->consulta($sql));
+		}
+		
+		
+		/**
 		 * Select Generico
-		 */
+		**/
 		
 		protected function _obtem($tabela,$campos,$condicao) {
 			$sql = $this->bd->sqlSelect($tabela,$campos,$condicao);
@@ -49,7 +63,7 @@
 
 		/**
 		 * Retorna apenas os dados requeridos pela tabela
-		 */
+		**/
 		protected function dadosUteis($tabela,$dados) {
 			$d = array();
 			while(list($campo,$valor)=each($dados) {
@@ -64,14 +78,14 @@
 
 		/**
 		 * Cadastra os dados de acordo com a tabela
-		 */
+		**/
 		protected function cadastra($tabela,$dados) {
 			return($this->insere($tabela,$this->dadosUteis($tabela,$dados)));		
 		}
 		
 		/**
 		 * Obtem os dados de uma tabela
-		 */
+		**/
 		protected function obtem($tabela,$condicao) {
 			return($this->_obtem($tabela,$campos[$tabela],$condicao));
 		}
@@ -83,6 +97,19 @@
 			return($this->_obtemUnico($tabela,$campos[$tabela],$condicao));
 		}
 		
+		/**
+		 *Autaliza os Dados de uma tabela
+		 */
+		 protected function atualiza($tabela,$campos,$condicao) {
+			return($this->_atualiza($tabela,$this->dadosUteis($tabela,$dados),$condicao));
+		}
+		
+		/**
+		 *Autaliza os Dados de uma tabela
+		 */
+		 protected function delete($tabela,$condicao) {
+			return($this->_delete($tabela,$condicao));
+		}
 
 	
 	
