@@ -900,8 +900,9 @@ class VARelatorio extends VirtexAdminWeb {
 			$sSQL .= "	cnt.nome_razao, ";
 			$sSQL .= "	cid.id_cidade, ";
 			$sSQL .= "	cid.cidade, ";
-			$sSQL .= "	cid.uf ";
+			$sSQL .= "	cid.uf, cn.status ";
 			$sSQL .= "FROM ";
+			$sSQL .= "  cntb_conta cn,";
 			$sSQL .= "	cltb_cliente as cnt, ";
 			$sSQL .= "	(SELECT ";
 			$sSQL .= "		id_cidade, ";
@@ -911,10 +912,12 @@ class VARelatorio extends VirtexAdminWeb {
 			$sSQL .= "		cftb_cidade ";
 			$sSQL .= "	ORDER BY uf) cid ";
 			$sSQL .= "WHERE ";
+			$sSQL .= "  cn.id_cliente = cnt.id_cliente AND ";
 			$sSQL .= "	cnt.id_cidade = cid.id_cidade AND cnt.id_cidade = $id_cidade AND";
 			$sSQL .= "	cnt.excluido = 'FALSE' ";
 			$sSQL .= "ORDER BY cid.uf, cid.id_cidade, cnt.nome_razao";	
 			
+			//echo "QUERY: $sSQL <br>\n";
 			if ($sop == "contratos"){
 				if( ! $this->privPodeLer("_RELATORIOS_COBRANCA") ) {
 									$this->privMSG();
@@ -932,7 +935,7 @@ class VARelatorio extends VirtexAdminWeb {
 				$sSQL .= "ORDER BY cid.uf,cid.id_cidade,cnt.nome_razao ";
 				//$sSQL .= "GROUP BY cnt.nome_razao,cnt.id_cliente,cid.cidade,cid.uf ";*/
 				
-				$sSQL = "SELECT DISTINCT(cnt.nome_razao) as nome_razao,cnt.id_cliente,cid.cidade,cid.uf 
+				$sSQL = "SELECT DISTINCT(cnt.nome_razao) as nome_razao,cnt.id_cliente,cid.cidade,cid.uf   
 								 FROM cltb_cliente cnt, (SELECT id_cidade,cidade,uf FROM cftb_cidade) cid, cbtb_cliente_produto cb 
 								 WHERE cnt.id_cidade = cid.id_cidade AND cnt.id_cidade = $id_cidade AND
 								 cnt.excluido is false AND
