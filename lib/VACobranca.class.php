@@ -3414,9 +3414,10 @@ class VACobranca extends VirtexAdminWeb {
 		$sSQL .= "		cb.id_cliente_produto = f.id_cliente_produto AND";
 		$sSQL .= "		cl.id_cliente = cb.id_cliente AND ";
 		$sSQL .= " 		cn.tipo_conta <> 'E' AND ";
+		$sSQL .= " 		f.status <> 'P' AND ";
 		$sSQL .= "		re.data = f.data ORDER BY data_para_reagendamento DESC, valor DESC, nome ASC, ad.admin ASC ";
 		
-		///////////echo $sSQL ;
+		/////////////////////echo $sSQL ;
 		
 		
 		
