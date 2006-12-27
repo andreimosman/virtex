@@ -53,18 +53,19 @@ class Spool {
 		
 		$parametros = "$rede,$mac,$banda_upload_kbps,$banda_download_kbps,$username";
 		
-		$sSQL  = "INSERT INTO ";
-		$sSQL .= "sptb_spool ( ";
-		$sSQL .= "		registro,destino,tipo,op,id_conta,parametros,status ";
-		$sSQL .= ") VALUES ( ";
-		$sSQL .= "		now(), '".$destino."', 'BL', 'a', '$id_conta', '$parametros' ,'A' ";
-		$sSQL .= ") ";
-		//echo "SPOOL INCLUIR: " . $sSQL . ";<br>\n";
-		//
-		//echo "ID: ". $id_conta . "<br>";
-		//echo "REDE: ". $rede . "<br>";
-		$this->bd->consulta($sSQL);
-		
+		if ($parametros == '' || !$parametros){
+			$sSQL  = "INSERT INTO ";
+			$sSQL .= "sptb_spool ( ";
+			$sSQL .= "		registro,destino,tipo,op,id_conta,parametros,status ";
+			$sSQL .= ") VALUES ( ";
+			$sSQL .= "		now(), '".$destino."', 'BL', 'a', '$id_conta', '$parametros' ,'A' ";
+			$sSQL .= ") ";
+			//echo "SPOOL INCLUIR: " . $sSQL . ";<br>\n";
+			//
+			//echo "ID: ". $id_conta . "<br>";
+			//echo "REDE: ". $rede . "<br>";
+			$this->bd->consulta($sSQL);
+		}
 		
 		
 		return;
@@ -74,17 +75,20 @@ class Spool {
 	function bandalargaExcluiRede($destino,$id_conta,$rede){
 	
 		$parametros = "$rede";
-	
-		$sSQL  = "INSERT INTO ";
-		$sSQL .= "sptb_spool ( ";
-		$sSQL .= "	registro,destino,tipo,op,id_conta,parametros,status ";
-		$sSQL .= ") VALUES ( ";
-		$sSQL .= "now(), '".$destino."', 'BL', 'x', '". $id_conta ."', '".$parametros."', 'A' ";
-		$sSQL .= ") ";
-		//echo "SPOOL EXCLUIR: " . $sSQL . ";<br>\n";
-
-		$this->bd->consulta($sSQL);
 		
+		if ($parametros == '' || !$parametros){
+	
+			$sSQL  = "INSERT INTO ";
+			$sSQL .= "sptb_spool ( ";
+			$sSQL .= "	registro,destino,tipo,op,id_conta,parametros,status ";
+			$sSQL .= ") VALUES ( ";
+			$sSQL .= "now(), '".$destino."', 'BL', 'x', '". $id_conta ."', '".$parametros."', 'A' ";
+			$sSQL .= ") ";
+			//echo "SPOOL EXCLUIR: " . $sSQL . ";<br>\n";
+
+			$this->bd->consulta($sSQL);
+			
+		}
 		return;
 	
 	
@@ -93,17 +97,19 @@ class Spool {
 		function bandalargaExcluiRedePPPoE($destino,$id_conta,$rede){
 		
 			$parametros = "$rede";
-		
-			$sSQL  = "INSERT INTO ";
-			$sSQL .= "sptb_spool ( ";
-			$sSQL .= "	registro,destino,tipo,op,id_conta,parametros,status ";
-			$sSQL .= ") VALUES ( ";
-			$sSQL .= "now(), '".$destino."', 'BL', 'k', '". $id_conta ."', '".$parametros."', 'A' ";
-			$sSQL .= ") ";
-			//echo "SPOOL EXCLUIR: " . $sSQL . ";<br>\n";
-	
-			$this->bd->consulta($sSQL);
 			
+			if ($parametros == '' || !$parametros){
+
+				$sSQL  = "INSERT INTO ";
+				$sSQL .= "sptb_spool ( ";
+				$sSQL .= "	registro,destino,tipo,op,id_conta,parametros,status ";
+				$sSQL .= ") VALUES ( ";
+				$sSQL .= "now(), '".$destino."', 'BL', 'k', '". $id_conta ."', '".$parametros."', 'A' ";
+				$sSQL .= ") ";
+				//echo "SPOOL EXCLUIR: " . $sSQL . ";<br>\n";
+
+				$this->bd->consulta($sSQL);
+			}
 			return;
 		
 		
