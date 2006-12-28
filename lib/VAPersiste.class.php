@@ -34,11 +34,7 @@
 		
 		/**
 		 * Update Generico
-		**/
-		protected function _atualiza($tabela,$campos,$condicao) {
-			$sql = $this->bd->sqlUpdate($tabela,$campos,$condicao);
-			return($this->bd->consulta($sql));
-		}
+		 */
 		
 		protected function _atualiza($tabela,$campos,$condicao) {
 			$sql = $this->bd->sqlUpdate($tabela,$campos,$condicao);
@@ -66,7 +62,7 @@
 		**/
 		protected function dadosUteis($tabela,$dados) {
 			$d = array();
-			while(list($campo,$valor)=each($dados) {
+			while(list($campo,$valor)=each($dados)) {
 				if( in_array($campo,@$this->campos[$tabela]) ) {
 					$d[$campo] = $valor;
 				}

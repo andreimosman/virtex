@@ -91,7 +91,7 @@
 		 * Exclui Conta
 		 */
 		public function exlcuiConta($condicao) {
-			return($this->delete("cntb_conta",$condicao);
+			return $this->delete("cntb_conta",$condicao);
 		}
 		
 		
@@ -99,7 +99,7 @@
 		 * Exclui Conta BandaLarga
 		 */
 		public function exlcuiContaBandaLarga($condicao) {
-			return($this->delete("cntb_conta_bandalarga",$condicao);
+			return $this->delete("cntb_conta_bandalarga",$condicao);
 		}
 		
 		
@@ -107,7 +107,7 @@
 		 * Exclui Conta Hospedagem
 		 */
 		public function exlcuiContaHospedagem($condicao) {
-			return($this->delete("cntb_conta_hospedagem",$condicao);
+			return $this->delete("cntb_conta_hospedagem",$condicao);
 		}
 		
 		
@@ -115,13 +115,13 @@
 		 * Exclui Conta Email
 		 */
 		public function exlcuiContaEmail($condicao) {
-			return($this->delete("cntb_conta_email",$condicao);
+			return $this->delete("cntb_conta_email",$condicao);
 		}
 		/**
 		 * Exclui Conta Discado
 		 */
 		public function exlcuiContaDiscado($condicao) {
-		return($this->delete("cntb_conta_discado",$condicao);
+		return $this->delete("cntb_conta_discado",$condicao);
 		}
 
 	///FIM DO EXCLUI CONTAS
@@ -134,66 +134,66 @@
 		 * Obtem Conta
 		 */
 		public function obtemConta($condicao) {
-			return($this->obtem("cntb_conta",$condicao);
+			return $this->obtem("cntb_conta",$condicao);
 		}
 		
 		/**
 		 * Obtem Conta BandaLarga
 		 */
 		public function obtemContaBandaLarga($condicao) {
-			return($this->obtem("cntb_conta_bandalarga",$condicao);
+			return $this->obtem("cntb_conta_bandalarga",$condicao);
 		}
 		/**
 		 * Obtem Conta Discado
 		 */
 		public function obtemContaDiscado($condicao) {
-			return($this->obtem("cntb_conta_discado",$condicao);
+			return $this->obtem("cntb_conta_discado",$condicao);
 		}
 		
 		/**
 		 * Obtem Conta Hospedagem
 		 */
 		public function obtemContaHospedagem($condicao) {
-			return($this->obtem("cntb_conta_hospedagem",$condicao);
-		}
+			return $this->obtem("cntb_conta_hospedagem",$condicao);
+		} 
 		
 		/**
 		 * Obtem Conta Email
 		 */
 		public function obtemContaEmail($condicao) {
-			return($this->obtem("cntb_conta_email",$condicao);
+			return $this->obtem("cntb_conta_email",$condicao);
 		}
 
 		/*
 		 *Obtem Unica Conta
 		 */
 		public function obtemUnicaConta($condicao) {
-			return($this->obtemUnico("cntb_conta",$condicao);
+			return $this->obtemUnico("cntb_conta",$condicao);
 		}
 		
 		/**
 		 * Obtem Unica Conta BandaLarga
 		 */
 		public function obtemUnicaContaBandaLarga($condicao) {
-			return($this->obtemUnico("cntb_conta_bandalarga",$condicao);
+			return $this->obtemUnico("cntb_conta_bandalarga",$condicao);
 		}
 		/**
 		 * Obtem Unica Conta Discado
 		 */
 		public function obtemUnicaContaDiscado($condicao) {
-			return($this->obtemUnico("cntb_conta_discado",$condicao);
+			return $this->obtemUnico("cntb_conta_discado",$condicao);
 		}
 		/**
 		 * Obtem Conta Hospedagem
 		 */
 		public function obtemUnicaContaHospedagem($condicao) {
-			return($this->obtemUnico("cntb_conta_hospedagem",$condicao);
+			return $this->obtemUnico("cntb_conta_hospedagem",$condicao);
 		}
 		/**
 		 * Obtem Conta Email
 		 */
 		public function obtemUnicaContaEmail($condicao) {
-			return($this->obtemUnico("cntb_conta_email",$condicao);
+			return $this->obtemUnico("cntb_conta_email",$condicao);
 		}
 
 	///FIM DOS SELECTS
