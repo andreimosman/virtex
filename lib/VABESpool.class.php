@@ -343,10 +343,10 @@
 				$fila = $this->bd->obtemRegistros($sSQL);
 				
 				for($i=0;$i<count($fila);$i++) {
+					
 					$sSQL = "UPDATE sptb_spool SET status = 'ERR' WHERE id_spool = '".$this->bd->escape($fila[$i]["id_spool"])."'";
 					$this->bd->consulta($sSQL);
-
-
+					
 					// TODO: TRATAR ERRO DE PROCESSAMENTO E JOGAR PRO BANCO
 					$abl->processa($fila[$i]["op"],$fila[$i]["id_conta"],$fila[$i]["parametros"]);
 					
