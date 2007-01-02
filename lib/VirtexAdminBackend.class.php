@@ -39,6 +39,13 @@ class VirtexAdminBackend extends VirtexAdmin {
 		$this->_longopts  = NULL;
 		
 		$this->_options = array();
+
+		if( @$this->usar_bd && @$this->cfg->config["DB"]["dsn"] ) {
+			// Instanciar BD;
+			//echo "PREFERENCIAS!!!<br>\n";
+			$this->prefs = new Preferencias($this->bd);
+		}
+
 		
 	}
 	
