@@ -53,7 +53,7 @@ class Spool {
 		
 		$parametros = "$rede,$mac,$banda_upload_kbps,$banda_download_kbps,$username";
 		
-		if ($parametros == '' || !$parametros){
+		if ($parametros != '' && $parametros){
 			$sSQL  = "INSERT INTO ";
 			$sSQL .= "sptb_spool ( ";
 			$sSQL .= "		registro,destino,tipo,op,id_conta,parametros,status ";
@@ -76,7 +76,7 @@ class Spool {
 	
 		$parametros = "$rede";
 		
-		if ($parametros == '' || !$parametros){
+		if ($parametros != '' && $parametros){
 	
 			$sSQL  = "INSERT INTO ";
 			$sSQL .= "sptb_spool ( ";
@@ -98,7 +98,7 @@ class Spool {
 		
 			$parametros = "$rede";
 			
-			if ($parametros == '' || !$parametros){
+			if ($parametros != '' && $parametros){
 
 				$sSQL  = "INSERT INTO ";
 				$sSQL .= "sptb_spool ( ";
