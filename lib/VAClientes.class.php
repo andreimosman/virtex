@@ -3433,7 +3433,14 @@ class VAClientes extends VirtexAdminWeb {
 				}// for
 				
 			}
+			//$preferencia = $this->prefs("total");
+			$sSQL = "SELECT * FROM pftb_preferencia_cobranca WHERE id_provedor = 1";
+			$pref = $this->bd->obtemUnicoRegistro($sSQL);
+			
+			$banco = $pref["cod_banco_boleto"];
 
+			
+			
 			$this->tpl->atribui("faturas",$faturas);
 			$this->arquivoTemplate = "boleto_segunda_via.html";		
 		
@@ -4701,6 +4708,7 @@ public function boleto($id_cliente_produto,$data,$id_cliente,$forma_pagamento,$s
 	$this->tpl->atribui("referente",$referente);
 	$this->tpl->atribui("cpf_cnpj",$cliente["cpf_cnpj"]);
 	$this->tpl->atribui("bairro",$cliente["bairro"]);
+	$this->tpl->atribui("banco",$banco);
 	//$this->tpl->atribui("barra",$barra);
 	
 	//return($carne_emitido);

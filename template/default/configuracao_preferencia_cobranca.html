@@ -446,7 +446,12 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                                               <tr>
                                                 <td><p><strong>Cod. Banco: </strong></p></td>
                                                 <td><strong>
-                                                  <input name="cod_banco_boleto" type="text" id="cod_banco_boleto" value="{$prefs.cod_banco_boleto}" size="12" maxlength="3">
+													<strong><select name="cod_banco_boleto" id="cod_banco_boleto">
+														<option value="1" {if $prefs.cod_banco_boleto == "1"}selected{/if}>BB</option>
+														<option value="237" {if $prefs.cod_banco_boleto == "237"}selected{/if}>Bradesco</option>
+														<option value="104" {if $prefs.cod_banco_boleto == "104"}selected{/if}>CEF</option>
+                                                    </select></strong>
+                                                  <!-- <input name="cod_banco_boleto" type="text" id="cod_banco_boleto" value="{$prefs.cod_banco_boleto}" size="12" maxlength="3">-->
                                                   </strong></td>
                                                 <td><p><strong>Carteira: </strong></p></td>
                                                 <td><input name="carteira_boleto" type="text" value="{$prefs.carteira_boleto}" size="12" id="carteira_boleto"></td>
@@ -455,9 +460,9 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                                                 <td><p><strong>Ag&ecirc;ncia: </strong></p></td>
                                                 <td><input name="agencia_boleto" type="text" value="{$prefs.agencia_boleto}" size="12" id="agencia_boleto"></td>
                                                 <td><p><strong>Num. Conta: </strong></p></td>
-                                                <td><strong>
-                                                  <input name="conta_boleto" type="text" value="{$prefs.conta_boleto}" size="12" id="conta_boleto">
-                                                  </strong></td>
+                                                  <td><strong> 
+                                                    <input name="conta_boleto" type="text" value="{$prefs.conta_boleto}" size="12" id="conta_boleto">
+                                                    </strong></td>
                                               </tr>
                                               <tr>
                                                 <td ><p><strong>Conv&ecirc;nio:</strong></p></td>

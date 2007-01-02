@@ -2,13 +2,14 @@
 <html><head>
 
 
-<!-- base href="https://registro.br/" --><title>Registro .br - Boleto 0045152397</title>
+<title>Boleto</title>
 </head><body bgcolor="#ffffff">
 
 <table border="0" cellpadding="0" cellspacing="0" width="640">
 <tbody>
 <tr>
-<td valign="bottom" width="242"><img src="template/boletos/imagens/banco001.gif" width="225" height="45"></td><td width="428" align="right" valign="bottom"><font face="Arial, Helvetica" size="-2"><b>RECIBO DO SACADO</b></font></td>
+      <td valign="bottom" width="242"><img src="template/boletos/imagens/{$banco}.gif" width="225" height="45"></td>
+      <td width="428" align="right" valign="bottom"><font face="Arial, Helvetica" size="-2"><b>RECIBO DO SACADO</b></font></td>
 </tr>
 </tbody></table>
 
@@ -17,7 +18,7 @@
 <td><font face="Arial, Helvetica" size="1">Cedente</font><br>
       <font face="Arial, Helvetica" size="-1">{$nome_cedente} - CNPJ: {$empresa_cnpj} 
       </font></td>
-<td><font face="Arial, Helvetica" size="1">Agência / Conta</font><br>
+<td><font face="Arial, Helvetica" size="1">Agência / Cod. Cedente</font><br>
     <font face="Arial, Helvetica" size="-1">{$agencia} {$conta} </font></td>
 <td><font face="Arial, Helvetica" size="1">Data Emissão</font><br>
   <font face="Arial, Helvetica" size="-1">{$hoje}</font></td>
@@ -55,7 +56,7 @@
 <table border="0" cellpadding="0" cellspacing="0">
 <tbody><tr>
 <td width="640">
-<hr size="1">
+<!-- tinha um HR -->
 </td>
 <td>
 <p align="right"><font size="-2">&nbsp;dobre</font></p>
@@ -65,7 +66,7 @@
 
 <table border="0" cellpadding="0" cellspacing="0" width="640">
 <tbody><tr>
-<td valign="bottom" width="225"><img src="template/boletos/imagens/banco001.gif" width="225" height="45"></td>
+      <td valign="bottom" width="225"><img src="template/boletos/imagens/{$banco}.gif" width="225" height="45"></td>
 <td align="right" valign="bottom"><font size="2" face="Arial, Helvetica, sans-serif"><strong><br>
   </strong><font size="1">linha digitavel</font><strong><br>
   {$linha_digitavel}</strong></font></td>
@@ -82,7 +83,7 @@
 <td colspan="5" width="500"><font face="Arial, Helvetica" size="1">Cedente</font><br>
   <font face="Arial, Helvetica" size="-1">{$nome_cedente} - CNPJ: {$empresa_cnpj} </font></td>
 <td align="right" width="170"><font face="Arial, Helvetica" size="1">Agência
-    / conta </font><br>
+    / Cod. Cedente </font><br>
     <font face="Arial, Helvetica" size="-1">{$agencia} {$conta} </font></td>
 </tr>
 <tr>
@@ -147,7 +148,7 @@
 <table border="0" cellpadding="0" cellspacing="0">
 <tbody><tr>
 <td width="640">
-<hr size="1"></td>
+<!-- TINHA UM HR --></td>
 <td>
 <p align="right"><font size="-2">&nbsp;corte</font></p></td>
 </tr>
@@ -155,6 +156,4 @@
 <td width="640">&nbsp;</td>
 </tr>
 </tbody></table>
-
-<!-- Registro .br (c) 1998/2006 -->
 </body></html>

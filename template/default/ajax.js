@@ -9,8 +9,11 @@ function createAjaxObj() {
 			httprequest=new ActiveXObject("Msxml2.XMLHTTP");
 		} catch (e) {
 			try{
-				httprequest=new ActiveXObject("Microsoft.XMLHTTP");
-			} catch (e){}
+				//httprequest=new ActiveXObject("Microsoft.XMLHTTP");
+				httprequest=new XMLHttpRequest(); 
+			} catch (e){
+				
+			}
 		}
 	}
 	return httprequest;

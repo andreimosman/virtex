@@ -3615,7 +3615,7 @@ class VACobranca extends VirtexAdminWeb {
 	$clocalidade = $provedor['localidade'];
 	$observacoes = $provedor['observacoes'];
 	$nome_produto = $produto["nome"];
-	
+	$banco = $provedor["cod_banco_boleto"];	
 	
 	
 	
@@ -3681,6 +3681,8 @@ class VACobranca extends VirtexAdminWeb {
 	$this->tpl->atribui("path",$_path);
 	$this->tpl->atribui("cod_barra",$cb);
 	$this->tpl->atribui("referente",$referente);
+	$this->tpl->atribui("banco",$banco);
+	//echo "banco: $banco <br>";
 	
 	
 	$template  = $this->tpl->obtemPagina("../boletos/pc-estilo.html");
