@@ -2263,6 +2263,14 @@ class VAConfiguracao extends VirtexAdminWeb {
 					$enviar_email = @$_REQUEST["enviar_email"];
 					$mensagem_email = nl2br(@$_REQUEST["mensagem_email"]);
 					$email_remetente = @$_REQUEST['email_remetente'];
+					$cnpj_ag_cedente = @$_REQUEST["cnpj_ag_cedente"];
+					$codigo_cedente = @$_REQUEST["codigo_cedente"];
+					$operacao_cedente = @$_REQUEST["operacao_cedente"];
+					$div_agencia = @$_REQUEST["div_agencia"];
+
+
+
+
 					
 					if ($enviar_email == ""){
 					
@@ -2342,10 +2350,11 @@ class VAConfiguracao extends VirtexAdminWeb {
 						$sSQL .= " pftb_preferencia_cobranca ";
 						$sSQL .= " (id_provedor, carencia, tx_juros, multa, dia_venc, cod_banco, carteira, ";
 						$sSQL .= " agencia, num_conta, convenio, pagamento, observacoes, path_contrato, cod_banco_boleto, ";
-						$sSQL .= " carteira_boleto, agencia_boleto, conta_boleto, convenio_boleto, enviar_email, mensagem_email, email_remetente) ";
+						$sSQL .= " carteira_boleto, agencia_boleto, conta_boleto, convenio_boleto, enviar_email, mensagem_email, email_remetente, ";
+						$sSQL .= " cnpj_ag_cedente, operacao_cedente, codigo_cedente, div_agencia )";
 						$sSQL .= " VALUES ( '1', '$carencia', '$tx_juros', '$multa', '$dia_venc', $cod_banco, $carteira, ";
 						$sSQL .= "			$agencia, $num_conta, $convenio, '$pagamento', '$observacoes', '$path_contrato', $cod_banco_boleto, ";
-						$sSQL .= "			$carteira_boleto, $agencia_boleto, $conta_boleto, $convenio_boleto, '$enviar_email', '$mensagem_email', '$email_remetente' ); ";
+						$sSQL .= "			$carteira_boleto, $agencia_boleto, $conta_boleto, $convenio_boleto, '$enviar_email', '$mensagem_email', '$email_remetente' , '$cnpj_ag_cedente', '$operacao_cedente', '$codigo_cedente', '$div_agencia' ); ";
 						$sSQL .= " COMMIT ; ";
 						
 						

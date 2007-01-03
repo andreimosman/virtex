@@ -727,12 +727,12 @@ class VACobranca extends VirtexAdminWeb {
 								if ($bl["tipo_bandalarga"] == "P"){
 		
 								////echo"PPPOE<BR>";
-									$this->spool->bandalargaExcluiRedePPPoE($nas["ip"],$bl["id_conta"],$bl["ipaddr"]);
+									$this->spool->bandalargaExcluiRedePPPoE($nas["id_nas"],$bl["id_conta"],$bl["ipaddr"]);
 		
 								}else {
 		
 									/////echo"IP <BR>";
-									$this->spool->bandalargaExcluiRede($nas["ip"],$bl["id_conta"],$bl["rede"]);
+									$this->spool->bandalargaExcluiRede($nas["id_nas"],$bl["id_conta"],$bl["rede"]);
 		
 								}
 		
@@ -2089,12 +2089,12 @@ class VACobranca extends VirtexAdminWeb {
 					if ($bl["tipo_bandalarga"] == "P"){
 						
 			//			//echo"PPPOE<BR>";
-						$this->spool->bandalargaExcluiRedePPPoE($nas["ip"],$bl["id_conta"],$bl["ipaddr"]);
+						$this->spool->bandalargaExcluiRedePPPoE($nas["id_nas"],$bl["id_conta"],$bl["ipaddr"]);
 					
 					}else {
 						
 			//			//echo"IP <BR>";
-						$this->spool->bandalargaExcluiRede($nas["ip"],$bl["id_conta"],$bl["rede"]);
+						$this->spool->bandalargaExcluiRede($nas["id_nas"],$bl["id_conta"],$bl["rede"]);
 					
 					}
 					
