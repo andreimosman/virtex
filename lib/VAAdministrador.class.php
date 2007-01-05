@@ -299,13 +299,7 @@ if( !defined("_VAADMINISTRADOR") ) {
 
 			}else if ($op == "altera"){
 			
-								if( ! $this->privPodeGravar("_ADMIN_PRIV") ) {
-									$this->privMSG();
-									return;
-					}	
-
-
-					$erro = array();
+				$erro = array();
 
 				$acao = @$_REQUEST["acao"];
 				//$id_admin = @$_REQUEST["id_admin"];
