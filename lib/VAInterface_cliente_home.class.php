@@ -4,6 +4,39 @@ class VAInterface_cliente_home extends VirtexAdminWeb {
 	
 	public function __construct() {
 		parent::__construct();
+		
+		
+		if( @$this->cfg->config["interface"]["interface_logo"] ) {
+						
+			$cor_um = @$this->cfg->config["interface"]["cor_um"] ;
+			$cor_dois = @$this->cfg->config["interface"]["cor_dois"] ;
+			$empresa = strtolower(trim(@$this->cfg->config["geral"]["empresa"]));
+			$barra = @$this->cfg->config["interface"]["barra"] ;
+			
+			$this->tpl->atribui("cor_um",$cor_um);
+			$this->tpl->atribui("barra",$barra);
+			$this->tpl->atribui("cor_dois",$cor_dois);
+			$this->tpl->atribui("empresa",$empresa);
+
+
+			return;
+				
+
+		}else{
+		
+			$cor_um = "#739B7C";
+			$cor_dois = "#99B7A0";
+			$empresa = "virtex";
+
+			$this->tpl->atribui("cor_um",$cor_um);
+			$this->tpl->atribui("cor_dois",$cor_dois);
+			$this->tpl->atribui("empresa",$empresa);
+		
+		
+		
+		
+		}
+		
 	}
 	
 

@@ -25,15 +25,15 @@ function check(form){
 {/literal}
 <body topmargin="30" {if $lic_interface=="sim"}onLoad="document.form1.admin.focus()"{/if}>
 <div align="center">
-  <table  width="700" height="345" border="0" cellpadding="0" cellspacing="0" background="template/default/images/top_pixel.gif">
+  <table  width="700" height="345" border="0" cellpadding="0" cellspacing="0" background="template/default/images/top_pixel_{$empresa}.gif">
     <tr>
-    <td width="478" height="55" ><img src="template/default/images/logo_top_interface.gif">
+    <td width="478" height="55" ><img src="template/default/images/logo_top_{$empresa}.gif">
     <td width="4" align="center" valign="middle"></td>
 	<td width="1"></td>
   </tr>
-  <tr bgcolor="#BACEBF">
+  <tr bgcolor="{$barra}">
     <td height="0" colspan="4">
-      <table width="483" bgcolor="#BACEBF">
+      <table width="483" bgcolor="{$barra}">
         <tr>
           <td width="53" height="21" >
             <p align="left">&nbsp;</p></td>
@@ -106,7 +106,7 @@ function check(form){
         </div></td>
   </tr>
   <tr>
-    <td height="20" colspan="4">
+    <td height="20" colspan="4" >
       <div align="center"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">&copy;
         Mosman Consultoria - Todos os Direitos Reservados</font></div></td>
         </tr>
