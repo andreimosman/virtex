@@ -1933,23 +1933,24 @@ class VARelatorio extends VirtexAdminWeb {
 		$banda = @$_REQUEST["banda"]; 
 		
 	
-		if($banda || $banda == "0"){
+		if($banda && $banda !="" || $banda == "0" && $banda !=""){
 		
 			$sSQL  = "SELECT ";
 			$sSQL .= "cbl.username,cbl.upload_kbps,cbl.download_kbps,cbl.tipo_conta,cbl.dominio,cn.id_cliente,cn.username,cn.tipo_conta,cn.dominio, cl.id_cliente, cl.nome_razao as nome ";
 			$sSQL .= "FROM ";
-			$sSQL .= "cntb_conta_bandalarga cbl, cntb_conta cn, cltb_cliente cl ";
+			$sSQL .= "cntb_conta_bandalarga cbl, cntb_conta cn, cltb_cliente cl , cbtb_cliente_produto cb ";
 			$sSQL .= "WHERE ";
 			$sSQL .= "(cbl.upload_kbps = '$banda' OR cbl.download_kbps = '$banda') AND ";
 			$sSQL .= "cbl.username = cn.username AND ";
 			$sSQL .= "cbl.tipo_conta = cn.tipo_conta AND ";
 			$sSQL .= "cbl.dominio = cn.dominio AND ";
-			$sSQL .= "cl.id_cliente = cn.id_cliente ";
+			$sSQL .= "cl.id_cliente = cb.id_cliente AND ";
+			$sSQL .= "cb.id_cliente_produto = cn.id_cliente_produto ";
 			$sSQL .= "ORDER BY ";
 			$sSQL .= "nome, cbl.username, cbl.upload_kbps, cbl.download_kbps ASC";
 			
 			$contas_banda = $this->bd->obtemRegistros($sSQL);
-			//echo "BANDA: $sSQL <br>";
+			////echo "BANDA: $sSQL <br>";
 			
 			if (!count($contas_banda)){
 				
@@ -1964,16 +1965,16 @@ class VARelatorio extends VirtexAdminWeb {
 		} else {
 	
 			$sSQL  = "SELECT ";
-			$sSQL .= "   b.banda, count(cbl.username) as num_contas "; 
+			$sSQL .= "   b.banda, count(cbl.username) as num_contas, b.id "; 
 			$sSQL .= "FROM ";
-			$sSQL .= "   cftb_banda b LEFT OUTER JOIN cntb_conta_bandalarga cbl ON(cbl.upload_kbps = b.id OR cbl.download_kbps = id) ";
+			$sSQL .= "   cftb_banda b LEFT OUTER JOIN cntb_conta_bandalarga cbl ON(cbl.upload_kbps = b.id OR cbl.download_kbps = b.id) ";
 			$sSQL .= "GROUP BY ";
 			$sSQL .= "   b.id , b.banda ";
 			$sSQL .= "ORDER BY ";
 			$sSQL .= "   b.id";
 	
 			$bandas = $this->bd->obtemRegistros($sSQL);
-			////echo "BANDA: $sSQL <br>";
+			/////echo "BANDA: $sSQL <br>";
 			
 			$total_contas = 0;
 			for($i=0;$i<count($bandas);$i++) {

@@ -89,10 +89,10 @@ if (da && !pr && !mac) with (document) {
 					    <table width="450" border="0" cellspacing="0" cellpadding="0">
                           <tr bgcolor="#FFFFFF" align="CENTER">
                             <td width="225" height="20">
-							{if $v.banda != 0}<p><a href="relatorio.php?op=lista_banda&banda={$v.banda}">{$v.banda} kbps</a></p>{/if}{if $v.banda == 0}<p><a href="relatorio.php?op=lista_banda&banda={$v.banda}">Sem Controle</a></p>{/if}</td>
+							{if $v.banda != 0}<p><a href="relatorio.php?op=lista_banda&banda={$v.id}">{$v.banda} kbps</a></p>{/if}{if $v.banda == 0}<p><a href="relatorio.php?op=lista_banda&banda={$v.id}">Sem Controle</a></p>{/if}</td>
                             <td width="225" height="20">
 
-							<p><a href="relatorio.php?op=lista_banda&banda={$v.banda}">{$v.num_contas}</a></p></td>
+							<p><a href="relatorio.php?op=lista_banda&banda={$v.id}">{$v.num_contas}</a></p></td>
                           </tr>
                           <tr bgcolor="#FFFFFF" align="CENTER">
                             <td colspan="2" bgcolor="#999999"><img src="template/default/images/menu/spacer.gif" width="200" height="1"></td>
@@ -158,7 +158,7 @@ if (da && !pr && !mac) with (document) {
                   <br>
                   <p><a href="relatorio.php?op=lista_banda">voltar</a>
                   {/if} </p>
-                  <p>&nbsp;</p>
+                
                   <p id="imprimir"><a href="javascript:;" onClick="return printPage();">IMPRIMIR</a></p>
                   <p><a href="configuracao.php?op=listar_bandas">Alterar Bandas</a>
                   </p>
