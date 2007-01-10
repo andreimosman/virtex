@@ -2253,6 +2253,96 @@ class VARelatorio extends VirtexAdminWeb {
 	
 	
 	
+	}else if ($op == "previsao_faturamento"){
+	
+		//$ano = @$_REQUEST["ano"];
+		
+		//if (!$ano){
+		//
+		//
+		//	$ano = date('Y');
+		//	ECHO $ano;
+		//}
+		
+		//$sSQL = "SELECT data, sum(valor) as valor from cbtb_faturas where status = 'A' GROUP BY data ";
+		//$fat_dia = $this->bd->obtemRegistros($sSQL);
+		
+		//$sSQL  = "SELECT EXTRACT('year' from data) as ano, EXTRACT('month' from data) as mes, sum(valor) as valor ";
+		//$sSQL .= "FROM cbtb_faturas ";
+		//$sSQL .= "WHERE status = 'A' ";
+		//$sSQL .= "GROUP BY ano,mes ";
+		//$sSQL .= "ORDER BY ano,mes";
+		//$fat_mensal = $this->bd->obtemRegistros($sSQL);
+		
+				if( !$this->privPodeGravar("_FATURAMENTO") ) {
+							$this->privMSG();
+							return;
+				}	
+				
+				$ano = @$_REQUEST["ano"];
+				$ano_atual = Date("Y");
+				
+				
+				if (!$ano ){
+					$ano = $ano_atual;
+					$metodo = "2";
+				}
+				
+				
+				$data_inicio = $ano."-01-01";
+				$data_final = $ano."-12-31";
+				
+				
+				
+		
+				$sSQL  = "SELECT "; 
+				$sSQL .= "SUM(valor) as faturamento, ";
+				$sSQL .= "EXTRACT(day from data) as dia, ";  
+				$sSQL .= "EXTRACT(month from data) as mes, ";  
+				$sSQL .= "EXTRACT(year from data) as ano   ";
+				$sSQL .= "FROM   ";
+				$sSQL .= "cbtb_faturas   ";
+				$sSQL .= "WHERE   ";
+				$sSQL .= "status = 'A' ";
+				$sSQL .= "AND data BETWEEN   ";
+				$sSQL .= "CAST( '$data_inicio' as date)  ";
+				$sSQL .= "AND CAST( '$data_final' as date )  ";
+				$sSQL .= "GROUP BY   ";
+				$sSQL .= "ano, mes, dia  ";
+				$sSQL .= "ORDER BY   ";
+				$sSQL .= "dia, mes, ano  ";
+				
+				$fat = $this->bd->obtemRegistros($sSQL);
+				//echo "SQL: $sSQL<br>";
+				$tabela = array();
+				
+				for($i=0;$i<count($fat);$i++) {
+					$tabela[   ((int)$fat[$i]["dia"]) ][   ((int)$fat[$i]["mes"]) ] = $fat[$i]["faturamento"] ;
+				}
+				
+				for($i=1;$i<=31;$i++) {
+					if( !@$tabela[$i] ) {
+						$tabela[$i]=array();
+					}
+					for($x=1;$x<=12;$x++) {
+						if( !@$tabela[$i][$x] ) {
+							$tabela[$i][$x] = 0;
+						}
+					}
+					//echo $tabela[$i]["1"] . " - " . $tabela[$i]["2"] . " - ". $tabela[$i]["3"] . "<br>\n";
+				}
+	
+			$sSQL = "SELECT EXTRACT('year' from data) as year FROM cbtb_faturas WHERE status = 'A' GROUP BY year ORDER BY year DESC";
+			$years = $this->bd->obtemRegistros($sSQL);
+		
+		
+		
+		$this->tpl->atribui("tabela",$tabela);
+		$this->tpl->atribui("ano",$ano);
+		$this->tpl->atribui("years",$years);
+		
+		$this->arquivoTemplate = "relatorio_faturamento_previsao.html";
+
 	}
 	
 	

@@ -443,32 +443,50 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
                                         <tr>
                                           <td><font style="font-size:10px;" face="Verdana, Arial, Helvetica, sans-serif">Opções
                                             de Boleto</font> <table width="" border="0" dwcopytype="CopyTableRow">
-                                              <tr>
-                                                <td><p><strong>Cod. Banco: </strong></p></td>
-                                                <td><strong>
-													<strong><select name="cod_banco_boleto" id="cod_banco_boleto">
-														<option value="1" {if $prefs.cod_banco_boleto == "1"}selected{/if}>BB</option>
-														<option value="237" {if $prefs.cod_banco_boleto == "237"}selected{/if}>Bradesco</option>
-														<option value="104" {if $prefs.cod_banco_boleto == "104"}selected{/if}>CEF</option>
-                                                    </select></strong>
-                                                  <!-- <input name="cod_banco_boleto" type="text" id="cod_banco_boleto" value="{$prefs.cod_banco_boleto}" size="12" maxlength="3">-->
-                                                  </strong></td>
-                                                <td><p><strong>Carteira: </strong></p></td>
-                                                <td><input name="carteira_boleto" type="text" value="{$prefs.carteira_boleto}" size="12" id="carteira_boleto"></td>
-                                              </tr>
-                                              <tr>
-                                                <td><p><strong>Ag&ecirc;ncia: </strong></p></td>
-                                                <td><input name="agencia_boleto" type="text" value="{$prefs.agencia_boleto}" size="12" id="agencia_boleto"></td>
-                                                <td><p><strong>Num. Conta: </strong></p></td>
+                                                <tr> 
+                                                  <td><p><strong>Cod. Banco: </strong></p></td>
+                                                  <td><strong> <strong> 
+                                                    <select name="cod_banco_boleto" id="cod_banco_boleto">
+                                                      <option value="1" {if $prefs.cod_banco_boleto == "1"}selected{/if}>BB</option>
+                                                      <option value="237" {if $prefs.cod_banco_boleto == "237"}selected{/if}>Bradesco</option>
+                                                      <option value="104" {if $prefs.cod_banco_boleto == "104"}selected{/if}>CEF</option>
+                                                    </select>
+                                                    </strong> 
+                                                    <!-- <input name="cod_banco_boleto" type="text" id="cod_banco_boleto" value="{$prefs.cod_banco_boleto}" size="12" maxlength="3">-->
+                                                    </strong></td>
+                                                  <td><p><strong>Carteira: </strong></p></td>
+                                                  <td><input name="carteira_boleto" type="text" value="{$prefs.carteira_boleto}" size="12" id="carteira_boleto"></td>
+                                                </tr>
+                                                <tr> 
+                                                  <td><p><strong>Ag&ecirc;ncia: 
+                                                      </strong></p></td>
+                                                  <td><input name="agencia_boleto" type="text" value="{$prefs.agencia_boleto}" size="12" id="agencia_boleto"></td>
+                                                  <td><p><strong>Num. Conta: </strong></p></td>
                                                   <td><strong> 
                                                     <input name="conta_boleto" type="text" value="{$prefs.conta_boleto}" size="12" id="conta_boleto">
                                                     </strong></td>
-                                              </tr>
-                                              <tr>
-                                                <td ><p><strong>Conv&ecirc;nio:</strong></p></td>
-                                                <td ><input name="convenio_boleto" type="text" id="convenio_boleto" value="{$prefs.convenio_boleto}" size="12"></td>
-                                              </tr>
-                                            </table></td>
+                                                </tr>
+                                                <tr> 
+                                                  <td ><p><strong>Conv&ecirc;nio:</strong></p></td>
+                                                  <td ><input name="convenio_boleto" type="text" id="convenio_boleto" value="{$prefs.convenio_boleto}" size="12"></td>
+                                                </tr>
+                                                <tr> 
+                                                  <td colspan="4"><div align="center"><strong><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Campos 
+                                                      dependentes do Banco Escolhido</font></strong></div></td>
+                                                </tr>
+                                                <tr> 
+                                                  <td><p><strong>CNPJ Ag. Cedente:</strong></p></td>
+                                                  <td><input name="cnpj_ag_cedente" type="text" id="cnpj_ag_cedente" value="{$prefs.cnpj_ag_cedente}" size="12" maxlength="4"></td>
+                                                  <td><p><strong>Cod. Cedente:</strong></p></td>
+                                                  <td><input name="codigo_cedente" type="text" id="codigo_cedente" value="{$prefs.codigo_cedente}" size="12" maxlength="8"></td>
+                                                </tr>
+                                                <tr>
+                                                  <td><p><strong>Op. Cedente:</strong></p></td>
+                                                  <td><input name="operacao_cedente" type="text" id="operacao_cedente" value="{$prefs.operacao_cedente}" size="12" maxlength="3"></td>
+                                                  <td><p><strong>DV Ag&ecirc;ncia:</strong></p></td>
+                                                  <td><input name="div_agencia" type="text" id="div_agencia" value="{$prefs.div_agencia}" size="12" maxlength="1"></td>
+                                                </tr>
+                                              </table></td>
                                         </tr>
                                       </table></div>
                                       {/if}</td>
