@@ -26,17 +26,31 @@
                       <td><p><strong>Status</strong></p></td>
                       <td><p><strong>Motivo</strong></p></td>
                     </tr>
+					{assign var="total" value=0}
 					{foreach item=r from=$detalhe}
                     <tr bgcolor="{cycle values="#ffffff,#f1f1f1"}"> 
                       <td align="CENTER"><p>{$r.nsr}</p></td>
                       <td align="CENTER"><p>{$r.data_pagamento}</p></td>
                       <td align="CENTER"><p>{$r.data_credito}</p></td>
-                      <td align="RIGHT"><p>{$r.valor}</p></td>
+                      <td align="RIGHT"><p>{$r.valor}{assign var="total" value=$total+$r.valor}</p></td>
                       <td align="CENTER"><p>{$r.status}</p></td>
                       <td align="CENTER"><p>{$r.motivo}</p></td>
                     </tr>
 					{/foreach}
-                  </table>
+                  </table><br>
+				  <table width="700" border="0" cellspacing="1" cellpadding="2" >
+				  	<tr bgcolor="#CCCCCC">
+						<td width="38%"><strong><p>&nbsp;#&nbsp;&nbsp;Totalização</p></strong></td>
+						<td align="right" width="17%"><strong><p>Valor Recebido</p></strong></td>
+						<td></td>
+					</tr>
+					<tr bgcolor="#fafafa">
+						<td width="38%"></td>
+						<td align="right" width="17%"><p>{$total}</p></td>
+						<td></td>
+					</tr>
+				  </table>
+				  
                   <p><a href="cobranca.php?op=retornos">voltar</a></p></td>
               </tr>
             </table></td>

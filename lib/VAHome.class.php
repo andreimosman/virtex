@@ -105,6 +105,10 @@ class VAHome extends VirtexAdminWeb {
 			$aSQL  = " SELECT enviar_email FROM pftb_preferencia_cobranca ";
 			$email = $this->bd->obtemUnicoRegistro($aSQL);
 			
+			$uSQL  = " UPDATE cbtb_faturas SET email_aviso = 't' WHERE status = 'P' OR status = 'E' OR email_aviso = 'C' ";
+			$this->bd->consulta($uSQL);
+			/////	echo $uSQL ;
+			
 			if ($email['enviar_email'] == 't'){
 			
 				$carencia = (int)$this->prefs->obtem("cobranca","carencia");
@@ -139,6 +143,9 @@ class VAHome extends VirtexAdminWeb {
 				$sSQL .= "ORDER BY ";
 				$sSQL .= "   cl.nome_razao, p.nome ";
 				$rel_clientes = $this->bd->obtemRegistros($sSQL);
+				
+				/////echo $sSQL;
+				
 
 					$aSQL  = " SELECT mensagem_email FROM pftb_preferencia_cobranca ";
 					$mensagem = $this->bd->obtemUnicoRegistro($aSQL);
@@ -253,6 +260,8 @@ class VAHome extends VirtexAdminWeb {
 					$sSQL .= " AND f.cod_barra = '$cod_barra' AND nosso_numero = '$nosso_numero' ";
 					$sSQL .= " AND f.id_cliente_produto = cn.id_cliente_produto ";
 					$sSQL .= " AND cn.tipo_conta <> 'E' " ;
+					$sSQL .= " AND f.status not in ('P','E','C') ";
+					
 					
 					$email_aviso = $this->bd->obtemUnicoRegistro($sSQL);					
 					$data = @$email_aviso['data'];
@@ -263,9 +272,9 @@ class VAHome extends VirtexAdminWeb {
 
 					if (@$email_aviso['email_aviso'] == 'f' && @$email_cliente != "" ){
 					
-						if(mail($email_cliente, "Problemas na Sua Conta" ,  $html, $headers)){
+						/*if(mail($email_cliente, "Problemas na Sua Conta" ,  $html, $headers)){
 
-							// SE O EMAIL FOR ENVIADO ATUALIZA O CAMPO EMAIL AVISO COMO TRUE NA TABELA CBTB_FATURAS
+							*/// SE O EMAIL FOR ENVIADO ATUALIZA O CAMPO EMAIL AVISO COMO TRUE NA TABELA CBTB_FATURAS
 							$sSQL  = "UPDATE cbtb_faturas SET email_aviso = 't' WHERE cod_barra = '$cod_barra' AND nosso_numero = '$nosso_numero' AND id_cliente_produto = '$id_cliente_produto' ";
 							$this->bd->consulta($sSQL);
 							
@@ -280,8 +289,13 @@ class VAHome extends VirtexAdminWeb {
 							$aSQL  = " INSERT INTO lgtb_emails_cobranca(data_envio, id_cliente_produto, data, email,username, tipo_conta, id_cliente) ";
 							$aSQL .= " VALUES ('$hoje' , '$id_cliente_produto', '$data', '$email_cliente', '$username', '$tipo_conta', $id_cliente) " ;							
 							$this->bd->consulta($aSQL);
-					
-						}
+						
+						/*
+						
+						
+						}*/
+						$counter+=1;
+						echo $counter ."&nbsp;".$email_cliente . "<br><hr>";
 	
 					}
 				
