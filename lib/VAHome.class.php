@@ -274,7 +274,7 @@ class VAHome extends VirtexAdminWeb {
 					
 						if(mail($email_cliente, "Problemas na Sua Conta" ,  $html, $headers)){
 
-							*/// SE O EMAIL FOR ENVIADO ATUALIZA O CAMPO EMAIL AVISO COMO TRUE NA TABELA CBTB_FATURAS
+							/// SE O EMAIL FOR ENVIADO ATUALIZA O CAMPO EMAIL AVISO COMO TRUE NA TABELA CBTB_FATURAS
 							$sSQL  = "UPDATE cbtb_faturas SET email_aviso = 't' WHERE cod_barra = '$cod_barra' AND nosso_numero = '$nosso_numero' AND id_cliente_produto = '$id_cliente_produto' ";
 							$this->bd->consulta($sSQL);
 							
