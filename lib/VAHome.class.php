@@ -105,7 +105,7 @@ class VAHome extends VirtexAdminWeb {
 			$aSQL  = " SELECT enviar_email FROM pftb_preferencia_cobranca ";
 			$email = $this->bd->obtemUnicoRegistro($aSQL);
 			
-			$uSQL  = " UPDATE cbtb_faturas SET email_aviso = 't' WHERE status = 'P' OR status = 'E' OR email_aviso = 'C' ";
+			$uSQL  = " UPDATE cbtb_faturas SET email_aviso = 't' WHERE status = 'P' OR status = 'E' OR status = 'C' ";
 			$this->bd->consulta($uSQL);
 			/////	echo $uSQL ;
 			
@@ -272,7 +272,7 @@ class VAHome extends VirtexAdminWeb {
 
 					if (@$email_aviso['email_aviso'] == 'f' && @$email_cliente != "" ){
 					
-						/*if(mail($email_cliente, "Problemas na Sua Conta" ,  $html, $headers)){
+						if(mail($email_cliente, "Problemas na Sua Conta" ,  $html, $headers)){
 
 							*/// SE O EMAIL FOR ENVIADO ATUALIZA O CAMPO EMAIL AVISO COMO TRUE NA TABELA CBTB_FATURAS
 							$sSQL  = "UPDATE cbtb_faturas SET email_aviso = 't' WHERE cod_barra = '$cod_barra' AND nosso_numero = '$nosso_numero' AND id_cliente_produto = '$id_cliente_produto' ";
@@ -290,12 +290,12 @@ class VAHome extends VirtexAdminWeb {
 							$aSQL .= " VALUES ('$hoje' , '$id_cliente_produto', '$data', '$email_cliente', '$username', '$tipo_conta', $id_cliente) " ;							
 							$this->bd->consulta($aSQL);
 						
-						/*
 						
 						
-						}*/
-						$counter+=1;
-						echo $counter ."&nbsp;".$email_cliente . "<br><hr>";
+						
+						}
+						///$counter+=1;
+						///echo $counter ."&nbsp;".$email_cliente . "<br><hr>";
 	
 					}
 				
