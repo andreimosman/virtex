@@ -2215,7 +2215,7 @@ class VARelatorio extends VirtexAdminWeb {
 		$sSQL .= "GROUP BY   ";
 		$sSQL .= "ano, mes, dia  ";
 		$sSQL .= "ORDER BY   ";
-		$sSQL .= "dia, mes, ano  ";
+		$sSQL .= "dia, mes, ano  ASC";
 		
 		$fat = $this->bd->obtemRegistros($sSQL);
 		
@@ -2241,6 +2241,7 @@ class VARelatorio extends VirtexAdminWeb {
 			//echo $tabela[$i]["1"] . " - " . $tabela[$i]["2"] . " - ". $tabela[$i]["3"] . "<br>\n";
 		}
 		
+		ksort($tabela);
 		
 		$this->tpl->atribui("metodo",$metodo);
 		$this->tpl->atribui("titulo",$titulo);
