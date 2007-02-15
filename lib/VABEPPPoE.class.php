@@ -28,9 +28,9 @@
 		public function __construct() {
 			parent::__construct();
 			$this->initVars();
-			
 			// Configura o getopt e chama as opções para processamento posterior
 			$this->_shortopts = "WUDKRIi:a:u:p:";
+
 			$this->getopt();
 		
 		}
@@ -50,6 +50,7 @@
 			$this->hisaddr	 		= "";
 			$this->interface 		= "";
 			$this->pid				= 0;
+
 		}
 		
 		
@@ -65,6 +66,7 @@
 			 *    Cada linha é um array contendo um par 0 => opcao, 1 => parametro
 			 *
 			 */
+
 
 			for($i=0;$i<count($this->options);$i++) {
 				switch($this->options[$i][0]) {
@@ -200,7 +202,7 @@
 			if( !@$info["id_conta"] ) return(-1);
 			
 
-			$abl = new AtuadorBandaLarga($this->bd);
+			$abl = new AtuadorBandaLarga();
 
 			
 			if( $this->linkup ) {
@@ -229,7 +231,7 @@
 		 */
 		public function rcstart() {
 			
-			$bl = new AtuadorBandaLarga($this->bd);
+			$bl = new AtuadorBandaLarga();
 			$interfaces = $bl->obtemListaNasPPPoEAtivos();
 			
 			for ($i=0;$i<count($interfaces);$i++){
@@ -260,7 +262,12 @@
 		}
 		
 		protected function print_info() {
-			$bl = new AtuadorBandaLarga($this->bd);
+
+
+
+			$bl = new AtuadorBandaLarga();
+			echo "PRINT INFO!\n";
+
 			$ifaces = $bl->obtemListaIfacesPPPoEAtivos();
 			
 			for($i=0;$i<count($ifaces);$i++) {
