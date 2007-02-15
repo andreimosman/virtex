@@ -15,9 +15,9 @@ include ("defs.php");
 		/**
 		 * Recebe uma instância do banco de dados
 		 */
-		public function __construct($bd=NULL) {
+		public function __construct() {
 			
-			parent::__construct($bd);
+			parent::__construct();
 			
 			$tcfg = new MConfig(PATH_ETC."/email.ini");
 			$this->email_cfg = $tcfg->config;

@@ -18,8 +18,9 @@
 		
 		protected $debug;
 
-		public function __construct($bd=NULL,$debug=0) {
-			$this->bd = $bd;
+		public function __construct($debug=0) {
+			//$this->bd = $bd;
+			$this->bd=MDatabase::getInstance();
 			$this->debug = $debug;
 			$this->so = new SOFreeBSD();
 		}

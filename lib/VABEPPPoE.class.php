@@ -262,11 +262,7 @@
 		}
 		
 		protected function print_info() {
-
-
-
 			$bl = new AtuadorBandaLarga();
-			echo "PRINT INFO!\n";
 
 			$ifaces = $bl->obtemListaIfacesPPPoEAtivos();
 			

@@ -1,8 +1,5 @@
 <?
 
-	require_once(PATH_LIB."/Atuador.class.php");
-	require_once(PATH_LIB."/redes.class.php");
-
 	class AtuadorBandaLarga extends Atuador {
 		// Configurações de rede
 		protected $net_cfg;
@@ -34,10 +31,8 @@
 		/**
 		 * Recebe uma instância do banco de dados
 		 */
-		public function __construct($bd=NULL,$debug=0) {
-			
-			parent::__construct($bd,$debug);
-			
+		public function __construct($debug=0) {
+			parent::__construct($debug);
 			
 			// Carrega arquivos de configuração necessários
 			$tcfg = new MConfig(PATH_ETC."/network.ini");

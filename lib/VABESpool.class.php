@@ -119,7 +119,7 @@
 				
 				
 				// Atuador BandaLarga é usado inclusive para a configuração de rede
-				$abl = new AtuadorBandaLarga($this->bd,$this->debug);
+				$abl = new AtuadorBandaLarga($this->debug);
 				
 				/**
 				 * Configurações de rede
@@ -273,7 +273,7 @@
 			 * Consulta Spool Bandalarga p/ esta máquina
 			 */
 
-			$abl = new AtuadorBandaLarga($this->bd,$this->debug);
+			$abl = new AtuadorBandaLarga($this->debug);
 			$lista_nas = $abl->obtemListaNasIPAtivos();
 			
 			if( count($lista_nas) ) {
@@ -363,7 +363,7 @@
 			 * Consulta Spool Email p/ esta mquina
 			 */
 
-			 $ae = new AtuadorEmail($this->bd);
+			 $ae = new AtuadorEmail();
 
 			 $lista_srve = $ae->obtemListaServidores();
 
@@ -407,7 +407,7 @@
 			 * Consulta Spool Hospedagem p/ esta mquina
 			 */
 
-			 $ah = new AtuadorHospedagem($this->bd,$this->tpl);
+			 $ah = new AtuadorHospedagem($this->tpl);
 
 			 $lista_srvh = $ah->obtemListaServidores();
 
@@ -489,7 +489,7 @@
 			 * Consulta Spool DNS p/ esta mquina
 			 */
 
-			 $ad = new AtuadorDNS($this->bd,$this->tpl);
+			 $ad = new AtuadorDNS($this->tpl);
 
 			 $lista_srvd = $ad->obtemListaServidores();
 

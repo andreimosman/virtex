@@ -19,9 +19,9 @@ include ("defs.php");
 		/**
 		 * Recebe uma instância do banco de dados
 		 */
-		public function __construct($bd=NULL,$tpl=NULL) {
+		public function __construct($tpl=NULL) {
 			
-			parent::__construct($bd);
+			parent::__construct();
 			
 			$this->tpl = $tpl;
 			

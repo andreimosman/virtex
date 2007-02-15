@@ -27,14 +27,14 @@ class VirtexAdminBackend extends VirtexAdmin {
 		
 		$this->_console = new Console_Getopt;
 		$this->_args = $this->_console->readPHPArgv();
-		
+
 		if( !count($this->_args) ) {
 			exit(-1); // Não tá chamando no console;
 		}
 		
 		// Tira o executável dos argumentos
 		//array_shift($this->_args);
-		
+
 		$this->_shortopts = NULL;
 		$this->_longopts  = NULL;
 		
@@ -43,9 +43,12 @@ class VirtexAdminBackend extends VirtexAdmin {
 		if( @$this->usar_bd && @$this->cfg->config["DB"]["dsn"] ) {
 			// Instanciar BD;
 			//echo "PREFERENCIAS!!!<br>\n";
-			$this->prefs = new Preferencias($this->bd);
-		}
 
+
+			$this->prefs = new Preferencias($this->bd);
+
+
+		}
 		
 	}
 	
@@ -60,7 +63,11 @@ class VirtexAdminBackend extends VirtexAdmin {
 	 * Faz o parse das opções via linha de comando
 	 */
 	protected function getopt() {
+
+
 		if( $this->_shortopts || $this->_longopts ) {
+
+
 			//echo "GETTING OPTIONS\n";
 			$this->_options = $this->_console->getopt($this->_args,$this->_shortopts,$this->_longopts);
 		
@@ -68,10 +75,12 @@ class VirtexAdminBackend extends VirtexAdmin {
 				$this->usage();
 				exit(-1);
 			}
+
 			
 			$this->options = $this->_options[0];
+
 		}
-		
+
 	}
 	
 	// Já faz o getopt	
