@@ -2251,7 +2251,117 @@ class VARelatorio extends VirtexAdminWeb {
 
 		
 	
-	
+	}else if ($op == "faturamento_prod"){
+
+		if( !$this->privPodeGravar("_FATURAMENTO") ) {
+					$this->privMSG();
+					return;
+		}	
+		
+		$ano = @$_REQUEST["ano"];
+		$ano_atual = Date("Y");
+		$metodo = @$_REQUEST["metodo"];
+		
+		
+		if (!$ano ){
+			$ano = $ano_atual;
+			$metodo = "2";
+		}
+		
+		if ($metodo == "1"){
+			$titulo = "Comparativo";		
+		}else{
+			$titulo = "Acumulativo";
+		}
+		
+		$data_inicio = $ano."-01-01";
+		$data_final = $ano."-12-31";
+		
+		
+		/*
+
+		$sSQL  = "SELECT "; 
+		$sSQL .= "SUM(f.valor_pago) as faturamento, ";
+		$sSQL .= "EXTRACT(day from f.data_pagamento) as dia, ";  
+		$sSQL .= "EXTRACT(month from f.data_pagamento) as mes, ";  
+		$sSQL .= "EXTRACT(year from f.data_pagamento) as ano   ";
+		// COLOCAÇÃO DO JOIN PARA OS PRODUTOS
+		$sSQL .= ", p.id_produto, p.nome as nome_produto, p.tipo as tipo_produto, cp.id_produto ";
+		
+		
+		$sSQL .= "FROM   ";
+		$sSQL .= "cbtb_faturas f, prtb_produtos p, cbtb_cliente_produto cp   ";
+		$sSQL .= "WHERE   ";
+		$sSQL .= " f.id_cliente_produto = cp.id_cliente_produto AND cp.id_produto = p.id_produto";
+		$sSQL .= "f.status = 'P' ";
+		$sSQL .= "AND f.data_pagamento BETWEEN   ";
+		$sSQL .= "CAST( '$data_inicio' as date)  ";
+		$sSQL .= "AND CAST( '$data_final' as date )  ";
+		$sSQL .= "GROUP BY   ";
+		$sSQL .= "tipo,ano, mes  ";
+		$sSQL .= "ORDER BY   ";
+		$sSQL .= "mes, ano  ASC";
+		*/
+		
+		$sSQL  = "SELECT SUM(f.valor_pago) as faturamento, p.tipo as tipo_produto, ";
+		$sSQL .= "EXTRACT(month from f.data_pagamento) as mes,   ";
+		$sSQL .= "EXTRACT(year from f.data_pagamento) as ano   ";
+		$sSQL .= "FROM cbtb_faturas f, cbtb_cliente_produto cp, prtb_produto p ";
+		$sSQL .= "WHERE f.id_cliente_produto = cp.id_cliente_produto AND ";
+		$sSQL .= "cp.id_produto = p.id_produto AND ";
+		$sSQL .= "f.status = 'P' ";
+		$sSQL .= "AND f.data_pagamento BETWEEN   ";
+		$sSQL .= "CAST( '$data_inicio' as date)  ";
+		$sSQL .= "AND CAST( '$data_final' as date )  ";
+		$sSQL .= "GROUP BY tipo_produto,mes,ano ";
+		$sSQL .= "ORDER BY tipo_produto ASC ";
+		
+		$fat = $this->bd->obtemRegistros($sSQL);
+		//echo "QUERY: " .$sSQL. "<br>";
+		
+		$tabela = array();
+		
+		for($i=0;$i<count($fat);$i++) {
+		
+			if ($fat[$i]["tipo_produto"] == "BL"){
+				$tipo_produto = "Banda-Larga";
+			}else if (trim($fat[$i]["tipo_produto"]) == "D"){
+				$tipo_produto = "Discado";
+			}else if (trim($fat[$i]["tipo_produto"]) == "H"){
+				$tipo_produto = "Hospedagem";
+			}
+			$tabela[   ($tipo_produto) ][   ((int)$fat[$i]["mes"]) ] = $fat[$i]["faturamento"] ;
+			//echo "tabela[".((int)$fat[$i]["dia"])."][".((int)$fat[$i]["mes"]) . "] = " . $fat[$i]["faturamento"] . "<br>\n";
+			//echo "D: " . ((int)$fat[$i]["dia"]) . "<br>\n";
+			//echo "M: " . ((int)$fat[$i]["mes"]) . "<br>\n";
+			//echo "V: " . ((int)$fat[$i]["faturamento"]) . "<br>\n";
+		}
+		
+		/*for($i=1;$i<=12;$i++) {
+			if( !@$tabela[$i] ) {
+				$tabela[$i]=0;
+			}
+			for($x=1;$x<=12;$x++) {
+				if( !@$tabela[$i][$x] ) {
+					$tabela[$i][$x] = 0;
+				}
+			}
+			//echo $tabela[$i]["1"] . " - " . $tabela[$i]["2"] . " - ". $tabela[$i]["3"] . "<br>\n";
+		}*/
+		
+		//ksort($tabela);
+		
+		//echo "<pre>";
+		//	print_r($tabela);
+		//echo "</pre";
+		
+		
+		
+		$this->tpl->atribui("metodo",$metodo);
+		$this->tpl->atribui("titulo",$titulo);
+		$this->tpl->atribui("ano",$ano);
+		$this->tpl->atribui("tabela",$tabela);
+		$this->arquivoTemplate = "relatorio_faturamento_produto.html";
 	
 	
 	}else if ($op == "previsao_faturamento"){

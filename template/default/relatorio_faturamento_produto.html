@@ -1,0 +1,154 @@
+<!-- RELATORIO_FATURAMENTO.HTML -->
+<html>
+<head>
+                    <script language="JavaScript">ready = "yes";</script>
+                    <script>
+{literal}
+var estado=false;
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_showHideLayers() { //v6.0
+  var i,p,v,obj,args=MM_showHideLayers.arguments;
+  for (i=0; i<(args.length-2); i+=3) if ((obj=MM_findObj(args[i]))!=null) { v=args[i+2];
+    if (obj.style) { obj=obj.style; v=(v=='show')?'visible':(v=='hide')?'hidden':v; }
+    obj.visibility=v; }
+}
+var da = (document.all) ? 1 : 0;
+var pr = (window.print) ? 1 : 0;
+var mac = (navigator.userAgent.indexOf("Mac") != -1);
+
+function printPage() {
+  if (pr) // NS4, IE5
+    window.print()
+  else if (da && !mac) // IE4 (Windows)
+       vbPrintPage()
+  else // other browsers
+    alert("Desculpe seu browser não suporta esta função. Por favor utilize a barra de trabalho para imprimir a página.");
+}
+
+if (da && !pr && !mac) with (document) {
+  writeln('<OBJECT ID="WB" WIDTH="0" HEIGHT="0" CLASSID="clsid:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>');
+  writeln('<' + 'SCRIPT LANGUAGE="VBScript">');
+  writeln('Sub window_onunload');
+  writeln('  On Error Resume Next');
+  writeln('  Set WB = nothing');
+  writeln('End Sub');
+  writeln('Sub vbPrintPage');
+  writeln('  OLECMDID_PRINT = 6');
+  writeln('  OLECMDEXECOPT_DONTPROMPTUSER = 1');
+  writeln('  OLECMDEXECOPT_PROMPTUSER = 1');
+  writeln('  On Error Resume Next');
+  writeln('  WB.ExecWB OLECMDID_PRINT, OLECMDEXECOPT_DONTPROMPTUSER');
+  writeln('End Sub');
+  writeln('<' + '/SCRIPT>');
+}
+{/literal}
+</script>
+<title>::.. Virtex Admin - Área de Gerenciamento ..::</title>
+
+<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
+</head>
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td height="100%" align="center" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td align="center" valign="middle"> <h1 align="center">Relat&oacute;rio 
+                    Faturamento por Produto<br>
+                  </h1>
+                  <form name="form1" method="get" action="">
+                    <table width="200" border="0" cellspacing="0" cellpadding="0">
+                      <tr> 
+                        <td width="87"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Escolha 
+                          o ano:</font></td>
+                        <td width="59"><select name="ano" id="select">
+                            <option value="2005" {if $ano == "2005"}selected{/if}>2005</option>
+                            <option value="2006" {if $ano == "2006"}selected{/if}>2006</option>
+                            <option value="2007" {if $ano == "2007"}selected{/if}>2007</option>
+                            <option value="2008" {if $ano == "2008"}selected{/if}>2008</option>
+                          </select></td>
+                        <td width="56"><input type="submit" name="Submit" value="listar"> 
+                          <input name="op" type="hidden" id="op" value="faturamento_prod"> 
+                          <font size="1" face="Verdana, Arial, Helvetica, sans-serif"> 
+                          <input type="hidden" name="metodo" value="1" >
+                          </font></td>
+                      </tr>
+                    </table>
+                  </form>
+                  <p align="center"><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Ano:<strong> 
+                    {$ano}</strong></font></p>
+                  <table width="800" border="0" cellspacing="0" cellpadding="0">
+                    <tr align="center"> 
+                      <td width="100" rowspan="2" align="center" bgcolor="#666666"><font size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong><font color="#FFFFFF">Tipo</font></strong></font></td>
+                      <td colspan="12" bgcolor="#666666"><font color="#FFFFFF" size="2" face="Verdana, Arial, Helvetica, sans-serif"><strong>Meses</strong></font></td>
+                    </tr>
+                    <tr align="center" bgcolor="#f1f1f1"> 
+                      <td width="50" bordercolor="#cccccc" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">JAN</font></td>
+                      <td width="50" bordercolor="#cccccc" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">FEV</font></td>
+                      <td width="50" bordercolor="#cccccc" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">MAR</font></td>
+                      <td width="50" bordercolor="#cccccc" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">ABR</font></td>
+                      <td width="50" bordercolor="#cccccc" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">MAI</font></td>
+                      <td width="50" bordercolor="#cccccc" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">JUN</font></td>
+                      <td width="50" bordercolor="#cccccc" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">JUL</font></td>
+                      <td width="50" bordercolor="#cccccc" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">AGO</font></td>
+                      <td width="50" bordercolor="#cccccc" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">SET</font></td>
+                      <td width="50" bordercolor="#cccccc" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">OUT</font></td>
+                      <td width="50" bordercolor="#cccccc" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">NOV</font></td>
+                      <td width="50" bordercolor="#cccccc" bgcolor="#CCCCCC"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">DEZ</font></td>
+                    </tr>
+	
+
+					{foreach name=hugo key=tipo_produto item=a from=$tabela} 
+                    <tr> 
+                      <td width="100" height="25" align="left" nowrap><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$tipo_produto}</font></td>
+                      <td width="50" height="25" align="right" bordercolor="#cccccc"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.1|string_format:"%.2f"}&nbsp;</font></td>
+                      <td width="50" height="25" align="right" bordercolor="#cccccc"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.2|string_format:"%.2f"}&nbsp;</font></td>
+                      <td width="50" height="25" align="right" bordercolor="#cccccc"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.3|string_format:"%.2f"}&nbsp;</font></td>
+                      <td width="50" height="25" align="right" bordercolor="#cccccc"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.4|string_format:"%.2f"}&nbsp;</font></td>
+                      <td width="50" height="25" align="right" bordercolor="#cccccc"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.5|string_format:"%.2f"}&nbsp;</font></td>
+                      <td width="50" height="25" align="right" bordercolor="#cccccc"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.6|string_format:"%.2f"}&nbsp;</font></td>
+                      <td width="50" height="25" align="right" bordercolor="#cccccc"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.7|string_format:"%.2f"}&nbsp;</font></td>
+                      <td width="50" height="25" align="right" bordercolor="#cccccc"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.8|string_format:"%.2f"}&nbsp;</font></td>
+                      <td width="50" height="25" align="right" bordercolor="#cccccc"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.9|string_format:"%.2f"}&nbsp;</font></td>
+                      <td width="50" height="25" align="right" bordercolor="#cccccc"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.10|string_format:"%.2f"}&nbsp;</font></td>
+                      <td width="50" height="25" align="right" bordercolor="#cccccc"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.11|string_format:"%.2f"}&nbsp;</font></td>
+                      <td width="50" height="25" align="right" bordercolor="#cccccc"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">{$a.12|string_format:"%.2f"}&nbsp;</font></td>
+
+                    </tr>
+					<tr> 
+                      <td colspan=13 bgcolor="#000000"><img src="template/default/menu/spacer.gif" width=100 height=1></td>
+                    </tr>
+					{/foreach} 
+                    
+                  </table>
+				  <br>{$smarty.foreach.hugo.total}<br>
+                  <h2 align="center"><font size="2"> </font> </h2>
+				  <p><a href="javascript:history.go(-1);">Voltar</a></p>
+
+
+					<p id="imprimir" align="center"><a href="javascript:;" onClick="return printPage();">IMPRIMIR</a></p>
+
+					</td>
+              </tr>
+            </table></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+</body>
+
+
+</html>
