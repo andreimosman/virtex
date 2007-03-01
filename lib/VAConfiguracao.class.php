@@ -1,5 +1,8 @@
 <?
 
+//require_once(PATH_LIB."/RedeIP.class.php");
+
+
 class VAConfiguracao extends VirtexAdminWeb {
 
 	public function __construt() {
@@ -3174,12 +3177,12 @@ class VAConfiguracao extends VirtexAdminWeb {
 	
 		for($x=0;$x<count($_subredes);$x++) {
 		
-			if( bin2addr($_subredes[$x]->network) == bin2addr($_rede_inicio->network) ){
+			if( RedeIP::bin2addr($_subredes[$x]->network) == RedeIP::bin2addr($_rede_inicio->network) ){
 				$comecou = true;
 			}
 	
 			if( $comecou ) {
-				$rede = bin2addr($_subredes[$x]->network) . "/". $bits_subredes;
+				$rede = RedeIP::bin2addr($_subredes[$x]->network) . "/". $bits_subredes;
 				$this->cadastraRede($rede,$tipo_rede);
 				$this->vinculaRede($id_nas,$rede);
 				$conta++;
