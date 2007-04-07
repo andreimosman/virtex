@@ -29,6 +29,7 @@ class AdminLogin {
 	 */
 	function __construct($bd=NULL) {
 		$this->bd = $bd;
+		VirtexModelo::init();
 		$this->logout();
 	}
 
@@ -36,18 +37,8 @@ class AdminLogin {
 	 * Verifica usuário e senha
 	 */
 	function login($admin,$senha) {
-		// Pega apenas os usuários vazios
-		$sSQL = "SELECT ";
-		$sSQL .= "   id_admin,admin,senha,nome,email,status, ";
-		$sSQL .= "   CASE WHEN primeiro_login is true THEN 1 ELSE 0 END as primeiro_login ";
-		$sSQL .= "FROM ";
-		$sSQL .= "   adtb_admin ";
-		$sSQL .= "WHERE ";
-		$sSQL .= "   admin ilike '".$admin."' ";
-		$sSQL .= "   AND status = 'A'";
-		
-		
-		$adm = $this->bd->obtemUnicoRegistro($sSQL);
+		$adtb_admin = VirtexModelo::factory("adtb_admin");		
+		$adm = $adtb_admin->obtemUnico( array("admin" => "%:".$admin, "status" => "A") );
 		
 		// Se encontrou o registro
 		if( count($adm) ) {
@@ -109,15 +100,8 @@ class AdminLogin {
 	 * Pega os privilégios do administrador e joga em $this-privilegios.
 	 */
 	function carregaPrivilegios() {
-		$sSQL  = "SELECT ";
-		$sSQL .= "   p.id_priv, p.cod_priv, p.nome, CASE WHEN up.pode_gravar THEN 1 ELSE 0 END as pode_gravar ";
-		$sSQL .= "FROM ";
-		$sSQL .= "   adtb_usuario_privilegio up, adtb_privilegio p ";
-		$sSQL .= "WHERE ";
-		$sSQL .= "   p.id_priv = up.id_priv ";
-		$sSQL .= "   AND up.id_admin = ".$this->id_admin . " ";
-
-		$this->privilegios = $this->bd->obtemRegistros($sSQL);
+		$adtb_usuario_privilegio = VirtexModelo::factory("adtb_usuario_privilegio");
+		$this->privilegios = $adtb_usuario_privilegio->obtemPrivilegiosUsuario($this->id_admin);
 	}
 	
 	/**
@@ -148,7 +132,8 @@ class AdminLogin {
 	function privPodeGravar($cod_priv) {
 		$prv = $this->obtemPrivilegio(trim($cod_priv));
 		if( !$prv ) return false;
-		return( $prv["pode_gravar"] );
+		$retorno = (($prv["pode_gravar"] == 't' || $prv["pode_gravar"] == 1 ) ? true : false);
+		return( $retorno );
 	}
 	
 	/**

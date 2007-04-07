@@ -1,11 +1,55 @@
+{include file='cliente_header.html'}
+{include file=cliente_cobranca_menu.html}
 
-<html>
-<head>
-<title>Untitled Document</title>
-<link href="template/default/estilos1.css" rel="stylesheet" type="text/css">
-</head>
+<table width="700" style="border: solid 1px #000000" cellpading=1 cellspacing=0 align="left">
+	<tr>
+		<td cospan=2 background="template/default/images/tabcliselected.gif">&nbsp;<font color="#000000" face="Arial, Helvetica, sans-serif"><strong>Contrato de {if $tipo=="D"}Acesso Discado{/if}{if $tipo=="BL"}Acesso Banda Larga{/if}{if $tipo=="H"}Hospedagem{/if}</strong></font></td>
+	</tr>
+	<tr>
+		<td width="50%">
+			<!-- Dados do Contrato: INI -->
+			<table width="100%">
+				<tr>
+					<td align="right" width="150"><p><strong>Contratante: </strong></p></td>
+					<td><p>{$cliente.nome_razao}</p></td>
+				</tr>
+				<tr>
+					<td align="right" width="150"><p><strong>Contratação:</strong></p></td>
+					<td><p>{$data_contratacao}</p></td>
+				</tr>
+				<tr>
+					<td align="right" width="150"><p><strong>Vigência:</strong></p></td>
+					<td><p>{$vigencia}</p></td>
+				</tr>
+				<tr>
+					<td align="right" width="150"><p><strong>Renovação:</strong></p></td>
+					<td><p>{$data_renovacao}</p></td>
+				</tr>
+				<tr>
+					<td align="right" width="150"><p><strong>Pagamento:</strong></p></td>
+					<td><p>{if $forma_pagamento=="PRE"}Pré Pago{else}Pós Pago{/if}</p></td>
+				</tr>
+				<tr>
+					<td align="right" width="150"><p><strong>1º vencimento:</strong></p></td>
+					<td><p>{$pri_venc}</p></td>
+				</tr>
 
-<body>
+
+			</table>
+			<!-- Dados do Contrato: FIM -->
+		</td>
+	</tr>
+</table>
+
+
+
+
+
+
+
+
+
+
 <table width="400" border="0" align="center">
   <form nome=formulario method="POST" action="{$smarty.server.PHP_SELF}">
 						<!-- Informações sobre cadastro do contrato -->
@@ -55,25 +99,25 @@
 
 							{if $tipo == "D"}
 								<input type="hidden" name="foneinfo" value="{$foneinfo}">
-								<input type="hidden" name="d_franquia_horas" value="{$d_franquia_horas}">
-								<input type="hidden" name="d_permitir_duplicidade" value="{$d_permitir_duplicidade}">
-								<input type="hidden" name="d_valor_hora_adicional" value="{$d_valor_hora_adicional}">
+								<input type="hidden" name="d_franquia_horas" value="{$produto.franquia_horas}">
+								<input type="hidden" name="d_permitir_duplicidade" value="{$produto.permitir_duplicidade}">
+								<input type="hidden" name="d_valor_hora_adicional" value="{$produto.valor_hora_adicional}">
 							{/if}
 
 							{if $tipo == "H"}
-								<input type="hidden" name="h_dominio" value="{$h_dominio}">
-								<input type="hidden" name="h_franquia_em_mb" value="{$h_franquia_em_mb}">
-								<input type="hidden" name="h_valor_mb_adicional" value="{$h_valor_mb_adicional}">
+								<input type="hidden" name="h_dominio" value="{$produto.dominio}">
+								<input type="hidden" name="h_franquia_em_mb" value="{$produto.franquia_em_mb}">
+								<input type="hidden" name="h_valor_mb_adicional" value="{$produto.valor_mb_adicional}">
 								<input type="hidden" name="tipo_hospedagem" value="{$tipo_hospedagem}">
 								<input type="hidden" name="dominio_hospedagem" value="{$dominio_hospedagem}">
 
 							{/if}
 
 							{if $tipo == "BL"}
-								<input type="hidden" name="bl_banda_upload_kbps" value="{$bl_banda_upload_kbps}">
-								<input type="hidden" name="bl_banda_download_kbps" value="{$bl_banda_download_kbps}">
-								<input type="hidden" name="bl_franquia_trafego_mensal_gb" value="{$bl_franquia_trafego_mensal_gb}">
-								<input type="hidden" name="bl_valor_trafego_adicional_gb" value="{$bl_valor_trafego_adicional_gb}">
+								<input type="hidden" name="bl_banda_upload_kbps" value="{$produto.banda_upload_kbps}">
+								<input type="hidden" name="bl_banda_download_kbps" value="{$produto.banda_download_kbps}">
+								<input type="hidden" name="bl_franquia_trafego_mensal_gb" value="{$produto.franquia_trafego_mensal_gb}">
+								<input type="hidden" name="bl_valor_trafego_adicional_gb" value="{$produto.valor_trafego_adicional_gb}">
 								<input type="hidden" name="redirecionar" value="{$redirecionar}">
 								<input type="hidden" name="endereco_ip" value="{$endereco_ip}">
 							{/if}
@@ -83,103 +127,103 @@
 								<input type="hidden" name="op" value="{$op}">
 								<input type="hidden" name="acao" value="cad">
                   				<!-- informações adicionais sobre cadastro do produto -->
-				 
-    <tr bgcolor="#f5f5f5"> 
+
+    <tr bgcolor="#f5f5f5">
       <td colspan="2" align="center"><font size="+1" face="Arial, Helvetica, sans-serif"><strong>Contrato</strong></font></td>
   </tr>
   <tr>
     <td width="32%"  valign="top">
 		<table border="0" width="350">
 			<tr>
-				
-            <td width="340" colspan="2" bgcolor="#fafafa"><p><font face="Verdana, Arial, Helvetica, sans-serif"><strong>- 
+
+            <td width="340" colspan="2" bgcolor="#fafafa"><p><font face="Verdana, Arial, Helvetica, sans-serif"><strong>-
                 Informa&ccedil;&otilde;es Gerais</strong></font></p></td>
 			</tr>
 			<tr>
-				
-            <td > 
+
+            <td >
               <table width="342" border="0" cellpadding="0" cellspacing="2" dwcopytype="CopyTableRow">
-              <tr> 
+              <tr>
                 <td width="116"><p><strong>Contratante: </strong></p></td>
                 <td width="220"><p>{$info_cliente.nome_razao}</p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td width="116"> <p><strong>Data da contratação:</strong></p></td>
                 <td><p>{$data_contratacao}</p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td width="116"> <p><strong>Data da renovação</strong></p></td>
                 <td><p>{$data_renovacao}</p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td width="116"> <p><strong>Data do 1º vencimento:</strong></p></td>
                 <td><p>{$pri_venc}</p></td>
               </tr>
               <td width="116"> <p><strong>Vigencia</strong></p></td>
               <td><p>{$vigencia}</p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td width="116"> <p><strong>Pagamento:</strong></p></td>
                 <td><p>{$forma_pagamento}</p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td width="116"> <p><strong>Forma de pagamento:</strong></p></td>
                 <td><p>{$info_pagamento.nome_cobranca}</p></td>
               </tr>
-              {if $prorata == true} 
-              <tr> 
+              {if $prorata == true}
+              <tr>
                 <td width="116"> <p><strong>Dias de Pro-Rata</strong></p></td>
                 <td><p>{$dias_prorata}</p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td width="116"> <p><strong>Valor Pro-Rata</strong></p></td>
                 <td><p>{$valor_prorata}</p></td>
               </tr>
-              {/if} {if $tipo_cobranca == 2 } 
-              <tr> 
+              {/if} {if $tipo_cobranca == 2 }
+              <tr>
                 <td width="116"> <p><strong>Data primeiro boleto</strong></p></td>
                 <td><p>{$ini_carne}</p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td width="116"> <p><strong>Data ultimo boleto</strong></p></td>
                 <td><p>{$data_carne}</p></td>
               </tr>
-              {/if} {if $tipo_cobranca == 3} 
-              <tr> 
+              {/if} {if $tipo_cobranca == 3}
+              <tr>
                 <td width="116"> <p><strong>Banco</strong></p></td>
                 <td><p>{$db_banco}</p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td width="116"> <p><strong>Agencia</strong></p></td>
                 <td><p>{$db_agencia}</p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td width="116"> <p><strong>Conta</strong></p></td>
                 <td><p>{$db_conta}</p></td>
               </tr>
-              {/if} {if $tipo_cobranca == 4} 
-              <tr> 
+              {/if} {if $tipo_cobranca == 4}
+              <tr>
                 <td width="116"> <p><strong>Vencimento:</strong></p></td>
                 <td><p>{$cc_vencimento}</p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td width="116"> <p><strong>Operadora</strong></p></td>
-                <td> {if $cc_operadora == "AE"} 
+                <td> {if $cc_operadora == "AE"}
                   <p>American Express</p>
-                  {/if} {if $cc_operadora == "DN"} 
+                  {/if} {if $cc_operadora == "DN"}
                   <p>Dinners</p>
-                  {/if} {if $cc_operadora == "VI"} 
+                  {/if} {if $cc_operadora == "VI"}
                   <p>VISA</p>
-                  {/if} {if $cc_operadora == "MC"} 
+                  {/if} {if $cc_operadora == "MC"}
                   <p>MasterCard</p>
                   {/if}</td>
               </tr>
-              <tr> 
+              <tr>
                 <td width="116"> <p><strong>Número</strong></p></td>
                 <td><p>{$cc_numero}</p></td>
               </tr>
-              {/if} 
-              <tr> 
+              {/if}
+              <tr>
                 <td width="116"> <p><strong>Forma de pagamento:</strong></p></td>
                 <td><p>{$info_pagamento.nome_cobranca}</p></td>
               </tr>
@@ -188,116 +232,120 @@
 			</tr>
 		</table>
 		<table width="200" border="0" cellspacing="1">
-          <tr> 
-            <td bgcolor="#fafafa"> <p><strong><font face="Verdana, Arial, Helvetica, sans-serif">- 
+          <tr>
+            <td bgcolor="#fafafa"> <p><strong><font face="Verdana, Arial, Helvetica, sans-serif">-
                 Informações técnicas</font></strong></p></td>
           </tr>
-          <tr> 
-            <td> {if $tipo == "BL"} 
+          <tr>
+            <td>
+              {if $tipo == "BL"}
               <table width="200" border="0" cellspacing="2" cellpadding="0" bgcolor="#FFFFFF">
-                <tr> 
+                <tr>
                   <td><p><b>NAS:</b></p></td>
-                  <td><p>{$id_nas} - {$nome_nas}</p></td>
+                  <td><p>{$nas.id_nas} - {$nas.nome}</p></td>
                 </tr>
-                <tr> 
+                <tr>
                   <td><p><b>Username:</b></p></td>
                   <td> <p>{$username}</p></td>
                 </tr>
-                <tr> 
+                <tr>
                   <td><p><b>POP:</b></p></td>
-                  <td><p>{$id_pop} - {$nome_pop}</p></td>
+                  <td><p>{$pop.id_pop} - {$pop.nome}</p></td>
                 </tr>
-                <tr> 
+                <tr>
                   <td> <p><b>IP:</b></p></td>
                   <td><p>{if $endereco_ip}{$endereco_ip}{else}IP atribuido automaticamente{/if}</p></td>
                 </tr>
               </table>
-              {/if} {if $tipo|trim == "D"} 
+              {/if}
+              {if $tipo|trim == "D"}
               <table width="200" border="0" cellspacing="2" cellpadding="0" bgcolor="#FFFFFF">
-                <tr> 
+                <tr>
                   <td><p><b>Username:</b></p></td>
                   <td><p>{$username}</p></td>
                 </tr>
-                <tr> 
+                <tr>
                   <td><p><b>Fone:</b></p></td>
                   <td><p>{$foneinfo}</p></td>
                 </tr>
               </table>
-              {/if} {if $tipo|trim == "H"} 
+              {/if}
+              {if $tipo|trim == "H"}
               <table width="200" border="0" cellspacing="2" cellpadding="0" bgcolor="#FFFFFF">
-                <tr> 
+                <tr>
                   <td><p><b>Username:</b></p></td>
                   <td><p>{$username}</p></td>
                 </tr>
-                <tr> 
+                <tr>
                   <td><p><b>Tipo hospedagem:</b></p></td>
                   <td><p>{if $tipo_hospedagem=="D"}Domínio{/if}{if $tipo_hospedagem=="U"}Usuario{/if}</p></td>
                 </tr>
-                <tr> 
+                <tr>
                   <td><p><b>Home:</b></p></td>
-                  {if $tipo_hospedagem=="D"} 
+                  {if $tipo_hospedagem=="D"}
                   <td><p>/mosman/virtex/dados/hospedagem/{$dominio_hospedagem}</p></td>
-                  {/if} {if $tipo_hospedagem=="U"} 
+                  {/if} {if $tipo_hospedagem=="U"}
                   <td><p>/mosman/virtex/dados/hospedagem/USUARIOS/{$username}</p></td>
                   {/if} </tr>
               </table>
-              {/if} </td>
+              {/if}
+            </td>
           </tr>
         </table></td>
     <td  valign="top">
 		<table width="200" border="0">
           <tr valign="top">
-				
-            <td width="396" colspan="2" valign="top" bgcolor="#fafafa"><p><strong><font face="Verdana, Arial, Helvetica, sans-serif">- 
+
+            <td width="396" colspan="2" valign="top" bgcolor="#fafafa"><p><strong><font face="Verdana, Arial, Helvetica, sans-serif">-
                 Produto Contratado</font></strong></p></td>
 			</tr>
 			<td>
 				<table width="200" border="0" cellpadding="0" cellspacing="2" dwcopytype="CopyTableRow">
-              <tr> 
+              <tr>
                 <td width="139"><p><strong>Produto:</strong></p></td>
-                <td width="402"><p>{$info_produto.nome}</p></td>
+                <td width="402"><p>{$produto.nome}</p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td width="139"><p><strong>Tipo:</strong></p></td>
-                <td><p>{if $tipo == "D"}Discado{/if}{if $tipo == "H"}Hospedagem{/if}{if 
+                <td><p>{if $tipo == "D"}Discado{/if}{if $tipo == "H"}Hospedagem{/if}{if
                     $tipo == "BL"}Banda Larga{/if}</p></td>
               </tr>
-              {if $tipo == "D"} 
-              <tr> 
+              {if $tipo == "D"}
+              <tr>
                 <td width="139"><p><strong>Franquia mensal(horas):</strong></p></td>
                 <td><p>{$info_adicional.franquia_horas}</p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td width="139"><p><strong>Valor hora adicional: </strong></p></td>
                 <td><p>{$info_adicional.valor_hora_adicional}</p></td>
               </tr>
-              {/if} {if $tipo == "H"} 
-              <tr> 
+              {/if} {if $tipo == "H"}
+              <tr>
                 <td width="139"><p><strong>Dominio:</strong></p></td>
                 <td><p>{$dominio_hospedagem}</p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td width="139"><p><strong>Franquia em mb:</strong></p></td>
                 <td><p>{$info_adicional.franqua_em_mb}</p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td width="139"><p><strong>Valor franquia adicional(MB):</strong></p></td>
                 <td> <p>{$info_adicional.valor_mb_adicional}</p></td>
               </tr>
-              {/if} {if $tipo == "BL"} 
-              <tr> 
+              {/if} {if $tipo == "BL"}
+              <tr>
                 <td width="139"><p><strong>Franquia mensal(GB): </strong></p></td>
                 <td><p>{$info_adicional.franquia_trafego_mensal_gb}</p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td width="139"><p><strong>Banda Upload: </strong></p></td>
                 <td><p>{$info_adicional.banda_upload_kbps}kbps</p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td width="139"><p><strong>Banda Download:</strong></p></td>
                 <td><p>{$info_adicional.banda_download_kbps}kbps</p></td>
               </tr>
-              <tr> 
+              <tr>
                 <td width="139"><p><strong>Valor adicional franquia(GB):</strong></p></td>
                 <td><p>{$info_adicional.valor_trafego_adicional_gb}</p></td>
               </tr>
@@ -305,32 +353,32 @@
 			</td>
 		</table>
 	    <table width="200" border="0">
-          <tr> 
-            <td width="321" colspan="2" bgcolor="#fafafa"><p><strong><font face="Verdana, Arial, Helvetica, sans-serif">- 
+          <tr>
+            <td width="321" colspan="2" bgcolor="#fafafa"><p><strong><font face="Verdana, Arial, Helvetica, sans-serif">-
                 Valores</font></strong></p></td>
           </tr>
-          <tr> 
+          <tr>
             <td> <table width="200" border="0" cellpadding="0" cellspacing="2" dwcopytype="CopyTableRow">
-                <tr> 
+                <tr>
                   <td width="139"><p><strong>Valor Produto:</strong></p></td>
                   <td width="406"><p>{$valor_contrato}</p></td>
                 </tr>
-                <tr> 
+                <tr>
                   <td width="139"><p><strong>Comodato:</strong></p></td>
-                  <td><p>{if $comodato}Sim({$valor_comodato}) {else}Sem comodato 
+                  <td><p>{if $comodato}Sim({$valor_comodato}) {else}Sem comodato
                       {/if}</p></td>
                 </tr>
-                <tr> 
+                <tr>
                   <td width="139"><p><strong>Taxa de instalação:</strong></p></td>
-                  <td><p>{if $tx_instalacao > 0} {$tx_instalacao} {else} Sem taxa 
+                  <td><p>{if $tx_instalacao > 0} {$tx_instalacao} {else} Sem taxa
                       de instalação {/if}</p></td>
                 </tr>
-                <tr> 
+                <tr>
                   <td width="139"><p><strong>Desconto:</strong></p></td>
-                  <td><p>{if $desconto_promo > 0 && $periodo_desconto > 0} {$desconto_promo} 
+                  <td><p>{if $desconto_promo > 0 && $periodo_desconto > 0} {$desconto_promo}
                       em {$periodo_desconto} parcela(s) {else} Sem Desconto {/if}</p></td>
                 </tr>
-                <tr> 
+                <tr>
                   <td width="139"><p><strong>Valor do Contrato: </strong></p></td>
                   <td><p>{$valor_contrato}</p></td>
                 </tr>
@@ -340,7 +388,7 @@
   </tr>
   <tr>
   	<td colspan="2"  align="center">
-	
+
 					<input type="submit" value="Confirmar »" name="confirmar">
 
 					</form>
@@ -381,23 +429,23 @@
 
 						{if $tipo == "D"}
 							<input type="hidden" name="foneinfo" value="{$foneinfo}">
-							<input type="hidden" name="d_franquia_horas" value="{$d_franquia_horas}">
-							<input type="hidden" name="d_permitir_duplicidade" value="{$d_permitir_duplicidade}">
-							<input type="hidden" name="d_valor_hora_adicional" value="{$d_valor_hora_adicional}">
+							<input type="hidden" name="d_franquia_horas" value="{$produto.franquia_horas}">
+							<input type="hidden" name="d_permitir_duplicidade" value="{$produto.permitir_duplicidade}">
+							<input type="hidden" name="d_valor_hora_adicional" value="{$produto.valor_hora_adicional}">
 						{/if}
 
 						{if $tipo == "H"}
-							<input type="hidden" name="h_dominio" value="{$h_dominio}">
-							<input type="hidden" name="h_franquia_em_mb" value="{$h_franquia_em_mb}">
-							<input type="hidden" name="h_valor_mb_adicional" value="{$h_valor_mb_adicional}">
+							<input type="hidden" name="h_dominio" value="{$produto.dominio}">
+							<input type="hidden" name="h_franquia_em_mb" value="{$produto.franquia_em_mb}">
+							<input type="hidden" name="h_valor_mb_adicional" value="{$produto.valor_mb_adicional}">
 							<input type="hidden" name="dominio_hospedagem" value="{$dominio_hospedagem}">
 						{/if}
 
 						{if $tipo == "BL"}
-							<input type="hidden" name="bl_banda_upload_kbps" value="{$bl_banda_upload_kbps}">
-							<input type="hidden" name="bl_banda_download_kbps" value="{$bl_banda_download_kbps}">
-							<input type="hidden" name="bl_franquia_trafego_mensal_gb" value="{$bl_franquia_trafego_mensal_gb}">
-							<input type="hidden" name="bl_valor_trafego_adicional_gb" value="{$bl_valor_trafego_adicional_gb}">
+							<input type="hidden" name="bl_banda_upload_kbps" value="{$produto.banda_upload_kbps}">
+							<input type="hidden" name="bl_banda_download_kbps" value="{$produto.banda_download_kbps}">
+							<input type="hidden" name="bl_franquia_trafego_mensal_gb" value="{$produto.franquia_trafego_mensal_gb}">
+							<input type="hidden" name="bl_valor_trafego_adicional_gb" value="{$produto.valor_trafego_adicional_gb}">
 						{/if}
 
 
@@ -405,7 +453,7 @@
 							<input type="hidden" name="op" value="{$op}">
 							<input type="hidden" name="acao" value="">
 						<input type="submit" value="« Voltar" name="voltar">
-					
+
 
 	</td>
   </tr>

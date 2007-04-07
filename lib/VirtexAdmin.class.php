@@ -25,6 +25,7 @@ class VirtexAdmin extends MWebApp {
 
 		if($usar_lic) {
 			$this->lic = new VirtexAdminLicenca();
+			$this->tpl->atribui("_licenca",$this->lic->obtemLicenca());
 		} else {
 			$this->lic = null;
 		}
@@ -34,7 +35,7 @@ class VirtexAdmin extends MWebApp {
 		$this->usar_bd = $usar_bd;
 		
 		$this->prefs = null;
-
+		
 		if( @$usar_bd && @$this->cfg->config["DB"]["dsn"] ) {
 			// Instanciar BD;
 			
@@ -47,6 +48,8 @@ class VirtexAdmin extends MWebApp {
 			}
 			
 		}
+		
+		$this->tpl->atribui("op",@$_REQUEST["op"]);
 		
 	}
 

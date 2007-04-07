@@ -1,24 +1,9 @@
-
-<table width="600" border="0" align="center" cellpadding="0" cellspacing="1">
-  <tr>
-    <td align="center"><strong><font size="+2" face="Arial, Helvetica, sans-serif">Cobran&ccedil;a</font></strong></td>
-  </tr>
-  <tr>
-    <td align="CENTER" valign="MIDDLE"><table width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#666666">
-        <tr>
-          <td><table width="600" border="0" cellspacing="1" cellpadding="0">
-              <tr align="CENTER" valign="MIDDLE" bgcolor="#CCCCCC">
-                <td height="30"  width="120"><strong><a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}">Novo 
-                  Contrato</a></strong></td>
-                <td height="30" width="120"><strong><a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&rotina=resumo&tipo_lista=">Resumo</a></strong></td>
-                <td height="30" width="120"><strong><a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&rotina=resumo&tipo_lista=contratos">Contratos</a></strong></td>
-                <td height="30"  width="120"><strong><a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&rotina=resumo&tipo_lista=tudo">Faturas</a></strong></td>
-                <td  width="120"><a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&rotina=carne"><strong>Carn&ecirc;s</strong></a></td>
-              </tr>
-            </table></td>
-        </tr>
-      </table></td>
-  </tr>
-</table>
-
- <br>
+<div id="clientesubtabs">
+	<ul>
+		<li {if $rotina=="contratar"}id="current"{/if}><a href="{$smarty.server.PHP_SELF}?op=cobranca&rotina=contratar&id_cliente={$id_cliente}"><span>Novo Contrato</span></a></li>
+		<li {if (!$rotina || $rotina=="resumo" && !$tipo_lista )}id="current"{/if}><a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&rotina=resumo&tipo_lista="><span>Resumo</span></a></li>
+		<li {if $rotina=="resumo" && $tipo_lista=="contratos"}id="current"{/if}><a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&rotina=resumo&tipo_lista=contratos"><span>Contratos</span></a></li>
+		<li {if $rotina=="resumo" && $tipo_lista=="tudo"}id="current"{/if}><a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&rotina=resumo&tipo_lista=tudo"><span>Faturas</span></a></li>
+		<li {if $rotina=="carne"}id="current"{/if}><a href="{$smarty.server.PHP_SELF}?op=cobranca&id_cliente={$id_cliente}&rotina=carne"><span>Carnês</span></a></li>
+	</ul>
+<div>

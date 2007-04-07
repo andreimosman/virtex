@@ -3,10 +3,18 @@
 class VAClientes extends VirtexAdminWeb {
 
 
+	protected $id_cliente;
+
 
 	public function __construct() {
 		parent::__construct();
-
+		
+		$this->id_cliente = @$_REQUEST["id_cliente"];
+		$this->tpl->atribui("id_cliente",$this->id_cliente);
+		if($this->id_cliente) {
+			$prod_contr = $this->obtemPR($this->id_cliente);
+			$this->tpl->atribui("prod_contr",$prod_contr);
+		}
 	}
 
 	protected function validaFormulario() {
@@ -14,7 +22,7 @@ class VAClientes extends VirtexAdminWeb {
 	   return $erros;
 	}
 	
-	private function specialChars($valor) {
+	protected function specialChars($valor) {
 		if( is_array($valor) ) {
 			while(list($tc,$tv)=each($valor) ) {
 			   $valor[$tc] = $this->specialChars($tv);
@@ -57,7 +65,7 @@ class VAClientes extends VirtexAdminWeb {
 	}
 	
 	
-	private function obtemPR($id_cliente){
+	protected function obtemPR($id_cliente){
 	
 		$sSQL  = "SELECT ";
 		$sSQL .= "pr.tipo ";
@@ -80,8 +88,8 @@ class VAClientes extends VirtexAdminWeb {
 		}
 
 									
-		$this->tpl->atribui("prod_contr",$prod_contr);
-		return;
+		// $this->tpl->atribui("prod_contr",$prod_contr);
+		return $prod_contr;
 	
 	}
 	
@@ -214,6 +222,7 @@ class VAClientes extends VirtexAdminWeb {
 	}
 
 	public function processa($op=null) {
+			$this->tpl->atribui("op",$op);
 
 			  ////PRIVILEGIOS DE LICENÇA
 
@@ -262,7 +271,7 @@ class VAClientes extends VirtexAdminWeb {
 		$id_cliente = @$_REQUEST["id_cliente"];
 		$tipo = @$_REQUEST["tipo"];
 		// Variáveis gerais de template
-		$this->tpl->atribui("op",$op);
+		//$this->tpl->atribui("op",$op);
 		$this->tpl->atribui("id_cliente",$id_cliente);
 		$this->tpl->atribui("tipo",$tipo);
 		
@@ -278,505 +287,31 @@ class VAClientes extends VirtexAdminWeb {
 			$this->tpl->atribui("cliente",$cliente);
 			
 		}
-
-
-		if ($op == "cadastro"){
-				if(( ! $this->privPodeGravar("_CLIENTES") )&&( ! $this->privPodeLer("_CLIENTES") )) {
-					$this->privMSG();
-					return;
-				}			
-				if( ! $this->privPodeLer("_CLIENTES") ) {
-					$this->privMSG();
-					return;
-				}			
 		
-
-			$erros = array();
-
-			$acao = @$_REQUEST["acao"];
-			$id_cliente = @$_REQUEST["id_cliente"];
-			$cpf_cnpj = @$_REQUEST["cpf_cnpj"];
-			//$msg_final = @$_REQUEST["msg_final"];
-
-			$enviando = false;
-
-
-			$reg = array();
-
-			$this->obtemPR($id_cliente);
-
-
-
-
-			if( $acao ) {			
-						if( ! $this->privPodeGravar("_CLIENTES") ) {
-							$this->privMSG();
-							return;
-				}		
-			   // Se ele recebeu o campo ação é pq veio de um submit
-			   $enviando = true;
-			} else {
-				// Se não recebe o campo ação e tem id_cliente é alteração, caso contrário é cadastro.
-				if( $id_cliente ) {
-					$reg = $this->obtemCliente($id_cliente);
-
-					$acao = "alt";
-					$titulo = "Alterar";
-
-				} else {
-					$acao = "cad";
-					$titulo = "Cadastrar";
-				}
-			}
-			
-			if( $enviando ) {
-
-				if( $cpf_cnpj ){
-
-					$tSQL  = "SELECT ";
-					$tSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
-					$tSQL .= "   rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
-					$tSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
-					$tSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, excluido ";
-					$tSQL .= "   ativo,obs, info_cobranca ";
-					$tSQL .= "FROM ";
-					$tSQL .= "   cltb_cliente ";
-					$tSQL .= "WHERE ";
-					$tSQL .= "   cpf_cnpj = '$cpf_cnpj' AND excluido = 'f'";
-					
-					if( $acao == "alt" ) {
-					   $tSQL .= "   AND id_cliente != '". $id_cliente ."' ";
-					}
-					  $checa = null;
-					//$checa = $this->bd->obtemUnicoRegistro($tSQL);
-					if($checa){
-					
-					$erros[] = "CPF/CNPJ cadastrado para outro cliente.";
-					
-					// Atribui os campos
-					$this->tpl->atribui("id_cliente",@$_REQUEST["id_cliente"]);
-					$this->tpl->atribui("data_cadastro",@$_REQUEST["data_cadastro"]);
-					$this->tpl->atribui("nome_razao",@$_REQUEST["nome_razao"]);// pega a info do db e atribui ao campo correspon do form
-					$this->tpl->atribui("tipo_pessoa",@$_REQUEST["tipo_pessoa"]);
-					$this->tpl->atribui("rg_inscr",@$_REQUEST["rg_inscr"]);
-					$this->tpl->atribui("rg_expedicao",@$_REQUEST["rg_expedicao"]);
-					$this->tpl->atribui("cpf_cnpj",@$_REQUEST["cpf_cnpj"]);
-					$this->tpl->atribui("email",@$_REQUEST["email"]);
-					$this->tpl->atribui("endereco",@$_REQUEST["endereco"]);
-					$this->tpl->atribui("complemento",@$_REQUEST["complemento"]);
-					$this->tpl->atribui("id_city",@$_REQUEST["id_cidade"]);
-					$this->tpl->atribui("cidade",@$_REQUEST["cidade"]);
-					$this->tpl->atribui("estado",@$_REQUEST["estado"]);
-					$this->tpl->atribui("cep",@$_REQUEST["cep"]);
-					$this->tpl->atribui("bairro",@$_REQUEST["bairro"]);
-					$this->tpl->atribui("fone_comercial",@$_REQUEST["fone_comercial"]);
-					$this->tpl->atribui("fone_residencial",@$_REQUEST["fone_residencial"]);
-					$this->tpl->atribui("fone_celular",@$_REQUEST["fone_celular"]);
-					$this->tpl->atribui("contato",@$_REQUEST["contato"]);
-					$this->tpl->atribui("banco",@$_REQUEST["banco"]);
-					$this->tpl->atribui("conta_corrente",@$_REQUEST["conta_corrente"]);
-					$this->tpl->atribui("agencia",@$_REQUEST["agencia"]);
-					$this->tpl->atribui("dia_pagamento",@$_REQUEST["dia_pagamento"]);
-					$this->tpl->atribui("ativo",@$_REQUEST["ativo"]);
-		        	$this->tpl->atribui("obs",@$_REQUEST["obs"]);
-					
-					}
-					
-				}
-				
-				if( !count($erros) ) {
-				   // Grava no banco.
-					if( $acao == "cad" ) {
-				   		// CADASTRO
-				   		
-						$msg_final = "Cliente Cadastrado com sucesso!";
-				   		
-						$id_cliente = $this->bd->proximoID("clsq_id_cliente");
-
-					
-						$sSQL  = "INSERT INTO ";
-						$sSQL .= "   cltb_cliente ( ";
-						$sSQL .= "      id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
-						$sSQL .= "      rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
-						$sSQL .= "      cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
-						$sSQL .= "      fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
-						$sSQL .= "      ativo,obs, info_cobranca ) ";
-						$sSQL .= "   VALUES (";
-						$sSQL .= "     '" . $this->bd->escape($id_cliente) . "', ";
-						$sSQL .= "     now(), ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["nome_razao"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["tipo_pessoa"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["rg_inscr"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["rg_expedicao"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["cpf_cnpj"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["email"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["endereco"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["complemento"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["id_cidade"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["cidade"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["estado"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["cep"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["bairro"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["fone_comercial"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["fone_residencial"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["fone_celular"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["contato"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["banco"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["conta_corrente"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["agencia"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["dia_pagamento"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["ativo"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["obs"]) . "', ";
-						$sSQL .= "     '" . $this->bd->escape(@$_REQUEST["info_cobranca"]) . "' ";
-						$sSQL .= "     )";
-					
-					
-					
-					} else {
-					   // ALTERACAO
-						$msg_final = "Cliente Alterado com sucesso!";
-
-
-						$sSQL  = "UPDATE ";
-						$sSQL .= "   cltb_cliente ";
-						$sSQL .= "SET ";
-						$sSQL .= "   nome_razao = '" . $this->bd->escape(@$_REQUEST["nome_razao"]) . "', ";
-						$sSQL .= "   tipo_pessoa = '" . $this->bd->escape(@$_REQUEST["tipo_pessoa"]) . "', ";
-						$sSQL .= "   rg_inscr = '" . $this->bd->escape(@$_REQUEST["rg_inscr"]) . "', ";
-						$sSQL .= "   rg_expedicao = '" . $this->bd->escape(@$_REQUEST["rg_expedicao"]) . "', ";
-						$sSQL .= "   cpf_cnpj = '" . $this->bd->escape(@$_REQUEST["cpf_cnpj"]) . "', ";
-						$sSQL .= "   email = '" . $this->bd->escape(@$_REQUEST["email"]) . "', ";
-						$sSQL .= "   endereco = '" . $this->bd->escape(@$_REQUEST["endereco"]) . "', ";
-						$sSQL .= "   complemento = '" . $this->bd->escape(@$_REQUEST["complemento"]) . "', ";
-						$sSQL .= "   id_cidade = '" . $this->bd->escape(@$_REQUEST["id_cidade"]) . "', ";
-						$sSQL .= "   cidade = '" . $this->bd->escape(@$_REQUEST["cidade"]) . "', ";
-						$sSQL .= "   estado = '" . $this->bd->escape(@$_REQUEST["estado"]) . "', ";
-						$sSQL .= "   cep = '" . $this->bd->escape(@$_REQUEST["cep"]) . "', ";
-						$sSQL .= "   bairro = '" . $this->bd->escape(@$_REQUEST["bairro"]) . "', ";
-						$sSQL .= "   fone_comercial = '" . $this->bd->escape(@$_REQUEST["fone_comercial"]) . "', ";
-						$sSQL .= "   fone_residencial = '" . $this->bd->escape(@$_REQUEST["fone_residencial"]) . "', ";
-						$sSQL .= "   fone_celular = '" . $this->bd->escape(@$_REQUEST["fone_celular"]) . "', ";
-						$sSQL .= "   contato = '" . $this->bd->escape(@$_REQUEST["contato"]) . "', ";
-						$sSQL .= "   banco = '" . $this->bd->escape(@$_REQUEST["banco"]) . "', ";
-						$sSQL .= "   conta_corrente = '" . $this->bd->escape(@$_REQUEST["conta_corrente"]) . "', ";
-						$sSQL .= "   agencia = '" . $this->bd->escape(@$_REQUEST["agencia"]) . "', ";
-						$sSQL .= "   dia_pagamento = '" . $this->bd->escape(@$_REQUEST["dia_pagamento"]) . "', ";
-						$sSQL .= "   ativo = '" . $this->bd->escape(@$_REQUEST["ativo"]) . "', ";
-						$sSQL .= "   obs = '" . $this->bd->escape(@$_REQUEST["obs"]) . "', ";
-						$sSQL .= "   info_cobranca = '" . $this->bd->escape(@$_REQUEST["info_cobranca"]) . "' ";
-						$sSQL .= "WHERE ";
-						$sSQL .= "   id_cliente = '" . $this->bd->escape(@$_REQUEST["id_cliente"]) . "' ";  // se idcliente for =  ao passado.
-						
-						
-						
-
-
-					}
-					//////////echo "$sSQL";
-					$this->bd->consulta($sSQL);  
-
-					//if( $this->bd->obtemErro() != MDATABASE_OK ) {
-					//	////////echo "ERRO: " . $this->bd->obtemMensagemErro() , "<br>\n";
-					//	////////echo "QUERY: " . $sSQL . "<br>\n";
-					//
-					//}
-
-
-					// Exibir mensagem de cadastro executado com sucesso e jogar pra página de listagem.
-					$this->tpl->atribui("mensagem",$msg_final); 
-					$this->tpl->atribui("url",$_SERVER["PHP_SELF"] . "?op=cadastro&id_cliente=$id_cliente");
-					$this->tpl->atribui("target","_top");
-
-					$this->arquivoTemplate = "msgredirect.html";
-					
-					
-					// cai fora da função (ou seja, deixa de processar o resto do aplicativo: a parte de exibicao da tela);
-					return;
-				}else{
-				
-				//$erros[] = "CPF/CNPJ cadastrado para outro cliente.";
-				
-				}
-				
-			}
-			
-			
-			// Pegar lista de cidades que o provedor opera.
-			
-				$eSQL  = "SELECT ";
-				$eSQL .= "   id_cidade, uf, cidade, disponivel ";
-				$eSQL .= "FROM cftb_cidade ";
-				$eSQL .= "WHERE disponivel = 't' ";
-				$eSQL .= "ORDER BY cidade ASC";
-
-				$cidades_disponiveis = $this->bd->obtemRegistros($eSQL);
-				
-				$this->tpl->atribui("cidades_disponiveis",$cidades_disponiveis);
-			
-				
-				
-				//////////echo $erros;
-			if ($acao == "cad"){
-				$titulo = "Cadastrar";
-			}else if ($acao == "alt"){
-				$titulo = "Alterar";
-			}
-			
-			
-			
-			
-			// Atribui a variável de erro no template.
-			$this->tpl->atribui("erros",$erros);
-			$this->tpl->atribui("mensagem",$erros);
-			$this->tpl->atribui("acao",$acao);
-			$this->tpl->atribui("op",$op);
-			
-			// Atribui as listas
-			//global $_LS_ESTADOS;
-			//$this->tpl->atribui("lista_estados",$_LS_ESTADOS);
-			
-			global $_LS_TP_PESSOA;
-			$this->tpl->atribui("lista_tp_pessoa",$_LS_TP_PESSOA); //lista_tp_pessoa recebe os dados do array LS_TP_PESSOA(status.defs.php) para mostrar do dropdown.
-			
-			global $_LS_ST_CLIENTE;
-			$this->tpl->atribui("lista_ativo",$_LS_ST_CLIENTE);
-
-			global $_LS_DIA_PGTO;
-			$this->tpl->atribui("lista_dia_pagamento",$_LS_DIA_PGTO);
-
-			// Atribui os campos
-		        $this->tpl->atribui("id_cliente",@$reg["id_cliente"]);
-		        $this->tpl->atribui("data_cadastro",@$reg["data_cadastro"]);
-		        $this->tpl->atribui("nome_razao",@$reg["nome_razao"]);// pega a info do db e atribui ao campo correspon do form
-		        $this->tpl->atribui("tipo_pessoa",@$reg["tipo_pessoa"]);
-		        $this->tpl->atribui("rg_inscr",@$reg["rg_inscr"]);
-		        $this->tpl->atribui("rg_expedicao",@$reg["rg_expedicao"]);
-		        $this->tpl->atribui("cpf_cnpj",@$reg["cpf_cnpj"]);
-		        $this->tpl->atribui("email",@$reg["email"]);
-		        $this->tpl->atribui("endereco",@$reg["endereco"]);
-		        $this->tpl->atribui("complemento",@$reg["complemento"]);
-		        $this->tpl->atribui("id_city",@$reg["id_cidade"]);
-		        $this->tpl->atribui("cidade",@$reg["cidade"]);
-		        $this->tpl->atribui("estado",@$reg["estado"]);
-		        $this->tpl->atribui("cep",@$reg["cep"]);
-		        $this->tpl->atribui("bairro",@$reg["bairro"]);
-		        $this->tpl->atribui("fone_comercial",@$reg["fone_comercial"]);
-		        $this->tpl->atribui("fone_residencial",@$reg["fone_residencial"]);
-		        $this->tpl->atribui("fone_celular",@$reg["fone_celular"]);			
-		        $this->tpl->atribui("contato",@$reg["contato"]);			
-		        $this->tpl->atribui("banco",@$reg["banco"]);
-		        $this->tpl->atribui("conta_corrente",@$reg["conta_corrente"]);			
-		        $this->tpl->atribui("agencia",@$reg["agencia"]);			
-		        $this->tpl->atribui("dia_pagamento",@$reg["dia_pagamento"]);			
-		        $this->tpl->atribui("ativo",@$reg["ativo"]);			
-		        $this->tpl->atribui("obs",@$reg["obs"]);
-		        $this->tpl->atribui("info_cobranca",@$reg["info_cobranca"]);
-		        
-		        $this->tpl->atribui("titulo",@$titulo);// para que no clientes_cadastro.html a variavel do smart titulo consiga pegar o que foi definido no $titulo.
-
-
-			
-			
-			// Seta as variáveis do template.
-			$this->arquivoTemplate = "clientes_cadastro.html";
-			
-		} else if ( $op == "pesquisa" ){
-				
-				if( ! $this->privPodeLer("_CLIENTES_FICHA") ) {
-							$this->privMSG();
-							return;
-			   }
-				if (( ! $this->privPodeGravar("_CLIENTES_FICHA"))&&( ! $this->privPodeLer("_CLIENTES_FICHA") )) {
-							return;
-				}		
+		if ($op == "cadastro") {
+				$tela = new VAClientesCadastro();
+				$tela->processa($op);
+				$tela->exibe();
+		} else if ( $op == "pesquisa" ) {
+				$tela = new VAClientesPesquisa();
+				$tela->processa($op);
+				$tela->exibe();
 		
-
-				$erros = array();
-				
-				$texto_pesquisa = @$_REQUEST['texto_pesquisa'];
-				$tipo_pesquisa = @$_REQUEST['tipo_pesquisa'];
-				$a = @$_REQUEST['a'];
-				$retorno = @$_REQUEST['retorno'];
-				
-				if( $retorno == "XML" ) {
-					// Retorno em XML para utilização com ajax
-					$this->arquivoTemplate = "clientes_pesquisa.xml";
-					header("Content-type: text/xml");
-				} else {
-					$this->arquivoTemplate = "clientes_pesquisa.html";
-				}
-
-				$texto_pesquisa = trim($texto_pesquisa);
-
-
-				$where = "";
-
-
-				if(!$tipo_pesquisa){
-					$tipo_pesquisa = "NOME";
-					
-					
-					//select dos ultimos cadastrados
-					$aSQL  = "SELECT ";
-					$aSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
-					$aSQL .= "   rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
-					$aSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
-					$aSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
-					$aSQL .= "   ativo,obs, info_cobranca  ";
-					$aSQL .= "FROM cltb_cliente ";
-					$aSQL .= "WHERE excluido = 'f' ";
-					$aSQL .= "ORDER BY id_cliente DESC LIMIT (10)";		
-					
-					$clientes = $this->bd->obtemRegistros($aSQL);
-					//echo "cliente: $aSQL<br>";
-				
-				}else{
-				
-					if ($tipo_pesquisa == "NOME" || $tipo_pesquisa == "DOCTOS"){
-
-						$sSQL  = "SELECT ";
-						$sSQL .= "   id_cliente, data_cadastro, nome_razao, tipo_pessoa, ";
-						$sSQL .= "   rg_inscr, rg_expedicao, cpf_cnpj, email, endereco, complemento, id_cidade, ";
-						$sSQL .= "   cidade, estado, cep, bairro, fone_comercial, fone_residencial, ";
-						$sSQL .= "   fone_celular, contato, banco, conta_corrente, agencia, dia_pagamento, ";
-						$sSQL .= "   ativo,obs, info_cobranca ";
-						$sSQL .= "FROM cltb_cliente ";
-						//$sSQL .= "WHERE $campo = '$campo_pesquisa' ";
-						$sSQL .= "WHERE ";
-						
-
-						switch($tipo_pesquisa) {
-
-						   case 'NOME':
-							  $sSQL .= "   nome_razao ilike '%$texto_pesquisa%' ";
-							  $sSQL .= " AND excluido = 'f' ";
-							  break;
-						   case 'DOCTOS':
-							  $sSQL .= "   cpf_cnpj = '" . $this->bd->escape(@$_REQUEST["texto_pesquisa"]) . "' AND excluido = 'f'  OR rg_inscr = '" . $this->bd->escape(@$_REQUEST["texto_pesquisa"]) . "' AND excluido = 'f' ";
-							  break;
-						   case 'cod':
-							  $sSQL .= "   id_cliente = '" . $this->bd->escape(@$_REQUEST["texto_pesquisa"]) . "' ";
-							  $sSQL .= " AND excluido = 'f' ";
-							  break;
-						}
-						
-						
-						$sSQL .= " ORDER BY nome_razao ASC ";
-
-						$clientes = $this->bd->obtemRegistros($sSQL);
-
-											
-					} else if ($tipo_pesquisa == "CONTA" || $tipo_pesquisa == "EMAIL"){
-					
-						if( $tipo_pesquisa == "CONTA" ) {
-							$tp = "CONTA";
-							if( preg_match( '/([0-9A-Fa-f]{1,2}[:\-]){5}([0-9A-Fa-f]{1,2})/', $texto_pesquisa) ) {
-								// ////////echo "MAC<br>\n";
-								$tp = "MAC";
-						    }
-						               
-						    if( preg_match( '/([0-9]\.){1,3}[0-9]{1,3}(\/[0-9]{1,2})*$/', $texto_pesquisa ) ) {
-						    	$tp = "IP";
-						    	
-						    	@list($endIP,$bitsREDE) = explode("/",$texto_pesquisa);
-						    	
-						    	$qr = $bitsREDE ? $texto_pesquisa : $r = $endIP . "/24";
-						    	$r = new RedeIP($qr);
-
-						    	if( ! $r->isValid() ) {
-						    	   $erros[] = "O endereço IP entrado não é válido.";
-						    	} else {
-						    	   if( $bitsREDE ) { 
-						    	      $texto_pesquisa = $r->obtemRede() . "/" . $bitsREDE;
-						    	   }
-						    	}
-						    }
-						               
-            			} else {
-            				$tp = 'EMAIL';
-            			}
-            			
-
-            			if( count($erros) ) {
-            				$clientes = array();
-            			} else {
-
-							@list($usr,$dom) = explode("@",$texto_pesquisa);
-
-							$campos_cliente = " cl.id_cliente,cl.nome_razao ";
-							$campos_conta   = " cn.username,cn.dominio,cn.tipo_conta,cn.id_conta ";
-
-							$from  = "	cntb_conta cn LEFT OUTER JOIN cntb_conta_bandalarga cbl USING(username,dominio,tipo_conta),  ";
-							$from .= "	cbtb_cliente_produto cp, cltb_cliente cl ";
-							//$sSQLBase .= "WHERE ";
-
-							$whereJoin = "	cn.id_cliente_produto = cp.id_cliente_produto ";
-							$whereJoin .= "	AND cp.id_cliente = cl.id_cliente ";
-							$whereJoin .= " AND cl.excluido = 'f' ";
-
-
-							$whereFiltro = "";
-							switch($tp) {
-
-								case 'EMAIL':
-									$whereFiltro .= "	cn.dominio = '$dom' AND ";
-
-								case 'CONTA':
-
-									$whereFiltro .= "	cn.username ilike '$usr' ";
-
-									break;
-								case 'MAC':
-									$whereFiltro .= "	cbl.mac = '$texto_pesquisa' ";
-
-									break;
-
-								case 'IP':
-									$whereFiltro .= "  ( ";
-
-									if( strstr($texto_pesquisa,"/") ) {
-									   // Rede
-									   $whereFiltro .= " cbl.rede = '$texto_pesquisa' OR cbl.rede << '$texto_pesquisa' OR cbl.ipaddr << '$texto_pesquisa' ";
-									} else {
-									   // IP
-									   $whereFiltro .= " cbl.rede >> '$texto_pesquisa' OR cbl.ipaddr = '$texto_pesquisa' ";
-
-									}
-
-									$whereFiltro .= " ) ";
-
-									break;
-
-							}
-
-							$clientes = $this->bd->obtemRegistros("SELECT $campos_cliente FROM $from WHERE $whereJoin AND $whereFiltro GROUP BY $campos_cliente " );
-							///echo "SELECT $campos_cliente FROM $from WHERE $whereJoin AND $whereFiltro GROUP BY $campos_cliente ";
-
-							// Pega as contas
-							for( $i=0;$i<count($clientes);$i++ ) {
-							   $sSQL = "SELECT $campos_conta FROM $from WHERE $whereJoin AND $whereFiltro AND cl.id_cliente = '".$clientes[$i]["id_cliente"] ."' GROUP BY $campos_conta ";
-							   $clientes[$i]["contas"] = $this->bd->obtemRegistros( $sSQL );
-							}
-						
-						}
-						
-					}
-					
-					
-				}
-				
-
-				$clientes = $this->specialChars($clientes);
-				
-				$this->tpl->atribui("erros",$erros);
-				$this->tpl->atribui("clientes",$clientes);
-										
-				$this->tpl->atribui("tipo_pesquisa",$tipo_pesquisa);
-				$this->tpl->atribui("texto_pesquisa",$texto_pesquisa);
+		//} else if ( $op == "contrato" ) {
+			// NEW!!!
+		
 
 		} else if ($op == "cobranca") {
-
-			require_once("cobranca_teste.php");
+			
+			$tela = new VAClientesCobranca();
+			$tela->processa($op);
+			$tela->exibe();
+			
+			//return;
+			
+			
+			
+			//require_once("cobranca_teste.php");
 
 		
 		} else if ($op == "produto") {
@@ -896,7 +431,8 @@ class VAClientes extends VirtexAdminWeb {
 			
 			
 			
-			$this->obtemPR($id_cliente);
+			//$prod_contr = $this->obtemPR($id_cliente);
+			//$this->tpl->atribui("prod_contr",$prod_contr);
 
 
 			
@@ -1001,7 +537,8 @@ class VAClientes extends VirtexAdminWeb {
 			$id_cliente = @$_REQUEST["id_cliente"];
 			$conta_mestre = @$_REQUEST["conta_mestre"];
 
-			$this->obtemPR($id_cliente);
+			//$prod_contr = $this->obtemPR($id_cliente);
+			//$this->tpl->abribui("prod_contr",$prod_contr);
 			
 			
 			$bnSQL  = " SELECT n.infoserver  " ;
@@ -1193,7 +730,8 @@ class VAClientes extends VirtexAdminWeb {
 					
 					
 					
-					$this->obtemPR($id_cliente);
+					//$prod_contr = $this->obtemPR($id_cliente);
+					//$this->tpl->atribui("prod_contr",$prod_contr);
 
 					
 					//$sSQL  = "SELECT cp.id_produto FROM cbtb_cliente_produto cp, cntb_conta cn WHERE ";
@@ -3659,7 +3197,8 @@ class VAClientes extends VirtexAdminWeb {
 			$rotina = @$_REQUEST["rotina"];
 			$id_cliente_produto = @$_REQUEST["id_cliente_produto"];
 			$id_cliente = @$_REQUEST["id_cliente"];
-			$this->obtemPR($id_cliente);
+			//$prod_contr = $this->obtemPR($id_cliente);
+			//$this->tpl->atribui("prod_contr",$prod_contr);
 
 			$sSQL = "SELECT * FROM cbtb_contrato WHERE id_cliente_produto = '$id_cliente_produto'";
 			$contr = $this->bd->obtemUnicoRegistro($sSQL);

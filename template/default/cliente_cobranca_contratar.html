@@ -1,9 +1,10 @@
+
 {literal}
  <!-- cliente_cobranca_contratar.html -->
 <script type="text/javascript" src="template/default/ajax.js"></script>
 <script type="text/javascript" src="template/default/ajax_validacoes.js"></script>
 <script type="text/javascript" src="template/default/formatar_text.js"></script>
- <script language="JavaScript" type="text/JavaScript">
+<script language="JavaScript" type="text/JavaScript">
 <!--
 function MM_reloadPage(init) {  //reloads the window if Nav4 resized
   if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
@@ -108,10 +109,15 @@ function preencheDadosProduto(id_produto) {
 
 {/literal}
 
-// frmContratacaos
+// frmContratacao
 var fD;
 var fBL;
 var fH;
+
+// frmFormaPagto
+var fFP_Carne;	// formaPagCarne
+var fFP_Banco;	// formaPagBanco
+var fFP_Cartao;	// formaPagCartao
 
 
 // ultimo id_produto selecionado
@@ -119,6 +125,52 @@ var id_produto_saved = '{$id_produto}';
 //window.alert(id_produto_saved);
 
 {literal}
+
+function alteraTipoCobranca() {
+	var t = document.getElementById("tformadados");
+
+	var frm = document.frmContratacao;
+
+	if( frm.tipo_cobranca.value == "1" ) { // Boleto
+		t.innerHTML="&nbsp";
+
+	} else if(frm.tipo_cobranca.value == "2") { // Carnê
+		t.innerHTML = fFP_Carne;
+		var frm = document.frmContratacao;
+		calculaDataCarne();
+		frm.data_carne.disabled=false;
+		frm.ini_carne.disabled=false;
+		change("ini_carne","enabled");
+		change("data_carne","enabled");
+
+	} else if(frm.tipo_cobranca.value == "3") { // deposito
+		t.innerHTML = fFP_Banco;
+		var frm = document.frmContratacao;
+
+		frm.db_banco.disabled=false;
+		frm.db_conta.disabled=false;
+		frm.db_agencia.disabled=false;
+		change("db_banco","enabled");
+		change("db_agencia","enabled");
+		change("db_conta","enabled");
+
+
+	} else if(frm.tipo_cobranca.value == "4") { // cartao
+		t.innerHTML = fFP_Cartao;
+		var frm = document.frmContratacao;
+
+		frm.cc_vencimento.disabled=false;
+		frm.cc_numero.disabled=false;
+		frm.cc_operadora.disabled=false;
+
+		change("cc_vencimento","enabled");
+		change("cc_numero","enabled");
+		change("cc_operadora","enabled");
+
+
+	}
+
+}
 
 function alteraTipo() {
 	var frm = document.frmContratacao;
@@ -183,36 +235,133 @@ function alteraTipo() {
 			}
 		}
 	}
+
+	verificaProdutoCortesia(frm.id_produto.value,lista);
+
 }
 ///////////////////////////////////////////////////////
 
+
+function verificaProdutoCortesia(id_produto,lista) {
+	var frm = document.frmContratacao;
+
+	if( lista != null ) {
+		for(i=0;i<lista.length;i++) {
+			if( lista[i][0] == id_produto ) {
+				// Achou o produto, verifica o valor do produto
+				if( lista[i][2] > 0 ) {
+					// Valor do produto zerado
+					// window.alert("Produto com valor diferente de zero");
+
+					frm.desconto_promo.value = "";
+					frm.desconto_promo.disabled=false;
+					change("desconto_promo","enabled");
+
+					frm.periodo_desconto.value = "";
+					frm.periodo_desconto.disabled = false;
+					change("periodo_desconto","enabled");
+
+					frm.tx_instalacao.value = "";
+					frm.tx_instalacao.disabled = false;
+					change("tx_instalacao","enabled");
+
+					frm.comodato.checked=false;
+					frm.comodato.disabled=false;
+					//change("comodato","enabled");
+
+					frm.valor_comodato.value="";
+					frm.valor_comodato.disabled=false;
+					change("valor_comodato","enabled");
+
+					frm.pri_venc.disabled=false;
+					change("pri_venc","enabled");
+
+					frm.dia_vencimento.disabled=false;
+					change("dia_vencimento", "enabled");
+
+					frm.carencia_pagamento.disabled=false;
+					change("carencia_pagamento","enabled");
+
+					frm.hoje.disabled=false;
+
+					return true;
+				}
+			}
+		}
+	}
+
+	frm.desconto_promo.value = "";
+	frm.desconto_promo.disabled=true;
+	change("desconto_promo","disabled");
+
+	frm.periodo_desconto.value = "";
+	frm.periodo_desconto.disabled = true;
+	change("periodo_desconto","disabled");
+
+	frm.tx_instalacao.value = "";
+	frm.tx_instalacao.disabled = true;
+	change("tx_instalacao","disabled");
+
+	frm.comodato.checked=false;
+	frm.comodato.disabled=true;
+	//change("comodato","disabled");
+
+	frm.valor_comodato.value="";
+	frm.valor_comodato.disabled=true;
+	change("valor_comodato","disabled");
+
+	frm.pri_venc.disabled=true;
+	change("pri_venc","disabled");
+
+	frm.dia_vencimento.disabled=true;
+	change("dia_vencimento", "disabled");
+
+	frm.carencia_pagamento.disabled=true;
+	change("carencia_pagamento","disabled");
+
+	frm.hoje.disabled=true;
+
+	// window.alert("Produto com valor zero");
+	return false;
+}
 
 function alteraProduto() {
 	var frm = document.frmContratacao;
 	prod = frm.id_produto;
 	id_produto_saved = prod.value;
 
-	// Preenche os dados com base no produto.
-	preencheDadosProduto(id_produto_saved)
-	if(frm.valor_comodato > "0.00" && frm.id_produto.value != "" && frm.valor_comodato != "" ){
-		frm.comodato.checked=true;
+	// Verifica os campos de cobrança (desabilitados para produtos cortesia)
+	lista = (frm.tipo.value == "BL" ? lista_bandalarga : (frm.tipo.value == "D" ? lista_discado : (frm.tipo.value == "H" ? lista_hospedagem : null)));
+	if( verificaProdutoCortesia(frm.id_produto.value,lista) ) {
+		// Preenche os dados com base no produto.
+		preencheDadosProduto(id_produto_saved)
+		if(frm.valor_comodato > "0.00" && frm.id_produto.value != "" && frm.valor_comodato != "" ){
+			frm.comodato.checked=true;
+		}
+
+		if (frm.valor_comodato.value == "0.00" || frm.valor_comodato.value == ""){
+			frm.valor_comodato.value = "";
+			frm.comodato.checked=false;
+		}
+
+		if (frm.id_produto.value == ""){
+			frm.desconto_promo.value = "";
+			frm.periodo_desconto.value = "";
+			frm.tx_instalacao.value = "";
+			frm.comodato.checked=false;
+			frm.comodato.disabled=true;
+			frm.valor_comodato.value="";
+		}
 	}
 
-	if (frm.valor_comodato.value == "0.00" || frm.valor_comodato.value == ""){
 
-		frm.valor_comodato.value = "";
-		frm.comodato.checked=false;
 
-	}
 
-	if (frm.id_produto.value == ""){
-	frm.desconto_promo.value = "";
-	frm.periodo_desconto.value = "";
-	frm.tx_instalacao.value = "";
-	frm.comodato.checked=false;
-	frm.comodato.disabled=true;
-	frm.valor_comodato.value="";
-	}
+
+	// Verifica o valor do produto
+
+
+
 	//window.alert(id_produto_saved);
 
 }
@@ -221,10 +370,6 @@ function alteraProduto() {
 function init() {
 
 	var frm = document.frmContratacao;
-	frm.ini_carne.disabled=true;
-	frm.data_carne.disabled=true;
-	change("ini_carne","disabled");
-	change("data_carne","disabled");
 
 	// frmContratacao de Discado;
 	var o = document.getElementById("formD")
@@ -241,6 +386,21 @@ function init() {
 	fH=o.outerHTML;
 	o.outerHTML="";
 
+
+	// forma de pagamento
+	var o = document.getElementById("formaPagCarne");
+	fFP_Carne=o.outerHTML;
+	o.outerHTML="";
+
+	var o = document.getElementById("formaPagBanco");
+	fFP_Banco=o.outerHTML;
+	o.outerHTML="";
+
+	var o = document.getElementById("formaPagCartao");
+	fFP_Cartao=o.outerHTML;
+	o.outerHTML="";
+
+
 	frm.valor_comodato.disabled=true;
 	change("valor_comodato","disabled");
 
@@ -253,98 +413,16 @@ function init() {
 		change("valor_comodato","disabled");
 	}
 
-
 	alteraTipo();
 	alteraProduto();
+	alteraTipoCobranca();
 
-		MM_showHideLayers('formaPag','','hide');
-		MM_showHideLayers('formaPagBanco','','hide');
-		MM_showHideLayers('formaPagCartao','','hide');
 }
 
 
 
 function validaUsername(user) {
 	return true;
-}
-
-function checaFormaCobranca(){
-	var frm = document.frmContratacao;
-	var msg;
-
-	frm.data_carne.disabled=true;
-	frm.ini_carne.disabled=true;
-	change("ini_carne","disabled");
-	change("data_carne","disabled");
-
-	frm.cc_vencimento.disabled=true;
-	frm.cc_numero.disabled=true;
-	frm.cc_operadora.disabled=true;
-	change("cc_vencimento","disabled");
-	change("cc_numero","disabled");
-	change("cc_operadora","disabled");
-
-	frm.db_banco.disabled=true;
-	frm.db_agencia.disabled=true;
-	frm.db_conta.disabled=true;
-	change("db_banco","disabled");
-	change("db_agencia","disabled");
-	change("db_conta","disabled");
-
-	if(frm.tipo_cobranca.value == "2"){ //Carnê
-
-		MM_showHideLayers('formaPag','','show');
-		MM_showHideLayers('formaPagBanco','','hide');
-		MM_showHideLayers('formaPagCartao','','hide');
-		//msg = "O sistema de carnê não suporta cobranças adicionais. Caso o contrato seja firmado os valores excedentes existentes serão desconsiderados, tanto no contrato quanto na fatura";
-		//window.alert(msg);
-		frm.data_carne.disabled=false;
-		frm.ini_carne.disabled=false;
-		change("ini_carne","enabled");
-		change("data_carne","enabled");
-
-	}else if(frm.tipo_cobranca.value == "3"){	//Depósito Bancário
-
-		MM_showHideLayers('formaPag','','hide');
-		MM_showHideLayers('formaPagBanco','','show');
-		MM_showHideLayers('formaPagCartao','','hide');
-		//msg = "O sistema de carnê não suporta cobranças adicionais. Caso o contrato seja firmado os valores excedentes existentes serão desconsiderados, tanto no contrato quanto na fatura";
-		//window.alert(msg);
-		frm.db_banco.disabled=false;
-		frm.db_conta.disabled=false;
-		frm.db_agencia.disabled=false;
-		change("db_banco","enabled");
-		change("db_agencia","enabled");
-		change("db_conta","enabled");
-
-	}else if(frm.tipo_cobranca.value == "4"){	//Cartão de Credito
-
-		MM_showHideLayers('formaPag','','hide');
-		MM_showHideLayers('formaPagBanco','','hide');
-		MM_showHideLayers('formaPagCartao','','show');
-		//msg = "O sistema de carnê não suporta cobranças adicionais. Caso o contrato seja firmado os valores excedentes existentes serão desconsiderados, tanto no contrato quanto na fatura";
-		//window.alert(msg);
-		frm.cc_vencimento.disabled=false;
-		frm.cc_numero.disabled=false;
-		frm.cc_operadora.disabled=false;
-		change("cc_vencimento","enabled");
-		change("cc_numero","enabled");
-		change("cc_operadora","enabled");
-
-	}else{
-		MM_showHideLayers('formaPag','','hide');
-		MM_showHideLayers('formaPagBanco','','hide');
-		MM_showHideLayers('formaPagCartao','','hide');
-		frm.data_carne.disabled=true;
-		frm.ini_carne.disabled=true;
-		frm.cc_vencimento.disabled=false;
-		frm.cc_numero.disabled=false;
-		frm.cc_operadora.disabled=false;
-		frm.db_banco.disabled=false;
-		frm.db_conta.disabled=false;
-		frm.db_agencia.disabled=false;
-	}
-	return;
 }
 
 function Comodato(){
@@ -512,14 +590,17 @@ function verificaTipoHosp() {
 
 {/literal}
 
-</script> {literal} <script language="JavaScript" src="util.js"></script> <script language="JavaScript">
+</script> {literal}
 
+<script language="JavaScript" src="util.js"></script>
 
-
-
+<script language="JavaScript">
 
 function calculaDataCarne() {
 var formulario = document.frmContratacao;
+	if( formulario.ini_carne == undefined ) {
+		return;
+	}
 
    if( formulario.dia_vencimento.value.length == 0 ) {
       formulario.ini_carne.value = formulario.data_contratacao.value;
@@ -659,20 +740,20 @@ function Tecla(e){
 	if (document.all){ // Internet Explorer
 		var tecla = event.keyCode;
 		var valor = document.frmContratacao.username.value;
-		
+
 	}else if(document.layers) // Nestcape
 		var tecla = e.which;
 		var valor = document.frmContratacao.username.value;
-		
+
 		if (tecla != 92 && tecla != 47 && tecla != 34  && tecla != 39 && tecla != 126 && tecla != 180 && tecla != 96 && tecla != 94 && tecla != 58 && tecla != 59 && tecla != 44 && tecla != 63 && tecla != 40 && tecla != 41 && tecla != 42 && tecla != 43 && tecla != 124 && tecla != 60 && tecla != 61 && tecla != 62 && tecla != 36 && tecla != 37 && tecla != 38 && tecla != 39 && tecla != 33 && tecla != 34 && tecla != 35 && tecla != 168 && tecla != 64 && tecla != 123 && tecla != 125 && tecla != 170 && tecla != 176 && tecla != 186 && tecla != 172 && tecla != 178 && tecla != 179 && tecla != 185 && tecla != 163 && tecla != 167 && tecla != 224 && tecla != 225 && tecla != 226 && tecla != 227 && tecla != 228 && tecla != 192 && tecla != 193 && tecla != 194 && tecla != 195 && tecla != 196 && tecla != 32  && tecla != 199 && tecla != 231 && tecla != 91 && tecla != 93 && tecla != 200 && tecla != 201 && tecla != 202 && tecla != 203 && tecla != 204 && tecla != 205 && tecla != 206 && tecla != 207 && tecla != 210 && tecla != 211 && tecla != 212 && tecla != 213 && tecla != 214 && tecla != 217 && tecla != 218 && tecla != 219 && tecla != 220 && tecla != 224 && tecla != 225 && tecla != 226 && tecla != 227 && tecla != 228 && tecla != 229 && tecla != 230 && tecla != 231 && tecla != 232 && tecla != 233 && tecla != 234 && tecla != 235 && tecla != 236 && tecla != 237 && tecla != 238 && tecla != 239 && tecla != 240 && tecla != 241 && tecla != 242 && tecla != 243 && tecla != 244 && tecla != 245 && tecla != 246 && tecla != 247 && tecla != 248 && tecla != 249 && tecla != 250 && tecla != 251 && tecla != 252 ){
 			return true;
-	
+
 	}else{
 				if (tecla != 8) // backspace
 					event.keyCode = 0;
 					//return false;
 				else
-				
+
 					return true;
 			}
 }
@@ -681,62 +762,351 @@ function Tecla_Mac(e){
 	if (document.all){ // Internet Explorer
 		var tecla = event.keyCode;
 		var valor = document.frmContratacao.username.value;
-		
+
 	}else if(document.layers) // Nestcape
 		var tecla = e.which;
 		var valor = document.frmContratacao.username.value;
-			
+
 			if (tecla != 92 && tecla != 47 && tecla != 34  && tecla != 39 && tecla != 126 && tecla != 180 && tecla != 96 && tecla != 94 && tecla != 59 && tecla != 44 && tecla != 63 && tecla != 40 && tecla != 41 && tecla != 42 && tecla != 43 && tecla != 124 && tecla != 60 && tecla != 61 && tecla != 62 && tecla != 36 && tecla != 37 && tecla != 38 && tecla != 39 && tecla != 33 && tecla != 34 && tecla != 35 && tecla != 168 && tecla != 64 && tecla != 123 && tecla != 125 && tecla != 170 && tecla != 176 && tecla != 186 && tecla != 172 && tecla != 178 && tecla != 179 && tecla != 185 && tecla != 163 && tecla != 167 && tecla != 224 && tecla != 225 && tecla != 226 && tecla != 227 && tecla != 228 && tecla != 192 && tecla != 193 && tecla != 194 && tecla != 195 && tecla != 196 && tecla != 32  && tecla != 199 && tecla != 231 && tecla != 91 && tecla != 93 && tecla != 200 && tecla != 201 && tecla != 202 && tecla != 203 && tecla != 204 && tecla != 205 && tecla != 206 && tecla != 207 && tecla != 210 && tecla != 211 && tecla != 212 && tecla != 213 && tecla != 214 && tecla != 217 && tecla != 218 && tecla != 219 && tecla != 220 && tecla != 224 && tecla != 225 && tecla != 226 && tecla != 227 && tecla != 228 && tecla != 229 && tecla != 230 && tecla != 231 && tecla != 232 && tecla != 233 && tecla != 234 && tecla != 235 && tecla != 236 && tecla != 237 && tecla != 238 && tecla != 239 && tecla != 240 && tecla != 241 && tecla != 242 && tecla != 243 && tecla != 244 && tecla != 245 && tecla != 246 && tecla != 247 && tecla != 248 && tecla != 249 && tecla != 250 && tecla != 251 && tecla != 252 && tecla != 46 && tecla != 45 && tecla != 95 && tecla != 71  && tecla != 72  && tecla != 73  && tecla != 74  && tecla != 75  && tecla != 76  && tecla != 77  && tecla != 78  && tecla != 79  && tecla != 80  && tecla != 81  && tecla != 82  && tecla != 83 && tecla != 84  && tecla != 85  && tecla != 86  && tecla != 87  && tecla != 88  && tecla != 89  && tecla != 90 && tecla != 103 && tecla != 104 && tecla != 105 && tecla != 106 && tecla != 107 && tecla != 108 && tecla != 109 && tecla != 110 && tecla != 111 && tecla != 112 && tecla != 113 && tecla != 114 && tecla != 115 && tecla != 116 && tecla != 117 && tecla != 118 && tecla != 119 && tecla != 120  && tecla != 121 && tecla != 122 ){
 			return true;
-	
+
 	}else{
 				if (tecla != 8) // backspace
 					event.keyCode = 0;
 					//return false;
 				else
-				
+
 					return true;
 			}
 }
 
 
 
-	
-	
+
+
 	var regra = new Object();
-	
+
 	regra.mac = /^([0-9A-F]{2}:){5}[0-9A-F]{2}$/i;
-	
+
 		function valida_mac(){
-		
-			var sel = regra.mac; 
-			var ver = sel.exec(document.frmContratacao.mac.value); 
-			if(!ver && document.frmContratacao.mac.value!="") 
-			{ 
+
+			var sel = regra.mac;
+			var ver = sel.exec(document.frmContratacao.mac.value);
+			if(!ver && document.frmContratacao.mac.value!="")
+			{
 				  alert('O MAC '+document.frmContratacao.mac.value+' não é válido.\nColoque o MAC no formato xx:xx:xx:xx:xx '); 				  				  document.frmContratacao.mac.focus();
 				  document.frmContratacao.mac.select();
-				  return false; 
-			} 
-			return true; 
-			} 
+				  return false;
+			}
+			return true;
+			}
 
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 </script> {/literal}
-
+{include file=cliente_cobranca_menu.html}
+<style>
+{literal}
+form {
+	margin: 0;
+}
+{/literal}
+</style>
 <form name="frmContratacao" method="post" action="{$smarty.server.PHP_SELF}" onSubmit="return validaForm();">
+
+<table align="left" _style="border: dotted 1px #000000;" _width="740" cellspacing=0 cellpadding=1>
+	<tr>
+		<td valign="top" _style="border-right: solid 1px #000000;" width="350">
+
+		  <!-- BOX CONTRATACAO: INI -->
+		  <table width="350" border=0 bgcolor="#F1F1F1" id="cob" cellspacing=0 cellpadding=1 style="border: solid 1px #000000; margin-top: 2px;">
+			<tr>
+			  <td colspan=4 background="template/default/images/tabcliselected.gif">&nbsp;<font color="#000000" face="arial" _size="+1"><b>Contrato</b></font>&nbsp;<select name="tipo" onChange="javascript:alteraTipo();">
+				  <option value=""></option>
+			{if $lic_bandalarga=="sim"}
+				  <option value="BL" {if $tipo=="BL"}SELECTED{/if}>Banda Larga</option>{/if}
+			{if $lic_discado=="sim"}
+				  <option value="D" {if $tipo=="D"}SELECTED{/if}>Discado</option>{/if}
+			{if $lic_hospedagem=="sim"}
+				  <option value="H" {if $tipo=="H"}SELECTED{/if}>Hospedagem</option>{/if}
+				</select>
+			  </td>
+			</tr>
+			<tr>
+			  <td width="70" align="right" bgcolor="#FFFFFF"><p>Produto:</p></td>
+			  <td bgcolor="#FFFFFF" colspan="3"> <SELECT name=id_produto onChange="javascript:alteraProduto();" style="width: 250px;">
+				</SELECT> </td>
+			</tr>
+			  <tr>
+				<td bgcolor="#FFFFFF" align="right" width="70"><p>Dt Contrato:</p></td>
+				<td bgcolor="#FFFFFF"><p><input type="text" size=11 maxlength="10" name="data_contratacao" onKeyPress=" formatar(this, '##/##/####'); return Tecla(event);" value="{$hoje}" onfocusout="javascript:processaDataContrato();"  onChange="javascript:processaDataContrato();"></p></td>
+				<td bgcolor="#FFFFFF" align="right" ><p>Vigência:</p></td>
+				<td bgcolor="#FFFFFF"><p><input type="text" size=2 maxlength="2" name="vigencia" value="12" onChange="javascript:processaVigencia();" onfocusout="javascrpt:processaVigencia();"> meses </p></td>
+			  </tr>
+			  <tr>
+				<td bgcolor="#FFFFFF" align="right" width="70"><p>Status:</p></td>
+				<td bgcolor="#FFFFFF"><p>
+					<select name='status' >
+					  <option value='A'  selected >Ativo</option>
+					  <option value='S' >Suspenso</option>
+					  <option value='C' >Cancelado</option>
+					</select>
+				  </p></td>
+				<td bgcolor="#FFFFFF" align="right"><p>Dia Venc.:</p></td>
+				<td bgcolor="#FFFFFF"><p>
+					<input type="text" id="dia_vencimento" name="dia_vencimento" value="{$dia_venc}" size=2 maxlength=2 onfocusout="javascript:processaDataContrato();"  onChange="javascript:processaDataContrato();">
+				  </p></td>
+			  </tr>
+			  <tr>
+				<td  align="right" bgcolor="#FFFFFF" width="70"><p>Dt 1&ordm; Venc:</p></td>
+				<td bgcolor="#FFFFFF" ><p>
+					<input name="pri_venc" type="text" size="13" id="pri_venc" maxlength="10" onKeyPress="formatar(this, '##/##/####'); return Tecla(event);" onBlur="return datavenc();">
+					<input type="button" name="hoje" value="Hoje" onClick="javascript:priVenc();" &gt;&gt;"" style="border: 1px solid #444444; font-size: 8px; background-color: #f3f3f3;">
+				  </p></td>
+				<td bgcolor="FFFFFF" align="right"><p>Carência:</p></td>
+				<td bgcolor="FFFFFF"> <p>
+					<input type="text" id="carencia_pagamento" name="carencia_pagamento" value="{$carencia}" size=2 maxlength=2>
+					dias </p></td>
+			  </tr>
+			  <tr>
+				<td bgcolor="#FFFFFF" align="right" width="70"><p>Desconto:</p></td>
+				<td bgcolor="#FFFFFF"><p>
+					<input name="desconto_promo" type="text" value="0.00" size=7 maxlength="7" id="desconto_promo">
+					reais</p></td>
+				<td bgcolor="#FFFFFF" align="right"><p>Periodo:</p></td>
+				<td bgcolor="#FFFFFF"><p>
+					<input type="text" id="periodo_desconto" name="periodo_desconto" value="" size=2 maxlength=2>
+					meses</p></td>
+			  </tr>
+			  <tr>
+				<td bgcolor="#FFFFFF" align="right" width="70"><p>Taxa Inst:</p></td>
+				<td bgcolor="#FFFFFF" colspan="3"><p>
+					<input name="tx_instalacao" type="text" value="0.00" size=7 maxlength="7" id="tx_instalacao">
+					reais</p></td>
+			  </tr>
+			  <tr>
+				<td bgcolor="#FFFFFF" align="right"><p>Comodato</p></td>
+				<td bgcolor="#FFFFFF"><p>
+					<input name="comodato" type="checkbox" value="true" id="comodato" onClick="javascript:Comodato()" class="checkbox" {if $comodato == true}checked{/if}>
+				  </p></td>
+				<td bgcolor="#FFFFFF" align="right"><p>Valor:</p></td>
+				<td bgcolor="#FFFFFF"><p>
+					<input name="valor_comodato" type="text" value="0.00" size=7 maxlength="7" id="valor_comodato ">
+					reais</p></td>
+			  </tr>
+			</tr>
+		  </table>
+		  <!-- BOX CONTRATACAO: FIM -->
+
+
+		  <!-- BOX FORMA PAGTO: INI -->
+    	  <table border=0 width="350" bgcolor="#F1F1F1" style="border: solid 1px #000000; margin-top: 2px;" cellspacing=0 cellpadding=1>
+
+    <tr>
+                       <td colspan=4 background="template/default/images/tabcliselected.gif">&nbsp;<font color="#000000" face="Arial, Helvetica, sans-serif"><strong>Cobrança</strong></font></td>
+                     </tr>
+                     <tr>
+                       <td bgcolor="#FFFFFF" align="right" width="70"><p>Pro-Rata:</p></td>
+                       <td bgcolor="#FFFFFF" colspan="3">
+                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                           <tr>
+                             <td width="8%"><input name="prorata" type="checkbox" value="true" id="prorata" class="checkbox" ></td>
+                             <td width="92%"></td>
+                           </tr>
+                         </table>
+                       </td>
+                     </tr>
+                     <tr>
+                       <td bgcolor="#FFFFFF" align="right" width="70"><p>Forma Pgto:</p></td>
+                       <td width="116" bgcolor="#FFFFFF"> <select name="tipo_cobranca" id="tipo_cobranca" onChange="javascript:alteraTipoCobranca();">
+ 				  { foreach item=a from=$tipo_cobranca }
+
+                           <option value="{$a.id_cobranca}" >{$a.nome_cobranca}</option>
+ 					{ /foreach }
+
+                         </select> </td>
+                       <td bgcolor="#FFFFFF" width="62"><p>Pgto:</p></td>
+                       <td bgcolor="#FFFFFF" width="83">
+ 			  <select name="forma_pagamento">
+ 				{foreach key=id item=nome from=$forma_pagamento}
+ 				  <option value="{$id}" { if $id == $pagamento }SELECTED{ /if }>{$nome}</option>
+ 				{/foreach}
+ 			  </select>
+ 		             </td>
+                     </tr>
+	                     <tr>
+                       <!--td bgcolor="#FFFFFF" align="right" width="70">&nbsp;</td>
+                       <td bgcolor="#FFFFFF" colspan="3" width="280" id="tformadados">&nbsp;</td-->
+                       <td bgcolor="#FFFFFF" width="100%" colspan=4 id="tformadados" height=55 valign="top">&nbsp;</td>
+ 		    </tr>
+	       </table>
+	       <div height="5px"><small><small>&nbsp;&nbsp;</small></small></div>
+
+		  <!-- BOX FORMA PAGTO: FIM -->
+
+
+		</td>
+		<td valign="top" width="370">
+
+
+
+
+		  <!-- BOX DADOS USUARIO: INI -->
+
+
+                  <table width="370" border=0 bgcolor="#F1F1F1" style="border: solid 1px #000000; margin-top: 2px;" cellspacing=0 cellpadding=1>
+                    <tr>
+                      <td colspan=2 background="template/default/images/tabcliselected.gif">&nbsp;<font color="#000000" face="Arial, Helvetica, sans-serif"><strong>Dados do Usuário</strong></font></td>
+                    </tr>
+                    <tr>
+                      <td bgcolor="#FFFFFF" align="right" width="80" valign="top"><p>Username:</p></td>
+                      <td bgcolor="#FFFFFF"><input type="text" maxlength="30" name="username" disabled="true" value="{$username}" onKeyPress="return Tecla(event);" ></td>
+                    </tr>
+                    <tr>
+                      <td bgcolor="#FFFFFF" align="right" width="80" valign="top"><p>Senha:</p></td>
+                      <td bgcolor="#FFFFFF"> <input type="password" maxlength="32" name="senha" disabled="true"></td>
+                    </tr>
+                    <tr>
+                      <td bgcolor="#FFFFFF" align="right" width="80" valign="top"><p>Confirme:</p></td>
+                      <td bgcolor="#FFFFFF"> <input type="password" maxlength="32" name="conf_senha" disabled="true"></td>
+                    </tr>
+					{if $_licenca.frontend.email}
+                    <tr bgcolor="FFFFFF">
+                      <td> <div align="right">
+                          <input name="email_igual" type="checkbox" id="email_igual" value="1" class="checkbox" {if $lic_email=="nao"}disabled{/if}>
+                        </div></td>
+                      <td ><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Criar
+                        email com os mesmos dados?</font> </td>
+                    </tr>
+              		{else}
+						<input type="hidden" value="checked" checked="no" name="email_igual" />
+					{/if}
+                  </table>
+
+
+		  <!-- BOX DADOS USUARIO: FIM -->
+
+		  <!-- BOX DADOS TIPO: INI -->
+
+				<!--table width="370" border="0" align="center" cellpadding="0" cellspacing="0" dwcopytype="CopyTableCell">
+                    <tr>
+						<td width="370" align="left" valign="middle" id="tdados">&nbsp;</td>
+					</tr>
+					<tr>
+					  <td align="left" valign="middle">
+					  </td>
+					</tr>
+				  </table-->
+
+
+				  <div id="tdados" width="370" style="padding:0;margin:0;">&nbsp;
+				  </div>
+
+				  <input type="hidden" name="op" value="cobranca">
+				  <input type="hidden" name="id_cliente" value="{$id_cliente}">
+				  <input type="hidden" name="rotina" value="{$rotina}">
+				  <input type="hidden" name="acao" value="conf">
+				  <input type="hidden" name="tipo_dominio" value="{$dominio}">
+
+		  <!-- BOX DADOS TIPO: FIM -->
+
+
+
+		</td>
+	</tr>
+	<tr align="right">
+		<td colspan=2 style="border-top: dotted 1px #000000;"><input name="botao_enviar" type="submit" class=input2 id="botao_enviar" value="Contratar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">&nbsp; </td>
+	</tr>
+
+</table>
+
+
+<!-- DADOS DA FORMA DE PAGAMENTO: INI -->
+
+
+   <div id="formaPagCarne">
+	 <table width="100%" border="0" cellspacing="3" cellpadding="0">
+		<tr>
+		  <td><p>de
+		  <input type="text" name="ini_carne" value="" size=11 maxlength=10 OnKeyPress="formatar(this, '##/##/####'); return Tecla(event);">
+		  até
+		  <input type="text" name="data_carne" value="" size=11 maxlength=10 OnKeyPress="formatar(this, '##/##/####'); return Tecla(event);">
+		</p></td>
+		</tr>
+		<tr>
+		  <td><p><font color="#CC0000">O sistema de carn&ecirc;
+		  n&atilde;o suporta cobran&ccedil;as adicionais. Valores excedentes existentes
+		  ser&atilde;o desconsiderados.</font></p>
+		  </td>
+		</tr>
+		</table>
+		<script language="JavaScript">
+			calculaDataCarne();
+		</script>
+	 </div>
+
+	 <div id="formaPagBanco">
+	   <table width="100%" border="0" cellspacing="3" cellpadding="0">
+		 <tr>
+		   <td><p>Banco
+			   <input type="text" name="db_banco" value="" size=7 maxlength=10>
+			   Agência
+			   <input type="text" name="db_agencia" value="" size=7 maxlength=10>
+			   Conta
+			   <input type="text" name="db_conta" value="" size=7 maxlength=10>
+			 </p></td>
+		 </tr>
+	   </table>
+	 </div>
+	 <div id="formaPagCartao">
+	   <table width="100%" border="0" cellspacing="3" cellpadding="0">
+		 <tr>
+		   <td><p>Vencimento
+			   <input type="text" name="cc_vencimento" value="" size=6 maxlength=5>
+			   Numero
+			   <input type="text" name="cc_numero" value="" size=11 maxlength=25>
+			   <br>
+			   Operadora
+			   <select name="cc_operadora">
+				{foreach key=id item=nome from=$cc_operadoras}
+					<option value="{$id}">{$nome}</option>
+				{/foreach}
+			   </select>
+			 </p></td>
+		 </tr>
+	   </table>
+	 </div>
+
+
+
+<!-- DADOS DA FORMA DE PAGAMENTO: FIM -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- DADOS DO frmContratacao: INI -->
-<div id="formBL">
-    <table width="320" border=0 bgcolor="#F1F1F1" id="disc">
+	<div id="formBL">
+    <table width="370" border=0 bgcolor="#F1F1F1" id="disc" style="border: solid 1px #000000; margin-top: 2px;" cellspacing=0 cellpadding=1>
       <tr>
-        <td colspan=4><p><strong>Dados da Conexão</strong></p></td>
+        <td colspan=4 background="template/default/images/tabcliselected.gif">&nbsp;<font color="#000000" face="Arial, Helvetica, sans-serif"><strong>Dados da Conexão</strong></font></td>
       </tr>
       <tr>
-        <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p align="right">POP:</p></td>
+        <td bgcolor="#FFFFFF" align="right" width="80" valign="top"><p align="right">POP:</p></td>
         <td width="152" bgcolor="#FFFFFF">
           <SELECT name='id_pop' >
 		{foreach item=v from=$lista_pops}
@@ -747,7 +1117,7 @@ function Tecla_Mac(e){
         </td>
       </tr>
       <tr>
-        <td bgcolor="#FFFFFF" align="right" width="71" valign="top"><p align="right">NAS:</p></td>
+        <td bgcolor="#FFFFFF" align="right" width="80" valign="top"><p align="right">NAS:</p></td>
         <td width="139" bgcolor="#FFFFFF">
 		<SELECT name='id_nas'>
 			{foreach item=v from=$lista_nas}
@@ -757,14 +1127,14 @@ function Tecla_Mac(e){
 	</td>
       </tr>
       <tr>
-        <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p align="right">Seleção de Rede/IP:</p></td>
-        <td bgcolor="#FFFFFF"><SELECT name='selecao_ip' onChange='javascript:verificaTipoRede();'>
+        <td bgcolor="#FFFFFF" align="right" width="80" valign="middle"><p>Sel. Rede/IP:</p></td>
+        <td bgcolor="#FFFFFF" valign="middle"><SELECT name='selecao_ip' onChange='javascript:verificaTipoRede();'>
             <OPTION VALUE='A' >Automática</OPTION>
             <OPTION VALUE='M' >Manual</OPTION>
-          </SELECT> <br> <input type="text" name="endereco_ip" id="endereco_ip" value="{$endereco_ip}"></td>
+          </SELECT> <input type="text" name="endereco_ip" id="endereco_ip" value="{$endereco_ip}"></td>
       </tr>
       <tr>
-        <td bgcolor="#FFFFFF" align="right" width="71" valign="top"><p align="right">MAC:</p></td>
+        <td bgcolor="#FFFFFF" align="right" width="80" valign="middle"><p align="right">MAC:</p></td>
         <td bgcolor="#FFFFFF" valign="top"><input type="text" name="mac" value="{$mac}" maxlength="17" size=17 onblur="valida_mac();" onkeypress="return Tecla_Mac(event);">
         </td>
 		{literal}
@@ -774,7 +1144,7 @@ function Tecla_Mac(e){
 		{/literal}
         </tr>
       <tr>
-        <td bgcolor="#FFFFFF" align="right" valign="MIDDLE" width="71"> <p align="right">Redirecionar:</p></td>
+        <td bgcolor="#FFFFFF" align="right" valign="MIDDLE" width="80"> <p align="right">Redirecionar:</p></td>
         <td bgcolor="#FFFFFF" colspan="3" valign="MIDDLE"> <p>
             <input name="redirecionar" type="checkbox" value="true" id="redirecionar" class="checkbox" {if $ip_externo}checked{/if}>
             IP: {$ip_externo}</p></td>
@@ -782,42 +1152,38 @@ function Tecla_Mac(e){
     </table>
     </div>
     <div id="formH">
-    <table width="320" border="0" cellpadding="0" cellspacing="1" id="hosp">
-      <tr>
-          <td align="center" valign="middle"><table border=0 width="320" bgcolor="#F1F1F1">
-            <tr>
-                <td colspan=2><p><strong>Dados da Hospedagem</strong></p></td>
-              </tr>
-              <tr>
-                <td bgcolor="#FFFFFF" align="right" width="70"><p> Tipo: </p></td>
-                <td bgcolor="#FFFFFF" width="369">
-                	<SELECT name='tipo_hospedagem' onChange='javascript:verificaTipoHosp();' onFocusOut='javascript:verificaTipoHosp();' onClick='javascript:verificaTipoHosp();'>
-                   		<OPTION VALUE='D'>www.dominio.com.br/</OPTION>
-                   		<OPTION VALUE='U'>www.PROVEDOR.com.br/usuario/username</OPTION>
-                  	</SELECT>
-                </td>
-              </tr>
-              <tr>
-                <td colspan=2><p><strong>Dados do Dominio</strong></p></td>
-              </tr>
-              <tr>
-                <td bgcolor="#FFFFFF" align="right" width="70"> <p>Criar: </p></td>
-                <td bgcolor="#FFFFFF"> <p><font color="#0000FF"> www.
-                    <input type="text" name="dominio_hospedagem" value="">
-                    </font> </p></td>
-              </tr>
-            </table></td>
-        </tr>
-      </table>
+    	<table border=0 width="370" bgcolor="#F1F1F1" style="border: solid 1px #000000; margin-top: 2px;" cellspacing=0 cellpadding=1>
+		  <tr>
+			<td colspan=2 background="template/default/images/tabcliselected.gif">&nbsp;<font color="#000000" face="Arial, Helvetica, sans-serif"><strong>Dados da Hospedagem</strong></font></td>
+		  </tr>
+		  <tr>
+			<td bgcolor="#FFFFFF" align="right" width="80"><p> Tipo: </p></td>
+			<td bgcolor="#FFFFFF" width="369">
+				<SELECT name='tipo_hospedagem' onChange='javascript:verificaTipoHosp();' onFocusOut='javascript:verificaTipoHosp();' onClick='javascript:verificaTipoHosp();'>
+					<OPTION VALUE='D'>www.dominio.com.br/</OPTION>
+					<OPTION VALUE='U'>www.PROVEDOR.com.br/usuario/username</OPTION>
+				</SELECT>
+			</td>
+		  </tr>
+		  <tr>
+			<td colspan=2 background="template/default/images/tabcliselected.gif"><p><strong>&nbsp;Dados do Dominio</strong></p></td>
+		  </tr>
+		  <tr>
+			<td bgcolor="#FFFFFF" align="right" width="80"> <p>Criar: </p></td>
+			<td bgcolor="#FFFFFF"> <p><font color="#0000FF"> www.
+				<input type="text" name="dominio_hospedagem" value="">
+				</font> </p></td>
+		  </tr>
+		</table>
     </div>
     <div id="formD">
 
-    <table width="320" border=0 bgcolor="#F1F1F1" id="disc">
+    <table width="370" border=0 bgcolor="#F1F1F1" id="disc" style="border: solid 1px #000000; margin-top: 2px;"  cellspacing=0 cellpadding=1>
       <tr>
-          <td colspan=2><p><strong>Dados do Acesso</strong></p></td>
+          <td colspan=2 background="template/default/images/tabcliselected.gif">&nbsp;<font color="#000000" face="Arial, Helvetica, sans-serif"><strong>Dados do Acesso</strong></font></td>
         </tr>
         <tr>
-          <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Fone:</p></td>
+          <td bgcolor="#FFFFFF" align="right" width="80" valign="top"><p>Fone:</p></td>
           <td bgcolor="#FFFFFF"><input type="text" size=15 maxlength="50" name="foneinfo" value=""></td>
         </tr>
       </table>
@@ -826,289 +1192,9 @@ function Tecla_Mac(e){
 
 <!-- DADOS DO frmContratacao: FIM -->
 
-                 <table width="100" border="0" cellspacing="0" cellpadding="0" align="center">
-                    <tr>
-                      <td>
-                          <table width="300" border="0" align="center" cellpadding="2" cellspacing="2">
-        <tr>
-          <td>{if count($erros)} {foreach item=erro from=$erros}<font color="#FF0000" face=arial size=-1><b>{$erro}</b></font>{/foreach}
-            {/if} </td>
-        </tr>
-        <tr>
-          <td height="66" align="center" valign="middle"> <table width="300">
-              <tr>
-                <td align="center"> <strong><font size="+2" face="Arial, Helvetica, sans-serif">Cobrança</font></strong></td>
-              </tr>
-              <tr>
-                <td><table width="100%" border="0" cellspacing="1" cellpadding="0">
-                    <tr align="center">
-                      <td><a href="clientes.php?op=cobranca&rotina=resumo&id_cliente={$id_cliente}">Resumo</a></td>
-                    </tr>
-                  </table></td>
-              </tr>
-            </table></td>
-        </tr>
-        <tr>
-          <td align="center" valign="middle"> <table width="400" height="363" border="0">
-              <tr>
-                <td width="401" height="84" valign="top"> <table width="350" border=0 bgcolor="#F1F1F1" id="cob">
-                    <tr>
-                      <td colspan><font color="#000000" face="arial" size="+1"><b>Contrato</b></font>
-                      </td>
-                      <td colspan="3"> <select name="tipo" onChange="javascript:alteraTipo();">
-                          <option value=""></option>
-                    {if $lic_bandalarga=="sim"}
-                          <option value="BL" {if $tipo=="BL"}SELECTED{/if}>Banda
-                          Larga</option>{/if}
-                    {if $lic_discado=="sim"}
-                          <option value="D" {if $tipo=="D"}SELECTED{/if}>Discado</option>{/if}
-                    {if $lic_hospedagem=="sim"}
-                          <option value="H" {if $tipo=="H"}SELECTED{/if}>Hospedagem</option>{/if}
-                        </select> </td>
-                    </tr>
-                    <tr>
-                      <td width="89" height="26" align="right" bgcolor="#FFFFFF">
-                        <p>Produto:</p></td>
-                      <td width="65" bgcolor="#FFFFFF" colspan="3"> <SELECT name=id_produto onChange="javascript:alteraProduto();" style="width: 250px;">
-                        </SELECT> </td>
-                    </tr>
-                  </table>
-                  <table width="350" border="0">
-                    <tr>
-                      <td><table width="100%" border=0 bgcolor="#F1F1F1" dwcopytype="CopyTableRow">
-                          <tr>
-                            <td bgcolor="#FFFFFF" align="right" width="72"><p>Dt
-                                Contrato:</p></td>
-                            <td bgcolor="#FFFFFF" ><p>
-                                <input type="text" size=11 maxlength="10" name="data_contratacao" onKeyPress=" formatar(this, '##/##/####'); return Tecla(event);" value="{$hoje}" onfocusout="javascript:processaDataContrato();"  onChange="javascript:processaDataContrato();">
-                              </p></td>
-                            <td bgcolor="#FFFFFF"><p> Vigência:</p></td>
-                            <td bgcolor="#FFFFFF"> <p>
-                                <input type="text" size=2 maxlength="2" name="vigencia" value="12" onChange="javascript:processaVigencia();" onfocusout="javascrpt:processaVigencia();">
-                                meses </p></td>
-                          </tr>
-                          <tr>
-                            <td bgcolor="#FFFFFF" align="right" width="72"><p>Status:</p></td>
-                            <td bgcolor="#FFFFFF" ><p>
-                                <select name='status' >
-                                  <option value='A'  selected >Ativo</option>
-                                  <option value='S' >Suspenso</option>
-                                  <option value='C' >Cancelado</option>
-                                </select>
-                              </p></td>
-                            <td bgcolor="#FFFFFF" ><p>Dia Vencimento:</p></td>
-                            <td bgcolor="#FFFFFF" ><p>
-                                <input type="text" id="dia_vencimento" name="dia_vencimento" value="{$dia_venc}" size=2 maxlength=2 onfocusout="javascript:processaDataContrato();"  onChange="javascript:processaDataContrato();">
-                              </p></td>
-                          </tr>
-                          <tr>
-                            <td  align="right" bgcolor="#FFFFFF"> <p>Data 1&ordm;
-                                Vencimento</p></td>
-                            <td bgcolor="#FFFFFF" ><p>
-                                <input name="pri_venc" type="text" size="13" id="pri_venc" maxlength="10" onKeyPress="formatar(this, '##/##/####'); return Tecla(event);" onBlur="return datavenc();">
-                                <input type="button" name="hoje" value="Hoje" onClick="javascript:priVenc();" &gt;&gt;""
-              style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
-                              </p></td>
-                            <td bgcolor="FFFFFF"><p>Carência:</p></td>
-                            <td bgcolor="FFFFFF"> <p>
-                                <input type="text" id="carencia_pagamento" name="carencia_pagamento" value="{$carencia}" size=2 maxlength=2>
-                                dias </p></td>
-                          </tr>
-                          <tr>
-                            <td bgcolor="#FFFFFF" align="right" width="72"><p>Desconto</p></td>
-                            <td bgcolor="#FFFFFF"><p>
-                                <input name="desconto_promo" type="text" value="0.00" size=7 maxlength="7" id="desconto_promo">
-                                reais</p></td>
-                            <td bgcolor="#FFFFFF"><p>Periodo:</p></td>
-                            <td bgcolor="#FFFFFF"><p>
-                                <input type="text" id="periodo_desconto" name="periodo_desconto" value="" size=2 maxlength=2>
-                                meses</p></td>
-                          </tr>
-                          <tr>
-                            <td bgcolor="#FFFFFF" align="right"><p>Taxa Inst.</p></td>
-                            <td bgcolor="#FFFFFF" colspan="3"><p>
-                                <input name="tx_instalacao" type="text" value="0.00" size=7 maxlength="7" id="tx_instalacao">
-                                reais</p></td>
-                          </tr>
-                          <tr>
-                            <td bgcolor="#FFFFFF" align="right"><p>Comodato</p></td>
-                            <td bgcolor="#FFFFFF" width="121"><p>
-                                <input name="comodato" type="checkbox" value="true" id="comodato" onClick="javascript:Comodato()" class="checkbox" {if $comodato == true}checked{/if}>
-                              </p></td>
-                            <td bgcolor="#FFFFFF" width="80"><p>Valor:</p></td>
-                            <td bgcolor="#FFFFFF" width="53"><p>
-                                <input name="valor_comodato" type="text" value="0.00" size=7 maxlength="7" id="valor_comodato ">
-                                reais</p></td>
-                          </tr>
-                          </table>
-                          </td>
-                    </tr>
-                  </table></td>
-                <td width="68" valign="top"> <table border=0 width="350" bgcolor="#F1F1F1">
-                    <tr>
-                      <td colspan=4><font color="#000000" face="Arial, Helvetica, sans-serif"><strong>Cobrança</strong></font></td>
-                    </tr>
-                    <tr>
-                      <td bgcolor="#FFFFFF" align="right"><p>Pro-Rata</p></td>
-                      <td bgcolor="#FFFFFF" colspan="3"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-                          <tr>
-                            <td width="8%"><input name="prorata" type="checkbox" value="true" id="prorata" class="checkbox" ></td>
-                            <td width="92%"></td>
-                          </tr>
-                        </table></td>
-                    </tr>
-                    <tr>
-                      <td bgcolor="#FFFFFF" align="right" width="77"><p>Forma
-                          de Pagamento:</p></td>
-                      <td width="144" bgcolor="#FFFFFF"> <select name="tipo_cobranca" id="tipo_cobranca" onChange="javascript:checaFormaCobranca();">
-				  { foreach item=a from=$tipo_cobranca }
-
-                          <option value="{$a.id_cobranca}" >{$a.nome_cobranca}</option>
-					{ /foreach }
-
-                        </select> </td>
-                      <td width="149" bgcolor="#FFFFFF"><p>Pagamento:</p></td>
-                      <td width="62" bgcolor="#FFFFFF">
-			  <select name="forma_pagamento">
-				{foreach key=id item=nome from=$forma_pagamento}
-				  <option value="{$id}" { if $id == $pagamento }SELECTED{ /if }>{$nome}</option>
-				{/foreach}
-			  </select>
-		      </td>
-                    </tr>
-                    <tr>
-                      <td bgcolor="#FFFFFF" align="right" height="1">&nbsp;</td>
-                      <td bgcolor="#FFFFFF" colspan="3" height="1"> <div id="formaPag" style="visible: hidden"  >
-                          <table width="100%" border="0" cellspacing="3" cellpadding="0">
-			    <tr>
-			      <td><p>de
-				  <input type="text" name="ini_carne" value="" size=11 maxlength=10 OnKeyPress="formatar(this, '##/##/####'); return Tecla(event);">
-				  até
-				  <input type="text" name="data_carne" value="" size=11 maxlength=10 OnKeyPress="formatar(this, '##/##/####'); return Tecla(event);">
-				</p></td>
-			    </tr>
-			    <tr>
-			      <td><p><strong><font color="#CC0000">O sistema de carn&ecirc;
-				  n&atilde;o suporta cobran&ccedil;as adicionais. Caso o
-				  contrato seja firmado os valores excedentes existentes
-				  ser&atilde;o desconsiderados, tanto no contrato quanto
-				  na fatura aaa</font></strong></p>
-			      </td>
-			    </tr>
-               		  </table>
-
-                        </div>
-                        <!-- Inicio DDS -->
-                        <div id="formaPagBanco" style="visibility: hidden;">
-                          <table width="100%" border="0" cellspacing="3" cellpadding="0">
-                            <tr>
-                              <td><p>Banco
-                                  <input type="text" name="db_banco" value="" size=7 maxlength=10>
-                                  Agência
-                                  <input type="text" name="db_agencia" value="" size=7 maxlength=10>
-                                  <br>
-                                  Conta
-                                  <input type="text" name="db_conta" value="" size=7 maxlength=10>
-                                </p></td>
-                            </tr>
-                          </table>
-                        </div>
-                        <div id="formaPagCartao" style="visibility: hidden;">
-                          <table width="100%" border="0" cellspacing="3" cellpadding="0">
-                            <tr>
-                              <td><p>Vencimento
-                                  <input type="text" name="cc_vencimento" value="" size=6 maxlength=5>
-                                  Numero
-                                  <input type="text" name="cc_numero" value="" size=11 maxlength=25>
-                                  <br>
-                                  Operadora
-                                  <select name="cc_operadora">
-					{foreach key=id item=nome from=$cc_operadoras}
-					    <option value="{$id}">{$nome}</option>
-					{/foreach}
-                                  </select>
-                                </p></td>
-                            </tr>
-                          </table>
-                        </div>
-			<!-- Fim DDS -->
-		      </td>
-		    </tr>
-		  	{literal}
-				<script language="JavaScript">
-					calculaDataCarne();
-				</script>
-		  	{/literal}
-	    </table></td>
-              </tr>
-              <tr>
-                <td valign="top">
-                  <table width="350" border=0 bgcolor="#F1F1F1">
-                    <tr>
-                      <td colspan=2><font color="#000000" face="Arial, Helvetica, sans-serif"><strong>Dados do Usuário</strong></font></td>
-                    </tr>
-                    <tr>
-                      <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Username:</p></td>
-                      <td bgcolor="#FFFFFF" colspan=2><input type="text" maxlength="30" name="username" disabled="true" value="{$username}" onKeyPress="return Tecla(event);" ></td>
-                    </tr>
-                    <tr>
-                      <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Senha:</p></td>
-                      <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="senha" disabled="true">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td bgcolor="#FFFFFF" align="right" width="70" valign="top"><p>Confirme:</p></td>
-                      <td bgcolor="#FFFFFF" colspan=2> <input type="password" maxlength="32" name="conf_senha" disabled="true">
-                      </td>
-                    </tr>
-		{if $lic_email == "sim"}
-                    <tr bgcolor="FFFFFF">
-                      <td> <div align="right">
-                          <input name="email_igual" type="checkbox" id="email_igual" value="1" class="checkbox" {if $lic_email=="nao"}disabled{/if}>
-                        </div></td>
-                      <td colspan="2"><font size="1" face="Verdana, Arial, Helvetica, sans-serif">Criar
-                        usuario de e-mail com os mesmos dados?</font> </td>
-                    </tr>
-              	{/if}
-				{if $lic_email=='nao'}<input type="hidden" value="checked" checked="no" name="email_igual" />{/if}
-                  </table></td>
-                <td valign="top">
-				<table width="336" border="0" align="center" cellpadding="2" cellspacing="2" dwcopytype="CopyTableCell">
-                    <tr>
-
-        <td width="328" align="center" valign="middle" id="tdados">&nbsp;</td>
-                            </tr>
-                            <tr>
-                              <td align="center" valign="middle">
-                              	<input type="hidden" name="p" value="contrato">
-                                <input type="hidden" name="op" value="cobranca">
-                                <input type="hidden" name="id_cliente" value="{$id_cliente}">
-                                <input type="hidden" name="rotina" value="{$rotina}">
-                                <input type="hidden" name="id_cliente_produto" value="">
-                                <input type="hidden" name="acao" value="conf">
-                                <input type="hidden" name="tipo_dominio" value="{$dominio}">
-                                </td>
-                            </tr>
-                          </table>
-				</td>
-              </tr>
-              <tr>
-                <td colspan="2"><div align="center">
-                    <input name="botao_enviar" type="submit" class=input2 id="botao_enviar" value="Cadastrar &gt;&gt;" style="border: 1px solid #444444; font-size: 10px; background-color: #f3f3f3;">
-                  </div></td>
-              </tr>
-            </table>
-			</td>
-        </tr>
-      </table>
-                        </form>
+{if count($erros)} {foreach item=erro from=$erros}<font color="#FF0000" face=arial size=-1><b>{$erro}</b></font>{/foreach}{/if}
 
 
-{ literal }
 <script language="JavaScript">
-
 init();
-checaFormaCobranca();
-
 </script>
-{ /literal }

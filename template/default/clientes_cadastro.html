@@ -389,7 +389,7 @@ function confirmacao(){
               <select name="id_cidade" style="width: 312px;" tabindex="10">
 			  {foreach item=a from=$cidades_disponiveis}
                     
-                <option value='{$a.id_cidade}' {if $a.id_cidade == $id_city}selected{/if}>{$a.cidade} 
+                <option value='{$a.id_cidade}' {if $a.id_cidade == $id_cidade}selected{/if}>{$a.cidade} 
                 - {$a.uf}</option>
 			  {/foreach}
                   
