@@ -10,7 +10,6 @@
 
 
 
-
 	class RedeIP {
 		public $addr;
 		public $mask;

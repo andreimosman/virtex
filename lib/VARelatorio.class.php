@@ -2454,6 +2454,55 @@ class VARelatorio extends VirtexAdminWeb {
 		
 		$this->arquivoTemplate = "relatorio_faturamento_previsao.html";
 
+	}else if ($op =="paginacao"){
+	//echo "bosta";
+	
+		$pg = @$_REQUEST["pg"];
+		$t = @$_REQUEST["trigger"];
+		$sentido = @$_REQUEST["sentido"];
+		$start = @$_REQUEST["st"];
+		$pagina = @$_REQUEST["pagina"];
+		
+		// PROPRIEDADES DO SELECT
+		
+		$tabela = @$_REQUEST["tabela"];
+		$ordena = @$_REQUEST["ordena"];
+		$sentido = @$_REQUEST["sentido"];
+		$quant = @$_REQUEST["quant"];
+		
+		if (!$tabela) $tabela = "cltb_cliente";
+		if (!$ordena) $ordena = "nome_razao";
+		if (!$sentido) $sentido = "ASC";
+		if (!$quant) $quant = 20;
+		
+		// FINAL DAS PROPRIEDADES DO SELECT
+		
+		
+		
+		if (!$pagina) $pagina = 0;
+		
+		if (!$start) $start = 0;
+		
+		
+		$sSQL  = "SELECT * FROM $tabela ";
+		$sSQL .= " ORDER BY $ordena $sentido LIMIT($quant) OFFSET $start ";
+		$contas = $this->bd->obtemRegistros($sSQL);
+		
+		$start = $start +$quant;
+		//echo "query: $sSQL <br>";
+		
+
+		$this->tpl->atribui("tabela",$tabela);
+		$this->tpl->atribui("ordena",$ordena);
+		$this->tpl->atribui("sentido",$sentido);
+		$this->tpl->atribui("quant",$quant);
+
+		$this->tpl->atribui("st",$start);
+		$this->tpl->atribui("contas",$contas);
+		$this->arquivoTemplate = "teste_paginacao.html";
+		
+		
+	
 	}
 	
 	
