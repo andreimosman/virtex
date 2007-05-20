@@ -50,6 +50,8 @@
 				// Ultimos registros cadastrados
 				$ordem = "id_cliente DESC";
 				$limite=10;
+				
+				$clientes = $cli->obtemUltimos($limite);
 
 			} else {
 			

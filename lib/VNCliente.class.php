@@ -46,6 +46,10 @@
 			return($this->obtem($filtro));
 		}
 		
+		public function obtemUltimos($limite) {
+			return($this->cltb_cliente->obtemUltimos($limite));
+		}
+		
 		public function obtemPeloNome($nome) {
 			$filtro["nome_razao"] = "%:" . $nome;
 			return($this->obtem($filtro));
